@@ -1,5 +1,7 @@
 2003-11-14  Werner Koch  <wk@gnupg.org>
 
+	* configure.ac: Bumbed version number to 0.7.
+
 	Released 0.6.
 	
 	* configure.ac: Bumbed up LIBGPG_ERROR_LT_REVISON.
