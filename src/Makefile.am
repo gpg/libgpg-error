@@ -22,9 +22,13 @@
 # depend on the configuration anyway. 
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrnos.awk errnos.in mkerrcodes1.awk mkerrcodes2.awk \
-	err-sources.h err-codes.h
+	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h
 CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h
+
+bin_SCRIPTS = gpg-error-config
+m4datadir = $(datadir)/aclocal
+m4data_DATA = gpg-error.m4
 
 include_HEADERS = gpg-error.h
 

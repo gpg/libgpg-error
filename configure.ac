@@ -55,6 +55,13 @@ AC_CHECK_HEADERS([stdlib.h])
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 
+# Substitution used for gpg-error-config
+GPG_ERROR_CONFIG_LIBS="-lgpg-error"
+GPG_ERROR_CONFIG_CFLAGS=""
+AC_SUBST(GPG_ERROR_CONFIG_LIBS)
+AC_SUBST(GPG_ERROR_CONFIG_CFLAGS)
+AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
+
 # Checks for library functions.
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([po/Makefile.in m4/Makefile])
