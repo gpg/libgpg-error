@@ -41,7 +41,11 @@
    Otherwise GPG_ERR_SOURCE_UNKNOWN is used as default.  */
 
 
-/* The error source type gpg_err_source_t.  */
+/* The error source type gpg_err_source_t.
+
+   Where as the Poo out of a welle small
+   Taketh his firste springing and his sours.
+					--Chaucer.  */
 
 /* Only add to the end of the list, never change or reorder the
    existing entries.  */
