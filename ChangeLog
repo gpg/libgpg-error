@@ -1,3 +1,7 @@
+2004-02-03  Werner Koch  <wk@gnupg.org>
+
+	* src/gpg-error.h: Added GPG_ERR_NOT_LOCKED.
+
 2003-12-22  Werner Koch  <wk@gnupg.org>
 
 	* src/gpg-error.h: Added GPG_ERR_LOCALE_PROBLEM.

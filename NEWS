@@ -5,6 +5,8 @@ Noteworthy changes in version 0.7 (unreleased)
  * Interface changes relative to the 0.6 release:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 GPG_ERR_LOCALE_PROBLEM          NEW.
+GPG_ERR_NOT_LOCKED              NEW.
+
 
 Noteworthy changes in version 0.6 (2003-11-14)
 ----------------------------------------------

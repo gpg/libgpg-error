@@ -269,8 +269,9 @@ typedef enum
     GPG_ERR_INV_CERT_OBJ = 164,
     GPG_ERR_UNKNOWN_NAME = 165,
     GPG_ERR_LOCALE_PROBLEM = 166,      /* A problem with the locale occured. */
+    GPG_ERR_NOT_LOCKED = 167,          /* Expected lock not held. */
 
-    /* 167 to 199 are free to be used.  */
+    /* 168 to 199 are free to be used.  */
 
     GPG_ERR_BUFFER_TOO_SHORT = 200,
 
