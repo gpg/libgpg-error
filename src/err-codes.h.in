@@ -49,6 +49,9 @@
 19	Bad session key
 20	Unknown compression algorithm
 21	Number is not prime
+22	Invalid encoding method
+23	Invalid encryption scheme
+24	Invalid signature scheme
 30	Bad MPI value
 31	Invalid passphrase
 32	Invalid signature class

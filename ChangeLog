@@ -1,3 +1,10 @@
+2003-10-28  Moritz Schulte  <mo@g10code.com>
+
+	* src/gpg-error.h (gpg_err_code_t): Added:
+	GPG_ERR_NO_ENCODING_METHOD, GPG_ERR_NO_ENCRYPTION_SCHEME,
+	GPG_ERR_NO_SIGNATURE_SCHEME.
+	* src/err-codes.h.in: Likewise.
+	
 2003-10-25  Werner Koch  <wk@gnupg.org>
 
 	* src/strerror.c: Include stdio.h for snprintf
