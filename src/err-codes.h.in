@@ -48,15 +48,6 @@
 18	Wrong secret key used
 19	Bad session key
 20	Unknown compression algorithm
-21	Reading file failed
-22	Writing file failed
-23	Opening file failed
-24	Creating file failed
-25	Closing file failed
-26	Renaming file failed
-27	Deleting file failed
-28	File exists
-29	File error
 30	Bad MPI value
 31	Invalid passphrase
 32	Invalid signature class
@@ -69,7 +60,6 @@
 39	Time conflict
 40	Keyserver error
 41	Wrong public key algorithm
-42	I/O error
 43	Weak encryption key
 44	Invalid key length
 45	Invalid argument
@@ -89,7 +79,6 @@
 59	Bug
 60	Not supported
 61	Invalid operation code
-62	Out of core
 63	Internal error
 64	EOF (gcrypt)
 65	Invalid object
@@ -100,8 +89,6 @@
 70	Conflicting use
 71	Invalid cipher mode
 72	Invalid flag
-73	Read error
-74	Write error
 75	Incomplete line
 76	Invalid response
 77	No agent running

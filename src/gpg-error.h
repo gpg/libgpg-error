@@ -92,15 +92,9 @@ typedef enum
     GPG_ERR_WRONG_SECKEY = 18,		/* Wrong secret key used.  */
     GPG_ERR_BAD_KEY = 19,		/* Bad (session) key.  */
     GPG_ERR_COMPR_ALGO = 20,		/* Unknown compress algorithm.  */
-    GPG_ERR_FILE_READ = 21,
-    GPG_ERR_FILE_WRITE = 22,
-    GPG_ERR_FILE_OPEN = 23,
-    GPG_ERR_FILE_CREATE = 24,
-    GPG_ERR_FILE_CLOSE = 25,
-    GPG_ERR_FILE_RENAME = 26,
-    GPG_ERR_FILE_DELETE = 27,
-    GPG_ERR_FILE_EXISTS = 28,
-    GPG_ERR_FILE = 29,
+
+    /* Codes 21 to 29 are unused.  */
+
     GPG_ERR_BAD_MPI = 30,		/* Problem with an MPI's value.  */
     GPG_ERR_INV_PASSPHRASE = 31,	/* Invalid passphrase.  */
     GPG_ERR_SIG_CLASS = 32,
@@ -113,7 +107,9 @@ typedef enum
     GPG_ERR_TIME_CONFLICT = 39,
     GPG_ERR_KEYSERVER = 40,
     GPG_ERR_WRONG_PUBKEY_ALGO = 41,	/* Wrong public key algorithm.  */
-    GPG_ERR_IO = 42,			/* I/O error.  */
+
+    /* Code 42 is free.  */
+
     GPG_ERR_WEAK_KEY = 43,		/* Weak encryption key.  */
     GPG_ERR_INV_KEYLEN = 44,		/* Invalid length of a key.  */
     GPG_ERR_INV_ARG = 45,		/* Invalid argument.  */
@@ -121,19 +117,21 @@ typedef enum
     GPG_ERR_INV_URI = 47,		/* Unsupported scheme and similar.  */
     GPG_ERR_NETWORK = 48,		/* General network error.  */
     GPG_ERR_UNKNOWN_HOST = 49,
-    GPG_ERR_SELFTEST_FAILED = 50,	/* Selftest failed.  */
+    GPG_ERR_SELFTEST_FAILED = 50,
     GPG_ERR_NOT_ENCRYPTED = 51,
     GPG_ERR_NOT_PROCESSED = 52,
     GPG_ERR_UNUSABLE_PUBKEY = 53,
     GPG_ERR_UNUSABLE_SECKEY = 54,
-    GPG_ERR_INV_VALUE = 55,		/* Invalid value.  */
+    GPG_ERR_INV_VALUE = 55,
     GPG_ERR_BAD_CERT_CHAIN = 56,
     GPG_ERR_MISSING_CERT = 57,
     GPG_ERR_NO_DATA = 58,
     GPG_ERR_BUG = 59,
     GPG_ERR_NOT_SUPPORTED = 60,
     GPG_ERR_INV_OP = 61,		/* Invalid operation code.  */
-    GPG_ERR_OUT_OF_CORE = 62,		/* Out of core ("Keine Kerne").  */
+
+    /* Code 62 is free.  */
+
     GPG_ERR_INTERNAL = 63,		/* Internal error.  */
     GPG_ERR_EOF_GCRYPT = 64,		/* Compatibility for gcrypt.  */
     GPG_ERR_INV_OBJ = 65,		/* An object is not valid.  */
@@ -144,8 +142,9 @@ typedef enum
     GPG_ERR_CONFLICT = 70,		/* Conflicting use.  */
     GPG_ERR_INV_CIPHER_MODE = 71,	/* Invalid cipher mode.  */ 
     GPG_ERR_INV_FLAG = 72,		/* Invalid flag.  */
-    GPG_ERR_READ_ERROR = 73,
-    GPG_ERR_WRITE_ERROR = 74,
+
+    /* Codes 73 and 74 are unused.  */
+
     GPG_ERR_INCOMPLETE_LINE = 75,
     GPG_ERR_INVALID_RESPONSE = 76,
     GPG_ERR_NO_AGENT = 77,

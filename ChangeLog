@@ -1,5 +1,12 @@
 2003-06-01  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/gpg-error.h (gpg_err_code_t): Remove GPG_ERR_FILE_READ,
+	GPG_ERR_FILE_WRITE, GPG_ERR_FILE_OPEN, GPG_ERR_FILE_CREATE,
+	GPG_ERR_FILE_CLOSE, GPG_ERR_FILE_DELETE, GPG_ERR_FILE_EXISTS,
+	GPG_ERR_FILE, GPG_ERR_IO, GPG_ERR_OUT_OF_CORE, GPG_ERR_READ_ERROR,
+	GPG_ERR_WRITE_ERROR.
+	* src/err-codes.h.in: Likewise.
+
 	* src/Makefile.am (EXTRA_DIST): Add err-sources.h and err-codes.h.
 
 	* src/mkerrcodes1.awk: New file.
