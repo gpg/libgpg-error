@@ -121,7 +121,7 @@
 91	Wrong card
 92	No dirmngr
 93	dirmngr error
-94	Certificate revoced
+94	Certificate revoked
 95	No CRL known
 96	CRL too old
 97	Line too long
@@ -193,6 +193,7 @@
 163	Unsupported CRL version
 164	Invalid certificate object
 165	Unknown name
+166	A locale function failed
 199	Buffer too short
 201	Invalid length specifier in S-expression
 202	String too long in S-expression

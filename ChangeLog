@@ -1,3 +1,11 @@
+2003-12-22  Werner Koch  <wk@gnupg.org>
+
+	* src/gpg-error.h: Added GPG_ERR_LOCALE_PROBLEM.
+
+2003-12-12  Werner Koch  <wk@gnupg.org>
+
+	* src/err-codes.h.in: s/revoced/revoked/.
+
 2003-12-08  Werner Koch  <wk@gnupg.org>
 
 	* README.CVS: Enhanced.
