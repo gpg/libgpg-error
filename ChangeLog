@@ -1,3 +1,9 @@
+2003-08-06  Marcus Brinkmann  <marcus@g10code.de>
+
+	* code-from-errno.c, code-to-errno.c, err-codes.h.in,
+	err-sources.h.in, errnos.in, gpg-error.h, strerror.c, strsource.c:
+	Fix typo in copyright notice.
+
 2003-07-31  Marcus Brinkmann  <marcus@g10code.de>
 
 	* README: Clarify copyright conditions.
