@@ -2,8 +2,7 @@ Noteworthy changes in version 0.7 (unreleased)
 ----------------------------------------------
 
  * A new tool gpg-error to convert error numbers into symbols into 
-   strings is provided.  It is not installed by default, but can be
-   found in src/gpg-error.
+   strings is provided.
 
  * Interface changes relative to the 0.6 release:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

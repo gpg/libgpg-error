@@ -46,7 +46,7 @@ libgpg_error_la_SOURCES = gpg-error.h gettext.h \
 
 libgpg_error_la_LIBADD = @LTLIBINTL@
 
-noinst_PROGRAMS = gpg-error
+bin_PROGRAMS = gpg-error
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c
 gpg_error_LDADD = ./libgpg-error.la
 
