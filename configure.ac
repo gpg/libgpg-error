@@ -42,6 +42,10 @@ AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/err-sources.h.in])
 AC_CONFIG_HEADER([config.h])
 
+# We need to know about the host architecture to avoid spurious
+# warnings.
+AC_CANONICAL_HOST
+
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_CPP
@@ -71,8 +75,16 @@ AM_GNU_GETTEXT([external])
 AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h])
 AC_FUNC_STRERROR_R
-AC_CHECK_FUNC([strerror_r], [],
-  AC_MSG_WARN([[Without strerror_r, gpg_strerror_r might not be thread-safe]]))
+case "${host_os}" in
+     solaris*)
+     # All versions of Solaris from 2.4 have a thread-safe strerror().
+     # Since Solaris 10, in addition strerror_r() exists.
+     ;;
+     *)
+     AC_CHECK_FUNC([strerror_r], [],
+AC_MSG_WARN([[Without strerror_r, gpg_strerror_r might not be thread-safe]]))
+     ;;
+esac
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
