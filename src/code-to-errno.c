@@ -1,4 +1,4 @@
-/* strerror.c - Describing an error code.
+/* code-to-errno.c - Mapping error codes to errnos.
    Copyright (C) 2003 g10 Code GmbH
 
    This file is part of libgpg-error.
@@ -24,23 +24,19 @@
 
 #include <gpg-error.h>
 
-#include "gettext.h"
-#include "err-codes.h"
+#include "code-to-errno.h"
 
-/* Return a pointer to a string containing a description of the error
-   code in the error value ERR.  */
-const char *
-gpg_strerror (gpg_error_t err)
+/* Retrieve the system error for the error code ERR.  This returns 0
+   if ERR is not a system error code.  */
+int
+gpg_err_code_to_errno (gpg_err_code_t code)
 {
-  gpg_err_code_t code = gpg_err_code (err);
+  if (!(code & GPG_ERR_SYSTEM_ERROR))
+    return 0;
+  code &= ~GPG_ERR_SYSTEM_ERROR;
 
-  if (code & GPG_ERR_SYSTEM_ERROR)
-    {
-      int no = gpg_err_code_to_errno (err);
-      if (no)
-	return strerror (no);
-      else
-	code = GPG_ERR_UNKNOWN_ERRNO;
-    }
-  return dgettext (PACKAGE, msgstr + msgidx[msgidxof (code)]);
+  if (code < sizeof (err_code_to_errno) / sizeof (err_code_to_errno[0]))
+    return err_code_to_errno[code];
+  else
+    return 0;
 }

@@ -1,5 +1,26 @@
 2003-06-01  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/mkerrcodes1.awk: New file.
+	* src/mkerrcodes2.awk: New file.
+	* src/mkerrnos.awk: New file.
+	* src/errnos.in: New file.
+	* src/code-from-errno.c: New file.
+	* src/code-to-errno.c: New file.
+	* src/Makefile.am (libgpg_error_la_SOURCES): Remove err-sources.h
+	and err-codes.h.  Add code-to-errno.c and code-from-errno.c.
+	(code-to-errno.h): New target.
+	(code-from-errno.h): Likewise.
+	(EXTRA_DIST): Add mkerrnos.awk, errnos.in, and mkerrcodes1.awk.
+	(BUILT_SOURCES): Add code-to-errno.h and code-from-errno.h.
+	(CLEANFILES): Likewise.
+	* src/strerror.c (gpg_strerror): Use strerror for system errors.
+	* src/err-codes.h.in: Add 16382 (Unknown system error).
+	* src/gpg-error.h (gpg_err_code_t): Add system errors.
+	(GPG_ERR_CODE_DIM): Change to 32768.
+	(GPG_ERR_SYSTEM_ERROR): New macro.
+	(gpg_err_code_from_errno): New prototype.
+	(gpg_err_code_to_errno): Likewise.
+
 	* src/Makefile.am (nobase_include_HEADERS): Rename target to ...
 	(include_HEADERS): ... this.  Change file to gpg-error.h
 	(libgpg_error_la_SOURCES): Change gpg/error.h to gpg-error.h.

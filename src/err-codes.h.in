@@ -166,5 +166,6 @@
 211	Bad hexadecimal character in S-expression
 212	Odd hexadecimal numbers in S-expression
 213	Bad octadecimal character in S-expression
+16382	Unknown system error
 16383	End of file
 	Unknown error code

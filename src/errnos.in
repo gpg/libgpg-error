@@ -1,0 +1,170 @@
+# errnos.h.in - List of system error values input file.
+/* errnos.h - List of system error values.
+   Copyright (C) 2003 g10 Code GmbH
+
+   This file is part of libgpg-error.
+
+   libgpg-error is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public License
+   as published by the Free Software Foundation; either version 2.1 of
+   the License, or (at your option) any later version.
+ 
+   libgpg-error is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+ 
+   You should have received a copy of the GNU Lesser General Public
+   License along with libgpgme-error; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+   02111-1307, USA.  */
+
+#include <errno.h>
+
+# Everything up to the first line that starts with an "E" in the first
+# column is copied into the output verbatim.  Then, empty lines are
+# ignored.  Other lines must have an error name, like EINT.  Please
+# note that the order must be the same as the corresponding macros in
+# the gpg_err_code_t type.
+
+E2BIG
+EACCES
+EADDRINUSE
+EADDRNOTAVAIL
+EADV
+EAFNOSUPPORT
+EAGAIN
+EALREADY
+EAUTH
+EBACKGROUND
+EBADE
+EBADF
+EBADFD
+EBADMSG
+EBADR
+EBADRPC
+EBADRQC
+EBADSLT
+EBFONT
+EBUSY
+ECANCELED
+ECHILD
+ECHRNG
+ECOMM
+ECONNABORTED
+ECONNREFUSED
+ECONNRESET
+ED
+EDEADLK
+EDEADLOCK
+EDESTADDRREQ
+EDIED
+EDOM
+EDOTDOT
+EDQUOT
+EEXIST
+EFAULT
+EFBIG
+EFTYPE
+EGRATUITOUS
+EGREGIOUS
+EHOSTDOWN
+EHOSTUNREACH
+EIDRM
+EIEIO
+EILSEQ
+EINPROGRESS
+EINTR
+EINVAL
+EIO
+EISCONN
+EISDIR
+EISNAM
+EL2HLT
+EL2NSYNC
+EL3HLT
+EL3RST
+ELIBACC
+ELIBBAD
+ELIBEXEC
+ELIBMAX
+ELIBSCN
+ELNRNG
+ELOOP
+EMEDIUMTYPE
+EMFILE
+EMLINK
+EMSGSIZE
+EMULTIHOP
+ENAMETOOLONG
+ENAVAIL
+ENEEDAUTH
+ENETDOWN
+ENETRESET
+ENETUNREACH
+ENFILE
+ENOANO
+ENOBUFS
+ENOCSI
+ENODATA
+ENODEV
+ENOENT
+ENOEXEC
+ENOLCK
+ENOLINK
+ENOMEDIUM
+ENOMEM
+ENOMSG
+ENONET
+ENOPKG
+ENOPROTOOPT
+ENOSPC
+ENOSR
+ENOSTR
+ENOSYS
+ENOTBLK
+ENOTCONN
+ENOTDIR
+ENOTEMPTY
+ENOTNAM
+ENOTSOCK
+ENOTSUP
+ENOTTY
+ENOTUNIQ
+ENXIO
+EOPNOTSUPP
+EOVERFLOW
+EPERM
+EPFNOSUPPORT
+EPIPE
+EPROCLIM
+EPROCUNAVAIL
+EPROGMISMATCH
+EPROGUNAVAIL
+EPROTO
+EPROTONOSUPPORT
+EPROTOTYPE
+ERANGE
+EREMCHG
+EREMOTE
+EREMOTEIO
+ERESTART
+EROFS
+ERPCMISMATCH
+ESHUTDOWN
+ESOCKTNOSUPPORT
+ESPIPE
+ESRCH
+ESRMNT
+ESTALE
+ESTRPIPE
+ETIME
+ETIMEDOUT
+ETOOMANYREFS
+ETXTBSY
+EUCLEAN
+EUNATCH
+EUSERS
+EWOULDBLOCK
+EXDEV
+EXFULL

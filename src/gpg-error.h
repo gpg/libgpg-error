@@ -213,10 +213,154 @@ typedef enum
     GPG_ERR_SEXP_ODD_HEX_NUMBERS = 212,
     GPG_ERR_SEXP_BAD_OCT_CHAR = 213,
 
+    GPG_ERR_UNKNOWN_ERRNO = 16382,
     GPG_ERR_EOF = 16383,		/* This was once a -1.  Pity.  */
 
+    /* The following error codes are used to map system errors.  */
+    GPG_ERR_E2BIG = 16384,
+    GPG_ERR_EACCES = 16385,
+    GPG_ERR_EADDRINUSE = 16386,
+    GPG_ERR_EADDRNOTAVAIL = 16387,
+    GPG_ERR_EADV = 16388,
+    GPG_ERR_EAFNOSUPPORT = 16389,
+    GPG_ERR_EAGAIN = 16390,
+    GPG_ERR_EALREADY = 16391,
+    GPG_ERR_EAUTH = 16392,
+    GPG_ERR_EBACKGROUND = 16393,
+    GPG_ERR_EBADE = 16394,
+    GPG_ERR_EBADF = 16395,
+    GPG_ERR_EBADFD = 16396,
+    GPG_ERR_EBADMSG = 16397,
+    GPG_ERR_EBADR = 16398,
+    GPG_ERR_EBADRPC = 16399,
+    GPG_ERR_EBADRQC = 16400,
+    GPG_ERR_EBADSLT = 16401,
+    GPG_ERR_EBFONT = 16402,
+    GPG_ERR_EBUSY = 16403,
+    GPG_ERR_ECANCELED = 16404,
+    GPG_ERR_ECHILD = 16405,
+    GPG_ERR_ECHRNG = 16406,
+    GPG_ERR_ECOMM = 16407,
+    GPG_ERR_ECONNABORTED = 16408,
+    GPG_ERR_ECONNREFUSED = 16409,
+    GPG_ERR_ECONNRESET = 16410,
+    GPG_ERR_ED = 16411,
+    GPG_ERR_EDEADLK = 16412,
+    GPG_ERR_EDEADLOCK = 16413,
+    GPG_ERR_EDESTADDRREQ = 16414,
+    GPG_ERR_EDIED = 16415,
+    GPG_ERR_EDOM = 16416,
+    GPG_ERR_EDOTDOT = 16417,
+    GPG_ERR_EDQUOT = 16418,
+    GPG_ERR_EEXIST = 16419,
+    GPG_ERR_EFAULT = 16420,
+    GPG_ERR_EFBIG = 16421,
+    GPG_ERR_EFTYPE = 16422,
+    GPG_ERR_EGRATUITOUS = 16423,
+    GPG_ERR_EGREGIOUS = 16424,
+    GPG_ERR_EHOSTDOWN = 16425,
+    GPG_ERR_EHOSTUNREACH = 16426,
+    GPG_ERR_EIDRM = 16427,
+    GPG_ERR_EIEIO = 16428,
+    GPG_ERR_EILSEQ = 16429,
+    GPG_ERR_EINPROGRESS = 16430,
+    GPG_ERR_EINTR = 16431,
+    GPG_ERR_EINVAL = 16432,
+    GPG_ERR_EIO = 16433,
+    GPG_ERR_EISCONN = 16434,
+    GPG_ERR_EISDIR = 16435,
+    GPG_ERR_EISNAM = 16436,
+    GPG_ERR_EL2HLT = 16437,
+    GPG_ERR_EL2NSYNC = 16438,
+    GPG_ERR_EL3HLT = 16439,
+    GPG_ERR_EL3RST = 16440,
+    GPG_ERR_ELIBACC = 16441,
+    GPG_ERR_ELIBBAD = 16442,
+    GPG_ERR_ELIBEXEC = 16443,
+    GPG_ERR_ELIBMAX = 16444,
+    GPG_ERR_ELIBSCN = 16445,
+    GPG_ERR_ELNRNG = 16446,
+    GPG_ERR_ELOOP = 16447,
+    GPG_ERR_EMEDIUMTYPE = 16448,
+    GPG_ERR_EMFILE = 16449,
+    GPG_ERR_EMLINK = 16450,
+    GPG_ERR_EMSGSIZE = 16451,
+    GPG_ERR_EMULTIHOP = 16452,
+    GPG_ERR_ENAMETOOLONG = 16453,
+    GPG_ERR_ENAVAIL = 16454,
+    GPG_ERR_ENEEDAUTH = 16455,
+    GPG_ERR_ENETDOWN = 16456,
+    GPG_ERR_ENETRESET = 16457,
+    GPG_ERR_ENETUNREACH = 16458,
+    GPG_ERR_ENFILE = 16459,
+    GPG_ERR_ENOANO = 16460,
+    GPG_ERR_ENOBUFS = 16461,
+    GPG_ERR_ENOCSI = 16462,
+    GPG_ERR_ENODATA = 16463,
+    GPG_ERR_ENODEV = 16464,
+    GPG_ERR_ENOENT = 16465,
+    GPG_ERR_ENOEXEC = 16466,
+    GPG_ERR_ENOLCK = 16467,
+    GPG_ERR_ENOLINK = 16468,
+    GPG_ERR_ENOMEDIUM = 16469,
+    GPG_ERR_ENOMEM = 16470,
+    GPG_ERR_ENOMSG = 16471,
+    GPG_ERR_ENONET = 16472,
+    GPG_ERR_ENOPKG = 16473,
+    GPG_ERR_ENOPROTOOPT = 16474,
+    GPG_ERR_ENOSPC = 16475,
+    GPG_ERR_ENOSR = 16476,
+    GPG_ERR_ENOSTR = 16477,
+    GPG_ERR_ENOSYS = 16478,
+    GPG_ERR_ENOTBLK = 16479,
+    GPG_ERR_ENOTCONN = 16480,
+    GPG_ERR_ENOTDIR = 16481,
+    GPG_ERR_ENOTEMPTY = 16482,
+    GPG_ERR_ENOTNAM = 16483,
+    GPG_ERR_ENOTSOCK = 16484,
+    GPG_ERR_ENOTSUP = 16485,
+    GPG_ERR_ENOTTY = 16486,
+    GPG_ERR_ENOTUNIQ = 16487,
+    GPG_ERR_ENXIO = 16488,
+    GPG_ERR_EOPNOTSUPP = 16489,
+    GPG_ERR_EOVERFLOW = 16490,
+    GPG_ERR_EPERM = 16491,
+    GPG_ERR_EPFNOSUPPORT = 16492,
+    GPG_ERR_EPIPE = 16493,
+    GPG_ERR_EPROCLIM = 16494,
+    GPG_ERR_EPROCUNAVAIL = 16495,
+    GPG_ERR_EPROGMISMATCH = 16496,
+    GPG_ERR_EPROGUNAVAIL = 16497,
+    GPG_ERR_EPROTO = 16498,
+    GPG_ERR_EPROTONOSUPPORT = 16499,
+    GPG_ERR_EPROTOTYPE = 16500,
+    GPG_ERR_ERANGE = 16501,
+    GPG_ERR_EREMCHG = 16502,
+    GPG_ERR_EREMOTE = 16503,
+    GPG_ERR_EREMOTEIO = 16504,
+    GPG_ERR_ERESTART = 16505,
+    GPG_ERR_EROFS = 16506,
+    GPG_ERR_ERPCMISMATCH = 16507,
+    GPG_ERR_ESHUTDOWN = 16508,
+    GPG_ERR_ESOCKTNOSUPPORT = 16509,
+    GPG_ERR_ESPIPE = 16510,
+    GPG_ERR_ESRCH = 16511,
+    GPG_ERR_ESRMNT = 16512,
+    GPG_ERR_ESTALE = 16513,
+    GPG_ERR_ESTRPIPE = 16514,
+    GPG_ERR_ETIME = 16515,
+    GPG_ERR_ETIMEDOUT = 16516,
+    GPG_ERR_ETOOMANYREFS = 16517,
+    GPG_ERR_ETXTBSY = 16518,
+    GPG_ERR_EUCLEAN = 16519,
+    GPG_ERR_EUNATCH = 16520,
+    GPG_ERR_EUSERS = 16521,
+    GPG_ERR_EWOULDBLOCK = 16522,
+    GPG_ERR_EXDEV = 16523,
+    GPG_ERR_EXFULL = 16524,
+
     /* This is one more than the largest allowed entry.  */
-    GPG_ERR_CODE_DIM = 16384
+    GPG_ERR_CODE_DIM = 32768
   } gpg_err_code_t;
 
 
@@ -228,10 +372,12 @@ typedef enum
    -freg-struct-return option to GCC).  */
 typedef unsigned int gpg_error_t;
 
-/* We use the lowest 16 bits of gpg_error_t for error codes.  */
+/* We use the lowest 16 bits of gpg_error_t for error codes.  The 17th
+   bit indicates system errors.  */
 #define GPG_ERR_CODE_MASK	(GPG_ERR_CODE_DIM - 1)
+#define GPG_ERR_SYSTEM_ERROR	16384
 
-/* Bits 17 to 24 are reserved.  */
+/* Bits 18 to 24 are reserved.  */
 
 /* We use the upper 8 bits of gpg_error_t for error sources.  */
 #define GPG_ERR_SOURCE_MASK	(GPG_ERR_SOURCE_DIM - 1)
@@ -289,5 +435,17 @@ const char *gpg_strerror (gpg_error_t err);
 /* Return a pointer to a string containing a description of the error
    source in the error value ERR.  */
 const char *gpg_strsource (gpg_error_t err);
+
+
+/* Mapping of system errors (errno).  */
+
+/* Retrieve the error code for the system error ERR.  This returns
+   GPG_ERR_UNKNOWN_ERRNO if the system error is not mapped (report
+   this).  */
+gpg_err_code_t gpg_err_code_from_errno (int err);
+
+/* Retrieve the system error for the error code ERR.  This returns 0
+   if ERR is not a system error code.  */
+int gpg_err_code_to_errno (gpg_err_code_t code);
 
 #endif	/* GPG_ERROR_H */
