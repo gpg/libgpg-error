@@ -20,7 +20,7 @@
 # (Process this file with autoconf to produce a configure script.)
 
 # Version number: Remember to change it immediately *after* a release.
-AC_INIT(libgpg-error, 0.1, bug-gnupg@gnupg.org)
+AC_INIT(libgpg-error, 0.2, bug-gnupg@gnupg.org)
 # LT Version numbers, remember to change them just *before* a release.
 #   (Code changed:			REVISION++)
 #   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)

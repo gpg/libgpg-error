@@ -1,5 +1,7 @@
 2003-07-30  Marcus Brinkmann  <marcus@g10code.de>
 
+	* configure.ac (AC_INIT): Bump version to 0.2.
+
 	Released 0.2.
 
 2003-07-17  Werner Koch  <wk@gnupg.org>
