@@ -51,8 +51,10 @@ libgpg_error_la_SOURCES = gpg-error.h gettext.h \
 
 libgpg_error_la_LIBADD = @LTLIBINTL@
 
+localedir = $(datadir)/locale
 bin_PROGRAMS = gpg-error
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c
+gpg_error_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 gpg_error_LDADD = ./libgpg-error.la
 
 err-sources.h: Makefile mkstrtable.awk err-sources.h.in

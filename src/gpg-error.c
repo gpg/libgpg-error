@@ -29,6 +29,29 @@
 #include <limits.h>
 #include <stdio.h>
 
+#ifdef USE_SIMPLE_GETTEXT
+  int set_gettext_file( const char *filename );
+  const char *gettext( const char *msgid );
+# define _(a) gettext (a)
+# define N_(a) (a)
+#else
+# ifdef HAVE_LOCALE_H
+#  include <locale.h>	
+# endif
+# ifdef ENABLE_NLS
+#  include <libintl.h>
+#  define _(a) gettext (a)
+#  ifdef gettext_noop
+#   define N_(a) gettext_noop (a)
+#  else
+#   define N_(a) (a)
+#  endif
+# else
+#  define _(a) (a)
+#  define N_(a) (a)
+# endif
+#endif /*!USE_SIMPLE_GETTEXT*/
+
 #include <gpg-error.h>
 
 
@@ -225,14 +248,37 @@ get_err_from_str (char *str, gpg_error_t *err)
 
 
 
+static void
+i18n_init(void)
+{
+#ifdef USE_SIMPLE_GETTEXT
+  set_gettext_file (PACKAGE);
+#else
+# ifdef ENABLE_NLS
+#  ifdef HAVE_LC_MESSAGES
+  setlocale (LC_TIME, "");
+  setlocale (LC_MESSAGES, "");
+#  else
+  setlocale (LC_ALL, "" );
+#  endif
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+# endif
+#endif
+}
+
+
 int
 main (int argc, char *argv[])
 {
   int i = 1;
 
+  /* Setup I18N. */
+  i18n_init();
+
   if (argc == 1)
     {
-      fprintf (stderr, "Usage: %s GPG-ERROR [...]\n", argv[0]);
+      fprintf (stderr, _("Usage: %s GPG-ERROR [...]\n"), argv[0]);
       exit (1);
     }
 
@@ -253,7 +299,7 @@ main (int argc, char *argv[])
 		  gpg_strsource (err), gpg_strerror (err));
 	}
       else
-	fprintf (stderr, "%s: warning: could not recognize %s\n",
+	fprintf (stderr, _("%s: warning: could not recognize %s\n"),
 		 argv[0], argv[i]);
       i++;
     }
