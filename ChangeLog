@@ -1,5 +1,7 @@
 2004-09-14  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/gpg-error.m4: Add copyright note.
+
 	* configure.ac: Call AC_CANONICAL_HOST.  Suppress warning about
 	lack of strerror_r on all Solaris platforms.
 
