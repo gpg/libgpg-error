@@ -31,9 +31,9 @@ Here is a quick summary:
    this.  Don't skip it - this is an important step!
 
 2) Unpack the TAR.  With GNU tar you can do it this way:
-   "tar xzvf libgpg-error-x.y.z.tar.gz"
+   "tar xzvf libgpg-error-x.y.tar.gz"
 
-3) "cd libgpg-error-x.y.z"
+3) "cd libgpg-error-x.y"
 
 4) "./configure"
 
@@ -52,10 +52,10 @@ the following ways:
 a) If you already have a trusted Version of GnuPG installed, you can
 simply check the supplied signature:
 
-$ gpg --verify libgpg-error-x.y.z.tar.gz.sig
+$ gpg --verify libgpg-error-x.y.tar.gz.sig
 
-This checks that the detached signature libgpg-error-x.y.z.tar.gz.sig
-is indeed a a signature of libgpg-error-x.y.z.tar.gz.
+This checks that the detached signature libgpg-error-x.y.tar.gz.sig
+is indeed a a signature of libgpg-error-x.y.tar.gz.
 
 Please note, that you have to use an old version of GnuPG to do all
 this stuff.  *Never* use the version which you are going to check!
@@ -64,11 +64,11 @@ this stuff.  *Never* use the version which you are going to check!
 b) If you don't have any of the above programs, you have to verify the
 MD5 checksum:
 
-$ md5sum libgpg-error-x.y.z.tar.gz
+$ md5sum libgpg-error-x.y.tar.gz
 
 This should yield an output _similar_ to this:
 
-fd9351b26b3189c1d577f0970f9dcadc  libgpg-error-x.y.z.tar.gz
+fd9351b26b3189c1d577f0970f9dcadc  libgpg-error-x.y.tar.gz
 
 Now check that this checksum is _exactly_ the same as the one
 published via the announcement list and probably via Usenet.
