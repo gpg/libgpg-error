@@ -7,6 +7,9 @@
 	* src/gpg-error-config.in (Options): Do not emit include and lib
 	directory for prefix "/usr" or "".
 
+	* tests/Makefile.am (INCLUDES): Change to -I$(top_srcdir)/src to
+	-I$(top_builddir).
+
 2004-03-01  Marcus Brinkmann  <marcus@g10code.de>
 
 	* configure.ac: Define CC_FOR_BUILD.

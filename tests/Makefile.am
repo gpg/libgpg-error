@@ -21,7 +21,7 @@
 
 TESTS = t-strerror
 
-INCLUDES = -I$(top_srcdir)/src
+INCLUDES = -I$(top_builddir)/src
 
 LDADD = ../src/libgpg-error.la
 
