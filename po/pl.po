@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 0.6\n"
+"Project-Id-Version: libgpg-error 0.8-cvs\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
 "POT-Creation-Date: 2004-04-20 18:23+0200\n"
-"PO-Revision-Date: 2004-02-15 21:50+0100\n"
+"PO-Revision-Date: 2004-04-20 21:03+0200\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -60,7 +60,7 @@ msgstr "Dirmngr"
 
 #: src/err-sources.h:39
 msgid "GSTI"
-msgstr ""
+msgstr "GSTI"
 
 #: src/err-sources.h:40
 msgid "User defined source 1"
@@ -459,7 +459,6 @@ msgid "dirmngr error"
 msgstr "B³±d dirmngr"
 
 #: src/err-codes.h:122
-#, fuzzy
 msgid "Certificate revoked"
 msgstr "Certyfikat anulowany"
 
@@ -748,14 +747,12 @@ msgid "Unknown name"
 msgstr "Nieznana nazwa"
 
 #: src/err-codes.h:194
-#, fuzzy
 msgid "A locale function failed"
-msgstr "Odszyfrowywanie nie powiod³o siê"
+msgstr "Funkcja lokalizacji nie powiod³a siê"
 
 #: src/err-codes.h:195
-#, fuzzy
 msgid "Not locked"
-msgstr "PIN zablokowany"
+msgstr "Nie zablokowany"
 
 #: src/err-codes.h:196
 msgid "Buffer too short"
