@@ -1,3 +1,18 @@
+2004-03-01  Marcus Brinkmann  <marcus@g10code.de>
+
+	* configure.ac: Define CC_FOR_BUILD.
+	* src/Makefile.am (BUILT_SOURCES): Add gpg-error.h.
+	(EXTRA_DIST): Add mkerrcodes.awk and mkerrcodes.c.
+	(CLEANFILES): Add mkerrcodes.h and mkerrcodes.
+	(mkerrcodes.h): New target.
+	(mkerrcodes): New target.
+	(code-from-errno.h): Rewritten.
+
+	* src/errnos.in: Remove include statement (which was ignored
+	anyway).
+	* src/mkerrcodes.awk: New file.
+	* src/mkerrcodes.c: New file.
+	
 2004-02-27  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/Makefile.am (noinst_PROGRAMS): Rename to ...

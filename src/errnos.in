@@ -19,8 +19,6 @@
    Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
    02111-1307, USA.  */
 
-#include <errno.h>
-
 # Everything up to the first line that starts with a number in the
 # first column is copied into the output verbatim.  Then, empty lines
 # are ignored.  Other lines must have an error code number, followed

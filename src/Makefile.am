@@ -21,13 +21,14 @@
 # because they are needed to build the po directory, and they don't
 # depend on the configuration anyway. 
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
-	mkerrnos.awk errnos.in mkerrcodes1.awk mkerrcodes2.awk \
+	mkerrnos.awk errnos.in \
+	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
 	mkheader.awk gpg-error.h.in \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
-	err-sources-sym.h err-codes-sym.h errnos-sym.h
+	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h
 CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
-	gpg-error.h \
+	gpg-error.h mkerrcodes mkerrcodes.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h
 
 bin_SCRIPTS = gpg-error-config
@@ -69,10 +70,18 @@ err-codes-sym.h: Makefile mkstrtable.awk err-codes.h.in
 code-to-errno.h: Makefile mkerrnos.awk errnos.in
 	$(AWK) -f $(srcdir)/mkerrnos.awk $(srcdir)/errnos.in >$@
 
-code-from-errno.h: Makefile mkerrcodes1.awk errnos.in
+# It is correct to use $(CPP).  We want the host's idea of the error codes.
+mkerrcodes.h: Makefile mkerrcodes.awk
 	$(AWK) -f $(srcdir)/mkerrcodes1.awk $(srcdir)/errnos.in \
-	| $(CPP) - | grep GPG_ERR_ | sort -n \
-	| $(AWK) -f $(srcdir)/mkerrcodes2.awk >$@
+	| $(CPP) - | grep GPG_ERR_ | $(AWK) -f $(srcdir)/mkerrcodes.awk >$@
+
+# It is correct to use $(CC_FOR_BUILD) here.  We want to run the
+# program at build time.
+mkerrcodes: mkerrcodes.c mkerrcodes.h Makefile
+	$(CC_FOR_BUILD) -I. -I$(srcdir) -o $@ $<
+
+code-from-errno.h: mkerrcodes Makefile
+	./$< | $(AWK) -f $(srcdir)/mkerrcodes2.awk >$@
 
 errnos-sym.h: Makefile mkstrtable.awk errnos.in
 	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=2 -v nogettext=1 \
