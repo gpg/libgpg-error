@@ -3,9 +3,15 @@ Noteworthy changes in version 0.8 (unreleased)
 
  * Ported to Solaris 2.8.
 
+ * Added a new error source GPG_ERR_SOURCE_GSTI, and two new error
+   codes GPG_ERR_PROTOCOL_VIOLATION and GPG_ERR_INV_MAC NEW for this
+   source.
+
  * Interface changes relative to the 0.7 release:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-(none so far)
+GPG_ERR_SOURCE_GSTI		NEW
+GPG_ERR_PROTOCOL_VIOLATION	NEW
+GPG_ERR_INV_MAC			NEW
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Noteworthy changes in version 0.7 (2004-03-07)
@@ -131,7 +137,7 @@ Noteworthy changes in version 0.1 (2003-06-06)
  * Initial release.
 
 
- Copyright 2003 g10 Code GmbH
+ Copyright 2003, 2004 g10 Code GmbH
 
  This file is free software; as a special exception the author gives
  unlimited permission to copy and/or distribute it, with or without
