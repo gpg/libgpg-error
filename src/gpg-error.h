@@ -170,8 +170,8 @@ typedef enum
     GPG_ERR_BAD_DATA = 89,
     GPG_ERR_INV_PARAMETER = 90,
 
-    /* Code 91 is free to be used.  */
-
+    GPG_ERR_WRONG_CARD = 91, 
+    
     GPG_ERR_NO_DIRMNGR = 92,
     GPG_ERR_DIRMNGR = 93,
     GPG_ERR_CERT_REVOKED = 94,
