@@ -33,6 +33,13 @@
 #endif 
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#if 0 /* just to make Emacs auto-indent happy */
+}
+#endif
+#endif /* __cplusplus */
+
 /* The GnuPG project consists of many components.  Error codes are
    exchanged between all components.  The common error codes and their
    user-presentable descriptions are kept into a shared library to
@@ -196,5 +203,9 @@ gpg_error_from_errno (int err)
 {
   return gpg_error (gpg_err_code_from_errno (err));
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif	/* GPG_ERROR_H */

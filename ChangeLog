@@ -1,5 +1,7 @@
 2004-02-27  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/gpg-error.h.in: Add extern "C" closure for C-- compilers.
+
 	* src/Makefile.am (noinst_PROGRAMS): New variable.
 	(gpg_error_LDADD): New variable.
 	(gpg_error_SOURCES): New variable.
