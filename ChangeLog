@@ -1,3 +1,8 @@
+2003-07-06  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/gpg-error.h (GPG_ERR_INLINE): Define macro.  Use it instead
+	of __inline__ in this file.
+
 2003-06-30  Werner Koch  <wk@gnupg.org>
 
 	* src/gpg-error.h: Add WRONG_CARD.

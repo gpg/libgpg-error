@@ -21,6 +21,12 @@
 #ifndef GPG_ERROR_H
 #define GPG_ERROR_H	1
 
+#ifdef __GNUC__
+#define GPG_ERR_INLINE __inline__
+#else
+#define GPG_ERR_INLINE inline
+#endif
+
 /* The GnuPG project consists of many components.  Error codes are
    exchanged between all components.  The common error codes and their
    user-presentable descriptions are kept into a shared library to
@@ -435,7 +441,7 @@ typedef unsigned int gpg_error_t;
 
 /* Construct an error value from an error code and source.  Within a
    subsystem, use gpg_error.  */
-static __inline__ gpg_error_t
+static GPG_ERR_INLINE gpg_error_t
 gpg_err_make (gpg_err_source_t source, gpg_err_code_t code)
 {
   return code == GPG_ERR_NO_ERROR ? GPG_ERR_NO_ERROR
@@ -450,7 +456,7 @@ gpg_err_make (gpg_err_source_t source, gpg_err_code_t code)
 #define GPG_ERR_SOURCE_DEFAULT	GPG_ERR_SOURCE_UNKNOWN
 #endif
 
-static __inline__ gpg_error_t
+static GPG_ERR_INLINE gpg_error_t
 gpg_error (gpg_err_code_t code)
 {
   return gpg_err_make (GPG_ERR_SOURCE_DEFAULT, code);
@@ -458,7 +464,7 @@ gpg_error (gpg_err_code_t code)
 
 
 /* Retrieve the error code from an error value.  */
-static __inline__ gpg_err_code_t
+static GPG_ERR_INLINE gpg_err_code_t
 gpg_err_code (gpg_error_t err)
 {
   return err & GPG_ERR_CODE_MASK;
@@ -466,7 +472,7 @@ gpg_err_code (gpg_error_t err)
 
 
 /* Retrieve the error source from an error value.  */
-static __inline__ gpg_err_source_t
+static GPG_ERR_INLINE gpg_err_source_t
 gpg_err_source (gpg_error_t err)
 {
   return (err >> GPG_ERR_SOURCE_SHIFT) & GPG_ERR_SOURCE_MASK;
@@ -499,14 +505,14 @@ int gpg_err_code_to_errno (gpg_err_code_t code);
 
 /* Self-documenting convenience functions.  */
 
-static __inline__ gpg_error_t
+static GPG_ERR_INLINE gpg_error_t
 gpg_err_make_from_errno (gpg_err_source_t source, int err)
 {
   return gpg_err_make (source, gpg_err_code_from_errno (err));
 }
 
 
-static __inline__ gpg_error_t
+static GPG_ERR_INLINE gpg_error_t
 gpg_error_from_errno (int err)
 {
   return gpg_error (gpg_err_code_from_errno (err));
