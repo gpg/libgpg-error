@@ -1,3 +1,43 @@
+2004-02-27  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/Makefile.am (noinst_PROGRAMS): New variable.
+	(gpg_error_LDADD): New variable.
+	(gpg_error_SOURCES): New variable.
+	(EXTRA_DIST): Add mkheader.awk and gpg-error.h.in.
+	(BUILT_SOURCES): Add err-sources-sym.h, err-codes-sym.h and
+	errnos-sym.h.
+	(CLEANFILES): Add err-sources-sym.h, err-codes-sym.h,
+	errnos-sym.h and gpg-error.h.
+	(err-codes.h, err-sources.h): Add -v textidx=3 to mkstrtable.awk
+	invocation.
+	(err-codes-sym.h): New target.
+	(err-sources-sym.h): New target.
+	(gpg-error.h): New rule.
+	* src/mkstrtable.awk: Skip the second field (which contains the
+	error code symbol).
+	(FS): Allow more than one tab as field separator.
+	Allow to specify the field to be used as text with the variable
+	textidx.
+	Allow to suppress gettext markers in the output.
+	Allow to specify a prefix to the messages.
+	Allow to specify a namespace for the variable and macro names.
+	* src/mkerrnos.awk (FS): Initialize.  Understand variable
+	errnoidx, which defaults to 2, to cope with the error names being
+	in a different column than the first.
+	* src/mkerrcodes1.awk: Likewise.  Use \t as separator.
+	* src/mkheader.awk: New file.
+	* src/errnos.in: Add error code numbers (relativ to
+	GPG_ERR_SYSTEM_ERROR).
+	* src/strerror-sym.c: New file.
+	* src/strsources-sym.c: New file.
+	* src/err-codes.h.in: Add the error code symbol for every error
+	code.
+	(GPG_ERR_BUFFER_TOO_SHORT): Fix error code (it is 200, not 199).
+	* src/err-sources.h.in: Likewise.
+	* src/gpg-error.h.in: New file.
+	* src/gpg-error.h: File removed.
+	* src/gpg-error.c: New file.
+
 2004-02-03  Werner Koch  <wk@gnupg.org>
 
 	* src/gpg-error.h: Added GPG_ERR_NOT_LOCKED.

@@ -1,5 +1,5 @@
 # mkstrtable.awk
-# Copyright (C) 2003 g10 Code GmbH
+# Copyright (C) 2003, 2004 g10 Code GmbH
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -59,19 +59,29 @@
 # msgstr + msgidx[msgidxof (code)].
 #
 # The input file has the following format:
-# CODE1	MESSAGE1		(Code number, <tab>, message string)
-# CODE2	MESSAGE2		(Code number, <tab>, message string)
+# CODE1	...	MESSAGE1	(code nr, <tab>, something, <tab>, msg)
+# CODE2	...	MESSAGE2	(code nr, <tab>, something, <tab>, msg)
 # ...
-# CODEn	MESSAGEn		(Code number, <tab>, message string)
-# 	DEFAULT MESSAGE		(<tab>, fall-back message string)
+# CODEn	...	MESSAGEn	(code nr, <tab>, something, <tab>, msg)
+# 	...	DEFAULT-MESSAGE	(<tab>, something, <tab>, fall-back msg)
 #
 # Comments (starting with # and ending at the end of the line) are removed,
 # as is trailing whitespace.  The last line is optional; if no DEFAULT
 # MESSAGE is given, msgidxof will return the number -1 for unknown
 # index numbers.
+#
+# The field to be used is specified with the variable "textidx" on
+# the command line.  It defaults to 2.
+#
+# The variable nogettext can be set to 1 to suppress gettext markers.
+#
+# The variable prefix can be used to prepend a string to each message.
+#
+# The variable namespace can be used to prepend a string to each
+# variable and macro name.
 
 BEGIN {
-  FS = "\t";
+  FS = "[\t]+";
 # cpos holds the current position in the message string.
   cpos = 0;
 # msg holds the number of messages.
@@ -79,6 +89,9 @@ BEGIN {
   print "/* Output of mkstrtable.awk.  DO NOT EDIT.  */";
   print "";
   header = 1;
+  if (textidx == 0)
+    textidx = 2;
+# nogettext can be set to 1 to suppress gettext noop markers.
 }
 
 /^#/ { next; }
@@ -89,7 +102,7 @@ header {
       print "/* The purpose of this complex string table is to produce";
       print "   optimal code with a minimum of relocations.  */";
       print "";
-      print "static const char msgstr[] = ";
+      print "static const char " namespace "msgstr[] = ";
       header = 0;
     }
   else
@@ -106,13 +119,18 @@ header {
 # Print the string msgstr line by line.  We delay output by one line to be able
 # to treat the last line differently (see END).
   if (last_msgstr)
-    print "  gettext_noop (\"" last_msgstr "\") \"\\0\"";
-  last_msgstr = $2;
+    {
+      if (nogettext)
+	print "  \"" last_msgstr "\" \"\\0\"";
+      else
+	print "  gettext_noop (\"" last_msgstr "\") \"\\0\"";
+    }
+  last_msgstr = prefix $textidx;
 
 # Remember the error code and msgidx of each error message.
   code[msg] = $1;
   pos[msg] = cpos;
-  cpos += length ($2) + 1;
+  cpos += length (last_msgstr) + 1;
   msg++;
 
   if ($1 == "")
@@ -127,16 +145,19 @@ END {
   else
     coded_msgs = msg;
 
-  print "  gettext_noop (\"" last_msgstr "\");";
+  if (nogettext)
+    print "  \"" prefix last_msgstr "\";";
+  else
+    print "  gettext_noop (\"" prefix last_msgstr "\");";
   print "";
-  print "static const int msgidx[] =";
+  print "static const int " namespace "msgidx[] =";
   print "  {";
   for (i = 0; i < coded_msgs; i++)
     print "    " pos[i] ",";
   print "    " pos[coded_msgs];
   print "  };";
   print "";
-  print "#define msgidxof(code) (0 ? -1 \\";
+  print "#define " namespace "msgidxof(code) (0 ? -1 \\";
 
 # Gather the ranges.
   skip = code[0];

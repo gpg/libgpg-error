@@ -1,5 +1,5 @@
 # Makefile.am for libgpg-error.
-# Copyright (C) 2003 g10 Code GmbH
+# Copyright (C) 2003, 2004 g10 Code GmbH
 # 
 # This file is part of libgpg-error.
 # 
@@ -22,9 +22,13 @@
 # depend on the configuration anyway. 
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrnos.awk errnos.in mkerrcodes1.awk mkerrcodes2.awk \
+	mkheader.awk gpg-error.h.in \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4
-BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h
-CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h
+BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
+	err-sources-sym.h err-codes-sym.h errnos-sym.h
+CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
+	gpg-error.h \
+	err-sources-sym.h err-codes-sym.h errnos-sym.h
 
 bin_SCRIPTS = gpg-error-config
 m4datadir = $(datadir)/aclocal
@@ -42,11 +46,25 @@ libgpg_error_la_SOURCES = gpg-error.h gettext.h \
 
 libgpg_error_la_LIBADD = @LTLIBINTL@
 
+noinst_PROGRAMS = gpg-error
+gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c
+gpg_error_LDADD = ./libgpg-error.la
+
 err-sources.h: Makefile mkstrtable.awk err-sources.h.in
-	$(AWK) -f $(srcdir)/mkstrtable.awk $(srcdir)/err-sources.h.in >$@
+	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=3 \
+		$(srcdir)/err-sources.h.in >$@
+
+err-sources-sym.h: Makefile mkstrtable.awk err-sources.h.in
+	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=2 -v nogettext=1 \
+		$(srcdir)/err-sources.h.in >$@
 
 err-codes.h: Makefile mkstrtable.awk err-codes.h.in
-	$(AWK) -f $(srcdir)/mkstrtable.awk $(srcdir)/err-codes.h.in >$@
+	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=3 \
+		$(srcdir)/err-codes.h.in >$@
+
+err-codes-sym.h: Makefile mkstrtable.awk err-codes.h.in
+	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=2 -v nogettext=1 \
+		$(srcdir)/err-codes.h.in >$@
 
 code-to-errno.h: Makefile mkerrnos.awk errnos.in
 	$(AWK) -f $(srcdir)/mkerrnos.awk $(srcdir)/errnos.in >$@
@@ -55,3 +73,16 @@ code-from-errno.h: Makefile mkerrcodes1.awk errnos.in
 	$(AWK) -f $(srcdir)/mkerrcodes1.awk $(srcdir)/errnos.in \
 	| $(CPP) - | grep GPG_ERR_ | sort -n \
 	| $(AWK) -f $(srcdir)/mkerrcodes2.awk >$@
+
+errnos-sym.h: Makefile mkstrtable.awk errnos.in
+	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=2 -v nogettext=1 \
+		-v prefix=GPG_ERR_ -v namespace=errnos_ \
+		$(srcdir)/errnos.in >$@
+
+gpg-error.h: Makefile mkheader.awk \
+		 err-sources.h.in err-codes.h.in errnos.in gpg-error.h.in
+	$(AWK) -f $(srcdir)/mkheader.awk \
+		$(srcdir)/err-sources.h.in \
+		$(srcdir)/err-codes.h.in \
+		$(srcdir)/errnos.in \
+		$(srcdir)/gpg-error.h.in > $@

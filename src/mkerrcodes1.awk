@@ -1,5 +1,5 @@
 # mkerrcodes.awk
-# Copyright (C) 2003 g10 Code GmbH
+# Copyright (C) 2003, 2004 g10 Code GmbH
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -48,21 +48,26 @@
 # EINVAL GPG_ERR_EINVAL
 # #endif
 #
-# The input file is a list of possible system errors.
+# The input file is a list of possible system errors in the column errnoidx
+# (defaults to 2).
 #
 # Comments (starting with # and ending at the end of the line) are removed,
 # as is trailing whitespace.
 
 BEGIN {
+  FS="[\t]+";
+  header = 1;
+  if (errnoidx == 0)
+    errnoidx = 2;
+
   print "/* Output of mkerrcodes.awk.  DO NOT EDIT.  */";
   print "";
-  header = 1;
 }
 
 /^#/ { next; }
 
 header {
-  if ($1 ~ /^E/)
+  if ($1 ~ /^[0-9]/)
     {
       print "#include <errno.h>";
       print "";
@@ -79,7 +84,7 @@ header {
   if (/^$/)
     next;
 
-    print "#ifdef " $1;
-    print $1 " GPG_ERR_" $1;
+    print "#ifdef " $errnoidx;
+    print $errnoidx "\tGPG_ERR_" $errnoidx;
     print "#endif";
 }
