@@ -4,6 +4,7 @@ Noteworthy changes in version 0.3 (unreleased)
  * Fixed bug that prevented that system errors were mapped to error
    strings correctly.
 
+
 Noteworthy changes in version 0.2 (2003-07-30)
 ----------------------------------------------
 
