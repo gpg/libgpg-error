@@ -25,70 +25,49 @@ automake_vers=1.7.6
 gettext_vers=0.12.1
 
 
-
 aclocal_vers="$automake_vers"
 ACLOCAL=${ACLOCAL:-aclocal}
 AUTOCONF=${AUTOCONF:-autoconf}
 AUTOMAKE=${AUTOMAKE:-automake}
 AUTOHEADER=${AUTOHEADER:-autoheader}
+GETTEXT=${GETTEXT:-gettext}
 DIE=no
 
+cvtver () {
+    awk 'NR==1 {split($NF,A,".");X=1000000*A[1]+1000*A[2]+A[3];print X;exit 0}'
+}
 
-if ($AUTOCONF --version) < /dev/null > /dev/null 2>&1 ; then
-    if ($AUTOCONF --version | awk 'NR==1 { if( $3 >= "'$autoconf_vers'") \
-			       exit 1; exit 0; }');
-    then
-       echo "**Error**: "\`autoconf\'" is too old."
-       echo '           (version ' $autoconf_vers ' or newer is required)'
+chkver () {
+    expr `("$1" --version || echo "0") | cvtver` '>=' `echo "$2" | cvtver` \
+           >/dev/null
+}
+
+check_version () {
+    if ! chkver $1 $2 ; then
+       echo "**Error**: "\`$1\'" not installed or too old." >&2
+       echo '           (version '$2' or newer is required)' >&2
        DIE="yes"
+       return 1
+    else
+       return 0
     fi
-else
-    echo
-    echo "**Error**: You must have "\`autoconf\'" installed to compile $PGM."
-    echo '           (version ' $autoconf_vers ' or newer is required)'
-    DIE="yes"
-fi
+}
 
-if ($AUTOMAKE --version) < /dev/null > /dev/null 2>&1 ; then
-  if ($AUTOMAKE --version | awk 'NR==1 { if( $4 >= "'$automake_vers'") \
-			     exit 1; exit 0; }');
-     then
-     echo "**Error**: "\`automake\'" is too old."
-     echo '           (version ' $automake_vers ' or newer is required)'
-     DIE="yes"
-  fi
-  if ($ACLOCAL --version) < /dev/null > /dev/null 2>&1; then
-    if ($ACLOCAL --version | awk 'NR==1 { if( $4 >= "'$aclocal_vers'" ) \
-						exit 1; exit 0; }' );
-    then
-      echo "**Error**: "\`aclocal\'" is too old."
-      echo '           (version ' $aclocal_vers ' or newer is required)'
-      DIE="yes"
-    fi
-  else
-    echo
-    echo "**Error**: Missing "\`aclocal\'".  The version of "\`automake\'
-    echo "           installed doesn't appear recent enough."
-    DIE="yes"
-  fi
-else
-    echo
-    echo "**Error**: You must have "\`automake\'" installed to compile $PGM."
-    echo '           (version ' $automake_vers ' or newer is required)'
-    DIE="yes"
-fi
 
-tmp_vers=$(echo "$gettext_vers" | awk '{ split($0,A,"."); \
-             X=10000*A[1]+100*A[2]+A[3]; print X;}')
-if (gettext --version </dev/null 2>/dev/null | awk 'NR==1 { split($4,A,"."); \
-    X=10000*A[1]+100*A[2]+A[3]; if( X >= '$tmp_vers' ) exit 1; exit 0}')
-    then
-    echo "**Error**: You must have "\`gettext\'" installed to compile $PGM."
-    echo '           (version '$gettext_vers' or newer is required)'
-    DIE="yes"
+check_version $AUTOCONF $autoconf_vers
+if check_version $AUTOMAKE $automake_vers ; then
+  check_version $ACLOCAL $aclocal_vers
 fi
+check_version $GETTEXT $gettext_vers
 
 if test "$DIE" = "yes"; then
+    cat <<EOF
+
+Note that you may use alternative versions of the tools by setting 
+the corresponding environment variable to that version; e.g.:
+  AUTOMAKE=automake-1.6 ACLOCAL=aclocal-1.6 ./autogen.sh
+                   
+EOF
     exit 1
 fi
 
