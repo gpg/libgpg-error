@@ -179,7 +179,7 @@ typedef enum
     GPG_ERR_CRL_TOO_OLD = 96,
     GPG_ERR_LINE_TOO_LONG = 97,
     GPG_ERR_NOT_TRUSTED = 98,
-    GPG_ERR_CANCELED = 109,
+    GPG_ERR_CANCELED = 99,
     GPG_ERR_BAD_CA_CERT = 100,
     GPG_ERR_CERT_EXPIRED = 101,		/* Key signature expired.  */
     GPG_ERR_CERT_TOO_YOUNG = 102,
