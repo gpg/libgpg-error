@@ -80,6 +80,7 @@
 59	Bug
 60	Not supported
 61	Invalid operation code
+62	Timeout
 63	Internal error
 64	EOF (gcrypt)
 65	Invalid object
@@ -90,6 +91,7 @@
 70	Conflicting use
 71	Invalid cipher mode
 72	Invalid flag
+73	Invalid handle
 75	Incomplete line
 76	Invalid response
 77	No agent running
@@ -140,6 +142,9 @@
 123	Card not initialized
 124	Unsupported operation
 125	Wrong key usage
+126	Nothing found
+127	Wrong blob type
+128	Missing value
 150	Invalid crypto engine
 151	Public key not trusted
 152	Decryption failed

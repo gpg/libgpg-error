@@ -59,6 +59,7 @@ typedef enum
     GPG_ERR_SOURCE_PINENTRY = 5,
     GPG_ERR_SOURCE_SCD = 6,
     GPG_ERR_SOURCE_GPGME = 7,
+    GPG_ERR_SOURCE_KEYBOX = 8,
 
     /* Free for use by non-GnuPG components.  */
     GPG_ERR_SOURCE_USER_1 = 32,
@@ -133,9 +134,7 @@ typedef enum
     GPG_ERR_BUG = 59,
     GPG_ERR_NOT_SUPPORTED = 60,
     GPG_ERR_INV_OP = 61,		/* Invalid operation code.  */
-
-    /* Code 62 is free.  */
-
+    GPG_ERR_TIMEOUT = 62,               /* Something timed out. */
     GPG_ERR_INTERNAL = 63,		/* Internal error.  */
     GPG_ERR_EOF_GCRYPT = 64,		/* Compatibility for gcrypt.  */
     GPG_ERR_INV_OBJ = 65,		/* An object is not valid.  */
@@ -146,8 +145,9 @@ typedef enum
     GPG_ERR_CONFLICT = 70,		/* Conflicting use.  */
     GPG_ERR_INV_CIPHER_MODE = 71,	/* Invalid cipher mode.  */ 
     GPG_ERR_INV_FLAG = 72,		/* Invalid flag.  */
+    GPG_ERR_INV_HANDLE = 73,            /* Invalid handle. */
 
-    /* Codes 73 and 74 are unused.  */
+    /* Code 74 ise unused.  */
 
     GPG_ERR_INCOMPLETE_LINE = 75,
     GPG_ERR_INV_RESPONSE = 76,
@@ -202,6 +202,10 @@ typedef enum
     GPG_ERR_CARD_NOT_INITIALIZED = 123,
     GPG_ERR_UNSUPPORTED_OPERATION = 124,
     GPG_ERR_WRONG_KEY_USAGE = 125,
+    GPG_ERR_NOTHING_FOUND = 126,        /* Operation failed due to an
+                                           unsuccessful find operation. */
+    GPG_ERR_WRONG_BLOB_TYPE = 127,      /* Keybox BLOB of wrong type. */
+    GPG_ERR_MISSING_VALUE = 128,        /* A required value is missing. */
 
     GPG_ERR_INV_ENGINE = 150,
     GPG_ERR_PUBKEY_NOT_TRUSTED = 151,

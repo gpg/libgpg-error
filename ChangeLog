@@ -31,6 +31,13 @@
 	GPG_ERR_CARD_ERROR to GPG_ERR_CARD, GPG_ERR_CONFIGURATION_ERROR to
 	GPG_ERR_CONFIGURATION, GPG_ERR_SCDAEMON_ERROR to GPG_ERR_SCDAEMON.
 
+2003-06-03  Werner Koch  <wk@gnupg.org>
+
+	* src/gpg-error.h, src/err-codes.h.in: Add codes for TIMEOUT,
+	INV_HANDLE, NOTHING_FOUND, WRONG_BLOB_TYPE and MISSING_VALUE.
+	* src/gpg-error.h, src/err-sources.h.in: Add KEYBOX which is the
+	keybox subsystem of GnuPG.
+
 2003-06-02  Moritz Schulte  <moritz@g10code.com>
 
 	* src/gpg-error.h: Fix description of gpg_err_code_to_errno
