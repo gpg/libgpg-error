@@ -1,3 +1,11 @@
+2003-08-19  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/gpg-error.h (GPG_ERR_SYSTEM_ERROR): Fix value (should have
+	been 2^15, was 2^14).
+	(GPG_ERR_CODE_DIM): Fix value (should have been 65536, was 32768).
+	Change the error codes of all system errors to have the
+	GPG_ERR_SYSTEM_ERROR bit set.
+
 2003-08-06  Marcus Brinkmann  <marcus@g10code.de>
 
 	* code-from-errno.c, code-to-errno.c, err-codes.h.in,
