@@ -1,7 +1,24 @@
-If you are building from CVS, make sure that you have all the
-necessary maintainer tools installed.  Then run:
+If you are building from CVS, run the script
 
-$ autoreconf -f -i -s
+./autogen.sh
 
-and configure the source with the option --enable-maintainer-mode.
+first, to make sure that you have all the necessary maintainer tools
+are installed and to build the actual configuration files.  The run
+
+./configure --enable-maintainer-mode
+
+followed by the usual make.
+
+
+Please don't use autopoint, libtoolize or autoreconf unless you are
+the current maintainer and want to update the standard configuration
+files.  All those files should be in the CVS and only updated manually
+if the maintainer decides that newer versions are required.  The
+maintainer should also make sure that the required version of automake
+et al. are properly indicated at the top of the autogen.sh script and
+take care to copy the files and not merely use symlinks.
+
+
+
+
 

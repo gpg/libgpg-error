@@ -21,7 +21,7 @@ SUBDIRS = m4 src tests po
 
 ACLOCAL_AMFLAGS = -I m4
 
-EXTRA_DIST = config.rpath libgpg-error.spec.in
+EXTRA_DIST = autogen.sh config.rpath libgpg-error.spec.in 
 
 dist-hook:
 	sed -e 's/@pkg_version@/$(VERSION)/g' \
