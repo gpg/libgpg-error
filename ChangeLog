@@ -1,4 +1,14 @@
-2004-06-29  Marcus Brinkmann  <marcus@g10code.de>
+2004-07-30  Werner Koch  <wk@g10code.de>
+
+	Released 1.0.
+	
+	* configure.ac: Bumbed version to 1.0, LT to C1/A1/R3.
+
+2004-07-15  Werner Koch  <wk@gnupg.org>
+
+	* src/err-codes.h.in: Renamed description for CARD_RESET.
+
+2004-06-28  Werner Koch  <wk@gnupg.org>
 
 	* src/err-codes.h.in: Add GPG_ERR_INV_REQUEST.
 
