@@ -257,4 +257,6 @@ main (int argc, char *argv[])
 		 argv[0], argv[i]);
       i++;
     }
+
+  exit (0);
 }
