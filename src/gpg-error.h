@@ -203,6 +203,11 @@ typedef enum
     GPG_ERR_UNSUPPORTED_OPERATION = 124,
     GPG_ERR_WRONG_KEY_USAGE = 125,
 
+    GPG_ERR_INV_ENGINE = 150,
+    GPG_ERR_PUBKEY_NOT_TRUSTED = 151,
+    GPG_ERR_DECRYPT_FAILED = 152,
+    GPG_ERR_KEY_EXPIRED = 153,
+
     /* Error codes pertaining to S-expressions.  */
     GPG_ERR_SEXP_INV_LEN_SPEC = 201,
     GPG_ERR_SEXP_STRING_TOO_LONG = 202,
@@ -412,7 +417,7 @@ typedef unsigned int gpg_error_t;
 /* Construct an error value from an error code and source.  Within a
    subsystem, use gpg_error.  */
 static __inline__ gpg_error_t
-gpg_make_error (gpg_err_source_t source, gpg_err_code_t code)
+gpg_err_make (gpg_err_source_t source, gpg_err_code_t code)
 {
   return code == GPG_ERR_NO_ERROR ? GPG_ERR_NO_ERROR
     : (((source & GPG_ERR_SOURCE_MASK) << GPG_ERR_SOURCE_SHIFT)
@@ -429,7 +434,7 @@ gpg_make_error (gpg_err_source_t source, gpg_err_code_t code)
 static __inline__ gpg_error_t
 gpg_error (gpg_err_code_t code)
 {
-  return gpg_make_error (GPG_ERR_SOURCE_DEFAULT, code);
+  return gpg_err_make (GPG_ERR_SOURCE_DEFAULT, code);
 }
 
 
@@ -475,7 +480,7 @@ int gpg_err_code_to_errno (gpg_err_code_t code);
 /* Self-documenting convenience functions.  */
 
 static __inline__ gpg_error_t
-gpg_make_error_from_errno (gpg_err_source_t source, int err)
+gpg_err_make_from_errno (gpg_err_source_t source, int err)
 {
   return gpg_make_error (source, gpg_err_code_from_errno (err));
 }

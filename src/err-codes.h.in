@@ -140,6 +140,10 @@
 123	Card not initialized
 124	Unsupported operation
 125	Wrong key usage
+150	Invalid crypto engine
+151	Public key not trusted
+152	Decryption failed
+153	Key expired
 201	Invalid length specifier in S-expression
 202	String too long in S-expression
 203	Unmatched parentheses in S-expression

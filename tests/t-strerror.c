@@ -37,8 +37,7 @@ main (int argc, char *argv[])
       int i = 1;
       while (i + 1 < argc)
 	{
-	  gpg_error_t err = gpg_make_error (atoi (argv[i]),
-					    atoi (argv[i + 1]));
+	  gpg_error_t err = gpg_err_make (atoi (argv[i]), atoi (argv[i + 1]));
 	  printf ("%s: %s\n", gpg_strsource (err), gpg_strerror (err));
 	  i += 2;
 	}
@@ -55,7 +54,7 @@ main (int argc, char *argv[])
 
       while (i < sizeof (list) / sizeof (list[0]))
 	{
-	  gpg_error_t err = gpg_make_error (list[i].src, list[i].code);
+	  gpg_error_t err = gpg_err_make (list[i].src, list[i].code);
 	  printf ("%s: %s\n", gpg_strsource (err), gpg_strerror (err));
 	  i++;
 	}

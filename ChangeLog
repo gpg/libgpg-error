@@ -1,5 +1,13 @@
 2003-06-04  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/gpg-error.h (gpg_err_code_t): Add GPG_ERR_INV_ENGINE,
+	GPG_ERR_PUBKEY_NOT_TRUSTED, GPG_ERR_DECRYPT_FAILED,
+	GPG_ERR_KEY_EXPIRED.
+	(gpg_make_error): Rename to gpg_err_make.
+	(gpg_error): Use here.
+	* tests/t-strerror.c (main): And here.
+	(gpg_make_error_from_errno): Rename to gpg_err_make_from_errno.
+
 	* src/gpg-error.h (gpg_make_error_from_errno): New inline function.
 	(gpg_error_from_errno): Likewise.
 
