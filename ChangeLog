@@ -1,5 +1,29 @@
 2003-05-15  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/mkstrtable.awk: Add exception clause to license about the
+	output of the script.
+	* configure.ac: Change license to LGPL 2.1 or later.
+	* Makefile.am: Likewise.
+	* src/Makefile.am: Likewise.
+	* src/err-codes.h.in: Likewise.
+	* src/err-sources.h.in: Likewise.
+	* src/strsource.c: Likewise.
+	* src/strerror.c: Likewise.
+	* src/gpg/error.h: Likewise.
+	* tests/Makefile.am: Likewise.
+
+	* src/mkstrtable.awk: New variable HEADER.  Copy input until first
+	line with an actual code and description occurs.	
+	* src/err-codes.h.in: Uncomment license, so it is copied into the
+	output.
+	* src/err-sources.h.in: Likewise.
+
+2003-05-15  Marcus Brinkmann  <marcus@g10code.de>
+
+	* COPYING.LIB: New file.
+
+2003-05-15  Marcus Brinkmann  <marcus@g10code.de>
+
 	* Initial check-in.
 
  Copyright 2003 g10 Code GmbH

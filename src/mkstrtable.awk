@@ -1,20 +1,47 @@
+# mkstrtable.awk
 # Copyright (C) 2003 g10 Code GmbH
+# 
 # This file is part of libgpg-error.
-
+# 
 # libgpg-error is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Lesser General Public
-# License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
-
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License, or (at your option) any later version.
+#
 # libgpg-error is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public
-# License along with the GNU C Library; if not, write to the Free
-# Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-# 02111-1307 USA.
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with libgnupg-error; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+#
+# As a special exception, g10 Code GmbH gives unlimited permission to
+# copy, distribute and modify the C source files that are the output
+# of mkstrtable.awk.  You need not follow the terms of the GNU General
+# Public License when using or distributing such scripts, even though
+# portions of the text of mkstrtable.awk appear in them.  The GNU
+# General Public License (GPL) does govern all other use of the material
+# that constitutes the mkstrtable.awk program.
+#
+# Certain portions of the mkstrtable.awk source text are designed to be
+# copied (in certain cases, depending on the input) into the output of
+# mkstrtable.awk.  We call these the "data" portions.  The rest of the
+# mkstrtable.awk source text consists of comments plus executable code
+# that decides which of the data portions to output in any given case.
+# We call these comments and executable code the "non-data" portions.
+# mkstrtable.h never copies any of the non-data portions into its output.
+#
+# This special exception to the GPL applies to versions of mkstrtable.awk
+# released by g10 Code GmbH.  When you make and distribute a modified version
+# of mkstrtable.awk, you may extend this special exception to the GPL to
+# apply to your modified version as well, *unless* your modified version
+# has the potential to copy into its output some of the text that was the
+# non-data portion of the version that you started with.  (In other words,
+# unless your change moves or copies text from the non-data portions to the
+# data portions.)  If your modification has such potential, you must delete
+# any notice of this special exception to the GPL from your modified version.
 
 # This script outputs a source file that does define the following
 # symbols:
@@ -53,15 +80,28 @@ BEGIN {
   msg = 0;
   print "/* Output of mkstrtable.awk.  DO NOT EDIT.  */";
   print "";
-  print "/* The purpose of this complex string table is to produce";
-  print "   optimal code with a minimum of relocations.  */";
-  print "";
-  print "static const char msgstr[] = ";
+  header = 1;
 }
 
-{
+/^#/ { next; }
+
+header {
+  if ($1 ~ /^[0123456789]+$/)
+    {
+      print "/* The purpose of this complex string table is to produce";
+      print "   optimal code with a minimum of relocations.  */";
+      print "";
+      print "static const char msgstr[] = ";
+      header = 0;
+    }
+  else
+    print;
+}
+
+!header {
   sub (/\#.+/, "");
   sub (/[ 	]+$/, ""); # Strip trailing space and tab characters.
+
   if (/^$/)
     next;
 
