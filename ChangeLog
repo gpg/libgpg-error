@@ -1,5 +1,9 @@
 2003-09-03  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/gpg-error-config.in: Rewritten.
+
+2003-09-03  Marcus Brinkmann  <marcus@g10code.de>
+
 	* configure.ac (AC_INIT): Bump up version number.
 
 2003-09-03  Marcus Brinkmann  <marcus@g10code.de>
