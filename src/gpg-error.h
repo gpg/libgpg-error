@@ -107,9 +107,7 @@ typedef enum
     GPG_ERR_TIME_CONFLICT = 39,
     GPG_ERR_KEYSERVER = 40,
     GPG_ERR_WRONG_PUBKEY_ALGO = 41,	/* Wrong public key algorithm.  */
-
-    /* Code 42 is free.  */
-
+    GPG_ERR_TRIBUTE_TO_D_A = 42,
     GPG_ERR_WEAK_KEY = 43,		/* Weak encryption key.  */
     GPG_ERR_INV_KEYLEN = 44,		/* Invalid length of a key.  */
     GPG_ERR_INV_ARG = 45,		/* Invalid argument.  */
@@ -161,7 +159,9 @@ typedef enum
     GPG_ERR_INV_NAME = 88,
     GPG_ERR_BAD_DATA = 89,
     GPG_ERR_INV_PARAMETER = 90,
-    GPG_ERR_TRIBUTE_TO_D_A = 91,
+
+    /* Code 91 is free.  */
+
     GPG_ERR_NO_DIRMNGR = 92,
     GPG_ERR_DIRMNGR_ERROR = 93,
     GPG_ERR_CERT_REVOKED = 94,

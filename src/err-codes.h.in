@@ -60,6 +60,7 @@
 39	Time conflict
 40	Keyserver error
 41	Wrong public key algorithm
+42	Tribute to D. A.
 43	Weak encryption key
 44	Invalid key length
 45	Invalid argument
@@ -105,7 +106,6 @@
 88	Invalid name
 89	Bad data
 90	Invalid parameter
-91	Tribute to D. A.
 92	No dirmngr
 93	dirmngr error
 94	Certificate revoced
