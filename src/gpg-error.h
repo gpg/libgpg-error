@@ -502,7 +502,7 @@ int gpg_err_code_to_errno (gpg_err_code_t code);
 static __inline__ gpg_error_t
 gpg_err_make_from_errno (gpg_err_source_t source, int err)
 {
-  return gpg_make_error (source, gpg_err_code_from_errno (err));
+  return gpg_err_make (source, gpg_err_code_from_errno (err));
 }
 
 
