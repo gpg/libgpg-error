@@ -5,7 +5,20 @@ This is a library that defines common error values for all GnuPG
 components.  Among these are GPG, GPGSM, GPGME, GPG-Agent, libgcrypt,
 pinentry, SmartCard Daemon and possibly more in the future.
 
-See the file COPYING for copyright and warranty information.
+libgpg-error is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of the
+License, or (at your option) any later version.  See the file
+COPYING.LIB for copyright and warranty information.
+
+However, some files (for example src/mkerrnos.awk) used in the build
+process of the library are covered by a different license.  Please see
+the header of these files and the file COPYING for copyright and
+warranty information on these files.  A special exception in the
+copyright license of these files makes sure that the output in the
+build process, which is used in libgpg-error, is not affected by the
+GPL.
+
 
 Installation
 ------------
