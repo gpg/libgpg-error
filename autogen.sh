@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # Run this to generate all the initial makefiles, etc.
 #
 # Copyright (C) 2003 g10 Code GmbH
@@ -25,12 +25,12 @@ automake_vers=1.7.6
 gettext_vers=0.12.1
 
 
-aclocal_vers="$automake_vers"
 ACLOCAL=${ACLOCAL:-aclocal}
 AUTOCONF=${AUTOCONF:-autoconf}
 AUTOMAKE=${AUTOMAKE:-automake}
 AUTOHEADER=${AUTOHEADER:-autoheader}
 GETTEXT=${GETTEXT:-gettext}
+MSGMERGE=${MSGMERGE:-gettext}
 DIE=no
 
 cvtver () {
@@ -45,7 +45,8 @@ chkver () {
 check_version () {
     if ! chkver $1 $2 ; then
        echo "**Error**: "\`$1\'" not installed or too old." >&2
-       echo '           (version '$2' or newer is required)' >&2
+       echo '           Version '$2' or newer is required.' >&2
+       [ -n "$3" ] && echo '           Note that this is part of '\`$3\''.' >&2
        DIE="yes"
        return 1
     else
@@ -56,9 +57,11 @@ check_version () {
 
 check_version $AUTOCONF $autoconf_vers
 if check_version $AUTOMAKE $automake_vers ; then
-  check_version $ACLOCAL $aclocal_vers
+  check_version $ACLOCAL $automake_vers automake
 fi
-check_version $GETTEXT $gettext_vers
+if check_version $GETTEXT $gettext_vers ; then
+  check_version $MSGMERGE $gettext_vers gettext
+fi
 
 if test "$DIE" = "yes"; then
     cat <<EOF
