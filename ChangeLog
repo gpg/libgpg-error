@@ -1,5 +1,7 @@
 2003-06-01  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/strerror.c: Include <string.h>.
+
 	* src/gpg-error.h (gpg_err_code_t): Remove GPG_ERR_FILE_READ,
 	GPG_ERR_FILE_WRITE, GPG_ERR_FILE_OPEN, GPG_ERR_FILE_CREATE,
 	GPG_ERR_FILE_CLOSE, GPG_ERR_FILE_DELETE, GPG_ERR_FILE_EXISTS,

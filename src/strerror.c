@@ -22,6 +22,8 @@
 #include <config.h>
 #endif
 
+#include <string.h>
+
 #include <gpg-error.h>
 
 #include "gettext.h"
