@@ -1,3 +1,10 @@
+2003-10-06  Marcus Brinkmann  <marcus@g10code.de>
+
+	Released 0.5.
+
+	* configure.ac (LIBGPG_ERROR_LT_CURRENT, LIBGPG_ERROR_LT_AGE):
+	Bump up by one.
+
 2003-09-30  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/gpg-error.h: Include <stddef.h>.
