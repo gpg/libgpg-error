@@ -1,3 +1,20 @@
+Noteworthy changes in version 0.2 (2003-07-30)
+----------------------------------------------
+
+ * Value of the error code GPG_ERR_CANCELED was fixed.
+
+ * New error codes GPG_ERR_WRONG_CARD, GPG_ERR_HARDWARE,
+   GPG_ERR_PIN_BLOCKED and GPG_ERR_USE_CONDITIONS have been added.
+
+ * The header file has been made C++ clean.
+
+ * AM_PATH_GPG_ERR has been fixed to work without explicit version
+   number.
+
+ * The header file now uses inline instead __inline__ for non-GNU
+   compilers.
+
+
 Noteworthy changes in version 0.1 (2003-06-06)
 ----------------------------------------------
 
