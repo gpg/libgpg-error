@@ -25,11 +25,15 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
 	mkheader.awk gpg-error.h.in \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4
+
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h
+
+tmp_files = _mkerrcodes.h
+
 CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	gpg-error.h mkerrcodes mkerrcodes.h \
-	err-sources-sym.h err-codes-sym.h errnos-sym.h
+	err-sources-sym.h err-codes-sym.h errnos-sym.h $(tmp_files)
 
 bin_SCRIPTS = gpg-error-config
 m4datadir = $(datadir)/aclocal
@@ -72,8 +76,9 @@ code-to-errno.h: Makefile mkerrnos.awk errnos.in
 
 # It is correct to use $(CPP).  We want the host's idea of the error codes.
 mkerrcodes.h: Makefile mkerrcodes.awk
-	$(AWK) -f $(srcdir)/mkerrcodes1.awk $(srcdir)/errnos.in \
-	| $(CPP) - | grep GPG_ERR_ | $(AWK) -f $(srcdir)/mkerrcodes.awk >$@
+	$(AWK) -f $(srcdir)/mkerrcodes1.awk $(srcdir)/errnos.in >_$@
+	$(CPP) _$@ | grep GPG_ERR_ | $(AWK) -f $(srcdir)/mkerrcodes.awk >$@
+	-rm _$@
 
 # It is correct to use $(CC_FOR_BUILD) here.  We want to run the
 # program at build time.

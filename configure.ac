@@ -21,8 +21,7 @@
 # The following lines are used by ./autogen.sh.
 AC_PREREQ(2.57)
 min_automake_version="1.7.6"
-# The gettext version is set below using AM_GNU_GETTEXT_VERSION.
-
+# The gettext version is set below using AM_GNU_GETTEXT_VERSION
 # Version number: Remember to change it immediately *after* a release.
 AC_INIT(libgpg-error, 0.8-cvs, bug-gnupg@gnupg.org)
 # LT Version numbers, remember to change them just *before* a release.
@@ -45,6 +44,7 @@ AC_CONFIG_HEADER([config.h])
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CPP
 AC_PROG_LIBTOOL
 AC_PROG_AWK
 

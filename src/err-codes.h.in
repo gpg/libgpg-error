@@ -196,7 +196,7 @@
 164	GPG_ERR_INV_CERT_OBJ		Invalid certificate object
 165	GPG_ERR_UNKNOWN_NAME		Unknown name
 166	GPG_ERR_LOCALE_PROBLEM		A locale function failed
-167	GPG_ERR_NOT_LOCKED		Not locked                                             
+167	GPG_ERR_NOT_LOCKED		Not locked
 
 # 168 to 199 are free to be used.
 

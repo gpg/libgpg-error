@@ -1,3 +1,16 @@
+2004-03-09  Werner Koch  <wk@gnupg.org>
+
+	* src/Makefile.am (mkerrcodes.h): Let CPP work on a temporary file.
+	(CLEANFILES): Add that temporary file.
+	* configure.ac (AC_PROG_CPP): Added.
+
+	* src/err-codes.h.in: Removed trailing spaces from
+	GPG_ERR_NOT_LOCKED.
+
+2004-03-08  Werner Koch  <wk@gnupg.org>
+
+	* src/err-sources.h.in: Added GPG_ERR_SOURCE_GSTI.
+
 2004-03-07  Marcus Brinkmann  <marcus@g10code.de>
 
 	Released 0.7.
@@ -70,6 +83,14 @@
 	* src/gpg-error.h.in: New file.
 	* src/gpg-error.h: File removed.
 	* src/gpg-error.c: New file.
+
+2004-02-18  Werner Koch  <wk@gnupg.org>
+
+	* src/gpg-error-config.in: Ignore setting of --prefix.
+
+2004-02-11  Werner Koch  <wk@gnupg.org>
+
+	* autogen.sh (check_version): Removed bashism and simplified.
 
 2004-02-03  Werner Koch  <wk@gnupg.org>
 
