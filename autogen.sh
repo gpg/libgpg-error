@@ -42,8 +42,8 @@ q
 }' ${configure_ac}`
 automake_vers_num=`echo "$automake_vers" | cvtver`
 
-gettext_vers=`sed -n '/^min_gettext_version=/ { 
-s/^.*="\(.*\)"/\1/p
+gettext_vers=`sed -n '/^AM_GNU_GETTEXT_VERSION(/ { 
+s/^.*(\(.*\))/\1/p
 q
 }' ${configure_ac}`
 gettext_vers_num=`echo "$gettext_vers" | cvtver`

@@ -21,7 +21,7 @@
 # The following lines are used by ./autogen.sh.
 AC_PREREQ(2.57)
 min_automake_version="1.7.6"
-min_gettext_version="0.12.1"
+# The gettext version is set below using AM_GNU_GETTEXT_VERSION.
 
 # Version number: Remember to change it immediately *after* a release.
 AC_INIT(libgpg-error, 0.7-cvs, bug-gnupg@gnupg.org)
@@ -49,8 +49,10 @@ AC_PROG_LIBTOOL
 AC_PROG_AWK
 
 # Checks for libraries.
-AM_GNU_GETTEXT([external])
+
+# Note, that autogen.sh greps for the next line.
 AM_GNU_GETTEXT_VERSION(0.12.1)
+AM_GNU_GETTEXT([external])
 
 # Checks for header files.
 AC_HEADER_STDC
