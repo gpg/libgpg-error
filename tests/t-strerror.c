@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #endif
 
-#include <gpg/error.h>
+#include <gpg-error.h>
 
 int
 main (int argc, char *argv[])
