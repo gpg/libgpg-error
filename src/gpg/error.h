@@ -241,8 +241,9 @@ typedef unsigned long gpg_error_t;
 static __inline__ gpg_error_t
 gpg_make_error (gpg_err_source_t source, gpg_err_code_t code)
 {
-  return ((source & GPG_ERR_SOURCE_MASK) << GPG_ERR_SOURCE_SHIFT)
-    | (code & GPG_ERR_CODE_MASK);
+  return code == GPG_ERR_NO_ERROR ? GPG_ERR_NO_ERROR
+    : (((source & GPG_ERR_SOURCE_MASK) << GPG_ERR_SOURCE_SHIFT)
+       | (code & GPG_ERR_CODE_MASK));
 }
 
 
