@@ -43,6 +43,7 @@ make distclean
 %defattr(-,root,root)
 %doc COPYING COPYING.LIB AUTHORS README INSTALL NEWS ChangeLog
 %attr(0755,root,root) %{_bindir}/gpg-error-config
+%attr(0755,root,root) %{_bindir}/gpg-error
 %attr(0755,root,root) %{_libdir}/*gpg-error.so*
 %attr(0755,root,root) %{_libdir}/*gpg-error.la
 %attr(0644,root,root) %{_libdir}/*gpg-error.a
