@@ -1,3 +1,9 @@
+2004-03-07  Marcus Brinkmann  <marcus@g10code.de>
+
+	Released 0.7.
+
+	* configure.ac: Bumbed up LIBGPG_ERROR_LT_REVISON.
+
 2004-03-01  Marcus Brinkmann  <marcus@g10code.de>
 
 	* configure.ac: Define CC_FOR_BUILD.

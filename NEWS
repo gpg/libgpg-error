@@ -1,4 +1,4 @@
-Noteworthy changes in version 0.7 (unreleased)
+Noteworthy changes in version 0.7 (2004-03-07)
 ----------------------------------------------
 
  * libgpg-error can be built on systems where the errno macros do not
