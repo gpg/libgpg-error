@@ -109,8 +109,9 @@ typedef enum
     GPG_ERR_WRONG_SECKEY = 18,		/* Wrong secret key used.  */
     GPG_ERR_BAD_KEY = 19,		/* Bad (session) key.  */
     GPG_ERR_COMPR_ALGO = 20,		/* Unknown compress algorithm.  */
+    GPG_ERR_NO_PRIME = 21,	        /* Number is not prime.  */
 
-    /* Codes 21 to 29 are free to be used.  */
+    /* Codes 22 to 29 are free to be used.  */
 
     GPG_ERR_BAD_MPI = 30,		/* Problem with an MPI's value.  */
     GPG_ERR_INV_PASSPHRASE = 31,	/* Invalid passphrase.  */
