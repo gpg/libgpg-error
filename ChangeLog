@@ -1,3 +1,20 @@
+2003-06-04  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/gpg-error.h (gpg_err_source_t): Add GPG_ERR_SOURCE_USER_1 to
+	GPG_ERR_SOURCE_USER_4.
+	(gpg_err_code_t): Add GPG_ERR_USER_1 to GPG_ERR_USER_16.
+	* src/err-sources.h.in: Likewise.
+	* src/err-codes.h.in: Likewise.
+
+	* src/gpg-error.h: Rename GPG_ERR_INVALID_RESPONSE to
+	GPG_ERR_INV_RESPONSE, GPG_ERR_INVALID_CARD to GPG_ERR_INV_CARD,
+	GPG_ERR_INVALID_INDEX to GPG_ERR_INV_INDEX, GPG_ERR_INVALID_ID to
+	GPG_ERR_INV_ID, GPG_ERR_AGENT_ERROR to GPG_ERR_AGENT,
+	GPG_ERR_ASSUAN_ERROR to GPG_ERR_ASSUAN, GPG_ERR_PIN_ENTRY_ERROR to
+	GPG_ERR_PIN_ENTRY, GPG_ERR_DIRMNGR_ERROR to GPG_ERR_DIRMNGR,
+	GPG_ERR_CARD_ERROR to GPG_ERR_CARD, GPG_ERR_CONFIGURATION_ERROR to
+	GPG_ERR_CONFIGURATION, GPG_ERR_SCDAEMON_ERROR to GPG_ERR_SCDAEMON.
+
 2003-06-02  Moritz Schulte  <moritz@g10code.com>
 
 	* src/gpg-error.h: Fix description of gpg_err_code_to_errno
