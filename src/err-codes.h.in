@@ -1,0 +1,166 @@
+# List of error codes and their description.
+# Copyright (C) 2003 g10 Code GmbH
+# 
+# This file is part of libgpg-error.
+# 
+# libgpg-error is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# libgpg-error is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+
+# Empty lines are ignored.  Other lines must have an error code
+# number, followed by exactly one <tab>, followed by the error
+# message.  Trailing whitespace is removed.  The error codes should be
+# sorted.  The last line should not have a number, but only a <tab>,
+# followed by a description for error codes that are not in the list.
+
+0	Success
+1	General error
+2	Unknown packet
+3	Unknown version in packet
+4	Invalid public key algorithm
+5	Invalid digest algorithm
+6	Bad public key
+7	Bad secret key
+8	Bad signature
+9	No public key
+10	Checksum error
+11	Bad passphrase
+12	Invalid cipher algorithm
+13	Keyring open
+14	Invalid packet
+15	Invalid armor
+16	No user ID
+17	No secret key
+18	Wrong secret key used
+19	Bad session key
+20	Unknown compression algorithm
+21	Reading file failed
+22	Writing file failed
+23	Opening file failed
+24	Creating file failed
+25	Closing file failed
+26	Renaming file failed
+27	Deleting file failed
+28	File exists
+29	File error
+30	Bad MPI value
+31	Invalid passphrase
+32	Invalid signature class
+33	Resources exhausted
+34	Invalid keyring
+35	Trust DB error
+36	Bad certificate
+37	Invalid user ID
+38	Unexpected error
+39	Time conflict
+40	Keyserver error
+41	Wrong public key algorithm
+42	I/O error
+43	Weak encryption key
+44	Invalid key length
+45	Invalid argument
+46	Syntax error in URI
+47	Invalid URI
+48	Network error
+49	Unknown host
+50	Selftest failed
+51	Data not encrypted
+52	Data not processed
+53	Unusable public key
+54	Unusable secret key
+55	Invalid value
+56	Bad certificate chain
+57	Missing certificate
+58	No data
+59	Bug
+60	Not supported
+61	Invalid operation code
+62	Out of core
+63	Internal error
+64	EOF (gcrypt)
+65	Invalid object
+66	Provided object is too short
+67	Provided object is too large
+68	Missing item in object
+69	Not implemented
+70	Conflicting use
+71	Invalid cipher mode
+72	Invalid flag
+73	Read error
+74	Write error
+75	Incomplete line
+76	Invalid response
+77	No agent running
+78	agent error
+79	Invalid data
+80	Assuan server fault
+81	Assuan error
+82	Invalid session key
+83	Invalid S-expression
+84	Unsupported algorithm
+85	No pinentry
+86	pinentry error
+87	Bad PIN
+88	Invalid name
+89	Bad data
+90	Invalid parameter
+91	Tribute to D. A.
+92	No dirmngr
+93	dirmngr error
+94	Certificate revoced
+95	No CRL known
+96	CRL too old
+97	Line too long
+98	Not trusted
+99 	Operation cancelled
+100	Bad CA certificate
+101	Certificate expired
+102	Certificate too young
+103	Unsupported certificate
+104	Unknown S-expression
+105	Unsupported protection
+106	Corrupted protection
+107	Ambiguous name
+108	Card error
+109	Card reset
+110	Card removed
+111	Invalid card
+112	Card not present
+113	No PKCS15 application
+114	Not confirmed
+115	Configuration error
+116	No policy match
+117	Invalid index
+118	Invalid ID
+119	No SmartCard daemon
+120	SmartCard daemon error
+121	Unsupported protocol
+122	Bad PIN method
+123	Card not initialized
+124	Unsupported operation
+125	Wrong key usage
+201	Invalid length specifier in S-expression
+202	String too long in S-expression
+203	Unmatched parentheses in S-expression
+204	S-expression not canonical
+205	Bad character in S-expression
+206	Bad quotation in S-expression
+207	Zero prefix in S-expression
+208	Nested display hints in S-expression
+209	Unmatched display hints
+210	Unexpected reserved punctuation in S-expression
+211	Bad hexadecimal character in S-expression
+212	Odd hexadecimal numbers in S-expression
+213	Bad octadecimal character in S-expression
+16383	End of file
+	Unknown error code

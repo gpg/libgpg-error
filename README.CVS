@@ -1,0 +1,7 @@
+If you are building from CVS, make sure that you have all the
+necessary maintainer tools installed.  Then run:
+
+$ autoreconf -f -i -s
+
+and configure the source with the option --enable-maintainer-mode.
+
