@@ -57,10 +57,14 @@ while test $# -gt 0; do
 	    exit 0
 	    ;;
         --cflags)
-            output="$output -I$includedir"
+	    if test "x$includedir" != "x/usr/include" -a "x$includedir" != "x/include"; then
+		output="$output -I$includedir"
+	    fi
 	    ;;
 	--libs)
-            output="$output -L$libdir -lgpg-error"
+	    if test "x$libdir" != "x/usr/lib" -a "x$libdir" != "x/lib"; then
+		output="$output -L$libdir -lgpg-error"
+	    fi
 	    ;;
 	*)
             usage 1 1>&2
