@@ -73,7 +73,7 @@ AM_GNU_GETTEXT([external])
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([stdlib.h])
+AC_CHECK_HEADERS([stdlib.h locale.h])
 AC_FUNC_STRERROR_R
 case "${host_os}" in
      solaris*)

@@ -1,3 +1,7 @@
+2005-01-05  Marcus Brinkmann  <marcus@g10code.de>
+
+	* configure.ac: Check for locale.h.
+
 2004-12-18  Werner Koch  <wk@g10code.com>
 
 	* autogen.sh: Add option --build-w32.
