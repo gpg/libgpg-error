@@ -26,3 +26,4 @@ EXTRA_DIST = autogen.sh config.rpath libgpg-error.spec.in
 dist-hook:
 	sed -e 's/@pkg_version@/$(VERSION)/g' \
 	    $(top_srcdir)/libgpg-error.spec.in  > $(distdir)/libgpg-error.spec
+	@set -e; echo "$(VERSION)" > $(distdir)/VERSION

@@ -1,5 +1,7 @@
 2004-03-09  Werner Koch  <wk@gnupg.org>
 
+	* Makefile.am (dist-hook): Create a VERSION file for use by mkdiff.
+
 	* src/Makefile.am (mkerrcodes.h): Let CPP work on a temporary file.
 	(CLEANFILES): Add that temporary file.
 	* configure.ac (AC_PROG_CPP): Added.
