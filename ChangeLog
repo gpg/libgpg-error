@@ -1,5 +1,13 @@
 2003-06-04  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/gpg-error.h (gpg_make_error_from_errno): New inline function.
+	(gpg_error_from_errno): Likewise.
+
+	* src/code-from-errno.c (gpg_err_code_from_errno): Handle the case
+	of no error at all.
+
+2003-06-04  Marcus Brinkmann  <marcus@g10code.de>
+
 	* src/gpg-error.h (gpg_err_source_t): Add GPG_ERR_SOURCE_USER_1 to
 	GPG_ERR_SOURCE_USER_4.
 	(gpg_err_code_t): Add GPG_ERR_USER_1 to GPG_ERR_USER_16.

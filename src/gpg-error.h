@@ -471,4 +471,20 @@ gpg_err_code_t gpg_err_code_from_errno (int err);
    if CODE is not a system error code.  */
 int gpg_err_code_to_errno (gpg_err_code_t code);
 
+
+/* Self-documenting convenience functions.  */
+
+static __inline__ gpg_error_t
+gpg_make_error_from_errno (gpg_err_source_t source, int err)
+{
+  return gpg_make_error (source, gpg_err_code_from_errno (err));
+}
+
+
+static __inline__ gpg_err_code_t
+gpg_error_from_errno (int err)
+{
+  return gpg_error (gpg_err_code_from_errno (err));
+}
+
 #endif	/* GPG_ERROR_H */

@@ -34,6 +34,9 @@ gpg_err_code_from_errno (int err)
 {
   int idx = errno_to_idx (err);
 
+  if (!err)
+    return GPG_ERR_NO_ERROR;
+
   if (idx < 0)
     return GPG_ERR_UNKNOWN_ERRNO;
 
