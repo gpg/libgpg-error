@@ -1,3 +1,8 @@
+2004-04-23  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/Makefile.am (mkerrcodes): Do not use $< in non-inference rule.
+	(code-from-errno.h): Likewise.
+
 2004-04-22  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/Makefile.am (gpg_error_CPPFLAGS): New variable.

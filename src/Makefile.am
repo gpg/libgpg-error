@@ -85,10 +85,10 @@ mkerrcodes.h: Makefile mkerrcodes.awk
 # It is correct to use $(CC_FOR_BUILD) here.  We want to run the
 # program at build time.
 mkerrcodes: mkerrcodes.c mkerrcodes.h Makefile
-	$(CC_FOR_BUILD) -I. -I$(srcdir) -o $@ $<
+	$(CC_FOR_BUILD) -I. -I$(srcdir) -o $@ mkerrcodes.c
 
 code-from-errno.h: mkerrcodes Makefile
-	./$< | $(AWK) -f $(srcdir)/mkerrcodes2.awk >$@
+	./mkerrcodes | $(AWK) -f $(srcdir)/mkerrcodes2.awk >$@
 
 errnos-sym.h: Makefile mkstrtable.awk errnos.in
 	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=2 -v nogettext=1 \
