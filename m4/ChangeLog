@@ -1,3 +1,8 @@
+2004-03-01  Marcus Brinkmann  <marcus@g10code.de>
+
+	* Makefile.am (EXTRA_DIST): Add ac_prog_cc_for_build.m4.
+	* ac_prog_cc_for_build.m4: New file.
+
 2003-12-08  Werner Koch  <wk@gnupg.org>
 
 	* libtool.m4: Added (CVS only).
