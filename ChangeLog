@@ -1,3 +1,8 @@
+2004-05-25  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/err-codes.h.in: Add GPG_ERR_PROTOCOL_VIOLATION and
+	GPG_ERR_INV_MAC.
+
 2004-04-23  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/Makefile.am (mkerrcodes): Do not use $< in non-inference rule.
