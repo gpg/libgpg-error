@@ -112,7 +112,7 @@ typedef enum
     GPG_ERR_RESOURCE_LIMIT = 33,
     GPG_ERR_INV_KEYRING = 34,
     GPG_ERR_TRUSTDB = 35,		/* A problem with the trustdb.  */
-    GPG_ERR_BAD_CERT = 36,		/* Bad certicate.  */
+    GPG_ERR_BAD_CERT = 36,		/* Bad certificate.  */
     GPG_ERR_INV_USER_ID = 37,
     GPG_ERR_UNEXPECTED = 38,
     GPG_ERR_TIME_CONFLICT = 39,
