@@ -490,6 +490,7 @@ const char *gpg_strsource (gpg_error_t err);
    this).  */
 gpg_err_code_t gpg_err_code_from_errno (int err);
 
+
 /* Retrieve the system error for the error code CODE.  This returns 0
    if CODE is not a system error code.  */
 int gpg_err_code_to_errno (gpg_err_code_t code);
@@ -504,7 +505,7 @@ gpg_err_make_from_errno (gpg_err_source_t source, int err)
 }
 
 
-static __inline__ gpg_err_code_t
+static __inline__ gpg_error_t
 gpg_error_from_errno (int err)
 {
   return gpg_error (gpg_err_code_from_errno (err));
