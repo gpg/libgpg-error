@@ -1,4 +1,4 @@
-Noteworthy changes in version 0.5 (unreleased)
+Noteworthy changes in version 0.5 (2003-10-06)
 ----------------------------------------------
 
  * New thread safe interface gpg_strerror_r.
