@@ -1,3 +1,9 @@
+2003-11-13  Werner Koch  <wk@gnupg.org>
+
+	* src/gpg-error.h, src/err-codes.h.in: Removed: GPG_ERR_IO_ERROR,
+	GPG_ERR_FILE_ERROR, GPG_ERR_READ_ERROR, GPG_ERR_WRITE_ERROR,
+	GPG_ERR_LOCK_ERROR.
+
 2003-11-12  Werner Koch  <wk@gnupg.org>
 
 	* src/gpg-error.h, src/err-codes.h.in: Added these codes:
@@ -15,7 +21,7 @@
 	GPG_ERR_UNSUPPORTED_CRL_VERSION, GPG_ERR_INV_CERT_OBJ,
 	GPG_ERR_UNKNOWN_NAME, GPG_ERR_IO_ERROR, GPG_ERR_FILE_ERROR,
 	GPG_ERR_READ_ERROR, GPG_ERR_WRITE_ERROR, GPG_ERR_LOCK_ERROR,
-	GPG_ERR_BUFFER_TOO_SHORT
+	GPG_ERR_BUFFER_TOO_SHORT.
 	
 2003-11-06  Werner Koch  <wk@gnupg.org>
 

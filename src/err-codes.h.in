@@ -193,11 +193,6 @@
 163	Unsupported CRL version
 164	Invalid certificate object
 165	Unknown name
-190	Generic I/O error
-191	Generic file operation error
-192	Generic read operation error
-193	Generic write operation error
-194	Generic lock operation error
 199	Buffer too short
 201	Invalid length specifier in S-expression
 202	String too long in S-expression

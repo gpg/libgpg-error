@@ -269,16 +269,8 @@ typedef enum
     GPG_ERR_INV_CERT_OBJ = 164,
     GPG_ERR_UNKNOWN_NAME = 165,
 
-    /* 166 to 189 are free to be used.  */
+    /* 166 to 199 are free to be used.  */
 
-    GPG_ERR_IO_ERROR    = 190,     /* Generic I/O error. */
-    GPG_ERR_FILE_ERROR  = 191,      /* Generic file operation error. */
-    GPG_ERR_READ_ERROR  = 192,     /* Generic read operation error. */
-    GPG_ERR_WRITE_ERROR = 193,     /* Generic write operation error. */
-    GPG_ERR_LOCK_ERROR = 194,      /* Generic lock operation error. */
-
-    /* 195 to 199 are free to be used. */
-    
     GPG_ERR_BUFFER_TOO_SHORT = 200,
 
     /* Error codes pertaining to S-expressions.  */
