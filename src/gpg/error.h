@@ -226,7 +226,7 @@ typedef enum
    structs as return values can cause binary compatibility issues, in
    particular if you want to do it effeciently (also see
    -freg-struct-return option to GCC).  */
-typedef unsigned long gpg_error_t;
+typedef unsigned int gpg_error_t;
 
 /* We use the lowest 16 bits of gpg_error_t for error codes.  */
 #define GPG_ERR_CODE_MASK	(GPG_ERR_CODE_DIM - 1)
