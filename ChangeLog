@@ -1,3 +1,10 @@
+2003-07-31  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/strerror.c (gpg_strerror): Use CODE, not ERR to map error
+	code to errno.
+
+	* configure.ac (AC_INIT): Bump version to 0.3.
+
 2003-07-30  Marcus Brinkmann  <marcus@g10code.de>
 
 	* configure.ac (AC_INIT): Bump version to 0.2.

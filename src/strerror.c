@@ -38,7 +38,7 @@ gpg_strerror (gpg_error_t err)
 
   if (code & GPG_ERR_SYSTEM_ERROR)
     {
-      int no = gpg_err_code_to_errno (err);
+      int no = gpg_err_code_to_errno (code);
       if (no)
 	return strerror (no);
       else
