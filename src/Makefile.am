@@ -16,9 +16,13 @@
 # You should have received a copy of the GNU Lesser General Public
 # License along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
- 
+
+# We distribute the generated sources err-sources.h and err-codes.h,
+# because they are needed to build the po directory, and they don't
+# depend on the configuration anyway. 
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
-	mkerrnos.awk errnos.in mkerrcodes1.awk mkerrcodes2.awk
+	mkerrnos.awk errnos.in mkerrcodes1.awk mkerrcodes2.awk \
+	err-sources.h err-codes.h
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h
 CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h
 

@@ -1,5 +1,7 @@
 2003-06-01  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/Makefile.am (EXTRA_DIST): Add err-sources.h and err-codes.h.
+
 	* src/mkerrcodes1.awk: New file.
 	* src/mkerrcodes2.awk: New file.
 	* src/mkerrnos.awk: New file.
