@@ -47,7 +47,7 @@ static const char header[] =
 "\n";
 
 int
-main (int argc, char *argv)
+main (int argc, char **argv)
 {
   int sorted;
   int i;
@@ -73,4 +73,6 @@ main (int argc, char *argv)
       
   for (i = 0; i < sizeof (err_table) / sizeof (err_table[0]); i++)
     printf ("%i\t%s\n", err_table[i].err, err_table[i].err_sym);
+
+  return 0;
 }
