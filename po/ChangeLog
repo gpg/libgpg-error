@@ -1,5 +1,9 @@
 2004-04-22  Marcus Brinkmann  <marcus@g10code.de>
 
+	* POTFILES.in: Add src/gpg-error.c.
+	* pl.po: Add messages for gpg-error.c.
+	* de.po: Likewise.
+
 	* pl.po: Update.
 
 2004-04-20  Marcus Brinkmann  <marcus@g10code.de>

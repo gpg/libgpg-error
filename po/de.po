@@ -874,3 +874,13 @@ msgstr "Dateiende"
 #: src/err-codes.h:226
 msgid "Unknown error code"
 msgstr "Unbekannter Fehlercode"
+
+#: src/gpg-error.c:240
+#, c-format
+msgid "Usage: %s GPG-ERROR [...]\n"
+msgstr "Aufruf: %s GPG-FEHLER [...]\n"
+
+#: src/gpg-error.c:261
+#, c-format
+msgid "%s: warning: could not recognize %s\n"
+msgstr "%s: Warnung: %s konnte nicht erkannt werden\n"

@@ -885,3 +885,13 @@ msgstr "Koniec pliku"
 #: src/err-codes.h:228
 msgid "Unknown error code"
 msgstr "Nieznany kod b³êdu"
+
+#: src/gpg-error.c:240
+#, c-format
+msgid "Usage: %s GPG-ERROR [...]\n"
+msgstr "Sk³adnia: %s B£¡D-GPG [...]\n"
+
+#: src/gpg-error.c:261
+#, c-format
+msgid "%s: warning: could not recognize %s\n"
+msgstr "%s: uwaga: nie rozpoznano %s\n"
