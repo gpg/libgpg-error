@@ -1,5 +1,9 @@
 2003-06-02  Moritz Schulte  <moritz@g10code.com>
 
+	* src/gpg-error.h: Fix description of gpg_err_code_to_errno
+	(i.e. substitute `ERR' with `CODE').
+	* src/code-to-errno.c: Likewise.
+
 	* tests/t-strerror.c: Include <gpg-error.h> instead of
 	<gpg/error.h>.
 
