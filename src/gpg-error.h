@@ -443,8 +443,8 @@ const char *gpg_strsource (gpg_error_t err);
    this).  */
 gpg_err_code_t gpg_err_code_from_errno (int err);
 
-/* Retrieve the system error for the error code ERR.  This returns 0
-   if ERR is not a system error code.  */
+/* Retrieve the system error for the error code CODE.  This returns 0
+   if CODE is not a system error code.  */
 int gpg_err_code_to_errno (gpg_err_code_t code);
 
 #endif	/* GPG_ERROR_H */

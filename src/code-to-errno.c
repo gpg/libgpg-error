@@ -26,8 +26,8 @@
 
 #include "code-to-errno.h"
 
-/* Retrieve the system error for the error code ERR.  This returns 0
-   if ERR is not a system error code.  */
+/* Retrieve the system error for the error code CODE.  This returns 0
+   if CODE is not a system error code.  */
 int
 gpg_err_code_to_errno (gpg_err_code_t code)
 {
