@@ -138,7 +138,7 @@
 106	GPG_ERR_CORRUPTED_PROTECTION	Corrupted protection
 107	GPG_ERR_AMBIGUOUS_NAME		Ambiguous name
 108	GPG_ERR_CARD			Card error
-109	GPG_ERR_CARD_RESET		Card reset
+109	GPG_ERR_CARD_RESET		Card reset required
 110	GPG_ERR_CARD_REMOVED		Card removed
 111	GPG_ERR_INV_CARD		Invalid card
 112	GPG_ERR_CARD_NOT_PRESENT	Card not present
