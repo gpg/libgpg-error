@@ -23,8 +23,10 @@
 
 #ifdef __GNUC__
 #define GPG_ERR_INLINE __inline__
-#else
+#elif __STDC_VERSION__ >= 199901L
 #define GPG_ERR_INLINE inline
+#else
+#define GPG_ERR_INLINE
 #endif
 
 /* The GnuPG project consists of many components.  Error codes are

@@ -1,3 +1,12 @@
+Noteworthy changes in version 0.4 (2003-09-03)
+----------------------------------------------
+
+ * Fixed another bug that prevented that system errors were created
+   correctly in the first place.
+
+ * Use inline in public header file only on C99 compilers.
+
+
 Noteworthy changes in version 0.3 (2003-07-31)
 ----------------------------------------------
 

@@ -1,3 +1,11 @@
+2003-09-03  Marcus Brinkmann  <marcus@g10code.de>
+
+	Released 0.4.
+
+	* src/gpg-error.h: Define GPG_ERR_INLINE to nothing if the
+	compiler does not implement C99.
+	* configure.ac: (AC_INIT): Bump up version number.
+
 2003-09-02  Moritz Schulte  <mo@g10code.com>
 
 	* src/gpg-error.h (gpg_err_code_t): Added: GPG_ERR_NO_PRIME.
