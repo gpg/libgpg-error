@@ -17,7 +17,7 @@ AC_DEFUN(AM_PATH_GPG_ERROR,
   fi
 
   AC_PATH_PROG(GPG_ERROR_CONFIG, gpg-error-config, no)
-  min_gpg_error_version=ifelse([$1], ,0.0.0,$1)
+  min_gpg_error_version=ifelse([$1], ,0.0,$1)
   AC_MSG_CHECKING(for GPG Error - version >= $min_gpg_error_version)
   ok=no
   if test "$GPG_ERROR_CONFIG" != "no" ; then
