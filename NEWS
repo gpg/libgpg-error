@@ -1,5 +1,7 @@
-Noteworthy changes in version 0.6 (unreleased)
+Noteworthy changes in version 0.6 (2003-11-14)
 ----------------------------------------------
+
+ * German translation included.
 
  * It is now possible to use the inline functions even for non C99
    compliant compilers by given e.g. -DGPG_ERR_INLINE=inline when
@@ -8,12 +10,46 @@ Noteworthy changes in version 0.6 (unreleased)
 
  * Interface changes relative to the 0.5 release:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-GPG_ERR_SOURCE_KSBA             NEW
-GPG_ERR_SORUCE_DIRMNGR          NEW
-GPG_ERR_TRUNCATED		NEW
-GPG_ERR_NO_ENCODING_METHOD      NEW
-GPG_ERR_NO_ENCRYPTION_SCHEME    NEW
-GPG_ERR_NO_SIGNATURE_SCHEME     NEW
+GPG_ERR_SOURCE_KSBA             NEW.
+GPG_ERR_SOURCE_DIRMNGR          NEW.
+GPG_ERR_TRUNCATED		NEW.
+GPG_ERR_NO_ENCODING_METHOD      NEW.
+GPG_ERR_NO_ENCRYPTION_SCHEME    NEW.
+GPG_ERR_NO_SIGNATURE_SCHEME     NEW.
+GPG_ERR_INV_ATTR                NEW.
+GPG_ERR_NO_VALUE                NEW.
+GPG_ERR_NOT_FOUND               NEW.
+GPG_ERR_VALUE_NOT_FOUND         NEW.
+GPG_ERR_SYNTAX                  NEW.
+GPG_ERR_INV_CRL                 NEW.
+GPG_ERR_BAD_BER                 NEW.
+GPG_ERR_INV_BER                 NEW.
+GPG_ERR_ELEMENT_NOT_FOUND       NEW.
+GPG_ERR_IDENTIFIER_NOT_FOUND    NEW.
+GPG_ERR_INV_TAG                 NEW.
+GPG_ERR_INV_LENGTH              NEW.
+GPG_ERR_INV_KEYINFO             NEW.
+GPG_ERR_UNEXPECTED_TAG          NEW.
+GPG_ERR_NOT_DER_ENCODED,        NEW.
+GPG_ERR_NO_CMS_OBJ              NEW.
+GPG_ERR_INV_CMS_OBJ             NEW.
+GPG_ERR_UNKNOWN_CMS_OBJ,        NEW.
+GPG_ERR_UNSUPPORTED_CMS_OBJ     NEW.
+GPG_ERR_UNSUPPORTED_ENCODING,   NEW.
+GPG_ERR_UNSUPPORTED_CMS_VERSION NEW.
+GPG_ERR_UNKNOWN_ALGORITHM       NEW.
+GPG_ERR_ENCODING_PROBLEM        NEW.
+GPG_ERR_INV_STATE               NEW.
+GPG_ERR_DUP_VALUE,              NEW.
+GPG_ERR_MISSING_ACTION          NEW.
+GPG_ERR_MODULE_NOT_FOUND        NEW.
+GPG_ERR_INV_OID_STRING          NEW.
+GPG_ERR_INV_TIME                NEW.
+GPG_ERR_INV_CRL_OBJ             NEW.
+GPG_ERR_UNSUPPORTED_CRL_VERSION NEW.
+GPG_ERR_INV_CERT_OBJ            NEW.
+GPG_ERR_UNKNOWN_NAME            NEW.
+GPG_ERR_BUFFER_TOO_SHORT.       NEW.  
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Noteworthy changes in version 0.5 (2003-10-06)

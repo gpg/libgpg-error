@@ -26,9 +26,10 @@ AC_INIT(libgpg-error, 0.6, bug-gnupg@gnupg.org)
 #   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)
 #   (Interfaces added:			AGE++)
 #   (Interfaces removed:		AGE=0)
+# Note, that added error codes don't constitute an interface change.
 LIBGPG_ERROR_LT_CURRENT=1
 LIBGPG_ERROR_LT_AGE=1
-LIBGPG_ERROR_LT_REVISION=0
+LIBGPG_ERROR_LT_REVISION=1
 AC_SUBST(LIBGPG_ERROR_LT_CURRENT)
 AC_SUBST(LIBGPG_ERROR_LT_AGE)
 AC_SUBST(LIBGPG_ERROR_LT_REVISION)

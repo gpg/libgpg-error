@@ -73,7 +73,7 @@ typedef enum
     GPG_ERR_SOURCE_GPGME = 7,      /* GPGME */
     GPG_ERR_SOURCE_KEYBOX = 8,     /* GnuPG */
     GPG_ERR_SOURCE_KSBA = 9,       /* Libksba */
-    GPG_ERR_SORUCE_DIRMNGR = 10,   /* Dirmngr */
+    GPG_ERR_SOURCE_DIRMNGR = 10,   /* Dirmngr */
 
     /* 9 to 31 are free to be used.  */
 
@@ -199,7 +199,7 @@ typedef enum
     GPG_ERR_CRL_TOO_OLD = 96,
     GPG_ERR_LINE_TOO_LONG = 97,
     GPG_ERR_NOT_TRUSTED = 98,
-    GPG_ERR_CANCELED = 99,
+    GPG_ERR_CANCELED = 99,              /* Canceled by user. */
     GPG_ERR_BAD_CA_CERT = 100,
     GPG_ERR_CERT_EXPIRED = 101,		/* Key signature expired.  */
     GPG_ERR_CERT_TOO_YOUNG = 102,
@@ -337,7 +337,7 @@ typedef enum
     GPG_ERR_EBADSLT = GPG_ERR_SYSTEM_ERROR | 17,
     GPG_ERR_EBFONT = GPG_ERR_SYSTEM_ERROR | 18,
     GPG_ERR_EBUSY = GPG_ERR_SYSTEM_ERROR | 19,
-    GPG_ERR_ECANCELED = GPG_ERR_SYSTEM_ERROR | 20,
+    GPG_ERR_ECANCELED = GPG_ERR_SYSTEM_ERROR | 20, /* Async op. was canceled. */
     GPG_ERR_ECHILD = GPG_ERR_SYSTEM_ERROR | 21,
     GPG_ERR_ECHRNG = GPG_ERR_SYSTEM_ERROR | 22,
     GPG_ERR_ECOMM = GPG_ERR_SYSTEM_ERROR | 23,
