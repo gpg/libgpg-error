@@ -25,27 +25,17 @@ AC_DEFUN(AM_PATH_GPG_ERROR,
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)\.\([[0-9]]*\)/\1/'`
     req_minor=`echo $min_gpg_error_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)\.\([[0-9]]*\)/\2/'`
-    req_micro=`echo $min_gpg_error_version | \
-               sed 's/\([[0-9]]*\)\.\([[0-9]]*\)\.\([[0-9]]*\)/\3/'`
     gpg_error_config_version=`$GPG_ERROR_CONFIG $gpg_error_config_args --version`
     major=`echo $gpg_error_config_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)\.\([[0-9]]*\).*/\1/'`
     minor=`echo $gpg_error_config_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)\.\([[0-9]]*\).*/\2/'`
-    micro=`echo $gpg_error_config_version | \
-               sed 's/\([[0-9]]*\)\.\([[0-9]]*\)\.\([[0-9]]*\).*/\3/'`
     if test "$major" -gt "$req_major"; then
         ok=yes
     else 
         if test "$major" -eq "$req_major"; then
             if test "$minor" -gt "$req_minor"; then
                ok=yes
-            else
-               if test "$minor" -eq "$req_minor"; then
-                   if test "$micro" -ge "$req_micro"; then
-                     ok=yes
-                   fi
-               fi
             fi
         fi
     fi
