@@ -1,3 +1,7 @@
+2004-12-18  Werner Koch  <wk@g10code.com>
+
+	* autogen.sh: Add option --build-w32.
+
 2004-09-14  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/gpg-error.m4: Add copyright note.
