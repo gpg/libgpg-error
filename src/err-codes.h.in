@@ -199,7 +199,8 @@
 167	GPG_ERR_NOT_LOCKED		Not locked
 168	GPG_ERR_PROTOCOL_VIOLATION	Protocol violation
 169	GPG_ERR_INV_MAC			Invalid MAC
-# 170 to 199 are free to be used.
+170	GPG_ERR_INV_REQUEST		Invalid request
+# 171 to 199 are free to be used.
 
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
 
