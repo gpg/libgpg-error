@@ -150,6 +150,7 @@
 129	Hardware problem
 130	PIN blocked     
 131	Conditions of use not satisfied 
+132	PINs are not synced
 150	Invalid crypto engine
 151	Public key not trusted
 152	Decryption failed

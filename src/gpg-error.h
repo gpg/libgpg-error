@@ -220,10 +220,11 @@ typedef enum
     GPG_ERR_WRONG_BLOB_TYPE = 127,      /* Keybox BLOB of wrong type.  */
     GPG_ERR_MISSING_VALUE = 128,        /* A required value is missing.  */
 
-    GPG_ERR_HARDWARE = 129,             /* e.g. EEPROM error of a smartcard. */
+    GPG_ERR_HARDWARE = 129,          /* e.g. EEPROM error of a smartcard. */
     GPG_ERR_PIN_BLOCKED = 130,
-    GPG_ERR_USE_CONDITIONS = 131,       /* e.g. used with smartcards. */
-    /* 132 to 149 are free to be used.   */
+    GPG_ERR_USE_CONDITIONS = 131,    /* e.g. used with smartcards. */
+    GPG_ERR_PIN_NOT_SYNCED = 132,    /* e.g. for OpenPGP card: CHV1 != CHV2. */
+    /* 133 to 149 are free to be used.   */
 
     GPG_ERR_INV_ENGINE = 150,
     GPG_ERR_PUBKEY_NOT_TRUSTED = 151,

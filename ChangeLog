@@ -1,3 +1,7 @@
+2003-09-30  Werner Koch  <wk@gnupg.org>
+
+	* src/gpg-error.h: Add PIN_NOT_SYNCED.
+
 2003-09-13  Marcus Brinkmann  <marcus@g10code.de>
 
 	* configure.ac: Invoke AC_FUNC_STRERROR_R.
