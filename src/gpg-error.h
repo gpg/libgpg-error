@@ -22,7 +22,6 @@
 #define GPG_ERROR_H	1
 
 #include <stddef.h>
-#include <stdio.h>
 
 #ifdef __GNUC__
 #define GPG_ERR_INLINE __inline__

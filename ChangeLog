@@ -1,6 +1,6 @@
 2003-10-25  Werner Koch  <wk@gnupg.org>
 
-	* src/gpg-error.h: Include stdio.h for snprintf
+	* src/strerror.c: Include stdio.h for snprintf
 	prototype. Suggested by papadopo@shfj.cea.fr, fixes #gnupg/214.
 
 2003-10-11  Moritz Schulte  <mo@g10code.com>
