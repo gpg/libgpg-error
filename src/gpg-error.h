@@ -492,8 +492,14 @@ gpg_err_source (gpg_error_t err)
 /* String functions.  */
 
 /* Return a pointer to a string containing a description of the error
-   code in the error value ERR.  */
+   code in the error value ERR.  This function is not thread-safe.  */
 const char *gpg_strerror (gpg_error_t err);
+
+/* Return a pointer to a string containing a description of the error
+   code in the error value ERR.  The buffer for the string is
+   allocated with malloc(), and has to be released by the user.  On
+   error, NULL is returned.  */
+char *gpg_strerror_r (gpg_error_t err);
 
 /* Return a pointer to a string containing a description of the error
    source in the error value ERR.  */

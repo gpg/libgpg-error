@@ -1,3 +1,10 @@
+2003-09-13  Marcus Brinkmann  <marcus@g10code.de>
+
+	* configure.ac: Invoke AC_FUNC_STRERROR_R.
+	* src/gpg-error.h (gpg_strerror_r): New prototype.
+	* src/strerror.c (system_strerror_r): New function.
+	(gpg_strerror_r): New function.
+
 2003-09-04  Marcus Brinkmann  <marcus@g10code.de>
 
 	* libgpg-error.spec.in: New file.

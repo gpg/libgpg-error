@@ -51,6 +51,9 @@ AM_GNU_GETTEXT_VERSION(0.11.5)
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h])
+AC_FUNC_STRERROR_R
+AC_CHECK_FUNC([strerror_r], [],
+  AC_MSG_WARN([[Without strerror_r, gpg_strerror_r might not be thread-safe]]))
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
