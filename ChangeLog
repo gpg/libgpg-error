@@ -1,3 +1,11 @@
+2003-07-16  Moritz Schulte  <moritz@g10code.com>
+
+	* src/gpg-error.h (gpg_err_code): Cast return value to
+	gpg_err_code_t.  Thanks to Ralf Schneider
+	<ralf@tapfere-schneiderleins.de>.
+	(gpg_err_source): Cast return value to gpg_err_source_t.  Thanks
+	to Ralf Schneider <ralf@tapfere-schneiderleins.de>.
+
 2003-07-15  Moritz Schulte  <moritz@g10code.com>
 
 	* src/gpg-error.m4 (AM_PATH_GPG_ERROR): Use `0.0' instead of

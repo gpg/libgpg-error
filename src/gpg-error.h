@@ -467,7 +467,7 @@ gpg_error (gpg_err_code_t code)
 static GPG_ERR_INLINE gpg_err_code_t
 gpg_err_code (gpg_error_t err)
 {
-  return err & GPG_ERR_CODE_MASK;
+  return (gpg_err_code_t) (err & GPG_ERR_CODE_MASK);
 }
 
 
@@ -475,7 +475,8 @@ gpg_err_code (gpg_error_t err)
 static GPG_ERR_INLINE gpg_err_source_t
 gpg_err_source (gpg_error_t err)
 {
-  return (err >> GPG_ERR_SOURCE_SHIFT) & GPG_ERR_SOURCE_MASK;
+  return (gpg_err_source_t) ((err >> GPG_ERR_SOURCE_SHIFT)
+			     & GPG_ERR_SOURCE_MASK);
 }
 
 
