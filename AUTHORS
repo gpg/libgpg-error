@@ -8,6 +8,10 @@ g10 Code GmbH <code@g10code.com>
  - Design and implementation.
 
 
+The RPM specs file libgpg-error.spec has been contributed by
+Robert Schiele <rschiele@uni-mannheim.de>
+
+
  Copyright 2003 g10 Code GmbH
 
  This file is free software; as a special exception the author gives
