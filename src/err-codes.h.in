@@ -52,6 +52,11 @@
 22	Invalid encoding method
 23	Invalid encryption scheme
 24	Invalid signature scheme
+25	Invalid attribute
+26	No value
+27	Not found
+28	Value not found
+29	Syntax error
 30	Bad MPI value
 31	Invalid passphrase
 32	Invalid signature class
@@ -155,11 +160,45 @@
 130	PIN blocked     
 131	Conditions of use not satisfied 
 132	PINs are not synced
+133	Invalid CRL     
+134	BER error
+135	Invalid BER
+136	Element not found
+137	Identifier not found
+138	Invalid tag
+139	Invalid length
+140	Invalid key info
+141	Unexpected tag
+142	Not DER encoded
+143	No CMS object
+144	Invalid CMS object
+145	Unknown CMS object
+146	Unsupported CMS object
+147	Unsupported encoding
+148	Unsupported CMS version
+149	Unknown algorithm
 150	Invalid crypto engine
 151	Public key not trusted
 152	Decryption failed
 153	Key expired
 154	Signature expired
+155	Encoding problem
+156	Invalid state
+157	Duplicated value
+158	Missing action
+159	ASN.1 module not found
+160	Invalid OID string
+161	Invalid time
+162	Invalid CRL object
+163	Unsupported CRL version
+164	Invalid certificate object
+165	Unknown name
+190	Generic I/O error
+191	Generic file operation error
+192	Generic read operation error
+193	Generic write operation error
+194	Generic lock operation error
+199	Buffer too short
 201	Invalid length specifier in S-expression
 202	String too long in S-expression
 203	Unmatched parentheses in S-expression

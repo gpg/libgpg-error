@@ -121,9 +121,11 @@ typedef enum
     GPG_ERR_NO_ENCODING_METHOD = 22,    /* Invalid encoding method.  */
     GPG_ERR_NO_ENCRYPTION_SCHEME = 23,  /* Invalid encryption scheme.  */
     GPG_ERR_NO_SIGNATURE_SCHEME = 24,   /* Invalid signature scheme.  */
-
-    /* Codes 25 to 29 are free to be used.  */
-
+    GPG_ERR_INV_ATTR = 25,              /* Invalid attribute. */
+    GPG_ERR_NO_VALUE = 26,
+    GPG_ERR_NOT_FOUND = 27,
+    GPG_ERR_VALUE_NOT_FOUND = 28,
+    GPG_ERR_SYNTAX = 29,
     GPG_ERR_BAD_MPI = 30,		/* Problem with an MPI's value.  */
     GPG_ERR_INV_PASSPHRASE = 31,	/* Invalid passphrase.  */
     GPG_ERR_SIG_CLASS = 32,
@@ -233,15 +235,51 @@ typedef enum
     GPG_ERR_PIN_BLOCKED = 130,
     GPG_ERR_USE_CONDITIONS = 131,    /* e.g. used with smartcards. */
     GPG_ERR_PIN_NOT_SYNCED = 132,    /* e.g. for OpenPGP card: CHV1 != CHV2. */
-    /* 133 to 149 are free to be used.   */
-
+    GPG_ERR_INV_CRL = 133,           /* e.g. not signed. */
+    GPG_ERR_BAD_BER = 134,           /* Basic Encoding Rules (ASN.1) error. */
+    GPG_ERR_INV_BER = 135,
+    GPG_ERR_ELEMENT_NOT_FOUND = 136,
+    GPG_ERR_IDENTIFIER_NOT_FOUND = 137,
+    GPG_ERR_INV_TAG = 138,
+    GPG_ERR_INV_LENGTH = 139,
+    GPG_ERR_INV_KEYINFO = 140,
+    GPG_ERR_UNEXPECTED_TAG = 141,
+    GPG_ERR_NOT_DER_ENCODED = 142,
+    GPG_ERR_NO_CMS_OBJ = 143,
+    GPG_ERR_INV_CMS_OBJ = 144,
+    GPG_ERR_UNKNOWN_CMS_OBJ = 145,
+    GPG_ERR_UNSUPPORTED_CMS_OBJ = 146,
+    GPG_ERR_UNSUPPORTED_ENCODING = 147,
+    GPG_ERR_UNSUPPORTED_CMS_VERSION = 148,
+    GPG_ERR_UNKNOWN_ALGORITHM = 149,
     GPG_ERR_INV_ENGINE = 150,
     GPG_ERR_PUBKEY_NOT_TRUSTED = 151,
     GPG_ERR_DECRYPT_FAILED = 152,
     GPG_ERR_KEY_EXPIRED = 153,
     GPG_ERR_SIG_EXPIRED = 154,		/* Data signature expired.  */
+    GPG_ERR_ENCODING_PROBLEM = 155,
+    GPG_ERR_INV_STATE = 156,
+    GPG_ERR_DUP_VALUE = 157,
+    GPG_ERR_MISSING_ACTION = 158,
+    GPG_ERR_MODULE_NOT_FOUND = 159,  /* ASN.1 mpodule not found. */
+    GPG_ERR_INV_OID_STRING = 160,
+    GPG_ERR_INV_TIME = 161,
+    GPG_ERR_INV_CRL_OBJ = 162,
+    GPG_ERR_UNSUPPORTED_CRL_VERSION = 163,
+    GPG_ERR_INV_CERT_OBJ = 164,
+    GPG_ERR_UNKNOWN_NAME = 165,
 
-    /* 155 to 200 are free to be used.  */
+    /* 166 to 189 are free to be used.  */
+
+    GPG_ERR_IO_ERROR    = 190,     /* Generic I/O error. */
+    GPG_ERR_FILE_ERROR  = 191,      /* Generic file operation error. */
+    GPG_ERR_READ_ERROR  = 192,     /* Generic read operation error. */
+    GPG_ERR_WRITE_ERROR = 193,     /* Generic write operation error. */
+    GPG_ERR_LOCK_ERROR = 194,      /* Generic lock operation error. */
+
+    /* 195 to 199 are free to be used. */
+    
+    GPG_ERR_BUFFER_TOO_SHORT = 200,
 
     /* Error codes pertaining to S-expressions.  */
     GPG_ERR_SEXP_INV_LEN_SPEC = 201,
