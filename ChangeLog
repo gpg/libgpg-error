@@ -4,6 +4,7 @@
 
 	* configure.ac: Bumbed up LIBGPG_ERROR_LT_REVISON.
 
+	* src/gpg-error-config.in: Fix last change.
 	* src/gpg-error-config.in (Options): Do not emit include and lib
 	directory for prefix "/usr" or "".
 

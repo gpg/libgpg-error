@@ -63,8 +63,9 @@ while test $# -gt 0; do
 	    ;;
 	--libs)
 	    if test "x$libdir" != "x/usr/lib" -a "x$libdir" != "x/lib"; then
-		output="$output -L$libdir -lgpg-error"
+		output="$output -L$libdir"
 	    fi
+	    output="$output -lgpg-error"
 	    ;;
 	*)
             usage 1 1>&2
