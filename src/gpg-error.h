@@ -47,8 +47,8 @@
    Taketh his firste springing and his sours.
 					--Chaucer.  */
 
-/* Only add to the end of the list, never change or reorder the
-   existing entries.  */
+/* Only use free slots, never change or reorder the existing
+   entries.  */
 typedef enum
   {
     GPG_ERR_SOURCE_UNKNOWN = 0,
@@ -61,11 +61,15 @@ typedef enum
     GPG_ERR_SOURCE_GPGME = 7,
     GPG_ERR_SOURCE_KEYBOX = 8,
 
+    /* 9 to 31 are free to be used.  */
+
     /* Free for use by non-GnuPG components.  */
     GPG_ERR_SOURCE_USER_1 = 32,
     GPG_ERR_SOURCE_USER_2 = 33,
     GPG_ERR_SOURCE_USER_3 = 34,
     GPG_ERR_SOURCE_USER_4 = 35,
+
+    /* 36 to 255 are free to be used.  */
 
     /* This is one more than the largest allowed entry.  */
     GPG_ERR_SOURCE_DIM = 256
@@ -74,8 +78,8 @@ typedef enum
 
 /* The error code type gpg_err_code_t.  */
 
-/* Only add to the end of the list, never change or reorder the
-   existing entries.  */
+/* Only use free slots, never change or reorder the existing
+   entries.  */
 typedef enum
   {
     GPG_ERR_NO_ERROR = 0,		/* An error that is not an error.  */
@@ -100,7 +104,7 @@ typedef enum
     GPG_ERR_BAD_KEY = 19,		/* Bad (session) key.  */
     GPG_ERR_COMPR_ALGO = 20,		/* Unknown compress algorithm.  */
 
-    /* Codes 21 to 29 are unused.  */
+    /* Codes 21 to 29 are free to be used.  */
 
     GPG_ERR_BAD_MPI = 30,		/* Problem with an MPI's value.  */
     GPG_ERR_INV_PASSPHRASE = 31,	/* Invalid passphrase.  */
@@ -145,9 +149,9 @@ typedef enum
     GPG_ERR_CONFLICT = 70,		/* Conflicting use.  */
     GPG_ERR_INV_CIPHER_MODE = 71,	/* Invalid cipher mode.  */ 
     GPG_ERR_INV_FLAG = 72,		/* Invalid flag.  */
-    GPG_ERR_INV_HANDLE = 73,            /* Invalid handle. */
+    GPG_ERR_INV_HANDLE = 73,            /* Invalid handle.  */
 
-    /* Code 74 ise unused.  */
+    /* Code 74 is free to be used.  */
 
     GPG_ERR_INCOMPLETE_LINE = 75,
     GPG_ERR_INV_RESPONSE = 76,
@@ -166,7 +170,7 @@ typedef enum
     GPG_ERR_BAD_DATA = 89,
     GPG_ERR_INV_PARAMETER = 90,
 
-    /* Code 91 is free.  */
+    /* Code 91 is free to be used.  */
 
     GPG_ERR_NO_DIRMNGR = 92,
     GPG_ERR_DIRMNGR = 93,
@@ -203,14 +207,18 @@ typedef enum
     GPG_ERR_UNSUPPORTED_OPERATION = 124,
     GPG_ERR_WRONG_KEY_USAGE = 125,
     GPG_ERR_NOTHING_FOUND = 126,        /* Operation failed due to an
-                                           unsuccessful find operation. */
-    GPG_ERR_WRONG_BLOB_TYPE = 127,      /* Keybox BLOB of wrong type. */
-    GPG_ERR_MISSING_VALUE = 128,        /* A required value is missing. */
+                                           unsuccessful find operation.  */
+    GPG_ERR_WRONG_BLOB_TYPE = 127,      /* Keybox BLOB of wrong type.  */
+    GPG_ERR_MISSING_VALUE = 128,        /* A required value is missing.  */
+
+    /* 129 to 149 are free to be used.  */
 
     GPG_ERR_INV_ENGINE = 150,
     GPG_ERR_PUBKEY_NOT_TRUSTED = 151,
     GPG_ERR_DECRYPT_FAILED = 152,
     GPG_ERR_KEY_EXPIRED = 153,
+
+    /* 154 to 200 are free to be used.  */
 
     /* Error codes pertaining to S-expressions.  */
     GPG_ERR_SEXP_INV_LEN_SPEC = 201,
@@ -226,6 +234,8 @@ typedef enum
     GPG_ERR_SEXP_BAD_HEX_CHAR = 211,
     GPG_ERR_SEXP_ODD_HEX_NUMBERS = 212,
     GPG_ERR_SEXP_BAD_OCT_CHAR = 213,
+
+    /* 213 to 1023 are free to be used.  */
 
     /* For free use by non-GnuPG components.  */
     GPG_ERR_USER_1 = 1024,
@@ -244,6 +254,8 @@ typedef enum
     GPG_ERR_USER_14 = 1037,
     GPG_ERR_USER_15 = 1038,
     GPG_ERR_USER_16 = 1039,
+
+    /* 1040 to 16381 are free to be used.  */
 
     GPG_ERR_UNKNOWN_ERRNO = 16382,
     GPG_ERR_EOF = 16383,		/* This was once a -1.  Pity.  */
@@ -390,6 +402,8 @@ typedef enum
     GPG_ERR_EWOULDBLOCK = 16522,
     GPG_ERR_EXDEV = 16523,
     GPG_ERR_EXFULL = 16524,
+
+    /* 16525 to 32677 are free to be used for more system errors.  */
 
     /* This is one more than the largest allowed entry.  */
     GPG_ERR_CODE_DIM = 32768
