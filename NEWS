@@ -6,6 +6,15 @@ Noteworthy changes in version 0.6 (unreleased)
    compiling an application using this library.  Note, that gcc will
    use inline anyway.
 
+ * Interface changes relative to the 0.5 release:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GPG_ERR_SOURCE_KSBA             NEW
+GPG_ERR_SORUCE_DIRMNGR          NEW
+GPG_ERR_TRUNCATED		NEW
+GPG_ERR_NO_ENCODING_METHOD      NEW
+GPG_ERR_NO_ENCRYPTION_SCHEME    NEW
+GPG_ERR_NO_SIGNATURE_SCHEME     NEW
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Noteworthy changes in version 0.5 (2003-10-06)
 ----------------------------------------------

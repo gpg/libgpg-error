@@ -36,6 +36,8 @@
 6	SCD
 7	GPGME
 8	Keybox
+9	KSBA
+10	Dirmngr
 32	User defined source 1
 33	User defined source 2
 34	User defined source 3

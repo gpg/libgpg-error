@@ -1,3 +1,8 @@
+2003-11-06  Werner Koch  <wk@gnupg.org>
+
+	* src/gpg-error.h, src/err-sources.h.in: Added error sources for
+	Libksba and Dirmngr. Added GPG_ERR_TRUNCATED.
+
 2003-11-03  Werner Koch  <wk@gnupg.org>
 
 	* src/gpg-error.h: Allow GPG_ERR_INLINE to get overriden, so that 

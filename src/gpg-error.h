@@ -64,14 +64,16 @@
 typedef enum
   {
     GPG_ERR_SOURCE_UNKNOWN = 0,
-    GPG_ERR_SOURCE_GCRYPT = 1,
-    GPG_ERR_SOURCE_GPG = 2,
-    GPG_ERR_SOURCE_GPGSM = 3,
-    GPG_ERR_SOURCE_GPGAGENT = 4,
-    GPG_ERR_SOURCE_PINENTRY = 5,
-    GPG_ERR_SOURCE_SCD = 6,
-    GPG_ERR_SOURCE_GPGME = 7,
-    GPG_ERR_SOURCE_KEYBOX = 8,
+    GPG_ERR_SOURCE_GCRYPT = 1,     /* Libgcrypt */
+    GPG_ERR_SOURCE_GPG = 2,        /* GnuPG */
+    GPG_ERR_SOURCE_GPGSM = 3,      /* GnuPG */
+    GPG_ERR_SOURCE_GPGAGENT = 4,   /* GnuPG */
+    GPG_ERR_SOURCE_PINENTRY = 5,   /* Pinentry */
+    GPG_ERR_SOURCE_SCD = 6,        /* GnuPG */
+    GPG_ERR_SOURCE_GPGME = 7,      /* GPGME */
+    GPG_ERR_SOURCE_KEYBOX = 8,     /* GnuPG */
+    GPG_ERR_SOURCE_KSBA = 9,       /* Libksba */
+    GPG_ERR_SORUCE_DIRMNGR = 10,   /* Dirmngr */
 
     /* 9 to 31 are free to be used.  */
 
@@ -167,7 +169,7 @@ typedef enum
     GPG_ERR_INV_FLAG = 72,		/* Invalid flag.  */
     GPG_ERR_INV_HANDLE = 73,            /* Invalid handle.  */
 
-    /* Code 74 is free to be used.  */
+    GPG_ERR_TRUNCATED = 74,             /* Result runcated. */
 
     GPG_ERR_INCOMPLETE_LINE = 75,
     GPG_ERR_INV_RESPONSE = 76,

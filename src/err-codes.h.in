@@ -96,6 +96,7 @@
 71	Invalid cipher mode
 72	Invalid flag
 73	Invalid handle
+74	Result truncated
 75	Incomplete line
 76	Invalid response
 77	No agent running
