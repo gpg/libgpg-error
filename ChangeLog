@@ -1,3 +1,9 @@
+2003-11-03  Werner Koch  <wk@gnupg.org>
+
+	* src/gpg-error.h: Allow GPG_ERR_INLINE to get overriden, so that 
+	one can use the -D flag to specify the inline keyword.  Suggested
+	by Philip Brown.
+
 2003-10-28  Moritz Schulte  <mo@g10code.com>
 
 	* src/gpg-error.h (gpg_err_code_t): Added:

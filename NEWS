@@ -1,6 +1,11 @@
 Noteworthy changes in version 0.6 (unreleased)
 ----------------------------------------------
 
+ * It is now possible to use the inline functions even for non C99
+   compliant compilers by given e.g. -DGPG_ERR_INLINE=inline when
+   compiling an application using this library.  Note, that gcc will
+   use inline anyway.
+
 
 Noteworthy changes in version 0.5 (2003-10-06)
 ----------------------------------------------
