@@ -181,7 +181,7 @@ typedef enum
     GPG_ERR_NOT_TRUSTED = 98,
     GPG_ERR_CANCELED = 109,
     GPG_ERR_BAD_CA_CERT = 100,
-    GPG_ERR_CERT_EXPIRED = 101,
+    GPG_ERR_CERT_EXPIRED = 101,		/* Key signature expired.  */
     GPG_ERR_CERT_TOO_YOUNG = 102,
     GPG_ERR_UNSUPPORTED_CERT = 103,
     GPG_ERR_UNKNOWN_SEXP = 104,
@@ -217,8 +217,9 @@ typedef enum
     GPG_ERR_PUBKEY_NOT_TRUSTED = 151,
     GPG_ERR_DECRYPT_FAILED = 152,
     GPG_ERR_KEY_EXPIRED = 153,
+    GPG_ERR_SIG_EXPIRED = 154,		/* Data signature expired.  */
 
-    /* 154 to 200 are free to be used.  */
+    /* 155 to 200 are free to be used.  */
 
     /* Error codes pertaining to S-expressions.  */
     GPG_ERR_SEXP_INV_LEN_SPEC = 201,

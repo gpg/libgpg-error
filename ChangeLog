@@ -1,5 +1,8 @@
 2003-06-05  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/gpg-error.h (gpg_err_code_t): Add GPG_ERR_SIG_EXPIRED.
+	(err-codes.h.in): Likewise.
+
 	* src/gpg-error.h (gpg_error_from_errno): Change return type to
 	gpg_error_t.
 
