@@ -1,5 +1,5 @@
 #! /bin/sh
-# Run this to generate all the initial makefiles, etc.
+# Run this to generate all the initial makefiles, etc. 
 #
 # Copyright (C) 2003 g10 Code GmbH
 #
@@ -11,64 +11,78 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-PGM=libgpg-error
-
-# Required version of autoconf.  Keep it in sync with the AC_PREREQ
-# macro at the top of configure.ac.
-autoconf_vers=2.57
-
-# Required version of automake. 
-automake_vers=1.7.6
-
-# Required version of gettext.  Keep it in sync with the
-# AM_GNU_GETTEXT_VERSION macro in configure.ac.
-gettext_vers=0.12.1
-
-
-ACLOCAL=${ACLOCAL:-aclocal}
-AUTOCONF=${AUTOCONF:-autoconf}
-AUTOMAKE=${AUTOMAKE:-automake}
-AUTOHEADER=${AUTOHEADER:-autoheader}
-GETTEXT=${GETTEXT:-gettext}
-MSGMERGE=${MSGMERGE:-gettext}
-DIE=no
+configure_ac="configure.ac"
 
 cvtver () {
-    awk 'NR==1 {split($NF,A,".");X=1000000*A[1]+1000*A[2]+A[3];print X;exit 0}'
-}
-
-chkver () {
-    expr `("$1" --version || echo "0") | cvtver` '>=' `echo "$2" | cvtver` \
-           >/dev/null
+  awk 'NR==1 {split($NF,A,".");X=1000000*A[1]+1000*A[2]+A[3];print X;exit 0}'
 }
 
 check_version () {
-    if ! chkver $1 $2 ; then
-       echo "**Error**: "\`$1\'" not installed or too old." >&2
-       echo '           Version '$2' or newer is required.' >&2
-       [ -n "$3" ] && echo '           Note that this is part of '\`$3\''.' >&2
-       DIE="yes"
-       return 1
-    else
+    if [ $(( `("$1" --version || echo "0") | cvtver` >= $2 )) == 1 ]; then
        return 0
     fi
+    echo "**Error**: "\`$1\'" not installed or too old." >&2
+    echo '           Version '$3' or newer is required.' >&2
+    [ -n "$4" ] && echo '           Note that this is part of '\`$4\''.' >&2
+    DIE="yes"
+    return 1
 }
 
 
-check_version $AUTOCONF $autoconf_vers
-if check_version $AUTOMAKE $automake_vers ; then
-  check_version $ACLOCAL $automake_vers automake
+# Grep the required versions from configure.ac
+autoconf_vers=`sed -n '/^AC_PREREQ(/ { 
+s/^.*(\(.*\))/\1/p
+q
+}' ${configure_ac}`
+autoconf_vers_num=`echo "$autoconf_vers" | cvtver`
+
+automake_vers=`sed -n '/^min_automake_version=/ { 
+s/^.*="\(.*\)"/\1/p
+q
+}' ${configure_ac}`
+automake_vers_num=`echo "$automake_vers" | cvtver`
+
+gettext_vers=`sed -n '/^min_gettext_version=/ { 
+s/^.*="\(.*\)"/\1/p
+q
+}' ${configure_ac}`
+gettext_vers_num=`echo "$gettext_vers" | cvtver`
+
+
+if [ -z "$autoconf_vers" -o -z "$automake_vers" -o -z "$gettext_vers" ]
+then
+  echo "**Error**: version information not found in "\`${configure_ac}\'"." >&2
+  exit 1
 fi
-if check_version $GETTEXT $gettext_vers ; then
-  check_version $MSGMERGE $gettext_vers gettext
+
+# Allow to override the default tool names
+AUTOCONF=${AUTOCONF_PREFIX}${AUTOCONF:-autoconf}${AUTOCONF_SUFFIX}
+AUTOHEADER=${AUTOCONF_PREFIX}${AUTOHEADER:-autoheader}${AUTOCONF_SUFFIX}
+
+AUTOMAKE=${AUTOMAKE_PREFIX}${AUTOMAKE:-automake}${AUTOMAKE_SUFFIX}
+ACLOCAL=${AUTOMAKE_PREFIX}${ACLOCAL:-aclocal}${AUTOMAKE_SUFFIX}
+
+GETTEXT=${GETTEXT_PREFIX}${GETTEXT:-gettext}${GETTEXT_SUFFIX}
+MSGMERGE=${GETTEXT_PREFIX}${MSGMERGE:-msgmerge}${GETTEXT_SUFFIX}
+
+DIE=no
+
+
+if check_version $AUTOCONF $autoconf_vers_num $autoconf_vers ; then
+    check_version $AUTOHEADER $autoconf_vers_num $autoconf_vers autoconf
+fi
+if check_version $AUTOMAKE $automake_vers_num $automake_vers; then
+  check_version $ACLOCAL $automake_vers_num $autoconf_vers automake
+fi
+if check_version $GETTEXT $gettext_vers_num $gettext_vers; then
+  check_version $MSGMERGE $gettext_vers_num $gettext_vers gettext
 fi
 
 if test "$DIE" = "yes"; then
     cat <<EOF
 
 Note that you may use alternative versions of the tools by setting 
-the corresponding environment variable to that version; e.g.:
-  AUTOMAKE=automake-1.6 ACLOCAL=aclocal-1.6 ./autogen.sh
+the corresponding environment variables; see README.CVS for details.
                    
 EOF
     exit 1

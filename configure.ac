@@ -18,11 +18,13 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
 
 # (Process this file with autoconf to produce a configure script.)
+# The following lines are used by ./autogen.sh.
 AC_PREREQ(2.57)
-
+min_automake_version="1.7.6"
+min_gettext_version="0.12.1"
 
 # Version number: Remember to change it immediately *after* a release.
-AC_INIT(libgpg-error, 0.7, bug-gnupg@gnupg.org)
+AC_INIT(libgpg-error, 0.7-cvs, bug-gnupg@gnupg.org)
 # LT Version numbers, remember to change them just *before* a release.
 #   (Code changed:			REVISION++)
 #   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)
@@ -36,7 +38,6 @@ AC_SUBST(LIBGPG_ERROR_LT_CURRENT)
 AC_SUBST(LIBGPG_ERROR_LT_AGE)
 AC_SUBST(LIBGPG_ERROR_LT_REVISION)
 
-AC_PREREQ(2.57)
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/err-sources.h.in])

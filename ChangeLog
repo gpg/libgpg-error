@@ -1,5 +1,7 @@
 2003-12-08  Werner Koch  <wk@gnupg.org>
 
+	* README.CVS: Enhanced.
+
 	* autogen.sh: New.
 	* Makefile.am (EXTRA_DIST): Added autogen.sh.
 
