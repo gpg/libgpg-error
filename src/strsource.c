@@ -22,7 +22,7 @@
 #include <config.h>
 #endif
 
-#include <gpg/error.h>
+#include <gpg-error.h>
 
 #include "gettext.h"
 #include "err-sources.h"

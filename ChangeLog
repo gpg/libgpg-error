@@ -1,5 +1,13 @@
 2003-06-01  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/Makefile.am (nobase_include_HEADERS): Rename target to ...
+	(include_HEADERS): ... this.  Change file to gpg-error.h
+	(libgpg_error_la_SOURCES): Change gpg/error.h to gpg-error.h.
+	* src/gpg/error.h: Move to ...
+	* src/gpg-error.h: ... here.  New file.
+	* src/strerror.c: Include <gpg-error.h>, not <gpg/error.h>.
+	* src/strsource.c: Likewise.
+	
 	* src/gpg/error.h (gpg_error_t): Change type to unsigned int, not
 	long.
 

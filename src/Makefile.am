@@ -21,14 +21,14 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in
 BUILT_SOURCES = err-sources.h err-codes.h
 CLEANFILES = err-sources.h err-codes.h
 
-nobase_include_HEADERS = gpg/error.h
+include_HEADERS = gpg-error.h
 
 lib_LTLIBRARIES = libgpg-error.la
 
 libgpg_error_la_LDFLAGS = -version-info \
   @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@
 
-libgpg_error_la_SOURCES = gpg/error.h gettext.h \
+libgpg_error_la_SOURCES = gpg-error.h gettext.h \
 	err-sources.h strsource.c err-codes.h strerror.c
 
 libgpg_error_la_LIBADD = @LTLIBINTL@
