@@ -3,9 +3,12 @@ Noteworthy changes in version 0.5 (unreleased)
 
  * New thread safe interface gpg_strerror_r.
 
+ * New error code GPG_ERR_PIN_NOT_SYNCED has been added.
+
  * Interface changes relative to the 0.4 release:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 gpg_strerror_r			NEW
+GPG_ERR_PIN_NOT_SYNCED		NEW
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
