@@ -1,7 +1,7 @@
 Noteworthy changes in version 0.8 (unreleased)
 ----------------------------------------------
 
- * (none so far)
+ * Ported to Solaris 2.8.
 
  * Interface changes relative to the 0.7 release:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
