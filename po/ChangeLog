@@ -1,3 +1,7 @@
+2003-12-08  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* Makefile.in.in: Upgrade to gettext-0.12.1.
+
 2003-11-14  Werner Koch  <wk@gnupg.org>
 
 	* de.po: New.
