@@ -41,14 +41,20 @@
 # data portions.)  If your modification has such potential, you must delete
 # any notice of this special exception to the GPL from your modified version.
 
-# This script outputs an intermediate file that contains the following block
-# for each error value symbol in the input file (example for EINVAL):
+# This script outputs an intermediate file that contains the following output:
+# static struct
+#   {
+#     int err;
+#     const char *err_sym;
+#   } err_table[] =
+# {
+#   { 7, "GPG_ERR_E2BIG" },
+#   [...]
+# };
 #
-# #ifdef EINVAL
-# EINVAL GPG_ERR_EINVAL
-# #endif
+# The input file is a list of possible system errors, followed by a GPG_ERR_* name:
 #
-# The input file is a list of possible system errors.
+# 7 GPG_ERR_E2BIG
 #
 # Comments (starting with # and ending at the end of the line) are removed,
 # as is trailing whitespace.
@@ -63,7 +69,7 @@ BEGIN {
 /^#/ { next; }
 
 header {
-  if ($0 ~ /^[ \t]*[0-9]+/)
+  if (! /^[ \t]*$/)
     {
       header = 0;
 

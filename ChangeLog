@@ -1,3 +1,9 @@
+2005-06-16  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/mkerrcodes.awk: Fix comment.  Allow any non-empty line to
+	start the processing, not only lines starting with numbers.
+	Guillaume Libersat <glibersat@hurdfr.org>
+
 2005-01-05  Marcus Brinkmann  <marcus@g10code.de>
 
 	* configure.ac: Check for locale.h.
