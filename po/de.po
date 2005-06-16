@@ -65,19 +65,19 @@ msgstr "GSTI"
 
 #: src/err-sources.h:40
 msgid "User defined source 1"
-msgstr "Benutzer definierte Quelle 1"
+msgstr "Benutzerdefinierte Quelle 1"
 
 #: src/err-sources.h:41
 msgid "User defined source 2"
-msgstr "Benutzer definierte Quelle 2"
+msgstr "Benutzerdefinierte Quelle 2"
 
 #: src/err-sources.h:42
 msgid "User defined source 3"
-msgstr "Benutzer definierte Quelle 3"
+msgstr "Benutzerdefinierte Quelle 3"
 
 #: src/err-sources.h:43
 msgid "User defined source 4"
-msgstr "Benutzer definierte Quelle 4"
+msgstr "Benutzerdefinierte Quelle 4"
 
 #: src/err-sources.h:44
 msgid "Unknown source"
@@ -105,7 +105,7 @@ msgstr "Ungültiges Public-Key-Verfahren"
 
 #: src/err-codes.h:33
 msgid "Invalid digest algorithm"
-msgstr "Ungütiger Hashmethode"
+msgstr "Ungültige Hashmethode"
 
 #: src/err-codes.h:34
 msgid "Bad public key"
@@ -217,7 +217,7 @@ msgstr "Ungültige Signaturklasse"
 
 #: src/err-codes.h:61
 msgid "Resources exhausted"
-msgstr "Resourcen erschöpft"
+msgstr "Ressourcen erschöpft"
 
 #: src/err-codes.h:62
 msgid "Invalid keyring"
@@ -265,7 +265,7 @@ msgstr "Ungültige Schlüssellänge"
 
 #: src/err-codes.h:73
 msgid "Invalid argument"
-msgstr "Ungütliges Argument"
+msgstr "Ungültiges Argument"
 
 #: src/err-codes.h:74
 msgid "Syntax error in URI"
@@ -305,11 +305,11 @@ msgstr "Unbrauchbarer geheimer Schlüssel"
 
 #: src/err-codes.h:83
 msgid "Invalid value"
-msgstr "Ungütiger Wert"
+msgstr "Ungültiger Wert"
 
 #: src/err-codes.h:84
 msgid "Bad certificate chain"
-msgstr "Fehlerhafter Zertifikatkette"
+msgstr "Fehlerhafte Zertifikatkette"
 
 #: src/err-codes.h:85
 msgid "Missing certificate"
@@ -401,7 +401,7 @@ msgstr "Fehler beim Agenten"
 
 #: src/err-codes.h:107
 msgid "Invalid data"
-msgstr "Ungütige Daten"
+msgstr "Ungültige Daten"
 
 #: src/err-codes.h:108
 msgid "Assuan server fault"
@@ -469,7 +469,7 @@ msgstr "Keine CRL bekannt"
 
 #: src/err-codes.h:124
 msgid "CRL too old"
-msgstr "CRL is zu alt"
+msgstr "CRL ist zu alt"
 
 #: src/err-codes.h:125
 msgid "Line too long"
@@ -793,11 +793,11 @@ msgstr "Fehlerhaftes Zeichen in S-expression"
 
 #: src/err-codes.h:205
 msgid "Bad quotation in S-expression"
-msgstr "Fehlerhafte Zietierung in S-expression"
+msgstr "Fehlerhafte Zitierung in S-expression"
 
 #: src/err-codes.h:206
 msgid "Zero prefix in S-expression"
-msgstr "Null-Prefix in S-expression"
+msgstr "Null-Präfix in S-expression"
 
 #: src/err-codes.h:207
 msgid "Nested display hints in S-expression"
@@ -825,67 +825,67 @@ msgstr "Falsches Oktal-Zeichen in S-expression"
 
 #: src/err-codes.h:213
 msgid "User defined error code 1"
-msgstr "Benutzer definierter Fehlercode 1"
+msgstr "Benutzerdefinierter Fehlercode 1"
 
 #: src/err-codes.h:214
 msgid "User defined error code 2"
-msgstr "Benutzer definierter Fehlercode 2"
+msgstr "Benutzerdefinierter Fehlercode 2"
 
 #: src/err-codes.h:215
 msgid "User defined error code 3"
-msgstr "Benutzer definierter Fehlercode 3"
+msgstr "Benutzerdefinierter Fehlercode 3"
 
 #: src/err-codes.h:216
 msgid "User defined error code 4"
-msgstr "Benutzer definierter Fehlercode 4"
+msgstr "Benutzerdefinierter Fehlercode 4"
 
 #: src/err-codes.h:217
 msgid "User defined error code 5"
-msgstr "Benutzer definierter Fehlercode 5"
+msgstr "Benutzerdefinierter Fehlercode 5"
 
 #: src/err-codes.h:218
 msgid "User defined error code 6"
-msgstr "Benutzer definierter Fehlercode 6"
+msgstr "Benutzerdefinierter Fehlercode 6"
 
 #: src/err-codes.h:219
 msgid "User defined error code 7"
-msgstr "Benutzer definierter Fehlercode 7"
+msgstr "Benutzerdefinierter Fehlercode 7"
 
 #: src/err-codes.h:220
 msgid "User defined error code 8"
-msgstr "Benutzer definierter Fehlercode 8"
+msgstr "Benutzerdefinierter Fehlercode 8"
 
 #: src/err-codes.h:221
 msgid "User defined error code 9"
-msgstr "Benutzer definierter Fehlercode 9"
+msgstr "Benutzerdefinierter Fehlercode 9"
 
 #: src/err-codes.h:222
 msgid "User defined error code 10"
-msgstr "Benutzer definierter Fehlercode 10"
+msgstr "Benutzerdefinierter Fehlercode 10"
 
 #: src/err-codes.h:223
 msgid "User defined error code 11"
-msgstr "Benutzer definierter Fehlercode 11"
+msgstr "Benutzerdefinierter Fehlercode 11"
 
 #: src/err-codes.h:224
 msgid "User defined error code 12"
-msgstr "Benutzer definierter Fehlercode 12"
+msgstr "Benutzerdefinierter Fehlercode 12"
 
 #: src/err-codes.h:225
 msgid "User defined error code 13"
-msgstr "Benutzer definierter Fehlercode 13"
+msgstr "Benutzerdefinierter Fehlercode 13"
 
 #: src/err-codes.h:226
 msgid "User defined error code 14"
-msgstr "Benutzer definierter Fehlercode 14"
+msgstr "Benutzerdefinierter Fehlercode 14"
 
 #: src/err-codes.h:227
 msgid "User defined error code 15"
-msgstr "Benutzer definierter Fehlercode 15"
+msgstr "Benutzerdefinierter Fehlercode 15"
 
 #: src/err-codes.h:228
 msgid "User defined error code 16"
-msgstr "Benutzer definierter Fehlercode 16"
+msgstr "Benutzerdefinierter Fehlercode 16"
 
 #: src/err-codes.h:229
 msgid "Unknown system error"

@@ -1,3 +1,7 @@
+2005-06-16  Marcus Brinkmann  <marcus@g10code.de>
+
+	* de.po: Apply typo fixes from Debian #313977.
+
 2004-04-22  Marcus Brinkmann  <marcus@g10code.de>
 
 	* POTFILES.in: Add src/gpg-error.c.
