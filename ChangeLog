@@ -1,5 +1,7 @@
 2005-06-20  Marcus Brinkmann  <marcus@g10code.de>
 
+	Released 1.1.
+	
 	* configure.ac: Bump up LIBGPG_ERROR_LT_REVISION, update version
 	field.
 
