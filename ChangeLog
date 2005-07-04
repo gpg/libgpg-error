@@ -15,6 +15,15 @@
 
 	* configure.ac: Check for locale.h.
 
+2005-04-20  Werner Koch  <wk@g10code.com>
+
+	* src/err-codes.h.in: Add GPG_ERR_LOCKED.
+
+2005-04-18  Werner Koch  <wk@g10code.com>
+
+	* src/err-codes.h.in: Add GPG_ERR_UNKNOWN_EXTN and
+	GPG_ERR_UNKNOWN_CRIT_EXTN.
+
 2004-12-18  Werner Koch  <wk@g10code.com>
 
 	* autogen.sh: Add option --build-w32.

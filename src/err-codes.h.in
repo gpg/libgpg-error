@@ -200,7 +200,10 @@
 168	GPG_ERR_PROTOCOL_VIOLATION	Protocol violation
 169	GPG_ERR_INV_MAC			Invalid MAC
 170	GPG_ERR_INV_REQUEST		Invalid request
-# 171 to 199 are free to be used.
+171	GPG_ERR_UNKNOWN_EXTN		Unknown extension
+172	GPG_ERR_UNKNOWN_CRIT_EXTN	Unknown critical extension
+173	GPG_ERR_LOCKED			Locked
+# 174 to 199 are free to be used.
 
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
 

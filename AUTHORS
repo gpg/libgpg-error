@@ -8,6 +8,11 @@ g10 Code GmbH <code@g10code.com>
  - Design and implementation.
 
 
+Laurentiu Buzdugan <lbuz@rolix.org> 
+ - TRANSLATION [ro]
+
+
+
 The RPM specs file libgpg-error.spec has been contributed by
 Robert Schiele <rschiele@uni-mannheim.de>
 

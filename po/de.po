@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.0\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2004-07-30 14:49+0200\n"
+"POT-Creation-Date: 2005-06-19 13:35+0200\n"
 "PO-Revision-Date: 2004-07-30 14:55+0200\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
@@ -768,134 +768,149 @@ msgid "Invalid request"
 msgstr "Ungültiger Request"
 
 #: src/err-codes.h:199
+#, fuzzy
+msgid "Unknown extension"
+msgstr "Unbekannte S-expression"
+
+#: src/err-codes.h:200
+#, fuzzy
+msgid "Unknown critical extension"
+msgstr "Unbekannte S-expression"
+
+#: src/err-codes.h:201
+#, fuzzy
+msgid "Locked"
+msgstr "Nicht gesperrt"
+
+#: src/err-codes.h:202
 msgid "Buffer too short"
 msgstr "Datenpuffer zu kurz"
 
-#: src/err-codes.h:200
+#: src/err-codes.h:203
 msgid "Invalid length specifier in S-expression"
 msgstr "Ungültige Längeangabe in der S-expression"
 
-#: src/err-codes.h:201
+#: src/err-codes.h:204
 msgid "String too long in S-expression"
 msgstr "Zeichenkette in S-expression zu lang"
 
-#: src/err-codes.h:202
+#: src/err-codes.h:205
 msgid "Unmatched parentheses in S-expression"
 msgstr "Nich übereinstimmende Klammern in S-expression"
 
-#: src/err-codes.h:203
+#: src/err-codes.h:206
 msgid "S-expression not canonical"
 msgstr "S-expression ist nicht kanonisch"
 
-#: src/err-codes.h:204
+#: src/err-codes.h:207
 msgid "Bad character in S-expression"
 msgstr "Fehlerhaftes Zeichen in S-expression"
 
-#: src/err-codes.h:205
+#: src/err-codes.h:208
 msgid "Bad quotation in S-expression"
 msgstr "Fehlerhafte Zitierung in S-expression"
 
-#: src/err-codes.h:206
+#: src/err-codes.h:209
 msgid "Zero prefix in S-expression"
 msgstr "Null-Präfix in S-expression"
 
-#: src/err-codes.h:207
+#: src/err-codes.h:210
 msgid "Nested display hints in S-expression"
 msgstr "Verschachtelte \"Hints\" in S-expression"
 
-#: src/err-codes.h:208
+#: src/err-codes.h:211
 msgid "Unmatched display hints"
 msgstr "Nicht übereinstimmende \"Hints\""
 
-#: src/err-codes.h:209
+#: src/err-codes.h:212
 msgid "Unexpected reserved punctuation in S-expression"
 msgstr "Unerwartetes reserviertes Zeichen in S-expression"
 
-#: src/err-codes.h:210
+#: src/err-codes.h:213
 msgid "Bad hexadecimal character in S-expression"
 msgstr "Falsches Hex-Zeichen in S-expression"
 
-#: src/err-codes.h:211
+#: src/err-codes.h:214
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Ungerade Anzahl von Hex-Zeichen in S-expression"
 
-#: src/err-codes.h:212
+#: src/err-codes.h:215
 msgid "Bad octadecimal character in S-expression"
 msgstr "Falsches Oktal-Zeichen in S-expression"
 
-#: src/err-codes.h:213
+#: src/err-codes.h:216
 msgid "User defined error code 1"
 msgstr "Benutzerdefinierter Fehlercode 1"
 
-#: src/err-codes.h:214
+#: src/err-codes.h:217
 msgid "User defined error code 2"
 msgstr "Benutzerdefinierter Fehlercode 2"
 
-#: src/err-codes.h:215
+#: src/err-codes.h:218
 msgid "User defined error code 3"
 msgstr "Benutzerdefinierter Fehlercode 3"
 
-#: src/err-codes.h:216
+#: src/err-codes.h:219
 msgid "User defined error code 4"
 msgstr "Benutzerdefinierter Fehlercode 4"
 
-#: src/err-codes.h:217
+#: src/err-codes.h:220
 msgid "User defined error code 5"
 msgstr "Benutzerdefinierter Fehlercode 5"
 
-#: src/err-codes.h:218
+#: src/err-codes.h:221
 msgid "User defined error code 6"
 msgstr "Benutzerdefinierter Fehlercode 6"
 
-#: src/err-codes.h:219
+#: src/err-codes.h:222
 msgid "User defined error code 7"
 msgstr "Benutzerdefinierter Fehlercode 7"
 
-#: src/err-codes.h:220
+#: src/err-codes.h:223
 msgid "User defined error code 8"
 msgstr "Benutzerdefinierter Fehlercode 8"
 
-#: src/err-codes.h:221
+#: src/err-codes.h:224
 msgid "User defined error code 9"
 msgstr "Benutzerdefinierter Fehlercode 9"
 
-#: src/err-codes.h:222
+#: src/err-codes.h:225
 msgid "User defined error code 10"
 msgstr "Benutzerdefinierter Fehlercode 10"
 
-#: src/err-codes.h:223
+#: src/err-codes.h:226
 msgid "User defined error code 11"
 msgstr "Benutzerdefinierter Fehlercode 11"
 
-#: src/err-codes.h:224
+#: src/err-codes.h:227
 msgid "User defined error code 12"
 msgstr "Benutzerdefinierter Fehlercode 12"
 
-#: src/err-codes.h:225
+#: src/err-codes.h:228
 msgid "User defined error code 13"
 msgstr "Benutzerdefinierter Fehlercode 13"
 
-#: src/err-codes.h:226
+#: src/err-codes.h:229
 msgid "User defined error code 14"
 msgstr "Benutzerdefinierter Fehlercode 14"
 
-#: src/err-codes.h:227
+#: src/err-codes.h:230
 msgid "User defined error code 15"
 msgstr "Benutzerdefinierter Fehlercode 15"
 
-#: src/err-codes.h:228
+#: src/err-codes.h:231
 msgid "User defined error code 16"
 msgstr "Benutzerdefinierter Fehlercode 16"
 
-#: src/err-codes.h:229
+#: src/err-codes.h:232
 msgid "Unknown system error"
 msgstr "Unbekannter Systemfehler"
 
-#: src/err-codes.h:230
+#: src/err-codes.h:233
 msgid "End of file"
 msgstr "Dateiende"
 
-#: src/err-codes.h:231
+#: src/err-codes.h:234
 msgid "Unknown error code"
 msgstr "Unbekannter Fehlercode"
 
