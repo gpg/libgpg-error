@@ -108,24 +108,24 @@ gpg-error.h: Makefile mkheader.awk \
 # Special code to build a DLL.  The current libtool (1.5.6) is not
 # able to do this properly; we better use gcc's built in magic.  
 if HAVE_W32_SYSTEM
-all-local: libgpg-error.dll libgpg-error.imp
+all-local: libgpg-error.dll libgpg-error.dll.a
 
 install-exec-hook:
-	cp libgpg-error.dll libgpg-error.imp $(DESTDIR)$(libdir)/
+	cp libgpg-error.dll libgpg-error.dll.a $(DESTDIR)$(libdir)/
 	cp gpg-error.exe $(DESTDIR)$(bindir)/
 	$(STRIP) $(DESTDIR)$(libdir)/libgpg-error.dll
 	$(STRIP) $(DESTDIR)$(bindir)/gpg-error.exe
 
-libgpg-error.dll libgpg-error.imp: gpg-error.def \
+libgpg-error.dll libgpg-error.dll.a: gpg-error.def \
              code-from-errno.o code-to-errno.o strerror.o strsource.o \
              gpg_error-strsource-sym.o gpg_error-strerror-sym.o \
              gpg_error-gpg-error.o versioninfo.o
 	$(CC) -shared -o libgpg-error.dll gpg-error.def \
            code-from-errno.o code-to-errno.o strerror.o strsource.o \
-	   versioninfo.o -Wl,--out-implib,libgpg-error.imp
+	   versioninfo.o -Wl,--out-implib,libgpg-error.dll.a
 	$(CC) -o gpg-error.exe gpg_error-strsource-sym.o \
               gpg_error-strerror-sym.o gpg_error-gpg-error.o \
-	      libgpg-error.imp
+	      libgpg-error.dll.a
 
 .rc.o:
 	$(WINDRES) `test -f '$<' || echo '$(srcdir)/'`$< $@

@@ -53,7 +53,6 @@ AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
 AC_CHECK_TOOL(DLLTOOL, dlltool, :)
 AC_CHECK_TOOL(WINDRES, windres, :)
-AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 
 # We need to compile and run a program on the build machine.
@@ -115,15 +114,18 @@ AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
 
 # Special defines for certain platforms
 if test "$have_w32_system" = yes; then
-    W32LDFLAGS="-no-undefined"
     AC_DEFINE(HAVE_W32_SYSTEM,1,[Defined if we run on a W32 API based system])
     BUILD_TIMESTAMP=`date --iso-8601=minutes`
     AC_SUBST(BUILD_TIMESTAMP)
     changequote(,)dnl 
-    BUILD_FILEVERSION=`echo "$VERSION" | sed 's/\([0-9.]*\).*/\1.0/;s/\./,/g'`
+    BUILD_FILEVERSION=`echo "$VERSION" | sed 's/\([0-9.]*\).*/\1./;s/\./,/g'`
     changequote([,])dnl
+    case "$VERSION" in
+      *-cvs) BUILD_FILEVERSION="${BUILD_FILEVERSION}0,0" ;;
+      *-rc*) BUILD_FILEVERSION="${BUILD_FILEVERSION}0,1" ;;
+      *)     BUILD_FILEVERSION="${BUILD_FILEVERSION}0,2" ;;
+    esac
 fi
-AC_SUBST(W32LDFLAGS)
 AC_SUBST(BUILD_TIMESTAMP)
 AC_SUBST(BUILD_FILEVERSION)
 AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
