@@ -19,8 +19,8 @@
 
 # (Process this file with autoconf to produce a configure script.)
 # The following lines are used by ./autogen.sh.
-AC_PREREQ(2.57)
-min_automake_version="1.7.6"
+AC_PREREQ(2.59)
+min_automake_version="1.9.3"
 # The gettext version is set below using AM_GNU_GETTEXT_VERSION
 # Version number: Remember to change it immediately *after* a release.
 AC_INIT(libgpg-error, 1.2-cvs, bug-gnupg@gnupg.org)
@@ -49,8 +49,12 @@ AC_CANONICAL_HOST
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_CPP
-AC_PROG_LIBTOOL
 AC_PROG_AWK
+AC_CHECK_TOOL(AR, ar, :)
+AC_CHECK_TOOL(DLLTOOL, dlltool, :)
+AC_CHECK_TOOL(WINDRES, windres, :)
+AC_LIBTOOL_WIN32_DLL
+AC_PROG_LIBTOOL
 
 # We need to compile and run a program on the build machine.
 dnl The AC_PROG_CC_FOR_BUILD macro in the AC archive is broken for
@@ -64,6 +68,18 @@ else
 fi
 AC_MSG_RESULT($CC_FOR_BUILD)
 AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
+
+
+# Set some internal variables depending on the platform for later use.
+have_w32_system=no
+case "${host}" in
+    *-mingw32*)
+        have_w32_system=yes
+        ;;
+    *)
+       ;;
+esac
+
 
 # Checks for libraries.
 
@@ -96,8 +112,26 @@ AC_SUBST(GPG_ERROR_CONFIG_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_CFLAGS)
 AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
 
-# Checks for library functions.
+
+# Special defines for certain platforms
+if test "$have_w32_system" = yes; then
+    W32LDFLAGS="-no-undefined"
+    AC_DEFINE(HAVE_W32_SYSTEM,1,[Defined if we run on a W32 API based system])
+    BUILD_TIMESTAMP=`date --iso-8601=minutes`
+    AC_SUBST(BUILD_TIMESTAMP)
+    changequote(,)dnl 
+    BUILD_FILEVERSION=`echo "$VERSION" | sed 's/\([0-9.]*\).*/\1.0/;s/\./,/g'`
+    changequote([,])dnl
+fi
+AC_SUBST(W32LDFLAGS)
+AC_SUBST(BUILD_TIMESTAMP)
+AC_SUBST(BUILD_FILEVERSION)
+AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
+
+
+# Substitution
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([po/Makefile.in m4/Makefile])
 AC_CONFIG_FILES([src/Makefile tests/Makefile])
+AC_CONFIG_FILES([src/versioninfo.rc])
 AC_OUTPUT

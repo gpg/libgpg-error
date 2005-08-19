@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.1\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2004-07-30 14:49+0200\n"
+"POT-Creation-Date: 2005-06-19 13:35+0200\n"
 "PO-Revision-Date: 2005-06-30 12:00-0500\n"
 "Last-Translator: Laurentiu Buzdugan <lbuz@rolix.org>\n"
 "Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
@@ -771,134 +771,149 @@ msgid "Invalid request"
 msgstr "Cerere invalidã"
 
 #: src/err-codes.h:199
+#, fuzzy
+msgid "Unknown extension"
+msgstr "Expresie-S necunoscutã"
+
+#: src/err-codes.h:200
+#, fuzzy
+msgid "Unknown critical extension"
+msgstr "Expresie-S necunoscutã"
+
+#: src/err-codes.h:201
+#, fuzzy
+msgid "Locked"
+msgstr "Neforþat(ã)"
+
+#: src/err-codes.h:202
 msgid "Buffer too short"
 msgstr "Buffer prea scurt"
 
-#: src/err-codes.h:200
+#: src/err-codes.h:203
 msgid "Invalid length specifier in S-expression"
 msgstr "Specificarea lungimii invalidã în expresia-S"
 
-#: src/err-codes.h:201
+#: src/err-codes.h:204
 msgid "String too long in S-expression"
 msgstr "ªir prea lung în expresia-S"
 
-#: src/err-codes.h:202
+#: src/err-codes.h:205
 msgid "Unmatched parentheses in S-expression"
 msgstr "Parantezã fãrã pereche în expresia-S"
 
-#: src/err-codes.h:203
+#: src/err-codes.h:206
 msgid "S-expression not canonical"
 msgstr "Expresia-S nu este canonicã"
 
-#: src/err-codes.h:204
+#: src/err-codes.h:207
 msgid "Bad character in S-expression"
 msgstr "Caracter invalid în expresia-S"
 
-#: src/err-codes.h:205
+#: src/err-codes.h:208
 msgid "Bad quotation in S-expression"
 msgstr "Ghilimele incorecte în expresia-S"
 
-#: src/err-codes.h:206
+#: src/err-codes.h:209
 msgid "Zero prefix in S-expression"
 msgstr "Prefix zero în expresia-S"
 
-#: src/err-codes.h:207
+#: src/err-codes.h:210
 msgid "Nested display hints in S-expression"
 msgstr "Indicaþii de afiºare încuibãrite în expresia-S"
 
-#: src/err-codes.h:208
+#: src/err-codes.h:211
 msgid "Unmatched display hints"
 msgstr "Indicaþii de afiºare fãrã pereche"
 
-#: src/err-codes.h:209
+#: src/err-codes.h:212
 msgid "Unexpected reserved punctuation in S-expression"
 msgstr "Punctuaþie rezervatã neaºteptatã în expresia-S"
 
-#: src/err-codes.h:210
+#: src/err-codes.h:213
 msgid "Bad hexadecimal character in S-expression"
 msgstr "Caracter hexazecimal incorect în expresia-S"
 
-#: src/err-codes.h:211
+#: src/err-codes.h:214
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Numere hexazecimale ciudate în expresia-S"
 
-#: src/err-codes.h:212
+#: src/err-codes.h:215
 msgid "Bad octadecimal character in S-expression"
 msgstr "Caracter octal incorect în expresia-S"
 
-#: src/err-codes.h:213
+#: src/err-codes.h:216
 msgid "User defined error code 1"
 msgstr "Cod de eroare definit de utilizator 1"
 
-#: src/err-codes.h:214
+#: src/err-codes.h:217
 msgid "User defined error code 2"
 msgstr "Cod de eroare definit de utilizator 2"
 
-#: src/err-codes.h:215
+#: src/err-codes.h:218
 msgid "User defined error code 3"
 msgstr "Cod de eroare definit de utilizator 3"
 
-#: src/err-codes.h:216
+#: src/err-codes.h:219
 msgid "User defined error code 4"
 msgstr "Cod de eroare definit de utilizator 4"
 
-#: src/err-codes.h:217
+#: src/err-codes.h:220
 msgid "User defined error code 5"
 msgstr "Cod de eroare definit de utilizator 5"
 
-#: src/err-codes.h:218
+#: src/err-codes.h:221
 msgid "User defined error code 6"
 msgstr "Cod de eroare definit de utilizator 6"
 
-#: src/err-codes.h:219
+#: src/err-codes.h:222
 msgid "User defined error code 7"
 msgstr "Cod de eroare definit de utilizator 7"
 
-#: src/err-codes.h:220
+#: src/err-codes.h:223
 msgid "User defined error code 8"
 msgstr "Cod de eroare definit de utilizator 8"
 
-#: src/err-codes.h:221
+#: src/err-codes.h:224
 msgid "User defined error code 9"
 msgstr "Cod de eroare definit de utilizator 9"
 
-#: src/err-codes.h:222
+#: src/err-codes.h:225
 msgid "User defined error code 10"
 msgstr "Cod de eroare definit de utilizator 10"
 
-#: src/err-codes.h:223
+#: src/err-codes.h:226
 msgid "User defined error code 11"
 msgstr "Cod de eroare definit de utilizator 11"
 
-#: src/err-codes.h:224
+#: src/err-codes.h:227
 msgid "User defined error code 12"
 msgstr "Cod de eroare definit de utilizator 12"
 
-#: src/err-codes.h:225
+#: src/err-codes.h:228
 msgid "User defined error code 13"
 msgstr "Cod de eroare definit de utilizator 13"
 
-#: src/err-codes.h:226
+#: src/err-codes.h:229
 msgid "User defined error code 14"
 msgstr "Cod de eroare definit de utilizator 14"
 
-#: src/err-codes.h:227
+#: src/err-codes.h:230
 msgid "User defined error code 15"
 msgstr "Cod de eroare definit de utilizator 15"
 
-#: src/err-codes.h:228
+#: src/err-codes.h:231
 msgid "User defined error code 16"
 msgstr "Cod de eroare definit de utilizator 16"
 
-#: src/err-codes.h:229
+#: src/err-codes.h:232
 msgid "Unknown system error"
 msgstr "Eroare de sistem necunoscutã"
 
-#: src/err-codes.h:230
+#: src/err-codes.h:233
 msgid "End of file"
 msgstr "Sfârºit de fiºier"
 
-#: src/err-codes.h:231
+#: src/err-codes.h:234
 msgid "Unknown error code"
 msgstr "Cod de eroare necunoscut"
 

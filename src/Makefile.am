@@ -20,11 +20,22 @@
 # We distribute the generated sources err-sources.h and err-codes.h,
 # because they are needed to build the po directory, and they don't
 # depend on the configuration anyway. 
+
+localedir = $(datadir)/locale
+bin_PROGRAMS = gpg-error
+lib_LTLIBRARIES = libgpg-error.la
+include_HEADERS = gpg-error.h
+bin_SCRIPTS = gpg-error-config
+m4datadir = $(datadir)/aclocal
+m4data_DATA = gpg-error.m4
+
+
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrnos.awk errnos.in \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
 	mkheader.awk gpg-error.h.in \
-	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4
+	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 \
+	gpg-error.def versioninfo.rc.in
 
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h
@@ -35,24 +46,14 @@ CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	gpg-error.h mkerrcodes mkerrcodes.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h $(tmp_files)
 
-bin_SCRIPTS = gpg-error-config
-m4datadir = $(datadir)/aclocal
-m4data_DATA = gpg-error.m4
-
-include_HEADERS = gpg-error.h
-
-lib_LTLIBRARIES = libgpg-error.la
-
 libgpg_error_la_LDFLAGS = -version-info \
   @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@
 
 libgpg_error_la_SOURCES = gpg-error.h gettext.h \
-	strsource.c strerror.c code-to-errno.c code-from-errno.c
+	strsource.c strerror.c code-to-errno.c code-from-errno.c 
 
 libgpg_error_la_LIBADD = @LTLIBINTL@
 
-localedir = $(datadir)/locale
-bin_PROGRAMS = gpg-error
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c
 gpg_error_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 gpg_error_LDADD = ./libgpg-error.la
@@ -102,3 +103,31 @@ gpg-error.h: Makefile mkheader.awk \
 		$(srcdir)/err-codes.h.in \
 		$(srcdir)/errnos.in \
 		$(srcdir)/gpg-error.h.in > $@
+
+
+# Special code to build a DLL.  The current libtool (1.5.6) is not
+# able to do this properly; we better use gcc's built in magic.  
+if HAVE_W32_SYSTEM
+all-local: libgpg-error.dll libgpg-error.imp
+
+install-exec-hook:
+	cp libgpg-error.dll libgpg-error.imp $(DESTDIR)$(libdir)/
+	cp gpg-error.exe $(DESTDIR)$(bindir)/
+	$(STRIP) $(DESTDIR)$(libdir)/libgpg-error.dll
+	$(STRIP) $(DESTDIR)$(bindir)/gpg-error.exe
+
+libgpg-error.dll libgpg-error.imp: gpg-error.def \
+             code-from-errno.o code-to-errno.o strerror.o strsource.o \
+             gpg_error-strsource-sym.o gpg_error-strerror-sym.o \
+             gpg_error-gpg-error.o versioninfo.o
+	$(CC) -shared -o libgpg-error.dll gpg-error.def \
+           code-from-errno.o code-to-errno.o strerror.o strsource.o \
+	   versioninfo.o -Wl,--out-implib,libgpg-error.imp
+	$(CC) -o gpg-error.exe gpg_error-strsource-sym.o \
+              gpg_error-strerror-sym.o gpg_error-gpg-error.o \
+	      libgpg-error.imp
+
+.rc.o:
+	$(WINDRES) `test -f '$<' || echo '$(srcdir)/'`$< $@
+
+endif
