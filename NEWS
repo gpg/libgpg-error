@@ -8,9 +8,10 @@ Noteworthy changes in version 1.2 (unreleased)
 
  * New error code GPG_ERR_LOCKED.
 
+ * New translations included for France and Romania.
+
  * Interface changes relative to the 1.1 release:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-SOMETHING			NEW
 GPG_ERR_UNKNOWN_EXTN		NEW
 GPG_ERR_UNKNOWN_CRIT_EXTN	NEW
 GPG_ERR_LOCKED			NEW
