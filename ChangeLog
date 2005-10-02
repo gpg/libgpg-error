@@ -1,3 +1,8 @@
+2005-10-02  Marcus Brinkmann  <marcus@g10code.de>
+
+	* configure.ac: Escape arguments in AC_INIT invocation.
+	* config.guess, config.sub, ltmain.sh: Update.
+
 2005-08-19  Werner Koch  <wk@g10code.com>
 
 	* configure.ac: Add code to allow building a W32 DLL.

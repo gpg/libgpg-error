@@ -1,3 +1,7 @@
+2005-10-02  Marcus Brinkmann  <marcus@g10code.de>
+
+	* libtool.m4: Update.
+
 2004-03-01  Marcus Brinkmann  <marcus@g10code.de>
 
 	* Makefile.am (EXTRA_DIST): Add ac_prog_cc_for_build.m4.
