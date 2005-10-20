@@ -51,8 +51,8 @@ AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
-AC_CHECK_TOOL(DLLTOOL, dlltool, :)
-AC_CHECK_TOOL(WINDRES, windres, :)
+AC_LIBTOOL_WIN32_DLL
+AC_LIBTOOL_RC
 AC_PROG_LIBTOOL
 
 # We need to compile and run a program on the build machine.

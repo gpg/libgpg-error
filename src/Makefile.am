@@ -46,11 +46,46 @@ CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	gpg-error.h mkerrcodes mkerrcodes.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h $(tmp_files)
 
-libgpg_error_la_LDFLAGS = -version-info \
-  @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@
+
+if HAVE_W32_SYSTEM
+
+LTRCCOMPILE = $(LIBTOOL) --mode=compile $(RC) \
+     `echo $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) | \
+     sed -e 's/-I/--include-dir /g;s/-D/--define /g'`
+
+%.o : %.rc
+	$(LTRCCOMPILE) -i $< -o $@
+
+gpg_error_res = versioninfo.o
+gpg_error_res_ldflag = -Wl,$(gpg_error_res)
+no_undefined = -no-undefined
+export_symbols = -export-symbols $(srcdir)/gpg-error.def
+
+install-def-file:
+	$(INSTALL) gpg-error.def $(DESTDIR)$(libdir)/gpg-error-.def
+
+uninstall-def-file:
+	-rm $(DESTDIR)$(libdir)/gpg-error.def
+
+libgpg_error_la_DEPENDENCIES = $(gpg_error_res) gpg-error.def
+
+else
+gpg_error_res =
+gpg_error_res_ldflag =
+no_undefined =
+export_symbols =
+install-def-file:
+uninstall-def-file:
+
+endif
+
+
+libgpg_error_la_LDFLAGS = $(gpg_error_res_ldflag) -version-info \
+  @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@ \
+  $(no_undefined) $(export_symbols)
 
 libgpg_error_la_SOURCES = gpg-error.h gettext.h \
-	strsource.c strerror.c code-to-errno.c code-from-errno.c 
+	strsource.c strerror.c code-to-errno.c code-from-errno.c
 
 libgpg_error_la_LIBADD = @LTLIBINTL@
 
@@ -103,31 +138,3 @@ gpg-error.h: Makefile mkheader.awk \
 		$(srcdir)/err-codes.h.in \
 		$(srcdir)/errnos.in \
 		$(srcdir)/gpg-error.h.in > $@
-
-
-# Special code to build a DLL.  The current libtool (1.5.6) is not
-# able to do this properly; we better use gcc's built in magic.  
-if HAVE_W32_SYSTEM
-all-local: libgpg-error.dll libgpg-error.dll.a
-
-install-exec-hook:
-	cp libgpg-error.dll libgpg-error.dll.a $(DESTDIR)$(libdir)/
-	cp gpg-error.exe $(DESTDIR)$(bindir)/
-	$(STRIP) $(DESTDIR)$(libdir)/libgpg-error.dll
-	$(STRIP) $(DESTDIR)$(bindir)/gpg-error.exe
-
-libgpg-error.dll libgpg-error.dll.a: gpg-error.def \
-             code-from-errno.o code-to-errno.o strerror.o strsource.o \
-             gpg_error-strsource-sym.o gpg_error-strerror-sym.o \
-             gpg_error-gpg-error.o versioninfo.o
-	$(CC) -shared -o libgpg-error.dll gpg-error.def \
-           code-from-errno.o code-to-errno.o strerror.o strsource.o \
-	   versioninfo.o -Wl,--out-implib,libgpg-error.dll.a
-	$(CC) -o gpg-error.exe gpg_error-strsource-sym.o \
-              gpg_error-strerror-sym.o gpg_error-gpg-error.o \
-	      libgpg-error.dll.a
-
-.rc.o:
-	$(WINDRES) `test -f '$<' || echo '$(srcdir)/'`$< $@
-
-endif
