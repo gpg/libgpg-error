@@ -1,3 +1,13 @@
+2005-10-23  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/Makefile.am (libgpg_error_la_SOURCES): Add init.c.
+	* src/init.c: New file.
+	* src/gpg-error.h.in (gpg_error_init): New function.
+	* src/gpg-error.def: Add gpg_err_init.
+	* src/gpg-error.c: Remove SIMPLE_GETTEXT stuff.
+	(i18n_init): Don't bind text domain.
+	(main): Call gpg_err_init.
+
 2005-10-20  Marcus Brinkmann  <marcus@g10code.de>
 
 	* configure.ac: Instead checking for windres and dlltool, invoke

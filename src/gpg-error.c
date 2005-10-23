@@ -29,28 +29,21 @@
 #include <limits.h>
 #include <stdio.h>
 
-#ifdef USE_SIMPLE_GETTEXT
-  int set_gettext_file( const char *filename );
-  const char *gettext( const char *msgid );
+#ifdef HAVE_LOCALE_H
+# include <locale.h>	
+#endif
+#ifdef ENABLE_NLS
+# include <libintl.h>
 # define _(a) gettext (a)
-# define N_(a) (a)
-#else
-# ifdef HAVE_LOCALE_H
-#  include <locale.h>	
-# endif
-# ifdef ENABLE_NLS
-#  include <libintl.h>
-#  define _(a) gettext (a)
-#  ifdef gettext_noop
-#   define N_(a) gettext_noop (a)
-#  else
-#   define N_(a) (a)
-#  endif
+# ifdef gettext_noop
+#  define N_(a) gettext_noop (a)
 # else
-#  define _(a) (a)
 #  define N_(a) (a)
 # endif
-#endif /*!USE_SIMPLE_GETTEXT*/
+#else
+# define _(a) (a)
+# define N_(a) (a)
+#endif
 
 #include <gpg-error.h>
 
@@ -249,22 +242,21 @@ get_err_from_str (char *str, gpg_error_t *err)
 
 
 static void
-i18n_init(void)
+i18n_init (void)
 {
-#ifdef USE_SIMPLE_GETTEXT
-  set_gettext_file (PACKAGE);
-#else
-# ifdef ENABLE_NLS
-#  ifdef HAVE_LC_MESSAGES
+#ifdef ENABLE_NLS
+# ifdef HAVE_LC_MESSAGES
   setlocale (LC_TIME, "");
   setlocale (LC_MESSAGES, "");
-#  else
+# else
   setlocale (LC_ALL, "" );
-#  endif
-  bindtextdomain (PACKAGE, LOCALEDIR);
-  textdomain (PACKAGE);
 # endif
 #endif
+
+  /* We have the same text domain as the library.  Thus, we don't need
+     to bind our text domain to our locale directory (this is done by
+     gpg_err_init).  We just need to set our text domain.  */
+  textdomain (PACKAGE);
 }
 
 
@@ -273,8 +265,9 @@ main (int argc, char *argv[])
 {
   int i = 1;
 
-  /* Setup I18N. */
-  i18n_init();
+  gpg_err_init ();
+
+  i18n_init ();
 
   if (argc == 1)
     {

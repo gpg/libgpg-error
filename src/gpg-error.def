@@ -5,4 +5,4 @@ EXPORTS
  gpg_strsource            @3  
  gpg_err_code_from_errno  @4
  gpg_err_code_to_errno    @5
-
+ gpg_err_init		  @6
