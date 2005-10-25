@@ -78,8 +78,6 @@ i18n_init (void)
       drop_locale_dir (locale_dir);
     }
   textdomain (PACKAGE);
-
-  return 0;
 }
 
 
