@@ -1415,7 +1415,7 @@ load_domain (const char *filename)
    NULL; caller may use GetLastError to get the actual error number.
    The result of calling this function with STRING set to NULL is not
    defined. */
-char *
+static char *
 wchar_to_native (const wchar_t *string)
 {
   int n;
@@ -1444,7 +1444,7 @@ wchar_to_native (const wchar_t *string)
    NULL; caller may use GetLastError to get the actual error number.
    The result of calling this function with STRING set to NULL is not
    defined. */
-wchar_t *
+static wchar_t *
 utf8_to_wchar (const char *string)
 {
   int n;
@@ -1468,7 +1468,7 @@ utf8_to_wchar (const char *string)
 }
 
 
-char *
+static char *
 utf8_to_native (const char *string)
 {
   wchar_t *wstring;
