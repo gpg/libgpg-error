@@ -22,8 +22,14 @@
 /* NLS can be disabled through the configure --disable-nls option.  */
 #if ENABLE_NLS
 
+#if HAVE_W32_SYSTEM
+/* Redirect the gettext calls to an internal implementation on W32
+   targets.  */
+# include "w32-gettext.h"
+#else
 /* Get declarations of GNU message catalog functions.  */
 # include <libintl.h>
+#endif
 
 #else
 

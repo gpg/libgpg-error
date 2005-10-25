@@ -1,3 +1,19 @@
+2005-10-25  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/Makefile.am (arch_sources): New variable.
+	(libgpg_error_la_SOURCES): Add $(arch_sources).
+	* src/gettext.h [HAVE_W32_SYSTEM]: Include w32-gettext.h.
+	* src/w32-gettext.h: New file.
+	* src/w32-gettext.c: New file.
+	* src/gpg-error.h.in: Check for gcc's constructor attribute.
+	Use it for gpg_err_init.
+	(GPG_ERR_INITIALIZED): Define if constructor is available.
+	* src/gpg-error.c (main) [GPG_ERR_INITIALIZED]: Don't invoke
+	gpg_err_init.
+	(i18n_init): Call bindtextdomain as well.  Now that gpg-error has
+	its own gettext implementation, we can't rely on it anymore.
+	Also, repeat all the w32 stuff for fetching the registry.
+
 2005-10-23  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/Makefile.am (libgpg_error_la_SOURCES): Add init.c.

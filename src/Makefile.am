@@ -48,6 +48,7 @@ CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 
 
 if HAVE_W32_SYSTEM
+arch_sources = w32-gettext.h w32-gettext.c
 
 LTRCCOMPILE = $(LIBTOOL) --mode=compile $(RC) \
      `echo $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) | \
@@ -68,14 +69,18 @@ uninstall-def-file:
 	-rm $(DESTDIR)$(libdir)/gpg-error.def
 
 libgpg_error_la_DEPENDENCIES = $(gpg_error_res) gpg-error.def
+intllibs = 
 
 else
+arch_sources =
 gpg_error_res =
 gpg_error_res_ldflag =
 no_undefined =
 export_symbols =
 install-def-file:
 uninstall-def-file:
+
+intllibs = @LTLIBINTL@
 
 endif
 
@@ -84,13 +89,14 @@ libgpg_error_la_LDFLAGS = $(gpg_error_res_ldflag) -version-info \
   @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@ \
   $(no_undefined) $(export_symbols)
 
-libgpg_error_la_SOURCES = gpg-error.h gettext.h \
+libgpg_error_la_SOURCES = gpg-error.h gettext.h $(arch_sources) \
 	init.c strsource.c strerror.c code-to-errno.c code-from-errno.c
+
 libgpg_error_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
-libgpg_error_la_LIBADD = @LTLIBINTL@
+libgpg_error_la_LIBADD = $(intllibs)
 
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c
-gpg_error_LDADD = ./libgpg-error.la
+gpg_error_LDADD = ./libgpg-error.la @LTLIBINTL@
 
 err-sources.h: Makefile mkstrtable.awk err-sources.h.in
 	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=3 \

@@ -114,10 +114,35 @@ typedef unsigned int gpg_error_t;
 #define GPG_ERR_SOURCE_SHIFT	24
 
 
+/* GCC feature test.  */
+#undef _GPG_ERR_HAVE_CONSTRUCTOR
+#if __GNUC__
+#define _GPG_ERR_GCC_VERSION (__GNUC__ * 10000 \
+                            + __GNUC_MINOR__ * 100 \
+                            + __GNUC_PATCHLEVEL__)
+
+#if _GPG_ERR_GCC_VERSION > 30100
+#define _GPG_ERR_CONSTRUCTOR	__attribute__ ((__constructor__))
+#define _GPG_ERR_HAVE_CONSTRUCTOR
+#endif
+#endif
+
+#ifndef _GPG_ERR_CONSTRUCTOR
+#define _GPG_ERR_CONSTRUCTOR
+#endif
+
+
 /* Initialization function.  */
 
 /* Initialize the library.  This function should be run early.  */
-gpg_error_t gpg_err_init (void);
+gpg_error_t gpg_err_init (void) _GPG_ERR_CONSTRUCTOR;
+
+/* If this is defined, the library is already initialized by the
+   constructor and does not need to be initialized explicitely.  */
+#undef GPG_ERR_INITIALIZED
+#ifdef _GPG_ERR_HAVE_CONSTRUCTOR
+#define GPG_ERR_INITIALIZED	1
+#endif
 
 
 /* Constructor and accessor functions.  */

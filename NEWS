@@ -2,7 +2,10 @@ Noteworthy changes in version 1.2 (unreleased)
 ----------------------------------------------
 
  * New function gpg_err_init, which binds the locale directory to
-   the text domain.
+   the text domain.  This function is a constructor on GCC targets,
+   so it does not need to be called explicitely.  The header file
+   defines GPG_ERR_INITIALIZED in this case.  This is experimental for
+   now.
 
  * "./autogen.sh --build-w32" does now also build a DLL for W32.
    Translations are not yet provided for this platform.
@@ -19,6 +22,7 @@ GPG_ERR_UNKNOWN_EXTN		NEW
 GPG_ERR_UNKNOWN_CRIT_EXTN	NEW
 GPG_ERR_LOCKED			NEW
 gpg_err_init			NEW
+GPG_ERR_INITIALIZED		NEW
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Noteworthy changes in version 1.1 (2005-06-20)
