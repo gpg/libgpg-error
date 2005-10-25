@@ -1410,12 +1410,80 @@ load_domain (const char *filename)
 }
 
 
+/* Return a malloced string encoded in UTF-8 from the wide char input
+   string STRING.  Caller must free this value. On failure returns
+   NULL; caller may use GetLastError to get the actual error number.
+   The result of calling this function with STRING set to NULL is not
+   defined. */
 char *
-utf8_to_native (const char *string, size_t length, int delim)
+wchar_to_native (const wchar_t *string)
 {
-  /* FIXME */
-  return strdup (string);
+  int n;
+  char *result;
+
+  n = WideCharToMultiByte (CP_ACP, 0, string, -1, NULL, 0, NULL, NULL);
+  if (n < 0)
+    return NULL;
+
+  result = malloc (n+1);
+  if (!result)
+    return NULL;
+
+  n = WideCharToMultiByte (CP_ACP, 0, string, -1, result, n, NULL, NULL);
+  if (n < 0)
+    {
+      free (result);
+      return NULL;
+    }
+  return result;
 }
+
+
+/* Return a malloced wide char string from an UTF-8 encoded input
+   string STRING.  Caller must free this value. On failure returns
+   NULL; caller may use GetLastError to get the actual error number.
+   The result of calling this function with STRING set to NULL is not
+   defined. */
+wchar_t *
+utf8_to_wchar (const char *string)
+{
+  int n;
+  wchar_t *result;
+
+  n = MultiByteToWideChar (CP_UTF8, 0, string, -1, NULL, 0);
+  if (n < 0)
+    return NULL;
+
+  result = malloc ((n+1) * sizeof *result);
+  if (!result)
+    return NULL;
+
+  n = MultiByteToWideChar (CP_UTF8, 0, string, -1, result, n);
+  if (n < 0)
+    {
+      free (result);
+      return NULL;
+    }
+  return result;
+}
+
+
+char *
+utf8_to_native (const char *string)
+{
+  wchar_t *wstring;
+  char *result;
+
+  wstring = utf8_to_wchar (string);
+  if (!wstring)
+    return NULL;
+
+  result = wchar_to_native (wstring);
+  free (wstring);
+
+  return result;
+}
+
 
 static const char*
 get_string (struct loaded_domain *domain, u32 idx)
@@ -1432,7 +1500,7 @@ get_string (struct loaded_domain *domain, u32 idx)
       domain->mapped[idx] = 1;
 
       plen = strlen (p);
-      buf = utf8_to_native (p, plen, -1);
+      buf = utf8_to_native (p);
       buflen = strlen (buf);
       if (buflen <= plen)
         strcpy (p, buf);

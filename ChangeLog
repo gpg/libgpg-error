@@ -1,5 +1,10 @@
 2005-10-25  Marcus Brinkmann  <marcus@g10code.de>
 
+	* src/w32-gettext.c (get_string): Remove extra arguments to
+	utf8_to_native_invocation.
+	(utf8_to_wchar, wchar_to_native): New function.
+	(utf8_to_native): Rewritten.
+
 	* src/Makefile.am (gpg_error_CPPFLAGS): New variable.
 	* src/gpg-error.c (i18n_init): Don't return anything.
 
