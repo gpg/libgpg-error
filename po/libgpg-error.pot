@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2005-06-19 13:35+0200\n"
+"POT-Creation-Date: 2005-10-26 10:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -912,12 +912,12 @@ msgstr ""
 msgid "Unknown error code"
 msgstr ""
 
-#: src/gpg-error.c:281
+#: src/gpg-error.c:452
 #, c-format
 msgid "Usage: %s GPG-ERROR [...]\n"
 msgstr ""
 
-#: src/gpg-error.c:302
+#: src/gpg-error.c:473
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr ""

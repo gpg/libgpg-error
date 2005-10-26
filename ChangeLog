@@ -1,3 +1,7 @@
+2005-10-26  Werner Koch  <wk@g10code.com>
+
+	* Makefile.am: Used dist-bzip2 option.
+
 2005-10-25  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/w32-gettext.c (get_string): Remove extra arguments to

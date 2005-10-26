@@ -20,6 +20,7 @@
 SUBDIRS = m4 src tests po
 
 ACLOCAL_AMFLAGS = -I m4
+AUTOMAKE_OPTIONS = dist-bzip2
 
 EXTRA_DIST = autogen.sh config.rpath libgpg-error.spec.in 
 
