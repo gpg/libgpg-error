@@ -80,7 +80,14 @@ case "${host}" in
 esac
 
 
-# Checks for libraries.
+AH_BOTTOM([
+/* Force using of NLS for W32 even if no libintl has been found.  This is 
+   okay because we have our own gettext implementation for W32.  */
+#if defined(HAVE_W32_SYSTEM) && !defined(ENABLE_NLS)
+#define ENABLE_NLS 1
+#endif
+])
+
 
 # Note, that autogen.sh greps for the next line.
 AM_GNU_GETTEXT_VERSION(0.12.1)

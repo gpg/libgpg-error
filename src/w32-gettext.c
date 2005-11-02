@@ -70,13 +70,7 @@
 #include <stdlib.h>
 #include <locale.h>
 
-#if defined _WIN32 || defined __WIN32__
-# undef WIN32   /* avoid warning on mingw32 */
-# define WIN32
-#endif
-
-#ifdef WIN32
-# define WIN32_LEAN_AND_MEAN
+#ifdef HAVE_W32_SYSTEM
 # include <windows.h>
 /* List of language codes, sorted by value:
    0x01 LANG_ARABIC
@@ -725,7 +719,7 @@
 # ifndef SUBLANG_UZBEK_CYRILLIC
 # define SUBLANG_UZBEK_CYRILLIC 0x02
 # endif
-#endif
+#endif /* HAVE_W32_SYSTEM */
 
 /* XPG3 defines the result of 'setlocale (category, NULL)' as:
    "Directs 'setlocale()' to query 'category' and return the current
@@ -748,13 +742,13 @@ _nl_locale_name (int category, const char *categoryname)
 {
   const char *retval;
 
-#ifndef WIN32
+#ifndef HAVE_W32_SYSTEM
 
   /* Use the POSIX methods of looking to 'LC_ALL', 'LC_xxx', and 'LANG'.
      On some systems this can be done by the 'setlocale' function itself.  */
 # if defined HAVE_SETLOCALE && defined HAVE_LC_MESSAGES && defined HAVE_LOCALE_NULL
   retval = setlocale (category, NULL);
-# else
+# else 
   /* Setting of LC_ALL overwrites all other.  */
   retval = getenv ("LC_ALL");
   if (retval == NULL || retval[0] == '\0')
@@ -775,7 +769,7 @@ _nl_locale_name (int category, const char *categoryname)
 
   return retval;
 
-#else /* WIN32 */
+#else /* HAVE_W32_SYSTEM */
 
   /* Return an XPG style locale name language[_territory][@modifier].
      Don't even bother determining the codeset; it's not useful in this
@@ -1185,7 +1179,7 @@ _nl_locale_name (int category, const char *categoryname)
     default: return "C";
     }
 
-#endif
+#endif /* HAVE_W32_SYSTEM */
 }
 
 /* localname.c from gettext END.  */
@@ -1617,7 +1611,9 @@ bindtextdomain (const char *domainname, const char *dirname)
   if (the_domain)
     free_domain (the_domain);
   the_domain = domain;
-  return dirname;
+
+  /* For historic reasoins we are not allowed to return a const char*. */
+  return (char*)dirname;
 }
 
 
@@ -1705,12 +1701,12 @@ char *
 textdomain (const char *domainname)
 {
   /* For now, support only one domain.  */
-  return domainname;
+  return (char*)domainname;
 }
 
 char *
 dgettext (const char *domainname, const char *msgid)
 {
   /* For now, support only one domain.  */
-  return gettext (msgid);
+  return (char*)gettext (msgid);
 }

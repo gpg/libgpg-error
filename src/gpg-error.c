@@ -33,7 +33,11 @@
 # include <locale.h>	
 #endif
 #ifdef ENABLE_NLS
+#ifdef HAVE_W32_SYSTEM
+# include "gettext.h"
+#else
 # include <libintl.h>
+#endif
 # define _(a) gettext (a)
 # ifdef gettext_noop
 #  define N_(a) gettext_noop (a)

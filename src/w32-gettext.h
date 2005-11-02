@@ -49,6 +49,6 @@ const char *gettext (const char *msgid);
 
 char *textdomain (const char *domainname);
 
-char *libintl_dgettext (const char *domainname, const char *msgid);
+char *dgettext (const char *domainname, const char *msgid);
 
 #endif	/* ENABLE_NLS */

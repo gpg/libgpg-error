@@ -74,8 +74,7 @@ if test "$1" = "--build-w32"; then
     fi
 
     ./configure --enable-maintainer-mode  --prefix=${w32root}  \
-            --host=i586-mingw32msvc --build=${build} \
-            --disable-shared
+            --host=i586-mingw32msvc --build=${build} 
 
     exit $?
 fi

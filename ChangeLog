@@ -1,3 +1,16 @@
+2005-11-02  Werner Koch  <wk@g10code.com>
+
+	* src/Makefile.am (gpg_error_SOURCES): Include ARCH_SOURCES.
+	* src/gpg-error.c [W32]: Include gettext.h instead of libintl.h.
+
+	* configure.ac (AH_BOTTOM): Define ENABLE_NLS for W32 builds.
+	* src/w32-gettext.h (dgettext): Changed prototype from
+	libintl_dgettext.
+	* src/w32-gettext.c: Replaced use of WIN32 by HAVE_W32_SYSTEM on
+	demand of the holy GNUquisition.
+	(bindtextdomain, textdomain, dgettext): Need to cast the const way
+	from the return value.
+
 2005-10-26  Werner Koch  <wk@g10code.com>
 
 	* Makefile.am: Used dist-bzip2 option.
