@@ -1,4 +1,4 @@
-Noteworthy changes in version 1.2 (unreleased)
+Noteworthy changes in version 1.2 (2006-03-03)
 ----------------------------------------------
 
  * New function gpg_err_init, which binds the locale directory to
@@ -24,6 +24,7 @@ GPG_ERR_LOCKED			NEW
 gpg_err_init			NEW
 GPG_ERR_INITIALIZED		NEW
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 Noteworthy changes in version 1.1 (2005-06-20)
 ----------------------------------------------
