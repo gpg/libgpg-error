@@ -20,7 +20,7 @@
 # (Process this file with autoconf to produce a configure script.)
 # The following lines are used by ./autogen.sh.
 AC_PREREQ(2.59)
-min_automake_version="1.9.3"
+min_automake_version="1.9.6"
 # The gettext version is set below using AM_GNU_GETTEXT_VERSION
 # Version number: Remember to change it immediately *after* a release.
 AC_INIT([libgpg-error],[1.3-cvs],[bug-gnupg@gnupg.org])

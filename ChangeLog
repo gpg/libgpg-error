@@ -1,3 +1,10 @@
+2006-03-06  Marcus Brinkmann  <marcus@g10code.de>
+
+	* configure.ac (min_automake_version): Bump to 1.9.6.
+	* mkinstalldirs, depcomp, compile, INSTALL, COPYING, missing,
+	install-sh: Update from automake 1.9.6.
+	ltmain.sh: Update from libtool 1.5.22.
+
 2006-03-03  Marcus Brinkmann  <marcus@g10code.de>
 
 	* configure.ac (LIBGPG_ERROR_LT_CURRENT, LIBGPG_ERROR_LT_AGE):
