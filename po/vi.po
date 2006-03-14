@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.1\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2004-07-30 14:49+0200\n"
+"POT-Creation-Date: 2006-03-14 12:56+0100\n"
 "PO-Revision-Date: 2006-01-08 16:33+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
@@ -775,143 +775,158 @@ msgid "Invalid request"
 msgstr "Yêu cầu không hợp lệ"
 
 #: src/err-codes.h:199
+#, fuzzy
+msgid "Unknown extension"
+msgstr "Biểu thức S lạ"
+
+#: src/err-codes.h:200
+#, fuzzy
+msgid "Unknown critical extension"
+msgstr "Biểu thức S lạ"
+
+#: src/err-codes.h:201
+#, fuzzy
+msgid "Locked"
+msgstr "Chưa khóa"
+
+#: src/err-codes.h:202
 msgid "Buffer too short"
 msgstr "Vùng đệm quá ngắn"
 
-#: src/err-codes.h:200
+#: src/err-codes.h:203
 msgid "Invalid length specifier in S-expression"
 msgstr "Điều ghi rõ độ dài không hợp lệ trong biểu thức S"
 
-#: src/err-codes.h:201
+#: src/err-codes.h:204
 msgid "String too long in S-expression"
 msgstr "Chuỗi quá dài trong biểu thức S"
 
-#: src/err-codes.h:202
+#: src/err-codes.h:205
 msgid "Unmatched parentheses in S-expression"
 msgstr "Có ngoặc chưa khớp trong biểu thức S"
 
-#: src/err-codes.h:203
+#: src/err-codes.h:206
 msgid "S-expression not canonical"
 msgstr "Biểu thức S không phải chuẩn tắc"
 
-#: src/err-codes.h:204
+#: src/err-codes.h:207
 msgid "Bad character in S-expression"
 msgstr "Ký tự sai trong biểu thức S"
 
-#: src/err-codes.h:205
+#: src/err-codes.h:208
 msgid "Bad quotation in S-expression"
 msgstr "Đoạn trích dẫn sai trong biểu thức S"
 
-#: src/err-codes.h:206
+#: src/err-codes.h:209
 msgid "Zero prefix in S-expression"
 msgstr "Tiền tố số không trong biểu thức S"
 
-#: src/err-codes.h:207
+#: src/err-codes.h:210
 msgid "Nested display hints in S-expression"
 msgstr "Có mẹo hiển thị lồng nhau trong biểu thức S"
 
-#: src/err-codes.h:208
+#: src/err-codes.h:211
 msgid "Unmatched display hints"
 msgstr "Có mẹo hiển thị chưa khớp"
 
-#: src/err-codes.h:209
+#: src/err-codes.h:212
 msgid "Unexpected reserved punctuation in S-expression"
 msgstr "Có dấu chấm câu đã dành riêng bất ngờ trong biểu thức S"
 
-#: src/err-codes.h:210
+#: src/err-codes.h:213
 msgid "Bad hexadecimal character in S-expression"
 msgstr "Ký tự thập lục sai trong biểu thức S"
 
-#: src/err-codes.h:211
+#: src/err-codes.h:214
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Có số thập lục lẻ trong biểu thức S"
 
-#: src/err-codes.h:212
+#: src/err-codes.h:215
 msgid "Bad octadecimal character in S-expression"
 msgstr "Ký tự bát phân trong biểu thức S"
 
-#: src/err-codes.h:213
+#: src/err-codes.h:216
 msgid "User defined error code 1"
 msgstr "Mã lỗi tự định nghĩa 1"
 
-#: src/err-codes.h:214
+#: src/err-codes.h:217
 msgid "User defined error code 2"
 msgstr "Mã lỗi tự định nghĩa 2"
 
-#: src/err-codes.h:215
+#: src/err-codes.h:218
 msgid "User defined error code 3"
 msgstr "Mã lỗi tự định nghĩa 3"
 
-#: src/err-codes.h:216
+#: src/err-codes.h:219
 msgid "User defined error code 4"
 msgstr "Mã lỗi tự định nghĩa 4"
 
-#: src/err-codes.h:217
+#: src/err-codes.h:220
 msgid "User defined error code 5"
 msgstr "Mã lỗi tự định nghĩa 5"
 
-#: src/err-codes.h:218
+#: src/err-codes.h:221
 msgid "User defined error code 6"
 msgstr "Mã lỗi tự định nghĩa 6"
 
-#: src/err-codes.h:219
+#: src/err-codes.h:222
 msgid "User defined error code 7"
 msgstr "Mã lỗi tự định nghĩa 7"
 
-#: src/err-codes.h:220
+#: src/err-codes.h:223
 msgid "User defined error code 8"
 msgstr "Mã lỗi tự định nghĩa 8"
 
-#: src/err-codes.h:221
+#: src/err-codes.h:224
 msgid "User defined error code 9"
 msgstr "Mã lỗi tự định nghĩa 9"
 
-#: src/err-codes.h:222
+#: src/err-codes.h:225
 msgid "User defined error code 10"
 msgstr "Mã lỗi tự định nghĩa 10"
 
-#: src/err-codes.h:223
+#: src/err-codes.h:226
 msgid "User defined error code 11"
 msgstr "Mã lỗi tự định nghĩa 11"
 
-#: src/err-codes.h:224
+#: src/err-codes.h:227
 msgid "User defined error code 12"
 msgstr "Mã lỗi tự định nghĩa 12"
 
-#: src/err-codes.h:225
+#: src/err-codes.h:228
 msgid "User defined error code 13"
 msgstr "Mã lỗi tự định nghĩa 13"
 
-#: src/err-codes.h:226
+#: src/err-codes.h:229
 msgid "User defined error code 14"
 msgstr "Mã lỗi tự định nghĩa 14"
 
-#: src/err-codes.h:227
+#: src/err-codes.h:230
 msgid "User defined error code 15"
 msgstr "Mã lỗi tự định nghĩa 15"
 
-#: src/err-codes.h:228
+#: src/err-codes.h:231
 msgid "User defined error code 16"
 msgstr "Mã lỗi tự định nghĩa 16"
 
-#: src/err-codes.h:229
+#: src/err-codes.h:232
 msgid "Unknown system error"
 msgstr "Gặp lỗi hệ thống lạ"
 
-#: src/err-codes.h:230
+#: src/err-codes.h:233
 msgid "End of file"
 msgstr "Kết thức tập tin"
 
-#: src/err-codes.h:231
+#: src/err-codes.h:234
 msgid "Unknown error code"
 msgstr "Mã lỗi lạ"
 
-#: src/gpg-error.c:281
+#: src/gpg-error.c:456
 #, c-format
 msgid "Usage: %s GPG-ERROR [...]\n"
 msgstr "Cách sử dụng: %s GPG-ERROR [...]\n"
 
-#: src/gpg-error.c:302
+#: src/gpg-error.c:477
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: cảnh báo : không thể nhận ra %s\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.0\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2005-10-26 10:43+0200\n"
+"POT-Creation-Date: 2006-03-14 12:56+0100\n"
 "PO-Revision-Date: 2004-07-30 14:55+0200\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
@@ -914,12 +914,12 @@ msgstr "Dateiende"
 msgid "Unknown error code"
 msgstr "Unbekannter Fehlercode"
 
-#: src/gpg-error.c:452
+#: src/gpg-error.c:456
 #, c-format
 msgid "Usage: %s GPG-ERROR [...]\n"
 msgstr "Aufruf: %s GPG-FEHLER [...]\n"
 
-#: src/gpg-error.c:473
+#: src/gpg-error.c:477
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: Warnung: %s konnte nicht erkannt werden\n"

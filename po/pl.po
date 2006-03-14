@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 0.8-cvs\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2005-10-26 10:43+0200\n"
+"POT-Creation-Date: 2006-03-14 12:56+0100\n"
 "PO-Revision-Date: 2004-04-20 21:03+0200\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -916,12 +916,12 @@ msgstr "Koniec pliku"
 msgid "Unknown error code"
 msgstr "Nieznany kod b³êdu"
 
-#: src/gpg-error.c:452
+#: src/gpg-error.c:456
 #, c-format
 msgid "Usage: %s GPG-ERROR [...]\n"
 msgstr "Sk³adnia: %s B£¡D-GPG [...]\n"
 
-#: src/gpg-error.c:473
+#: src/gpg-error.c:477
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: uwaga: nie rozpoznano %s\n"

@@ -1,3 +1,12 @@
+2006-03-14  Marcus Brinkmann  <marcus@g10code.de>
+
+	Many files regenerated.
+	* src/Makefile.am (gpg_error_CPPFLAGS, libgpg_error_la_CPPFLAGS):
+	Add -I../intl.
+	* Makefile.am (SUBDIRS): Add intl.
+	* configure.ac (AC_CONFIG_FILES): Add intl/Makefile.
+	(AM_GNU_GETTEXT_VERSION): Bump to 0.14.5.
+
 2006-03-06  Marcus Brinkmann  <marcus@g10code.de>
 
 	* configure.ac (min_automake_version): Bump to 1.9.6.

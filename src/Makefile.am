@@ -96,7 +96,7 @@ libgpg_error_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 libgpg_error_la_LIBADD = $(intllibs)
 
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c $(arch_sources)
-gpg_error_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
+gpg_error_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" -I../intl
 gpg_error_LDADD = ./libgpg-error.la @LTLIBINTL@
 
 err-sources.h: Makefile mkstrtable.awk err-sources.h.in

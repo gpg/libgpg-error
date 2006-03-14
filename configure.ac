@@ -90,8 +90,8 @@ AH_BOTTOM([
 
 
 # Note, that autogen.sh greps for the next line.
-AM_GNU_GETTEXT_VERSION(0.12.1)
-AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.14.5])
+AM_GNU_GETTEXT
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -140,7 +140,9 @@ AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
 
 # Substitution
 AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([intl/Makefile])
 AC_CONFIG_FILES([po/Makefile.in m4/Makefile])
 AC_CONFIG_FILES([src/Makefile tests/Makefile])
 AC_CONFIG_FILES([src/versioninfo.rc])
+
 AC_OUTPUT
