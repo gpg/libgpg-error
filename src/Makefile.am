@@ -92,7 +92,7 @@ libgpg_error_la_LDFLAGS = $(gpg_error_res_ldflag) -version-info \
 libgpg_error_la_SOURCES = gpg-error.h gettext.h $(arch_sources) \
 	init.c strsource.c strerror.c code-to-errno.c code-from-errno.c
 
-libgpg_error_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
+libgpg_error_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" -I../intl
 libgpg_error_la_LIBADD = $(intllibs)
 
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c $(arch_sources)
