@@ -1,5 +1,9 @@
 2006-03-14  Marcus Brinkmann  <marcus@g10code.de>
 
+	Released 1.3.
+
+	* configure.ac (LIBGPG_ERROR_LT_REVISION): Bump for release.
+
 	Many files regenerated.
 	* src/Makefile.am (gpg_error_CPPFLAGS, libgpg_error_la_CPPFLAGS):
 	Add -I../intl.

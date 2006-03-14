@@ -23,7 +23,7 @@ AC_PREREQ(2.59)
 min_automake_version="1.9.6"
 # The gettext version is set below using AM_GNU_GETTEXT_VERSION
 # Version number: Remember to change it immediately *after* a release.
-AC_INIT([libgpg-error],[1.3-cvs],[bug-gnupg@gnupg.org])
+AC_INIT([libgpg-error],[1.3],[bug-gnupg@gnupg.org])
 # LT Version numbers, remember to change them just *before* a release.
 #   (Code changed:			REVISION++)
 #   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)
@@ -32,7 +32,7 @@ AC_INIT([libgpg-error],[1.3-cvs],[bug-gnupg@gnupg.org])
 # Note that added error codes don't constitute an interface change.
 LIBGPG_ERROR_LT_CURRENT=2
 LIBGPG_ERROR_LT_AGE=2
-LIBGPG_ERROR_LT_REVISION=0
+LIBGPG_ERROR_LT_REVISION=1
 AC_SUBST(LIBGPG_ERROR_LT_CURRENT)
 AC_SUBST(LIBGPG_ERROR_LT_AGE)
 AC_SUBST(LIBGPG_ERROR_LT_REVISION)
