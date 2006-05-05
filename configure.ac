@@ -1,5 +1,5 @@
 # configure.ac for libgpg-error
-# Copyright (C) 2003, 2004 g10 Code GmbH
+# Copyright (C) 2003, 2004, 2006 g10 Code GmbH
 # 
 # This file is part of libgpg-error.
 # 
@@ -23,7 +23,7 @@ AC_PREREQ(2.59)
 min_automake_version="1.9.6"
 # The gettext version is set below using AM_GNU_GETTEXT_VERSION
 # Version number: Remember to change it immediately *after* a release.
-AC_INIT([libgpg-error],[1.3],[bug-gnupg@gnupg.org])
+AC_INIT([libgpg-error],[1.4-cvs],[bug-gnupg@gnupg.org])
 # LT Version numbers, remember to change them just *before* a release.
 #   (Code changed:			REVISION++)
 #   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)
@@ -143,6 +143,7 @@ AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([intl/Makefile])
 AC_CONFIG_FILES([po/Makefile.in m4/Makefile])
 AC_CONFIG_FILES([src/Makefile tests/Makefile])
+AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile])
 AC_CONFIG_FILES([src/versioninfo.rc])
 
 AC_OUTPUT

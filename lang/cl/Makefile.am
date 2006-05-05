@@ -17,14 +17,25 @@
 # License along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
 
-SUBDIRS = intl m4 src tests po lang
+distributed_clfiles = gpg-error.asd \
+	gpg-error-package.lisp \
+	gpg-error.lisp
 
-ACLOCAL_AMFLAGS = -I m4
-AUTOMAKE_OPTIONS = dist-bzip2
+generated_clfiles = gpg-error-codes.lisp
 
-EXTRA_DIST = autogen.sh config.rpath libgpg-error.spec.in 
+clfiles = $(distributed_clfiles) $(generated_clfiles)
 
-dist-hook:
-	sed -e 's/@pkg_version@/$(VERSION)/g' \
-	    $(top_srcdir)/libgpg-error.spec.in  > $(distdir)/libgpg-error.spec
-	@set -e; echo "$(VERSION)" > $(distdir)/VERSION
+# FIXME: Should be configurable.
+clfilesdir = $(prefix)/common-lisp/source/libgpg-error
+dist_clfiles_DATA = $(distributed_clfiles)
+nodist_clfiles_DATA = $(generated_clfiles)
+
+EXTRA_DIST = README mkerrcodes.awk
+CLEANFILES = gpg-error-codes.lisp
+
+codes_file := $(top_srcdir)/src/err-codes.h.in
+errno_file := $(top_srcdir)/src/errnos.in
+
+gpg-error-codes.lisp: Makefile mkerrcodes.awk $(codes_file) $(errno_file)
+	echo '@errnos@' | cat $(codes_file) - $(errno_file) \
+	| $(AWK) -f $(srcdir)/mkerrcodes.awk >$@

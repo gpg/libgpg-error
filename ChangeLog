@@ -1,3 +1,15 @@
+2006-05-05  Marcus Brinkmann  <marcus@g10code.de>
+
+	* configure.ac (AC_CONFIG_FILES): Add lang/Makefile and
+	lang/cl/Makefile.
+	* Makefile.am (SUBDIRS): Add lang.
+	* lang: New directory.
+	* lang/README, lang/Makefile.am: New files.
+	* lang/cl: New directory.
+	* lang/cl/Makefile.am, lang/cl/README, lang/cl/gpg-error.asd,
+	lang/cl/gpg-error-package.lisp, lang/cl/gpg-error.lisp,
+	lang/cl/mkerrcodes.awk: New files.
+
 2006-03-14  Marcus Brinkmann  <marcus@g10code.de>
 
 	Released 1.3.

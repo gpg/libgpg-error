@@ -17,14 +17,6 @@
 # License along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
 
-SUBDIRS = intl m4 src tests po lang
+SUBDIRS = cl
 
-ACLOCAL_AMFLAGS = -I m4
-AUTOMAKE_OPTIONS = dist-bzip2
-
-EXTRA_DIST = autogen.sh config.rpath libgpg-error.spec.in 
-
-dist-hook:
-	sed -e 's/@pkg_version@/$(VERSION)/g' \
-	    $(top_srcdir)/libgpg-error.spec.in  > $(distdir)/libgpg-error.spec
-	@set -e; echo "$(VERSION)" > $(distdir)/VERSION
+EXTRA_DIST = README

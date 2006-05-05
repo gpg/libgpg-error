@@ -1,0 +1,8 @@
+Common Lisp Support for libgpg-error
+------------------------------------
+
+Requirements:
+
+ASDF	Packaging Support
+CFFI	Foreign Function Interface
+
