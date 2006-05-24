@@ -1,3 +1,7 @@
+2006-05-25  Marcus Brinkmann  <marcus@g10code.de>
+
+	* lang/cl/Makefile.am (clfilesdir): Use datadir, not prefix.
+
 2006-05-05  Marcus Brinkmann  <marcus@g10code.de>
 
 	* configure.ac (AC_CONFIG_FILES): Add lang/Makefile and

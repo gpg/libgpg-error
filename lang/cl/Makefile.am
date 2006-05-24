@@ -26,7 +26,7 @@ generated_clfiles = gpg-error-codes.lisp
 clfiles = $(distributed_clfiles) $(generated_clfiles)
 
 # FIXME: Should be configurable.
-clfilesdir = $(prefix)/common-lisp/source/libgpg-error
+clfilesdir = $(datadir)/common-lisp/source/libgpg-error
 dist_clfiles_DATA = $(distributed_clfiles)
 nodist_clfiles_DATA = $(generated_clfiles)
 
