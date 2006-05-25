@@ -26,8 +26,8 @@
 
 (defsystem gpg-error
     :description "Common error values for all GnuPG components."
-    :version "1.4"
     :author "g10 Code GmbH"
+    :version "@VERSION@"
     :licence "LGPL"
     :components ((:file "gpg-error-package")
 		 (:file "gpg-error-codes"

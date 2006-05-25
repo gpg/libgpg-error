@@ -143,7 +143,7 @@ AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([intl/Makefile])
 AC_CONFIG_FILES([po/Makefile.in m4/Makefile])
 AC_CONFIG_FILES([src/Makefile tests/Makefile])
-AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile])
+AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc])
 
 AC_OUTPUT
