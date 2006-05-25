@@ -1,5 +1,9 @@
 2006-05-25  Marcus Brinkmann  <marcus@g10code.de>
 
+	* lang/cl/Makefile.am (distributed_clfiles): Move gpg-error.asd to ...
+	(generated_clfiles): ... here.
+	(EXTRA_DIST): Add gpg-error.asd.in.
+
 	* lang/cl/gpg-error.asd: Renamed to ...
 	* lang/cl/gpg-error.asd.in: ... this.
 	* configure.ac (AC_CONFIG_FILES): Add lang/cl/gpg-error.asd.in.
