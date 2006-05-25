@@ -17,10 +17,10 @@
 # License along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
 
-distributed_clfiles = gpg-error-package.lisp \
-	gpg-error.lisp
+distributed_clfiles = gpg-error.asd \
+	gpg-error-package.lisp gpg-error.lisp
 
-generated_clfiles = gpg-error.asd gpg-error-codes.lisp
+generated_clfiles = gpg-error-codes.lisp
 
 clfiles = $(distributed_clfiles) $(generated_clfiles)
 
@@ -29,7 +29,7 @@ clfilesdir = $(datadir)/common-lisp/source/gpg-error
 dist_clfiles_DATA = $(distributed_clfiles)
 nodist_clfiles_DATA = $(generated_clfiles)
 
-EXTRA_DIST = README gpg-error.asd.in mkerrcodes.awk
+EXTRA_DIST = README mkerrcodes.awk
 CLEANFILES = gpg-error-codes.lisp
 
 codes_file := $(top_srcdir)/src/err-codes.h.in
