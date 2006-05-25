@@ -19,13 +19,13 @@
 ;;; Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 ;;; 02111-1307, USA.
 
-(defpackage #:org.gnupg.libgpg-error.system
+(defpackage #:gpg-error-system
   (:use #:common-lisp #:asdf))
 
-(in-package #:org.gnupg.libgpg-error.system)
+(in-package #:gpg-error-system)
 
-(defsystem org.gnupg.libgpg-error
-    :components ((:file "libgpg-error-package")
-		 (:file "libgpg-error-codes"
+(defsystem gpg-error
+    :components ((:file "gpg-error-package")
+		 (:file "gpg-error-codes"
 			:depends-on ("libgpg-error-package"))
-		 (:file "libgpg-error" :depends-on ("error-codes"))))
+		 (:file "gpg-error" :depends-on ("error-codes"))))

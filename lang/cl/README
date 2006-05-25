@@ -6,3 +6,7 @@ Requirements:
 ASDF	Packaging Support
 CFFI	Foreign Function Interface
 
+Use with:
+
+> (asdf:operate 'asdf:load-op ':gpg-error)
+> (use-package :gpg-error)

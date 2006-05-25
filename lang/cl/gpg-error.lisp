@@ -21,7 +21,7 @@
 
 ;;; Set up the library.
 
-(in-package :org.gnupg.libgpg-error)
+(in-package :gpg-error)
 
 (define-foreign-library libgpg-error
   (:unix "libgpg-error.so")

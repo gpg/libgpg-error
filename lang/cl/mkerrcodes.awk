@@ -99,7 +99,7 @@ header {
 	{
 	  header = 0;
 	  
-	  print "(in-package :org.gnupg.libgpg-error)";
+	  print "(in-package :gpg-error)";
 	  print "";
 	  print ";;; The error code type gpg-err-code-t.";
 	  print "";

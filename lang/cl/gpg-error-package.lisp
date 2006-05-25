@@ -43,7 +43,7 @@
 ;;; *gpg-err-source-default* is a dynamic variable that can be set to
 ;;; change the default for gpg-error.
 
-(defpackage #:org.gnupg.libgpg-error
+(defpackage #:gpg-error
   (:use #:common-lisp #:cffi)
 
   (:export :gpg-err-code-as-key

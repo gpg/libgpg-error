@@ -1,5 +1,9 @@
 2006-05-25  Marcus Brinkmann  <marcus@g10code.de>
 
+	* lang/cl/mkerrcodes.awk, lang/cl/gpg-error-package.lisp,
+	lang/cl/gpg-error.lisp, lang/cl/gpg-error.asd, lang/cl/Makefile.am
+	(clfilesdir): Fix package and file names.
+	
 	* lang/cl/Makefile.am (clfilesdir): Use datadir, not prefix.
 
 2006-05-05  Marcus Brinkmann  <marcus@g10code.de>
