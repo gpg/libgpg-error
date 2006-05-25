@@ -25,7 +25,11 @@
 (in-package #:gpg-error-system)
 
 (defsystem gpg-error
+    :description "Common error values for all GnuPG components."
+    :version "1.4"
+    :author "g10 Code GmbH"
+    :licence "LGPL"
     :components ((:file "gpg-error-package")
 		 (:file "gpg-error-codes"
-			:depends-on ("libgpg-error-package"))
-		 (:file "gpg-error" :depends-on ("error-codes"))))
+			:depends-on ("gpg-error-package"))
+		 (:file "gpg-error" :depends-on ("gpg-error-codes"))))
