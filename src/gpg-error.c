@@ -64,16 +64,15 @@ static void drop_locale_dir (char *locale_dir);
 static void
 i18n_init (void)
 {
+#ifdef ENABLE_NLS
   char *locale_dir;
 
-#ifdef ENABLE_NLS
 # ifdef HAVE_LC_MESSAGES
   setlocale (LC_TIME, "");
   setlocale (LC_MESSAGES, "");
 # else
   setlocale (LC_ALL, "" );
 # endif
-#endif
 
   locale_dir = get_locale_dir ();
   if (locale_dir)
@@ -82,6 +81,7 @@ i18n_init (void)
       drop_locale_dir (locale_dir);
     }
   textdomain (PACKAGE);
+#endif
 }
 
 

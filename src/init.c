@@ -48,6 +48,7 @@ static void drop_locale_dir (char *locale_dir);
 gpg_error_t
 gpg_err_init (void)
 {
+#ifdef ENABLE_NLS
   char *locale_dir;
 
   /* We only have to bind our locale directory to our text domain.  */
@@ -58,6 +59,7 @@ gpg_err_init (void)
       bindtextdomain (PACKAGE, locale_dir);
       drop_locale_dir (locale_dir);
     }
+#endif
 
   return 0;
 }

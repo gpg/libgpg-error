@@ -1,3 +1,10 @@
+2006-05-29  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/init.c (gpg_err_init) [!ENABLE_NLS]: Do not initialize the
+	locale.
+	* src/gpg-error.c (i18n_init) [!ENABLE_NLS]: Likewise.
+	Patch submitted by Nils Durner <ndurner@web.de>.
+
 2006-05-25  Marcus Brinkmann  <marcus@g10code.de>
 
 	* lang/cl/gpg-error.asd: Renamed to ...
