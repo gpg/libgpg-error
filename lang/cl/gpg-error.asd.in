@@ -29,6 +29,7 @@
     :author "g10 Code GmbH"
     :version "@VERSION@"
     :licence "LGPL"
+    :depends-on ("cffi")
     :components ((:file "gpg-error-package")
 		 (:file "gpg-error-codes"
 			:depends-on ("gpg-error-package"))
