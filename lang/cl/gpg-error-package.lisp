@@ -27,9 +27,6 @@
 ;;; Errors are represented as lists '(SOURCE CODE).  Other
 ;;; representations are also accepted in some places.
 ;;;
-;;; TODO: Lispy convenience functions as need arises, for example for
-;;; output.
-;;;
 ;;; The following functions are defined which are not defined in the C API:
 ;;; gpg-err-source-as-key, gpg-err-source-as-value
 ;;; gpg-err-code-as-key, gpg-err-code-as-value

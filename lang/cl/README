@@ -10,3 +10,13 @@ Use with:
 
 > (asdf:operate 'asdf:load-op ':gpg-error)
 > (use-package :gpg-error)
+
+
+TODO
+----
+
+* We probably should define a condition base class.  Currently, we do
+  this in the user code only (eg in GPGME).
+
+* Some lispy convenience functions as need arises, for example for
+  output.
