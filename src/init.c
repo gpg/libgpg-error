@@ -196,7 +196,7 @@ get_locale_dir (void)
   instdir = read_w32_registry_string ("HKEY_LOCAL_MACHINE", REGKEY,
 				      "Install Directory");
   if (!instdir)
-    return;
+    return NULL;
   
   /* Build the key: "<instdir>/share/locale".  */
 #define SLDIR "\\share\\locale"
@@ -204,7 +204,7 @@ get_locale_dir (void)
   if (!dname)
     {
       free (instdir);
-      return;
+      return NULL;
     }
   p = dname;
   strcpy (p, instdir);
