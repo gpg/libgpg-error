@@ -1,3 +1,12 @@
+2006-09-05  Werner Koch  <wk@g10code.com>
+
+	* src/err-sources.h.in (GPG_ERR_SOURCE_ANY): New. This is so that
+	we have source distinguished from the Unknown one but declaring
+	that it is an gpg-error style error code.
+
+	* src/err-codes.h.in: Added GPG_ERR_ASS_* codes, rabnge 257-281.
+	(GPG_ERR_MISSING_ERRNO): New.
+
 2006-07-04  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/init.c (get_locale_dir): Return NULL instead of garbage.

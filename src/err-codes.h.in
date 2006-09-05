@@ -223,7 +223,38 @@
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octadecimal character in S-expression
 
-# 214 to 1023 are free to be used.
+# 214 to 254 are free to be used. 255 and 256 are RFU.
+
+# Error codes pertaining to the Assuan IPC interface
+257	GPG_ERR_ASS_GENERAL		General IPC error
+258	GPG_ERR_ASS_ACCEPT_FAILED	IPC accept call failed
+259	GPG_ERR_ASS_CONNECT_FAILED	IPC connect call failed
+260	GPG_ERR_ASS_INV_RESPONSE	Invalid IPC response
+261	GPG_ERR_ASS_INV_VALUE		Invalid value passed to IPC
+262	GPG_ERR_ASS_INCOMPLETE_LINE	Incomplete line passed to IPC
+263	GPG_ERR_ASS_LINE_TOO_LONG	Line passed to IPC too long
+264	GPG_ERR_ASS_NESTED_COMMANDS	Nested IPC commands
+265	GPG_ERR_ASS_NO_DATA_CB		No data callback in IPC
+266	GPG_ERR_ASS_NO_INQUIRE_CB	No inquire callback in IPC
+267	GPG_ERR_ASS_NOT_A_SERVER	Not an IPC server
+268	GPG_ERR_ASS_NOT_A_CLIENT	Not an IPC client
+269	GPG_ERR_ASS_SERVER_START	Problem starting IPC server
+270	GPG_ERR_ASS_READ_ERROR		IPC read error
+271	GPG_ERR_ASS_WRITE_ERROR		IPC write error
+272	GPG_ERR_ASS_SERVER_FAULT	IPC server fault
+273	GPG_ERR_ASS_TOO_MUCH_DATA	Too much data for IPC layer
+274	GPG_ERR_ASS_UNEXPECTED_CMD	Unexpected IPC command
+275	GPG_ERR_ASS_UNKNOWN_CMD		Unknown IPC command
+276	GPG_ERR_ASS_SYNTAX		IPC syntax error
+277	GPG_ERR_ASS_CANCELED		IPC call has been cancelled
+278	GPG_ERR_ASS_NO_INPUT		No input source for IPC
+279	GPG_ERR_ASS_NO_OUTPUT		No output source for IPC
+280	GPG_ERR_ASS_PARAMETER		IPC parameter error 
+281	GPG_ERR_ASS_UNKNOWN_INQUIRE	Unknown IPC inquire
+
+# 282 to 299 are reserved for future assuan codes.
+
+# 300 to 1023 are free to be used.
 
 # For free use by non-GnuPG components.
 1024	GPG_ERR_USER_1			User defined error code 1
@@ -243,8 +274,9 @@
 1038	GPG_ERR_USER_15			User defined error code 15
 1039	GPG_ERR_USER_16			User defined error code 16
 
-# 1040 to 16381 are free to be used.
+# 1040 to 16380 are free to be used.
 
+16381	GPG_ERR_MISSING_ERRNO		System error w/o errno
 16382	GPG_ERR_UNKNOWN_ERRNO		Unknown system error
 16383	GPG_ERR_EOF			End of file
 

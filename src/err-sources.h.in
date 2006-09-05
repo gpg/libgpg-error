@@ -42,8 +42,9 @@
 10	GPG_ERR_SOURCE_DIRMNGR		Dirmngr
 11	GPG_ERR_SOURCE_GSTI		GSTI
 
-# 11 to 31 are free to be used.
+# 11 to 30 are free to be used.
 
+31	GPG_ERR_SOURCE_ANY		Any source
 32	GPG_ERR_SOURCE_USER_1		User defined source 1
 33	GPG_ERR_SOURCE_USER_2		User defined source 2
 34	GPG_ERR_SOURCE_USER_3		User defined source 3
