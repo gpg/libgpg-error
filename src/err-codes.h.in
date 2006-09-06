@@ -109,8 +109,8 @@
 77	GPG_ERR_NO_AGENT		No agent running
 78	GPG_ERR_AGENT			agent error
 79	GPG_ERR_INV_DATA		Invalid data
-80	GPG_ERR_ASSUAN_SERVER_FAULT	Assuan server fault
-81	GPG_ERR_ASSUAN			Assuan error
+80	GPG_ERR_ASSUAN_SERVER_FAULT	Unspecific Assuan server fault
+81	GPG_ERR_ASSUAN			General Assuan error
 82	GPG_ERR_INV_SESSION_KEY		Invalid session key
 83	GPG_ERR_INV_SEXP		Invalid S-expression
 84	GPG_ERR_UNSUPPORTED_ALGORITHM	Unsupported algorithm
@@ -203,7 +203,9 @@
 171	GPG_ERR_UNKNOWN_EXTN		Unknown extension
 172	GPG_ERR_UNKNOWN_CRIT_EXTN	Unknown critical extension
 173	GPG_ERR_LOCKED			Locked
-# 174 to 199 are free to be used.
+174	GPG_ERR_UNKNOWN_OPTION		Unknown option
+175	GPG_ERR_UNKNOWN_COMMAND		Unknown command
+# 176 to 199 are free to be used.
 
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
 
@@ -241,7 +243,7 @@
 269	GPG_ERR_ASS_SERVER_START	Problem starting IPC server
 270	GPG_ERR_ASS_READ_ERROR		IPC read error
 271	GPG_ERR_ASS_WRITE_ERROR		IPC write error
-272	GPG_ERR_ASS_SERVER_FAULT	IPC server fault
+# reserved
 273	GPG_ERR_ASS_TOO_MUCH_DATA	Too much data for IPC layer
 274	GPG_ERR_ASS_UNEXPECTED_CMD	Unexpected IPC command
 275	GPG_ERR_ASS_UNKNOWN_CMD		Unknown IPC command

@@ -16,6 +16,8 @@ Noteworthy changes in version 1.4 (unreleased)
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_SOURCE_ANY            NEW
  GPG_ERR_MISSING_ERRNO         NEW
+ GPG_ERR_UNKNOWN_OPTION        NEW
+ GPG_ERR_UNKNOWN_COMMAND       NEW
  GPG_ERR_ASS_GENERAL           NEW
  GPG_ERR_ASS_ACCEPT_FAILED     NEW
  GPG_ERR_ASS_CONNECT_FAILED    NEW
@@ -31,7 +33,6 @@ Noteworthy changes in version 1.4 (unreleased)
  GPG_ERR_ASS_SERVER_START      NEW
  GPG_ERR_ASS_READ_ERROR        NEW
  GPG_ERR_ASS_WRITE_ERROR       NEW
- GPG_ERR_ASS_SERVER_FAULT      NEW
  GPG_ERR_ASS_TOO_MUCH_DATA     NEW
  GPG_ERR_ASS_UNEXPECTED_CMD    NEW
  GPG_ERR_ASS_UNKNOWN_CMD       NEW
