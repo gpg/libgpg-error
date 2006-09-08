@@ -1,3 +1,7 @@
+2006-09-08  Werner Koch  <wk@g10code.com>
+
+	* pl.po: Updated. 
+
 2006-03-14  gettextize  <bug-gnu-gettext@gnu.org>
 
 	* Makefile.in.in: Upgrade to gettext-0.14.5.
