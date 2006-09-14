@@ -61,7 +61,7 @@ gpg_strerror (gpg_error_t err)
    to a resource shortage, set *STR to NULL and return 1.  If this
    call fails because the error number is not valid, don't set *STR
    and return 0.  */
-int
+static int
 system_strerror_r (int no, char *buf, size_t buflen)
 {
   char *errstr;
@@ -89,7 +89,7 @@ system_strerror_r (int no, char *buf, size_t buflen)
 #else	/* STRERROR_R_CHAR_P */
 /* Now the POSIX version.  */
 
-int
+static int
 system_strerror_r (int no, char *buf, size_t buflen)
 {
   return strerror_r (no, buf, buflen);
@@ -102,7 +102,7 @@ system_strerror_r (int no, char *buf, size_t buflen)
    version.  Maybe we are even lucky and the system's strerror() is
    already thread-safe.  */
 
-int
+static int
 system_strerror_r (int no, char *buf, size_t buflen)
 {
   char *errstr = strerror (no);

@@ -212,13 +212,21 @@ const char *gpg_strsource (gpg_error_t err);
 
 /* Retrieve the error code for the system error ERR.  This returns
    GPG_ERR_UNKNOWN_ERRNO if the system error is not mapped (report
-   this).  */
+   this). */
 gpg_err_code_t gpg_err_code_from_errno (int err);
 
 
 /* Retrieve the system error for the error code CODE.  This returns 0
    if CODE is not a system error code.  */
 int gpg_err_code_to_errno (gpg_err_code_t code);
+
+
+/* Retrieve the error code directly from the ERRNO variable.  This
+   returns GPG_ERR_UNKNOWN_ERRNO if the system error is not mapped
+   (report this) and GPG_ERR_MISSING_ERRNO if ERRNO has the value 0. */
+gpg_err_code_t gpg_err_code_from_syserror (void);
+
+
 
 
 /* Self-documenting convenience functions.  */
@@ -234,6 +242,12 @@ static GPG_ERR_INLINE gpg_error_t
 gpg_error_from_errno (int err)
 {
   return gpg_error (gpg_err_code_from_errno (err));
+}
+
+static GPG_ERR_INLINE gpg_error_t
+gpg_error_from_syserror (void)
+{
+  return gpg_error (gpg_err_code_from_syserror ());
 }
 
 #ifdef __cplusplus

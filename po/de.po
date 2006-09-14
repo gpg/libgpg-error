@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error-1.0\n"
+"Project-Id-Version: libgpg-error-1.4\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2006-03-14 12:56+0100\n"
-"PO-Revision-Date: 2004-07-30 14:55+0200\n"
+"POT-Creation-Date: 2006-09-14 14:58+0200\n"
+"PO-Revision-Date: 2006-09-14 15:11+0200\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -64,22 +64,26 @@ msgid "GSTI"
 msgstr "GSTI"
 
 #: src/err-sources.h:40
+msgid "Any source"
+msgstr "Unspezifische Quelle"
+
+#: src/err-sources.h:41
 msgid "User defined source 1"
 msgstr "Benutzerdefinierte Quelle 1"
 
-#: src/err-sources.h:41
+#: src/err-sources.h:42
 msgid "User defined source 2"
 msgstr "Benutzerdefinierte Quelle 2"
 
-#: src/err-sources.h:42
+#: src/err-sources.h:43
 msgid "User defined source 3"
 msgstr "Benutzerdefinierte Quelle 3"
 
-#: src/err-sources.h:43
+#: src/err-sources.h:44
 msgid "User defined source 4"
 msgstr "Benutzerdefinierte Quelle 4"
 
-#: src/err-sources.h:44
+#: src/err-sources.h:45
 msgid "Unknown source"
 msgstr "Unbekannte Quelle"
 
@@ -404,12 +408,12 @@ msgid "Invalid data"
 msgstr "Ungültige Daten"
 
 #: src/err-codes.h:108
-msgid "Assuan server fault"
-msgstr "Assuan Serverfehler"
+msgid "Unspecific Assuan server fault"
+msgstr "Unspezifischer Assuan Serverfehler"
 
 #: src/err-codes.h:109
-msgid "Assuan error"
-msgstr "Fehler in Assuan"
+msgid "General Assuan error"
+msgstr "Allgemeiner Assuan Fehler"
 
 #: src/err-codes.h:110
 msgid "Invalid session key"
@@ -768,149 +772,254 @@ msgid "Invalid request"
 msgstr "Ungültiger Request"
 
 #: src/err-codes.h:199
-#, fuzzy
 msgid "Unknown extension"
-msgstr "Unbekannte S-expression"
+msgstr "Unbekannte Erweiterung"
 
 #: src/err-codes.h:200
-#, fuzzy
 msgid "Unknown critical extension"
-msgstr "Unbekannte S-expression"
+msgstr "Unbekannte kritische Erweiterung"
 
 #: src/err-codes.h:201
-#, fuzzy
 msgid "Locked"
-msgstr "Nicht gesperrt"
+msgstr "Gesperrt"
 
 #: src/err-codes.h:202
+msgid "Unknown option"
+msgstr "Unbekannte Option"
+
+#: src/err-codes.h:203
+msgid "Unknown command"
+msgstr "Unbekanntes Kommando"
+
+#: src/err-codes.h:204
 msgid "Buffer too short"
 msgstr "Datenpuffer zu kurz"
 
-#: src/err-codes.h:203
+#: src/err-codes.h:205
 msgid "Invalid length specifier in S-expression"
 msgstr "Ungültige Längeangabe in der S-expression"
 
-#: src/err-codes.h:204
+#: src/err-codes.h:206
 msgid "String too long in S-expression"
 msgstr "Zeichenkette in S-expression zu lang"
 
-#: src/err-codes.h:205
+#: src/err-codes.h:207
 msgid "Unmatched parentheses in S-expression"
 msgstr "Nich übereinstimmende Klammern in S-expression"
 
-#: src/err-codes.h:206
+#: src/err-codes.h:208
 msgid "S-expression not canonical"
 msgstr "S-expression ist nicht kanonisch"
 
-#: src/err-codes.h:207
+#: src/err-codes.h:209
 msgid "Bad character in S-expression"
 msgstr "Fehlerhaftes Zeichen in S-expression"
 
-#: src/err-codes.h:208
+#: src/err-codes.h:210
 msgid "Bad quotation in S-expression"
 msgstr "Fehlerhafte Zitierung in S-expression"
 
-#: src/err-codes.h:209
+#: src/err-codes.h:211
 msgid "Zero prefix in S-expression"
 msgstr "Null-Präfix in S-expression"
 
-#: src/err-codes.h:210
+#: src/err-codes.h:212
 msgid "Nested display hints in S-expression"
 msgstr "Verschachtelte \"Hints\" in S-expression"
 
-#: src/err-codes.h:211
+#: src/err-codes.h:213
 msgid "Unmatched display hints"
 msgstr "Nicht übereinstimmende \"Hints\""
 
-#: src/err-codes.h:212
+#: src/err-codes.h:214
 msgid "Unexpected reserved punctuation in S-expression"
 msgstr "Unerwartetes reserviertes Zeichen in S-expression"
 
-#: src/err-codes.h:213
+#: src/err-codes.h:215
 msgid "Bad hexadecimal character in S-expression"
 msgstr "Falsches Hex-Zeichen in S-expression"
 
-#: src/err-codes.h:214
+#: src/err-codes.h:216
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Ungerade Anzahl von Hex-Zeichen in S-expression"
 
-#: src/err-codes.h:215
+#: src/err-codes.h:217
 msgid "Bad octadecimal character in S-expression"
 msgstr "Falsches Oktal-Zeichen in S-expression"
 
-#: src/err-codes.h:216
+#: src/err-codes.h:218
+msgid "General IPC error"
+msgstr "Allgemeiner IPC Fehler"
+
+#: src/err-codes.h:219
+msgid "IPC accept call failed"
+msgstr "IPC \"accept\" Aufruf fehlgeschlagen"
+
+#: src/err-codes.h:220
+msgid "IPC connect call failed"
+msgstr "IPC \"connect\" Aufruf fehlgeschlagen"
+
+#: src/err-codes.h:221
+msgid "Invalid IPC response"
+msgstr "Ungültige IPC Antwort"
+
+#: src/err-codes.h:222
+msgid "Invalid value passed to IPC"
+msgstr "Ungültiger Wert an IPC übergeben"
+
+#: src/err-codes.h:223
+msgid "Incomplete line passed to IPC"
+msgstr "Unvollständige Zeile an IPC übergeben"
+
+#: src/err-codes.h:224
+msgid "Line passed to IPC too long"
+msgstr "An die IPC übergebene Zeile ist zu lang"
+
+#: src/err-codes.h:225
+msgid "Nested IPC commands"
+msgstr "Verschachtelte IPC Kommandos"
+
+#: src/err-codes.h:226
+msgid "No data callback in IPC"
+msgstr "Kein Daten vom IPC \"Callback\""
+
+#: src/err-codes.h:227
+msgid "No inquire callback in IPC"
+msgstr "Kein \"Inquire\" \"Callback\" für IPC gesetzt"
+
+#: src/err-codes.h:228
+msgid "Not an IPC server"
+msgstr "Kein IPC Server"
+
+#: src/err-codes.h:229
+msgid "Not an IPC client"
+msgstr "Kein IPC Client"
+
+#: src/err-codes.h:230
+msgid "Problem starting IPC server"
+msgstr "Problem beim Starten des IPC Servers"
+
+#: src/err-codes.h:231
+msgid "IPC read error"
+msgstr "IPC Lesefehler"
+
+#: src/err-codes.h:232
+msgid "IPC write error"
+msgstr "IPC Schreibfehler"
+
+#: src/err-codes.h:233
+msgid "Too much data for IPC layer"
+msgstr "Zu viele Daten für das IPC Ebene"
+
+#: src/err-codes.h:234
+msgid "Unexpected IPC command"
+msgstr "Unerwartetes IPC Kommando"
+
+#: src/err-codes.h:235
+msgid "Unknown IPC command"
+msgstr "Unbekanntes IPC Kommando"
+
+#: src/err-codes.h:236
+msgid "IPC syntax error"
+msgstr "IPC Syntaxfehler"
+
+#: src/err-codes.h:237
+msgid "IPC call has been cancelled"
+msgstr "Der IPC Aufruf wurde abgebrochen"
+
+#: src/err-codes.h:238
+msgid "No input source for IPC"
+msgstr "Eingabequelle für IPC fehlt"
+
+#: src/err-codes.h:239
+msgid "No output source for IPC"
+msgstr "Ausgabesenke für IPC fehlt"
+
+#: src/err-codes.h:240
+msgid "IPC parameter error"
+msgstr "IPC Parameterfehler"
+
+#: src/err-codes.h:241
+msgid "Unknown IPC inquire"
+msgstr "Unbekanntes IPC \"Inquire\""
+
+#: src/err-codes.h:242
 msgid "User defined error code 1"
 msgstr "Benutzerdefinierter Fehlercode 1"
 
-#: src/err-codes.h:217
+#: src/err-codes.h:243
 msgid "User defined error code 2"
 msgstr "Benutzerdefinierter Fehlercode 2"
 
-#: src/err-codes.h:218
+#: src/err-codes.h:244
 msgid "User defined error code 3"
 msgstr "Benutzerdefinierter Fehlercode 3"
 
-#: src/err-codes.h:219
+#: src/err-codes.h:245
 msgid "User defined error code 4"
 msgstr "Benutzerdefinierter Fehlercode 4"
 
-#: src/err-codes.h:220
+#: src/err-codes.h:246
 msgid "User defined error code 5"
 msgstr "Benutzerdefinierter Fehlercode 5"
 
-#: src/err-codes.h:221
+#: src/err-codes.h:247
 msgid "User defined error code 6"
 msgstr "Benutzerdefinierter Fehlercode 6"
 
-#: src/err-codes.h:222
+#: src/err-codes.h:248
 msgid "User defined error code 7"
 msgstr "Benutzerdefinierter Fehlercode 7"
 
-#: src/err-codes.h:223
+#: src/err-codes.h:249
 msgid "User defined error code 8"
 msgstr "Benutzerdefinierter Fehlercode 8"
 
-#: src/err-codes.h:224
+#: src/err-codes.h:250
 msgid "User defined error code 9"
 msgstr "Benutzerdefinierter Fehlercode 9"
 
-#: src/err-codes.h:225
+#: src/err-codes.h:251
 msgid "User defined error code 10"
 msgstr "Benutzerdefinierter Fehlercode 10"
 
-#: src/err-codes.h:226
+#: src/err-codes.h:252
 msgid "User defined error code 11"
 msgstr "Benutzerdefinierter Fehlercode 11"
 
-#: src/err-codes.h:227
+#: src/err-codes.h:253
 msgid "User defined error code 12"
 msgstr "Benutzerdefinierter Fehlercode 12"
 
-#: src/err-codes.h:228
+#: src/err-codes.h:254
 msgid "User defined error code 13"
 msgstr "Benutzerdefinierter Fehlercode 13"
 
-#: src/err-codes.h:229
+#: src/err-codes.h:255
 msgid "User defined error code 14"
 msgstr "Benutzerdefinierter Fehlercode 14"
 
-#: src/err-codes.h:230
+#: src/err-codes.h:256
 msgid "User defined error code 15"
 msgstr "Benutzerdefinierter Fehlercode 15"
 
-#: src/err-codes.h:231
+#: src/err-codes.h:257
 msgid "User defined error code 16"
 msgstr "Benutzerdefinierter Fehlercode 16"
 
-#: src/err-codes.h:232
+#: src/err-codes.h:258
+msgid "System error w/o errno"
+msgstr "Systemfehler ohne gesetzten Sytemfehlercode"
+
+#: src/err-codes.h:259
 msgid "Unknown system error"
 msgstr "Unbekannter Systemfehler"
 
-#: src/err-codes.h:233
+#: src/err-codes.h:260
 msgid "End of file"
 msgstr "Dateiende"
 
-#: src/err-codes.h:234
+#: src/err-codes.h:261
 msgid "Unknown error code"
 msgstr "Unbekannter Fehlercode"
 
@@ -923,3 +1032,6 @@ msgstr "Aufruf: %s GPG-FEHLER [...]\n"
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: Warnung: %s konnte nicht erkannt werden\n"
+
+#~ msgid "Assuan error"
+#~ msgstr "Fehler in Assuan"

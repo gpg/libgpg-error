@@ -1,3 +1,7 @@
+2006-09-14  Werner Koch  <wk@g10code.com>
+
+	* autobuild.m4: New.
+
 2006-03-14  gettextize  <bug-gnu-gettext@gnu.org>
 
 	* codeset.m4: Upgrade to gettext-0.14.5.

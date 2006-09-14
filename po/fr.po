@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.0\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2006-03-14 12:56+0100\n"
+"POT-Creation-Date: 2006-09-14 14:58+0200\n"
 "PO-Revision-Date: 2005-08-18 16:48+0100\n"
 "Last-Translator: Stephane Roy <sroy@j2n.net>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -64,22 +64,27 @@ msgid "GSTI"
 msgstr "GSTI"
 
 #: src/err-sources.h:40
+#, fuzzy
+msgid "Any source"
+msgstr "Source inconnue"
+
+#: src/err-sources.h:41
 msgid "User defined source 1"
 msgstr "Source 1 définie par l'utilisateur"
 
-#: src/err-sources.h:41
+#: src/err-sources.h:42
 msgid "User defined source 2"
 msgstr "Source 2 définie par l'utilisateur"
 
-#: src/err-sources.h:42
+#: src/err-sources.h:43
 msgid "User defined source 3"
 msgstr "Source 3 définie par l'utilisateur"
 
-#: src/err-sources.h:43
+#: src/err-sources.h:44
 msgid "User defined source 4"
 msgstr "Source 4 définie par l'utilisateur"
 
-#: src/err-sources.h:44
+#: src/err-sources.h:45
 msgid "Unknown source"
 msgstr "Source inconnue"
 
@@ -404,12 +409,14 @@ msgid "Invalid data"
 msgstr "Donnée invalide"
 
 #: src/err-codes.h:108
-msgid "Assuan server fault"
+#, fuzzy
+msgid "Unspecific Assuan server fault"
 msgstr "Faute de serveur assuan"
 
 #: src/err-codes.h:109
-msgid "Assuan error"
-msgstr "Erreur assuan"
+#, fuzzy
+msgid "General Assuan error"
+msgstr "Erreur génerale"
 
 #: src/err-codes.h:110
 msgid "Invalid session key"
@@ -780,134 +787,256 @@ msgid "Locked"
 msgstr "Verrouillé"
 
 #: src/err-codes.h:202
+#, fuzzy
+msgid "Unknown option"
+msgstr "Extension inconnue"
+
+#: src/err-codes.h:203
+#, fuzzy
+msgid "Unknown command"
+msgstr "Code d'erreur inconnu"
+
+#: src/err-codes.h:204
 msgid "Buffer too short"
 msgstr "Tampon trop court"
 
-#: src/err-codes.h:203
+#: src/err-codes.h:205
 msgid "Invalid length specifier in S-expression"
 msgstr "Longueur spécifiée dans la S-expression invalide"
 
-#: src/err-codes.h:204
+#: src/err-codes.h:206
 msgid "String too long in S-expression"
 msgstr "Chaîne trop longue dans la S-expression"
 
-#: src/err-codes.h:205
+#: src/err-codes.h:207
 msgid "Unmatched parentheses in S-expression"
 msgstr "Parenthèses non balancées dans la S-expression"
 
-#: src/err-codes.h:206
+#: src/err-codes.h:208
 msgid "S-expression not canonical"
 msgstr "S-expression non canonique"
 
-#: src/err-codes.h:207
+#: src/err-codes.h:209
 msgid "Bad character in S-expression"
 msgstr "Mauvais caractère dans la S-expression"
 
-#: src/err-codes.h:208
+#: src/err-codes.h:210
 msgid "Bad quotation in S-expression"
 msgstr "Mauvaise balance de guillemets dans la S-expression"
 
-#: src/err-codes.h:209
+#: src/err-codes.h:211
 msgid "Zero prefix in S-expression"
 msgstr "Préfixe nul dans la S-expression"
 
-#: src/err-codes.h:210
+#: src/err-codes.h:212
 msgid "Nested display hints in S-expression"
 msgstr ""
 
-#: src/err-codes.h:211
+#: src/err-codes.h:213
 msgid "Unmatched display hints"
 msgstr ""
 
-#: src/err-codes.h:212
+#: src/err-codes.h:214
 msgid "Unexpected reserved punctuation in S-expression"
 msgstr "Ponctuation réservée inattendue dans la S-expression"
 
-#: src/err-codes.h:213
+#: src/err-codes.h:215
 msgid "Bad hexadecimal character in S-expression"
 msgstr "Mauvais caractère hexadécimal dans la S-expression"
 
-#: src/err-codes.h:214
+#: src/err-codes.h:216
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Nombre hexadécimal impair dans la S-expression"
 
-#: src/err-codes.h:215
+#: src/err-codes.h:217
 msgid "Bad octadecimal character in S-expression"
 msgstr "Mauvais caractère octadécimal dans la S-expression"
 
-#: src/err-codes.h:216
+#: src/err-codes.h:218
+#, fuzzy
+msgid "General IPC error"
+msgstr "Erreur génerale"
+
+#: src/err-codes.h:219
+msgid "IPC accept call failed"
+msgstr ""
+
+#: src/err-codes.h:220
+msgid "IPC connect call failed"
+msgstr ""
+
+#: src/err-codes.h:221
+#, fuzzy
+msgid "Invalid IPC response"
+msgstr "Réponse invalide"
+
+#: src/err-codes.h:222
+#, fuzzy
+msgid "Invalid value passed to IPC"
+msgstr "Valeur invalide"
+
+#: src/err-codes.h:223
+#, fuzzy
+msgid "Incomplete line passed to IPC"
+msgstr "Ligne incomplète"
+
+#: src/err-codes.h:224
+#, fuzzy
+msgid "Line passed to IPC too long"
+msgstr "Ligne trop longue"
+
+#: src/err-codes.h:225
+msgid "Nested IPC commands"
+msgstr ""
+
+#: src/err-codes.h:226
+msgid "No data callback in IPC"
+msgstr ""
+
+#: src/err-codes.h:227
+msgid "No inquire callback in IPC"
+msgstr ""
+
+#: src/err-codes.h:228
+msgid "Not an IPC server"
+msgstr ""
+
+#: src/err-codes.h:229
+msgid "Not an IPC client"
+msgstr ""
+
+#: src/err-codes.h:230
+msgid "Problem starting IPC server"
+msgstr ""
+
+#: src/err-codes.h:231
+#, fuzzy
+msgid "IPC read error"
+msgstr "Erreur de carte"
+
+#: src/err-codes.h:232
+#, fuzzy
+msgid "IPC write error"
+msgstr "Erreur de carte"
+
+#: src/err-codes.h:233
+msgid "Too much data for IPC layer"
+msgstr ""
+
+#: src/err-codes.h:234
+#, fuzzy
+msgid "Unexpected IPC command"
+msgstr "Balise inattendue"
+
+#: src/err-codes.h:235
+#, fuzzy
+msgid "Unknown IPC command"
+msgstr "Code d'erreur inconnu"
+
+#: src/err-codes.h:236
+#, fuzzy
+msgid "IPC syntax error"
+msgstr "Erreur de syntaxe"
+
+#: src/err-codes.h:237
+msgid "IPC call has been cancelled"
+msgstr ""
+
+#: src/err-codes.h:238
+msgid "No input source for IPC"
+msgstr ""
+
+#: src/err-codes.h:239
+msgid "No output source for IPC"
+msgstr ""
+
+#: src/err-codes.h:240
+#, fuzzy
+msgid "IPC parameter error"
+msgstr "Erreur de carte"
+
+#: src/err-codes.h:241
+#, fuzzy
+msgid "Unknown IPC inquire"
+msgstr "Source inconnue"
+
+#: src/err-codes.h:242
 msgid "User defined error code 1"
 msgstr "Code d'erreur 1 défini par l'utilisateur"
 
-#: src/err-codes.h:217
+#: src/err-codes.h:243
 msgid "User defined error code 2"
 msgstr "Code d'erreur 2 défini par l'utilisateur"
 
-#: src/err-codes.h:218
+#: src/err-codes.h:244
 msgid "User defined error code 3"
 msgstr "Code d'erreur 3 défini par l'utilisateur"
 
-#: src/err-codes.h:219
+#: src/err-codes.h:245
 msgid "User defined error code 4"
 msgstr "Code d'erreur 4 défini par l'utilisateur"
 
-#: src/err-codes.h:220
+#: src/err-codes.h:246
 msgid "User defined error code 5"
 msgstr "Code d'erreur 5 défini par l'utilisateur"
 
-#: src/err-codes.h:221
+#: src/err-codes.h:247
 msgid "User defined error code 6"
 msgstr "Code d'erreur 6 défini par l'utilisateur"
 
-#: src/err-codes.h:222
+#: src/err-codes.h:248
 msgid "User defined error code 7"
 msgstr "Code d'erreur 7 défini par l'utilisateur"
 
-#: src/err-codes.h:223
+#: src/err-codes.h:249
 msgid "User defined error code 8"
 msgstr "Code d'erreur 8 défini par l'utilisateur"
 
-#: src/err-codes.h:224
+#: src/err-codes.h:250
 msgid "User defined error code 9"
 msgstr "Code d'erreur 9 défini par l'utilisateur"
 
-#: src/err-codes.h:225
+#: src/err-codes.h:251
 msgid "User defined error code 10"
 msgstr "Code d'erreur 10 défini par l'utilisateur"
 
-#: src/err-codes.h:226
+#: src/err-codes.h:252
 msgid "User defined error code 11"
 msgstr "Code d'erreur 11 défini par l'utilisateur"
 
-#: src/err-codes.h:227
+#: src/err-codes.h:253
 msgid "User defined error code 12"
 msgstr "Code d'erreur 12 défini par l'utilisateur"
 
-#: src/err-codes.h:228
+#: src/err-codes.h:254
 msgid "User defined error code 13"
 msgstr "Code d'erreur 13 défini par l'utilisateur"
 
-#: src/err-codes.h:229
+#: src/err-codes.h:255
 msgid "User defined error code 14"
 msgstr "Code d'erreur 14 défini par l'utilisateur"
 
-#: src/err-codes.h:230
+#: src/err-codes.h:256
 msgid "User defined error code 15"
 msgstr "Code d'erreur 15 défini par l'utilisateur"
 
-#: src/err-codes.h:231
+#: src/err-codes.h:257
 msgid "User defined error code 16"
 msgstr "Code d'erreur 16 défini par l'utilisateur"
 
-#: src/err-codes.h:232
+#: src/err-codes.h:258
+msgid "System error w/o errno"
+msgstr ""
+
+#: src/err-codes.h:259
 msgid "Unknown system error"
 msgstr "Erreur système inconnue"
 
-#: src/err-codes.h:233
+#: src/err-codes.h:260
 msgid "End of file"
 msgstr "Fin du fichier"
 
-#: src/err-codes.h:234
+#: src/err-codes.h:261
 msgid "Unknown error code"
 msgstr "Code d'erreur inconnu"
 
@@ -920,3 +1049,6 @@ msgstr "Usage : %s GPG-ERROR [...]\n"
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s : attention : pourrait ne pas reconnaître %s\n"
+
+#~ msgid "Assuan error"
+#~ msgstr "Erreur assuan"

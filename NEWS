@@ -1,4 +1,4 @@
-Noteworthy changes in version 1.4 (unreleased)
+Noteworthy changes in version 1.4 (2006-09-14)
 ----------------------------------------------
 
  * Support for Common Lisp is included.
@@ -12,8 +12,13 @@ Noteworthy changes in version 1.4 (unreleased)
  * New error source GPG_ERR_SOURCE_ANY to allow proper use of
    libgpg-error even if a specific source is not available.
 
+ * New convenience functions gpg_err_code_from_syserror and
+   gpg_error_from_syserror which make sure never to return 0. 
+
  * Interface changes relative to the 1.2 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpg_err_code_from_syserror    NEW
+ gpg_error_from_syserror       NEW
  GPG_ERR_SOURCE_ANY            NEW
  GPG_ERR_MISSING_ERRNO         NEW
  GPG_ERR_UNKNOWN_OPTION        NEW

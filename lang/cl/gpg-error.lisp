@@ -109,6 +109,10 @@
 (defcfun ("gpg_err_code_to_errno" c-gpg-err-code-to-errno) :int
   (code gpg-err-code-t))
 
+(defcfun ("gpg_err_code_from_syserror"
+           c-gpg-err-code-from-syserror) gpg-err-code-t
+  (void))
+
 ;;; Self-documenting convenience functions.
 
 ;;; See below.
@@ -211,6 +215,13 @@
    system error, 0 is returned."
   (c-gpg-err-code-to-errno (gpg-err-code code)))
 
+(defun gpg-err-code-from-syserror ()
+  "Retrieve the error code directly from the system ERRNO.  If the system error
+   is not mapped, :gpg-err-unknown-errno is returned and 
+   :gpg-err-missing-errno if ERRNO has the value 0."
+  (gpg-err-code-as-key (c-gpg-err-code-from-syserror)))
+
+
 ;;; Self-documenting convenience functions.
 
 (defun gpg-err-make-from-errno (source err)
@@ -218,3 +229,7 @@
 
 (defun gpg-error-from-errno (err)
   (gpg-error (gpg-err-code-from-errno err)))
+
+(defun gpg-error-from-syserror ()
+  (gpg-error (gpg-err-code-from-syserror)))
+

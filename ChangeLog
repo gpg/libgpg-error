@@ -1,3 +1,27 @@
+2006-09-14  Werner Koch  <wk@g10code.com>
+
+	Released 1.4.
+
+	* configure.ac: Set LT version to C3/A3/R0.
+	(AB_INIT): New.
+
+	* autogen.sh (--build-w32): Better cross-compiler locating.
+
+	* src/strerror.c (system_strerror_r): Made static.
+
+	* tests/t-syserror.c: New.
+	* tests/Makefile.am (TESTS): Added new test.
+
+	* lang/cl/gpg-error.lisp ("gpg_err_code_from_syserror"): New.
+	(gpg-err-code-from-syserror): New.
+	(gpg-error-from-syserror): New.
+	* lang/cl/gpg-error-package.lisp: Export new functions 
+
+	* src/gpg-error.h.in (gpg_error_from_syserror): New.
+	* src/code-from-errno.c (gpg_err_code_from_errno): Cosmetic change
+	to first check whether ERR is zero.
+	(gpg_err_code_from_syserror): New.
+
 2006-09-06  Werner Koch  <wk@g10code.com>
 
 	* src/err-codes.h.in: Add GPG_ERR_UNKNOWN_OPTION and

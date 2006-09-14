@@ -45,25 +45,21 @@ if test "$1" = "--build-w32"; then
     [ -z "$w32root" ] && w32root="$HOME/w32root"
     echo "Using $w32root as standard install directory" >&2
     
-    # See whether we have the Debian cross compiler package or the
-    # old mingw32/cpd system
-    if i586-mingw32msvc-gcc --version >/dev/null 2>&1 ; then
-        host=i586-mingw32msvc
-        crossbindir=/usr/$host/bin
-    else
-       host=i386--mingw32
-       if ! mingw32 --version >/dev/null; then
-          echo "We need at least version 0.3 of MingW32/CPD" >&2
-          exit 1
-       fi
-       crossbindir=`mingw32 --install-dir`/bin
-       # Old autoconf version required us to setup the environment
-       # with the proper tool names.
-       CC=`mingw32 --get-path gcc`
-       CPP=`mingw32 --get-path cpp`
-       AR=`mingw32 --get-path ar`
-       RANLIB=`mingw32 --get-path ranlib`
-       export CC CPP AR RANLIB 
+    # Locate the cross compiler
+    crossbindir=
+    for host in i586-mingw32msvc i386-mingw32msvc; do
+        if ${host}-gcc --version >/dev/null 2>&1 ; then
+            crossbindir=/usr/${host}/bin
+            conf_CC="CC=${host}-gcc"
+            break;
+        fi
+    done
+    if [ -z "$crossbindir" ]; then
+        echo "Cross compiler kit not installed" >&2
+        echo "Under Debian GNU/Linux, you may install it using" >&2
+        echo "  apt-get install mingw32 mingw32-runtime mingw32-binutils" >&2 
+        echo "Stop." >&2
+        exit 1
     fi
    
     if [ -f "$tsdir/config.log" ]; then
@@ -74,7 +70,7 @@ if test "$1" = "--build-w32"; then
     fi
 
     ./configure --enable-maintainer-mode  --prefix=${w32root}  \
-            --host=i586-mingw32msvc --build=${build} 
+            --host=${host} --build=${build} 
 
     exit $?
 fi

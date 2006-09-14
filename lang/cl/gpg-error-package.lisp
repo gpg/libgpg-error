@@ -58,5 +58,7 @@
 	   :gpg-strsource
 	   :gpg-err-code-from-errno
 	   :gpg-err-code-to-errno
+           :gpg-err-code-from-syserror
 	   :gpg-err-make-from-errno
-	   :gpg-error-from-errno))
+	   :gpg-error-from-errno
+           :gpg-error-from-syserror))

@@ -19,7 +19,7 @@
 
 ## Process this file with automake to produce Makefile.in
 
-TESTS = t-strerror
+TESTS = t-strerror t-syserror
 
 INCLUDES = -I$(top_builddir)/src
 
