@@ -24,7 +24,7 @@ min_automake_version="1.9.6"
 
 # The gettext version is set below using AM_GNU_GETTEXT_VERSION
 # Version number: Remember to change it immediately *after* a release.
-AC_INIT([libgpg-error],[1.4],[bug-gnupg@gnupg.org])
+AC_INIT([libgpg-error],[1.5-cvs],[bug-gnupg@gnupg.org])
 # LT Version numbers, remember to change them just *before* a release.
 #   (Code changed:			REVISION++)
 #   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)
