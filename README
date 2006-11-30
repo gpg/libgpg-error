@@ -32,7 +32,7 @@ Here is a quick summary:
    important step!
 
 2) Unpack the archive.  With GNU tar you can do it this way:
-   "tar xzvf libgpg-error-x.y.tar.gz"
+   "tar xjvf libgpg-error-x.y.tar.bz2"
 
 3) "cd libgpg-error-x.y"
 
@@ -53,24 +53,24 @@ do it in one of the following ways:
 a) If you already have a trusted version of GnuPG installed, you can
    simply check the supplied signature:
 
-   $ gpg --verify libgpg-error-x.y.tar.gz.sig
+   $ gpg --verify libgpg-error-x.y.tar.bz2.sig
 
-   This checks that the detached signature libgpg-error-x.y.tar.gz.sig
-   is indeed a a signature of libgpg-error-x.y.tar.gz.
+   This checks that the detached signature libgpg-error-x.y.tar.bz2.sig
+   is indeed a a signature of libgpg-error-x.y.tar.bz2.
 
    Please note that you have to use an old version of GnuPG to do all
    this stuff.  *Never* use the version which was built using the
    library you are trying to verify!
 
 b) If you don't have any a trusted version of GnuPG, you can attempt
-   to verify the MD5 checksum, using a trusted version of the md5sum
+   to verify the SHA1 checksum, using a trusted version of the sha1sum
    program:
 
-   $ md5sum libgpg-error-x.y.tar.gz
+   $ sha1sum libgpg-error-x.y.tar.bz2
 
    This should yield an output _similar_ to this:
 
-   fd9351b26b3189c1d577f0970f9dcadc  libgpg-error-x.y.tar.gz
+   610064e5b77700f5771c8fde2691c4365e1ca100  libgpg-error-x.y.tar.bz2
 
    Now check that this checksum is _exactly_ the same as the one
    published via the announcement list and probably via Usenet.

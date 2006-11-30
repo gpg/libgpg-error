@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.1\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2006-09-14 14:58+0200\n"
+"POT-Creation-Date: 2006-11-30 15:57+0100\n"
 "PO-Revision-Date: 2005-06-30 12:00-0500\n"
 "Last-Translator: Laurentiu Buzdugan <lbuz@rolix.org>\n"
 "Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
@@ -1046,12 +1046,12 @@ msgstr "Sfârºit de fiºier"
 msgid "Unknown error code"
 msgstr "Cod de eroare necunoscut"
 
-#: src/gpg-error.c:456
+#: src/gpg-error.c:457
 #, c-format
 msgid "Usage: %s GPG-ERROR [...]\n"
 msgstr "Folosire: %s EROARE-GPG [...]\n"
 
-#: src/gpg-error.c:477
+#: src/gpg-error.c:485
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: avertisment: nu am putut recunoaºte %s\n"

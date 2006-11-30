@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.1\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2006-09-14 14:58+0200\n"
+"POT-Creation-Date: 2006-11-30 15:57+0100\n"
 "PO-Revision-Date: 2006-01-08 16:33+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
@@ -1050,12 +1050,12 @@ msgstr "Kết thức tập tin"
 msgid "Unknown error code"
 msgstr "Mã lỗi lạ"
 
-#: src/gpg-error.c:456
+#: src/gpg-error.c:457
 #, c-format
 msgid "Usage: %s GPG-ERROR [...]\n"
 msgstr "Cách sử dụng: %s GPG-ERROR [...]\n"
 
-#: src/gpg-error.c:477
+#: src/gpg-error.c:485
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: cảnh báo : không thể nhận ra %s\n"

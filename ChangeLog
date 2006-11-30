@@ -1,5 +1,15 @@
 2006-11-30  Werner Koch  <wk@g10code.com>
 
+	Released 1.5.
+	
+	* configure.ac: Set LT version to C3/A3/R1.
+
+	* README: Switch to tar.bz2 and sha1sum.
+
+	* src/gpg-error.c (main): Add option --version.
+
+	* autogen.sh (FORCE): Add option --force.
+
 	* intl/: Removed.
 	* Makefile.am (SUBDIRS): Removed intl.
 	* configure.ac (AM_GNU_GETTEXT): Use external flag

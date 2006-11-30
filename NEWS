@@ -1,9 +1,11 @@
-Noteworthy changes in version 1.5
+Noteworthy changes in version 1.5 (2006-11-30)
 ----------------------------------------------
 
  * Minor build system fixes.
 
  * Updated gettext.  Removed included gettext copy.
+
+ * gpg-error has a new option --version.
 
 
 Noteworthy changes in version 1.4 (2006-09-14)

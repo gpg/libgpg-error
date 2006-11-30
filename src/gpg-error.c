@@ -451,11 +451,19 @@ main (int argc, char *argv[])
 
   i18n_init ();
 
+
   if (argc == 1)
     {
-      fprintf (stderr, _("Usage: %s GPG-ERROR [...]\n"), argv[0]);
+      fprintf (stderr, _("Usage: %s GPG-ERROR [...]\n"), 
+               strrchr (argv[0],'/')? (strrchr (argv[0], '/')+1): argv[0]);
       exit (1);
     }
+  else if (argc == 2 && !strcmp (argv[1], "--version"))
+    {
+      fputs ("gpg-error (" PACKAGE_NAME ") " PACKAGE_VERSION "\n", stdout);
+      exit (0);
+    }
+
 
   while (i < argc)
     {
