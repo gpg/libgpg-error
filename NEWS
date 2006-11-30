@@ -1,6 +1,9 @@
 Noteworthy changes in version 1.5
 ----------------------------------------------
 
+ * Minor build system fixes.
+
+ * Updated gettext.  Removed included gettext copy.
 
 
 Noteworthy changes in version 1.4 (2006-09-14)

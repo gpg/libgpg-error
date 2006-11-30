@@ -22,9 +22,16 @@
 AC_PREREQ(2.59)
 min_automake_version="1.9.6"
 
-# The gettext version is set below using AM_GNU_GETTEXT_VERSION
-# Version number: Remember to change it immediately *after* a release.
-AC_INIT([libgpg-error],[1.5-cvs],[bug-gnupg@gnupg.org])
+# Remember to change the version number immediately *after* a release.
+# Set my_issvn to "yes" for non-released code.  Remember to run an
+# "svn up" and "autogen.sh" right before creating a distribution.
+m4_define([my_version], [1.5])
+m4_define([my_issvn], [yes])
+
+m4_define([svn_revision], m4_esyscmd([echo -n $( (svn info 2>/dev/null \
+            || echo 'Revision: 0')|sed -n '/^Revision:/ {s/[^0-9]//gp;q;}')]))
+AC_INIT([libgpg-error], my_version[]m4_if(my_issvn,[yes],[-svn[]svn_revision]),
+        [bug-gnupg@gnupg.org])
 # LT Version numbers, remember to change them just *before* a release.
 #   (Code changed:			REVISION++)
 #   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)
@@ -55,6 +62,8 @@ AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
 AC_LIBTOOL_WIN32_DLL
 AC_LIBTOOL_RC
+AC_GNU_SOURCE
+
 AC_PROG_LIBTOOL
 
 # We need to compile and run a program on the build machine.
@@ -92,8 +101,8 @@ AH_BOTTOM([
 
 
 # Note, that autogen.sh greps for the next line.
-AM_GNU_GETTEXT_VERSION([0.14.5])
-AM_GNU_GETTEXT
+AM_GNU_GETTEXT_VERSION([0.15])
+AM_GNU_GETTEXT([external])
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -130,9 +139,10 @@ if test "$have_w32_system" = yes; then
     BUILD_FILEVERSION=`echo "$VERSION" | sed 's/\([0-9.]*\).*/\1./;s/\./,/g'`
     changequote([,])dnl
     case "$VERSION" in
-      *-cvs) BUILD_FILEVERSION="${BUILD_FILEVERSION}0,0" ;;
-      *-rc*) BUILD_FILEVERSION="${BUILD_FILEVERSION}0,1" ;;
-      *)     BUILD_FILEVERSION="${BUILD_FILEVERSION}0,2" ;;
+      *-svn*) BUILD_FILEVERSION="${BUILD_FILEVERSION}0,0" ;;
+      *-cvs)  BUILD_FILEVERSION="${BUILD_FILEVERSION}0,0" ;;
+      *-rc*)  BUILD_FILEVERSION="${BUILD_FILEVERSION}0,1" ;;
+      *)      BUILD_FILEVERSION="${BUILD_FILEVERSION}0,2" ;;
     esac
 fi
 AC_SUBST(BUILD_TIMESTAMP)
@@ -142,10 +152,16 @@ AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
 
 # Substitution
 AC_CONFIG_FILES([Makefile])
-AC_CONFIG_FILES([intl/Makefile])
 AC_CONFIG_FILES([po/Makefile.in m4/Makefile])
 AC_CONFIG_FILES([src/Makefile tests/Makefile])
 AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc])
 
 AC_OUTPUT
+
+echo "
+        Libgpg-error v${VERSION} has been configured as follows:
+        
+        Platform:  $host
+
+"

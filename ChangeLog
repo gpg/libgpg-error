@@ -1,3 +1,28 @@
+2006-11-30  Werner Koch  <wk@g10code.com>
+
+	* intl/: Removed.
+	* Makefile.am (SUBDIRS): Removed intl.
+	* configure.ac (AM_GNU_GETTEXT): Use external flag
+	* src/Makefile.am: Removed -I../intl.
+
+2006-11-23  Werner Koch  <wk@g10code.com>
+
+	* configure.ac: Display configuration status after AC_OUTPUT.
+	(AC_INIT): Use SVN revision magic.
+	(AC_GNU_SOURCE): New.
+
+2006-11-23  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* configure.ac (AM_GNU_GETTEXT_VERSION): Bump to 0.15.
+
+2006-11-15  Werner Koch  <wk@g10code.com>
+
+	* autogen.sh: Add convenience option --build-amd64.
+
+2006-10-20  Werner Koch  <wk@g10code.com>
+
+	* Makefile.am (stowinstall): New convenience target.
+
 2006-09-18  Werner Koch  <wk@g10code.com>
 
 	* src/gpg-error.def: Added gpg_err_code_from_syserror.
