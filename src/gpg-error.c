@@ -257,11 +257,23 @@ get_err_from_number (char *str, gpg_error_t *err)
 
   errno = 0;
   nr = strtoul (str, &tail, 0);
-  if (errno || *tail)
+  if (errno)
     return 0;
 
-  if (nr > UINT_MAX)
+  if (nr > GPG_ERR_CODE_DIM)
     return 0;
+
+  if (*tail)
+    {
+      unsigned long cnr = strtoul (tail + 1, &tail, 0);
+      if (errno || *tail)
+	return 0;
+
+      if (cnr >= GPG_ERR_SOURCE_DIM)
+	return 0;
+
+      nr = gpg_err_make (nr, cnr);
+    }
 
   *err = (unsigned int) nr;
   return 1;

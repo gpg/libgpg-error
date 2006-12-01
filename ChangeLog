@@ -1,3 +1,8 @@
+2006-12-01  Marcus Brinkmann  <marcus@g10code.de>
+
+	* src/gpg-error.c (get_err_from_number): Support source and code
+	number in split format like "7.17".
+
 2006-11-30  Werner Koch  <wk@g10code.com>
 
 	Released 1.5.
