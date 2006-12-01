@@ -260,7 +260,7 @@ get_err_from_number (char *str, gpg_error_t *err)
   if (errno)
     return 0;
 
-  if (nr > GPG_ERR_CODE_DIM)
+  if (nr > UINT_MAX)
     return 0;
 
   if (*tail)
@@ -269,7 +269,7 @@ get_err_from_number (char *str, gpg_error_t *err)
       if (errno || *tail)
 	return 0;
 
-      if (cnr >= GPG_ERR_SOURCE_DIM)
+      if (nr >= GPG_ERR_SOURCE_DIM || cnr >= GPG_ERR_CODE_DIM)
 	return 0;
 
       nr = gpg_err_make (nr, cnr);
