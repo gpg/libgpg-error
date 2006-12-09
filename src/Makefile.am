@@ -31,7 +31,7 @@ m4data_DATA = gpg-error.m4
 
 
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
-	mkerrnos.awk errnos.in \
+	mkerrnos.awk errnos.in README \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
 	mkheader.awk gpg-error.h.in \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 \
