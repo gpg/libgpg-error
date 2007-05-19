@@ -50,6 +50,7 @@
   (:gpg-err-source-ksba 9)
   (:gpg-err-source-dirmngr 10)
   (:gpg-err-source-gsti 11)
+  (:gpg-err-source-any 31)
   (:gpg-err-source-user-1 32)
   (:gpg-err-source-user-2 33)
   (:gpg-err-source-user-3 34)
