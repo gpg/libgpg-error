@@ -51,7 +51,7 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
   if test $ok = yes; then
     GPG_ERROR_CFLAGS=`$GPG_ERROR_CONFIG $gpg_error_config_args --cflags`
     GPG_ERROR_LIBS=`$GPG_ERROR_CONFIG $gpg_error_config_args --libs`
-    AC_MSG_RESULT(yes)
+    AC_MSG_RESULT([yes ($gpg_error_config_version)])
     ifelse([$2], , :, [$2])
   else
     GPG_ERROR_CFLAGS=""

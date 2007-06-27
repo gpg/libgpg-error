@@ -3,6 +3,16 @@
 	* lang/cl/gpg-error.lisp (gpg-err-source-t): Add
 	:gpg-err-source-any.
 
+2007-06-18  Werner Koch  <wk@g10code.com>
+
+	* src/code-from-errno.c (w32_special_errnos) [W32]: New.  This is
+	to provide some common mappings for winsocket error codes.
+	(gpg_err_code_from_errno, gpg_err_code_from_syserror): Use it.
+
+2007-05-09  Werner Koch  <wk@g10code.com>
+
+	* src/gpg-error.m4: Print found version on success.
+
 2006-12-09  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/Makefile.am (EXTRA_DIST): Add README.
