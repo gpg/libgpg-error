@@ -1,5 +1,5 @@
 # Makefile.am for libgpg-error.
-# Copyright (C) 2003, 2006 g10 Code GmbH
+# Copyright (C) 2003, 2006, 2007 g10 Code GmbH
 # 
 # This file is part of libgpg-error.
 # 
@@ -22,7 +22,13 @@ AUTOMAKE_OPTIONS = dist-bzip2
 
 EXTRA_DIST = autogen.sh config.rpath libgpg-error.spec.in 
 
-SUBDIRS = m4 src tests po lang
+if LANGUAGES_SOME
+lang_subdirs = lang
+else
+lang_subdirs =
+endif
+
+SUBDIRS = m4 src tests po $(lang_subdirs)
 
 
 dist-hook:

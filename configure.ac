@@ -151,6 +151,12 @@ AC_SUBST(BUILD_FILEVERSION)
 AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
 
 
+AC_ARG_ENABLE(languages,
+[  --disable-languages     do not build support for other languages than C])
+AM_CONDITIONAL([LANGUAGES_SOME], [test "x$enable_languages" != xno])
+
+
+
 # Substitution
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([po/Makefile.in m4/Makefile])

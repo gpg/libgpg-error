@@ -1,8 +1,10 @@
 2007-08-03  Marcus Brinkmann  <marcus@g10code.de>
 
-	* configure.ac: Call AM_PROG_CC_C_O.
+	* configure.ac: Call AM_PROG_CC_C_O.  Allow --disable-languages.
 	* autogen.sh: Use = not == in test.
 	* lang/cl/Makefile.am: Do not use :=, but =.
+	* Makefile.am [!LANGUAGES_SOME]: Don't add lang to subdirs.
+	* m4/inttypes-h.m4, m4/lock.m4, m4/visibility.m4: New files.
 	
 2007-05-19  Marcus Brinkmann  <marcus@g10code.de>
 
