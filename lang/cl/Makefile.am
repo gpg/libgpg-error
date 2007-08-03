@@ -32,8 +32,8 @@ nodist_clfiles_DATA = $(generated_clfiles)
 EXTRA_DIST = README mkerrcodes.awk
 CLEANFILES = gpg-error-codes.lisp
 
-codes_file := $(top_srcdir)/src/err-codes.h.in
-errno_file := $(top_srcdir)/src/errnos.in
+codes_file = $(top_srcdir)/src/err-codes.h.in
+errno_file = $(top_srcdir)/src/errnos.in
 
 gpg-error-codes.lisp: Makefile mkerrcodes.awk $(codes_file) $(errno_file)
 	echo '@errnos@' | cat $(codes_file) - $(errno_file) \

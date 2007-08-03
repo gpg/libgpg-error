@@ -57,6 +57,7 @@ AB_INIT
 
 # Checks for programs.
 AC_PROG_CC
+AM_PROG_CC_C_O
 AC_PROG_CPP
 AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)

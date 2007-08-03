@@ -30,7 +30,7 @@ check_version () {
 
 DIE=no
 FORCE=
-if test "$1" == "--force"; then
+if test "$1" = "--force"; then
   FORCE=" --force"
   shift
 fi
