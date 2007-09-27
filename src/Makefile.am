@@ -54,7 +54,9 @@ LTRCCOMPILE = $(LIBTOOL) --mode=compile $(RC) \
      `echo $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) | \
      sed -e 's/-I/--include-dir /g;s/-D/--define /g'`
 
-%.o : %.rc
+SUFFIXES = rc
+
+.rc.o:
 	$(LTRCCOMPILE) -i $< -o $@
 
 gpg_error_res = versioninfo.o
