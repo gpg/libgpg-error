@@ -1,6 +1,11 @@
 Noteworthy changes in version 1.6
 ----------------------------------------------
 
+ * Interface changes relative to the 1.4 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_UNFINISHED            NEW
+ GPG_ERR_SOURCE_GPA            NEW
+
 
 Noteworthy changes in version 1.5 (2006-11-30)
 ----------------------------------------------

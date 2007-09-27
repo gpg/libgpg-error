@@ -41,8 +41,9 @@
 9	GPG_ERR_SOURCE_KSBA		KSBA
 10	GPG_ERR_SOURCE_DIRMNGR		Dirmngr
 11	GPG_ERR_SOURCE_GSTI		GSTI
+12	GPG_ERR_SOURCE_GPA		GPA
 
-# 11 to 30 are free to be used.
+# 13 to 30 are free to be used.
 
 31	GPG_ERR_SOURCE_ANY		Any source
 32	GPG_ERR_SOURCE_USER_1		User defined source 1
