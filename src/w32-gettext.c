@@ -522,10 +522,10 @@
 # define SUBLANG_AZERI_CYRILLIC 0x02
 # endif
 # ifndef SUBLANG_BENGALI_INDIA
-# define SUBLANG_BENGALI_INDIA 0x00
+# define SUBLANG_BENGALI_INDIA 0x01
 # endif
 # ifndef SUBLANG_BENGALI_BANGLADESH
-# define SUBLANG_BENGALI_BANGLADESH 0x01
+# define SUBLANG_BENGALI_BANGLADESH 0x02
 # endif
 # ifndef SUBLANG_CHINESE_MACAU
 # define SUBLANG_CHINESE_MACAU 0x05
@@ -618,16 +618,10 @@
 # define SUBLANG_NEPALI_INDIA 0x02
 # endif
 # ifndef SUBLANG_PUNJABI_INDIA
-# define SUBLANG_PUNJABI_INDIA 0x00
-# endif
-# ifndef SUBLANG_PUNJABI_PAKISTAN
-# define SUBLANG_PUNJABI_PAKISTAN 0x01
+# define SUBLANG_PUNJABI_INDIA 0x01
 # endif
 # ifndef SUBLANG_ROMANIAN_ROMANIA
-# define SUBLANG_ROMANIAN_ROMANIA 0x00
-# endif
-# ifndef SUBLANG_ROMANIAN_MOLDOVA
-# define SUBLANG_ROMANIAN_MOLDOVA 0x01
+# define SUBLANG_ROMANIAN_ROMANIA 0x01
 # endif
 # ifndef SUBLANG_SERBIAN_LATIN
 # define SUBLANG_SERBIAN_LATIN 0x02
@@ -1056,7 +1050,6 @@ _nl_locale_name (int category, const char *categoryname)
       switch (sub)
 	{
 	case SUBLANG_PUNJABI_INDIA: return "pa_IN"; /* Gurmukhi script */
-	case SUBLANG_PUNJABI_PAKISTAN: return "pa_PK"; /* Arabic script */
 	}
       return "pa";
     case LANG_RHAETO_ROMANCE: return "rm_CH";
@@ -1064,7 +1057,6 @@ _nl_locale_name (int category, const char *categoryname)
       switch (sub)
 	{
 	case SUBLANG_ROMANIAN_ROMANIA: return "ro_RO";
-	case SUBLANG_ROMANIAN_MOLDOVA: return "ro_MD";
 	}
       return "ro";
     case LANG_RUSSIAN:

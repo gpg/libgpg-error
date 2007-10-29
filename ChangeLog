@@ -1,3 +1,12 @@
+2007-10-29  Werner Koch  <wk@g10code.com>
+
+	* src/err-sources.h.in: (GPG_ERR_SOURCE_KLEO): New. 
+
+	* w32-gettext.c (SUBLANG_BENGALI_BANGLADESH): Fix to 2 as per MSDN.
+	(SUBLANG_PUNJABI_PAKISTAN): Remove as it is not in MSDN.
+	(SUBLANG_ROMANIAN_MOLDOVA): Remove as it is not in MSDN.
+	(SUBLANG_ROMANIAN_ROMANIA): Change to value 1 as per MSDN.
+
 2007-09-27  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/Makefile.am (%.o): Replace pattern rule with suffix rule.
