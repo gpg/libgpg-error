@@ -1,5 +1,11 @@
 2007-10-29  Werner Koch  <wk@g10code.com>
 
+	Released 1.6.
+
+	* configure.ac: Set LT version to C4/A4/R0.
+
+	* config.guess, config.sub: Updated.
+	
 	* src/err-sources.h.in: (GPG_ERR_SOURCE_KLEO): New. 
 
 	* w32-gettext.c (SUBLANG_BENGALI_BANGLADESH): Fix to 2 as per MSDN.
@@ -816,7 +822,7 @@
 
 	* Initial check-in.
 
- Copyright 2003 g10 Code GmbH
+ Copyright 2003, 2004, 2005, 2006, 2007 g10 Code GmbH
 
  This file is free software; as a special exception the author gives
  unlimited permission to copy and/or distribute it, with or without

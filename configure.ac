@@ -26,7 +26,7 @@ min_automake_version="1.9.6"
 # Set my_issvn to "yes" for non-released code.  Remember to run an
 # "svn up" and "autogen.sh" right before creating a distribution.
 m4_define([my_version], [1.6])
-m4_define([my_issvn], [yes])
+m4_define([my_issvn], [no])
 
 m4_define([svn_revision], m4_esyscmd([echo -n $( (svn info 2>/dev/null \
             || echo 'Revision: 0')|sed -n '/^Revision:/ {s/[^0-9]//gp;q;}')]))
@@ -38,9 +38,9 @@ AC_INIT([libgpg-error], my_version[]m4_if(my_issvn,[yes],[-svn[]svn_revision]),
 #   (Interfaces added:			AGE++)
 #   (Interfaces removed:		AGE=0)
 # Note that added error codes don't constitute an interface change.
-LIBGPG_ERROR_LT_CURRENT=3
-LIBGPG_ERROR_LT_AGE=3
-LIBGPG_ERROR_LT_REVISION=1
+LIBGPG_ERROR_LT_CURRENT=4
+LIBGPG_ERROR_LT_AGE=4
+LIBGPG_ERROR_LT_REVISION=0
 AC_SUBST(LIBGPG_ERROR_LT_CURRENT)
 AC_SUBST(LIBGPG_ERROR_LT_AGE)
 AC_SUBST(LIBGPG_ERROR_LT_REVISION)
