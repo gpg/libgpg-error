@@ -205,7 +205,7 @@
 173	GPG_ERR_LOCKED			Locked
 174	GPG_ERR_UNKNOWN_OPTION		Unknown option
 175	GPG_ERR_UNKNOWN_COMMAND		Unknown command
-
+176	GPG_ERR_NOT_OPERATIONAL		Not operational
 # 176 to 198 are free to be used.
 
 199	GPG_ERR_UNFINISHED		Operation not yet finished

@@ -2,6 +2,11 @@ Noteworthy changes in version 1.7
 ----------------------------------------------
 
 
+ * Interface changes relative to the 1.6 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_NOT_OPERATIONAL       NEW
+
+
 Noteworthy changes in version 1.6 (2007-10-29)
 ----------------------------------------------
 

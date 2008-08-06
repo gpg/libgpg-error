@@ -20,7 +20,7 @@
 ACLOCAL_AMFLAGS = -I m4
 AUTOMAKE_OPTIONS = dist-bzip2
 
-EXTRA_DIST = autogen.sh config.rpath libgpg-error.spec.in COPYING
+EXTRA_DIST = autogen.sh config.rpath libgpg-error.spec.in COPYING COPYING.LIB
 
 if LANGUAGES_SOME
 lang_subdirs = lang
