@@ -1,5 +1,5 @@
 # mkstrtable.awk
-# Copyright (C) 2003, 2004 g10 Code GmbH
+# Copyright (C) 2003, 2004, 2008 g10 Code GmbH
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -157,7 +157,10 @@ END {
   print "    " pos[coded_msgs];
   print "  };";
   print "";
-  print "#define " namespace "msgidxof(code) (0 ? -1 \\";
+  print "static inline int";
+  print namespace "msgidxof (int code)";
+  print "{";
+  print "  return (0 ? 0";
 
 # Gather the ranges.
   skip = code[0];
@@ -170,17 +173,17 @@ END {
       else
 	{
 	  print "  : ((code >= " start ") && (code <= " stop ")) ? (code - " \
-            skip ") \\";
+            skip ")";
 	  skip += code[i] - stop - 1;
 	  start = code[i];
 	  stop = code[i];
 	}
     }
   print "  : ((code >= " start ") && (code <= " stop ")) ? (code - " \
-    skip ") \\";
+    skip ")";
   if (has_default)
-    print "  : " stop + 1 " - " skip ")";
+    print "  : " stop + 1 " - " skip ");";
   else
-    print "  : -1)";
-    
- }
+    print "  : -1);";
+  print "}";
+}
