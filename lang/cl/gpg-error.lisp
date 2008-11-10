@@ -31,8 +31,7 @@
 
 ;;; System dependencies.
 
-(defctype size-t :unsigned-int
-  :documentation "The system size_t type.")
+(defctype size-t :unsigned-int "The system size_t type.")
 
 ;;; Error sources.
 
@@ -62,8 +61,7 @@
 
 ;;; libgpg-error-codes.lisp is loaded by ASDF.
 
-(defctype gpg-error-t :unsigned-int
-  :documentation "The GPG error code type.")
+(defctype gpg-error-t :unsigned-int "The GPG error code type.")
 
 ;;; Bit mask manipulation constants.
 
@@ -111,8 +109,7 @@
   (code gpg-err-code-t))
 
 (defcfun ("gpg_err_code_from_syserror"
-           c-gpg-err-code-from-syserror) gpg-err-code-t
-  (void))
+           c-gpg-err-code-from-syserror) gpg-err-code-t)
 
 ;;; Self-documenting convenience functions.
 

@@ -1,3 +1,12 @@
+2008-11-08  Moritz  <moritz@gnu.org>
+
+	* lang/cl/gpg-error.lisp ("gpg_err_code_from_syserror"): Fix
+	defcfun: removed "(void)".
+
+	* lang/cl/gpg-error.lisp (size-t): Wrong call to defctype:
+	function accepts optional, not keyword argument.
+	(gpg-error-t): Likewise.
+
 2008-10-29  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/mkstrtable.awk: Make generated code -W clean to silence gcc
