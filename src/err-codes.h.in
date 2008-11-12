@@ -206,7 +206,9 @@
 174	GPG_ERR_UNKNOWN_OPTION		Unknown option
 175	GPG_ERR_UNKNOWN_COMMAND		Unknown command
 176	GPG_ERR_NOT_OPERATIONAL		Not operational
-# 176 to 198 are free to be used.
+177	GPG_ERR_NO_PASSPHRASE		No passphrase given
+178	GPG_ERR_NO_PIN			No PIN given
+# 179 to 198 are free to be used.
 
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
