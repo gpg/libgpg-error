@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgpg-error-1.4\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
 "POT-Creation-Date: 2008-08-06 17:30+0200\n"
-"PO-Revision-Date: 2008-08-06 17:30+0200\n"
+"PO-Revision-Date: 2008-11-12 14:15+0100\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -705,7 +705,7 @@ msgstr "Öffentlicher Schlüssel ist nicht vertrauenswürdig"
 
 #: src/err-codes.h:180
 msgid "Decryption failed"
-msgstr "Enschlüsselung fehlgeschlagen"
+msgstr "Entschlüsselung fehlgeschlagen"
 
 #: src/err-codes.h:181
 msgid "Key expired"
