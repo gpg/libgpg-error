@@ -1,6 +1,7 @@
-Noteworthy changes in version 1.7
+Noteworthy changes in version 1.7 (2008-11-26)
 ----------------------------------------------
 
+ * Minor fixes and a few new error codes.
 
  * Interface changes relative to the 1.6 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

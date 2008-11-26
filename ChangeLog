@@ -1,3 +1,9 @@
+2008-11-26  Werner Koch  <wk@g10code.com>
+
+	Release 1.7.
+	
+	* configure.ac: Set LT version to C5/A5/R0.
+	
 2008-11-12  Werner Koch  <wk@g10code.com>
 
 	* src/err-codes.h.in: Add GPG_ERR_NO_PASSPHRASE and GPG_ERR_NO_PIN.
