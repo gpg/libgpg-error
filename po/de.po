@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgpg-error-1.4\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
 "POT-Creation-Date: 2008-11-12 14:44+0100\n"
-"PO-Revision-Date: 2008-11-12 14:45+0100\n"
+"PO-Revision-Date: 2009-03-29 17:29+0200\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -613,7 +613,7 @@ msgstr "Fehlender Wert"
 
 #: src/err-codes.h:157
 msgid "Hardware problem"
-msgstr "Problem mit de Hardware"
+msgstr "Problem mit der Hardware"
 
 #: src/err-codes.h:158
 msgid "PIN blocked"
