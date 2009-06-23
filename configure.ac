@@ -50,6 +50,7 @@ AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/err-sources.h.in])
 AC_CONFIG_HEADER([config.h])
+AC_CONFIG_MACRO_DIR([m4])
 
 # We need to know about the host architecture to avoid spurious
 # warnings.
@@ -62,11 +63,12 @@ AM_PROG_CC_C_O
 AC_PROG_CPP
 AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
-AC_LIBTOOL_WIN32_DLL
-AC_LIBTOOL_RC
 AC_GNU_SOURCE
 
-AC_PROG_LIBTOOL
+LT_PREREQ([2.2.6])
+LT_INIT([win32-dll disable-static])
+LT_LANG([Windows Resource])
+
 
 # We need to compile and run a program on the build machine.
 dnl The AC_PROG_CC_FOR_BUILD macro in the AC archive is broken for

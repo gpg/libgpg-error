@@ -50,22 +50,21 @@ CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 if HAVE_W32_SYSTEM
 arch_sources = w32-gettext.h w32-gettext.c
 
-LTRCCOMPILE = $(LIBTOOL) --mode=compile $(RC) \
-     `echo $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) | \
-     sed -e 's/-I/--include-dir /g;s/-D/--define /g'`
+RCCOMPILE = $(RC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(libgpg_error_la_CPPFLAGS) $(AM_CPPFLAGS) $(CPPFLAGS)
+LTRCCOMPILE = $(LIBTOOL) --mode=compile --tag=RC $(RCCOMPILE)
 
-SUFFIXES = rc
+SUFFIXES = .rc .lo
 
-.rc.o:
-	$(LTRCCOMPILE) -i $< -o $@
+.rc.lo:
+	$(LTRCCOMPILE) -i "$<" -o "$@"
 
-gpg_error_res = versioninfo.o
-gpg_error_res_ldflag = -Wl,$(gpg_error_res)
+gpg_error_res = versioninfo.lo
 no_undefined = -no-undefined
 export_symbols = -export-symbols $(srcdir)/gpg-error.def
 
 install-def-file:
-	$(INSTALL) gpg-error.def $(DESTDIR)$(libdir)/gpg-error-.def
+	$(INSTALL) gpg-error.def $(DESTDIR)$(libdir)/gpg-error.def
 
 uninstall-def-file:
 	-rm $(DESTDIR)$(libdir)/gpg-error.def
@@ -76,7 +75,6 @@ intllibs =
 else
 arch_sources =
 gpg_error_res =
-gpg_error_res_ldflag =
 no_undefined =
 export_symbols =
 install-def-file:
@@ -87,7 +85,7 @@ intllibs = @LTLIBINTL@
 endif
 
 
-libgpg_error_la_LDFLAGS = $(gpg_error_res_ldflag) -version-info \
+libgpg_error_la_LDFLAGS = -version-info \
   @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@ \
   $(no_undefined) $(export_symbols)
 
@@ -95,7 +93,7 @@ libgpg_error_la_SOURCES = gpg-error.h gettext.h $(arch_sources) \
 	init.c strsource.c strerror.c code-to-errno.c code-from-errno.c
 
 libgpg_error_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
-libgpg_error_la_LIBADD = $(intllibs)
+libgpg_error_la_LIBADD = $(gpg_error_res) $(intllibs)
 
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c $(arch_sources)
 gpg_error_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
