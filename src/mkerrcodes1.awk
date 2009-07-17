@@ -70,7 +70,10 @@ header {
   if ($1 ~ /^[0-9]/)
     {
       print "#include <errno.h>";
-      print "";
+      print "#ifdef _WIN32";
+      print "#include <winsock2.h>";
+      print "#endif";
+       print "";
       header = 0;
     }
   else
@@ -86,5 +89,8 @@ header {
 
     print "#ifdef " $errnoidx;
     print $errnoidx "\tGPG_ERR_" $errnoidx;
+    print "#endif";
+    print "#ifdef WSA" $errnoidx;
+    print "WSA" $errnoidx "\tGPG_ERR_" $errnoidx;
     print "#endif";
 }

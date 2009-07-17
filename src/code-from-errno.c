@@ -23,36 +23,10 @@
 #endif
 
 #include <errno.h> 
-#ifdef HAVE_W32_SYSTEM
-#include <winsock2.h>
-#endif
 
 #include <gpg-error.h>
 
 #include "code-from-errno.h"
-
-#ifdef HAVE_W32_SYSTEM
-/* Under Windows socket related error codes are defined in a different
-   file and prefixed with "WSA".  As their ranges don't overlap, we map
-   some of them to our usual error codes. */
-gpg_err_code_t
-w32_special_errnos (int err)
-{
-  switch (err)
-    {
-    case WSAEADDRINUSE:    return GPG_ERR_EADDRINUSE;
-    case WSAEADDRNOTAVAIL: return GPG_ERR_EADDRNOTAVAIL;  
-    case WSAECONNABORTED:  return GPG_ERR_ECONNABORTED;
-    case WSAECONNREFUSED:  return GPG_ERR_ECONNREFUSED;
-    case WSAECONNRESET:    return GPG_ERR_ECONNRESET;
-    case WSAENAMETOOLONG:  return GPG_ERR_ENAMETOOLONG;
-    case WSAEHOSTDOWN:     return GPG_ERR_EHOSTDOWN;
-    case WSAEHOSTUNREACH:  return GPG_ERR_EHOSTUNREACH;
-    default: 
-      return GPG_ERR_UNKNOWN_ERRNO;
-    }
-}
-#endif /*HAVE_W32_SYSTEM*/
 
 /* Retrieve the error code for the system error ERR.  This returns
    GPG_ERR_UNKNOWN_ERRNO if the system error is not mapped (report
@@ -68,13 +42,7 @@ gpg_err_code_from_errno (int err)
   idx = errno_to_idx (err);
 
   if (idx < 0)
-    {
-#ifdef HAVE_W32_SYSTEM
-      return w32_special_errnos (err);
-#else
-      return GPG_ERR_UNKNOWN_ERRNO;
-#endif
-    }
+    return GPG_ERR_UNKNOWN_ERRNO;
 
   return GPG_ERR_SYSTEM_ERROR | err_code_from_index[idx];
 }
@@ -95,13 +63,7 @@ gpg_err_code_from_syserror (void)
   idx = errno_to_idx (err);
 
   if (idx < 0)
-    {
-#ifdef HAVE_W32_SYSTEM
-      return w32_special_errnos (err);
-#else
-      return GPG_ERR_UNKNOWN_ERRNO;
-#endif
-    }
+    return GPG_ERR_UNKNOWN_ERRNO;
 
   return GPG_ERR_SYSTEM_ERROR | err_code_from_index[idx];
 }

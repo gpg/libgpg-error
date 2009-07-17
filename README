@@ -74,3 +74,17 @@ b) If you don't have any a trusted version of GnuPG, you can attempt
 
    Now check that this checksum is _exactly_ the same as the one
    published via the announcement list and probably via Usenet.
+
+
+Known Problems
+--------------
+
+On Windows, WSA Error Codes can be provided as system error codes and
+will be transparently converted to the corresponding gpg error codes.
+However, not all of them have detailed description when printed with
+gpg_strerror, but will default to "Unknown system error (NUMBER)" for
+pretty printing.  For example, WSAEHOSTDOWN will be translated to
+GPG_ERR_EHOSTDOWN, but there is no corresponding EHOSTDOWN in Windows
+and thus gpg_strerror will default to "Unknown system error (8029)".
+(This could be fixed by adding our own error strings replacing or
+extending the system error strings, including their translations).
