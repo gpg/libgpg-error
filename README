@@ -81,10 +81,22 @@ Known Problems
 
 On Windows, WSA Error Codes can be provided as system error codes and
 will be transparently converted to the corresponding gpg error codes.
-However, not all of them have detailed description when printed with
-gpg_strerror, but will default to "Unknown system error (NUMBER)" for
-pretty printing.  For example, WSAEHOSTDOWN will be translated to
-GPG_ERR_EHOSTDOWN, but there is no corresponding EHOSTDOWN in Windows
-and thus gpg_strerror will default to "Unknown system error (8029)".
-(This could be fixed by adding our own error strings replacing or
-extending the system error strings, including their translations).
+There are two problems with this support:
+
+* Not all error codes corresponding to WSA Error codes have a detailed
+  description when printed with gpg_strerror.  Some will default to
+  "Unknown error" for pretty printing.  For example, WSAEHOSTDOWN will
+  be translated to GPG_ERR_EHOSTDOWN, but there is no corresponding
+  EHOSTDOWN in Windows and thus gpg_strerror will default to "Unknown
+  error" as printed by the system's strerror function for the argument
+  WSAEHOSTDOWN.  (This could be fixed by adding our own error strings
+  replacing or extending the system error strings, including their
+  translations).
+
+* The translation to a gpg error code and back to a system error code
+  in some cases does not preserve information.  For example, the error code
+  WSAEACCES translates to GPG_ERR_EACCES, which translates back to
+  EACCES.
+
+Any WSA Error code has either the first problem or the second (but not
+both), depending on if there is a corresponding Windows error code.

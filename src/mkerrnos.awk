@@ -71,6 +71,9 @@ header {
   if ($1 ~ /^[0-9]/)
     {
       print "#include <errno.h>";
+      print "#ifdef _WIN32";
+      print "#include <winsock2.h>";
+      print "#endif";
       print "";
       print "static const int err_code_to_errno [] = {";
       header = 0;
@@ -89,7 +92,11 @@ header {
     print "#ifdef " $errnoidx;
     print "  " $errnoidx ",";
     print "#else";
+    print "#ifdef WSA" $errnoidx;
+    print "  WSA" $errnoidx ",";
+    print "#else"; 
     print "  0,";
+    print "#endif";
     print "#endif";
 }
 END {
