@@ -2,7 +2,8 @@ Package: libgpg-error
 Maintainer: Marcus Brinkmann <marcus@g10code.com>
 Bug reports: bug-gnupg@gnupg.org
 Security related bug reports: security@gnupg.org
-License: LGPLv2.1+
+License (library): LGPLv2.1+
+License (tools): GPLv2+ with exception
 
 
 g10 Code GmbH <code@g10code.com>
