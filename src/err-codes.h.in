@@ -228,7 +228,7 @@
 210	GPG_ERR_SEXP_UNEXPECTED_PUNC	Unexpected reserved punctuation in S-expression
 211	GPG_ERR_SEXP_BAD_HEX_CHAR	Bad hexadecimal character in S-expression
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
-213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octadecimal character in S-expression
+213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
 # 214 to 254 are free to be used. 255 and 256 are RFU.
 

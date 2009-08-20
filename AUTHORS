@@ -6,11 +6,8 @@ License (library): LGPLv2.1+
 License (tools): GPLv2+ with exception
 
 
-g10 Code GmbH <code@g10code.com>
- - Design and implementation.
-
-Laurentiu Buzdugan <lbuz@rolix.org> 
- - TRANSLATION [ro]
+Aron Xu <happyaron.xu@gmail.com>
+ - TRANSLATION [zh_CN]
 
 Clytie Siddall <clytie@riverland.net.au>
  - TRANSLATION [vi]
@@ -18,8 +15,20 @@ Clytie Siddall <clytie@riverland.net.au>
 Daniel Nylander <po@danielnylander.se>
  - TRANSLATION [sv]
 
+Francesco Groccia <fgr@anche.no>
+ - TRANSLATION [it]
+
+g10 Code GmbH <code@g10code.com>
+ - Design and implementation.
+
 Jakub Bogusz <qboosh@pld-linux.org>
  - TRANSLATION [pl]
+
+Laurentiu Buzdugan <lbuz@rolix.org> 
+ - TRANSLATION [ro]
+
+Petr Pisar <petr.pisar@atlas.cz>
+ - TRANSLATION [cs]
 
 
 The RPM specs file libgpg-error.spec has been contributed by
