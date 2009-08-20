@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2009-08-20 08:48+0200\n"
+"POT-Creation-Date: 2009-08-20 08:57+0200\n"
 "PO-Revision-Date: 2009-08-19 17:45+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <translation-team-zh-cn@lists."
@@ -875,7 +875,7 @@ msgid "Odd hexadecimal numbers in S-expression"
 msgstr ""
 
 #: src/err-codes.h:222
-msgid "Bad octadecimal character in S-expression"
+msgid "Bad octal character in S-expression"
 msgstr ""
 
 #: src/err-codes.h:223
