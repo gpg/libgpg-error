@@ -1,14 +1,14 @@
 # Swedish translation for libgpg-error.
-# Copyright (C) 2006, 2007 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gnupg package.
-# Daniel Nylander <po@danielnylander.se>, 2006, 2007.
+# Copyright (C) 2006, 2007, 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the libgpg-error package.
+# Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.4\n"
+"Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
 "POT-Creation-Date: 2008-11-12 14:44+0100\n"
-"PO-Revision-Date: 2007-08-24 13:01+0100\n"
+"PO-Revision-Date: 2009-06-25 07:54+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -65,11 +65,11 @@ msgstr "GSTI"
 
 #: src/err-sources.h:40
 msgid "GPA"
-msgstr ""
+msgstr "GPA"
 
 #: src/err-sources.h:41
 msgid "Kleopatra"
-msgstr ""
+msgstr "Kleopatra"
 
 #: src/err-sources.h:42
 msgid "Any source"
@@ -800,23 +800,20 @@ msgid "Unknown command"
 msgstr "Okänt kommando"
 
 #: src/err-codes.h:204
-#, fuzzy
 msgid "Not operational"
-msgstr "Åtgärden stöds inte"
+msgstr "Fungerar inte"
 
 #: src/err-codes.h:205
-#, fuzzy
 msgid "No passphrase given"
-msgstr "Felaktig lösenfras"
+msgstr "Ingen lösenfras angiven"
 
 #: src/err-codes.h:206
 msgid "No PIN given"
-msgstr ""
+msgstr "Ingen pinkod angiven"
 
 #: src/err-codes.h:207
-#, fuzzy
 msgid "Operation not yet finished"
-msgstr "Åtgärden avbröts"
+msgstr "Åtgärden är ännu inte färdig"
 
 #: src/err-codes.h:208
 msgid "Buffer too short"

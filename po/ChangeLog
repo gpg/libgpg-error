@@ -2,6 +2,12 @@
 
 	* LINGUAS: Add zh_CN.
 
+2009-08-20  Daniel Nylander <po@danielnylander.se>  (wk)
+
+	* sv.po: Update
+
+2009-08-20  Aron Xu  <happyaron.xu@gmail.com>  (wk)
+	
 	* zh_CN.po: New.
 
 2009-03-29  Moritz  <moritz@gnu.org>
