@@ -43,8 +43,9 @@
 11	GPG_ERR_SOURCE_GSTI		GSTI
 12	GPG_ERR_SOURCE_GPA		GPA
 13	GPG_ERR_SOURCE_KLEO		Kleopatra
+14	GPG_ERR_SOURCE_G13		G13
 
-# 14 to 30 are free to be used.
+# 15 to 30 are free to be used.
 
 31	GPG_ERR_SOURCE_ANY		Any source
 32	GPG_ERR_SOURCE_USER_1		User defined source 1

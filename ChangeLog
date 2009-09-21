@@ -1,3 +1,7 @@
+2009-09-21  Werner Koch  <wk@g10code.com>
+
+	* src/err-sources.h.in (GPG_ERR_SOURCE_G13): New.
+
 2009-08-20  Werner Koch  <wk@g10code.com>
 
 	* src/err-codes.h.in: s/octadecimal/octal/.  Reported by Petr Pisar.
@@ -16,7 +20,7 @@
 	transparently translated.
 	* src/code-from-errno.c [HAVE_W32_SYSTEM]: Don't include winsock2.h.
 	(w32_special_errnos) [HAVE_W32_SYSTEM]: Removed.
-	(gpg_err_code_from_errno) [HAVE_W32_SYSTEM]: Remove special case. 
+	(gpg_err_code_from_errno) [HAVE_W32_SYSTEM]: Remove special case.
 	* README: Document problem with printing some WSA Errors.
 
 2009-06-23  Marcus Brinkmann  <marcus@g10code.de>
