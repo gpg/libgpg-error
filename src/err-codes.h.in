@@ -209,7 +209,8 @@
 177	GPG_ERR_NO_PASSPHRASE		No passphrase given
 178	GPG_ERR_NO_PIN			No PIN given
 179	GPG_ERR_NOT_ENABLED		Not enabled
-# 180 to 198 are free to be used.
+180	GPG_ERR_NO_ENGINE		No crypto engine
+# 181 to 198 are free to be used.
 
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
