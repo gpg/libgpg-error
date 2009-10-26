@@ -74,7 +74,7 @@ typedef enum
 @include err-sources.h.in
 
     /* This is one more than the largest allowed entry.  */
-    GPG_ERR_SOURCE_DIM = 256
+    GPG_ERR_SOURCE_DIM = 128
   } gpg_err_source_t;
 
 
@@ -109,9 +109,13 @@ typedef unsigned int gpg_error_t;
 
 /* Bits 17 to 24 are reserved.  */
 
-/* We use the upper 8 bits of gpg_error_t for error sources.  */
+/* We use the upper 7 bits of gpg_error_t for error sources.  */
 #define GPG_ERR_SOURCE_MASK	(GPG_ERR_SOURCE_DIM - 1)
 #define GPG_ERR_SOURCE_SHIFT	24
+
+/* The highest bit is reserved.  It shouldn't be used to prevent
+   potential negative numbers when transmitting error values as
+   text.  */
 
 
 /* GCC feature test.  */
