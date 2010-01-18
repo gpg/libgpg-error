@@ -48,7 +48,7 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h \
-	gpg-error.def gpg-extra/errno.h extra-h.in
+	gpg-error.def extra-h.in $(extra_headers)
 
 tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h 
 

@@ -1,5 +1,11 @@
 2010-01-18  Werner Koch  <wk@g10code.com>
 
+	* src/init.c (wchar_to_utf8, utf8_to_wchar): New.
+
+	* src/gpg-error.c (main): Add option --list.
+
+2010-01-18  Werner Koch  <wk@g10code.com>
+
 	* ltmain.sh (wrappers_required): Don't set for mingw32ce.
 
 	* tests/Makefile.am (extra_includes): New.

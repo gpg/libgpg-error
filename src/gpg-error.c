@@ -462,6 +462,10 @@ int
 main (int argc, char *argv[])
 {
   int i = 1;
+  int listmode = 0;
+  const char *source_sym;
+  const char *error_sym;
+  gpg_error_t err;
 
 #ifndef GPG_ERR_INITIALIZED
   gpg_err_init ();
@@ -481,18 +485,46 @@ main (int argc, char *argv[])
       fputs ("gpg-error (" PACKAGE_NAME ") " PACKAGE_VERSION "\n", stdout);
       exit (0);
     }
+  else if (argc == 2 && !strcmp (argv[1], "--list"))
+    {
+      listmode = 1;
+    }
 
 
+  if (listmode)
+    {
+      for (i=0; i <  GPG_ERR_SOURCE_DIM; i++)
+        {
+          /* We use error code 1 because gpg_err_make requires a
+             non-zero error code. */
+          err = gpg_err_make (i, 1);
+          err -= 1;
+	  source_sym = gpg_strsource_sym (err);
+          if (source_sym)
+            printf ("%u = (%u, -) = (%s, -) = (%s, -)\n",
+                    err, gpg_err_source (err),
+                    source_sym, gpg_strsource (err));
+        }
+      for (i=0; i <  GPG_ERR_CODE_DIM; i++)
+        {
+          err = gpg_err_make (GPG_ERR_SOURCE_UNKNOWN, i);
+	  error_sym = gpg_strerror_sym (err);
+          if (error_sym)
+            printf ("%u = (-, %u) = (-, %s) = (-, %s)\n",
+                    err, gpg_err_code (err),
+                    error_sym, gpg_strerror (err));
+        }
+
+      i = argc;  /* Don't run the usual stuff.  */
+    }
   while (i < argc)
     {
-      gpg_error_t err;
-
       if (get_err_from_number (argv[i], &err)
 	  || get_err_from_symbol (argv[i], &err)
 	  || get_err_from_str (argv[i], &err))
 	{
-	  const char *source_sym = gpg_strsource_sym (err);
-	  const char *error_sym = gpg_strerror_sym (err);
+	  source_sym = gpg_strsource_sym (err);
+	  error_sym = gpg_strerror_sym (err);
 	  
 	  printf ("%u = (%u, %u) = (%s, %s) = (%s, %s)\n",
 		  err, gpg_err_source (err), gpg_err_code (err),

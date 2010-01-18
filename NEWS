@@ -3,6 +3,8 @@ Noteworthy changes in version 1.8
 
  * Preliminary support for WindowsCE.
 
+ * New option --list for gpg-error.
+
  * Interface changes relative to the 1.7 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_NOT_ENABLED           NEW.

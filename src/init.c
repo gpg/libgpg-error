@@ -35,13 +35,16 @@
 /* Locale directory support.  */
 
 #if HAVE_W32_SYSTEM
+
+/* 119 bytes for an error message should be enough.  With this size we
+   can assume that the allocation does not take up more than 128 bytes
+   per thread.  */
+#define STRBUFFER_SIZE 120
+
 /* The TLS space definition. */
 struct tls_space_s
 {
-  /* 119 bytes for an error message should be enough.  With this size
-     we can assume that the allocation does not take up more than 128
-     bytes per thread.  */
-  char strerror_buffer[120];
+  char strerror_buffer[STRBUFFER_SIZE];
 };
 static int tls_index;  /* Index for the TLS functions.  */ 
 
@@ -81,6 +84,68 @@ gpg_err_init (void)
 #ifdef HAVE_W32_SYSTEM
 
 #include <windows.h>
+
+/* Return a malloced string encoded in UTF-8 from the wide char input
+   string STRING.  Caller must free this value.  Returns NULL on
+   failure.  Caller may use GetLastError to get the actual error
+   number.  The result of calling this function with STRING set to
+   NULL is not defined.  */
+static char *
+wchar_to_utf8 (const wchar_t *string)
+{
+  int n;
+  char *result;
+
+  /* Note, that CP_UTF8 is not defined in Windows versions earlier
+     than NT.  */
+  n = WideCharToMultiByte (CP_UTF8, 0, string, -1, NULL, 0, NULL, NULL);
+  if (n < 0)
+    return NULL;
+
+  result = malloc (n+1);
+  if (result)
+    {
+      n = WideCharToMultiByte (CP_UTF8, 0, string, -1, result, n, NULL, NULL);
+      if (n < 0)
+        {
+          free (result);
+          result = NULL;
+        }
+    }
+  return result;
+}
+
+
+/* Return a malloced wide char string from an UTF-8 encoded input
+   string STRING.  Caller must free this value.  Returns NULL on
+   failure.  Caller may use GetLastError to get the actual error
+   number.  The result of calling this function with STRING set to
+   NULL is not defined.  */
+static wchar_t *
+utf8_to_wchar (const char *string)
+{
+  int n;
+  wchar_t *result;
+
+  n = MultiByteToWideChar (CP_UTF8, 0, string, -1, NULL, 0);
+  if (n < 0)
+    return NULL;
+
+  result = malloc ((n+1) * sizeof *result);
+  if (result)
+    {
+      n = MultiByteToWideChar (CP_UTF8, 0, string, -1, result, n);
+      if (n < 0)
+        {
+          free (result);
+          result = NULL;
+        }
+      return NULL;
+    }
+  return result;
+}
+
+
 
 static HKEY
 get_root_key(const char *root)
@@ -295,13 +360,25 @@ char *
 _gpg_w32ce_strerror (int err)
 {
   struct tls_space_s *tls = get_tls ();
+  wchar_t tmpbuf[STRBUFFER_SIZE];
+  int n;
 
   if (err == -1)
     err = _gpg_w32ce_get_errno ();
-  if (!FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM, NULL, err,
+  if (FormatMessageW (FORMAT_MESSAGE_FROM_SYSTEM, NULL, err,
                       MAKELANGID (LANG_NEUTRAL, SUBLANG_DEFAULT),
-                      tls->strerror_buffer, sizeof tls->strerror_buffer -1,
+                      tmpbuf, STRBUFFER_SIZE -1,
                       NULL))
+    {
+      n = WideCharToMultiByte (CP_UTF8, 0, tmpbuf, -1,
+                               tls->strerror_buffer,
+                               sizeof tls->strerror_buffer -1,
+                               NULL, NULL);
+    }
+  else
+    n = -1;
+
+  if (n < 0)
     snprintf (tls->strerror_buffer, sizeof tls->strerror_buffer -1,
               "[w32err=%d]", err);
   return tls->strerror_buffer;    
