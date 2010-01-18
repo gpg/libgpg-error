@@ -71,7 +71,11 @@ i18n_init (void)
   setlocale (LC_TIME, "");
   setlocale (LC_MESSAGES, "");
 # else
-  setlocale (LC_ALL, "" );
+#   ifdef HAVE_W32_SYSTEM
+#     warning setlocal is missing
+#   else
+      setlocale (LC_ALL, "" );
+#   endif
 # endif
 
   locale_dir = get_locale_dir ();
@@ -158,6 +162,7 @@ read_w32_registry_string( const char *root, const char *dir, const char *name )
     goto leave;
   }
   result[nbytes] = 0; /* make sure it is really a string  */
+#ifndef HAVE_W32CE_SYSTEM
   if (type == REG_EXPAND_SZ && strchr (result, '%')) {
     char *tmp;
 
@@ -196,6 +201,7 @@ read_w32_registry_string( const char *root, const char *dir, const char *name )
       free (tmp);
     }
   }
+#endif /*HAVE_W32CE_SYSTEM*/
 
  leave:
   RegCloseKey( key_handle );
@@ -255,7 +261,7 @@ get_err_from_number (char *str, gpg_error_t *err)
   unsigned long nr;
   char *tail;
 
-  errno = 0;
+  gpg_err_set_errno (0);
   nr = strtoul (str, &tail, 0);
   if (errno)
     return 0;

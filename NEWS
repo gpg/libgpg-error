@@ -1,12 +1,15 @@
 Noteworthy changes in version 1.8
 ----------------------------------------------
 
+ * Preliminary support for WindowsCE.
+
  * Interface changes relative to the 1.7 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- GPG_ERR_NOT_ENABLED           NEW
- GPG_ERR_SOURCE_G13            NEW
+ GPG_ERR_NOT_ENABLED           NEW.
+ GPG_ERR_SOURCE_G13            NEW.
  GPG_ERR_NO_ENGINE             NEW.
-
+ gpg_err_set_errno             NEW.
+ 
 
 Noteworthy changes in version 1.7 (2008-11-26)
 ----------------------------------------------

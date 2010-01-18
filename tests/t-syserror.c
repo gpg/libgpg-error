@@ -64,7 +64,7 @@ main (int argc, char *argv[])
       return 1;
     }
 
-  errno = 0;
+  gpg_err_set_errno (0);
 
   ec = gpg_err_code_from_syserror ();
   if (ec != GPG_ERR_MISSING_ERRNO)

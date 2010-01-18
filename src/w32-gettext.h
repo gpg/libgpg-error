@@ -20,7 +20,11 @@
 
 #if ENABLE_NLS
 
-#include <locale.h>
+#ifdef HAVE_W32CE_SYSTEM
+# define LC_ALL 0
+#else
+# include <locale.h>
+#endif
 #if !defined LC_MESSAGES && !(defined __LOCALE_H || (defined _LOCALE_H && defined __sun))
 # define LC_MESSAGES 1729
 #endif

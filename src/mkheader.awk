@@ -58,6 +58,8 @@ BEGIN {
   codes_nr = 0;
 # errnos_nr holds the number of system errors.
   errnos_nr = 0;
+# extra_nr holds the number of extra lines to be included.
+  extra_nr = 0
 
 # These variables walk us through our input.
   sources_header = 1;
@@ -66,6 +68,7 @@ BEGIN {
   codes_body = 0;
   between_codes_and_errnos = 0;
   errnos_body = 0;
+  extra_body = 0;
   gpg_error_h = 0;
 
   print "/* Output of mkheader.awk.  DO NOT EDIT.  */";
@@ -148,15 +151,32 @@ errnos_body {
 
   if ($1 !~ /^[0-9]/)
     {
-# Note that this assumes that gpg-error.h.in doesn't start with a digit.
+# Note that this assumes that extra_body.in doesn't start with a digit.
       errnos_body = 0;
-      gpg_error_h = 1;
+      extra_body = 1;
     }
   else
     {
       errnos_idx[errnos_nr] = "GPG_ERR_SYSTEM_ERROR | " $1;
       errnos_sym[errnos_nr] = "GPG_ERR_" $2;
       errnos_nr++;
+    }
+}
+
+extra_body {
+  if (/^##/)
+    next
+
+  if (/^EOF/)
+    {
+      extra_body = 0;
+      gpg_error_h = 1;
+      next;
+    }
+  else
+    {
+      extra_line[extra_nr] = $0;
+      extra_nr++;
     }
 }
 
@@ -180,9 +200,16 @@ gpg_error_h {
   else if ($0 ~ /^@include errnos/)
     {
       for (i = 0; i < errnos_nr; i++)
+       {
+         print "    " errnos_sym[i] " = " errnos_idx[i] ",";
+#        print "#define " errnos_sym[i] " (" errnos_idx[i] ")";
+       }
+    }
+  else if ($0 ~ /^@include extra-h.in/)
+    {
+      for (i = 0; i < extra_nr; i++)
 	{
-	  print "    " errnos_sym[i] " = " errnos_idx[i] ",";
-#	  print "#define " errnos_sym[i] " (" errnos_idx[i] ")";
+            print extra_line[i];
 	}
     }
   else

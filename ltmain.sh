@@ -7680,14 +7680,14 @@ EOF
 
       wrappers_required=yes
       case $host in
+      *cegcc | *mingw32ce* )
+        # Disable wrappers for cegcc, we are cross compiling anyway.
+        wrappers_required=no
+        ;;
       *cygwin* | *mingw* )
         if test "$build_libtool_libs" != yes; then
           wrappers_required=no
         fi
-        ;;
-      *cegcc)
-        # Disable wrappers for cegcc, we are cross compiling anyway.
-        wrappers_required=no
         ;;
       *)
         if test "$need_relink" = no || test "$build_libtool_libs" != yes; then

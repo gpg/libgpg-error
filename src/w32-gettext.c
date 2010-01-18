@@ -68,7 +68,9 @@
 #endif
 
 #include <stdlib.h>
-#include <locale.h>
+#ifndef HAVE_W32CE_SYSTEM
+# include <locale.h>
+#endif
 
 #ifdef HAVE_W32_SYSTEM
 # include <windows.h>
@@ -776,6 +778,7 @@ _nl_locale_name (int category, const char *categoryname)
 
   /* Let the user override the system settings through environment
      variables, as on POSIX systems.  */
+#ifndef HAVE_W32CE_SYSTEM
   retval = getenv ("LC_ALL");
   if (retval != NULL && retval[0] != '\0')
     return retval;
@@ -785,9 +788,14 @@ _nl_locale_name (int category, const char *categoryname)
   retval = getenv ("LANG");
   if (retval != NULL && retval[0] != '\0')
     return retval;
+#endif /*!HAVE_W32CE_SYSTEM*/
 
   /* Use native Win32 API locale ID.  */
+#ifdef HAVE_W32CE_SYSTEM
+  lcid = GetSystemDefaultLCID ();
+#else
   lcid = GetThreadLocale ();
+#endif
 
   /* Strip off the sorting rules, keep only the language part.  */
   langid = LANGIDFROMLCID (lcid);

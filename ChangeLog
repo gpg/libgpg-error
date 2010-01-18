@@ -1,3 +1,40 @@
+2010-01-18  Werner Koch  <wk@g10code.com>
+
+	* ltmain.sh (wrappers_required): Don't set for mingw32ce.
+
+	* tests/Makefile.am (extra_includes): New.
+	* tests/t-syserror.c (main): Use gpg_err_set_errno.
+
+	* src/w32ce-add.h: New.
+	* src/Makefile.am (EXTRA_DIST): Add it
+	(extra-h.in): New rule
+	(gpg-error.h): Pass extra-h.in to mkheader.
+	* src/mkheader.awk (extra_body): New.
+
+	* src/gpg-error.c (get_err_from_number): Use gpg_err_set_errno.
+
+	* src/mkw32errmap.c: New
+	* src/gpg-error.def: Rename to  ..
+	* src/gpg-error.def.in: .. this.
+	(_gpg_errno_location): New.
+	* src/init.c (struct tls_space_s, tls_index): New.
+	(get_tls, _gpg_errno_location, DllMain): New.
+	(read_w32_registry_string) [W32CE]: Don't expand envvars.
+	(_gpg_w32ce_strerror): New.
+	* src/Makefile.am (extra_headers, extra_cppflags): New.
+	(include_HEADERS): Add extra_headers.  Prefix with nobase_.
+	(libgpg_error_la_CPPFLAGS, gpg_error_CPPFLAGS)
+	(mkerrcodes.h): Add extra_cppflags.
+	(RCCOMPILE): Replace libgpg_error_la_CPPFLAGS by direct inclusion
+	of -DLOCALEDIR.
+	* configure.ac (HAVE_W32CE_SYSTEM): New AM_CONDITIONAL and
+	AC_DEFINE.
+	(GPG_ERROR_CONFIG_ISUBDIRAFTER): New.
+	* src/gpg-error-config.in <--libs>: Replace fixed -lgpg-error
+	by subst variable.
+	(isubdirafter): New.
+	<--cflags>: Take subst variable in account.  Add idirafter stuff.
+
 2009-10-26  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/gpg-error.h.in (GPG_ERR_SOURCE_DIM): Reduce to 128.
