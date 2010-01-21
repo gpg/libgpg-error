@@ -76,6 +76,19 @@ b) If you don't have any a trusted version of GnuPG, you can attempt
    published via the announcement list and probably via Usenet.
 
 
+Hints
+-----
+
+To build for Windows you you may use the convenience command:
+
+   ./autogen.sh --build-w32
+
+which runs configure with suitable options.  For WindowsCE the command
+is:
+
+   ./autogen.sh --build-w32ce
+
+
 Known Problems
 --------------
 

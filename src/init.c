@@ -1,5 +1,5 @@
 /* init.c - Initialize the GnuPG error library.
-   Copyright (C) 2005 g10 Code GmbH
+   Copyright (C) 2005, 2010 g10 Code GmbH
 
    This file is part of libgpg-error.
 
@@ -14,9 +14,8 @@
    Lesser General Public License for more details.
  
    You should have received a copy of the GNU Lesser General Public
-   License along with libgpg-error; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-   02111-1307, USA.  */
+   License along with this program; if not, see <http://www.gnu.org/licenses/>.
+ */
 
 #if HAVE_CONFIG_H
 #include <config.h>
@@ -30,22 +29,13 @@
 #include <gpg-error.h>
 
 #include "gettext.h"
+#include "init.h"
 
 
 /* Locale directory support.  */
 
 #if HAVE_W32_SYSTEM
 
-/* 119 bytes for an error message should be enough.  With this size we
-   can assume that the allocation does not take up more than 128 bytes
-   per thread.  */
-#define STRBUFFER_SIZE 120
-
-/* The TLS space definition. */
-struct tls_space_s
-{
-  char strerror_buffer[STRBUFFER_SIZE];
-};
 static int tls_index;  /* Index for the TLS functions.  */ 
 
 static char *get_locale_dir (void);
@@ -59,15 +49,13 @@ static void drop_locale_dir (char *locale_dir);
 #endif /*!HAVE_W32_SYSTEM*/
 
 
-/* Initialize the library.  This function should be run early.  */
-gpg_error_t
-gpg_err_init (void)
+static void
+real_init (void)
 {
 #ifdef ENABLE_NLS
   char *locale_dir;
 
   /* We only have to bind our locale directory to our text domain.  */
-
   locale_dir = get_locale_dir ();
   if (locale_dir)
     {
@@ -75,7 +63,22 @@ gpg_err_init (void)
       drop_locale_dir (locale_dir);
     }
 #endif
+}
 
+/* Initialize the library.  This function should be run early.  */
+gpg_error_t
+gpg_err_init (void)
+{
+#ifdef HAVE_W32_SYSTEM
+  /* We always have a constructor and thus this function is called
+     automatically.  Due to the way the C init code of mingw works,
+     the constructors are called before our DllMain function is
+     called.  The problem with that is that the TLS has not been setup
+     and w32-gettext.c requires TLS.  To solve this we do nothing here
+     but call the actual init code from our DllMain.  */
+#else
+  real_init ();
+#endif
   return 0;
 }
 
@@ -146,161 +149,53 @@ utf8_to_wchar (const char *string)
 }
 
 
-
-static HKEY
-get_root_key(const char *root)
-{
-  HKEY root_key;
-
-  if( !root )
-    root_key = HKEY_CURRENT_USER;
-  else if( !strcmp( root, "HKEY_CLASSES_ROOT" ) )
-    root_key = HKEY_CLASSES_ROOT;
-  else if( !strcmp( root, "HKEY_CURRENT_USER" ) )
-    root_key = HKEY_CURRENT_USER;
-  else if( !strcmp( root, "HKEY_LOCAL_MACHINE" ) )
-    root_key = HKEY_LOCAL_MACHINE;
-  else if( !strcmp( root, "HKEY_USERS" ) )
-    root_key = HKEY_USERS;
-  else if( !strcmp( root, "HKEY_PERFORMANCE_DATA" ) )
-    root_key = HKEY_PERFORMANCE_DATA;
-  else if( !strcmp( root, "HKEY_CURRENT_CONFIG" ) )
-    root_key = HKEY_CURRENT_CONFIG;
-  else
-    return NULL;
-  return root_key;
-}
-
-/****************
- * Return a string from the Win32 Registry or NULL in case of
- * error.  Caller must release the return value.   A NULL for root
- * is an alias for HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE in turn.
- * NOTE: The value is allocated with a plain malloc() - use free() and not
- * the usual xfree()!!!
- */
-static char *
-read_w32_registry_string( const char *root, const char *dir, const char *name )
-{
-  HKEY root_key, key_handle;
-  DWORD n1, nbytes, type;
-  char *result = NULL;
-
-  if ( !(root_key = get_root_key(root) ) )
-    return NULL;
-
-  if( RegOpenKeyEx( root_key, dir, 0, KEY_READ, &key_handle ) )
-    {
-      if (root)
-	return NULL; /* no need for a RegClose, so return direct */
-      /* It seems to be common practise to fall back to HKLM. */
-      if (RegOpenKeyEx (HKEY_LOCAL_MACHINE, dir, 0, KEY_READ, &key_handle) )
-	return NULL; /* still no need for a RegClose, so return direct */
-    }
-
-  nbytes = 1;
-  if( RegQueryValueEx( key_handle, name, 0, NULL, NULL, &nbytes ) ) 
-    {
-      if (root)
-        goto leave;
-      /* Try to fallback to HKLM also vor a missing value.  */
-      RegCloseKey (key_handle);
-      if (RegOpenKeyEx (HKEY_LOCAL_MACHINE, dir, 0, KEY_READ, &key_handle) )
-        return NULL; /* Nope.  */
-      if (RegQueryValueEx( key_handle, name, 0, NULL, NULL, &nbytes))
-        goto leave;
-    }
-  result = malloc ( (n1=nbytes+1) );
-  if( !result )
-    goto leave;
-  if( RegQueryValueEx( key_handle, name, 0, &type, result, &n1 ) ) 
-    {
-      free(result); result = NULL;
-      goto leave;
-    }
-  result[nbytes] = 0; /* make sure it is really a string  */
-
-#ifndef HAVE_W32CE_SYSTEM  /* W32CE has no environment variables.  */
-  if (type == REG_EXPAND_SZ && strchr (result, '%')) 
-    {
-      char *tmp;
-      
-      n1 += 1000;
-      tmp = malloc (n1+1);
-      if (!tmp)
-        goto leave;
-      nbytes = ExpandEnvironmentStrings (result, tmp, n1);
-      if (nbytes && nbytes > n1) 
-        {
-          free (tmp);
-          n1 = nbytes;
-          tmp = malloc (n1 + 1);
-          if (!tmp)
-            goto leave;
-          nbytes = ExpandEnvironmentStrings (result, tmp, n1);
-          if (nbytes && nbytes > n1)
-            {
-              free (tmp); /* oops - truncated, better don't expand at all */
-              goto leave;
-            }
-          tmp[nbytes] = 0;
-          free (result);
-          result = tmp;
-        }
-      else if (nbytes) /* okay, reduce the length */
-        {
-          tmp[nbytes] = 0;
-          free (result);
-          result = malloc (strlen (tmp)+1);
-          if (!result)
-            result = tmp;
-          else {
-            strcpy (result, tmp);
-            free (tmp);
-          }
-        }
-      else /* error - don't expand */
-        {
-          free (tmp);
-        }
-    }
-#endif /*HAVE_W32CE_SYSTEM*/
-
- leave:
-  RegCloseKey( key_handle );
-  return result;
-}
-
-
-#define REGKEY "Software\\GNU\\GnuPG"
-
 static char *
 get_locale_dir (void)
 {
-  char *instdir;
-  char *p;
-  char *dname;
+  static wchar_t moddir[MAX_PATH+5];
+  char *result, *p;
+  int nbytes;
 
-  instdir = read_w32_registry_string ("HKEY_LOCAL_MACHINE", REGKEY,
-				      "Install Directory");
-  if (!instdir)
-    return NULL;
-  
-  /* Build the key: "<instdir>/share/locale".  */
+  if (!GetModuleFileNameW (NULL, moddir, MAX_PATH))
+    *moddir = 0;
+
 #define SLDIR "\\share\\locale"
-  dname = malloc (strlen (instdir) + strlen (SLDIR) + 1);
-  if (!dname)
+  if (*moddir)
     {
-      free (instdir);
-      return NULL;
+      nbytes = WideCharToMultiByte (CP_UTF8, 0, moddir, -1, NULL, 0, NULL, NULL);
+      if (nbytes < 0)
+        return NULL;
+      
+      result = malloc (nbytes + strlen (SLDIR) + 1);
+      if (result)
+        {
+          nbytes = WideCharToMultiByte (CP_UTF8, 0, moddir, -1,
+                                        result, nbytes, NULL, NULL);
+          if (nbytes < 0)
+            {
+              free (result);
+              result = NULL;
+            }
+          else
+            {
+              p = strrchr (result, '\\');
+              if (p)
+                *p = 0;
+              strcat (result, SLDIR);
+            }
+        }
     }
-  p = dname;
-  strcpy (p, instdir);
-  p += strlen (instdir);
-  strcpy (p, SLDIR);
-  
-  free (instdir);
-  
-  return dname;
+  else /* Use the old default value.  */
+    {
+      result = malloc (10 + strlen (SLDIR) + 1);
+      if (result)
+        {
+          strcpy (result, "c:\\gnupg");
+          strcat (result, SLDIR);
+        }
+    }  
+#undef SLDIR  
+  return result;
 }
 
 
@@ -313,8 +208,7 @@ drop_locale_dir (char *locale_dir)
 
 /* Return the tls object.  This function is guaranteed to return a
    valid non-NULL object.  */
-#ifdef HAVE_W32CE_SYSTEM
-static struct tls_space_s *
+struct tls_space_s *
 get_tls (void)
 {
   struct tls_space_s *tls;
@@ -330,12 +224,13 @@ get_tls (void)
           /* No way to continue - commit suicide.  */
           abort ();
         }
+      tls->gt_use_utf8 = 0;
       TlsSetValue (tls_index, tls);
     }
         
   return tls;
 }
-#endif /*HAVE_W32CE_SYSTEM*/
+
 
 /* Return the value of the ERRNO variable.  This needs to be a
    function so that we can have a per-thread ERRNO.  This is used only
@@ -397,10 +292,7 @@ gpg_err_set_errno (int err)
 }
 
 
-/* Entry point called by the DLL loader.  This is only used by
-   WindowsCE for now; we might eventually use TLS to implement a
-   thread safe strerror.  */
-#ifdef HAVE_W32CE_SYSTEM
+/* Entry point called by the DLL loader.  */
 int WINAPI
 DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
 {
@@ -418,7 +310,12 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
       tls = LocalAlloc (LPTR, sizeof *tls);
       if (!tls)
         return FALSE;
+      tls->gt_use_utf8 = 0;
       TlsSetValue (tls_index, tls);
+      if (reason == DLL_PROCESS_ATTACH)
+        {
+          real_init ();
+        }
       break;
 
     case DLL_THREAD_DETACH:
@@ -440,7 +337,7 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
   
   return TRUE;
 }
-#endif /*HAVE_W32CE_SYSTEM*/
+
 
 #else /*!HAVE_W32_SYSTEM*/
 

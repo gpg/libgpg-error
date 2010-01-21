@@ -1,3 +1,52 @@
+2010-01-21  Werner Koch  <wk@g10code.com>
+
+	* src/mkstrtable.awk (END): Do not print PREFIX before
+	LAST_MSGSTR.
+
+	* src/init.c (get_locale_dir): Rework to match what gnupg is doing.
+	(get_root_key, read_w32_registry_string): Remove.
+	* src/gpg-error.c (get_locale_dir): Replace by code from init.c
+	(get_root_key, read_w32_registry_string): Remove.
+
+2010-01-20  Werner Koch  <wk@g10code.com>
+
+	* src/init.c (gpg_err_init): Factor code out to ..
+	(real_init): .. new.
+
+	* src/Makefile.am (gpg_error_SOURCES): Remove arch_sources.
+	(export_symbols): Do not prefix gpg-error-def with srcdir.
+
+2010-01-19  Werner Koch  <wk@g10code.com>
+
+	* src/init.c (DllMain): Call _w32_gettext_init.
+	(get_tls): Use it also for standard Windows.
+	(DllMain): Ditto.
+	(struct tls_space_s): Move to ..
+	(get_tls): Make global.
+	* src/init.h: .. New.
+	* src/gettext.h: Do not include w32-gettext.h.
+	* src/w32-gettext.c: Replace by version from GnuPG.
+	(my_nl_locale_name) [W32CE]: Do not use getenv.  Use
+	GetSystemDefaultLCID.
+	(struct loaded_domain): Use uint16_t for NSTRINGS and MAPPED to
+	save space.
+	(load_domain): Check for too large MO files.
+	(utf8_to_wchar): Use gpg_err_set_errno.
+	(bindtextdomain): Rename to _gpg_w32_bindtextdomain.
+	(textdomain): Rename to _gpg_w32_textdomain.
+	(gettext): Rename to _gpg_w32_gettext.
+	(dgettext): Rename to _gpg_w32_dgettext.
+	(ngettext): Remove.
+	(gettext_localename): Rename to _gpg_w32_gettext_localename.
+	(gettext_select_utf8): Rename to _gpg_w32_gettext_use_utf8.
+	(_gpg_w32_bindtextdomain): Change to only register the directory.
+	Return the current directory if asked to.
+	(do_gettext): Add DOMAINNAME arg and take care of it.
+	* src/w32-add.h: New.
+	* src/w32-gettext.h: Remove.
+	* src/Makefile.am (extra-h.in): Process w32-add.h.
+	(arch_sources): Remove w32-gettext.h.
+
 2010-01-18  Werner Koch  <wk@g10code.com>
 
 	* src/init.c (wchar_to_utf8, utf8_to_wchar): New.

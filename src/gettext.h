@@ -23,15 +23,14 @@
 #if ENABLE_NLS
 
 #if HAVE_W32_SYSTEM
-/* Redirect the gettext calls to an internal implementation on W32
-   targets.  */
-# include "w32-gettext.h"
-#else
-/* Get declarations of GNU message catalog functions.  */
+  /* We have a gettext implementation in gpg-error.h which get
+     included anyway.  */
+#else /*!HAVE_W32_SYSTEM*/
+  /* Get declarations of GNU message catalog functions.  */
 # include <libintl.h>
-#endif
+#endif /*!HAVE_W32_SYSTEM*/
 
-#else
+#else /*!ENABLE_NLS*/
 
 /* Solaris /usr/include/locale.h includes /usr/include/libintl.h, which
    chokes if dcgettext is defined as a macro.  So include it now, to make
@@ -61,7 +60,7 @@
 # define bindtextdomain(Domainname, Dirname) ((const char *) (Dirname))
 # define bind_textdomain_codeset(Domainname, Codeset) ((const char *) (Codeset))
 
-#endif
+#endif /*!ENABLE_NLS*/
 
 /* A pseudo function call that serves as a marker for the automated
    extraction of messages, but does not call gettext().  The run-time
@@ -71,5 +70,7 @@
    The macro's expansion is not parenthesized, so that it is suitable as
    initializer for static 'char[]' or 'const char[]' variables.  */
 #define gettext_noop(String) String
+
+
 
 #endif /* _LIBGETTEXT_H */

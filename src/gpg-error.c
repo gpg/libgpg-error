@@ -66,17 +66,22 @@ i18n_init (void)
 {
 #ifdef ENABLE_NLS
   char *locale_dir;
-
-# ifdef HAVE_LC_MESSAGES
+  
+#ifdef HAVE_LC_MESSAGES
   setlocale (LC_TIME, "");
   setlocale (LC_MESSAGES, "");
-# else
-#   ifdef HAVE_W32_SYSTEM
-#     warning setlocal is missing
-#   else
-      setlocale (LC_ALL, "" );
-#   endif
+#else
+# ifndef HAVE_W32_SYSTEM
+  setlocale (LC_ALL, "" );
 # endif
+#endif
+  
+  /* Note that for this program we would only need the textdomain call
+     because libgpg-error already initializes itself to its locale dir
+     (via gpg_err_init or a constructor).  However this is only done
+     for the static standard locale and thus if the above setlocale
+     calls select a different locale the bindtext below will do
+     something else.  */
 
   locale_dir = get_locale_dir ();
   if (locale_dir)
@@ -93,152 +98,54 @@ i18n_init (void)
 
 #include <windows.h>
 
-static HKEY
-get_root_key(const char *root)
-{
-  HKEY root_key;
-
-  if( !root )
-    root_key = HKEY_CURRENT_USER;
-  else if( !strcmp( root, "HKEY_CLASSES_ROOT" ) )
-    root_key = HKEY_CLASSES_ROOT;
-  else if( !strcmp( root, "HKEY_CURRENT_USER" ) )
-    root_key = HKEY_CURRENT_USER;
-  else if( !strcmp( root, "HKEY_LOCAL_MACHINE" ) )
-    root_key = HKEY_LOCAL_MACHINE;
-  else if( !strcmp( root, "HKEY_USERS" ) )
-    root_key = HKEY_USERS;
-  else if( !strcmp( root, "HKEY_PERFORMANCE_DATA" ) )
-    root_key = HKEY_PERFORMANCE_DATA;
-  else if( !strcmp( root, "HKEY_CURRENT_CONFIG" ) )
-    root_key = HKEY_CURRENT_CONFIG;
-  else
-    return NULL;
-  return root_key;
-}
-
-/****************
- * Return a string from the Win32 Registry or NULL in case of
- * error.  Caller must release the return value.   A NULL for root
- * is an alias for HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE in turn.
- * NOTE: The value is allocated with a plain malloc() - use free() and not
- * the usual xfree()!!!
- */
-static char *
-read_w32_registry_string( const char *root, const char *dir, const char *name )
-{
-  HKEY root_key, key_handle;
-  DWORD n1, nbytes, type;
-  char *result = NULL;
-
-  if ( !(root_key = get_root_key(root) ) )
-    return NULL;
-
-  if( RegOpenKeyEx( root_key, dir, 0, KEY_READ, &key_handle ) )
-    {
-      if (root)
-	return NULL; /* no need for a RegClose, so return direct */
-      /* It seems to be common practise to fall back to HKLM. */
-      if (RegOpenKeyEx (HKEY_LOCAL_MACHINE, dir, 0, KEY_READ, &key_handle) )
-	return NULL; /* still no need for a RegClose, so return direct */
-    }
-
-  nbytes = 1;
-  if( RegQueryValueEx( key_handle, name, 0, NULL, NULL, &nbytes ) ) {
-    if (root)
-      goto leave;
-    /* Try to fallback to HKLM also vor a missing value.  */
-    RegCloseKey (key_handle);
-    if (RegOpenKeyEx (HKEY_LOCAL_MACHINE, dir, 0, KEY_READ, &key_handle) )
-      return NULL; /* Nope.  */
-    if (RegQueryValueEx( key_handle, name, 0, NULL, NULL, &nbytes))
-      goto leave;
-  }
-  result = malloc( (n1=nbytes+1) );
-  if( !result )
-    goto leave;
-  if( RegQueryValueEx( key_handle, name, 0, &type, result, &n1 ) ) {
-    free(result); result = NULL;
-    goto leave;
-  }
-  result[nbytes] = 0; /* make sure it is really a string  */
-#ifndef HAVE_W32CE_SYSTEM
-  if (type == REG_EXPAND_SZ && strchr (result, '%')) {
-    char *tmp;
-
-    n1 += 1000;
-    tmp = malloc (n1+1);
-    if (!tmp)
-      goto leave;
-    nbytes = ExpandEnvironmentStrings (result, tmp, n1);
-    if (nbytes && nbytes > n1) {
-      free (tmp);
-      n1 = nbytes;
-      tmp = malloc (n1 + 1);
-      if (!tmp)
-	goto leave;
-      nbytes = ExpandEnvironmentStrings (result, tmp, n1);
-      if (nbytes && nbytes > n1) {
-	free (tmp); /* oops - truncated, better don't expand at all */
-	goto leave;
-      }
-      tmp[nbytes] = 0;
-      free (result);
-      result = tmp;
-    }
-    else if (nbytes) { /* okay, reduce the length */
-      tmp[nbytes] = 0;
-      free (result);
-      result = malloc (strlen (tmp)+1);
-      if (!result)
-	result = tmp;
-      else {
-	strcpy (result, tmp);
-	free (tmp);
-      }
-    }
-    else {  /* error - don't expand */
-      free (tmp);
-    }
-  }
-#endif /*HAVE_W32CE_SYSTEM*/
-
- leave:
-  RegCloseKey( key_handle );
-  return result;
-}
-
-
-#define REGKEY "Software\\GNU\\GnuPG"
 
 static char *
 get_locale_dir (void)
 {
-  char *instdir;
-  char *p;
-  char *dname;
+  static wchar_t moddir[MAX_PATH+5];
+  char *result, *p;
+  int nbytes;
 
-  instdir = read_w32_registry_string ("HKEY_LOCAL_MACHINE", REGKEY,
-				      "Install Directory");
-  if (!instdir)
-    return NULL;
-  
-  /* Build the key: "<instdir>/share/locale".  */
+  if (!GetModuleFileNameW (NULL, moddir, MAX_PATH))
+    *moddir = 0;
+
 #define SLDIR "\\share\\locale"
-  dname = malloc (strlen (instdir) + strlen (SLDIR) + 1);
-  if (!dname)
+  if (*moddir)
     {
-      free (instdir);
-      return NULL;
+      nbytes = WideCharToMultiByte (CP_UTF8, 0, moddir, -1, NULL, 0, NULL, NULL);
+      if (nbytes < 0)
+        return NULL;
+      
+      result = malloc (nbytes + strlen (SLDIR) + 1);
+      if (result)
+        {
+          nbytes = WideCharToMultiByte (CP_UTF8, 0, moddir, -1,
+                                        result, nbytes, NULL, NULL);
+          if (nbytes < 0)
+            {
+              free (result);
+              result = NULL;
+            }
+          else
+            {
+              p = strrchr (result, '\\');
+              if (p)
+                *p = 0;
+              strcat (result, SLDIR);
+            }
+        }
     }
-  p = dname;
-  strcpy (p, instdir);
-  p += strlen (instdir);
-  strcpy (p, SLDIR);
-  
-  free (instdir);
-  
-  return dname;
+  else /* Use the old default value.  */
+    {
+      result = malloc (10 + strlen (SLDIR) + 1);
+      if (result)
+        {
+          strcpy (result, "c:\\gnupg");
+          strcat (result, SLDIR);
+        }
+    }  
+#undef SLDIR  
+  return result;
 }
 
 

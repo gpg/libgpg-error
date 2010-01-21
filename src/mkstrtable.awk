@@ -146,9 +146,9 @@ END {
     coded_msgs = msg;
 
   if (nogettext)
-    print "  \"" prefix last_msgstr "\";";
+    print "  \"" last_msgstr "\";";
   else
-    print "  gettext_noop (\"" prefix last_msgstr "\");";
+    print "  gettext_noop (\"" last_msgstr "\");";
   print "";
   print "static const int " namespace "msgidx[] =";
   print "  {";
