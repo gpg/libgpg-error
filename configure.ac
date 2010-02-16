@@ -86,6 +86,7 @@ AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
 
 # Set some internal variables depending on the platform for later use.
 have_w32_system=no
+have_w32ce_system=no
 case "${host}" in
     *-mingw32ce*)
         have_w32_system=yes

@@ -1,5 +1,7 @@
 2010-01-21  Werner Koch  <wk@g10code.com>
 
+	* configure.ac (have_w32ce_system): Initialize to no.
+
 	* src/mkstrtable.awk (END): Do not print PREFIX before
 	LAST_MSGSTR.
 
