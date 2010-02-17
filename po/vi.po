@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.4\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2009-08-20 08:57+0200\n"
+"POT-Creation-Date: 2010-01-21 12:09+0100\n"
 "PO-Revision-Date: 2007-07-26 12:53+09300\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -73,26 +73,30 @@ msgid "Kleopatra"
 msgstr ""
 
 #: src/err-sources.h:42
+msgid "G13"
+msgstr ""
+
+#: src/err-sources.h:43
 msgid "Any source"
 msgstr "Bất cứ nguồn nào"
 
-#: src/err-sources.h:43
+#: src/err-sources.h:44
 msgid "User defined source 1"
 msgstr "Nguồn tự xác định 1"
 
-#: src/err-sources.h:44
+#: src/err-sources.h:45
 msgid "User defined source 2"
 msgstr "Nguồn tự xác định 2"
 
-#: src/err-sources.h:45
+#: src/err-sources.h:46
 msgid "User defined source 3"
 msgstr "Nguồn tự xác định 3"
 
-#: src/err-sources.h:46
+#: src/err-sources.h:47
 msgid "User defined source 4"
 msgstr "Nguồn tự xác định 4"
 
-#: src/err-sources.h:47
+#: src/err-sources.h:48
 msgid "Unknown source"
 msgstr "Nguồn lạ"
 
@@ -827,248 +831,253 @@ msgstr "Không phải bị khoá"
 
 #: src/err-codes.h:208
 #, fuzzy
+msgid "No crypto engine"
+msgstr "Cơ chế mật mã học không hợp lệ"
+
+#: src/err-codes.h:209
+#, fuzzy
 msgid "Operation not yet finished"
 msgstr "Thao tác bị hủy bỏ"
 
-#: src/err-codes.h:209
+#: src/err-codes.h:210
 msgid "Buffer too short"
 msgstr "Vùng đệm quá ngắn"
 
-#: src/err-codes.h:210
+#: src/err-codes.h:211
 msgid "Invalid length specifier in S-expression"
 msgstr "Chỉ thị độ dài không hợp lệ trong biểu thức S"
 
-#: src/err-codes.h:211
+#: src/err-codes.h:212
 msgid "String too long in S-expression"
 msgstr "Chuỗi quá dài trong biểu thức S"
 
-#: src/err-codes.h:212
+#: src/err-codes.h:213
 msgid "Unmatched parentheses in S-expression"
 msgstr "Có dấu ngoặc chưa khớp trong biểu thức S"
 
-#: src/err-codes.h:213
+#: src/err-codes.h:214
 msgid "S-expression not canonical"
 msgstr "Biểu thức S không phải chuẩn tắc"
 
-#: src/err-codes.h:214
+#: src/err-codes.h:215
 msgid "Bad character in S-expression"
 msgstr "Ký tự sai trong biểu thức S"
 
-#: src/err-codes.h:215
+#: src/err-codes.h:216
 msgid "Bad quotation in S-expression"
 msgstr "Đoạn trích dẫn sai trong biểu thức S"
 
-#: src/err-codes.h:216
+#: src/err-codes.h:217
 msgid "Zero prefix in S-expression"
 msgstr "Tiền tố số không trong biểu thức S"
 
-#: src/err-codes.h:217
+#: src/err-codes.h:218
 msgid "Nested display hints in S-expression"
 msgstr "Có mẹo hiển thị lồng nhau trong biểu thức S"
 
-#: src/err-codes.h:218
+#: src/err-codes.h:219
 msgid "Unmatched display hints"
 msgstr "Có mẹo hiển thị chưa khớp"
 
-#: src/err-codes.h:219
+#: src/err-codes.h:220
 msgid "Unexpected reserved punctuation in S-expression"
 msgstr "Có dấu chấm câu đã dành riêng bất thường trong biểu thức S"
 
-#: src/err-codes.h:220
+#: src/err-codes.h:221
 msgid "Bad hexadecimal character in S-expression"
 msgstr "Ký tự thập lục sai trong biểu thức S"
 
-#: src/err-codes.h:221
+#: src/err-codes.h:222
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Có số thập lục lẻ trong biểu thức S"
 
-#: src/err-codes.h:222
+#: src/err-codes.h:223
 #, fuzzy
 msgid "Bad octal character in S-expression"
 msgstr "Ký tự bát phân sai trong biểu thức S"
 
-#: src/err-codes.h:223
+#: src/err-codes.h:224
 msgid "General IPC error"
 msgstr "Lỗi IPC chung"
 
-#: src/err-codes.h:224
+#: src/err-codes.h:225
 msgid "IPC accept call failed"
 msgstr "Lời gọi chấp nhận IPC bị lỗi"
 
-#: src/err-codes.h:225
+#: src/err-codes.h:226
 msgid "IPC connect call failed"
 msgstr "Lời gọi kết nối IPC bị lỗi"
 
-#: src/err-codes.h:226
+#: src/err-codes.h:227
 msgid "Invalid IPC response"
 msgstr "Đáp ứng IPC không hợp lệ"
 
-#: src/err-codes.h:227
+#: src/err-codes.h:228
 msgid "Invalid value passed to IPC"
 msgstr "Giá trị không hợp lệ được gửi cho IPC"
 
-#: src/err-codes.h:228
+#: src/err-codes.h:229
 msgid "Incomplete line passed to IPC"
 msgstr "Dòng không hoàn toàn được gửi cho IPC"
 
-#: src/err-codes.h:229
+#: src/err-codes.h:230
 msgid "Line passed to IPC too long"
 msgstr "Dòng quá dài được gửi cho IPC"
 
-#: src/err-codes.h:230
+#: src/err-codes.h:231
 msgid "Nested IPC commands"
 msgstr "Các lệnh IPC lồng nhau"
 
-#: src/err-codes.h:231
+#: src/err-codes.h:232
 msgid "No data callback in IPC"
 msgstr "Không có lời gọi ngược lại dữ liệu trong IPC"
 
-#: src/err-codes.h:232
+#: src/err-codes.h:233
 msgid "No inquire callback in IPC"
 msgstr "Không có lời gọi ngược lại hỏi thăm trong IPC"
 
-#: src/err-codes.h:233
+#: src/err-codes.h:234
 msgid "Not an IPC server"
 msgstr "Không phải trình phục vụ IPC"
 
-#: src/err-codes.h:234
+#: src/err-codes.h:235
 msgid "Not an IPC client"
 msgstr "Không phải trình khách IPC"
 
-#: src/err-codes.h:235
+#: src/err-codes.h:236
 msgid "Problem starting IPC server"
 msgstr "Gặp khó khăn trong việc khởi chạy trình phục vụ IPC"
 
-#: src/err-codes.h:236
+#: src/err-codes.h:237
 msgid "IPC read error"
 msgstr "Lỗi đọc IPC"
 
-#: src/err-codes.h:237
+#: src/err-codes.h:238
 msgid "IPC write error"
 msgstr "Lỗi ghi IPC"
 
-#: src/err-codes.h:238
+#: src/err-codes.h:239
 msgid "Too much data for IPC layer"
 msgstr "Quá nhiều dữ liệu cho lớp IPC"
 
-#: src/err-codes.h:239
+#: src/err-codes.h:240
 msgid "Unexpected IPC command"
 msgstr "Lệnh IPC bất thường"
 
-#: src/err-codes.h:240
+#: src/err-codes.h:241
 msgid "Unknown IPC command"
 msgstr "Lệnh IPC lạ"
 
-#: src/err-codes.h:241
+#: src/err-codes.h:242
 msgid "IPC syntax error"
 msgstr "Lỗi cú pháp IPC"
 
-#: src/err-codes.h:242
+#: src/err-codes.h:243
 msgid "IPC call has been cancelled"
 msgstr "Lời gọi IPC bị thôi"
 
-#: src/err-codes.h:243
+#: src/err-codes.h:244
 msgid "No input source for IPC"
 msgstr "Không có nguồn nhập vào cho IPC"
 
-#: src/err-codes.h:244
+#: src/err-codes.h:245
 msgid "No output source for IPC"
 msgstr "Không có nguồn xuất ra cho IPC"
 
-#: src/err-codes.h:245
+#: src/err-codes.h:246
 msgid "IPC parameter error"
 msgstr "Lỗi tham số IPC"
 
-#: src/err-codes.h:246
+#: src/err-codes.h:247
 msgid "Unknown IPC inquire"
 msgstr "Lời hỏi thăm IPC lạ"
 
-#: src/err-codes.h:247
+#: src/err-codes.h:248
 msgid "User defined error code 1"
 msgstr "Mã lỗi tự xác định 1"
 
-#: src/err-codes.h:248
+#: src/err-codes.h:249
 msgid "User defined error code 2"
 msgstr "Mã lỗi tự xác định 2"
 
-#: src/err-codes.h:249
+#: src/err-codes.h:250
 msgid "User defined error code 3"
 msgstr "Mã lỗi tự xác định 3"
 
-#: src/err-codes.h:250
+#: src/err-codes.h:251
 msgid "User defined error code 4"
 msgstr "Mã lỗi tự xác định 4"
 
-#: src/err-codes.h:251
+#: src/err-codes.h:252
 msgid "User defined error code 5"
 msgstr "Mã lỗi tự xác định 5"
 
-#: src/err-codes.h:252
+#: src/err-codes.h:253
 msgid "User defined error code 6"
 msgstr "Mã lỗi tự xác định 6"
 
-#: src/err-codes.h:253
+#: src/err-codes.h:254
 msgid "User defined error code 7"
 msgstr "Mã lỗi tự xác định 7"
 
-#: src/err-codes.h:254
+#: src/err-codes.h:255
 msgid "User defined error code 8"
 msgstr "Mã lỗi tự xác định 8"
 
-#: src/err-codes.h:255
+#: src/err-codes.h:256
 msgid "User defined error code 9"
 msgstr "Mã lỗi tự xác định 9"
 
-#: src/err-codes.h:256
+#: src/err-codes.h:257
 msgid "User defined error code 10"
 msgstr "Mã lỗi tự xác định 10"
 
-#: src/err-codes.h:257
+#: src/err-codes.h:258
 msgid "User defined error code 11"
 msgstr "Mã lỗi tự xác định 11"
 
-#: src/err-codes.h:258
+#: src/err-codes.h:259
 msgid "User defined error code 12"
 msgstr "Mã lỗi tự xác định 12"
 
-#: src/err-codes.h:259
+#: src/err-codes.h:260
 msgid "User defined error code 13"
 msgstr "Mã lỗi tự xác định 13"
 
-#: src/err-codes.h:260
+#: src/err-codes.h:261
 msgid "User defined error code 14"
 msgstr "Mã lỗi tự xác định 14"
 
-#: src/err-codes.h:261
+#: src/err-codes.h:262
 msgid "User defined error code 15"
 msgstr "Mã lỗi tự xác định 15"
 
-#: src/err-codes.h:262
+#: src/err-codes.h:263
 msgid "User defined error code 16"
 msgstr "Mã lỗi tự xác định 16"
 
-#: src/err-codes.h:263
+#: src/err-codes.h:264
 msgid "System error w/o errno"
 msgstr "Lỗi hệ thống không có số hiệu lỗi"
 
-#: src/err-codes.h:264
+#: src/err-codes.h:265
 msgid "Unknown system error"
 msgstr "Gặp lỗi hệ thống không rõ"
 
-#: src/err-codes.h:265
+#: src/err-codes.h:266
 msgid "End of file"
 msgstr "Kết thúc tập tin"
 
-#: src/err-codes.h:266
+#: src/err-codes.h:267
 msgid "Unknown error code"
 msgstr "Mã lỗi lạ"
 
-#: src/gpg-error.c:469
+#: src/gpg-error.c:386
 #, c-format
 msgid "Usage: %s GPG-ERROR [...]\n"
 msgstr "Cách sử dụng: %s GPG-ERROR [...]\n"
 
-#: src/gpg-error.c:497
+#: src/gpg-error.c:442
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: cảnh báo : không thể nhận ra %s\n"

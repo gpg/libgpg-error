@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.4\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2009-08-20 08:57+0200\n"
+"POT-Creation-Date: 2010-01-21 12:09+0100\n"
 "PO-Revision-Date: 2006-09-15 19:30+0200\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -72,26 +72,30 @@ msgid "Kleopatra"
 msgstr ""
 
 #: src/err-sources.h:42
+msgid "G13"
+msgstr ""
+
+#: src/err-sources.h:43
 msgid "Any source"
 msgstr "Dowolne ¼ród³o"
 
-#: src/err-sources.h:43
+#: src/err-sources.h:44
 msgid "User defined source 1"
 msgstr "Zdefiniowane przez u¿ytkownika ¼ród³o 1"
 
-#: src/err-sources.h:44
+#: src/err-sources.h:45
 msgid "User defined source 2"
 msgstr "Zdefiniowane przez u¿ytkownika ¼ród³o 2"
 
-#: src/err-sources.h:45
+#: src/err-sources.h:46
 msgid "User defined source 3"
 msgstr "Zdefiniowane przez u¿ytkownika ¼ród³o 3"
 
-#: src/err-sources.h:46
+#: src/err-sources.h:47
 msgid "User defined source 4"
 msgstr "Zdefiniowane przez u¿ytkownika ¼ród³o 4"
 
-#: src/err-sources.h:47
+#: src/err-sources.h:48
 msgid "Unknown source"
 msgstr "Nieznane ¼ród³o"
 
@@ -820,248 +824,253 @@ msgstr "Nie zablokowany"
 
 #: src/err-codes.h:208
 #, fuzzy
+msgid "No crypto engine"
+msgstr "Niepoprawny silnik kryptograficzny"
+
+#: src/err-codes.h:209
+#, fuzzy
 msgid "Operation not yet finished"
 msgstr "Operacja anulowana"
 
-#: src/err-codes.h:209
+#: src/err-codes.h:210
 msgid "Buffer too short"
 msgstr "Bufor zbyt ma³y"
 
-#: src/err-codes.h:210
+#: src/err-codes.h:211
 msgid "Invalid length specifier in S-expression"
 msgstr "Niepoprawne okre¶lenie d³ugo¶ci w S-wyra¿eniu"
 
-#: src/err-codes.h:211
+#: src/err-codes.h:212
 msgid "String too long in S-expression"
 msgstr "Zbyt d³ugi ³añcuch w S-wyra¿eniu"
 
-#: src/err-codes.h:212
+#: src/err-codes.h:213
 msgid "Unmatched parentheses in S-expression"
 msgstr "Niedopasowane nawiasy w S-wyra¿eniu"
 
-#: src/err-codes.h:213
+#: src/err-codes.h:214
 msgid "S-expression not canonical"
 msgstr "S-wyra¿enie nie kanoniczne"
 
-#: src/err-codes.h:214
+#: src/err-codes.h:215
 msgid "Bad character in S-expression"
 msgstr "B³êdny znak w S-wyra¿eniu"
 
-#: src/err-codes.h:215
+#: src/err-codes.h:216
 msgid "Bad quotation in S-expression"
 msgstr "B³êdne cytowanie w S-wyra¿eniu"
 
-#: src/err-codes.h:216
+#: src/err-codes.h:217
 msgid "Zero prefix in S-expression"
 msgstr "Zerowy prefiks w S-wyra¿eniu"
 
-#: src/err-codes.h:217
+#: src/err-codes.h:218
 msgid "Nested display hints in S-expression"
 msgstr "Zagnie¿d¿one podpowiedzi wy¶wietlania w S-wyra¿eniu"
 
-#: src/err-codes.h:218
+#: src/err-codes.h:219
 msgid "Unmatched display hints"
 msgstr "Niedopasowane podpowiedzi wy¶wietlania"
 
-#: src/err-codes.h:219
+#: src/err-codes.h:220
 msgid "Unexpected reserved punctuation in S-expression"
 msgstr "Nieoczekiwany zarezerwowany znak w S-wyra¿eniu"
 
-#: src/err-codes.h:220
+#: src/err-codes.h:221
 msgid "Bad hexadecimal character in S-expression"
 msgstr "B³êdny znak szesnastkowy w S-wyra¿eniu"
 
-#: src/err-codes.h:221
+#: src/err-codes.h:222
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Nieparzysta liczba cyfr szesnastkowych w S-wyra¿eniu"
 
-#: src/err-codes.h:222
+#: src/err-codes.h:223
 #, fuzzy
 msgid "Bad octal character in S-expression"
 msgstr "B³êdny znak ósemkowy w S-wyra¿eniu"
 
-#: src/err-codes.h:223
+#: src/err-codes.h:224
 msgid "General IPC error"
 msgstr "B³±d ogólny IPC"
 
-#: src/err-codes.h:224
+#: src/err-codes.h:225
 msgid "IPC accept call failed"
 msgstr "Wywo³anie accept dla IPC nie powiod³o siê"
 
-#: src/err-codes.h:225
+#: src/err-codes.h:226
 msgid "IPC connect call failed"
 msgstr "Wywo³anie connect dla IPC nie powiod³o siê"
 
-#: src/err-codes.h:226
+#: src/err-codes.h:227
 msgid "Invalid IPC response"
 msgstr "Niepoprawna odpowied¼ IPC"
 
-#: src/err-codes.h:227
+#: src/err-codes.h:228
 msgid "Invalid value passed to IPC"
 msgstr "Niepoprawna warto¶æ przekazana do IPC"
 
-#: src/err-codes.h:228
+#: src/err-codes.h:229
 msgid "Incomplete line passed to IPC"
 msgstr "Niekompletna linia przekazana do IPC"
 
-#: src/err-codes.h:229
+#: src/err-codes.h:230
 msgid "Line passed to IPC too long"
 msgstr "Linia przekazana do IPC zbyt d³uga"
 
-#: src/err-codes.h:230
+#: src/err-codes.h:231
 msgid "Nested IPC commands"
 msgstr "Zagnie¿d¿one polecenia IPC"
 
-#: src/err-codes.h:231
+#: src/err-codes.h:232
 msgid "No data callback in IPC"
 msgstr "Brak wywo³ania zwrotnego dla danych w IPC"
 
-#: src/err-codes.h:232
+#: src/err-codes.h:233
 msgid "No inquire callback in IPC"
 msgstr "Brak wywo³ania wstecznego dla zapytañ w IPC"
 
-#: src/err-codes.h:233
+#: src/err-codes.h:234
 msgid "Not an IPC server"
 msgstr "To nie jest serwer IPC"
 
-#: src/err-codes.h:234
+#: src/err-codes.h:235
 msgid "Not an IPC client"
 msgstr "To nie jest klient IPC"
 
-#: src/err-codes.h:235
+#: src/err-codes.h:236
 msgid "Problem starting IPC server"
 msgstr "Problem z uruchomieniem serwera IPC"
 
-#: src/err-codes.h:236
+#: src/err-codes.h:237
 msgid "IPC read error"
 msgstr "B³±d odczytu IPC"
 
-#: src/err-codes.h:237
+#: src/err-codes.h:238
 msgid "IPC write error"
 msgstr "B³±d zapisu IPC"
 
-#: src/err-codes.h:238
+#: src/err-codes.h:239
 msgid "Too much data for IPC layer"
 msgstr "Zbyt du¿o danych dla warstwy IPC"
 
-#: src/err-codes.h:239
+#: src/err-codes.h:240
 msgid "Unexpected IPC command"
 msgstr "Nieoczekiwane polecenie IPC"
 
-#: src/err-codes.h:240
+#: src/err-codes.h:241
 msgid "Unknown IPC command"
 msgstr "Nieznane polecenie IPC"
 
-#: src/err-codes.h:241
+#: src/err-codes.h:242
 msgid "IPC syntax error"
 msgstr "B³±d sk³adni IPC"
 
-#: src/err-codes.h:242
+#: src/err-codes.h:243
 msgid "IPC call has been cancelled"
 msgstr "Wywo³anie IPC zosta³o anulowane"
 
-#: src/err-codes.h:243
+#: src/err-codes.h:244
 msgid "No input source for IPC"
 msgstr "Brak ¼ród³a wej¶ciowego dla IPC"
 
-#: src/err-codes.h:244
+#: src/err-codes.h:245
 msgid "No output source for IPC"
 msgstr "Brak ¼ród³a wyj¶ciowego dla IPC"
 
-#: src/err-codes.h:245
+#: src/err-codes.h:246
 msgid "IPC parameter error"
 msgstr "B³±d parametru IPC"
 
-#: src/err-codes.h:246
+#: src/err-codes.h:247
 msgid "Unknown IPC inquire"
 msgstr "Nieznane zapytanie IPC"
 
-#: src/err-codes.h:247
+#: src/err-codes.h:248
 msgid "User defined error code 1"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 1"
 
-#: src/err-codes.h:248
+#: src/err-codes.h:249
 msgid "User defined error code 2"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 2"
 
-#: src/err-codes.h:249
+#: src/err-codes.h:250
 msgid "User defined error code 3"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 3"
 
-#: src/err-codes.h:250
+#: src/err-codes.h:251
 msgid "User defined error code 4"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 4"
 
-#: src/err-codes.h:251
+#: src/err-codes.h:252
 msgid "User defined error code 5"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 5"
 
-#: src/err-codes.h:252
+#: src/err-codes.h:253
 msgid "User defined error code 6"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 6"
 
-#: src/err-codes.h:253
+#: src/err-codes.h:254
 msgid "User defined error code 7"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 7"
 
-#: src/err-codes.h:254
+#: src/err-codes.h:255
 msgid "User defined error code 8"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 8"
 
-#: src/err-codes.h:255
+#: src/err-codes.h:256
 msgid "User defined error code 9"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 9"
 
-#: src/err-codes.h:256
+#: src/err-codes.h:257
 msgid "User defined error code 10"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 10"
 
-#: src/err-codes.h:257
+#: src/err-codes.h:258
 msgid "User defined error code 11"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 11"
 
-#: src/err-codes.h:258
+#: src/err-codes.h:259
 msgid "User defined error code 12"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 12"
 
-#: src/err-codes.h:259
+#: src/err-codes.h:260
 msgid "User defined error code 13"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 13"
 
-#: src/err-codes.h:260
+#: src/err-codes.h:261
 msgid "User defined error code 14"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 14"
 
-#: src/err-codes.h:261
+#: src/err-codes.h:262
 msgid "User defined error code 15"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 15"
 
-#: src/err-codes.h:262
+#: src/err-codes.h:263
 msgid "User defined error code 16"
 msgstr "Zdefiniowany przez u¿ytkownika kod b³êdu 16"
 
-#: src/err-codes.h:263
+#: src/err-codes.h:264
 msgid "System error w/o errno"
 msgstr "B³±d systemowy bez errno"
 
-#: src/err-codes.h:264
+#: src/err-codes.h:265
 msgid "Unknown system error"
 msgstr "Nieznany b³±d systemu"
 
-#: src/err-codes.h:265
+#: src/err-codes.h:266
 msgid "End of file"
 msgstr "Koniec pliku"
 
-#: src/err-codes.h:266
+#: src/err-codes.h:267
 msgid "Unknown error code"
 msgstr "Nieznany kod b³êdu"
 
-#: src/gpg-error.c:469
+#: src/gpg-error.c:386
 #, c-format
 msgid "Usage: %s GPG-ERROR [...]\n"
 msgstr "Sk³adnia: %s B£¡D-GPG [...]\n"
 
-#: src/gpg-error.c:497
+#: src/gpg-error.c:442
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: uwaga: nie rozpoznano %s\n"

@@ -23,10 +23,8 @@
 
 
 if HAVE_W32CE_SYSTEM
-extra_headers  = gpg-extra/errno.h
 extra_cppflags = -idirafter gpg-extra
 else
-extra_headers  =
 extra_cppflags =  
 endif
 
