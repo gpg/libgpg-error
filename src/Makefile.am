@@ -23,15 +23,17 @@
 
 
 if HAVE_W32CE_SYSTEM
+gpg_extra_headers = gpg-extra/errno.h
 extra_cppflags = -idirafter gpg-extra
 else
+gpg_extra_headers = 
 extra_cppflags =  
 endif
 
 localedir = $(datadir)/locale
 bin_PROGRAMS = gpg-error
 lib_LTLIBRARIES = libgpg-error.la
-nobase_include_HEADERS = gpg-error.h $(extra_headers)
+include_HEADERS = gpg-error.h
 bin_SCRIPTS = gpg-error-config
 m4datadir = $(datadir)/aclocal
 m4data_DATA = gpg-error.m4
@@ -45,7 +47,7 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h \
-	gpg-error.def extra-h.in $(extra_headers)
+	gpg-error.def extra-h.in
 
 tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h 
 
@@ -129,7 +131,7 @@ code-to-errno.h: Makefile mkerrnos.awk errnos.in
 	$(AWK) -f $(srcdir)/mkerrnos.awk $(srcdir)/errnos.in >$@
 
 # It is correct to use $(CPP).  We want the host's idea of the error codes.
-mkerrcodes.h: Makefile mkerrcodes.awk $(extra_headers)
+mkerrcodes.h: Makefile mkerrcodes.awk $(gpg_extra_headers)
 	$(AWK) -f $(srcdir)/mkerrcodes1.awk $(srcdir)/errnos.in >_$@
 	$(CPP) $(extra_cppflags) _$@ | grep GPG_ERR_ | \
                $(AWK) -f $(srcdir)/mkerrcodes.awk >$@
@@ -190,3 +192,14 @@ gpg-error.h: Makefile mkheader.awk err-sources.h.in err-codes.h.in \
 		$(srcdir)/errnos.in \
 		extra-h.in \
 		$(srcdir)/gpg-error.h.in > $@
+
+
+install-data-local:
+if HAVE_W32CE_SYSTEM
+	test -z "$(includedir)/gpg-extra" \
+           || $(MKDIR_P) "$(DESTDIR)$(includedir)/gpg-extra"
+	$(INSTALL_DATA) gpg-extra/errno.h \
+                         "$(DESTDIR)$(includedir)/gpg-extra/errno.h"
+else
+        :
+endif

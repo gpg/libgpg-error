@@ -1,5 +1,14 @@
 2010-02-17  Werner Koch  <wk@g10code.com>
 
+	* src/Makefile.am: Revert last change.
+	(gpg_extra_headers): New.
+	(nobase_include_HEADERS): Rename to include_HEADERS and remove
+	extra_headers.
+	(mkerrcodes.h): Depend on gpg_extra_headers.
+	(install-data-local): New.
+
+2010-02-17  Werner Koch  <wk@g10code.com>
+
 	* src/Makefile.am (extra_headers): Remove.
 
 2010-01-21  Werner Koch  <wk@g10code.com>
