@@ -143,6 +143,7 @@ mkw32errmap.tab.h: Makefile mkw32errmap.c
 	$(CPP) -DRESOLVE_MACROS $(srcdir)/mkw32errmap.c | \
 	      grep '{&mkw32errmap_marker' >$@
 gpg-extra/errno.h: mkw32errmap
+	-$(MKDIR_P) gpg-extra
 	./mkw32errmap > $@
 endif
 
@@ -196,8 +197,7 @@ gpg-error.h: Makefile mkheader.awk err-sources.h.in err-codes.h.in \
 
 install-data-local:
 if HAVE_W32CE_SYSTEM
-	test -z "$(includedir)/gpg-extra" \
-           || $(MKDIR_P) "$(DESTDIR)$(includedir)/gpg-extra"
+	-$(MKDIR_P) "$(DESTDIR)$(includedir)/gpg-extra"
 	$(INSTALL_DATA) gpg-extra/errno.h \
                          "$(DESTDIR)$(includedir)/gpg-extra/errno.h"
 else
