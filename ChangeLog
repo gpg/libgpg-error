@@ -1,3 +1,7 @@
+2010-03-01  Werner Koch  <wk@g10code.com>
+
+	* src/mkw32errmap.c: Map ESPIPE.
+
 2010-02-17  Werner Koch  <wk@g10code.com>
 
 	* src/Makefile.am: Revert last change.

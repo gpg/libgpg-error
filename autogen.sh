@@ -103,7 +103,7 @@ if [ "$myhost" = "w32" ]; then
     fi
 
     ./configure --enable-maintainer-mode  --prefix=${w32root}  \
-            --host=${host} --build=${build} 
+            --host=${host} --build=${build} "$@"
 
     exit $?
 fi
@@ -222,4 +222,6 @@ $AUTOMAKE --gnu;
 echo "Running autoconf${FORCE} ..."
 $AUTOCONF${FORCE}
 
-echo "You may now run \"./configure --enable-maintainer-mode && make\"."
+echo "You may now run
+  ./configure --enable-maintainer-mode && make
+"

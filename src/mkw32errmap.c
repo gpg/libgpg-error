@@ -79,7 +79,6 @@ struct table_s table[] =
 #ifdef RESOLVE_MACROS
 #define X(a,b) \
     {&mkw32errmap_marker, (a), (b)}
-
    X( "EPERM",	ERROR_CANNOT_MAKE                 ), 
    X( "ENOENT",	ERROR_FILE_NOT_FOUND              ),
    X( "EINTR",	ERROR_INVALID_AT_INTERRUPT_TIME   ),
@@ -98,6 +97,8 @@ struct table_s table[] =
 
    X( "EXDEV",	ERROR_NOT_SAME_DEVICE             ),
    X( "ENODEV",	ERROR_BAD_DEVICE                  ),
+   /* FIXME: ERROR_DEV_NOT_EXIST */
+
    X( "ENOTDIR",ERROR_DIRECTORY                   ),
    X( "EINVAL",	ERROR_INVALID_PARAMETER           ),
    X( "ENFILE",	ERROR_NO_MORE_FILES               ),
@@ -111,11 +112,11 @@ struct table_s table[] =
    X( "ENOLCK",	ERROR_SHARING_BUFFER_EXCEEDED     ),
    X( "ENOSYS",	ERROR_NOT_SUPPORTED               ),
    X( "ENOTEMPTY",ERROR_DIR_NOT_EMPTY             ),
+   X( "ESPIPE",  ERROR_SEEK_ON_DEVICE             ),
 #if 0 /* FIXME: Find appropriate mappings.  */
    X( "EILSEQ",		), 
    X( "EDOM",		), 
    X( "EMLINK",		), 
-   X( "ESPIPE",		), /* Invalid seek (seek on a pipe?) */
    X( "ESRCH",		), /* No such process */
    X( "E2BIG",		), /* Arg list too long */
    X( "ENOEXEC",	), /* Exec format error */

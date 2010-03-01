@@ -1837,7 +1837,7 @@ _gpg_w32_gettext_localename (void)
 
 /* With a VALUE of 1 switch the gettext functions into utf8 mode.
    That is the strings are returned without translation to the native
-   charset.  A VALUE of 0 swicthes back to trnslated strings.  A VALUE
+   charset.  A VALUE of 0 switches back to translated strings.  A VALUE
    of -1 returns the current value. */
 int
 _gpg_w32_gettext_use_utf8 (int value)
