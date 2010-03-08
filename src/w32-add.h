@@ -1,5 +1,14 @@
 ## w32-add.h - Snippet to be be included into gpg-error.h.
-## (Comments are indicated by a double hash mark)
+## Comments are indicated by a double hash mark.  Due to a
+## peculiarity of the script the first used line must not
+## start with a hash mark.
+
+/* Decide whether to use the format_arg attribute.  */
+#if _GPG_ERR_GCC_VERSION > 20800
+# define _GPG_ERR_ATTR_FORMAT_ARG(a)  __attribute__ ((__format_arg__ (a)))
+#else
+# define _GPG_ERR_ATTR_FORMAT_ARG(a)
+#endif
 
 /* A lean gettext implementation based on GNU style mo files which are
    required to be encoded in UTF-8.  There is a limit on 65534 entries
@@ -7,10 +16,13 @@
 const char *_gpg_w32_bindtextdomain (const char *domainname,
                                      const char *dirname);
 const char *_gpg_w32_textdomain (const char *domainname);
-const char *_gpg_w32_gettext (const char *msgid);
-const char *_gpg_w32_dgettext (const char *domainname, const char *msgid);
+const char *_gpg_w32_gettext (const char *msgid)
+            _GPG_ERR_ATTR_FORMAT_ARG (1);
+const char *_gpg_w32_dgettext (const char *domainname, const char *msgid)
+            _GPG_ERR_ATTR_FORMAT_ARG (2);
 const char *_gpg_w32_dngettext (const char *domainname, const char *msgid1,
-                                const char *msgid2, unsigned long int n);
+                                const char *msgid2, unsigned long int n)
+            _GPG_ERR_ATTR_FORMAT_ARG (2) _GPG_ERR_ATTR_FORMAT_ARG (3);
 const char *_gpg_w32_gettext_localename (void);
 int _gpg_w32_gettext_use_utf8 (int value);
 

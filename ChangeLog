@@ -1,3 +1,8 @@
+2010-03-08  Werner Koch  <wk@g10code.com>
+
+	* src/w32-add.h (_GPG_ERR_ATTR_FORMAT_ARG): New.
+	(_gpg_w32_gettext, _gpg_w32_dgettext, _gpg_w32_dngettext): Use it.
+
 2010-03-01  Werner Koch  <wk@g10code.com>
 
 	* src/mkw32errmap.c: Map ESPIPE.
@@ -167,9 +172,9 @@
 2008-11-26  Werner Koch  <wk@g10code.com>
 
 	Release 1.7.
-	
+
 	* configure.ac: Set LT version to C5/A5/R0.
-	
+
 2008-11-12  Werner Koch  <wk@g10code.com>
 
 	* src/err-codes.h.in: Add GPG_ERR_NO_PASSPHRASE and GPG_ERR_NO_PIN.
@@ -207,8 +212,8 @@
 	* configure.ac: Set LT version to C4/A4/R0.
 
 	* config.guess, config.sub: Updated.
-	
-	* src/err-sources.h.in: (GPG_ERR_SOURCE_KLEO): New. 
+
+	* src/err-sources.h.in: (GPG_ERR_SOURCE_KLEO): New.
 
 	* w32-gettext.c (SUBLANG_BENGALI_BANGLADESH): Fix to 2 as per MSDN.
 	(SUBLANG_PUNJABI_PAKISTAN): Remove as it is not in MSDN.
@@ -232,7 +237,7 @@
 	* lang/cl/Makefile.am: Do not use :=, but =.
 	* Makefile.am [!LANGUAGES_SOME]: Don't add lang to subdirs.
 	* m4/inttypes-h.m4, m4/lock.m4, m4/visibility.m4: New files.
-	
+
 2007-05-19  Marcus Brinkmann  <marcus@g10code.de>
 
 	* lang/cl/gpg-error.lisp (gpg-err-source-t): Add
@@ -263,7 +268,7 @@
 2006-11-30  Werner Koch  <wk@g10code.com>
 
 	Released 1.5.
-	
+
 	* configure.ac: Set LT version to C3/A3/R1.
 
 	* README: Switch to tar.bz2 and sha1sum.
@@ -316,7 +321,7 @@
 	* lang/cl/gpg-error.lisp ("gpg_err_code_from_syserror"): New.
 	(gpg-err-code-from-syserror): New.
 	(gpg-error-from-syserror): New.
-	* lang/cl/gpg-error-package.lisp: Export new functions 
+	* lang/cl/gpg-error-package.lisp: Export new functions
 
 	* src/gpg-error.h.in (gpg_error_from_syserror): New.
 	* src/code-from-errno.c (gpg_err_code_from_errno): Cosmetic change
@@ -363,7 +368,7 @@
 	* lang/cl/mkerrcodes.awk, lang/cl/gpg-error-package.lisp,
 	lang/cl/gpg-error.lisp, lang/cl/gpg-error.asd, lang/cl/Makefile.am
 	(clfilesdir): Fix package and file names.
-	
+
 	* lang/cl/Makefile.am (clfilesdir): Use datadir, not prefix.
 
 2006-05-05  Marcus Brinkmann  <marcus@g10code.de>
@@ -461,7 +466,7 @@
 	AC_LIBTOOL_WIN32_DLL and AC_LIBTOOL_RC.
 	* src/Makefile.am [HAVE_W32_SYSTEM]: Use libtool, which simplifies
 	the rules.
-	
+
 2005-10-02  Marcus Brinkmann  <marcus@g10code.de>
 
 	* configure.ac: Escape arguments in AC_INIT invocation.
@@ -477,7 +482,7 @@
 2005-06-20  Marcus Brinkmann  <marcus@g10code.de>
 
 	Released 1.1.
-	
+
 	* configure.ac: Bump up LIBGPG_ERROR_LT_REVISION, update version
 	field.
 
@@ -514,7 +519,7 @@
 2004-07-30  Werner Koch  <wk@g10code.de>
 
 	Released 1.0.
-	
+
 	* configure.ac: Bumbed version to 1.0, LT to C1/A1/R3.
 
 2004-07-15  Werner Koch  <wk@gnupg.org>
@@ -567,7 +572,7 @@
 
 	* libgpg-error.spec.in (%files): Add gpg-error.  Submitted by
 	Albrecht Dreﬂ <albrecht.dress@arcor.de>.
-	
+
 	* src/mkerrcodes.c (main): Fix type of argv.  Return something.
 
 2004-03-09  Werner Koch  <wk@gnupg.org>
@@ -612,7 +617,7 @@
 	anyway).
 	* src/mkerrcodes.awk: New file.
 	* src/mkerrcodes.c: New file.
-	
+
 2004-02-27  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/Makefile.am (noinst_PROGRAMS): Rename to ...
@@ -690,7 +695,7 @@
 	* configure.ac: Bumbed version number to 0.7.
 
 	Released 0.6.
-	
+
 	* configure.ac: Bumbed up LIBGPG_ERROR_LT_REVISON.
 
 2003-11-13  Werner Koch  <wk@gnupg.org>
@@ -713,13 +718,13 @@
 	GPG_ERR_UNSUPPORTED_CMS_OBJ, GPG_ERR_UNSUPPORTED_ENCODING,
 	GPG_ERR_UNSUPPORTED_CMS_VERSION, GPG_ERR_UNKNOWN_ALGORITHM,
 	GPG_ERR_ENCODING_PROBLEM, GPG_ERR_INV_STATE, GPG_ERR_DUP_VALUE,
-	GPG_ERR_MISSING_ACTION, GPG_ERR_MODULE_NOT_FOUND, 
+	GPG_ERR_MISSING_ACTION, GPG_ERR_MODULE_NOT_FOUND,
 	GPG_ERR_INV_OID_STRING, GPG_ERR_INV_TIME, GPG_ERR_INV_CRL_OBJ,
 	GPG_ERR_UNSUPPORTED_CRL_VERSION, GPG_ERR_INV_CERT_OBJ,
 	GPG_ERR_UNKNOWN_NAME, GPG_ERR_IO_ERROR, GPG_ERR_FILE_ERROR,
 	GPG_ERR_READ_ERROR, GPG_ERR_WRITE_ERROR, GPG_ERR_LOCK_ERROR,
 	GPG_ERR_BUFFER_TOO_SHORT.
-	
+
 2003-11-06  Werner Koch  <wk@gnupg.org>
 
 	* src/gpg-error.h, src/err-sources.h.in: Added error sources for
@@ -727,7 +732,7 @@
 
 2003-11-03  Werner Koch  <wk@gnupg.org>
 
-	* src/gpg-error.h: Allow GPG_ERR_INLINE to get overriden, so that 
+	* src/gpg-error.h: Allow GPG_ERR_INLINE to get overriden, so that
 	one can use the -D flag to specify the inline keyword.  Suggested
 	by Philip Brown.
 
@@ -737,7 +742,7 @@
 	GPG_ERR_NO_ENCODING_METHOD, GPG_ERR_NO_ENCRYPTION_SCHEME,
 	GPG_ERR_NO_SIGNATURE_SCHEME.
 	* src/err-codes.h.in: Likewise.
-	
+
 2003-10-25  Werner Koch  <wk@gnupg.org>
 
 	* src/strerror.c: Include stdio.h for snprintf
@@ -781,7 +786,7 @@
 	* libgpg-error.spec.in: New file.
 	* Makefile.am (EXTRA_DIST): Add libgpg-error.spec.in.
 	* AUTHORS (Maintainer): Add Robert Schiele as contributor.
-	
+
 2003-09-03  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/gpg-error-config.in: Rewritten.
@@ -986,7 +991,7 @@
 	* src/gpg-error.h: ... here.  New file.
 	* src/strerror.c: Include <gpg-error.h>, not <gpg/error.h>.
 	* src/strsource.c: Likewise.
-	
+
 	* src/gpg/error.h (gpg_error_t): Change type to unsigned int, not
 	long.
 
@@ -1011,7 +1016,7 @@
 	* tests/Makefile.am: Likewise.
 
 	* src/mkstrtable.awk: New variable HEADER.  Copy input until first
-	line with an actual code and description occurs.	
+	line with an actual code and description occurs.
 	* src/err-codes.h.in: Uncomment license, so it is copied into the
 	output.
 	* src/err-sources.h.in: Likewise.
@@ -1024,7 +1029,7 @@
 
 	* Initial check-in.
 
- Copyright 2003, 2004, 2005, 2006, 2007 g10 Code GmbH
+ Copyright 2003, 2004, 2005, 2006, 2007, 2010 g10 Code GmbH
 
  This file is free software; as a special exception the author gives
  unlimited permission to copy and/or distribute it, with or without
