@@ -106,6 +106,8 @@ AH_BOTTOM([
 #if defined(HAVE_W32_SYSTEM) && !defined(ENABLE_NLS)
 #define ENABLE_NLS 1
 #endif
+/* For building we need to define this macro.  */
+#define GPG_ERR_ENABLE_GETTEXT_MACROS
 ])
 
 

@@ -1,3 +1,8 @@
+2010-03-09  Werner Koch  <wk@g10code.com>
+
+	* src/w32-add.h [!GPG_ERR_ENABLE_GETTEXT_MACROS]: Do not provide
+	gettext macros.
+
 2010-03-08  Werner Koch  <wk@g10code.com>
 
 	* src/w32-add.h (_GPG_ERR_ATTR_FORMAT_ARG): New.
