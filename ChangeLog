@@ -1,3 +1,9 @@
+2010-03-15  Werner Koch  <wk@g10code.com>
+
+	* src/mkheader.awk: Add emacs local-var line.
+
+	* src/w32-add.h (gettext_localename): Fix type in name.
+
 2010-03-09  Werner Koch  <wk@g10code.com>
 
 	* src/w32-add.h [!GPG_ERR_ENABLE_GETTEXT_MACROS]: Do not provide

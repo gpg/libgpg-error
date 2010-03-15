@@ -71,10 +71,11 @@ BEGIN {
   extra_body = 0;
   gpg_error_h = 0;
 
-  print "/* Output of mkheader.awk.  DO NOT EDIT.  */";
+  print "/* Output of mkheader.awk.  DO NOT EDIT.  -*- buffer-read-only: t -*- */";
   print "";
 
 }
+
 
 sources_header {
   if ($1 ~ /^[0123456789]+$/)

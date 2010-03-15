@@ -172,7 +172,6 @@ AC_ARG_ENABLE(languages,
 AM_CONDITIONAL([LANGUAGES_SOME], [test "x$enable_languages" != xno])
 
 
-
 # Substitution
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([po/Makefile.in m4/Makefile])
