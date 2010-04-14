@@ -47,14 +47,14 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h \
-	gpg-error.def extra-h.in
+	gpg-error.def extra-h.in mkw32errmap.map.c 
 
-tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h 
+tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h mkw32errmap.map.c 
 
 CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	gpg-error.h mkerrcodes mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
-	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-extra/errno.h \
-	extra-h.in $(tmp_files)
+	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
+	gpg-extra/errno.h extra-h.in $(tmp_files)
 
 if HAVE_W32_SYSTEM
 arch_sources = w32-gettext.c
@@ -142,9 +142,14 @@ if HAVE_W32CE_SYSTEM
 mkw32errmap.tab.h: Makefile mkw32errmap.c
 	$(CPP) -DRESOLVE_MACROS $(srcdir)/mkw32errmap.c | \
 	      grep '{&mkw32errmap_marker' >$@
+mkw32errmap.map.c: mkw32errmap
+	./mkw32errmap --map > $@
 gpg-extra/errno.h: mkw32errmap
 	-$(MKDIR_P) gpg-extra
 	./mkw32errmap > $@
+else
+mkw32errmap.map.c:
+	echo "/*dummy*/" > $@
 endif
 
 # We use CC proper for preprocessing thus we have to convince it that

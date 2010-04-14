@@ -1,3 +1,11 @@
+2010-04-14  Werner Koch  <wk@g10code.com>
+
+	* src/init.c (_gpg_w32ce_get_errno): Add native error mapping.
+	* src/Makefile.am (mkw32errmap.map.c): New.
+	* src/mkw32errmap.c (struct table_s): Add field W32CODE2.
+	(table): Init this field.
+	(main): Add option --map.
+
 2010-03-15  Werner Koch  <wk@g10code.com>
 
 	* src/mkheader.awk: Add emacs local-var line.

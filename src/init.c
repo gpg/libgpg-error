@@ -31,6 +31,10 @@
 #include "gettext.h"
 #include "init.h"
 
+#ifdef HAVE_W32CE_SYSTEM
+# include "mkw32errmap.map.c"  /* Generated map_w32codes () */
+#endif
+
 
 /* Locale directory support.  */
 
@@ -239,12 +243,7 @@ get_tls (void)
 int
 _gpg_w32ce_get_errno (void)
 {
-  int err;
-
-  err = GetLastError ();
-  /* FIXME: Should we fold some W32 error codes into the same errno
-     value? */
-  return err;
+  return map_w32codes ( GetLastError () );
 }
 #endif /*HAVE_W32CE_SYSTEM*/
 

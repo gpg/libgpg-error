@@ -72,47 +72,45 @@ struct table_s
   int *dummy;
   const char *name;
   int w32code;
+  int w32code2;
 };
 
 struct table_s table[] = 
   {
 #ifdef RESOLVE_MACROS
-#define X(a,b) \
-    {&mkw32errmap_marker, (a), (b)}
-   X( "EPERM",	ERROR_CANNOT_MAKE                 ), 
-   X( "ENOENT",	ERROR_FILE_NOT_FOUND              ),
-   X( "EINTR",	ERROR_INVALID_AT_INTERRUPT_TIME   ),
-   X( "EIO",	ERROR_IO_DEVICE                   ),
-   X( "ENXIO",	ERROR_FILE_INVALID                ),
-   X( "EBADF",	ERROR_INVALID_HANDLE              ),
-   X( "EAGAIN",	ERROR_MORE_DATA                   ),
-   /* FIXME:  Add WSAEWOULDBLOCK */
+#define X(a,b,c)                                 \
+    {&mkw32errmap_marker, (a), (b), (c)}
+   X( "EPERM",	ERROR_CANNOT_MAKE               , 0 ), 
+   X( "ENOENT",	ERROR_FILE_NOT_FOUND            , ERROR_PATH_NOT_FOUND ),
+   X( "EINTR",	ERROR_INVALID_AT_INTERRUPT_TIME , 0 ),
+   X( "EIO",	ERROR_IO_DEVICE                 , 0 ),
+   X( "ENXIO",	ERROR_FILE_INVALID              , 0 ),
+   X( "EBADF",	ERROR_INVALID_HANDLE            , 0 ),
+   X( "EAGAIN",	ERROR_MORE_DATA                 , WSAEWOULDBLOCK ),
 
-   X( "ENOMEM",	ERROR_NOT_ENOUGH_MEMORY           ),
-   X( "EACCES",	ERROR_ACCESS_DENIED               ),
-   X( "EFAULT",	ERROR_PROCESS_ABORTED             ),
-   X( "EBUSY",	ERROR_BUSY                        ),
-   X( "EEXIST",	ERROR_FILE_EXISTS                 ),
-   /* FIXME: Add WSAEADDRINUSE.  */
+   X( "ENOMEM",	ERROR_NOT_ENOUGH_MEMORY         , 0 ),
+   X( "EACCES",	ERROR_ACCESS_DENIED             , 0 ),
+   X( "EFAULT",	ERROR_PROCESS_ABORTED           , 0 ),
+   X( "EBUSY",	ERROR_BUSY                      , 0 ),
+   X( "EEXIST",	ERROR_FILE_EXISTS               , WSAEADDRINUSE  ),
 
-   X( "EXDEV",	ERROR_NOT_SAME_DEVICE             ),
-   X( "ENODEV",	ERROR_BAD_DEVICE                  ),
-   /* FIXME: ERROR_DEV_NOT_EXIST */
+   X( "EXDEV",	ERROR_NOT_SAME_DEVICE           , 0 ),
+   X( "ENODEV",	ERROR_BAD_DEVICE                , ERROR_DEV_NOT_EXIST ),
 
-   X( "ENOTDIR",ERROR_DIRECTORY                   ),
-   X( "EINVAL",	ERROR_INVALID_PARAMETER           ),
-   X( "ENFILE",	ERROR_NO_MORE_FILES               ),
-   X( "EMFILE",	ERROR_TOO_MANY_OPEN_FILES         ),
-   X( "ENOSPC",	ERROR_DISK_FULL                   ),
-   X( "EROFS",	ERROR_WRITE_PROTECT               ),
-   X( "EPIPE",	ERROR_BROKEN_PIPE                 ),
-   X( "ERANGE",	ERROR_ARITHMETIC_OVERFLOW         ),
-   X( "EDEADLOCK",ERROR_POSSIBLE_DEADLOCK         ),
-   X( "ENAMETOOLONG", ERROR_FILENAME_EXCED_RANGE  ),
-   X( "ENOLCK",	ERROR_SHARING_BUFFER_EXCEEDED     ),
-   X( "ENOSYS",	ERROR_NOT_SUPPORTED               ),
-   X( "ENOTEMPTY",ERROR_DIR_NOT_EMPTY             ),
-   X( "ESPIPE",  ERROR_SEEK_ON_DEVICE             ),
+   X( "ENOTDIR",ERROR_DIRECTORY                 , 0 ),
+   X( "EINVAL",	ERROR_INVALID_PARAMETER         , 0 ),
+   X( "ENFILE",	ERROR_NO_MORE_FILES             , 0 ),
+   X( "EMFILE",	ERROR_TOO_MANY_OPEN_FILES       , 0 ),
+   X( "ENOSPC",	ERROR_DISK_FULL                 , 0 ),
+   X( "EROFS",	ERROR_WRITE_PROTECT             , 0 ),
+   X( "EPIPE",	ERROR_BROKEN_PIPE               , 0 ),
+   X( "ERANGE",	ERROR_ARITHMETIC_OVERFLOW       , 0 ),
+   X( "EDEADLOCK",ERROR_POSSIBLE_DEADLOCK       , 0 ),
+   X( "ENAMETOOLONG", ERROR_FILENAME_EXCED_RANGE, 0 ),
+   X( "ENOLCK",	ERROR_SHARING_BUFFER_EXCEEDED   , 0 ),
+   X( "ENOSYS",	ERROR_NOT_SUPPORTED             , 0 ),
+   X( "ENOTEMPTY",ERROR_DIR_NOT_EMPTY           , 0 ),
+   X( "ESPIPE",  ERROR_SEEK_ON_DEVICE           , 0 ),
 #if 0 /* FIXME: Find appropriate mappings.  */
    X( "EILSEQ",		), 
    X( "EDOM",		), 
@@ -152,11 +150,29 @@ main (int argc, char **argv)
   for (idx=0; table[idx].name; idx++)
     ;
   qsort (table, idx, sizeof *table, compare_table);
-
-  fputs (header_gpg_extra_errno_h, stdout);
-  for (idx=0; table[idx].name; idx++)
-    printf ("#define %-12s %5d\n", table[idx].name, table[idx].w32code);
-  fputs (footer_gpg_extra_errno_h, stdout);
+  
+  if (argc == 2 && !strcmp (argv[1], "--map"))
+    {
+      fputs ("static int\n"
+             "map_w32codes (int err)\n"
+             "{\n"
+             "  switch (err)\n"
+             "    {\n", stdout );
+      for (idx=0; table[idx].name; idx++)
+        if (table[idx].w32code2)
+          printf ("    case %d: return %d;\n",
+                  table[idx].w32code2, table[idx].w32code);
+      fputs ("    default: return err;\n"
+             "    }\n"
+             "}\n", stdout);
+    }
+  else
+    {
+      fputs (header_gpg_extra_errno_h, stdout);
+      for (idx=0; table[idx].name; idx++)
+        printf ("#define %-12s %5d\n", table[idx].name, table[idx].w32code);
+      fputs (footer_gpg_extra_errno_h, stdout);
+    }
 
   return 0;
 }
