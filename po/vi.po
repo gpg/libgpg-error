@@ -1,20 +1,21 @@
 # Vietnamese translation for Lib. GPG Error.
-# Copyright © 2007 Free Software Foundation, Inc.
-# Clytie Siddall <clytie@riverland.net.au>, 2006-2007.
+# Copyright © 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the libgpg-error package.
+# Clytie Siddall <clytie@riverland.net.au>, 2006-2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.4\n"
+"Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
 "POT-Creation-Date: 2010-01-21 12:09+0100\n"
-"PO-Revision-Date: 2007-07-26 12:53+09300\n"
+"PO-Revision-Date: 2009-09-19 18:34+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: LocFactoryEditor 1.7b1\n"
+"X-Generator: LocFactoryEditor 1.8\n"
 
 #: src/err-sources.h:28
 msgid "Unspecified source"
@@ -66,11 +67,11 @@ msgstr "GSTI"
 
 #: src/err-sources.h:40
 msgid "GPA"
-msgstr ""
+msgstr "GPA"
 
 #: src/err-sources.h:41
 msgid "Kleopatra"
-msgstr ""
+msgstr "Kleopatra"
 
 #: src/err-sources.h:42
 msgid "G13"
@@ -98,7 +99,7 @@ msgstr "Nguồn tự xác định 4"
 
 #: src/err-sources.h:48
 msgid "Unknown source"
-msgstr "Nguồn lạ"
+msgstr "Nguồn không rõ"
 
 #: src/err-codes.h:28
 msgid "Success"
@@ -110,11 +111,11 @@ msgstr "Lỗi chung"
 
 #: src/err-codes.h:30
 msgid "Unknown packet"
-msgstr "Gói tin lạ"
+msgstr "Gói tin không rõ"
 
 #: src/err-codes.h:31
 msgid "Unknown version in packet"
-msgstr "Gặp phiên bản lạ trong gói tin"
+msgstr "Gặp phiên bản không rõ trong gói tin"
 
 #: src/err-codes.h:32
 msgid "Invalid public key algorithm"
@@ -154,7 +155,7 @@ msgstr "Thuật toán mật mã không hợp lệ"
 
 #: src/err-codes.h:41
 msgid "Keyring open"
-msgstr "Vòng chìa khoá đã mở"
+msgstr "Vòng khoá đã mở"
 
 #: src/err-codes.h:42
 msgid "Invalid packet"
@@ -166,7 +167,7 @@ msgstr "Bọc sắt không hợp lệ"
 
 #: src/err-codes.h:44
 msgid "No user ID"
-msgstr "Không có ID người dùng"
+msgstr "Không có mã số người dùng"
 
 #: src/err-codes.h:45
 msgid "No secret key"
@@ -178,11 +179,11 @@ msgstr "Đã dùng khoá bí mật không đúng"
 
 #: src/err-codes.h:47
 msgid "Bad session key"
-msgstr "Khoá phiên chạy sai"
+msgstr "Khoá buổi hợp sai"
 
 #: src/err-codes.h:48
 msgid "Unknown compression algorithm"
-msgstr "Thuật toán nén lạ"
+msgstr "Thuật toán nén không rõ"
 
 #: src/err-codes.h:49
 msgid "Number is not prime"
@@ -234,15 +235,15 @@ msgstr "Hạng chữ ký không hợp lệ"
 
 #: src/err-codes.h:61
 msgid "Resources exhausted"
-msgstr "Hết tiềm năng hoàn toàn"
+msgstr "Cạn tài nguyên"
 
 #: src/err-codes.h:62
 msgid "Invalid keyring"
-msgstr "Vòng chia khoá không hợp lệ"
+msgstr "Vòng khoá không hợp lệ"
 
 #: src/err-codes.h:63
 msgid "Trust DB error"
-msgstr "Lỗi DB tin cậy"
+msgstr "Lỗi CSDL tin cậy"
 
 #: src/err-codes.h:64
 msgid "Bad certificate"
@@ -250,7 +251,7 @@ msgstr "Chứng nhận sai"
 
 #: src/err-codes.h:65
 msgid "Invalid user ID"
-msgstr "ID người dùng không hợp lệ"
+msgstr "Mã số người dùng không hợp lệ"
 
 #: src/err-codes.h:66
 msgid "Unexpected error"
@@ -278,7 +279,7 @@ msgstr "Khoá mật mã yếu"
 
 #: src/err-codes.h:72
 msgid "Invalid key length"
-msgstr "Độ dài khoá không hợp lệ"
+msgstr "Chiều dài khoá không hợp lệ"
 
 #: src/err-codes.h:73
 msgid "Invalid argument"
@@ -294,11 +295,11 @@ msgstr "URI không hợp lệ"
 
 #: src/err-codes.h:76
 msgid "Network error"
-msgstr "Lỗi mạng"
+msgstr "Lỗi chạy mạng"
 
 #: src/err-codes.h:77
 msgid "Unknown host"
-msgstr "Máy lạ"
+msgstr "Không nhận ra máy chủ"
 
 #: src/err-codes.h:78
 msgid "Selftest failed"
@@ -312,14 +313,10 @@ msgstr "Chưa mật mã dữ liệu"
 msgid "Data not processed"
 msgstr "Chưa xử lý dữ liệu"
 
-# Type: error
-# Description
 #: src/err-codes.h:81
 msgid "Unusable public key"
 msgstr "Khoá công vô ích"
 
-# Type: error
-# Description
 #: src/err-codes.h:82
 msgid "Unusable secret key"
 msgstr "Khoá bí mật vô ích"
@@ -370,11 +367,11 @@ msgstr "Đối tượng không hợp lệ"
 
 #: src/err-codes.h:94
 msgid "Provided object is too short"
-msgstr "Đối tượng đã cung cấp là quá ngắn"
+msgstr "Đã cung cấp một đối tượng quá ngắn"
 
 #: src/err-codes.h:95
 msgid "Provided object is too large"
-msgstr "Đối tượng đã cung cấp là quá lớn"
+msgstr "Đã cung cấp một đối tượng quá lớn"
 
 #: src/err-codes.h:96
 msgid "Missing item in object"
@@ -418,7 +415,7 @@ msgstr "Không có tác nhân đang chạy"
 
 #: src/err-codes.h:106
 msgid "agent error"
-msgstr "Lỗi tác nhân"
+msgstr "lỗi tác nhân"
 
 #: src/err-codes.h:107
 msgid "Invalid data"
@@ -434,7 +431,7 @@ msgstr "Lỗi Assuan chung"
 
 #: src/err-codes.h:110
 msgid "Invalid session key"
-msgstr "Khoá phiên chạy không hợp lệ"
+msgstr "Khoá buổi hợp không hợp lệ"
 
 #: src/err-codes.h:111
 msgid "Invalid S-expression"
@@ -470,7 +467,7 @@ msgstr "Tham số không hợp lệ"
 
 #: src/err-codes.h:119
 msgid "Wrong card"
-msgstr "Bo mạch không đúng"
+msgstr "Thẻ không đúng"
 
 #: src/err-codes.h:120
 msgid "No dirmngr"
@@ -482,7 +479,7 @@ msgstr "Lỗi dirmngr"
 
 #: src/err-codes.h:122
 msgid "Certificate revoked"
-msgstr "Chứng nhận bị hủy bỏ"
+msgstr "Chứng nhận bị thu hồi"
 
 #: src/err-codes.h:123
 msgid "No CRL known"
@@ -510,7 +507,7 @@ msgstr "Chứng nhận CA (nhà cầm quyền chứng nhận) sai"
 
 #: src/err-codes.h:129
 msgid "Certificate expired"
-msgstr "Chứng nhận quá hạn"
+msgstr "Chứng nhận đã hết hạn"
 
 #: src/err-codes.h:130
 msgid "Certificate too young"
@@ -522,7 +519,7 @@ msgstr "Chứng nhận không được hỗ trợ"
 
 #: src/err-codes.h:132
 msgid "Unknown S-expression"
-msgstr "Biểu thức S lạ"
+msgstr "Biểu thức S không rõ"
 
 #: src/err-codes.h:133
 msgid "Unsupported protection"
@@ -538,23 +535,23 @@ msgstr "Tên mờ hồ"
 
 #: src/err-codes.h:136
 msgid "Card error"
-msgstr "Lỗi bo mạch"
+msgstr "Lỗi thẻ"
 
 #: src/err-codes.h:137
 msgid "Card reset required"
-msgstr "Cần thiết lập lại bo mạch"
+msgstr "Cần thiết lập lại thẻ"
 
 #: src/err-codes.h:138
 msgid "Card removed"
-msgstr "Bo mạch bị gỡ bỏ"
+msgstr "Thẻ bị gỡ bỏ"
 
 #: src/err-codes.h:139
 msgid "Invalid card"
-msgstr "Bo mạch không hợp lệ"
+msgstr "Thẻ không hợp lệ"
 
 #: src/err-codes.h:140
 msgid "Card not present"
-msgstr "Không có bo mạch"
+msgstr "Không có thẻ"
 
 #: src/err-codes.h:141
 msgid "No PKCS15 application"
@@ -570,25 +567,23 @@ msgstr "Lỗi cấu hình"
 
 #: src/err-codes.h:144
 msgid "No policy match"
-msgstr "Không khớp với chính sách"
+msgstr "Không có chính sách tương ứng"
 
 #: src/err-codes.h:145
 msgid "Invalid index"
 msgstr "Chỉ mục không hợp lệ"
 
-# Type: error
-# Description
 #: src/err-codes.h:146
 msgid "Invalid ID"
-msgstr "ID không hợp lệ"
+msgstr "Mã số không hợp lệ"
 
 #: src/err-codes.h:147
 msgid "No SmartCard daemon"
-msgstr "Không có trình nền Bo Mạch Khéo"
+msgstr "Không có trình nền Thẻ Khéo"
 
 #: src/err-codes.h:148
 msgid "SmartCard daemon error"
-msgstr "Lỗi trình nền Bo Mạch Khéo"
+msgstr "Lỗi trình nền Thẻ Khéo"
 
 #: src/err-codes.h:149
 msgid "Unsupported protocol"
@@ -600,7 +595,7 @@ msgstr "Phương pháp PIN sai"
 
 #: src/err-codes.h:151
 msgid "Card not initialized"
-msgstr "Chưa sở khởi bo mạch"
+msgstr "Chưa sơ khởi thẻ"
 
 #: src/err-codes.h:152
 msgid "Unsupported operation"
@@ -652,7 +647,7 @@ msgstr "BER không hợp lệ"
 
 #: src/err-codes.h:164
 msgid "Element not found"
-msgstr "Không tìm thấy yếu tố"
+msgstr "Không tìm thấy phần tử"
 
 #: src/err-codes.h:165
 msgid "Identifier not found"
@@ -660,11 +655,11 @@ msgstr "Không tìm thấy bộ nhận diện"
 
 #: src/err-codes.h:166
 msgid "Invalid tag"
-msgstr "Thẻ không hợp lệ"
+msgstr "Thẻ (tag) không hợp lệ"
 
 #: src/err-codes.h:167
 msgid "Invalid length"
-msgstr "Độ dài không hợp lệ"
+msgstr "Chiều dài không hợp lệ"
 
 #: src/err-codes.h:168
 msgid "Invalid key info"
@@ -672,7 +667,7 @@ msgstr "Thông tin khoá không hợp lệ"
 
 #: src/err-codes.h:169
 msgid "Unexpected tag"
-msgstr "Thẻ bất thường"
+msgstr "Thẻ (tag) bất thường"
 
 #: src/err-codes.h:170
 msgid "Not DER encoded"
@@ -688,7 +683,7 @@ msgstr "Đối tượng CMS không hợp lệ"
 
 #: src/err-codes.h:173
 msgid "Unknown CMS object"
-msgstr "Đối tượng CMS lạ"
+msgstr "Đối tượng CMS không rõ"
 
 #: src/err-codes.h:174
 msgid "Unsupported CMS object"
@@ -704,11 +699,11 @@ msgstr "Phiên bản CMS không được hỗ trợ"
 
 #: src/err-codes.h:177
 msgid "Unknown algorithm"
-msgstr "Thuật toán lạ"
+msgstr "Thuật toán không rõ"
 
 #: src/err-codes.h:178
 msgid "Invalid crypto engine"
-msgstr "Cơ chế mật mã học không hợp lệ"
+msgstr "Cơ chế mật mã không hợp lệ"
 
 #: src/err-codes.h:179
 msgid "Public key not trusted"
@@ -768,7 +763,7 @@ msgstr "Đối tượng chứng nhận không hợp lệ"
 
 #: src/err-codes.h:193
 msgid "Unknown name"
-msgstr "Tên lạ"
+msgstr "Tên không rõ"
 
 #: src/err-codes.h:194
 msgid "A locale function failed"
@@ -792,11 +787,11 @@ msgstr "Yêu cầu không hợp lệ"
 
 #: src/err-codes.h:199
 msgid "Unknown extension"
-msgstr "Phần mở rộng lạ"
+msgstr "Phần mở rộng không rõ"
 
 #: src/err-codes.h:200
 msgid "Unknown critical extension"
-msgstr "Phần mở rộng nghiêm trọng lạ"
+msgstr "Phần mở rộng nghiêm trọng không rõ"
 
 #: src/err-codes.h:201
 msgid "Locked"
@@ -804,25 +799,23 @@ msgstr "Bị khoá"
 
 #: src/err-codes.h:202
 msgid "Unknown option"
-msgstr "Tùy chọn lạ"
+msgstr "Tùy chọn không rõ"
 
 #: src/err-codes.h:203
 msgid "Unknown command"
-msgstr "Lệnh lạ"
+msgstr "Lệnh không rõ"
 
 #: src/err-codes.h:204
-#, fuzzy
 msgid "Not operational"
-msgstr "Thao tác không được hỗ trợ"
+msgstr "Không hoạt động được"
 
 #: src/err-codes.h:205
-#, fuzzy
 msgid "No passphrase given"
-msgstr "Cụm từ mật khẩu sai"
+msgstr "Chưa đưa ra cụm từ mật khẩu"
 
 #: src/err-codes.h:206
 msgid "No PIN given"
-msgstr ""
+msgstr "Chưa đưa ra số cá nhân PIN"
 
 #: src/err-codes.h:207
 #, fuzzy
@@ -832,12 +825,11 @@ msgstr "Không phải bị khoá"
 #: src/err-codes.h:208
 #, fuzzy
 msgid "No crypto engine"
-msgstr "Cơ chế mật mã học không hợp lệ"
+msgstr "Cơ chế mật mã không hợp lệ"
 
 #: src/err-codes.h:209
-#, fuzzy
 msgid "Operation not yet finished"
-msgstr "Thao tác bị hủy bỏ"
+msgstr "Thao tác chưa kết thúc"
 
 #: src/err-codes.h:210
 msgid "Buffer too short"
@@ -845,7 +837,7 @@ msgstr "Vùng đệm quá ngắn"
 
 #: src/err-codes.h:211
 msgid "Invalid length specifier in S-expression"
-msgstr "Chỉ thị độ dài không hợp lệ trong biểu thức S"
+msgstr "Chỉ thị chiều dài không hợp lệ trong biểu thức S"
 
 #: src/err-codes.h:212
 msgid "String too long in S-expression"
@@ -873,15 +865,15 @@ msgstr "Tiền tố số không trong biểu thức S"
 
 #: src/err-codes.h:218
 msgid "Nested display hints in S-expression"
-msgstr "Có mẹo hiển thị lồng nhau trong biểu thức S"
+msgstr "Có mẹo trình bày lồng nhau trong biểu thức S"
 
 #: src/err-codes.h:219
 msgid "Unmatched display hints"
-msgstr "Có mẹo hiển thị chưa khớp"
+msgstr "Có mẹo trình bày chưa khớp"
 
 #: src/err-codes.h:220
 msgid "Unexpected reserved punctuation in S-expression"
-msgstr "Có dấu chấm câu đã dành riêng bất thường trong biểu thức S"
+msgstr "Có dấu chấm câu dành riêng bất thường trong biểu thức S"
 
 #: src/err-codes.h:221
 msgid "Bad hexadecimal character in S-expression"
@@ -926,7 +918,7 @@ msgstr "Dòng quá dài được gửi cho IPC"
 
 #: src/err-codes.h:231
 msgid "Nested IPC commands"
-msgstr "Các lệnh IPC lồng nhau"
+msgstr "Các câu lệnh IPC lồng nhau"
 
 #: src/err-codes.h:232
 msgid "No data callback in IPC"
@@ -934,7 +926,7 @@ msgstr "Không có lời gọi ngược lại dữ liệu trong IPC"
 
 #: src/err-codes.h:233
 msgid "No inquire callback in IPC"
-msgstr "Không có lời gọi ngược lại hỏi thăm trong IPC"
+msgstr "Không có lời gọi ngược lại yêu cầu trong IPC"
 
 #: src/err-codes.h:234
 msgid "Not an IPC server"
@@ -942,7 +934,7 @@ msgstr "Không phải trình phục vụ IPC"
 
 #: src/err-codes.h:235
 msgid "Not an IPC client"
-msgstr "Không phải trình khách IPC"
+msgstr "Không phải ứng dụng khách IPC"
 
 #: src/err-codes.h:236
 msgid "Problem starting IPC server"
@@ -962,11 +954,11 @@ msgstr "Quá nhiều dữ liệu cho lớp IPC"
 
 #: src/err-codes.h:240
 msgid "Unexpected IPC command"
-msgstr "Lệnh IPC bất thường"
+msgstr "Câu lệnh IPC bất thường"
 
 #: src/err-codes.h:241
 msgid "Unknown IPC command"
-msgstr "Lệnh IPC lạ"
+msgstr "Câu lệnh IPC không rõ"
 
 #: src/err-codes.h:242
 msgid "IPC syntax error"
@@ -982,7 +974,7 @@ msgstr "Không có nguồn nhập vào cho IPC"
 
 #: src/err-codes.h:245
 msgid "No output source for IPC"
-msgstr "Không có nguồn xuất ra cho IPC"
+msgstr "Không có nguồn kết xuất cho IPC"
 
 #: src/err-codes.h:246
 msgid "IPC parameter error"
@@ -990,7 +982,7 @@ msgstr "Lỗi tham số IPC"
 
 #: src/err-codes.h:247
 msgid "Unknown IPC inquire"
-msgstr "Lời hỏi thăm IPC lạ"
+msgstr "Yêu cầu IPC không rõ"
 
 #: src/err-codes.h:248
 msgid "User defined error code 1"
@@ -1058,7 +1050,7 @@ msgstr "Mã lỗi tự xác định 16"
 
 #: src/err-codes.h:264
 msgid "System error w/o errno"
-msgstr "Lỗi hệ thống không có số hiệu lỗi"
+msgstr "Lỗi hệ thống không có số thứ tự lỗi"
 
 #: src/err-codes.h:265
 msgid "Unknown system error"
@@ -1070,12 +1062,12 @@ msgstr "Kết thúc tập tin"
 
 #: src/err-codes.h:267
 msgid "Unknown error code"
-msgstr "Mã lỗi lạ"
+msgstr "Mã lỗi không rõ"
 
 #: src/gpg-error.c:386
 #, c-format
 msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Cách sử dụng: %s GPG-ERROR [...]\n"
+msgstr "Sử dụng: %s GPG-ERROR [...]\n"
 
 #: src/gpg-error.c:442
 #, c-format

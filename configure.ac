@@ -1,5 +1,5 @@
 # configure.ac for libgpg-error
-# Copyright (C) 2003, 2004, 2006 g10 Code GmbH
+# Copyright (C) 2003, 2004, 2006, 2010 g10 Code GmbH
 # 
 # This file is part of libgpg-error.
 # 
@@ -13,9 +13,8 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
 # 
-# You should have received a copy of the GNU Lesser General Public
-# License along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 # (Process this file with autoconf to produce a configure script.)
 # The following lines are used by ./autogen.sh.
@@ -26,7 +25,7 @@ min_automake_version="1.9.6"
 # Set my_issvn to "yes" for non-released code.  Remember to run an
 # "svn up" and "autogen.sh" right before creating a distribution.
 m4_define([my_version], [1.8])
-m4_define([my_issvn], [yes])
+m4_define([my_issvn], [no])
 
 m4_define([svn_revision], m4_esyscmd([printf "%d" $(svn info 2>/dev/null \
           | sed -n '/^Revision:/ s/[^0-9]//gp'|head -1)]))
@@ -39,8 +38,8 @@ AC_INIT([libgpg-error],
 #   (Interfaces added:			AGE++)
 #   (Interfaces removed:		AGE=0)
 # Note that added error codes don't constitute an interface change.
-LIBGPG_ERROR_LT_CURRENT=5
-LIBGPG_ERROR_LT_AGE=5
+LIBGPG_ERROR_LT_CURRENT=6
+LIBGPG_ERROR_LT_AGE=6
 LIBGPG_ERROR_LT_REVISION=0
 AC_SUBST(LIBGPG_ERROR_LT_CURRENT)
 AC_SUBST(LIBGPG_ERROR_LT_AGE)

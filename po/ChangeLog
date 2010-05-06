@@ -1,15 +1,23 @@
+2010-05-06  Freek de Kruijf  <f.de.kruijf@gmail.com>  (wk)
+
+	* nl.po: New.
+
+2010-05-06  Clytie Siddall  <clytie@riverland.net.au>  (wk)
+
+	* vi.po: Update
+
 2009-08-20  Werner Koch  <wk@g10code.com>
 
 	* LINGUAS: Add zh_CN, cs and it.
 	* cs.po: New.
 	* it.po: New.
-	
+
 2009-08-20  Daniel Nylander <po@danielnylander.se>  (wk)
 
 	* sv.po: Update
 
 2009-08-20  Aron Xu  <happyaron.xu@gmail.com>  (wk)
-	
+
 	* zh_CN.po: New.
 
 2009-03-29  Moritz  <moritz@gnu.org>
@@ -54,7 +62,7 @@
 
 2006-09-08  Werner Koch  <wk@g10code.com>
 
-	* pl.po: Updated. 
+	* pl.po: Updated.
 
 2006-03-14  gettextize  <bug-gnu-gettext@gnu.org>
 
@@ -111,8 +119,8 @@
 	* remove-potcdate.sin: New file, from gettext-0.11.5.
 	* Rules-quot: New file, from gettext-0.11.5.
 
-	
- Copyright 2003 g10 Code GmbH
+
+ Copyright 2003, 2010 g10 Code GmbH
 
  This file is free software; as a special exception the author gives
  unlimited permission to copy and/or distribute it, with or without

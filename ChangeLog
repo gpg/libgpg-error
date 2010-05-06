@@ -1,3 +1,9 @@
+2010-05-06  Werner Koch  <wk@g10code.com>
+
+	Release 1.8.
+
+	* configure.ac: Set LT version to C6/A6/R0.
+
 2010-04-14  Werner Koch  <wk@g10code.com>
 
 	* src/init.c (_gpg_w32ce_get_errno): Add native error mapping.
@@ -590,7 +596,7 @@
 2004-03-09  Marcus Brinkmann  <marcus@g10code.de>
 
 	* libgpg-error.spec.in (%files): Add gpg-error.  Submitted by
-	Albrecht Dreﬂ <albrecht.dress@arcor.de>.
+	Albrecht Dre√ü <albrecht.dress@arcor.de>.
 
 	* src/mkerrcodes.c (main): Fix type of argv.  Return something.
 
