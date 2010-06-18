@@ -1,3 +1,7 @@
+2010-06-18  Werner Koch  <wk@g10code.com>
+
+	* src/err-codes.h.in (GPG_ERR_MISSING_KEY): New.
+
 2010-05-06  Werner Koch  <wk@g10code.com>
 
 	Release 1.8.
