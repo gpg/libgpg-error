@@ -2,6 +2,11 @@ Noteworthy changes in version 1.9
 ----------------------------------------------
 
 
+ * Interface changes relative to the 1.8 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_MISSING_KEY           NEW.
+
+
 Noteworthy changes in version 1.8 (2010-05-06)
 ----------------------------------------------
 
