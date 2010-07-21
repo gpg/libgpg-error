@@ -1,10 +1,16 @@
-Noteworthy changes in version 1.9
+Noteworthy changes in version 1.9 (2010-07-21)
 ----------------------------------------------
 
+ * New function gpg_err_deinit.
+
+ * Fix building of static lib under W32.
 
  * Interface changes relative to the 1.8 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_MISSING_KEY           NEW.
+ GPG_ERR_TOO_MANY              NEW.
+ GPG_ERR_LIMIT_REACHED         NEW.
+ gpg_err_deinit                NEW.
 
 
 Noteworthy changes in version 1.8 (2010-05-06)

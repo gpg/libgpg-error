@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2010-01-21 12:09+0100\n"
+"POT-Creation-Date: 2010-07-20 18:05+0200\n"
 "PO-Revision-Date: 2009-06-23 14:10+0200\n"
 "Last-Translator: Petr Pisar <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
@@ -836,238 +836,252 @@ msgid "No crypto engine"
 msgstr "Neplatná kryptografická jednotka"
 
 #: src/err-codes.h:209
+#, fuzzy
+msgid "Missing key"
+msgstr "Chybí hodnota"
+
+#: src/err-codes.h:210
+#, fuzzy
+msgid "Too many objects"
+msgstr "Žádný objekt CMS"
+
+#: src/err-codes.h:211
+msgid "Limit reached"
+msgstr ""
+
+#: src/err-codes.h:212
 msgid "Operation not yet finished"
 msgstr "Operace ještě neskončila"
 
-#: src/err-codes.h:210
+#: src/err-codes.h:213
 msgid "Buffer too short"
 msgstr "Vyrovnávací paměť je příliš malá"
 
-#: src/err-codes.h:211
+#: src/err-codes.h:214
 msgid "Invalid length specifier in S-expression"
 msgstr "Neplatné určení délky v S-výrazu"
 
-#: src/err-codes.h:212
+#: src/err-codes.h:215
 msgid "String too long in S-expression"
 msgstr "Řetězec v S-výrazu je příliš dlouhý"
 
-#: src/err-codes.h:213
+#: src/err-codes.h:216
 msgid "Unmatched parentheses in S-expression"
 msgstr "Nepárové závorky v S-výrazu"
 
-#: src/err-codes.h:214
+#: src/err-codes.h:217
 msgid "S-expression not canonical"
 msgstr "S-výraz není kanonický"
 
-#: src/err-codes.h:215
+#: src/err-codes.h:218
 msgid "Bad character in S-expression"
 msgstr "Chybný znak v S-výrazu"
 
-#: src/err-codes.h:216
+#: src/err-codes.h:219
 msgid "Bad quotation in S-expression"
 msgstr "Chybné uzavření do uvozovek v S-výrazu"
 
-#: src/err-codes.h:217
+#: src/err-codes.h:220
 msgid "Zero prefix in S-expression"
 msgstr "Nulová předpona v S-výrazu"
 
-#: src/err-codes.h:218
+#: src/err-codes.h:221
 msgid "Nested display hints in S-expression"
 msgstr "Vnořené pokyny pro zobrazení v S-výrazu"
 
-#: src/err-codes.h:219
+#: src/err-codes.h:222
 msgid "Unmatched display hints"
 msgstr "Neodpovídající pokyny pro zobrazení"
 
-#: src/err-codes.h:220
+#: src/err-codes.h:223
 msgid "Unexpected reserved punctuation in S-expression"
 msgstr "Neočekávaná vyhrazená interpunkce v S-výrazu"
 
-#: src/err-codes.h:221
+#: src/err-codes.h:224
 msgid "Bad hexadecimal character in S-expression"
 msgstr "Chybný šestnáctkový znak v S-výrazu"
 
-#: src/err-codes.h:222
+#: src/err-codes.h:225
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Lichá šestnáctková čísla v S-výrazu"
 
-#: src/err-codes.h:223
+#: src/err-codes.h:226
 msgid "Bad octal character in S-expression"
 msgstr "Chybný osmnáctkový znak v S-výrazu"
 
-#: src/err-codes.h:224
+#: src/err-codes.h:227
 msgid "General IPC error"
 msgstr "Obecná chyba IPC"
 
-#: src/err-codes.h:225
+#: src/err-codes.h:228
 msgid "IPC accept call failed"
 msgstr "IPC volání accept (přijmout) selhalo"
 
-#: src/err-codes.h:226
+#: src/err-codes.h:229
 msgid "IPC connect call failed"
 msgstr "IPC volání connect (připojit) selhalo"
 
-#: src/err-codes.h:227
+#: src/err-codes.h:230
 msgid "Invalid IPC response"
 msgstr "Neplatná odpověď IPC"
 
-#: src/err-codes.h:228
+#: src/err-codes.h:231
 msgid "Invalid value passed to IPC"
 msgstr "Neplatná hodnota předaná do IPC"
 
-#: src/err-codes.h:229
+#: src/err-codes.h:232
 msgid "Incomplete line passed to IPC"
 msgstr "Neúplný řádek předán do IPC"
 
-#: src/err-codes.h:230
+#: src/err-codes.h:233
 msgid "Line passed to IPC too long"
 msgstr "Řádek předaný do IPC je příliš dlouhý"
 
-#: src/err-codes.h:231
+#: src/err-codes.h:234
 msgid "Nested IPC commands"
 msgstr "Vnořené příkazy IPC"
 
-#: src/err-codes.h:232
+#: src/err-codes.h:235
 msgid "No data callback in IPC"
 msgstr "Žádná data zpětného volání v IPC"
 
-#: src/err-codes.h:233
+#: src/err-codes.h:236
 msgid "No inquire callback in IPC"
 msgstr "Žádné dotazovací zpětné volání v IPC"
 
-#: src/err-codes.h:234
+#: src/err-codes.h:237
 msgid "Not an IPC server"
 msgstr "Není serverem IPC"
 
-#: src/err-codes.h:235
+#: src/err-codes.h:238
 msgid "Not an IPC client"
 msgstr "Není klientem IPC"
 
-#: src/err-codes.h:236
+#: src/err-codes.h:239
 msgid "Problem starting IPC server"
 msgstr "Problém se spuštěním serveru IPC"
 
-#: src/err-codes.h:237
+#: src/err-codes.h:240
 msgid "IPC read error"
 msgstr "Chyba čtení IPC"
 
-#: src/err-codes.h:238
+#: src/err-codes.h:241
 msgid "IPC write error"
 msgstr "Chyba zápisu IPC"
 
-#: src/err-codes.h:239
+#: src/err-codes.h:242
 msgid "Too much data for IPC layer"
 msgstr "Příliš mnoho data pro vrstvu IPC"
 
-#: src/err-codes.h:240
+#: src/err-codes.h:243
 msgid "Unexpected IPC command"
 msgstr "Neočekávaný příkaz IPC"
 
-#: src/err-codes.h:241
+#: src/err-codes.h:244
 msgid "Unknown IPC command"
 msgstr "Neznámý příkaz IPC"
 
-#: src/err-codes.h:242
+#: src/err-codes.h:245
 msgid "IPC syntax error"
 msgstr "Chyba syntaxe IPC"
 
-#: src/err-codes.h:243
+#: src/err-codes.h:246
 msgid "IPC call has been cancelled"
 msgstr "Volání IPC bylo zrušeno"
 
-#: src/err-codes.h:244
+#: src/err-codes.h:247
 msgid "No input source for IPC"
 msgstr "Žádný zdroj vstupu pro IPC"
 
-#: src/err-codes.h:245
+#: src/err-codes.h:248
 msgid "No output source for IPC"
 msgstr "Žádný zdroj výstupu pro IPC"
 
-#: src/err-codes.h:246
+#: src/err-codes.h:249
 msgid "IPC parameter error"
 msgstr "Chyba parametru IPC"
 
-#: src/err-codes.h:247
+#: src/err-codes.h:250
 msgid "Unknown IPC inquire"
 msgstr "Neznámý dotaz IPC"
 
-#: src/err-codes.h:248
+#: src/err-codes.h:251
 msgid "User defined error code 1"
 msgstr "Uživatelem definovaný chybový kód 1"
 
-#: src/err-codes.h:249
+#: src/err-codes.h:252
 msgid "User defined error code 2"
 msgstr "Uživatelem definovaný chybový kód 2"
 
-#: src/err-codes.h:250
+#: src/err-codes.h:253
 msgid "User defined error code 3"
 msgstr "Uživatelem definovaný chybový kód 3"
 
-#: src/err-codes.h:251
+#: src/err-codes.h:254
 msgid "User defined error code 4"
 msgstr "Uživatelem definovaný chybový kód 4"
 
-#: src/err-codes.h:252
+#: src/err-codes.h:255
 msgid "User defined error code 5"
 msgstr "Uživatelem definovaný chybový kód 5"
 
-#: src/err-codes.h:253
+#: src/err-codes.h:256
 msgid "User defined error code 6"
 msgstr "Uživatelem definovaný chybový kód 6"
 
-#: src/err-codes.h:254
+#: src/err-codes.h:257
 msgid "User defined error code 7"
 msgstr "Uživatelem definovaný chybový kód 7"
 
-#: src/err-codes.h:255
+#: src/err-codes.h:258
 msgid "User defined error code 8"
 msgstr "Uživatelem definovaný chybový kód 8"
 
-#: src/err-codes.h:256
+#: src/err-codes.h:259
 msgid "User defined error code 9"
 msgstr "Uživatelem definovaný chybový kód 9"
 
-#: src/err-codes.h:257
+#: src/err-codes.h:260
 msgid "User defined error code 10"
 msgstr "Uživatelem definovaný chybový kód 10"
 
-#: src/err-codes.h:258
+#: src/err-codes.h:261
 msgid "User defined error code 11"
 msgstr "Uživatelem definovaný chybový kód 11"
 
-#: src/err-codes.h:259
+#: src/err-codes.h:262
 msgid "User defined error code 12"
 msgstr "Uživatelem definovaný chybový kód 12"
 
-#: src/err-codes.h:260
+#: src/err-codes.h:263
 msgid "User defined error code 13"
 msgstr "Uživatelem definovaný chybový kód 13"
 
-#: src/err-codes.h:261
+#: src/err-codes.h:264
 msgid "User defined error code 14"
 msgstr "Uživatelem definovaný chybový kód 14"
 
-#: src/err-codes.h:262
+#: src/err-codes.h:265
 msgid "User defined error code 15"
 msgstr "Uživatelem definovaný chybový kód 15"
 
-#: src/err-codes.h:263
+#: src/err-codes.h:266
 msgid "User defined error code 16"
 msgstr "Uživatelem definovaný chybový kód 16"
 
-#: src/err-codes.h:264
+#: src/err-codes.h:267
 msgid "System error w/o errno"
 msgstr "Chyba systému bez čísla chyby (errno)"
 
-#: src/err-codes.h:265
+#: src/err-codes.h:268
 msgid "Unknown system error"
 msgstr "Neznámá chyba systému"
 
-#: src/err-codes.h:266
+#: src/err-codes.h:269
 msgid "End of file"
 msgstr "Konec souboru"
 
-#: src/err-codes.h:267
+#: src/err-codes.h:270
 msgid "Unknown error code"
 msgstr "Neznámý kód chyby"
 

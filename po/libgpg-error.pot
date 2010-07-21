@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2010-01-21 12:09+0100\n"
+"POT-Creation-Date: 2010-07-20 18:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -825,238 +825,250 @@ msgid "No crypto engine"
 msgstr ""
 
 #: src/err-codes.h:209
-msgid "Operation not yet finished"
+msgid "Missing key"
 msgstr ""
 
 #: src/err-codes.h:210
-msgid "Buffer too short"
+msgid "Too many objects"
 msgstr ""
 
 #: src/err-codes.h:211
-msgid "Invalid length specifier in S-expression"
+msgid "Limit reached"
 msgstr ""
 
 #: src/err-codes.h:212
-msgid "String too long in S-expression"
+msgid "Operation not yet finished"
 msgstr ""
 
 #: src/err-codes.h:213
-msgid "Unmatched parentheses in S-expression"
+msgid "Buffer too short"
 msgstr ""
 
 #: src/err-codes.h:214
-msgid "S-expression not canonical"
+msgid "Invalid length specifier in S-expression"
 msgstr ""
 
 #: src/err-codes.h:215
-msgid "Bad character in S-expression"
+msgid "String too long in S-expression"
 msgstr ""
 
 #: src/err-codes.h:216
-msgid "Bad quotation in S-expression"
+msgid "Unmatched parentheses in S-expression"
 msgstr ""
 
 #: src/err-codes.h:217
-msgid "Zero prefix in S-expression"
+msgid "S-expression not canonical"
 msgstr ""
 
 #: src/err-codes.h:218
-msgid "Nested display hints in S-expression"
+msgid "Bad character in S-expression"
 msgstr ""
 
 #: src/err-codes.h:219
-msgid "Unmatched display hints"
+msgid "Bad quotation in S-expression"
 msgstr ""
 
 #: src/err-codes.h:220
-msgid "Unexpected reserved punctuation in S-expression"
+msgid "Zero prefix in S-expression"
 msgstr ""
 
 #: src/err-codes.h:221
-msgid "Bad hexadecimal character in S-expression"
+msgid "Nested display hints in S-expression"
 msgstr ""
 
 #: src/err-codes.h:222
-msgid "Odd hexadecimal numbers in S-expression"
+msgid "Unmatched display hints"
 msgstr ""
 
 #: src/err-codes.h:223
-msgid "Bad octal character in S-expression"
+msgid "Unexpected reserved punctuation in S-expression"
 msgstr ""
 
 #: src/err-codes.h:224
-msgid "General IPC error"
+msgid "Bad hexadecimal character in S-expression"
 msgstr ""
 
 #: src/err-codes.h:225
-msgid "IPC accept call failed"
+msgid "Odd hexadecimal numbers in S-expression"
 msgstr ""
 
 #: src/err-codes.h:226
-msgid "IPC connect call failed"
+msgid "Bad octal character in S-expression"
 msgstr ""
 
 #: src/err-codes.h:227
-msgid "Invalid IPC response"
+msgid "General IPC error"
 msgstr ""
 
 #: src/err-codes.h:228
-msgid "Invalid value passed to IPC"
+msgid "IPC accept call failed"
 msgstr ""
 
 #: src/err-codes.h:229
-msgid "Incomplete line passed to IPC"
+msgid "IPC connect call failed"
 msgstr ""
 
 #: src/err-codes.h:230
-msgid "Line passed to IPC too long"
+msgid "Invalid IPC response"
 msgstr ""
 
 #: src/err-codes.h:231
-msgid "Nested IPC commands"
+msgid "Invalid value passed to IPC"
 msgstr ""
 
 #: src/err-codes.h:232
-msgid "No data callback in IPC"
+msgid "Incomplete line passed to IPC"
 msgstr ""
 
 #: src/err-codes.h:233
-msgid "No inquire callback in IPC"
+msgid "Line passed to IPC too long"
 msgstr ""
 
 #: src/err-codes.h:234
-msgid "Not an IPC server"
+msgid "Nested IPC commands"
 msgstr ""
 
 #: src/err-codes.h:235
-msgid "Not an IPC client"
+msgid "No data callback in IPC"
 msgstr ""
 
 #: src/err-codes.h:236
-msgid "Problem starting IPC server"
+msgid "No inquire callback in IPC"
 msgstr ""
 
 #: src/err-codes.h:237
-msgid "IPC read error"
+msgid "Not an IPC server"
 msgstr ""
 
 #: src/err-codes.h:238
-msgid "IPC write error"
+msgid "Not an IPC client"
 msgstr ""
 
 #: src/err-codes.h:239
-msgid "Too much data for IPC layer"
+msgid "Problem starting IPC server"
 msgstr ""
 
 #: src/err-codes.h:240
-msgid "Unexpected IPC command"
+msgid "IPC read error"
 msgstr ""
 
 #: src/err-codes.h:241
-msgid "Unknown IPC command"
+msgid "IPC write error"
 msgstr ""
 
 #: src/err-codes.h:242
-msgid "IPC syntax error"
+msgid "Too much data for IPC layer"
 msgstr ""
 
 #: src/err-codes.h:243
-msgid "IPC call has been cancelled"
+msgid "Unexpected IPC command"
 msgstr ""
 
 #: src/err-codes.h:244
-msgid "No input source for IPC"
+msgid "Unknown IPC command"
 msgstr ""
 
 #: src/err-codes.h:245
-msgid "No output source for IPC"
+msgid "IPC syntax error"
 msgstr ""
 
 #: src/err-codes.h:246
-msgid "IPC parameter error"
+msgid "IPC call has been cancelled"
 msgstr ""
 
 #: src/err-codes.h:247
-msgid "Unknown IPC inquire"
+msgid "No input source for IPC"
 msgstr ""
 
 #: src/err-codes.h:248
-msgid "User defined error code 1"
+msgid "No output source for IPC"
 msgstr ""
 
 #: src/err-codes.h:249
-msgid "User defined error code 2"
+msgid "IPC parameter error"
 msgstr ""
 
 #: src/err-codes.h:250
-msgid "User defined error code 3"
+msgid "Unknown IPC inquire"
 msgstr ""
 
 #: src/err-codes.h:251
-msgid "User defined error code 4"
+msgid "User defined error code 1"
 msgstr ""
 
 #: src/err-codes.h:252
-msgid "User defined error code 5"
+msgid "User defined error code 2"
 msgstr ""
 
 #: src/err-codes.h:253
-msgid "User defined error code 6"
+msgid "User defined error code 3"
 msgstr ""
 
 #: src/err-codes.h:254
-msgid "User defined error code 7"
+msgid "User defined error code 4"
 msgstr ""
 
 #: src/err-codes.h:255
-msgid "User defined error code 8"
+msgid "User defined error code 5"
 msgstr ""
 
 #: src/err-codes.h:256
-msgid "User defined error code 9"
+msgid "User defined error code 6"
 msgstr ""
 
 #: src/err-codes.h:257
-msgid "User defined error code 10"
+msgid "User defined error code 7"
 msgstr ""
 
 #: src/err-codes.h:258
-msgid "User defined error code 11"
+msgid "User defined error code 8"
 msgstr ""
 
 #: src/err-codes.h:259
-msgid "User defined error code 12"
+msgid "User defined error code 9"
 msgstr ""
 
 #: src/err-codes.h:260
-msgid "User defined error code 13"
+msgid "User defined error code 10"
 msgstr ""
 
 #: src/err-codes.h:261
-msgid "User defined error code 14"
+msgid "User defined error code 11"
 msgstr ""
 
 #: src/err-codes.h:262
-msgid "User defined error code 15"
+msgid "User defined error code 12"
 msgstr ""
 
 #: src/err-codes.h:263
-msgid "User defined error code 16"
+msgid "User defined error code 13"
 msgstr ""
 
 #: src/err-codes.h:264
-msgid "System error w/o errno"
+msgid "User defined error code 14"
 msgstr ""
 
 #: src/err-codes.h:265
-msgid "Unknown system error"
+msgid "User defined error code 15"
 msgstr ""
 
 #: src/err-codes.h:266
-msgid "End of file"
+msgid "User defined error code 16"
 msgstr ""
 
 #: src/err-codes.h:267
+msgid "System error w/o errno"
+msgstr ""
+
+#: src/err-codes.h:268
+msgid "Unknown system error"
+msgstr ""
+
+#: src/err-codes.h:269
+msgid "End of file"
+msgstr ""
+
+#: src/err-codes.h:270
 msgid "Unknown error code"
 msgstr ""
 

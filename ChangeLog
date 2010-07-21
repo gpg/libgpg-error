@@ -1,3 +1,21 @@
+2010-07-21  Werner Koch  <wk@g10code.com>
+
+	Release 1.9.
+
+	* configure.ac: Set LT version to C7/A7/R0.
+
+2010-07-20  Werner Koch  <wk@g10code.com>
+
+	* src/init.c (DllMain) [!DLL_EXPORT]: Do not build.
+	(gpg_err_init) [W32][!DLL_EXPORT]: Init TLS.
+	(gpg_err_deinit): New.
+	* src/gpg-error.def.in: Add gpg_err_deinit.
+	* src/gpg-error.h.in: Add gpg_err_deinit.
+
+2010-07-05  Werner Koch  <wk@g10code.com>
+
+	* src/err-codes.h.in (GPG_ERR_TOO_MANY, GPG_ERR_LIMIT_REACHED): New.
+
 2010-06-18  Werner Koch  <wk@g10code.com>
 
 	* src/err-codes.h.in (GPG_ERR_MISSING_KEY): New.

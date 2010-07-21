@@ -211,7 +211,9 @@
 179	GPG_ERR_NOT_ENABLED		Not enabled
 180	GPG_ERR_NO_ENGINE		No crypto engine
 181	GPG_ERR_MISSING_KEY		Missing key
-# 182 to 198 are free to be used.
+182	GPG_ERR_TOO_MANY		Too many objects
+183	GPG_ERR_LIMIT_REACHED		Limit reached
+# 184 to 198 are free to be used.
 
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short

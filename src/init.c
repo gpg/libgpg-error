@@ -40,7 +40,9 @@
 
 #if HAVE_W32_SYSTEM
 
-static int tls_index;  /* Index for the TLS functions.  */ 
+#include <windows.h>
+
+static int tls_index = TLS_OUT_OF_INDEXES;  /* Index for the TLS functions.  */ 
 
 static char *get_locale_dir (void);
 static void drop_locale_dir (char *locale_dir);
@@ -74,12 +76,29 @@ gpg_error_t
 gpg_err_init (void)
 {
 #ifdef HAVE_W32_SYSTEM
+# ifdef DLL_EXPORT
   /* We always have a constructor and thus this function is called
      automatically.  Due to the way the C init code of mingw works,
      the constructors are called before our DllMain function is
      called.  The problem with that is that the TLS has not been setup
      and w32-gettext.c requires TLS.  To solve this we do nothing here
      but call the actual init code from our DllMain.  */
+# else /*!DLL_EXPORT*/
+  /* Note that if the TLS is actually used, we can't release the TLS
+     as there is no way to know when a thread terminates (i.e. no
+     thread-specific-atexit).  You are really better off to use the
+     DLL! */
+  if (tls_index == TLS_OUT_OF_INDEXES)
+    {
+      tls_index = TlsAlloc ();
+      if (tls_index == TLS_OUT_OF_INDEXES)
+        {
+          /* No way to continue - commit suicide.  */
+          abort ();
+        }
+      real_init ();
+    }
+# endif /*!DLL_EXPORT*/
 #else
   real_init ();
 #endif
@@ -87,10 +106,40 @@ gpg_err_init (void)
 }
 
 
+/* Deinitialize libgpg-error.  This function is only used in special
+   circumstances.  No gpg-error function should be used after this
+   function has been called.  A value of 0 passed for MODE
+   deinitializes the entire libgpg-error, a value of 1 releases
+   resources allocated for the current thread and only that thread may
+   not anymore access libgpg-error after such a call.  Under Windows
+   this function may be called from the DllMain function of a DLL
+   which statically links to libgpg-error.  */
+void
+gpg_err_deinit (int mode)
+{
+#if defined (HAVE_W32_SYSTEM) && !defined(DLL_EXPORT)
+  struct tls_space_s *tls;
+  
+  tls = TlsGetValue (tls_index);
+  if (tls)
+    {
+      TlsSetValue (tls_index, NULL);
+      LocalFree (tls);
+    }
+
+  if (mode == 0)
+    {
+      TlsFree (tls_index);
+      tls_index = TLS_OUT_OF_INDEXES;
+    }
+#else
+  (void)mode;
+#endif
+}
+
+
 
 #ifdef HAVE_W32_SYSTEM
-
-#include <windows.h>
 
 /* Return a malloced string encoded in UTF-8 from the wide char input
    string STRING.  Caller must free this value.  Returns NULL on
@@ -292,6 +341,7 @@ gpg_err_set_errno (int err)
 
 
 /* Entry point called by the DLL loader.  */
+#ifdef DLL_EXPORT
 int WINAPI
 DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
 {
@@ -336,7 +386,7 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
   
   return TRUE;
 }
-
+#endif /*DLL_EXPORT*/
 
 #else /*!HAVE_W32_SYSTEM*/
 
