@@ -24,8 +24,8 @@ min_automake_version="1.9.6"
 # Remember to change the version number immediately *after* a release.
 # Set my_issvn to "yes" for non-released code.  Remember to run an
 # "svn up" and "autogen.sh" right before creating a distribution.
-m4_define([my_version], [1.9])
-m4_define([my_issvn], [no])
+m4_define([my_version], [1.10])
+m4_define([my_issvn], [yes])
 
 m4_define([svn_revision], m4_esyscmd([printf "%d" $(svn info 2>/dev/null \
           | sed -n '/^Revision:/ s/[^0-9]//gp'|head -1)]))
@@ -105,8 +105,9 @@ AH_BOTTOM([
 #if defined(HAVE_W32_SYSTEM) && !defined(ENABLE_NLS)
 #define ENABLE_NLS 1
 #endif
-/* For building we need to define this macro.  */
-#define GPG_ERR_ENABLE_GETTEXT_MACROS
+/* For building we need to define these macro.  */
+#define GPG_ERR_ENABLE_GETTEXT_MACROS 1
+#define GPG_ERR_ENABLE_ERRNO_MACROS 1
 ])
 
 
