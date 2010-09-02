@@ -1,8 +1,10 @@
 Noteworthy changes in version 1.10
 ----------------------------------------------
 
+
  * Interface changes relative to the 1.9 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_NOT_INITIALIZED       NEW.
 
 
 Noteworthy changes in version 1.9 (2010-07-21)

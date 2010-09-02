@@ -1,6 +1,6 @@
 /* w32-gettext.h - A simple gettext implementation for Windows targets.
    Copyright (C) 1995, 1996, 1997, 1999, 2005, 2007,
-2                 2008, 2010 Free Software Foundation, Inc.
+                 2008, 2010 Free Software Foundation, Inc.
 
    This file is part of libgpg-error.
  
