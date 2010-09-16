@@ -1,3 +1,9 @@
+2010-09-16  Werner Koch  <wk@g10code.com>
+
+	* src/w32-gettext.c (module_init): Do not set a constructur if not
+	build as DLL.
+	(_gpg_w32__init_gettext_module): New.
+
 2010-09-16  gettextize  <bug-gnu-gettext@gnu.org>
 
 	* configure.ac (AM_GNU_GETTEXT_VERSION): Bump to 0.17.

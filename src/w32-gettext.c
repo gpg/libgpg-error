@@ -1146,13 +1146,32 @@ static char *current_domainname;
 
 
 
-/* Constructor for this module.  Called from DllMain.  */
+/* Constructor for this module.  This can only be used if we are a
+   DLL.  IF used as a static lib we can't control the process set; for
+   example it might be used with a main module which is not build with
+   mingw and thus does not know how to call the constructors.  */
+#ifdef DLL_EXPORT
 static void module_init (void) __attribute__ ((__constructor__));
+#endif
 static void
 module_init (void)
 {
-  InitializeCriticalSection (&domainlist_access_cs);
+  static int init_done;
+
+  if (!init_done)
+    {
+      InitializeCriticalSection (&domainlist_access_cs);
+      init_done = 1;
+    }
 }
+
+#ifndef DLL_EXPORT
+void
+_gpg_w32__init_gettext_module (void)
+{
+  module_init ();
+}
+#endif
 
 
 /* Free the domain data.  */

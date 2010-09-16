@@ -1,6 +1,7 @@
 Noteworthy changes in version 1.10
 ----------------------------------------------
 
+ * Using a static library on W32 does now work.
 
  * Interface changes relative to the 1.9 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

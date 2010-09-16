@@ -96,6 +96,7 @@ gpg_err_init (void)
           /* No way to continue - commit suicide.  */
           abort ();
         }
+      _gpg_w32__init_gettext_module ();
       real_init ();
     }
 # endif /*!DLL_EXPORT*/
