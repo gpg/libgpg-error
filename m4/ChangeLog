@@ -1,3 +1,10 @@
+2010-09-16  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* gettext.m4: Upgrade to gettext-0.17.
+	* iconv.m4: Upgrade to gettext-0.17.
+	* lib-link.m4: Upgrade to gettext-0.17.
+	* po.m4: Upgrade to gettext-0.17.
+
 2006-11-23  gettextize  <bug-gnu-gettext@gnu.org>
 
 	* gettext.m4: Upgrade to gettext-0.15.

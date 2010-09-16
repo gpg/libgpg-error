@@ -111,7 +111,12 @@ gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c
 gpg_error_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" $(extra_cppflags)
 gpg_error_LDADD = ./libgpg-error.la @LTLIBINTL@
 
-err-sources.h: Makefile mkstrtable.awk err-sources.h.in
+# We build err-sources.h and err-codes.h in the source directory.
+# This is needed because gettext does only look into the source
+# directory to find the files listed in po/POTFILE.in.  To make these
+# rules work we also need to depend on Makefile.am and not on the
+# generated files Makefile.in or Makefile.
+$(srcdir)/err-sources.h: Makefile.am mkstrtable.awk err-sources.h.in
 	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=3 \
 		$(srcdir)/err-sources.h.in >$@
 
@@ -119,7 +124,7 @@ err-sources-sym.h: Makefile mkstrtable.awk err-sources.h.in
 	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=2 -v nogettext=1 \
 		$(srcdir)/err-sources.h.in >$@
 
-err-codes.h: Makefile mkstrtable.awk err-codes.h.in
+$(srcdir)/err-codes.h: Makefile.am mkstrtable.awk err-codes.h.in
 	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=3 \
 		$(srcdir)/err-codes.h.in >$@
 

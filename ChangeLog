@@ -1,3 +1,14 @@
+2010-09-16  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* configure.ac (AM_GNU_GETTEXT_VERSION): Bump to 0.17.
+
+2010-09-16  Werner Koch  <wk@g10code.com>
+
+	* src/err-codes.h.in: Add GPG_ERR_MISSING_ISSUER_CERT.
+
+	* src/Makefile.am (err-sources.h, err-codes.h): Built them in the
+	source directory.
+
 2010-09-02  Werner Koch  <wk@g10code.com>
 
 	* src/err-codes.h.in: Add GPG_ERR_NOT_INITIALIZED.

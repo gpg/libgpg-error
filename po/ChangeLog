@@ -1,3 +1,11 @@
+2010-09-16  Jakub Bogusz  <qboosh@pld-linux.org>  (wk)
+
+	* pl.po: Update.
+
+2010-09-16  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* Makefile.in.in: Upgrade to gettext-0.17.
+
 2010-05-06  Freek de Kruijf  <f.de.kruijf@gmail.com>  (wk)
 
 	* nl.po: New.

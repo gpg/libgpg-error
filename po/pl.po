@@ -1,14 +1,14 @@
 # Polish translation for libgpg-error.
 # Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
-# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2006.
+# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.4\n"
+"Project-Id-Version: libgpg-error 1.9\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
 "POT-Creation-Date: 2010-07-20 18:05+0200\n"
-"PO-Revision-Date: 2006-09-15 19:30+0200\n"
+"PO-Revision-Date: 2010-08-05 20:05+0200\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -65,15 +65,15 @@ msgstr "GSTI"
 
 #: src/err-sources.h:40
 msgid "GPA"
-msgstr ""
+msgstr "GPA"
 
 #: src/err-sources.h:41
 msgid "Kleopatra"
-msgstr ""
+msgstr "Kleopatra"
 
 #: src/err-sources.h:42
 msgid "G13"
-msgstr ""
+msgstr "G13"
 
 #: src/err-sources.h:43
 msgid "Any source"
@@ -804,47 +804,40 @@ msgid "Unknown command"
 msgstr "Nieznane polecenie"
 
 #: src/err-codes.h:204
-#, fuzzy
 msgid "Not operational"
-msgstr "Nieobs³ugiwana operacja"
+msgstr "Nie gotowy"
 
 #: src/err-codes.h:205
-#, fuzzy
 msgid "No passphrase given"
-msgstr "B³êdne has³o"
+msgstr "Nie podano has³a"
 
 #: src/err-codes.h:206
 msgid "No PIN given"
-msgstr ""
+msgstr "Nie podano PIN-u"
 
 #: src/err-codes.h:207
-#, fuzzy
 msgid "Not enabled"
-msgstr "Nie zablokowany"
+msgstr "Nie w³±czony"
 
 #: src/err-codes.h:208
-#, fuzzy
 msgid "No crypto engine"
-msgstr "Niepoprawny silnik kryptograficzny"
+msgstr "Brak silnika kryptograficznego"
 
 #: src/err-codes.h:209
-#, fuzzy
 msgid "Missing key"
-msgstr "Brak warto¶ci"
+msgstr "Brak klucza"
 
 #: src/err-codes.h:210
-#, fuzzy
 msgid "Too many objects"
-msgstr "Brak obiektu CMS"
+msgstr "Zbyt du¿o obiektów"
 
 #: src/err-codes.h:211
 msgid "Limit reached"
-msgstr ""
+msgstr "Osi±gniêto limit"
 
 #: src/err-codes.h:212
-#, fuzzy
 msgid "Operation not yet finished"
-msgstr "Operacja anulowana"
+msgstr "Operacja jeszcze nie zakoñczona"
 
 #: src/err-codes.h:213
 msgid "Buffer too short"
@@ -899,7 +892,6 @@ msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Nieparzysta liczba cyfr szesnastkowych w S-wyra¿eniu"
 
 #: src/err-codes.h:226
-#, fuzzy
 msgid "Bad octal character in S-expression"
 msgstr "B³êdny znak ósemkowy w S-wyra¿eniu"
 

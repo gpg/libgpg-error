@@ -214,7 +214,8 @@
 182	GPG_ERR_TOO_MANY		Too many objects
 183	GPG_ERR_LIMIT_REACHED		Limit reached
 184	GPG_ERR_NOT_INITIALIZED		Not initialized
-# 185 to 198 are free to be used.
+185	GPG_ERR_MISSING_ISSUER_CERT	Missing issuer certificate
+# 186 to 198 are free to be used.
 
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short

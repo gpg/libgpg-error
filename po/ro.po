@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.1\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"POT-Creation-Date: 2010-07-20 18:05+0200\n"
+"POT-Creation-Date: 2010-09-16 14:55+0200\n"
 "PO-Revision-Date: 2009-08-20 09:00+0200\n"
 "Last-Translator: Laurentiu Buzdugan <lbuz@rolix.org>\n"
 "Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
@@ -854,250 +854,260 @@ msgstr ""
 
 #: src/err-codes.h:212
 #, fuzzy
+msgid "Not initialized"
+msgstr "Card neiniþializat"
+
+#: src/err-codes.h:213
+#, fuzzy
+msgid "Missing issuer certificate"
+msgstr "Certificat lipsã"
+
+#: src/err-codes.h:214
+#, fuzzy
 msgid "Operation not yet finished"
 msgstr "Operaþiune anulatã"
 
-#: src/err-codes.h:213
+#: src/err-codes.h:215
 msgid "Buffer too short"
 msgstr "Buffer prea scurt"
 
-#: src/err-codes.h:214
+#: src/err-codes.h:216
 msgid "Invalid length specifier in S-expression"
 msgstr "Specificarea lungimii invalidã în expresia-S"
 
-#: src/err-codes.h:215
+#: src/err-codes.h:217
 msgid "String too long in S-expression"
 msgstr "ªir prea lung în expresia-S"
 
-#: src/err-codes.h:216
+#: src/err-codes.h:218
 msgid "Unmatched parentheses in S-expression"
 msgstr "Parantezã fãrã pereche în expresia-S"
 
-#: src/err-codes.h:217
+#: src/err-codes.h:219
 msgid "S-expression not canonical"
 msgstr "Expresia-S nu este canonicã"
 
-#: src/err-codes.h:218
+#: src/err-codes.h:220
 msgid "Bad character in S-expression"
 msgstr "Caracter invalid în expresia-S"
 
-#: src/err-codes.h:219
+#: src/err-codes.h:221
 msgid "Bad quotation in S-expression"
 msgstr "Ghilimele incorecte în expresia-S"
 
-#: src/err-codes.h:220
+#: src/err-codes.h:222
 msgid "Zero prefix in S-expression"
 msgstr "Prefix zero în expresia-S"
 
-#: src/err-codes.h:221
+#: src/err-codes.h:223
 msgid "Nested display hints in S-expression"
 msgstr "Indicaþii de afiºare încuibãrite în expresia-S"
 
-#: src/err-codes.h:222
+#: src/err-codes.h:224
 msgid "Unmatched display hints"
 msgstr "Indicaþii de afiºare fãrã pereche"
 
-#: src/err-codes.h:223
+#: src/err-codes.h:225
 msgid "Unexpected reserved punctuation in S-expression"
 msgstr "Punctuaþie rezervatã neaºteptatã în expresia-S"
 
-#: src/err-codes.h:224
+#: src/err-codes.h:226
 msgid "Bad hexadecimal character in S-expression"
 msgstr "Caracter hexazecimal incorect în expresia-S"
 
-#: src/err-codes.h:225
+#: src/err-codes.h:227
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Numere hexazecimale ciudate în expresia-S"
 
-#: src/err-codes.h:226
+#: src/err-codes.h:228
 msgid "Bad octal character in S-expression"
 msgstr "Caracter octal incorect în expresia-S"
 
-#: src/err-codes.h:227
+#: src/err-codes.h:229
 #, fuzzy
 msgid "General IPC error"
 msgstr "Eroare generalã"
 
-#: src/err-codes.h:228
+#: src/err-codes.h:230
 msgid "IPC accept call failed"
 msgstr ""
 
-#: src/err-codes.h:229
+#: src/err-codes.h:231
 msgid "IPC connect call failed"
 msgstr ""
 
-#: src/err-codes.h:230
+#: src/err-codes.h:232
 #, fuzzy
 msgid "Invalid IPC response"
 msgstr "Rãspuns invalid"
 
-#: src/err-codes.h:231
+#: src/err-codes.h:233
 #, fuzzy
 msgid "Invalid value passed to IPC"
 msgstr "Valoare invalidã"
 
-#: src/err-codes.h:232
+#: src/err-codes.h:234
 #, fuzzy
 msgid "Incomplete line passed to IPC"
 msgstr "Linie incompletã"
 
-#: src/err-codes.h:233
+#: src/err-codes.h:235
 #, fuzzy
 msgid "Line passed to IPC too long"
 msgstr "Linie prea lungã"
 
-#: src/err-codes.h:234
+#: src/err-codes.h:236
 msgid "Nested IPC commands"
 msgstr ""
 
-#: src/err-codes.h:235
+#: src/err-codes.h:237
 msgid "No data callback in IPC"
 msgstr ""
 
-#: src/err-codes.h:236
+#: src/err-codes.h:238
 msgid "No inquire callback in IPC"
 msgstr ""
 
-#: src/err-codes.h:237
+#: src/err-codes.h:239
 msgid "Not an IPC server"
 msgstr ""
 
-#: src/err-codes.h:238
+#: src/err-codes.h:240
 msgid "Not an IPC client"
 msgstr ""
 
-#: src/err-codes.h:239
+#: src/err-codes.h:241
 msgid "Problem starting IPC server"
 msgstr ""
 
-#: src/err-codes.h:240
+#: src/err-codes.h:242
 #, fuzzy
 msgid "IPC read error"
 msgstr "Eroare card"
 
-#: src/err-codes.h:241
+#: src/err-codes.h:243
 #, fuzzy
 msgid "IPC write error"
 msgstr "Eroare card"
 
-#: src/err-codes.h:242
+#: src/err-codes.h:244
 msgid "Too much data for IPC layer"
 msgstr ""
 
-#: src/err-codes.h:243
+#: src/err-codes.h:245
 #, fuzzy
 msgid "Unexpected IPC command"
 msgstr "Etichetã neaºteptatã"
 
-#: src/err-codes.h:244
+#: src/err-codes.h:246
 #, fuzzy
 msgid "Unknown IPC command"
 msgstr "Cod de eroare necunoscut"
 
-#: src/err-codes.h:245
+#: src/err-codes.h:247
 #, fuzzy
 msgid "IPC syntax error"
 msgstr "Eroare de sintaxã"
 
-#: src/err-codes.h:246
+#: src/err-codes.h:248
 msgid "IPC call has been cancelled"
 msgstr ""
 
-#: src/err-codes.h:247
+#: src/err-codes.h:249
 msgid "No input source for IPC"
 msgstr ""
 
-#: src/err-codes.h:248
+#: src/err-codes.h:250
 msgid "No output source for IPC"
 msgstr ""
 
-#: src/err-codes.h:249
+#: src/err-codes.h:251
 #, fuzzy
 msgid "IPC parameter error"
 msgstr "Eroare card"
 
-#: src/err-codes.h:250
+#: src/err-codes.h:252
 #, fuzzy
 msgid "Unknown IPC inquire"
 msgstr "Sursã necunoscutã"
 
-#: src/err-codes.h:251
+#: src/err-codes.h:253
 msgid "User defined error code 1"
 msgstr "Cod de eroare definit de utilizator 1"
 
-#: src/err-codes.h:252
+#: src/err-codes.h:254
 msgid "User defined error code 2"
 msgstr "Cod de eroare definit de utilizator 2"
 
-#: src/err-codes.h:253
+#: src/err-codes.h:255
 msgid "User defined error code 3"
 msgstr "Cod de eroare definit de utilizator 3"
 
-#: src/err-codes.h:254
+#: src/err-codes.h:256
 msgid "User defined error code 4"
 msgstr "Cod de eroare definit de utilizator 4"
 
-#: src/err-codes.h:255
+#: src/err-codes.h:257
 msgid "User defined error code 5"
 msgstr "Cod de eroare definit de utilizator 5"
 
-#: src/err-codes.h:256
+#: src/err-codes.h:258
 msgid "User defined error code 6"
 msgstr "Cod de eroare definit de utilizator 6"
 
-#: src/err-codes.h:257
+#: src/err-codes.h:259
 msgid "User defined error code 7"
 msgstr "Cod de eroare definit de utilizator 7"
 
-#: src/err-codes.h:258
+#: src/err-codes.h:260
 msgid "User defined error code 8"
 msgstr "Cod de eroare definit de utilizator 8"
 
-#: src/err-codes.h:259
+#: src/err-codes.h:261
 msgid "User defined error code 9"
 msgstr "Cod de eroare definit de utilizator 9"
 
-#: src/err-codes.h:260
+#: src/err-codes.h:262
 msgid "User defined error code 10"
 msgstr "Cod de eroare definit de utilizator 10"
 
-#: src/err-codes.h:261
+#: src/err-codes.h:263
 msgid "User defined error code 11"
 msgstr "Cod de eroare definit de utilizator 11"
 
-#: src/err-codes.h:262
+#: src/err-codes.h:264
 msgid "User defined error code 12"
 msgstr "Cod de eroare definit de utilizator 12"
 
-#: src/err-codes.h:263
+#: src/err-codes.h:265
 msgid "User defined error code 13"
 msgstr "Cod de eroare definit de utilizator 13"
 
-#: src/err-codes.h:264
+#: src/err-codes.h:266
 msgid "User defined error code 14"
 msgstr "Cod de eroare definit de utilizator 14"
 
-#: src/err-codes.h:265
+#: src/err-codes.h:267
 msgid "User defined error code 15"
 msgstr "Cod de eroare definit de utilizator 15"
 
-#: src/err-codes.h:266
+#: src/err-codes.h:268
 msgid "User defined error code 16"
 msgstr "Cod de eroare definit de utilizator 16"
 
-#: src/err-codes.h:267
+#: src/err-codes.h:269
 msgid "System error w/o errno"
 msgstr ""
 
-#: src/err-codes.h:268
+#: src/err-codes.h:270
 msgid "Unknown system error"
 msgstr "Eroare de sistem necunoscutã"
 
-#: src/err-codes.h:269
+#: src/err-codes.h:271
 msgid "End of file"
 msgstr "Sfârºit de fiºier"
 
-#: src/err-codes.h:270
+#: src/err-codes.h:272
 msgid "Unknown error code"
 msgstr "Cod de eroare necunoscut"
 
