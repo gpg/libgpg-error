@@ -330,6 +330,10 @@ _gpg_w32ce_strerror (int err)
 
   if (err == -1)
     err = _gpg_w32ce_get_errno ();
+
+  /* Note: On a German HTC Touch Pro2 device I also tried
+     LOCALE_USER_DEFAULT and LOCALE_SYSTEM_DEFAULT - both returned
+     English messages.  */
   if (FormatMessageW (FORMAT_MESSAGE_FROM_SYSTEM, NULL, err,
                       MAKELANGID (LANG_NEUTRAL, SUBLANG_DEFAULT),
                       tmpbuf, STRBUFFER_SIZE -1,
