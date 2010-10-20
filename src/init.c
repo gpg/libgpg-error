@@ -235,6 +235,27 @@ get_locale_dir (void)
               p = strrchr (result, '\\');
               if (p)
                 *p = 0;
+              /* If we are installed below "bin" strip that part and
+                 use the top directory instead.
+
+                 Background: Under Windows we don't install GnuPG
+                 below bin/ but in the top directory with only share/,
+                 lib/, and etc/ below it.  One of the reasons is to
+                 keep the the length of the filenames at bay so not to
+                 increase the limited length of the PATH envvar.
+                 Another and more important reason, however, is that
+                 the very first GPG versions on W32 were installed
+                 into a flat directory structure and for best
+                 compatibility with these versions we didn't changed
+                 that later.  For WindowsCE we can right away install
+                 it under bin, though.  The hack with detection of the
+                 bin directory part allows us to eventually migrate to
+                 such a directory layout under plain Windows without
+                 the need to change libgpg-error.  */
+              p = strrchr (result, '\\');
+              if (p && !strcmp (p+1, "bin"))
+                *p = 0;
+              /* Append the static part.  */
               strcat (result, SLDIR);
             }
         }

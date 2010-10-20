@@ -131,6 +131,12 @@ get_locale_dir (void)
               p = strrchr (result, '\\');
               if (p)
                 *p = 0;
+              /* If we are installed below "bin" strip that part and
+                 use the top directory instead.  */
+              p = strrchr (result, '\\');
+              if (p && !strcmp (p+1, "bin"))
+                *p = 0;
+              /* Append the static part.  */
               strcat (result, SLDIR);
             }
         }

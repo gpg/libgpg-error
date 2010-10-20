@@ -215,8 +215,9 @@
 183	GPG_ERR_LIMIT_REACHED		Limit reached
 184	GPG_ERR_NOT_INITIALIZED		Not initialized
 185	GPG_ERR_MISSING_ISSUER_CERT	Missing issuer certificate
-# 186 to 198 are free to be used.
+# 186 to 197 are free to be used.
 
+198	GPG_ERR_FULLY_CANCELED		Operation fully cancelled
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
 

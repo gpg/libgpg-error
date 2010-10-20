@@ -1,3 +1,15 @@
+2010-10-20  Werner Koch  <wk@g10code.com>
+
+	* potomo: New.  Copied from GnuPG.
+	* Makefile.am (install-data-hook) [W32]: New.
+
+	* src/init.c (get_locale_dir): Strip the "bin" part.
+	* src/gpg-error.c (get_locale_dir): Ditto.
+
+2010-09-30  Werner Koch  <wk@g10code.com>
+
+	* src/err-codes.h.in: Add GPG_ERR_FULLY_CANCELED.
+
 2010-09-16  Werner Koch  <wk@g10code.com>
 
 	* src/w32-gettext.c (module_init): Do not set a constructur if not
