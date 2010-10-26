@@ -1,4 +1,4 @@
-Noteworthy changes in version 1.10
+Noteworthy changes in version 1.10 (2010-10-26)
 ----------------------------------------------
 
  * Using a static library on W32 does now work.
