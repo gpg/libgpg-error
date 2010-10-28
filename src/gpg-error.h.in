@@ -25,6 +25,8 @@
 
 #ifdef __GNUC__
 #define GPG_ERR_INLINE __inline__
+#elif _MSC_VER >= 1300
+#define GPG_ERR_INLINE __inline
 #elif __STDC_VERSION__ >= 199901L
 #define GPG_ERR_INLINE inline
 #else

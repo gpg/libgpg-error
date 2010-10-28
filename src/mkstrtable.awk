@@ -157,7 +157,7 @@ END {
   print "    " pos[coded_msgs];
   print "  };";
   print "";
-  print "static inline int";
+  print "static GPG_ERR_INLINE int";
   print namespace "msgidxof (int code)";
   print "{";
   print "  return (0 ? 0";

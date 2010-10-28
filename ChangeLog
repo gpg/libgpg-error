@@ -1,3 +1,16 @@
+2010-10-28  Werner Koch  <wk@g10code.com>
+
+	* contrib/conf-w32ce-msc/build.mk: New.
+	* contrib/conf-w32ce-msc/config.h: New.
+
+	* src/mkstrtable.awk: s/inline/GPG_ERR_INLINE/
+	* src/w32-gettext.c: Include gpg-error.h and replace all
+	__inline__ by GPG_ERR_INLINE.
+	(module_init):  Use _GPG_ERR_CONSTRUCTOR.
+	(_gpg_w32__init_gettext_module): Build also if we don't have
+	constructors
+	* src/gpg-error.h.in (GPG_ERR_INLINE) [_MSC_VER]: Define as __inline.
+
 2010-10-26  Werner Koch  <wk@g10code.com>
 
 	Release 1.10.

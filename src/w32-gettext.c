@@ -50,7 +50,7 @@
 #endif /*!jnlib_malloc*/
 
 #include "init.h"
-
+#include "gpg-error.h"
 
 
 /* localname.c from gettext BEGIN.  */
@@ -1026,7 +1026,7 @@ my_nl_locale_name (const char *categoryname)
 
 /* Support functions.  */
 
-static __inline__ uint32_t
+static GPG_ERR_INLINE uint32_t
 do_swap_u32 (uint32_t i)
 {
   return (i << 24) | ((i & 0xff00) << 8) | ((i >> 8) & 0xff00) | (i >> 24);
@@ -1041,8 +1041,8 @@ do_swap_u32 (uint32_t i)
 /* The so called `hashpjw' function by P.J. Weinberger
    [see Aho/Sethi/Ullman, COMPILERS: Principles, Techniques and Tools,
    1986, 1987 Bell Telephone Laboratories, Inc.]  */
-static __inline__ unsigned long
-hash_string( const char *str_param )
+static GPG_ERR_INLINE unsigned long
+hash_string (const char *str_param)
 {
   unsigned long int hval, g;
   const char *str = str_param;
@@ -1147,11 +1147,11 @@ static char *current_domainname;
 
 
 /* Constructor for this module.  This can only be used if we are a
-   DLL.  IF used as a static lib we can't control the process set; for
+   DLL.  If used as a static lib we can't control the process set; for
    example it might be used with a main module which is not build with
    mingw and thus does not know how to call the constructors.  */
 #ifdef DLL_EXPORT
-static void module_init (void) __attribute__ ((__constructor__));
+static void module_init (void) _GPG_ERR_CONSTRUCTOR;
 #endif
 static void
 module_init (void)
@@ -1165,7 +1165,7 @@ module_init (void)
     }
 }
 
-#ifndef DLL_EXPORT
+#if !defined(DLL_EXPORT) || !defined(_GPG_ERR_HAVE_CONSTRUCTOR)
 void
 _gpg_w32__init_gettext_module (void)
 {
