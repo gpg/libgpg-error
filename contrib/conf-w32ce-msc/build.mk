@@ -24,8 +24,26 @@ help:
 	@echo "  nmake -f build.mk all"
 	@echo "on the Windows system"
 
+ce_defines = -DWINCE -D_WIN32_WCE=0x502 -DUNDER_CE
+             -DWIN32_PLATFORM_PSPC -D_UNICODE -DUNICODE
+             -D_CONSOLE -DARM -D_ARM_
+#-D_DEBUG -DDEBUG 
 
-CFLAGS = -DHAVE_CONFIG_H -DDLL_EXPORT -I.
+# Some options of Visual-C:
+# -W3   Set warning level 3
+# -Zi   Generate debug info
+# -Od   Disable optimization
+# -Gm   Enable minimal rebuild (for C++)
+# -EHsc Exception handling model sc 
+# -MTd  Create a debug multithreaded executable
+# -fp:  Floating point behaviour
+# -GR-  Disable runtime type information
+# -Os   Favor small code
+# -LD   Create a DLL
+# -Fe   Set executable output name (may be only a directory)
+CFLAGS = -nologo -W3 -fp:fast -Os $(ce_defines) \
+         -DHAVE_CONFIG_H -DDLL_EXPORT -I. 
+
 LDFLAGS = 
 
 # Standard source files
@@ -55,7 +73,8 @@ built_sources = \
 	gpg-error.h	  \
 	mkerrcodes.h	  \
 	mkw32errmap.map.c \
-	gpg-error.def
+	gpg-error.def     \
+	gpg-extra/errno.h
 
 copy-static-source:
 	@if [ ! -f ./w32-gettext.c ]; then \
@@ -83,7 +102,7 @@ all:  $(sources) $(conf_sources) $(built_sources)
 	$(CC) $(CFLAGS) -c strerror.c
 	$(CC) $(CFLAGS) -c code-to-errno.c
 	$(CC) $(CFLAGS) -c code-from-errno.c
-	$(CC) $(LDFLAGS) /LD -Felibgpg-error-0.dll \
+	$(CC) $(LDFLAGS) -LD -Felibgpg-error-0.dll \
 	   w32-gettext.obj init.obj strsource.obj strerror.obj \
 	   code-to-errno.obj code-from-errno.obj \
 	   gpg-error.def
