@@ -24,8 +24,8 @@ help:
 	@echo "  nmake -f build.mk all"
 	@echo "on the Windows system"
 
-ce_defines = -DWINCE -D_WIN32_WCE=0x502 -DUNDER_CE
-             -DWIN32_PLATFORM_PSPC -D_UNICODE -DUNICODE
+ce_defines = -DWINCE -D_WIN32_WCE=0x502 -DUNDER_CE \
+             -DWIN32_PLATFORM_PSPC -D_UNICODE -DUNICODE \
              -D_CONSOLE -DARM -D_ARM_
 #-D_DEBUG -DDEBUG 
 
@@ -42,9 +42,9 @@ ce_defines = -DWINCE -D_WIN32_WCE=0x502 -DUNDER_CE
 # -LD   Create a DLL
 # -Fe   Set executable output name (may be only a directory)
 CFLAGS = -nologo -W3 -fp:fast -Os $(ce_defines) \
-         -DHAVE_CONFIG_H -DDLL_EXPORT -I. 
+         -DHAVE_CONFIG_H -DDLL_EXPORT -I. -Igpg-extra
 
-LDFLAGS = 
+LDFLAGS =
 
 # Standard source files
 sources = \
@@ -102,10 +102,13 @@ all:  $(sources) $(conf_sources) $(built_sources)
 	$(CC) $(CFLAGS) -c strerror.c
 	$(CC) $(CFLAGS) -c code-to-errno.c
 	$(CC) $(CFLAGS) -c code-from-errno.c
-	$(CC) $(LDFLAGS) -LD -Felibgpg-error-0.dll \
-	   w32-gettext.obj init.obj strsource.obj strerror.obj \
-	   code-to-errno.obj code-from-errno.obj \
-	   gpg-error.def
+	link.exe /DLL /IMPLIB:libgpg-error-0.lib /OUT:libgpg-error-0.dll \
+		/DEF:gpg-error.def /NOLOGO /MANIFEST:NO \
+		/NODEFAULTLIB:"oldnames.lib" /DYNAMICBASE:NO \
+	        w32-gettext.obj init.obj strsource.obj strerror.obj \
+	  	code-to-errno.obj code-from-errno.obj \
+		coredll.lib corelibc.lib ole32.lib oleaut32.lib uuid.lib \
+		commctrl.lib /subsystem:windowsce,5.02
 
 # Note that install needs to be run on the POSIX platform and the all
 # is only to make sure we build everything; it won't compile anything
