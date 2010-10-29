@@ -30,8 +30,9 @@
 #include <string.h>
 #include <errno.h>
 #include <ctype.h>
+#ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
-#include <sys/stat.h>
+#endif
 #include <stdint.h>
 #ifndef HAVE_W32CE_SYSTEM
 # include <locale.h>
@@ -51,6 +52,36 @@
 
 #include "init.h"
 #include "gpg-error.h"
+
+#ifdef HAVE_W32CE_SYSTEM
+/* Forward declaration.  */
+static wchar_t *utf8_to_wchar (const char *string, size_t length, size_t *retlen);
+
+static HANDLE
+CreateFileA (LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwSharedMode,
+	     LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+	     DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes,
+	     HANDLE hTemplateFile)
+{
+  wchar_t *filename;
+  HANDLE result;
+  int err;
+  size_t size;
+
+  filename = utf8_to_wchar (lpFileName, -1, &size);
+  if (!filename)
+    return INVALID_HANDLE_VALUE;
+
+  result = CreateFileW (filename, dwDesiredAccess, dwSharedMode,
+			lpSecurityAttributes, dwCreationDisposition,
+			dwFlagsAndAttributes, hTemplateFile);
+
+  err = GetLastError ();
+  free (filename);
+  SetLastError (err);
+  return result;
+}
+#endif
 
 
 /* localname.c from gettext BEGIN.  */
@@ -611,7 +642,9 @@
 static const char *
 my_nl_locale_name (const char *categoryname)
 {
+#ifndef HAVE_W32CE_SYSTEM
   const char *retval;
+#endif
   LCID lcid;
   LANGID langid;
   int primary, sub;
@@ -1194,31 +1227,28 @@ free_domain (struct loaded_domain *domain)
 static struct loaded_domain *
 load_domain (const char *filename)
 {
-  FILE *fp;
-  size_t size;
-  struct stat st;
+  HANDLE fh;
+  DWORD size;
   struct mo_file_header *data = NULL;
   struct loaded_domain *domain = NULL;
   size_t to_read;
   char *read_ptr;
-  
-  fp = fopen (filename, "rb");
-  if (!fp)
+
+  fh = CreateFileA (filename, GENERIC_READ, FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+  if (fh == INVALID_HANDLE_VALUE)
+    return NULL;
+
+  size = GetFileSize (fh, NULL);
+  if (size == INVALID_FILE_SIZE)
     {
-      return NULL;
-    }
-  if (fstat (fileno (fp), &st)
-      || (size = (size_t) st.st_size) != st.st_size
-      || size < sizeof (struct mo_file_header))
-    {
-      fclose (fp);
+      CloseHandle (fh);
       return NULL;
     }
 
   data = (2*size <= size)? NULL : jnlib_malloc (2*size);
   if (!data)
     {
-      fclose (fp);
+      CloseHandle (fh);
       return NULL;
     }
 
@@ -1226,10 +1256,13 @@ load_domain (const char *filename)
   read_ptr = (char *) data;
   do
     {
-      long int nb = fread (read_ptr, 1, to_read, fp);
-      if (nb < to_read)
+      BOOL res;
+      DWORD nb;
+
+      res = ReadFile (fh, read_ptr, to_read, &nb, NULL);
+      if (! res || nb < to_read)
 	{
-	  fclose (fp);
+	  CloseHandle (fh);
 	  jnlib_free (data);
 	  return NULL;
 	}
@@ -1237,7 +1270,7 @@ load_domain (const char *filename)
       to_read -= nb;
     }
   while (to_read > 0);
-  fclose (fp);
+  CloseHandle (fh);
 
   /* Using the magic number we can test whether it really is a message
      catalog file.  */

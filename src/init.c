@@ -33,6 +33,12 @@
 
 #ifdef HAVE_W32CE_SYSTEM
 # include "mkw32errmap.map.c"  /* Generated map_w32codes () */
+# ifndef TLS_OUT_OF_INDEXES
+#  define TLS_OUT_OF_INDEXES 0xFFFFFFFF
+# endif
+# ifndef __MINGW32CE__
+#  define abort() exit(1)
+# endif
 #endif
 
 
