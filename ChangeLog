@@ -1,3 +1,8 @@
+2010-10-31  Werner Koch  <wk@g10code.com>
+
+	* src/init.c (abort): Use TerminateProcess; exit would call atexit
+	functions.
+
 2010-10-29  Marcus Brinkmann  <marcus.brinkmann@ruhr-uni-bochum.de>
 
 	* src/w32-gettext.c: Guard include of <sys/types.h>.  Do not

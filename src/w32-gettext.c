@@ -1234,7 +1234,8 @@ load_domain (const char *filename)
   size_t to_read;
   char *read_ptr;
 
-  fh = CreateFileA (filename, GENERIC_READ, FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+  fh = CreateFileA (filename, GENERIC_READ, FILE_SHARE_WRITE, NULL,
+                    OPEN_EXISTING, 0, NULL);
   if (fh == INVALID_HANDLE_VALUE)
     return NULL;
 

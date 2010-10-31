@@ -37,7 +37,8 @@
 #  define TLS_OUT_OF_INDEXES 0xFFFFFFFF
 # endif
 # ifndef __MINGW32CE__
-#  define abort() exit(1)
+#  /* Replace the Mingw32CE provided abort function.  */
+#  define abort() do { TerminateProcess (GetCurrentProcess(), 8); } while (0)
 # endif
 #endif
 
