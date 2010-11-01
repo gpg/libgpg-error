@@ -102,7 +102,8 @@ all:  $(sources) $(conf_sources) $(built_sources)
 	$(CC) $(CFLAGS) -c strerror.c
 	$(CC) $(CFLAGS) -c code-to-errno.c
 	$(CC) $(CFLAGS) -c code-from-errno.c
-	link.exe /DLL /IMPLIB:libgpg-error-0.lib /OUT:libgpg-error-0.dll \
+	link.exe /DLL /IMPLIB:libgpg-error-0-msc.lib \
+	        /OUT:libgpg-error-0-msc.dll \
 		/DEF:gpg-error.def /NOLOGO /MANIFEST:NO \
 		/NODEFAULTLIB:"oldnames.lib" /DYNAMICBASE:NO \
 	        w32-gettext.obj init.obj strsource.obj strerror.obj \
