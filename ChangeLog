@@ -1,3 +1,8 @@
+2010-11-01  Marcus Brinkmann  <marcus.brinkmann@ruhr-uni-bochum.de>
+
+	* src/w32-gettext.c (CreateFileA): Rename to ...
+	(MyCreateFileA): ... this, but provide macro CreateFileA.
+
 2010-10-31  Werner Koch  <wk@g10code.com>
 
 	* src/init.c (abort): Use TerminateProcess; exit would call atexit

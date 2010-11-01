@@ -58,7 +58,7 @@
 static wchar_t *utf8_to_wchar (const char *string, size_t length, size_t *retlen);
 
 static HANDLE
-CreateFileA (LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwSharedMode,
+MyCreateFileA (LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwSharedMode,
 	     LPSECURITY_ATTRIBUTES lpSecurityAttributes,
 	     DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes,
 	     HANDLE hTemplateFile)
@@ -81,6 +81,8 @@ CreateFileA (LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwSharedMode,
   SetLastError (err);
   return result;
 }
+#undef CreateFileA
+#define CreateFileA MyCreateFileA
 #endif
 
 
