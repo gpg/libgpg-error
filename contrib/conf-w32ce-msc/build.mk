@@ -25,9 +25,9 @@ targetdir = /home/smb/xppro-gnu
 targetsrc = $(targetdir)/src
 
 # Install directories (relative)
-bindir = ../../bin
-libdir = ../../lib
-incdir = ../../include
+bindir = ../../../bin
+libdir = ../../../lib
+incdir = ../../../include
 
 help:
 	@echo "Run "
@@ -133,7 +133,7 @@ install: all
 	-mkdir $(libdir:/=\)
 	-mkdir $(incdir:/=\)
 	-mkdir $(incdir:/=\)\gpg-extra
-	copy /y libgpg-error-0-msc.dll $(bindir:/=\)
-	copy /y libgpg-error-0-msc.lib $(libdir:/=\)
 	copy /y gpg-error.h $(incdir:/=\)
 	copy /y gpg-extra\errno.h $(incdir:/=\)\gpg-extra
+	copy /y libgpg-error-0-msc.dll $(bindir:/=\)
+	copy /y libgpg-error-0-msc.lib $(libdir:/=\)
