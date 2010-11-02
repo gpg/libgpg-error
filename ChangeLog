@@ -1,4 +1,4 @@
-2010-11-01  Marcus Brinkmann  <marcus.brinkmann@ruhr-uni-bochum.de>
+2010-11-01  Marcus Brinkmann  <marcus@g10code.de>
 
 	* src/w32-gettext.c (CreateFileA): Rename to ...
 	(MyCreateFileA): ... this, but provide macro CreateFileA.

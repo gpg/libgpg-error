@@ -1,3 +1,8 @@
+2010-11-02  Werner Koch  <wk@g10code.com>
+
+	* conf-w32ce-msc/build.mk: Change directory layout.  Provide
+	install target.
+
 2010-10-28  Werner Koch  <wk@g10code.com>
 
 	* contrib/conf-w32ce-msc/build.mk: New.

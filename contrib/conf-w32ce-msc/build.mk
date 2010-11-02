@@ -12,16 +12,29 @@
 # This is a helper make script to build libgpg-error for WindowsCE
 # using the Microsoft Visual C compiler.  
 
-# The target build directry where we run the Visual C compiler/
-# This needs to be an absolute directory name.
-targetdir = /home/smb/xppro-gnu/src/libgpg-error
+# The target build directory where we run the Visual C compiler/ This
+# needs to be an absolute directory name.  Further we expect this
+# structure of the tree:
+# 
+#   TARGET/src - Source directories:  One directory for each project
+#         /bin - Installed DLLs
+#         /lib - Installed import libs.
+#         /include - Instaled header files.
 
+targetdir = /home/smb/xppro-gnu
+targetsrc = $(targetdir)/src
+
+# Install directories (relative)
+bindir = ../../bin
+libdir = ../../lib
+incdir = ../../include
 
 help:
 	@echo "Run "
 	@echo "  make -f ../contrib/conf-w32ce-msc/build.mk copy-source"
 	@echo "on the POSIX system and then"
 	@echo "  nmake -f build.mk all"
+	@echo "  nmake -f build.mk install"
 	@echo "on the Windows system"
 
 ce_defines = -DWINCE -D_WIN32_WCE=0x502 -DUNDER_CE \
@@ -81,8 +94,9 @@ copy-static-source:
            echo "Please cd to the src/ directory first"; \
 	   exit 1; \
         fi
-	cp -t $(targetdir) $(sources);
-	cd ../contrib/conf-w32ce-msc ; cp -t $(targetdir) $(conf_sources)
+	cp -t $(targetsrc)/libgpg-error/src $(sources);
+	cd ../contrib/conf-w32ce-msc ; \
+           cp -t $(targetsrc)/libgpg-error/src $(conf_sources)
 
 
 copy-built-source:
@@ -90,7 +104,10 @@ copy-built-source:
            echo "Please build using ./autogen.sh --build-w32ce first"; \
 	   exit 1; \
         fi
-	cp -t $(targetdir) $(built_sources)
+	cp -t $(targetsrc)/libgpg-error/src $(built_sources)
+	-mkdir $(targetsrc)/libgpg-error/src/gpg-extra
+	mv $(targetsrc)/libgpg-error/src/errno.h \
+           $(targetsrc)/libgpg-error/src/gpg-extra
 
 copy-source: copy-static-source copy-built-source
 
@@ -111,8 +128,12 @@ all:  $(sources) $(conf_sources) $(built_sources)
 		coredll.lib corelibc.lib ole32.lib oleaut32.lib uuid.lib \
 		commctrl.lib /subsystem:windowsce,5.02
 
-# Note that install needs to be run on the POSIX platform and the all
-# is only to make sure we build everything; it won't compile anything
-# because Visual-C is probably not installed on that platform.
 install: all
-	@echo fixme Install the files
+	-mkdir $(bindir:/=\)
+	-mkdir $(libdir:/=\)
+	-mkdir $(incdir:/=\)
+	-mkdir $(incdir:/=\)\gpg-extra
+	copy /y libgpg-error-0-msc.dll $(bindir:/=\)
+	copy /y libgpg-error-0-msc.lib $(libdir:/=\)
+	copy /y gpg-error.h $(incdir:/=\)
+	copy /y gpg-extra\errno.h $(incdir:/=\)\gpg-extra
