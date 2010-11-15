@@ -74,7 +74,8 @@ sources = \
 # Sources files in this directory inclduing this Makefile
 conf_sources = \
 	build.mk \
-	config.h
+	config.h \
+	stdint.h
 
 # Source files built by running the standard build system.
 built_sources = \
