@@ -137,3 +137,7 @@ install: all
 	copy /y gpg-extra\errno.h $(incdir:/=\)\gpg-extra
 	copy /y libgpg-error-0-msc.dll $(bindir:/=\)
 	copy /y libgpg-error-0-msc.lib $(libdir:/=\)
+
+clean:
+	del *.obj libgpg-error-0-msc.lib \
+            libgpg-error-0-msc.dll libgpg-error-0-msc.exe

@@ -1,3 +1,7 @@
+2010-11-15  Werner Koch  <wk@g10code.com>
+
+	* conf-w32ce-msc/build.mk (clean): New.
+
 2010-11-02  Werner Koch  <wk@g10code.com>
 
 	* conf-w32ce-msc/build.mk: Change directory layout.  Provide
