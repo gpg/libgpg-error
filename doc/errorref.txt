@@ -1,0 +1,378 @@
+grep -n -e ERR_CONFLICT ~/w/{gnupg,libksba,libgcrypt,gpgme,gpa}/*/*.[ch] 
+
+GPG_ERR_UNKNOWN_PACKET		Unknown packet
+
+    GNUPG:  - Redefined to G10ERR_UNKNOWN_PACKET in gpg.
+
+GPG_ERR_UNKNOWN_VERSION		Unknown version in packet
+
+    Not used.  Fixme: We might want to use it in gpg instead of some
+    of the INV_PACKET in gpg.  The error string does not make sense
+    otherwise.
+
+GPG_ERR_PUBKEY_ALGO		Invalid public key algorithm
+
+    GNUPG:  - Redefined to G10ERR_PUBKEY_ALGO in gpg.
+            - Public key algorithm is not allowed by OpenPGP. 
+    GCRYPT: - Public key algorithm is not defined or not available.
+              Note that this is also the case if the algorithm has
+              been disabled.
+            - [version < 1.5] Checking of the RSA secret key failed
+                              (consistency check).
+
+GPG_ERR_DIGEST_ALGO		Invalid digest algorithm
+
+    GNUPG:  - Digest algorithm is not supported.
+            - Redefined to G10ERR_PUBKEY_ALGO in gpg.
+            - Digest algorithm is not allowed by OpenPGP. 
+            - Unsupported algorithm given to "--hash=" option of 
+              certain Assuan server commands.
+            - Signature creation or verification failed due to 
+              an unsupported hash algorithm.
+    GCRYPT: - Digest key algorithm is not defined or not available.
+              Note that this is also the case if the algorithm has
+              been disabled.
+            - Unsupported digest algorithm in a selftest.
+            - Invalid digest algorithm used in FIPS mode.  Note that
+              in enforced-FIPS mode there is no such error return.
+            - Message digested or HMAC computation finished with no
+              message algorithm enabled for the hash context.
+            - Bad digest algorithm given to public key function.
+    
+GPG_ERR_BAD_PUBKEY		Bad public key
+
+    GNUPG:  - Redefined to G10ERR_BAD_PUBKEY in gpg.
+
+GPG_ERR_BAD_SECKEY		Bad secret key
+
+    GNUPG:  - Invalid format of a S-expression encoded private key in
+              gpg-agent.
+            - A protected or shadowed private key was passed to the
+              OpenPGP card application for storing it on the card.
+            - A private key passed to the OpenPGP card application does
+              not match the requirements of the card or misses required
+              parameters.
+            - Gpg'agents import key command is not able to convert
+              the key to the internal format.
+    GCRYPT: - Checking the secret key failed (consistency check).
+             
+
+GPG_ERR_BAD_SIGNATURE		Bad signature
+
+    GNUPG:  - Redefined to G10ERR_BAD_SIGN in gpg.
+            - The MDC check of an OpenPGP encrypted message failed.
+            - A OpenPGP key signature did not verify.
+            - A signature with a key flagged as "never trust" was made.
+    GCRYPT: - A public key signature did not verify.
+
+GPG_ERR_NO_PUBKEY		No public key
+
+    GNUPG:  - Redefined to G10ERR_NO_PUBKEY in gpg.
+            - A key was requested from an OpenPGP card but the key is
+              not stored on the card.
+            - The public key could not be retrieved from a corresponding
+              certificate on a card (command READKEY in scd).
+            - A requested certificate was not found or an unspecified
+              error occured while selecting a X.509 certificate in
+              gpgsm.
+            - The specified certificate or key was not found.  This
+              does not necessary mean that the certifciate is not
+              available but the specification method may not be usable
+              for the given certificate.  May also happen for
+              certificates somehwere in the chain while validaiting a
+              certificate chain.
+            - The requested encryption certificate was not found.
+            - A certificate specified in a CMS message is not
+              available and thus the signature could not be verified
+              or details of the certificate be shown.
+    GPA:    - No key was given for encryption.
+            - The selected encryption protocol is not available.
+
+GPG_ERR_CHECKSUM		Checksum error
+
+    GNUPG:  - The checksum of an unprotected OpenPGP secret key packet
+              is wrong.
+    GCRYPT: - Decryption in AESWRAP mode does not match the expected IV.
+    [more to come]
+
+11	GPG_ERR_BAD_PASSPHRASE		Bad passphrase
+12	GPG_ERR_CIPHER_ALGO		Invalid cipher algorithm
+13	GPG_ERR_KEYRING_OPEN		Keyring open
+14	GPG_ERR_INV_PACKET		Invalid packet
+15	GPG_ERR_INV_ARMOR		Invalid armor
+16	GPG_ERR_NO_USER_ID		No user ID
+17	GPG_ERR_NO_SECKEY		No secret key
+18	GPG_ERR_WRONG_SECKEY		Wrong secret key used
+
+GPG_ERR_BAD_KEY			Bad session key
+
+    GNUPG: - gpg-agent's command IMPORT_KEY or EXPORT_KEY is used
+             without a prior KEYWRAP_KEY command.
+
+    [more to come]
+
+        
+20	GPG_ERR_COMPR_ALGO		Unknown compression algorithm
+21	GPG_ERR_NO_PRIME		Number is not prime
+22	GPG_ERR_NO_ENCODING_METHOD	Invalid encoding method
+23	GPG_ERR_NO_ENCRYPTION_SCHEME	Invalid encryption scheme
+24	GPG_ERR_NO_SIGNATURE_SCHEME	Invalid signature scheme
+25	GPG_ERR_INV_ATTR		Invalid attribute
+
+
+GPG_ERR_NO_VALUE		No value
+
+    GNUPG:  - A timestamp value is expect but there is none.
+    KSBA:   - A timestamp value is expect but there is none.
+            - A certificate is missing a required property.
+            - A CMS object is missing a required property.
+            - Converting a Distinguised Name to an RFC2253 string failed.
+
+
+27	GPG_ERR_NOT_FOUND		Not found
+28	GPG_ERR_VALUE_NOT_FOUND		Value not found
+29	GPG_ERR_SYNTAX			Syntax error
+30	GPG_ERR_BAD_MPI			Bad MPI value
+31	GPG_ERR_INV_PASSPHRASE		Invalid passphrase
+32	GPG_ERR_SIG_CLASS		Invalid signature class
+33	GPG_ERR_RESOURCE_LIMIT		Resources exhausted
+34	GPG_ERR_INV_KEYRING		Invalid keyring
+35	GPG_ERR_TRUSTDB			Trust DB error
+
+
+        GPG_ERR_BAD_CERT		Bad certificate
+
+GPG_ERR_INV_USER_ID		Invalid user ID
+
+    GNUPG:  - Used to indicate a bad specification of a user id.
+    [more to come]
+
+
+38	GPG_ERR_UNEXPECTED		Unexpected error
+39	GPG_ERR_TIME_CONFLICT		Time conflict
+40	GPG_ERR_KEYSERVER		Keyserver error
+
+
+GPG_ERR_WRONG_PUBKEY_ALGO	Wrong public key algorithm
+
+    GNUPG: - The algorithm is not expected.  For example a DSA
+              algorithm is used where a non-DSA algorithm is expected
+              or vice versa.  May indicate an internal error.
+
+
+42	GPG_ERR_TRIBUTE_TO_D_A		Tribute to D. A.
+43	GPG_ERR_WEAK_KEY		Weak encryption key
+44	GPG_ERR_INV_KEYLEN		Invalid key length
+
+GPG_ERR_INV_ARG			Invalid argument
+
+    GCRYPT:  - Unsupported length of input data in encrypt or decrypt
+               cipher functions.  For example not matching the block
+               lengths of the algorithm.
+    [more to come]
+
+
+46	GPG_ERR_BAD_URI			Syntax error in URI
+47	GPG_ERR_INV_URI			Invalid URI
+48	GPG_ERR_NETWORK			Network error
+49	GPG_ERR_UNKNOWN_HOST		Unknown host
+50	GPG_ERR_SELFTEST_FAILED		Selftest failed
+51	GPG_ERR_NOT_ENCRYPTED		Data not encrypted
+52	GPG_ERR_NOT_PROCESSED		Data not processed
+53	GPG_ERR_UNUSABLE_PUBKEY		Unusable public key
+54	GPG_ERR_UNUSABLE_SECKEY		Unusable secret key
+55	GPG_ERR_INV_VALUE		Invalid value
+56	GPG_ERR_BAD_CERT_CHAIN		Bad certificate chain
+
+GPG_ERR_MISSING_CERT		Missing certificate
+
+                                
+
+
+58	GPG_ERR_NO_DATA			No data
+59	GPG_ERR_BUG			Bug
+
+60	GPG_ERR_NOT_SUPPORTED		Not supported
+
+        Used if a feature is currently not supported but may be
+        enabled for example using program option.  Sometimes also used
+        for features which are not yet supported.
+
+
+61	GPG_ERR_INV_OP			Invalid operation code
+62	GPG_ERR_TIMEOUT			Timeout
+63	GPG_ERR_INTERNAL		Internal error
+64	GPG_ERR_EOF_GCRYPT		EOF (gcrypt)
+65	GPG_ERR_INV_OBJ			Invalid object
+66	GPG_ERR_TOO_SHORT		Provided object is too short
+67	GPG_ERR_TOO_LARGE		Provided object is too large
+68	GPG_ERR_NO_OBJ			Missing item in object
+69	GPG_ERR_NOT_IMPLEMENTED		Not implemented
+70	GPG_ERR_CONFLICT		Conflicting use
+71	GPG_ERR_INV_CIPHER_MODE		Invalid cipher mode
+72	GPG_ERR_INV_FLAG		Invalid flag
+73	GPG_ERR_INV_HANDLE		Invalid handle
+74	GPG_ERR_TRUNCATED		Result truncated
+75	GPG_ERR_INCOMPLETE_LINE		Incomplete line
+76	GPG_ERR_INV_RESPONSE		Invalid response
+77	GPG_ERR_NO_AGENT		No agent running
+78	GPG_ERR_AGENT			agent error
+79	GPG_ERR_INV_DATA		Invalid data
+80	GPG_ERR_ASSUAN_SERVER_FAULT	Unspecific Assuan server fault
+81	GPG_ERR_ASSUAN			General Assuan error
+82	GPG_ERR_INV_SESSION_KEY		Invalid session key
+83	GPG_ERR_INV_SEXP		Invalid S-expression
+84	GPG_ERR_UNSUPPORTED_ALGORITHM	Unsupported algorithm
+85	GPG_ERR_NO_PIN_ENTRY		No pinentry
+86	GPG_ERR_PIN_ENTRY		pinentry error
+87	GPG_ERR_BAD_PIN			Bad PIN
+
+GPG_ERR_INV_NAME		Invalid name
+
+    GNUPG:  - Formerly used in GPGSM to indicate an error in
+              the specification of a user id.  Later replaced by 
+              GPG_ERR_INV_USER_ID.
+            - In G13 to indicate a bad file name (e.g. one with
+              an embedded Nul byte when given as escaped string.
+            - In SCDAEMON for an unknown attribute name.
+
+    [more to come]
+
+89	GPG_ERR_BAD_DATA		Bad data
+90	GPG_ERR_INV_PARAMETER		Invalid parameter
+91	GPG_ERR_WRONG_CARD		Wrong card
+92	GPG_ERR_NO_DIRMNGR		No dirmngr
+93	GPG_ERR_DIRMNGR			dirmngr error
+94	GPG_ERR_CERT_REVOKED		Certificate revoked
+95	GPG_ERR_NO_CRL_KNOWN		No CRL known
+96	GPG_ERR_CRL_TOO_OLD		CRL too old
+97	GPG_ERR_LINE_TOO_LONG		Line too long
+98	GPG_ERR_NOT_TRUSTED		Not trusted
+99	GPG_ERR_CANCELED		Operation cancelled
+100	GPG_ERR_BAD_CA_CERT		Bad CA certificate
+101	GPG_ERR_CERT_EXPIRED		Certificate expired
+102	GPG_ERR_CERT_TOO_YOUNG		Certificate too young
+103	GPG_ERR_UNSUPPORTED_CERT	Unsupported certificate
+104	GPG_ERR_UNKNOWN_SEXP		Unknown S-expression
+105	GPG_ERR_UNSUPPORTED_PROTECTION	Unsupported protection
+106	GPG_ERR_CORRUPTED_PROTECTION	Corrupted protection
+107	GPG_ERR_AMBIGUOUS_NAME		Ambiguous name
+108	GPG_ERR_CARD			Card error
+109	GPG_ERR_CARD_RESET		Card reset required
+110	GPG_ERR_CARD_REMOVED		Card removed
+111	GPG_ERR_INV_CARD		Invalid card
+112	GPG_ERR_CARD_NOT_PRESENT	Card not present
+113	GPG_ERR_NO_PKCS15_APP		No PKCS15 application
+114	GPG_ERR_NOT_CONFIRMED		Not confirmed
+115	GPG_ERR_CONFIGURATION		Configuration error
+116	GPG_ERR_NO_POLICY_MATCH		No policy match
+117	GPG_ERR_INV_INDEX		Invalid index
+118	GPG_ERR_INV_ID			Invalid ID
+119	GPG_ERR_NO_SCDAEMON		No SmartCard daemon
+120	GPG_ERR_SCDAEMON		SmartCard daemon error
+121	GPG_ERR_UNSUPPORTED_PROTOCOL	Unsupported protocol
+122	GPG_ERR_BAD_PIN_METHOD		Bad PIN method
+123	GPG_ERR_CARD_NOT_INITIALIZED	Card not initialized
+124	GPG_ERR_UNSUPPORTED_OPERATION	Unsupported operation
+125	GPG_ERR_WRONG_KEY_USAGE		Wrong key usage
+126	GPG_ERR_NOTHING_FOUND		Nothing found
+127	GPG_ERR_WRONG_BLOB_TYPE		Wrong blob type
+
+GPG_ERR_MISSING_VALUE		Missing value
+
+    GNUPG: - Not enough parameters for a secret key send to gpg-agent.
+
+
+129	GPG_ERR_HARDWARE		Hardware problem
+130	GPG_ERR_PIN_BLOCKED		PIN blocked     
+131	GPG_ERR_USE_CONDITIONS		Conditions of use not satisfied 
+132	GPG_ERR_PIN_NOT_SYNCED		PINs are not synced
+133	GPG_ERR_INV_CRL			Invalid CRL     
+134	GPG_ERR_BAD_BER			BER error
+135	GPG_ERR_INV_BER			Invalid BER
+136	GPG_ERR_ELEMENT_NOT_FOUND	Element not found
+137	GPG_ERR_IDENTIFIER_NOT_FOUND	Identifier not found
+138	GPG_ERR_INV_TAG			Invalid tag
+
+GPG_ERR_INV_LENGTH		Invalid length
+
+    GCRYPT: - Bad block length for certain cipher algorithms and
+              modes.
+            - Bad length of input data; e.g. not a multiple of the
+              block length.
+    [more to come]
+    GNUPG:  - Invalid hash length for a pubkey
+    [more to come]
+
+140	GPG_ERR_INV_KEYINFO		Invalid key info
+141	GPG_ERR_UNEXPECTED_TAG		Unexpected tag
+142	GPG_ERR_NOT_DER_ENCODED		Not DER encoded
+143	GPG_ERR_NO_CMS_OBJ		No CMS object
+144	GPG_ERR_INV_CMS_OBJ		Invalid CMS object
+145	GPG_ERR_UNKNOWN_CMS_OBJ		Unknown CMS object
+146	GPG_ERR_UNSUPPORTED_CMS_OBJ	Unsupported CMS object
+147	GPG_ERR_UNSUPPORTED_ENCODING	Unsupported encoding
+148	GPG_ERR_UNSUPPORTED_CMS_VERSION	Unsupported CMS version
+149	GPG_ERR_UNKNOWN_ALGORITHM	Unknown algorithm
+150	GPG_ERR_INV_ENGINE		Invalid crypto engine
+151	GPG_ERR_PUBKEY_NOT_TRUSTED	Public key not trusted
+152	GPG_ERR_DECRYPT_FAILED		Decryption failed
+153	GPG_ERR_KEY_EXPIRED		Key expired
+154	GPG_ERR_SIG_EXPIRED		Signature expired
+155	GPG_ERR_ENCODING_PROBLEM	Encoding problem
+156	GPG_ERR_INV_STATE		Invalid state
+157	GPG_ERR_DUP_VALUE		Duplicated value
+
+GPG_ERR_MISSING_ACTION		Missing action
+
+    GNUPG: - In G13 the server command "MOUNT" is used without prior
+             use of the command "OPEN".
+
+    others: - The libassuan ce-server test program uses this to
+              indicate that the client did not conncted to the server
+              as requested.
+
+159	GPG_ERR_MODULE_NOT_FOUND	ASN.1 module not found
+160	GPG_ERR_INV_OID_STRING		Invalid OID string
+161	GPG_ERR_INV_TIME		Invalid time
+162	GPG_ERR_INV_CRL_OBJ		Invalid CRL object
+163	GPG_ERR_UNSUPPORTED_CRL_VERSION	Unsupported CRL version
+
+
+GPG_ERR_INV_CERT_OBJ		Invalid certificate object
+
+    GPGME: - A bad certificate (gpgme_key_t) has been passed to a
+             function.  For example it might be incomplete due to a
+             missing fingerprint.
+
+
+165	GPG_ERR_UNKNOWN_NAME		Unknown name
+166	GPG_ERR_LOCALE_PROBLEM		A locale function failed
+167	GPG_ERR_NOT_LOCKED		Not locked
+168	GPG_ERR_PROTOCOL_VIOLATION	Protocol violation
+169	GPG_ERR_INV_MAC			Invalid MAC
+170	GPG_ERR_INV_REQUEST		Invalid request
+171	GPG_ERR_UNKNOWN_EXTN		Unknown extension
+172	GPG_ERR_UNKNOWN_CRIT_EXTN	Unknown critical extension
+173	GPG_ERR_LOCKED			Locked
+174	GPG_ERR_UNKNOWN_OPTION		Unknown option
+175	GPG_ERR_UNKNOWN_COMMAND		Unknown command
+176	GPG_ERR_NOT_OPERATIONAL		Not operational
+177	GPG_ERR_NO_PASSPHRASE		No passphrase given
+178	GPG_ERR_NO_PIN			No PIN given
+179	GPG_ERR_NOT_ENABLED		Not enabled
+180	GPG_ERR_NO_ENGINE		No crypto engine
+181	GPG_ERR_MISSING_KEY		Missing key
+182     GPG_ERR_TOO_MANY                Too many objects
+
+GPG_ERR_LIMIT_REACHED           Limit reached
+                                
+        A programmed limit has been reached.
+        
+        GnuPG: gpgtar: Extract directory can't be created because too
+        many of directories with a similar name are already existing.
+        
+
+199	GPG_ERR_UNFINISHED		Operation not yet finished
+200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
+
