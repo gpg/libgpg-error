@@ -1,0 +1,7 @@
+Makefile.in
+aclocal.m4
+autom4te.cache/
+configure
+config.h.in
+src/err-codes.h
+src/err-sources.h
