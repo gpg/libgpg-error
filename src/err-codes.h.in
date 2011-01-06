@@ -215,6 +215,7 @@
 183	GPG_ERR_LIMIT_REACHED		Limit reached
 184	GPG_ERR_NOT_INITIALIZED		Not initialized
 185	GPG_ERR_MISSING_ISSUER_CERT	Missing issuer certificate
+186	GPG_ERR_NO_KEYSERVER		No keyserver available
 # 186 to 197 are free to be used.
 
 198	GPG_ERR_FULLY_CANCELED		Operation fully cancelled

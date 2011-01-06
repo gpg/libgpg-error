@@ -311,7 +311,12 @@ GPG_ERR_INV_LENGTH		Invalid length
 144	GPG_ERR_INV_CMS_OBJ		Invalid CMS object
 145	GPG_ERR_UNKNOWN_CMS_OBJ		Unknown CMS object
 146	GPG_ERR_UNSUPPORTED_CMS_OBJ	Unsupported CMS object
-147	GPG_ERR_UNSUPPORTED_ENCODING	Unsupported encoding
+
+GPG_ERR_UNSUPPORTED_ENCODING	Unsupported encoding
+
+    GNUPG: - Returned by Dirmngr if a keyserver returns a HTML document.
+
+
 148	GPG_ERR_UNSUPPORTED_CMS_VERSION	Unsupported CMS version
 149	GPG_ERR_UNKNOWN_ALGORITHM	Unknown algorithm
 150	GPG_ERR_INV_ENGINE		Invalid crypto engine
@@ -364,6 +369,12 @@ GPG_ERR_INV_CERT_OBJ		Invalid certificate object
 180	GPG_ERR_NO_ENGINE		No crypto engine
 181	GPG_ERR_MISSING_KEY		Missing key
 182     GPG_ERR_TOO_MANY                Too many objects
+
+
+GPG_ERR_NO_KEYSERVER		No keyserver available
+
+        No keyserver configured or no keyserver available due to
+        missing support for the requested protocol.  Found in Dirmngr.
 
 GPG_ERR_LIMIT_REACHED           Limit reached
                                 

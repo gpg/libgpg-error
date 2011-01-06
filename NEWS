@@ -2,6 +2,10 @@ Noteworthy changes in version 1.11 (unreleased)
 ----------------------------------------------
 
 
+ * Interface changes relative to the 1.10 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_NO_KEYSERVER          NEW.
+
 
 Noteworthy changes in version 1.10 (2010-10-26)
 ----------------------------------------------
