@@ -5,6 +5,8 @@ Noteworthy changes in version 1.11 (unreleased)
  * Interface changes relative to the 1.10 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_NO_KEYSERVER          NEW.
+ GPG_ERR_INV_CURVE             NEW.
+ GPG_ERR_UNKNOWN_CURVE         NEW.
 
 
 Noteworthy changes in version 1.10 (2010-10-26)
@@ -47,7 +49,7 @@ Noteworthy changes in version 1.8 (2010-05-06)
  GPG_ERR_SOURCE_G13            NEW.
  GPG_ERR_NO_ENGINE             NEW.
  gpg_err_set_errno             NEW.
- 
+
 
 Noteworthy changes in version 1.7 (2008-11-26)
 ----------------------------------------------
@@ -98,7 +100,7 @@ Noteworthy changes in version 1.4 (2006-09-14)
    libgpg-error even if a specific source is not available.
 
  * New convenience functions gpg_err_code_from_syserror and
-   gpg_error_from_syserror which make sure never to return 0. 
+   gpg_error_from_syserror which make sure never to return 0.
 
  * Interface changes relative to the 1.2 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

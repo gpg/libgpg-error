@@ -8,12 +8,12 @@
    modify it under the terms of the GNU Lesser General Public License
    as published by the Free Software Foundation; either version 2.1 of
    the License, or (at your option) any later version.
- 
+
    libgpg-error is distributed in the hope that it will be useful, but
    WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    Lesser General Public License for more details.
- 
+
    You should have received a copy of the GNU Lesser General Public
    License along with libgpg-error; if not, write to the Free
    Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -159,10 +159,10 @@
 127	GPG_ERR_WRONG_BLOB_TYPE		Wrong blob type
 128	GPG_ERR_MISSING_VALUE		Missing value
 129	GPG_ERR_HARDWARE		Hardware problem
-130	GPG_ERR_PIN_BLOCKED		PIN blocked     
-131	GPG_ERR_USE_CONDITIONS		Conditions of use not satisfied 
+130	GPG_ERR_PIN_BLOCKED		PIN blocked
+131	GPG_ERR_USE_CONDITIONS		Conditions of use not satisfied
 132	GPG_ERR_PIN_NOT_SYNCED		PINs are not synced
-133	GPG_ERR_INV_CRL			Invalid CRL     
+133	GPG_ERR_INV_CRL			Invalid CRL
 134	GPG_ERR_BAD_BER			BER error
 135	GPG_ERR_INV_BER			Invalid BER
 136	GPG_ERR_ELEMENT_NOT_FOUND	Element not found
@@ -216,7 +216,9 @@
 184	GPG_ERR_NOT_INITIALIZED		Not initialized
 185	GPG_ERR_MISSING_ISSUER_CERT	Missing issuer certificate
 186	GPG_ERR_NO_KEYSERVER		No keyserver available
-# 186 to 197 are free to be used.
+187	GPG_ERR_INV_CURVE		Invalid elliptic curve
+188	GPG_ERR_UNKNOWN_CURVE		Unknown elliptic curve
+# 189 to 197 are free to be used.
 
 198	GPG_ERR_FULLY_CANCELED		Operation fully cancelled
 199	GPG_ERR_UNFINISHED		Operation not yet finished
@@ -264,7 +266,7 @@
 277	GPG_ERR_ASS_CANCELED		IPC call has been cancelled
 278	GPG_ERR_ASS_NO_INPUT		No input source for IPC
 279	GPG_ERR_ASS_NO_OUTPUT		No output source for IPC
-280	GPG_ERR_ASS_PARAMETER		IPC parameter error 
+280	GPG_ERR_ASS_PARAMETER		IPC parameter error
 281	GPG_ERR_ASS_UNKNOWN_INQUIRE	Unknown IPC inquire
 
 # 282 to 299 are reserved for future assuan codes.
