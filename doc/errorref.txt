@@ -176,6 +176,12 @@ GPG_ERR_INV_ARG			Invalid argument
 47	GPG_ERR_INV_URI			Invalid URI
 48	GPG_ERR_NETWORK			Network error
 49	GPG_ERR_UNKNOWN_HOST		Unknown host
+
+        Used instead of the non-portbale EHOSTNOTFOUND which is
+        returned by some systems as a mapping of h_errno's
+        HOST_NOT_FOUND
+
+
 50	GPG_ERR_SELFTEST_FAILED		Selftest failed
 51	GPG_ERR_NOT_ENCRYPTED		Data not encrypted
 52	GPG_ERR_NOT_PROCESSED		Data not processed
@@ -405,4 +411,3 @@ GPG_ERR_LIMIT_REACHED           Limit reached
 
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
-

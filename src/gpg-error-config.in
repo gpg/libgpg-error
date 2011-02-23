@@ -74,6 +74,10 @@ while test $# -gt 0; do
 	    fi
 	    output="$output @GPG_ERROR_CONFIG_LIBS@"
 	    ;;
+        --host)
+            echo "@GPG_ERROR_CONFIG_HOST@"
+            exit 0
+            ;;
 	*)
             usage 1 1>&2
 	    ;;

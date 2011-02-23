@@ -1,18 +1,18 @@
 # configure.ac for libgpg-error
 # Copyright (C) 2003, 2004, 2006, 2010 g10 Code GmbH
-# 
+#
 # This file is part of libgpg-error.
-# 
+#
 # libgpg-error is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as
 # published by the Free Software Foundation; either version 2.1 of the
 # License, or (at your option) any later version.
-# 
+#
 # libgpg-error is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
 
@@ -31,7 +31,7 @@ m4_define([svn_revision], m4_esyscmd([printf "%d" $(svn info 2>/dev/null \
           | sed -n '/^Revision:/ s/[^0-9]//gp'|head -1)]))
 m4_define([git_revision], m4_esyscmd([git branch -v 2>/dev/null \
           | awk '/^\* / {printf "%s",$3}']))
-AC_INIT([libgpg-error], 
+AC_INIT([libgpg-error],
         [my_version[]m4_if(my_issvn,[yes],
         [m4_if(git_revision,[],[-svn[]svn_revision],[-git[]git_revision])])],
         [bug-gnupg@gnupg.org])
@@ -103,7 +103,7 @@ esac
 
 
 AH_BOTTOM([
-/* Force using of NLS for W32 even if no libintl has been found.  This is 
+/* Force using of NLS for W32 even if no libintl has been found.  This is
    okay because we have our own gettext implementation for W32.  */
 #if defined(HAVE_W32_SYSTEM) && !defined(ENABLE_NLS)
 #define ENABLE_NLS 1
@@ -140,9 +140,11 @@ AC_C_CONST
 GPG_ERROR_CONFIG_LIBS="-lgpg-error"
 GPG_ERROR_CONFIG_CFLAGS=""
 GPG_ERROR_CONFIG_ISUBDIRAFTER=""
+GPG_ERROR_CONFIG_HOST="$host"
 AC_SUBST(GPG_ERROR_CONFIG_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_CFLAGS)
 AC_SUBST(GPG_ERROR_CONFIG_ISUBDIRAFTER)
+AC_SUBST(GPG_ERROR_CONFIG_HOST)
 AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
 
 
@@ -154,7 +156,7 @@ if test "$have_w32_system" = yes; then
       GPG_ERROR_CONFIG_ISUBDIRAFTER="gpg-extra"
     fi
     BUILD_TIMESTAMP=`date --iso-8601=minutes`
-    changequote(,)dnl 
+    changequote(,)dnl
     BUILD_FILEVERSION=`echo "$VERSION" | sed 's/\([0-9.]*\).*/\1./;s/\./,/g'`
     changequote([,])dnl
     case "$VERSION" in
@@ -187,7 +189,7 @@ AC_OUTPUT
 
 echo "
         Libgpg-error v${VERSION} has been configured as follows:
-        
+
         Platform:  $host
 
 "

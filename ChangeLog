@@ -1,3 +1,12 @@
+2011-02-23  Werner Koch  <wk@g10code.com>
+
+	* autogen.sh: Check git setup.
+
+	* src/gpg-error-config.in: Add option --host.
+	* configure.ac (GPG_ERROR_CONFIG_HOST): New.
+	* src/gpg-error.m4: Use AC_PATH_TOOL to look for
+	gpg-error-config.  Print a warning if host does not match.
+
 2011-02-01  Werner Koch  <wk@g10code.com>
 
 	* src/err-codes.h.in: Add GPG_ERR_INV_CURVE and GPG_ERR_UNKNOWN_CURVE.
