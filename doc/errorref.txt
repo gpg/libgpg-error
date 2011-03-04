@@ -1,4 +1,4 @@
-grep -n -e ERR_CONFLICT ~/w/{gnupg,libksba,libgcrypt,gpgme,gpa}/*/*.[ch] 
+grep -n -e ERR_CONFLICT ~/w/{gnupg,libksba,libgcrypt,gpgme,gpa}/*/*.[ch]
 
 GPG_ERR_UNKNOWN_PACKET		Unknown packet
 
@@ -13,7 +13,7 @@ GPG_ERR_UNKNOWN_VERSION		Unknown version in packet
 GPG_ERR_PUBKEY_ALGO		Invalid public key algorithm
 
     GNUPG:  - Redefined to G10ERR_PUBKEY_ALGO in gpg.
-            - Public key algorithm is not allowed by OpenPGP. 
+            - Public key algorithm is not allowed by OpenPGP.
     GCRYPT: - Public key algorithm is not defined or not available.
               Note that this is also the case if the algorithm has
               been disabled.
@@ -24,10 +24,10 @@ GPG_ERR_DIGEST_ALGO		Invalid digest algorithm
 
     GNUPG:  - Digest algorithm is not supported.
             - Redefined to G10ERR_PUBKEY_ALGO in gpg.
-            - Digest algorithm is not allowed by OpenPGP. 
-            - Unsupported algorithm given to "--hash=" option of 
+            - Digest algorithm is not allowed by OpenPGP.
+            - Unsupported algorithm given to "--hash=" option of
               certain Assuan server commands.
-            - Signature creation or verification failed due to 
+            - Signature creation or verification failed due to
               an unsupported hash algorithm.
     GCRYPT: - Digest key algorithm is not defined or not available.
               Note that this is also the case if the algorithm has
@@ -38,7 +38,7 @@ GPG_ERR_DIGEST_ALGO		Invalid digest algorithm
             - Message digested or HMAC computation finished with no
               message algorithm enabled for the hash context.
             - Bad digest algorithm given to public key function.
-    
+
 GPG_ERR_BAD_PUBKEY		Bad public key
 
     GNUPG:  - Redefined to G10ERR_BAD_PUBKEY in gpg.
@@ -55,7 +55,7 @@ GPG_ERR_BAD_SECKEY		Bad secret key
             - Gpg'agents import key command is not able to convert
               the key to the internal format.
     GCRYPT: - Checking the secret key failed (consistency check).
-             
+
 
 GPG_ERR_BAD_SIGNATURE		Bad signature
 
@@ -111,7 +111,7 @@ GPG_ERR_BAD_KEY			Bad session key
 
     [more to come]
 
-        
+
 20	GPG_ERR_COMPR_ALGO		Unknown compression algorithm
 21	GPG_ERR_NO_PRIME		Number is not prime
 22	GPG_ERR_NO_ENCODING_METHOD	Invalid encoding method
@@ -192,7 +192,7 @@ GPG_ERR_INV_ARG			Invalid argument
 
 GPG_ERR_MISSING_CERT		Missing certificate
 
-                                
+
 
 
 58	GPG_ERR_NO_DATA			No data
@@ -201,8 +201,10 @@ GPG_ERR_MISSING_CERT		Missing certificate
 60	GPG_ERR_NOT_SUPPORTED		Not supported
 
         Used if a feature is currently not supported but may be
-        enabled for example using program option.  Sometimes also used
-        for features which are not yet supported.
+        enabled for example using a program option.  Commonly used if
+        a feature has been disabled by an administrator.  See also
+        GPG_ERR_NOT_ENABLED.  Sometimes also used for features which
+        are not yet supported.
 
 
 61	GPG_ERR_INV_OP			Invalid operation code
@@ -236,7 +238,7 @@ GPG_ERR_MISSING_CERT		Missing certificate
 GPG_ERR_INV_NAME		Invalid name
 
     GNUPG:  - Formerly used in GPGSM to indicate an error in
-              the specification of a user id.  Later replaced by 
+              the specification of a user id.  Later replaced by
               GPG_ERR_INV_USER_ID.
             - In G13 to indicate a bad file name (e.g. one with
               an embedded Nul byte when given as escaped string.
@@ -297,10 +299,10 @@ GPG_ERR_MISSING_VALUE		Missing value
 
 
 129	GPG_ERR_HARDWARE		Hardware problem
-130	GPG_ERR_PIN_BLOCKED		PIN blocked     
-131	GPG_ERR_USE_CONDITIONS		Conditions of use not satisfied 
+130	GPG_ERR_PIN_BLOCKED		PIN blocked
+131	GPG_ERR_USE_CONDITIONS		Conditions of use not satisfied
 132	GPG_ERR_PIN_NOT_SYNCED		PINs are not synced
-133	GPG_ERR_INV_CRL			Invalid CRL     
+133	GPG_ERR_INV_CRL			Invalid CRL
 134	GPG_ERR_BAD_BER			BER error
 135	GPG_ERR_INV_BER			Invalid BER
 136	GPG_ERR_ELEMENT_NOT_FOUND	Element not found
@@ -386,7 +388,14 @@ GPG_ERR_INV_CERT_OBJ		Invalid certificate object
 176	GPG_ERR_NOT_OPERATIONAL		Not operational
 177	GPG_ERR_NO_PASSPHRASE		No passphrase given
 178	GPG_ERR_NO_PIN			No PIN given
-179	GPG_ERR_NOT_ENABLED		Not enabled
+
+GPG_ERR_NOT_ENABLED		Not enabled
+
+        Similar to GPG_ERR_NOT_SUPPORTED.  In general this error is
+        used for disabled features which can be expected to be enabled
+        by the user.
+
+
 180	GPG_ERR_NO_ENGINE		No crypto engine
 181	GPG_ERR_MISSING_KEY		Missing key
 
@@ -402,12 +411,12 @@ GPG_ERR_NO_KEYSERVER		No keyserver available
         missing support for the requested protocol.  Found in Dirmngr.
 
 GPG_ERR_LIMIT_REACHED           Limit reached
-                                
+
         A programmed limit has been reached.
-        
+
         GnuPG: gpgtar: Extract directory can't be created because too
         many of directories with a similar name are already existing.
-        
+
 
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
