@@ -29,7 +29,8 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
   min_gpg_error_version=ifelse([$1], ,0.0,$1)
   AC_MSG_CHECKING(for GPG Error - version >= $min_gpg_error_version)
   ok=no
-  if test "$GPG_ERROR_CONFIG" != "no" ; then
+  if test "$GPG_ERROR_CONFIG" != "no" \
+     && test -f "$GPG_ERROR_CONFIG" ; then
     req_major=`echo $min_gpg_error_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)/\1/'`
     req_minor=`echo $min_gpg_error_version | \
