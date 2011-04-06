@@ -64,6 +64,10 @@ case "$1" in
         myhost="w32"
         myhostsub="ce"
         ;;
+    --build-w64)
+        myhost="w32"
+        myhostsub="64"
+        ;;
     --build*)
         echo "**Error**: invalid build option $1" >&2
         exit 1
@@ -92,6 +96,11 @@ if [ "$myhost" = "w32" ]; then
           [ -z "$w32root" ] && w32root="$HOME/w32ce_root"
           toolprefixes="arm-mingw32ce"
           ;;
+        64)
+          w32root="$w64root"
+          [ -z "$w32root" ] && w32root="$HOME/w64root"
+          toolprefixes="amd64-mingw32msvc"
+          ;;
         *)
           [ -z "$w32root" ] && w32root="$HOME/w32root"
           toolprefixes="i586-mingw32msvc i386-mingw32msvc"
@@ -110,7 +119,7 @@ if [ "$myhost" = "w32" ]; then
     done
     if [ -z "$crossbindir" ]; then
         echo "Cross compiler kit not installed" >&2
-        if [ -z "$sub" ]; then
+        if [ -z "$myhostsub" ]; then
           echo "Under Debian GNU/Linux, you may install it using" >&2
           echo "  apt-get install mingw32 mingw32-runtime mingw32-binutils" >&2
         fi

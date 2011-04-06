@@ -88,8 +88,13 @@ AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
 
 # Set some internal variables depending on the platform for later use.
 have_w32_system=no
+have_w64_system=no
 have_w32ce_system=no
 case "${host}" in
+    x86_64-*mingw32*)
+        have_w32_system=yes
+        have_w64_system=yes
+        ;;
     *-mingw32ce*)
         have_w32_system=yes
         have_w32ce_system=yes
@@ -151,6 +156,9 @@ AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
 # Special defines for certain platforms
 if test "$have_w32_system" = yes; then
     AC_DEFINE(HAVE_W32_SYSTEM,1,[Defined if we run on a W32 API based system])
+    if test "$have_w64_system" = yes; then
+      AC_DEFINE(HAVE_W64_SYSTEM,1,[Defined if we run on 64 bit W32 API system])
+    fi
     if test "$have_w32ce_system" = yes; then
       AC_DEFINE(HAVE_W32CE_SYSTEM,1,[Defined if we run on WindowsCE])
       GPG_ERROR_CONFIG_ISUBDIRAFTER="gpg-extra"
@@ -170,6 +178,7 @@ fi
 AC_SUBST(BUILD_TIMESTAMP)
 AC_SUBST(BUILD_FILEVERSION)
 AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
+AM_CONDITIONAL(HAVE_W64_SYSTEM, test "$have_w64_system" = yes)
 AM_CONDITIONAL(HAVE_W32CE_SYSTEM, test "$have_w32ce_system" = yes)
 
 

@@ -1,5 +1,8 @@
 2011-04-06  Werner Koch  <wk@g10code.com>
 
+	* autogen.sh: Support option --build-w64.
+	* configure.ac (HAVE_W64_SYSTEM): New.
+
 	* src/gpg-error.m4: Test whether gpg-error-config exists.
 
 2011-02-23  Werner Koch  <wk@g10code.com>
@@ -1179,7 +1182,7 @@
 
 	* Initial check-in.
 
- Copyright 2003, 2004, 2005, 2006, 2007, 2010 g10 Code GmbH
+ Copyright 2003, 2004, 2005, 2006, 2007, 2010, 2011 g10 Code GmbH
 
  This file is free software; as a special exception the author gives
  unlimited permission to copy and/or distribute it, with or without
