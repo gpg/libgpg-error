@@ -8,6 +8,7 @@ Noteworthy changes in version 1.11 (unreleased)
  GPG_ERR_INV_CURVE             NEW.
  GPG_ERR_UNKNOWN_CURVE         NEW.
  GPG_ERR_DUP_KEY               NEW.
+ GPG_ERR_AMBIGUOUS             NEW.
 
 
 Noteworthy changes in version 1.10 (2010-10-26)

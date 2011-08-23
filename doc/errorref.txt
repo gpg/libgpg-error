@@ -437,6 +437,11 @@ GPG_ERR_DUP_KEY                 Duplicated key
         A duplicated key was detected.  For example a unique key in a
         database occurred more than once.
 
+GPG_ERR_AMBIGUOUS		Ambiguous search
+
+        A search etc returned an ambigious result.  This usually means
+        that the search string was not specific enough.
+
 
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
