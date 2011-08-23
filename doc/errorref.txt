@@ -130,7 +130,13 @@ GPG_ERR_NO_VALUE		No value
 
 
 27	GPG_ERR_NOT_FOUND		Not found
-28	GPG_ERR_VALUE_NOT_FOUND		Value not found
+
+GPG_ERR_VALUE_NOT_FOUND		Value not found
+
+    GNUPG:  - A keyblock or a cert object was requested but not
+              found.  This might indicate an internal error here.
+
+
 29	GPG_ERR_SYNTAX			Syntax error
 30	GPG_ERR_BAD_MPI			Bad MPI value
 31	GPG_ERR_INV_PASSPHRASE		Invalid passphrase
@@ -169,6 +175,8 @@ GPG_ERR_INV_ARG			Invalid argument
     GCRYPT:  - Unsupported length of input data in encrypt or decrypt
                cipher functions.  For example not matching the block
                lengths of the algorithm.
+             - Incompatible args given; e.g. two or none if exactly one
+               is required.
     [more to come]
 
 
@@ -315,6 +323,7 @@ GPG_ERR_INV_LENGTH		Invalid length
               modes.
             - Bad length of input data; e.g. not a multiple of the
               block length.
+            - A length does not match the size of the digest algorithm.
     [more to come]
     GNUPG:  - Invalid hash length for a pubkey
     [more to come]
@@ -336,7 +345,12 @@ GPG_ERR_UNSUPPORTED_ENCODING	Unsupported encoding
 
 
 148	GPG_ERR_UNSUPPORTED_CMS_VERSION	Unsupported CMS version
+
+
 149	GPG_ERR_UNKNOWN_ALGORITHM	Unknown algorithm
+
+    GCRYPT:  gcry_kdf_proc for an unknown kdf algorithm
+
 150	GPG_ERR_INV_ENGINE		Invalid crypto engine
 151	GPG_ERR_PUBKEY_NOT_TRUSTED	Public key not trusted
 152	GPG_ERR_DECRYPT_FAILED		Decryption failed
@@ -416,6 +430,12 @@ GPG_ERR_LIMIT_REACHED           Limit reached
 
         GnuPG: gpgtar: Extract directory can't be created because too
         many of directories with a similar name are already existing.
+
+
+GPG_ERR_DUP_KEY                 Duplicated key
+
+        A duplicated key was detected.  For example a unique key in a
+        database occurred more than once.
 
 
 199	GPG_ERR_UNFINISHED		Operation not yet finished

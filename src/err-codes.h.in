@@ -218,7 +218,8 @@
 186	GPG_ERR_NO_KEYSERVER		No keyserver available
 187	GPG_ERR_INV_CURVE		Invalid elliptic curve
 188	GPG_ERR_UNKNOWN_CURVE		Unknown elliptic curve
-# 189 to 197 are free to be used.
+189     GPG_ERR_DUP_KEY                 Duplicated key
+# 190 to 197 are free to be used.
 
 198	GPG_ERR_FULLY_CANCELED		Operation fully cancelled
 199	GPG_ERR_UNFINISHED		Operation not yet finished
