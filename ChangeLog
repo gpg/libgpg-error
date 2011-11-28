@@ -1,3 +1,10 @@
+2011-11-28  Jim Meyering  <meyering@redhat.com>
+
+	accept --with-libgpg-error-prefix as well as --with-gpg-error-prefix
+	* src/gpg-error.m4 (AM_PATH_GPG_ERROR): Also accept
+	--with-libgpg-error-prefix=PFX, for consistency with our three
+	library sibling packages.
+
 2011-08-23  Werner Koch  <wk@g10code.com>
 
 	* src/err-codes.h.in: Add GPG_ERR_DUP_KEY and GPG_ERR_AMBIGUOUS.
