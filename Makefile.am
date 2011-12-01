@@ -22,7 +22,7 @@ AUTOMAKE_OPTIONS = dist-bzip2
 
 EXTRA_DIST = autogen.sh config.rpath libgpg-error.spec.in 		\
              COPYING COPYING.LIB potomo doc/HACKING ChangeLog-2011   	\
-	     po/ChangeLog-2011m4/ChangeLog-2011 contrib/ChangeLog-2011 	\
+	     po/ChangeLog-2011 m4/ChangeLog-2011 contrib/ChangeLog-2011 \
              build-aux/gitlog-to-changelog build-aux/git-log-footer	\
              build-aux/git-log-fix
 

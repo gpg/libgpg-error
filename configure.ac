@@ -31,10 +31,9 @@ m4_define([svn_revision], m4_esyscmd([printf "%d" $(svn info 2>/dev/null \
           | sed -n '/^Revision:/ s/[^0-9]//gp'|head -1)]))
 m4_define([git_revision], m4_esyscmd([git branch -v 2>/dev/null \
           | awk '/^\* / {printf "%s",$3}']))
-AC_INIT([libgpg-error],
-        [my_version[]m4_if(my_issvn,[yes],
-        [m4_if(git_revision,[],[-svn[]svn_revision],[-git[]git_revision])])],
-        [bug-gnupg@gnupg.org])
+m4_define([my_full_version], [my_version[]m4_if(my_issvn,[yes],
+          [m4_if(git_revision,[],[-svn[]svn_revision],[-git[]git_revision])])])
+AC_INIT([libgpg-error],[my_full_version], [http://bugs.gnupg.org])
 # LT Version numbers, remember to change them just *before* a release.
 #   (Code changed:			REVISION++)
 #   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)
@@ -150,7 +149,6 @@ AC_SUBST(GPG_ERROR_CONFIG_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_CFLAGS)
 AC_SUBST(GPG_ERROR_CONFIG_ISUBDIRAFTER)
 AC_SUBST(GPG_ERROR_CONFIG_HOST)
-AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
 
 
 # Special defines for certain platforms
@@ -193,6 +191,7 @@ AC_CONFIG_FILES([po/Makefile.in m4/Makefile])
 AC_CONFIG_FILES([src/Makefile tests/Makefile])
 AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc])
+AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
 
 AC_OUTPUT
 
