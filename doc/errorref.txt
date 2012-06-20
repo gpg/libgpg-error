@@ -129,7 +129,10 @@ GPG_ERR_NO_VALUE		No value
             - Converting a Distinguised Name to an RFC2253 string failed.
 
 
-27	GPG_ERR_NOT_FOUND		Not found
+GPG_ERR_NOT_FOUND		Not found
+
+    A search operation did not return a matching value.
+
 
 GPG_ERR_VALUE_NOT_FOUND		Value not found
 
@@ -295,10 +298,22 @@ GPG_ERR_UNSUPPORTED_PROTOCOL	Unsupported protocol
     GPGME:      - GPGME_PROTOCOL_xxx not supported.
 
 122	GPG_ERR_BAD_PIN_METHOD		Bad PIN method
-123	GPG_ERR_CARD_NOT_INITIALIZED	Card not initialized
+
+GPG_ERR_CARD_NOT_INITIALIZED	Card not initialized
+
+    SCDAEMON: - A card function is called but the card has not yet
+                been initialized.  This may be due to a conflict with
+                another card using connection or due to a bug.
+
 124	GPG_ERR_UNSUPPORTED_OPERATION	Unsupported operation
 125	GPG_ERR_WRONG_KEY_USAGE		Wrong key usage
-126	GPG_ERR_NOTHING_FOUND		Nothing found
+
+GPG_ERR_NOTHING_FOUND		Nothing found
+
+  Indicates that the operation was not possible because nothing has
+  been found.  For example an update request for non existent data.
+
+
 127	GPG_ERR_WRONG_BLOB_TYPE		Wrong blob type
 
 GPG_ERR_MISSING_VALUE		Missing value
