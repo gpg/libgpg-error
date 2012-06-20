@@ -1,6 +1,7 @@
 Package: libgpg-error
 Maintainer: Marcus Brinkmann <marcus@g10code.com>
 Bug reports: bug-gnupg@gnupg.org
+Mailing list: gnupg-devel@gnupg.org
 Security related bug reports: security@gnupg.org
 License (library): LGPLv2.1+
 License (tools): GPLv2+ with exception
@@ -24,7 +25,7 @@ g10 Code GmbH <code@g10code.com>
 Jakub Bogusz <qboosh@pld-linux.org>
  - TRANSLATION [pl]
 
-Laurentiu Buzdugan <lbuz@rolix.org> 
+Laurentiu Buzdugan <lbuz@rolix.org>
  - TRANSLATION [ro]
 
 Petr Pisar <petr.pisar@atlas.cz>
