@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.9\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2010-09-16 15:16+0200\n"
+"PO-Revision-Date: 2012-08-07 09:02+0200\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -639,19 +639,22 @@ msgid "Missing issuer certificate"
 msgstr "Fehlendes Herausgeberzertifikat in der Kette"
 
 msgid "No keyserver available"
-msgstr ""
+msgstr "Kein Schlüsselserver verfügbar"
 
-#, fuzzy
 msgid "Invalid elliptic curve"
-msgstr "Ungültige Zeit"
+msgstr "Ungültige elliptische Kurve"
 
-#, fuzzy
 msgid "Unknown elliptic curve"
-msgstr "Unbekannte Quelle"
+msgstr "Unbekannte elliptische Kurve"
 
-#, fuzzy
+msgid "Duplicated key"
+msgstr "Doppelter Schlüssel"
+
+msgid "Ambiguous result"
+msgstr "Uneindeutiges Ergebiss"
+
 msgid "Operation fully cancelled"
-msgstr "Verarbeitung wurde abgebrochen"
+msgstr "Verarbeitung wurde vollständig abgebrochen"
 
 msgid "Operation not yet finished"
 msgstr "Verarbeitung ist noch nicht beendet"
