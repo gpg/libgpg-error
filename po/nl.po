@@ -1,19 +1,20 @@
-# translation of libgpg-error-1.7.nl.po to Dutch
+# translation of libgpg-error-1.10.nl.po to Dutch
 # Copyright (C) 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 #
-# Freek de Kruijf <f.de.kruijf@gmail.com>, 2009, 2010.
+# Freek de Kruijf <f.de.kruijf@gmail.com>, 2009, 2010, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.7\n"
+"Project-Id-Version: libgpg-error 1.10\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2010-04-30 16:20+0200\n"
+"PO-Revision-Date: 2012-08-08 15:03-0300\n"
 "Last-Translator: Freek de Kruijf <f.de.kruijf@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.0\n"
+"X-Generator: Lokalize 1.4\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 msgid "Unspecified source"
@@ -59,7 +60,7 @@ msgid "Kleopatra"
 msgstr "Kleopatra"
 
 msgid "G13"
-msgstr ""
+msgstr "G13"
 
 msgid "Any source"
 msgstr "Elke bron"
@@ -320,522 +321,516 @@ msgid "Invalid data"
 msgstr "Ongeldige gegevens"
 
 msgid "Unspecific Assuan server fault"
-msgstr ""
+msgstr "Ongespecificeerde fout in de Assuan-server"
 
 msgid "General Assuan error"
-msgstr ""
+msgstr "Algemene Assuan-fout"
 
 msgid "Invalid session key"
-msgstr ""
+msgstr "Ongeldige sessiesleutel"
 
 msgid "Invalid S-expression"
-msgstr ""
+msgstr "Ongeldige S-expressie"
 
 msgid "Unsupported algorithm"
-msgstr ""
+msgstr "Niet ondersteund algoritme"
 
 msgid "No pinentry"
-msgstr ""
+msgstr "Geen pin-item"
 
 msgid "pinentry error"
-msgstr ""
+msgstr "pin-item-fout"
 
 msgid "Bad PIN"
-msgstr ""
+msgstr "Verkeerde PIN"
 
 msgid "Invalid name"
-msgstr ""
+msgstr "Ongeldige naam"
 
 msgid "Bad data"
-msgstr ""
+msgstr "Slechte gegevens"
 
 msgid "Invalid parameter"
-msgstr ""
+msgstr "Ongeldige parameter "
 
 msgid "Wrong card"
-msgstr ""
+msgstr "Verkeerde kaart"
 
 msgid "No dirmngr"
-msgstr ""
+msgstr "Geen dirmngr"
 
 msgid "dirmngr error"
-msgstr ""
+msgstr "dirmngr-fout"
 
 msgid "Certificate revoked"
-msgstr ""
+msgstr "Certificaat is ingetrokken"
 
 msgid "No CRL known"
-msgstr ""
+msgstr "Geen CRL bekend"
 
 msgid "CRL too old"
-msgstr ""
+msgstr "CRL te oud"
 
 msgid "Line too long"
-msgstr ""
+msgstr "Regel te lang"
 
 msgid "Not trusted"
-msgstr ""
+msgstr "Niet vertrouwd"
 
 msgid "Operation cancelled"
-msgstr ""
+msgstr "Bewerking geannuleerd"
 
 msgid "Bad CA certificate"
-msgstr ""
+msgstr "Fout CA-certificaat"
 
 msgid "Certificate expired"
-msgstr ""
+msgstr "Certificaat verlopen"
 
 msgid "Certificate too young"
-msgstr ""
+msgstr "Certificaat te jong"
 
 msgid "Unsupported certificate"
-msgstr ""
+msgstr "Niet ondersteund certificaat"
 
 msgid "Unknown S-expression"
-msgstr ""
+msgstr "Onbekende S-expressie"
 
 msgid "Unsupported protection"
-msgstr ""
+msgstr "Niet ondersteunde bescherming"
 
 msgid "Corrupted protection"
-msgstr ""
+msgstr "Doorbroken bescherming"
 
 msgid "Ambiguous name"
-msgstr ""
+msgstr "Dubbelzinnige naam"
 
 msgid "Card error"
-msgstr ""
+msgstr "Kaartfout"
 
 msgid "Card reset required"
-msgstr ""
+msgstr "Reset van kaart vereist"
 
 msgid "Card removed"
-msgstr ""
+msgstr "Kaart verwijderd"
 
 msgid "Invalid card"
-msgstr ""
+msgstr "Ongeldige kaart"
 
 msgid "Card not present"
-msgstr ""
+msgstr "Kaart niet aanwezig"
 
 msgid "No PKCS15 application"
-msgstr ""
+msgstr "Geen PKCS15-toepassing"
 
 msgid "Not confirmed"
-msgstr ""
+msgstr "Niet bevestigd"
 
 msgid "Configuration error"
-msgstr ""
+msgstr "Configuratiefout"
 
 msgid "No policy match"
-msgstr ""
+msgstr "Geen overeenkomst met beleid"
 
 msgid "Invalid index"
-msgstr ""
+msgstr "Ongeldige index"
 
 msgid "Invalid ID"
-msgstr ""
+msgstr "Ongeldige ID"
 
 msgid "No SmartCard daemon"
-msgstr ""
+msgstr "Geen SmartCard-daemon"
 
 msgid "SmartCard daemon error"
-msgstr ""
+msgstr "SmartCard-daemon-fout"
 
 msgid "Unsupported protocol"
-msgstr ""
+msgstr "Niet ondersteund protocol"
 
 msgid "Bad PIN method"
-msgstr ""
+msgstr "Verkeerde PIN-methode"
 
 msgid "Card not initialized"
-msgstr ""
+msgstr "Kaart niet geïnitialiseerd"
 
 msgid "Unsupported operation"
-msgstr ""
+msgstr "Niet-ondersteunde operatie"
 
 msgid "Wrong key usage"
-msgstr ""
+msgstr "Verkeerd gebruik van sleutel"
 
 msgid "Nothing found"
-msgstr ""
+msgstr "Niets gevonden"
 
 msgid "Wrong blob type"
-msgstr ""
+msgstr "Verkeerde blob-type"
 
 msgid "Missing value"
-msgstr ""
+msgstr "Ontbrekende waarde"
 
 msgid "Hardware problem"
-msgstr ""
+msgstr "Hardwareprobleem"
 
 msgid "PIN blocked"
-msgstr ""
+msgstr "PIN geblokkeerd"
 
 msgid "Conditions of use not satisfied"
-msgstr ""
+msgstr "Aan voorwaarden voor gebruik wordt niet voldaan"
 
 msgid "PINs are not synced"
-msgstr ""
+msgstr "PIN's zijn niet gesynchroniseerd"
 
 msgid "Invalid CRL"
-msgstr ""
+msgstr "Ongeldige CRL"
 
 msgid "BER error"
-msgstr ""
+msgstr "BER-fout"
 
 msgid "Invalid BER"
-msgstr ""
+msgstr "Ongeldige BER"
 
 msgid "Element not found"
-msgstr ""
+msgstr "Element niet gevonden"
 
 msgid "Identifier not found"
-msgstr ""
+msgstr "Identifier niet gevonden"
 
 msgid "Invalid tag"
-msgstr ""
+msgstr "Ongeldige tag"
 
 msgid "Invalid length"
-msgstr ""
+msgstr "Ongeldige lengte"
 
 msgid "Invalid key info"
-msgstr ""
+msgstr "Ongeldige sleutelinformatie"
 
 msgid "Unexpected tag"
-msgstr ""
+msgstr "Onverwachte tag"
 
 msgid "Not DER encoded"
-msgstr ""
+msgstr "Niet met DER gecodeerd"
 
 msgid "No CMS object"
-msgstr ""
+msgstr "Geen CMS-object"
 
 msgid "Invalid CMS object"
-msgstr ""
+msgstr "Ongeldig CMS-object"
 
 msgid "Unknown CMS object"
-msgstr ""
+msgstr "Onbekend CMS-object"
 
 msgid "Unsupported CMS object"
-msgstr ""
+msgstr "Niet-ondersteund CMS-object"
 
 msgid "Unsupported encoding"
-msgstr ""
+msgstr "Niet-ondersteunde codering"
 
 msgid "Unsupported CMS version"
-msgstr ""
+msgstr "Niet-ondersteunde CMS-versie"
 
 msgid "Unknown algorithm"
-msgstr ""
+msgstr "Onbekend algoritme"
 
 msgid "Invalid crypto engine"
-msgstr ""
+msgstr "Ongeldige crypto-engine"
 
 msgid "Public key not trusted"
-msgstr ""
+msgstr "Publieke sleutel wordt niet vertrouwd"
 
 msgid "Decryption failed"
-msgstr ""
+msgstr "Ontcijfering is mislukt"
 
 msgid "Key expired"
-msgstr ""
+msgstr "Sleutel is verlopen"
 
 msgid "Signature expired"
-msgstr ""
+msgstr "Handtekening verlopen"
 
 msgid "Encoding problem"
-msgstr ""
+msgstr "Coderingsprobleem"
 
 msgid "Invalid state"
-msgstr ""
+msgstr "Ongeldige status"
 
 msgid "Duplicated value"
-msgstr ""
+msgstr "Gedupliceerde waarde"
 
 msgid "Missing action"
-msgstr ""
+msgstr "Ontbrekende actie"
 
 msgid "ASN.1 module not found"
-msgstr ""
+msgstr "ASN.1-module niet gevonden"
 
 msgid "Invalid OID string"
-msgstr ""
+msgstr "Ongeldige OID-tekenreeks"
 
 msgid "Invalid time"
-msgstr ""
+msgstr "Ongeldige tijd"
 
 msgid "Invalid CRL object"
-msgstr ""
+msgstr "Ongeldig CRL-object"
 
 msgid "Unsupported CRL version"
-msgstr ""
+msgstr "Niet-ondersteunde CRL-versie"
 
 msgid "Invalid certificate object"
-msgstr ""
+msgstr "Ongeldig certificaatobject"
 
 msgid "Unknown name"
-msgstr ""
+msgstr "Onbekende naam"
 
 msgid "A locale function failed"
-msgstr ""
+msgstr "Een lokale functie is mislukt"
 
 msgid "Not locked"
-msgstr ""
+msgstr "Niet vergrendeld"
 
 msgid "Protocol violation"
-msgstr ""
+msgstr "In strijd met protocol"
 
 msgid "Invalid MAC"
-msgstr ""
+msgstr "Ongeldige MAC"
 
 msgid "Invalid request"
-msgstr ""
+msgstr "Ongeldig verzoek"
 
 msgid "Unknown extension"
-msgstr ""
+msgstr "Onbekende extensie"
 
 msgid "Unknown critical extension"
-msgstr ""
+msgstr "Onbekende kritische extensie"
 
 msgid "Locked"
-msgstr ""
+msgstr "Vergrendeld"
 
 msgid "Unknown option"
-msgstr ""
+msgstr "Onbekende optie"
 
 msgid "Unknown command"
-msgstr ""
+msgstr "Onbekend commando"
 
 msgid "Not operational"
-msgstr ""
+msgstr "Niet in werking"
 
 msgid "No passphrase given"
-msgstr ""
+msgstr "Geen wachtwoordzin ingegeven"
 
 msgid "No PIN given"
-msgstr ""
+msgstr "Geen PIN ingegeven"
 
-#, fuzzy
 msgid "Not enabled"
-msgstr "Geen waarde"
+msgstr "Niet ingeschakeld"
 
 msgid "No crypto engine"
-msgstr ""
+msgstr "Geen crypto-engine"
 
-#, fuzzy
 msgid "Missing key"
-msgstr "Foute sessiesleutel"
+msgstr "Ontbrekende sleutel"
 
 msgid "Too many objects"
-msgstr ""
+msgstr "Te veel objecten"
 
 msgid "Limit reached"
-msgstr ""
+msgstr "Limiet bereikt"
 
-#, fuzzy
 msgid "Not initialized"
-msgstr "Geen waarde"
+msgstr "Niet geïnitialiseerd"
 
-#, fuzzy
 msgid "Missing issuer certificate"
-msgstr "Ontbrekend certificaat"
+msgstr "Ontbrekend certificaat van uitgever"
 
 msgid "No keyserver available"
-msgstr ""
+msgstr "Geen sleutelserver beschikbaar"
 
-#, fuzzy
 msgid "Invalid elliptic curve"
-msgstr "Ongeldig versleutelingsschema"
+msgstr "Ongeldige elliptische kromme"
 
-#, fuzzy
 msgid "Unknown elliptic curve"
-msgstr "Onbekende bron"
+msgstr "Onbekende elliptische kromme"
 
 msgid "Operation fully cancelled"
-msgstr ""
+msgstr "Bewerking volledig geannuleerd"
 
 msgid "Operation not yet finished"
-msgstr ""
+msgstr "Bewerking is nog niet beëindigd"
 
 msgid "Buffer too short"
-msgstr ""
+msgstr "Buffer is te kort"
 
 msgid "Invalid length specifier in S-expression"
-msgstr ""
+msgstr "Ongeldige lengtespecificatie in S-expressie"
 
 msgid "String too long in S-expression"
-msgstr ""
+msgstr "Tekenreeks is te lang in S-expressie"
 
 msgid "Unmatched parentheses in S-expression"
-msgstr ""
+msgstr "Niet overeenkomende haakjes in S-expressie"
 
 msgid "S-expression not canonical"
-msgstr ""
+msgstr "S-expressie is niet canoniek"
 
 msgid "Bad character in S-expression"
-msgstr ""
+msgstr "Fout teken in S-expressie"
 
 msgid "Bad quotation in S-expression"
-msgstr ""
+msgstr "Foute aanhalingstekens in S-expressie"
 
 msgid "Zero prefix in S-expression"
-msgstr ""
+msgstr "Nul-prefix in S-expressie"
 
 msgid "Nested display hints in S-expression"
-msgstr ""
+msgstr "Geneste weergavetips in S-expressie"
 
 msgid "Unmatched display hints"
-msgstr ""
+msgstr "Niet overeenkomende weergavetips"
 
 msgid "Unexpected reserved punctuation in S-expression"
-msgstr ""
+msgstr "Onverwachte gereserveerde punctuatie in S-expressie"
 
 msgid "Bad hexadecimal character in S-expression"
-msgstr ""
+msgstr "Fout hexadecimaal teken in S-expressie"
 
 msgid "Odd hexadecimal numbers in S-expression"
-msgstr ""
+msgstr "Vreemde hexadecimale getallen in S-expressie"
 
 msgid "Bad octal character in S-expression"
-msgstr ""
+msgstr "Fout octaal teken in S-expressie"
 
 msgid "General IPC error"
-msgstr ""
+msgstr "Algemene IPC-fout"
 
 msgid "IPC accept call failed"
-msgstr ""
+msgstr "IPC acceptatie-aanroep is mislukt"
 
 msgid "IPC connect call failed"
-msgstr ""
+msgstr "IPC verbindingsoproep is mislukt"
 
 msgid "Invalid IPC response"
-msgstr ""
+msgstr "Ongeldige IPC-reactie"
 
 msgid "Invalid value passed to IPC"
-msgstr ""
+msgstr "Ongeldige waarde naar IPC gestuurd"
 
 msgid "Incomplete line passed to IPC"
-msgstr ""
+msgstr "Onvolledige regel naar IPC gestuurd"
 
 msgid "Line passed to IPC too long"
-msgstr ""
+msgstr "Naar IPC gestuurde regel is te lang"
 
 msgid "Nested IPC commands"
-msgstr ""
+msgstr "Geneste IPC-commando's"
 
 msgid "No data callback in IPC"
-msgstr ""
+msgstr "Geen gegevens terugroep in IPC"
 
 msgid "No inquire callback in IPC"
-msgstr ""
+msgstr "Geen afvraagterugroep in IPC"
 
 msgid "Not an IPC server"
-msgstr ""
+msgstr "Geen IPC-server"
 
 msgid "Not an IPC client"
-msgstr ""
+msgstr "Geen IPC-client"
 
 msgid "Problem starting IPC server"
-msgstr ""
+msgstr "Probleem met opstarten van IPC-server"
 
 msgid "IPC read error"
-msgstr ""
+msgstr "IPC-leesfout"
 
 msgid "IPC write error"
-msgstr ""
+msgstr "IPC-schrijffout"
 
 msgid "Too much data for IPC layer"
-msgstr ""
+msgstr "Te veel gegevens voor IPC=laag"
 
 msgid "Unexpected IPC command"
-msgstr ""
+msgstr "Onverwacht IPC-commando"
 
 msgid "Unknown IPC command"
-msgstr ""
+msgstr "Onbekend IPC-commando"
 
 msgid "IPC syntax error"
-msgstr ""
+msgstr "IPC-syntaxfout"
 
 msgid "IPC call has been cancelled"
-msgstr ""
+msgstr "IPC-oproep is geannuleerd"
 
 msgid "No input source for IPC"
-msgstr ""
+msgstr "Geen invoerbron voor IPC"
 
 msgid "No output source for IPC"
-msgstr ""
+msgstr "Geen uitvoerbron voor IPC"
 
 msgid "IPC parameter error"
-msgstr ""
+msgstr "IPC-parameterfout"
 
 msgid "Unknown IPC inquire"
-msgstr ""
+msgstr "Onbekende IPC-afvraging"
 
 msgid "User defined error code 1"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 1"
 
 msgid "User defined error code 2"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 2"
 
 msgid "User defined error code 3"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 3"
 
 msgid "User defined error code 4"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 4"
 
 msgid "User defined error code 5"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 5"
 
 msgid "User defined error code 6"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 6"
 
 msgid "User defined error code 7"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 7"
 
 msgid "User defined error code 8"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 8"
 
 msgid "User defined error code 9"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 9"
 
 msgid "User defined error code 10"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 10"
 
 msgid "User defined error code 11"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 11"
 
 msgid "User defined error code 12"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 12"
 
 msgid "User defined error code 13"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 13"
 
 msgid "User defined error code 14"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 14"
 
 msgid "User defined error code 15"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 15"
 
 msgid "User defined error code 16"
-msgstr ""
+msgstr "Gebruikergedefinieerde foutcode 16"
 
 msgid "System error w/o errno"
-msgstr ""
+msgstr "Systeemfout zonder foutnr."
 
 msgid "Unknown system error"
-msgstr ""
+msgstr "Onbekende systeemfout"
 
 msgid "End of file"
-msgstr ""
+msgstr "Einde van bestand"
 
 msgid "Unknown error code"
-msgstr ""
+msgstr "Onbekende foutcode"
 
 #, c-format
 msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr ""
+msgstr "Gebruik: %s GPG-ERROR [...]\n"
 
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
-msgstr ""
+msgstr "%s: waarschuwing: kon %s niet herkennen\n"
