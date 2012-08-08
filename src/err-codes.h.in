@@ -107,7 +107,7 @@
 75	GPG_ERR_INCOMPLETE_LINE		Incomplete line
 76	GPG_ERR_INV_RESPONSE		Invalid response
 77	GPG_ERR_NO_AGENT		No agent running
-78	GPG_ERR_AGENT			agent error
+78	GPG_ERR_AGENT			Agent error
 79	GPG_ERR_INV_DATA		Invalid data
 80	GPG_ERR_ASSUAN_SERVER_FAULT	Unspecific Assuan server fault
 81	GPG_ERR_ASSUAN			General Assuan error
