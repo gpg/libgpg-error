@@ -10,10 +10,10 @@ msgstr ""
 "PO-Revision-Date: 2012-08-08 15:03-0300\n"
 "Last-Translator: Freek de Kruijf <f.de.kruijf@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
-"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
 "X-Generator: Lokalize 1.4\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -646,6 +646,16 @@ msgstr "Ongeldige elliptische kromme"
 
 msgid "Unknown elliptic curve"
 msgstr "Onbekende elliptische kromme"
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated key"
+msgstr "Gedupliceerde waarde"
+
+#, fuzzy
+#| msgid "Ambiguous name"
+msgid "Ambiguous result"
+msgstr "Dubbelzinnige naam"
 
 msgid "Operation fully cancelled"
 msgstr "Bewerking volledig geannuleerd"

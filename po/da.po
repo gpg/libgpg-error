@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2012-08-07 21:27+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
-"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: da\n"
 
 msgid "Unspecified source"
 msgstr "Uspecificeret kilde"
@@ -649,6 +649,16 @@ msgstr "Ugyldig elliptisk kurve"
 
 msgid "Unknown elliptic curve"
 msgstr "Ukendt elliptisk kurve"
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated key"
+msgstr "Duplikeret værdi"
+
+#, fuzzy
+#| msgid "Ambiguous name"
+msgid "Ambiguous result"
+msgstr "Tvetydigt navn"
 
 msgid "Operation fully cancelled"
 msgstr "Handling fuldt afbrudt"

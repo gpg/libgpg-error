@@ -655,6 +655,16 @@ msgid "Unknown elliptic curve"
 msgstr "Nguồn không rõ"
 
 #, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated key"
+msgstr "Giá trị trùng"
+
+#, fuzzy
+#| msgid "Ambiguous name"
+msgid "Ambiguous result"
+msgstr "Tên mờ hồ"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "Thao tác bị hủy bỏ"
 

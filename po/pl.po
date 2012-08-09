@@ -649,6 +649,16 @@ msgid "Unknown elliptic curve"
 msgstr "Nieznane ¼ród³o"
 
 #, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated key"
+msgstr "Powtórzona warto¶æ"
+
+#, fuzzy
+#| msgid "Ambiguous name"
+msgid "Ambiguous result"
+msgstr "Niejednoznaczna nazwa"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "Operacja anulowana"
 

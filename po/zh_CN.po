@@ -655,6 +655,14 @@ msgid "Unknown elliptic curve"
 msgstr "来源不明"
 
 #, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated key"
+msgstr "重复值"
+
+msgid "Ambiguous result"
+msgstr ""
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "操作已取消"
 

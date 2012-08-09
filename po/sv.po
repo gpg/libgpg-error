@@ -653,6 +653,16 @@ msgid "Unknown elliptic curve"
 msgstr "Okänd källa"
 
 #, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated key"
+msgstr "Dubblettvärde"
+
+#, fuzzy
+#| msgid "Ambiguous name"
+msgid "Ambiguous result"
+msgstr "Tvetydigt namn"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "Åtgärden avbröts"
 
