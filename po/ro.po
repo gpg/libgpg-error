@@ -315,7 +315,9 @@ msgstr "Rãspuns invalid"
 msgid "No agent running"
 msgstr "Nu ruleazã nici un agent"
 
-msgid "agent error"
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
 msgstr "eroare agent"
 
 msgid "Invalid data"

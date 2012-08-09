@@ -313,7 +313,9 @@ msgstr "Đáp ứng không hợp lệ"
 msgid "No agent running"
 msgstr "Không có tác nhân đang chạy"
 
-msgid "agent error"
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
 msgstr "lỗi tác nhân"
 
 msgid "Invalid data"

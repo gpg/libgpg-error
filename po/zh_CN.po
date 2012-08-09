@@ -313,7 +313,9 @@ msgstr "无效的响应"
 msgid "No agent running"
 msgstr "未运行代理"
 
-msgid "agent error"
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
 msgstr "代理错误"
 
 msgid "Invalid data"

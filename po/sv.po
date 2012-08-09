@@ -311,7 +311,9 @@ msgstr "Ogiltigt svar"
 msgid "No agent running"
 msgstr "Ingen agent kör"
 
-msgid "agent error"
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
 msgstr "agentfel"
 
 msgid "Invalid data"

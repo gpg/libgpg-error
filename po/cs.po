@@ -321,7 +321,9 @@ msgstr "Neplatná odpověď"
 msgid "No agent running"
 msgstr "Agent neběží"
 
-msgid "agent error"
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
 msgstr "chyba agenta"
 
 msgid "Invalid data"

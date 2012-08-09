@@ -314,7 +314,9 @@ msgstr "Ongeldige reactie"
 msgid "No agent running"
 msgstr "Er draait geen agent"
 
-msgid "agent error"
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
 msgstr "fout met agent"
 
 msgid "Invalid data"

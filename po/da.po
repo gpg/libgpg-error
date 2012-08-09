@@ -317,7 +317,9 @@ msgstr "Ugyldigt svar"
 msgid "No agent running"
 msgstr "Ingen agent kører"
 
-msgid "agent error"
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
 msgstr "agentfejl"
 
 msgid "Invalid data"

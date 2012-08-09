@@ -315,7 +315,9 @@ msgstr "無効な応答です"
 msgid "No agent running"
 msgstr "エージェントが実行されていません"
 
-msgid "agent error"
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
 msgstr "エージェントエラーです"
 
 msgid "Invalid data"
