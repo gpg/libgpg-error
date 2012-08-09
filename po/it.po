@@ -1,14 +1,14 @@
-# Italian translation of libgpg-error.
-# Copyright (C) 2003 g10 Code GmbH
+# Italian messages for libgpg-error.
+# Copyright (C) 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
-# Francesco Groccia <fgr＠anche｡no>, 2009.
+# Francesco Groccia <francesco.groccia@poste.it>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2009-06-21 15:24+0200\n"
-"Last-Translator: Francesco Groccia <fgr＠anche｡no>\n"
+"PO-Revision-Date: 2010-12-02 20:23+0100\n"
+"Last-Translator: Francesco Groccia <francesco.groccia@poste.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +21,7 @@ msgid "gcrypt"
 msgstr "gcrypt"
 
 msgid "GnuPG"
-msgstr "GPG"
+msgstr "GnuPG"
 
 msgid "GpgSM"
 msgstr "GpgSM"
@@ -311,7 +311,9 @@ msgstr "Risposta non valida"
 msgid "No agent running"
 msgstr "Nessun agente in esecuzione"
 
-msgid "agent error"
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
 msgstr "errore dell'agente"
 
 msgid "Invalid data"
@@ -615,18 +617,22 @@ msgid "No PIN given"
 msgstr "Nessun PIN fornito"
 
 #, fuzzy
+#| msgid "Not locked"
 msgid "Not enabled"
 msgstr "Non bloccato"
 
 #, fuzzy
+#| msgid "Invalid crypto engine"
 msgid "No crypto engine"
 msgstr "Motore crittografico non valido"
 
 #, fuzzy
+#| msgid "Missing value"
 msgid "Missing key"
 msgstr "Valore assente"
 
 #, fuzzy
+#| msgid "No CMS object"
 msgid "Too many objects"
 msgstr "Non esiste alcun oggetto CMS"
 
@@ -634,10 +640,12 @@ msgid "Limit reached"
 msgstr ""
 
 #, fuzzy
+#| msgid "Card not initialized"
 msgid "Not initialized"
 msgstr "La scheda non è stata inizializzata"
 
 #, fuzzy
+#| msgid "Missing certificate"
 msgid "Missing issuer certificate"
 msgstr "Certificato mancante"
 
@@ -645,10 +653,12 @@ msgid "No keyserver available"
 msgstr ""
 
 #, fuzzy
+#| msgid "Invalid time"
 msgid "Invalid elliptic curve"
 msgstr "Data non valida"
 
 #, fuzzy
+#| msgid "Unknown source"
 msgid "Unknown elliptic curve"
 msgstr "Fonte sconosciuta"
 
@@ -663,6 +673,7 @@ msgid "Ambiguous result"
 msgstr "Nome ambiguo"
 
 #, fuzzy
+#| msgid "Operation cancelled"
 msgid "Operation fully cancelled"
 msgstr "Operazione annullata"
 
@@ -709,6 +720,7 @@ msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Numeri esadecimali dispari in S-expression"
 
 #, fuzzy
+#| msgid "Bad octadecimal character in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Carattere ottale errato in S-expression"
 
