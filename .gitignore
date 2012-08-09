@@ -11,6 +11,7 @@ configure
 config.h.in
 src/err-codes.h
 src/err-sources.h
+/po/libgpg-error.pot
 /lang/Makefile
 /lang/cl/Makefile
 /lang/cl/gpg-error-codes.lisp
