@@ -19,21 +19,30 @@
 # (Process this file with autoconf to produce a configure script.)
 # The following lines are used by ./autogen.sh.
 AC_PREREQ(2.59)
-min_automake_version="1.9.6"
+min_automake_version="1.11"
 
-# Remember to change the version number immediately *after* a release.
-# Set my_issvn to "yes" for non-released code.  Remember to run an
-# "svn up" and "autogen.sh" right before creating a distribution.
-m4_define([my_version], [1.11])
-m4_define([my_issvn], [yes])
+# To build a release you need to create a tag with the version number
+# (git tag -s libgpg-error-n.m) and run "./autogen.sh --force".
+# Please bump the version number immediately after the release, do
+# another commit, and a push so that the git magic is able to work.
+# See below for the LT versions.
+m4_define([mym4_version], [1.11])
 
-m4_define([svn_revision], m4_esyscmd([printf "%d" $(svn info 2>/dev/null \
-          | sed -n '/^Revision:/ s/[^0-9]//gp'|head -1)]))
-m4_define([git_revision],
+# Below is m4 magic to extract and compute the revision number, the
+# decimalized short revision number, a beta version string, and a flag
+# indicating a development version (mym4_isgit). Note that the m4
+# processing is done by autoconf and not during the configure run.
+m4_define([mym4_revision],
           m4_esyscmd([git rev-parse --short HEAD | tr -d '\n\r']))
-m4_define([my_full_version], [my_version[]m4_if(my_issvn,[yes],
-          [m4_if(git_revision,[],[-svn[]svn_revision],[-git[]git_revision])])])
-AC_INIT([libgpg-error],[my_full_version], [http://bugs.gnupg.org])
+m4_define([mym4_revision_dec],
+          m4_esyscmd_s([echo $((0x$(echo ]mym4_revision[|head -c 4)))]))
+m4_define([mym4_betastring],
+       m4_esyscmd_s([git describe --match 'libgpg-error-[0-9].*[0-9]' --long|\
+                        awk -F- '$4!=0{print"-beta"$4}']))
+m4_define([mym4_isgit],m4_if(mym4_betastring,[],[no],[yes]))
+m4_define([mym4_full_version],[mym4_version[]mym4_betastring])
+
+AC_INIT([libgpg-error],[mym4_full_version],[http://bugs.gnupg.org])
 # LT Version numbers, remember to change them just *before* a release.
 #   (Code changed:			REVISION++)
 #   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)
@@ -165,16 +174,14 @@ if test "$have_w32_system" = yes; then
     changequote(,)dnl
     BUILD_FILEVERSION=`echo "$VERSION" | sed 's/\([0-9.]*\).*/\1./;s/\./,/g'`
     changequote([,])dnl
-    case "$VERSION" in
-      *-svn*) BUILD_FILEVERSION="${BUILD_FILEVERSION}0,0" ;;
-      *-cvs)  BUILD_FILEVERSION="${BUILD_FILEVERSION}0,0" ;;
-      *-git*) BUILD_FILEVERSION="${BUILD_FILEVERSION}0,0" ;;
-      *-rc*)  BUILD_FILEVERSION="${BUILD_FILEVERSION}0,1" ;;
-      *)      BUILD_FILEVERSION="${BUILD_FILEVERSION}0,2" ;;
-    esac
+    BUILD_FILEVERSION="${BUILD_FILEVERSION}0,mym4_revision_dec"
 fi
+BUILD_REVISION="mym4_revision"
 AC_SUBST(BUILD_TIMESTAMP)
 AC_SUBST(BUILD_FILEVERSION)
+AC_SUBST(BUILD_REVISION)
+AC_DEFINE_UNQUOTED(BUILD_REVISION, "$BUILD_REVISION",
+                   [GIT commit id used to build this package])
 AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
 AM_CONDITIONAL(HAVE_W64_SYSTEM, test "$have_w64_system" = yes)
 AM_CONDITIONAL(HAVE_W32CE_SYSTEM, test "$have_w32ce_system" = yes)
@@ -196,8 +203,9 @@ AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
 AC_OUTPUT
 
 echo "
-        Libgpg-error v${VERSION} has been configured as follows:
+        $PACKAGE_NAME-$PACKAGE_VERSION prepared for make
 
-        Platform:  $host
+        Revision: mym4_revision  (mym4_revision_dec)
+        Platform: $host
 
 "
