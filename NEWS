@@ -1,6 +1,7 @@
 Noteworthy changes in version 1.11 (unreleased)
 ----------------------------------------------
 
+ * New error source GPG_ERR_SOURCE_ASSUAN for Libassuan related errors.
 
  * Interface changes relative to the 1.10 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -9,6 +10,7 @@ Noteworthy changes in version 1.11 (unreleased)
  GPG_ERR_UNKNOWN_CURVE         NEW.
  GPG_ERR_DUP_KEY               NEW.
  GPG_ERR_AMBIGUOUS             NEW.
+ GPG_ERR_SOURCE_ASSUAN         NEW.
 
 
 Noteworthy changes in version 1.10 (2010-10-26)
