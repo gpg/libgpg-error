@@ -256,7 +256,7 @@ if [ -d .git ]; then
     and .git/hooks/pre-commit.sample out of the way.
 EOF
       cp -av .git/hooks/pre-commit.sample .git/hooks/pre-commit
-      chmod -c +x  .git/hooks/pre-commit
+      chmod +x  .git/hooks/pre-commit
   fi
   tmp=$(git config --get filter.cleanpo.clean)
   if [ "$tmp" != "awk '/^\"POT-Creation-Date:/&&!s{s=1;next};!/^#: /{print}'" ]
