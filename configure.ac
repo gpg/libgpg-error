@@ -26,12 +26,14 @@ min_automake_version="1.11"
 # Please bump the version number immediately after the release, do
 # another commit, and a push so that the git magic is able to work.
 # See below for the LT versions.
-m4_define([mym4_version], [1.11])
+m4_define([mym4_version_major], [1])
+m4_define([mym4_version_minor], [11])
 
 # Below is m4 magic to extract and compute the revision number, the
 # decimalized short revision number, a beta version string, and a flag
 # indicating a development version (mym4_isgit). Note that the m4
 # processing is done by autoconf and not during the configure run.
+m4_define([mym4_version], [mym4_version_major.mym4_version_minor])
 m4_define([mym4_revision],
           m4_esyscmd([git rev-parse --short HEAD | tr -d '\n\r']))
 m4_define([mym4_revision_dec],
@@ -52,9 +54,15 @@ AC_INIT([libgpg-error],[mym4_full_version],[http://bugs.gnupg.org])
 LIBGPG_ERROR_LT_CURRENT=8
 LIBGPG_ERROR_LT_AGE=8
 LIBGPG_ERROR_LT_REVISION=0
+################################################
+
 AC_SUBST(LIBGPG_ERROR_LT_CURRENT)
 AC_SUBST(LIBGPG_ERROR_LT_AGE)
 AC_SUBST(LIBGPG_ERROR_LT_REVISION)
+
+VERSION_NUMBER=m4_esyscmd(printf "0x%02x%02x00" mym4_version_major \
+                          mym4_version_minor)
+AC_SUBST(VERSION_NUMBER)
 
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
@@ -170,21 +178,31 @@ if test "$have_w32_system" = yes; then
       AC_DEFINE(HAVE_W32CE_SYSTEM,1,[Defined if we run on WindowsCE])
       GPG_ERROR_CONFIG_ISUBDIRAFTER="gpg-extra"
     fi
-    BUILD_TIMESTAMP=`date --iso-8601=minutes`
-    changequote(,)dnl
-    BUILD_FILEVERSION=`echo "$VERSION" | sed 's/\([0-9.]*\).*/\1./;s/\./,/g'`
-    changequote([,])dnl
-    BUILD_FILEVERSION="${BUILD_FILEVERSION}0,mym4_revision_dec"
 fi
-BUILD_REVISION="mym4_revision"
-AC_SUBST(BUILD_TIMESTAMP)
-AC_SUBST(BUILD_FILEVERSION)
-AC_SUBST(BUILD_REVISION)
-AC_DEFINE_UNQUOTED(BUILD_REVISION, "$BUILD_REVISION",
-                   [GIT commit id used to build this package])
 AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
 AM_CONDITIONAL(HAVE_W64_SYSTEM, test "$have_w64_system" = yes)
 AM_CONDITIONAL(HAVE_W32CE_SYSTEM, test "$have_w32ce_system" = yes)
+
+
+#
+# Provide information about the build.
+#
+BUILD_REVISION="mym4_revision"
+AC_SUBST(BUILD_REVISION)
+AC_DEFINE_UNQUOTED(BUILD_REVISION, "$BUILD_REVISION",
+                   [GIT commit id revision used to build this package])
+
+changequote(,)dnl
+BUILD_FILEVERSION=`echo "$PACKAGE_VERSION"|sed 's/\([0-9.]*\).*/\1./;s/\./,/g'`
+changequote([,])dnl
+BUILD_FILEVERSION="${BUILD_FILEVERSION}0,mym4_revision_dec"
+AC_SUBST(BUILD_FILEVERSION)
+
+BUILD_TIMESTAMP=`date -u +%Y-%m-%dT%H:%M+0000 2>/dev/null || date`
+AC_SUBST(BUILD_TIMESTAMP)
+AC_DEFINE_UNQUOTED(BUILD_TIMESTAMP, "$BUILD_TIMESTAMP",
+                   [The time this package was configured for a build])
+
 
 
 AC_ARG_ENABLE(languages,

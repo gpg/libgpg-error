@@ -1,18 +1,18 @@
 /* gpg-error.h - Public interface to libgpg-error.
-   Copyright (C) 2003, 2004, 2010 g10 Code GmbH
+   Copyright (C) 2003, 2004, 2010, 2013 g10 Code GmbH
 
    This file is part of libgpg-error.
- 
+
    libgpg-error is free software; you can redistribute it and/or
    modify it under the terms of the GNU Lesser General Public License
    as published by the Free Software Foundation; either version 2.1 of
    the License, or (at your option) any later version.
- 
+
    libgpg-error is distributed in the hope that it will be useful, but
    WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    Lesser General Public License for more details.
- 
+
    You should have received a copy of the GNU Lesser General Public
    License along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,7 +32,7 @@
 #else
 #ifndef GPG_ERR_INLINE
 #define GPG_ERR_INLINE
-#endif 
+#endif
 #endif
 
 
@@ -244,6 +244,9 @@ gpg_err_code_t gpg_err_code_from_syserror (void);
 /* Set the ERRNO variable.  This function is the preferred way to set
    ERRNO due to peculiarities on WindowsCE.  */
 void gpg_err_set_errno (int err);
+
+/* Return or check the version.  */
+const char *gpg_error_check_version (const char *req_version);
 
 @include extra-h.in
 

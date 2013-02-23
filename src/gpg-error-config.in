@@ -54,7 +54,7 @@ while test $# -gt 0; do
 	    output="$output $exec_prefix"
 	    ;;
         --version)
-            echo "@VERSION@"
+            echo "@PACKAGE_VERSION@"
 	    exit 0
 	    ;;
         --cflags)

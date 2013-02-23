@@ -6,8 +6,8 @@
 
 EXPORTS
  gpg_strerror                 @1
- gpg_strerror_r               @2  
- gpg_strsource                @3  
+ gpg_strerror_r               @2
+ gpg_strsource                @3
  gpg_err_code_from_errno      @4
  gpg_err_code_to_errno        @5
  gpg_err_init		      @6
@@ -27,3 +27,4 @@ EXPORTS
    _gpg_w32_gettext_use_utf8   @17
 #endif
  gpg_err_deinit		      @18
+ gpg_error_check_version      @19

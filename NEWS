@@ -1,7 +1,11 @@
 Noteworthy changes in version 1.11 (unreleased)
 ----------------------------------------------
 
- * New error source GPG_ERR_SOURCE_ASSUAN for Libassuan related errors.
+ * New error source GPG_ERR_SOURCE_ASSUAN for Libassuan related
+   errors.
+
+ * New macros GPG_ERROR_VERSION and GPG_ERROR_VERSION_NUMBER.  New
+   function gpg_error_check_version.
 
  * Interface changes relative to the 1.10 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -11,6 +15,9 @@ Noteworthy changes in version 1.11 (unreleased)
  GPG_ERR_DUP_KEY               NEW.
  GPG_ERR_AMBIGUOUS             NEW.
  GPG_ERR_SOURCE_ASSUAN         NEW.
+ gpg_error_check_version       NEW.
+ GPG_ERROR_VERSION             NEW.
+ GPG_ERROR_VERSION_NUMBER      NEW.
 
 
 Noteworthy changes in version 1.10 (2010-10-26)
