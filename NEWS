@@ -1,5 +1,5 @@
-Noteworthy changes in version 1.11 (unreleased)
-----------------------------------------------
+Noteworthy changes in version 1.11 (2013-02-25)
+-----------------------------------------------
 
  * New error source GPG_ERR_SOURCE_ASSUAN for Libassuan related
    errors.
@@ -21,7 +21,7 @@ Noteworthy changes in version 1.11 (unreleased)
 
 
 Noteworthy changes in version 1.10 (2010-10-26)
-----------------------------------------------
+-----------------------------------------------
 
  * Using a static library on W32 does now work.
 

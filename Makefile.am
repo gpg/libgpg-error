@@ -1,5 +1,5 @@
 # Makefile.am for libgpg-error.
-# Copyright (C) 2003, 2006, 2007 g10 Code GmbH
+# Copyright (C) 2003, 2006, 2007, 2013 g10 Code GmbH
 #
 # This file is part of libgpg-error.
 #
@@ -14,17 +14,18 @@
 # GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public
-# License along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+# License along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 ACLOCAL_AMFLAGS = -I m4
 AUTOMAKE_OPTIONS = dist-bzip2
 
+# (A suitable gitlog-to-changelog script can be found in GnuPG master.)
+GITLOG_TO_CHANGELOG=gitlog-to-changelog
+
 EXTRA_DIST = autogen.sh config.rpath libgpg-error.spec.in 		\
              COPYING COPYING.LIB potomo doc/HACKING ChangeLog-2011   	\
 	     po/ChangeLog-2011 m4/ChangeLog-2011 contrib/ChangeLog-2011 \
-             build-aux/gitlog-to-changelog build-aux/git-log-footer	\
-             build-aux/git-log-fix
+             build-aux/git-log-footer  build-aux/git-log-fix
 
 if LANGUAGES_SOME
 lang_subdirs = lang
@@ -44,10 +45,11 @@ dist-hook: gen-ChangeLog
 gen_start_date = 2011-12-01T00:00:00
 .PHONY: gen-ChangeLog
 gen-ChangeLog:
+	set -e;                         				\
 	if test -d $(top_srcdir)/.git; then				\
 	  (cd $(top_srcdir) &&                      			\
-	    ./build-aux/gitlog-to-changelog				\
-	    --amend=build-aux/git-log-fix				\
+	    $(GITLOG_TO_CHANGELOG) --append-dot --tear-off		\
+	    --amend=build-aux/git-log-fix  --tear-off			\
 	    --since=$(gen_start_date) ) > $(distdir)/cl-t;		\
           cat $(top_srcdir)/build-aux/git-log-footer >> $(distdir)/cl-t;\
 	  rm -f $(distdir)/ChangeLog;					\

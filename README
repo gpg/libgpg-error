@@ -9,7 +9,8 @@ libgpg-error is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as
 published by the Free Software Foundation; either version 2.1 of the
 License, or (at your option) any later version.  See the file
-COPYING.LIB for copyright and warranty information.
+COPYING.LIB for copyright and warranty information.  See the file
+AUTHORS for a list of authors and important mail addresses.
 
 However, some files (for example src/mkerrnos.awk) used in the build
 process of the library are covered by a different license.  Please see
@@ -87,6 +88,11 @@ which runs configure with suitable options.  For WindowsCE the command
 is:
 
    ./autogen.sh --build-w32ce
+
+There is also _experimental_ support for building a 64 bit Windows
+version:
+
+   ./autogen.sh --build-w64
 
 
 Known Problems
