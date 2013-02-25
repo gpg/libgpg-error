@@ -27,7 +27,7 @@ min_automake_version="1.11"
 # another commit, and a push so that the git magic is able to work.
 # See below for the LT versions.
 m4_define([mym4_version_major], [1])
-m4_define([mym4_version_minor], [11])
+m4_define([mym4_version_minor], [12])
 
 # Below is m4 magic to extract and compute the revision number, the
 # decimalized short revision number, a beta version string, and a flag
