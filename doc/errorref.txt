@@ -258,7 +258,14 @@ GPG_ERR_INV_NAME		Invalid name
     [more to come]
 
 89	GPG_ERR_BAD_DATA		Bad data
-90	GPG_ERR_INV_PARAMETER		Invalid parameter
+
+GPG_ERR_INV_PARAMETER		Invalid parameter
+
+    GNUPG:  - Returned if gpg-agent sends a new generated key with
+              unknown parameter names.
+            - Invalid parameter in the parameter file for key
+              generation by gpgsm.
+
 91	GPG_ERR_WRONG_CARD		Wrong card
 92	GPG_ERR_NO_DIRMNGR		No dirmngr
 93	GPG_ERR_DIRMNGR			dirmngr error
@@ -401,8 +408,9 @@ GPG_ERR_INV_CERT_OBJ		Invalid certificate object
 165	GPG_ERR_UNKNOWN_NAME		Unknown name
 
         Used by GPG to indicate an unknown ECC curve name (may also
-        indicate missing ECC support).
-
+        indicate missing ECC support).  It is also used to indicate an
+        unsuported parameter name in functions which take a name and
+        value to update state.
 
 166	GPG_ERR_LOCALE_PROBLEM		A locale function failed
 167	GPG_ERR_NOT_LOCKED		Not locked
@@ -446,6 +454,16 @@ GPG_ERR_LIMIT_REACHED           Limit reached
         GnuPG: gpgtar: Extract directory can't be created because too
         many of directories with a similar name are already existing.
 
+184	GPG_ERR_NOT_INITIALIZED		Not initialized
+185	GPG_ERR_MISSING_ISSUER_CERT	Missing issuer certificate
+186	GPG_ERR_NO_KEYSERVER		No keyserver available
+
+GPG_ERR_INV_CURVE		Invalid elliptic curve
+
+        The curve is missing parameters or the curve is invald, for example
+        it is not possible to get affine coordinates for the public key.
+
+188	GPG_ERR_UNKNOWN_CURVE		Unknown elliptic curve
 
 GPG_ERR_DUP_KEY                 Duplicated key
 
@@ -457,6 +475,41 @@ GPG_ERR_AMBIGUOUS		Ambiguous search
         A search etc returned an ambigious result.  This usually means
         that the search string was not specific enough.
 
+GPG_ERR_NO_CRYPT_CTX		No crypto context
+
+        A crypto context was expected but not given.  Commonly used by
+        Libgcrypt.
+
+GPG_ERR_WRONG_CRYPT_CTX		Wrong crypto context
+
+        The given crypto context does not match the requirements.  For
+        example in Libgcrypt a crypto context has private data
+        pertaining to certain algorithms.  This error is for example
+        returned if a crypto context initialized for a different
+        algorithm is used.
+
+GPG_ERR_BAD_CRYPT_CTX		Bad crypto context
+
+        The is a problem with the crypto context.  For example it has
+        not been properly initialized.
+
+GPG_ERR_CRYPT_CTX_CONFLICT	Conflict in the crypto context
+
+        Conflicting use of a crypto context.  For example if a context
+        is used with objects that don't match the state of the
+        context.
+
+GPG_ERR_BROKEN_PUBKEY		Broken public key
+
+        The public key was mathematically not correctly generated.
+        (It would have been nicer if we would have used BAD_PUBKEY for
+        this, but that error code is in long time use to describe for
+        example policy and encoding problems with a key.  Using
+        INV_PUBKEY would have been better for these purposes)
+
+GPG_ERR_BROKEN_SECKEY		Broken secret key
+
+        The secret key was mathematically not correctly generated.
 
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short

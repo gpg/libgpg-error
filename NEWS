@@ -1,6 +1,15 @@
 Noteworthy changes in version 1.12 (unreleased)
 -----------------------------------------------
 
+ * Interface changes relative to the 1.11 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_NO_CRYPT_CTX         NEW.
+ GPG_ERR_WRONG_CRYPT_CTX      NEW.
+ GPG_ERR_BAD_CRYPT_CTX        NEW.
+ GPG_ERR_CRYPT_CTX_CONFLICT   NEW.
+ GPG_ERR_BROKEN_PUBKEY        NEW.
+ GPG_ERR_BROKEN_SECKEY        NEW.
+
 
 Noteworthy changes in version 1.11 (2013-02-25)
 -----------------------------------------------

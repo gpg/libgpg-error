@@ -220,8 +220,13 @@
 188	GPG_ERR_UNKNOWN_CURVE		Unknown elliptic curve
 189	GPG_ERR_DUP_KEY			Duplicated key
 190	GPG_ERR_AMBIGUOUS		Ambiguous result
-# 191 to 197 are free to be used.
-
+191	GPG_ERR_NO_CRYPT_CTX		No crypto context
+192	GPG_ERR_WRONG_CRYPT_CTX		Wrong crypto context
+193	GPG_ERR_BAD_CRYPT_CTX		Bad crypto context
+194	GPG_ERR_CRYPT_CTX_CONFLICT	Conflict in the crypto context
+195	GPG_ERR_BROKEN_PUBKEY		Broken public key
+196	GPG_ERR_BROKEN_SECKEY		Broken secret key
+# 197 is free to be used.
 198	GPG_ERR_FULLY_CANCELED		Operation fully cancelled
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
