@@ -73,6 +73,7 @@ no_undefined = -no-undefined
 export_symbols = -export-symbols gpg-error.def
 
 install-def-file: gpg-error.def
+	-$(INSTALL) -d $(DESTDIR)$(libdir)
 	$(INSTALL) gpg-error.def $(DESTDIR)$(libdir)/gpg-error.def
 
 uninstall-def-file:
