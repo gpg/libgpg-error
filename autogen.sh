@@ -40,12 +40,15 @@ w32_toolprefixes=
 w32_extraoptions=
 w32ce_toolprefixes=
 w32ce_extraoptions=
+w64_toolprefixes=
+w64_extraoptions=
 amd64_toolprefixes=
 # End list of optional variables sourced from ~/.gnupg-autogen.rc
 # What follows are variables which are sourced but default to
 # environment variables or lacking them hardcoded values.
 #w32root=
 #w32ce_root=
+#w64root=
 #amd64root=
 
 if [ -f "$HOME/.gnupg-autogen.rc" ]; then
@@ -99,7 +102,7 @@ if [ "$myhost" = "w32" ]; then
         64)
           w32root="$w64root"
           [ -z "$w32root" ] && w32root="$HOME/w64root"
-          toolprefixes="$amd64_toolprefixes amd64-mingw32msvc"
+          toolprefixes="$w64_toolprefixes x86_64-w64-mingw32"
           ;;
         *)
           [ -z "$w32root" ] && w32root="$HOME/w32root"
