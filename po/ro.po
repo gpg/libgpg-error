@@ -682,6 +682,32 @@ msgid "Ambiguous result"
 msgstr "Nume ambiguu"
 
 #, fuzzy
+msgid "No crypto context"
+msgstr "Motor cifrare invalid"
+
+#, fuzzy
+msgid "Wrong crypto context"
+msgstr "Motor cifrare invalid"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Motor cifrare invalid"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Nici o cheie publicã"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Nici o cheie secretã"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "Operaþiune anulatã"
 

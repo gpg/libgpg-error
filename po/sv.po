@@ -669,6 +669,32 @@ msgid "Ambiguous result"
 msgstr "Tvetydigt namn"
 
 #, fuzzy
+msgid "No crypto context"
+msgstr "Ogiltig krypteringsmotor"
+
+#, fuzzy
+msgid "Wrong crypto context"
+msgstr "Ogiltig krypteringsmotor"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Ogiltig krypteringsmotor"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Ingen publik nyckel"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Ingen hemlig nyckel"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "Åtgärden avbröts"
 

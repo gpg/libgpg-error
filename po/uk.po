@@ -679,6 +679,34 @@ msgid "Ambiguous result"
 msgstr "Неоднозначна назва"
 
 #, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "No crypto context"
+msgstr "Некоректний рушій шифрування"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Wrong crypto context"
+msgstr "Некоректний рушій шифрування"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Некоректний рушій шифрування"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Немає відкритого ключа"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Немає закритого ключа"
+
+#, fuzzy
 #| msgid "Operation cancelled"
 msgid "Operation fully cancelled"
 msgstr "Дію скасовано"

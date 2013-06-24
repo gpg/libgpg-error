@@ -663,6 +663,34 @@ msgstr "Valeur dupliquée"
 msgid "Ambiguous result"
 msgstr "Nom ambiguë"
 
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "No crypto context"
+msgstr "Aucun moteur de chiffrement"
+
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Wrong crypto context"
+msgstr "Aucun moteur de chiffrement"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Moteur de chiffrement incorrect"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Pas de clef publique"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Pas de clef secrète"
+
 msgid "Operation fully cancelled"
 msgstr "Opération complètement annulée"
 

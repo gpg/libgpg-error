@@ -677,6 +677,34 @@ msgid "Ambiguous result"
 msgstr "Nome ambiguo"
 
 #, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "No crypto context"
+msgstr "Motore crittografico non valido"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Wrong crypto context"
+msgstr "Motore crittografico non valido"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Motore crittografico non valido"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Nessuna chiave pubblica"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Nessuna chiave segreta"
+
+#, fuzzy
 #| msgid "Operation cancelled"
 msgid "Operation fully cancelled"
 msgstr "Operazione annullata"

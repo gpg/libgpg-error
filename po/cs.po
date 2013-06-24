@@ -670,6 +670,34 @@ msgstr "Zdvojená hodnota"
 msgid "Ambiguous result"
 msgstr "Nejednoznačné jméno"
 
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "No crypto context"
+msgstr "Chybí kryptografická jednotka"
+
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Wrong crypto context"
+msgstr "Chybí kryptografická jednotka"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Neplatná kryptografická jednotka"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Žádný veřejný klíč"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Žádný tajný klíč"
+
 msgid "Operation fully cancelled"
 msgstr "Operace zcela zrušena"
 

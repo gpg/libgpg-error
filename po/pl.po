@@ -665,6 +665,34 @@ msgid "Ambiguous result"
 msgstr "Niejednoznaczna nazwa"
 
 #, fuzzy
+#| msgid "No crypto engine"
+msgid "No crypto context"
+msgstr "Brak silnika kryptograficznego"
+
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Wrong crypto context"
+msgstr "Brak silnika kryptograficznego"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Niepoprawny silnik kryptograficzny"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Brak klucza publicznego"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Brak klucza tajnego"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "Operacja anulowana"
 

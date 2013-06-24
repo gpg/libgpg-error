@@ -665,6 +665,34 @@ msgstr "Duplikeret værdi"
 msgid "Ambiguous result"
 msgstr "Tvetydigt navn"
 
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "No crypto context"
+msgstr "Ingen cryptomotor"
+
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Wrong crypto context"
+msgstr "Ingen cryptomotor"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Ugyldig cryptomotor"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Ingen offentlig nøgle"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Ingen hemmelig nøgle"
+
 msgid "Operation fully cancelled"
 msgstr "Handling fuldt afbrudt"
 

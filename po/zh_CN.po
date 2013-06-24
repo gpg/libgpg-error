@@ -669,6 +669,32 @@ msgid "Ambiguous result"
 msgstr ""
 
 #, fuzzy
+msgid "No crypto context"
+msgstr "无效的加密引擎"
+
+#, fuzzy
+msgid "Wrong crypto context"
+msgstr "无效的加密引擎"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "无效的加密引擎"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "没有公钥"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "没有秘匙"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "操作已取消"
 

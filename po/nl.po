@@ -662,6 +662,34 @@ msgstr "Gedupliceerde waarde"
 msgid "Ambiguous result"
 msgstr "Dubbelzinnige naam"
 
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "No crypto context"
+msgstr "Geen crypto-engine"
+
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Wrong crypto context"
+msgstr "Geen crypto-engine"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Ongeldige crypto-engine"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Geen publieke sleutel"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Geen geheime sleutel"
+
 msgid "Operation fully cancelled"
 msgstr "Bewerking volledig geannuleerd"
 

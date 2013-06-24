@@ -675,6 +675,32 @@ msgid "Ambiguous result"
 msgstr "曖昧な名前です"
 
 #, fuzzy
+msgid "No crypto context"
+msgstr "無効な暗号エンジンです"
+
+#, fuzzy
+msgid "Wrong crypto context"
+msgstr "無効な暗号エンジンです"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "無効な暗号エンジンです"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "公開鍵がありません"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "秘密鍵がありません"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "操作がキャンセルされました"
 

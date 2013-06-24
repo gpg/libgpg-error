@@ -671,6 +671,32 @@ msgid "Ambiguous result"
 msgstr "Tên mờ hồ"
 
 #, fuzzy
+msgid "No crypto context"
+msgstr "Cơ chế mật mã không hợp lệ"
+
+#, fuzzy
+msgid "Wrong crypto context"
+msgstr "Cơ chế mật mã không hợp lệ"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Cơ chế mật mã không hợp lệ"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Không có khoá công"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Không có khoá bí mật"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "Thao tác bị hủy bỏ"
 
