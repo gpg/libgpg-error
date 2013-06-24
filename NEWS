@@ -1,5 +1,9 @@
-Noteworthy changes in version 1.12 (unreleased)
+Noteworthy changes in version 1.12 (2013-06-24)
 -----------------------------------------------
+
+ * Add support for 64 bit Windows (use ./autogen.sh --build-w64).
+
+ * Fixed parsing and installing of the Windows .def file.
 
  * Interface changes relative to the 1.11 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
