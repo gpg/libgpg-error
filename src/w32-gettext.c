@@ -1617,6 +1617,17 @@ get_string (struct loaded_domain *domain, uint32_t idx,
                 + SWAPIT(domain->must_swap, domain->trans_tab[idx].offset));
       plen_utf8 = SWAPIT(domain->must_swap, domain->trans_tab[idx].length);
 
+      /* We need to include the nul, so that the utf8->wchar->native
+         conversion chain works correctly and the nul is stored after
+         the conversion. */
+      if (p_utf8[plen_utf8])
+        {
+          trans = "ERROR in MO file"; /* Terminating zero is missing.  */
+          translen = 0;
+          goto leave;
+        }
+      plen_utf8++;
+
       buf = utf8_to_native (p_utf8, plen_utf8, &buflen);
       if (!buf)
         {
@@ -1640,10 +1651,10 @@ get_string (struct loaded_domain *domain, uint32_t idx,
           /* There is not enough space for the translation (or for
              whatever reason an empty string is used): Store it in the
              overflow_space and mark that in the mapped array.
-             Because UTF-8 strings are in general shorter than the
-             Windows 2 byte encodings, we expect that this won't
-             happen too often (if at all) and thus we use a linked
-             list to manage this space. */
+             Because UTF-8 strings are in general longer than the
+             Windows native encoding, we expect that this won't happen
+             too often and thus we use a linked list to manage this
+             space. */
           os = jnlib_malloc (sizeof *os + buflen);
           if (os)
             {
@@ -1662,6 +1673,8 @@ get_string (struct loaded_domain *domain, uint32_t idx,
               translen = 0;
             }
         }
+      if (translen)
+        translen--;  /* TRANSLEN shall be the size without the nul.  */
       jnlib_free (buf);
     }
   else if (domain->mapped[idx] == 1)
@@ -1688,6 +1701,7 @@ get_string (struct loaded_domain *domain, uint32_t idx,
       translen = domain->mapped[idx];
     }
 
+ leave:
   if (use_plural && translen)
     return get_plural (trans, translen, nplural);
   else
