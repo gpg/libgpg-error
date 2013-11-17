@@ -1,6 +1,11 @@
 Noteworthy changes in version 1.13 (unreleased)
 -----------------------------------------------
 
+ * Interface changes relative to the 1.11 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_MAC_ALGO             NEW.
+
+
 Noteworthy changes in version 1.12 (2013-06-24)
 -----------------------------------------------
 

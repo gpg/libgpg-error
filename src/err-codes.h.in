@@ -226,7 +226,7 @@
 194	GPG_ERR_CRYPT_CTX_CONFLICT	Conflict in the crypto context
 195	GPG_ERR_BROKEN_PUBKEY		Broken public key
 196	GPG_ERR_BROKEN_SECKEY		Broken secret key
-# 197 is free to be used.
+197	GPG_ERR_MAC_ALGO		Invalid MAC algorithm
 198	GPG_ERR_FULLY_CANCELED		Operation fully cancelled
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short

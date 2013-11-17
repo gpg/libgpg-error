@@ -345,7 +345,10 @@ GPG_ERR_INV_LENGTH		Invalid length
               modes.
             - Bad length of input data; e.g. not a multiple of the
               block length.
-            - A length does not match the size of the digest algorithm.
+            - A length does not match the size of the digest
+              algorithm.
+            - Length of signature or public key is not as expected
+              (e.g. in EdDSA).
     [more to come]
     GNUPG:  - Invalid hash length for a pubkey
     [more to come]
@@ -511,5 +514,11 @@ GPG_ERR_BROKEN_SECKEY		Broken secret key
 
         The secret key was mathematically not correctly generated.
 
+GPG_ERR_MAC_ALGO
+
+    GCRYPT: - MAC key algorithm is not defined or not available.
+
+
+198     GPG_ERR_FULLY_CANCELED          Operation fully cancelled
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
