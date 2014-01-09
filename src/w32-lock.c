@@ -52,10 +52,24 @@ get_lock_object (gpgrt_lock_t *lockhd)
 gpg_err_code_t
 gpgrt_lock_init (gpgrt_lock_t *lockhd)
 {
-  _gpgrt_lock_t *lock = get_lock_object (lockhd);
+  _gpgrt_lock_t *lock = (_gpgrt_lock_t*)lockhd;
 
-  if (sizeof (gpgrt_lock_t) < sizeof (_gpgrt_lock_t))
-    abort ();
+  /* If VERS is zero we assume that no static initialization has been
+     done, so we setup our ABI version right here.  The caller might
+     have called us to test whether lock support is at all available. */
+  if (!lock->vers)
+    {
+      if (sizeof (gpgrt_lock_t) < sizeof (_gpgrt_lock_t))
+        abort ();
+      lock->vers = LOCK_ABI_VERSION;
+    }
+  else /* Run the usual check.  */
+    {
+      lock = get_lock_object (lockhd);
+      if (sizeof (gpgrt_lock_t) < sizeof (_gpgrt_lock_t))
+        abort ();
+    }
+
   InitializeCriticalSection (&lock->csec);
   lock->initdone = 1;
 }

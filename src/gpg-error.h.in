@@ -291,7 +291,8 @@ gpg_error_from_syserror (void)
 #define GPGRT_LOCK_DEFINE(name) \
   static gpgrt_lock_t name  = GPGRT_LOCK_INITIALIZER
 
-
+/* NB: If GPGRT_LOCK_DEFINE is not used, zero out the lock variable
+   before passing it to gpgrt_lock_init.  */
 gpg_err_code_t gpgrt_lock_init (gpgrt_lock_t *lockhd);
 gpg_err_code_t gpgrt_lock_lock (gpgrt_lock_t *lockhd);
 gpg_err_code_t gpgrt_lock_unlock (gpgrt_lock_t *lockhd);
