@@ -1,5 +1,5 @@
 # gpg-error.m4 - autoconf macro to detect libgpg-error.
-# Copyright (C) 2002, 2003, 2004, 2011 g10 Code GmbH
+# Copyright (C) 2002, 2003, 2004, 2011, 2014 g10 Code GmbH
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -8,10 +8,16 @@
 # This file is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+# Last-changed: 2014-01-24
+
 
 dnl AM_PATH_GPG_ERROR([MINIMUM-VERSION,
 dnl                   [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND ]]])
-dnl Test for libgpg-error and define GPG_ERROR_CFLAGS and GPG_ERROR_LIBS
+dnl
+dnl Test for libgpg-error and define GPG_ERROR_CFLAGS, GPG_ERROR_LIBS,
+dnl GPG_ERROR_MT_CFLAGS, and GPG_ERROR_MT_LIBS.  The _MT_ variants are
+dnl used for programs requireding real multi thread support.
 dnl
 AC_DEFUN([AM_PATH_GPG_ERROR],
 [ AC_REQUIRE([AC_CANONICAL_HOST])
@@ -64,6 +70,8 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
   if test $ok = yes; then
     GPG_ERROR_CFLAGS=`$GPG_ERROR_CONFIG $gpg_error_config_args --cflags`
     GPG_ERROR_LIBS=`$GPG_ERROR_CONFIG $gpg_error_config_args --libs`
+    GPG_ERROR_MT_CFLAGS=`$GPG_ERROR_CONFIG $gpg_error_config_args --mt --cflags 2>/dev/null`
+    GPG_ERROR_MT_LIBS=`$GPG_ERROR_CONFIG $gpg_error_config_args --mt --libs 2>/dev/null`
     AC_MSG_RESULT([yes ($gpg_error_config_version)])
     ifelse([$2], , :, [$2])
     gpg_error_config_host=`$GPG_ERROR_CONFIG $gpg_error_config_args --host 2>/dev/null || echo none`
@@ -82,9 +90,13 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
   else
     GPG_ERROR_CFLAGS=""
     GPG_ERROR_LIBS=""
+    GPG_ERROR_MT_CFLAGS=""
+    GPG_ERROR_MT_LIBS=""
     AC_MSG_RESULT(no)
     ifelse([$3], , :, [$3])
   fi
   AC_SUBST(GPG_ERROR_CFLAGS)
   AC_SUBST(GPG_ERROR_LIBS)
+  AC_SUBST(GPG_ERROR_MT_CFLAGS)
+  AC_SUBST(GPG_ERROR_MT_LIBS)
 ])

@@ -17,12 +17,14 @@ libdir=@libdir@
 isubdirafter="@GPG_ERROR_CONFIG_ISUBDIRAFTER@"
 
 output=""
+mt=no
 
 usage()
 {
     cat <<EOF
 Usage: gpg-error-config [OPTIONS]
 Options:
+        [--mt]       (must be the first option)
 	[--prefix]
 	[--exec-prefix]
 	[--version]
@@ -47,6 +49,9 @@ while test $# -gt 0; do
     esac
 
     case $1 in
+        --mt)
+            mt=yes
+            ;;
         --prefix)
 	    output="$output $prefix"
 	    ;;
@@ -67,6 +72,9 @@ while test $# -gt 0; do
                 output="$output -idirafter ${includedir}/${i}"
             done
 	    output="$output @GPG_ERROR_CONFIG_CFLAGS@"
+            if test $mt = yes ; then
+                output="$output @GPG_ERROR_CONFIG_MT_CFLAGS@"
+            fi
 	    ;;
 	--libs)
 	    case "$libdir" in
@@ -76,6 +84,9 @@ while test $# -gt 0; do
 		    ;;
 	    esac
 	    output="$output @GPG_ERROR_CONFIG_LIBS@"
+            if test $mt = yes ; then
+                output="$output @GPG_ERROR_CONFIG_MT_LIBS@"
+            fi
 	    ;;
         --host)
             echo "@GPG_ERROR_CONFIG_HOST@"

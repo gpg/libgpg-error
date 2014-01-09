@@ -1,4 +1,4 @@
-# threadlib.m4 serial 10 (gettext-0.18.2) modified by wk 2014-01-15.
+# threadlib.m4 serial 10 (gettext-0.18.2) modified by wk 2014-01-24.
 dnl Copyright (C) 2005-2014 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,8 +23,8 @@ dnl Sets the variables LIBMULTITHREAD and LTLIBMULTITHREAD similarly, for
 dnl programs that really need multithread functionality. The difference
 dnl between LIBTHREAD and LIBMULTITHREAD is that on platforms supporting weak
 dnl symbols, typically LIBTHREAD="" whereas LIBMULTITHREAD="-lpthread".
-dnl Adds to CPPFLAGS the flag -D_REENTRANT or -D_THREAD_SAFE if needed for
-dnl multithread-safe programs.
+dnl Sets THREADLIB_CPPFLAGS to -D_REENTRANT or -D_THREAD_SAFE if needed for
+dnl multithread-safe programs and adds THREADLIB_CPPFLAGS to CPPFLAGS.
 
 AC_DEFUN([gl_THREADLIB_EARLY],
 [
@@ -49,6 +49,7 @@ AC_DEFUN([gl_THREADLIB_EARLY_BODY],
     [AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])],
     [AC_REQUIRE([AC_GNU_SOURCE])])
   dnl Check for multithreading.
+  THREADLIB_CPPFLAGS=""
   m4_ifdef([gl_THREADLIB_DEFAULT_NO],
     [m4_divert_text([DEFAULTS], [gl_use_threads_default=no])],
     [m4_divert_text([DEFAULTS], [gl_use_threads_default=])])
@@ -89,16 +90,23 @@ changequote([,])dnl
         # 2. putting a flag into CPPFLAGS that has an effect on the linker
         # causes the AC_LINK_IFELSE test below to succeed unexpectedly,
         # leading to wrong values of LIBTHREAD and LTLIBTHREAD.
-        CPPFLAGS="$CPPFLAGS -D_REENTRANT"
+        THREADLIB_CPPFLAGS="$THREADLIB_CPPFLAGS -D_REENTRANT"
         ;;
     esac
     # Some systems optimize for single-threaded programs by default, and
     # need special flags to disable these optimizations. For example, the
     # definition of 'errno' in <errno.h>.
     case "$host_os" in
-      aix* | freebsd*) CPPFLAGS="$CPPFLAGS -D_THREAD_SAFE" ;;
-      solaris*) CPPFLAGS="$CPPFLAGS -D_REENTRANT" ;;
+      aix* | freebsd*)
+           THREADLIB_CPPFLAGS="$THREADLIB_CPPFLAGS -D_THREAD_SAFE"
+           ;;
+      solaris*)
+           THREADLIB_CPPFLAGS="$THREADLIB_CPPFLAGS -D_REENTRANT"
+           ;;
     esac
+  fi
+  if test x"$THREADLIB_CPPFLAGS" != x ; then
+      CPPFLAGS="$CPPFLAGS $THREADLIB_CPPFLAGS"
   fi
 ])
 

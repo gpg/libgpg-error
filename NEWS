@@ -1,7 +1,12 @@
 Noteworthy changes in version 1.13 (unreleased)
 -----------------------------------------------
 
- Add a portable mutex API.
+ * Added a portable mutex API.
+
+ * The AM_PATH_GPG_ERROR macro now defines GPG_ERROR_MT_CFLAGS and
+   GPG_ERROR_MT_LIBS autoconf output variables for use by programs
+   which need gpgrt based thread support.  gpg-error-config has a new
+   option --mt.
 
  * Interface changes relative to the 1.12 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
