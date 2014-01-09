@@ -22,7 +22,7 @@ AUTOMAKE_OPTIONS = dist-bzip2
 # (A suitable gitlog-to-changelog script can be found in GnuPG master.)
 GITLOG_TO_CHANGELOG=gitlog-to-changelog
 
-EXTRA_DIST = autogen.sh config.rpath libgpg-error.spec.in 		\
+EXTRA_DIST = autogen.sh autogen.rc libgpg-error.spec.in 		\
              COPYING COPYING.LIB potomo doc/HACKING ChangeLog-2011   	\
 	     po/ChangeLog-2011 m4/ChangeLog-2011 contrib/ChangeLog-2011 \
              build-aux/git-log-footer  build-aux/git-log-fix
@@ -71,4 +71,3 @@ endif
 
 stowinstall:
 	$(MAKE) $(AM_MAKEFLAGS) install prefix=/usr/local/stow/libgpg-error
-
