@@ -95,6 +95,30 @@ version:
    ./autogen.sh --build-w64
 
 
+Cross-Compiling
+---------------
+
+Libgpg-error needs to figure out some platform specific properties.
+These are used to build the platform specific gpg-error.h file.  The
+detection is done during build time but can't be done when
+cross-compiling.  Thus if you run into an error during building you
+need to figure out these values.  You may use these commands:
+
+  build="$(build-aux/config.guess)"
+  ./configure --prefix=TARGETDIR --host=TARGET --build=$build
+  cd src
+  make gen-posix-lock-obj
+  scp gen-posix-lock-obj TARGET:
+  ssh TARGET ./gen-posix-lock-obj >tmp.h
+  mv tmp.h "syscfg/$(awk 'NR==1 {print $2}' tmp.h)"
+
+If you are using a VPATH build adjust accordingly.  If this all works
+for you (make sure to run the test programs on the target platform),
+please send the generated file to the gnupg-devel mailing list so that
+we can include it in the next release.
+
+
+
 Known Problems
 --------------
 

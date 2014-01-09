@@ -39,6 +39,11 @@ else
 noinst_PROGRAMS = gen-posix-lock-obj
 endif
 
+# Distributed lock object definitions for cross compilation.
+lock_obj_pub = \
+	syscfg/lock-obj-pub.mingw32.h
+
+
 lib_LTLIBRARIES = libgpg-error.la
 include_HEADERS = gpg-error.h
 bin_SCRIPTS = gpg-error-config
@@ -51,7 +56,7 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkheader.c gpg-error.h.in mkw32errmap.c w32-add.h w32ce-add.h \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 \
 	gpg-error.def.in versioninfo.rc.in \
-	w32-lock-obj-pub.in
+	$(lock_obj_pub)
 
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h \
@@ -62,7 +67,7 @@ tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h mkw32errmap.map.c
 CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	gpg-error.h mkerrcodes mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
-	gpg-extra/errno.h mkheader $(tmp_files) posix-lock-obj-pub.in
+	gpg-extra/errno.h mkheader $(tmp_files) lock-obj-pub.native.h
 
 if HAVE_W32_SYSTEM
 arch_sources = w32-gettext.c w32-lock.c w32-lock-obj.h w32-thread.c
@@ -105,20 +110,6 @@ endif
 libgpg_error_la_LDFLAGS = -version-info \
   @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@ \
   $(no_undefined) $(export_symbols)
-
-parts_of_gpg_error_h = 	 	\
-	gpg-error.h.in  	\
-	err-sources.h.in 	\
-	err-codes.h.in 	 	\
-	errnos.in 	 	\
-	w32-add.h	 	\
-	w32ce-add.h      	\
-	w32-lock-obj-pub.in
-
-if ! HAVE_W32_SYSTEM
-parts_of_gpg_error_h += posix-lock-obj-pub.in
-endif
-
 
 libgpg_error_la_SOURCES = gpg-error.h gettext.h $(arch_sources) \
 	init.c init.h version.c lock.h thread.h \
@@ -212,14 +203,32 @@ errnos-sym.h: Makefile mkstrtable.awk errnos.in
 mkheader: mkheader.c Makefile
 	$(CC_FOR_BUILD) -g -O0 -I. -I$(srcdir) -o $@ $(srcdir)/mkheader.c
 
+parts_of_gpg_error_h = 	 	\
+	gpg-error.h.in  	\
+	err-sources.h.in 	\
+	err-codes.h.in 	 	\
+	errnos.in 	 	\
+	w32-add.h	 	\
+	w32ce-add.h      	\
+	$(lock_obj_pub)
 
-posix-lock-obj-pub.in: Makefile gen-posix-lock-obj posix-lock-obj.h
+# If we are cross-compiling we better make sure that no stale native
+# lock include file will be found by mkheader.
+if CROSS_COMPILING
+pre_mkheader_cmds = -rm lock-obj-pub.native.h 2>/dev/null
+else
+pre_mkheader_cmds = :
+parts_of_gpg_error_h += ./lock-obj-pub.native.h
+
+lock-obj-pub.native.h: Makefile gen-posix-lock-obj posix-lock-obj.h
 	./gen-posix-lock-obj >$@
+endif
 
 # We also depend on versioninfo.rc because that is build by
 # config.status and thus has up-to-date version numbers.
 gpg-error.h: Makefile mkheader $(parts_of_gpg_error_h) versioninfo.rc
-	./mkheader $(host_os) $(srcdir)/gpg-error.h.in \
+	$(pre_mkheader_cmds)
+	./mkheader $(host_os) $(host_triplet)  $(srcdir)/gpg-error.h.in \
                    $(PACKAGE_VERSION) $(VERSION_NUMBER) >$@
 
 

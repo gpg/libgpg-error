@@ -27,6 +27,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 #include <pthread.h>
 
 #include "posix-lock-obj.h"
@@ -65,7 +66,8 @@ main (void)
 
   /* To force a probably suitable alignment of the structure we use a
      union and include a long and a pointer to a long.  */
-  printf ("## File created by " PGM " - DO NOT EDIT\n"
+  printf ("## lock-obj.%s.h\n"
+          "## File created by " PGM " - DO NOT EDIT\n"
           "## To be included by mkheader into gpg-error.h\n"
           "\n"
           "typedef union\n"
@@ -79,6 +81,7 @@ main (void)
           "} gpgrt_lock_t;\n"
           "\n"
           "#define GPGRT_LOCK_INITIALIZER {{{",
+          HOST_TRIPLET_STRING,
           SIZEOF_PTHREAD_MUTEX_T);
   p = (unsigned char *)&mtx;
   for (i=0; i < sizeof mtx; i++)
@@ -90,6 +93,18 @@ main (void)
         putchar (',');
     }
   printf ("},%d}}\n", LOCK_ABI_VERSION);
+  fputs ("##\n"
+         "## Loc" "al Variables:\n"
+         "## mode: c\n"
+         "## buffer-read-only: t\n"
+         "## End:\n"
+         "##\n", stdout);
+
+  if (ferror (stdout))
+    {
+      fprintf (stderr, PGM ": error writing to stdout: %s\n", strerror (errno));
+      return 1;
+    }
 
   return 0;
 }

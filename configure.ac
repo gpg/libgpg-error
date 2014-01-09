@@ -202,6 +202,9 @@ fi
 AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
 AM_CONDITIONAL(HAVE_W64_SYSTEM, test "$have_w64_system" = yes)
 AM_CONDITIONAL(HAVE_W32CE_SYSTEM, test "$have_w32ce_system" = yes)
+AM_CONDITIONAL(CROSS_COMPILING, test x$cross_compiling = xyes)
+
+AC_DEFINE_UNQUOTED(HOST_TRIPLET_STRING, "$host", [The host triplet])
 
 
 #

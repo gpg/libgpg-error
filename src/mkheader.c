@@ -16,12 +16,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <unistd.h>
 
 #define PGM "mkheader"
 
 #define LINESIZE 1024
 
 static const char *host_os;
+static const char *host_triplet;
 static char *srcdir;
 static const char *hdr_version;
 static const char *hdr_version_number;
@@ -128,6 +130,45 @@ write_errnos_in (char *line)
 }
 
 
+/* Create the full file name for NAME and return a newly allocated
+   string with it.  If name contains a '&' and REPL is not NULL
+   replace '&' with REPL. */
+static char *
+mk_include_name (const char *name, const char *repl)
+{
+  FILE *fp;
+  char *incfname, *p;
+  const char *s;
+
+  incfname = malloc (strlen (srcdir) + strlen (name)
+                     + (repl?strlen (repl):0) + 1);
+  if (!incfname)
+    {
+      fputs (PGM ": out of core\n", stderr);
+      exit (1);
+    }
+
+  if (*name == '.' && name[1] == '/')
+    *incfname = 0;
+  else
+    strcpy (incfname, srcdir);
+  p = incfname + strlen (incfname);
+  for (s=name; *s; s++)
+    {
+      if (*s == '&' && repl)
+        {
+          while (*repl)
+            *p++ = *repl++;
+          repl = NULL;  /* Replace only once.  */
+        }
+      else
+        *p++ = *s;
+    }
+  *p = 0;
+  return incfname;
+}
+
+
 /* Include the file NAME from the source directory.  The included file
    is not further expanded.  It may have comments indicated by a
    double hash mark at the begin of a line.  OUTF is called for each
@@ -141,27 +182,28 @@ include_file (const char *fname, int lnr, const char *name, void (*outf)(char*))
   char *incfname;
   int inclnr;
   char line[LINESIZE];
+  int repl_flag;
 
-  incfname = malloc (strlen (srcdir) + strlen (name) + 1);
-  if (!incfname)
-    {
-      fputs (PGM ": out of core\n", stderr);
-      exit (1);
-    }
-
-  if (*name == '.' && name[1] == '/')
-    *incfname = 0;
-  else
-    strcpy (incfname, srcdir);
-  strcat (incfname, name);
-
+  repl_flag = !!strchr (name, '&');
+  incfname = mk_include_name (name, repl_flag? host_triplet : NULL);
   fp = fopen (incfname, "r");
+  if (!fp && repl_flag)
+    {
+      /* Try again using the OS string.  */
+      free (incfname);
+      incfname = mk_include_name (name, host_os);
+      fp = fopen (incfname, "r");
+    }
   if (!fp)
     {
       fprintf (stderr, "%s:%d: error including `%s': %s\n",
                fname, lnr, incfname, strerror (errno));
       exit (1);
     }
+
+  if (repl_flag)
+    fprintf (stderr,"%s:%d: note: including '%s'\n",
+             fname, lnr, incfname);
 
   inclnr = 0;
   while (fgets (line, LINESIZE, fp))
@@ -203,6 +245,33 @@ include_file (const char *fname, int lnr, const char *name, void (*outf)(char*))
     }
   fclose (fp);
   free (incfname);
+}
+
+
+/* Try to include the file NAME.  Returns true if it does not
+   exist. */
+static int
+try_include_file (const char *fname, int lnr, const char *name,
+                  void (*outf)(char*))
+{
+  int rc;
+  char *incfname;
+  int repl_flag;
+
+  repl_flag = !!strchr (name, '&');
+  incfname = mk_include_name (name, repl_flag? host_triplet : NULL);
+  rc = access (incfname, R_OK);
+  if (rc && repl_flag)
+    {
+      free (incfname);
+      incfname = mk_include_name (name, host_os);
+      rc = access (incfname, R_OK);
+    }
+  if (!rc)
+    include_file (fname, lnr, name, outf);
+
+  free (incfname);
+  return rc;
 }
 
 
@@ -249,12 +318,8 @@ write_special (const char *fname, int lnr, const char *tag)
     }
   else if (!strcmp (tag, "include:lock-obj"))
     {
-      if (!strcmp (host_os, "mingw32"))
-        {
-          include_file (fname, lnr, "w32-lock-obj-pub.in", write_line);
-        }
-      else
-        include_file (fname, lnr, "./posix-lock-obj-pub.in", write_line);
+      if (try_include_file (fname, lnr, "./lock-obj-pub.native.h", write_line))
+        include_file (fname, lnr, "syscfg/lock-obj-pub.&.h", write_line);
     }
   else
     return 0; /* Unknown tag.  */
@@ -277,16 +342,18 @@ main (int argc, char **argv)
       argc--; argv++;
     }
 
-  if (argc != 4)
+  if (argc != 5)
     {
-      fputs ("usage: " PGM " host_os template.h version version_number\n",
+      fputs ("usage: " PGM
+             " host_os host_triplet template.h version version_number\n",
              stderr);
       return 1;
     }
   host_os = argv[0];
-  fname = argv[1];
-  hdr_version = argv[2];
-  hdr_version_number = argv[3];
+  host_triplet = argv[1];
+  fname = argv[2];
+  hdr_version = argv[3];
+  hdr_version_number = argv[4];
 
   srcdir = malloc (strlen (fname) + 2 + 1);
   if (!srcdir)
@@ -337,8 +404,8 @@ main (int argc, char **argv)
       if (!strcmp (p1, "configure_input"))
         {
           s = strrchr (fname, '/');
-          printf ("Do not edit.  Generated from %s by %s for %s.",
-                  s? s+1 : fname, PGM, host_os);
+          printf ("Do not edit.  Generated from %s for %s.",
+                  s? s+1 : fname, host_triplet);
           fputs (p2, stdout);
           putchar ('\n');
         }
