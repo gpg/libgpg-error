@@ -164,6 +164,9 @@ accountant_thread (void *arg)
 
   (void)arg;
 
+#ifdef _WIN32
+  srand (time(NULL)*getpid());  /* Windows needs it per thread.  */
+#endif
   for (i = 0; i < N_TRANSACTIONS; i++)
     {
       rc = gpgrt_lock_lock (&accounts_lock);
