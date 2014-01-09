@@ -1,5 +1,5 @@
 /* version.c - Version checking
- * Copyright (C) 2001, 2002, 2012, 2013 g10 Code GmbH
+ * Copyright (C) 2001, 2002, 2012, 2013, 2014 g10 Code GmbH
  *
  * This file is part of libgpg-error.
  *
@@ -39,7 +39,7 @@ cright_blurb (void)
   static const char blurb[] =
     "\n\n"
     "This is Libgpg-error " PACKAGE_VERSION " - An error code library\n"
-    "Copyright 2003, 2004, 2010, 2013 g10 Code GmbH\n"
+    "Copyright 2003, 2004, 2010, 2013, 2014 g10 Code GmbH\n"
     "\n"
     "(" BUILD_REVISION " " BUILD_TIMESTAMP ")\n"
     "\n\n";

@@ -1,0 +1,95 @@
+/* gen-posix-lock-obj.c - Build tool to construct the lock object.
+   Copyright (C) 2014 g10 Code GmbH
+
+   This file is part of libgpg-error.
+
+   libgpg-error is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public License
+   as published by the Free Software Foundation; either version 2.1 of
+   the License, or (at your option) any later version.
+
+   libgpg-error is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with this program; if not, see <http://www.gnu.org/licenses/>.
+ */
+
+#if HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_W32_SYSTEM
+# error This module may not be build for Windows.
+#endif
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <pthread.h>
+
+#include "posix-lock-obj.h"
+
+#define PGM "gen-posix-lock-obj"
+
+/* Check that configure did its job.  */
+#if SIZEOF_PTHREAD_MUTEX_T < 4
+# error sizeof pthread_mutex_t is not known.
+#endif
+
+static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+
+
+int
+main (void)
+{
+  unsigned char *p;
+  int i;
+  struct {
+    pthread_mutex_t mtx;
+    long vers;
+  } dummyobj;
+
+  if (sizeof mtx != SIZEOF_PTHREAD_MUTEX_T)
+    {
+      fprintf (stderr, PGM ": pthread_mutex_t mismatch\n");
+      exit (1);
+    }
+
+  if (sizeof (dummyobj) != sizeof (_gpgrt_lock_t))
+    {
+      fprintf (stderr, PGM ": internal and external lock object mismatch\n");
+      exit (1);
+    }
+
+  /* To force a probably suitable alignment of the structure we use a
+     union and include a long and a pointer to a long.  */
+  printf ("## File created by " PGM " - DO NOT EDIT\n"
+          "## To be included by mkheader into gpg-error.h\n"
+          "\n"
+          "typedef union\n"
+          "{\n"
+          "  struct {\n"
+          "    volatile char _priv[%d];\n"
+          "    long _vers;\n"
+          "  } d;\n"
+          "  long _x_align;\n"
+          "  long *_xp_align;\n"
+          "} gpgrt_lock_t;\n"
+          "\n"
+          "#define GPGRT_LOCK_INITIALIZER {{{",
+          SIZEOF_PTHREAD_MUTEX_T);
+  p = (unsigned char *)&mtx;
+  for (i=0; i < sizeof mtx; i++)
+    {
+      if (i && !(i % 8))
+        printf (" \\\n%*s", 34, "");
+      printf ("%u", p[i]);
+      if (i < sizeof mtx - 1)
+        putchar (',');
+    }
+  printf ("},%d}}\n", LOCK_ABI_VERSION);
+
+  return 0;
+}

@@ -28,3 +28,9 @@ EXPORTS
 #endif
  gpg_err_deinit		      @18
  gpg_error_check_version      @19
+
+ gpgrt_lock_init              @20
+ gpgrt_lock_lock              @21
+ gpgrt_lock_unlock            @22
+ gpgrt_lock_destroy           @23
+ gpgrt_yield                  @24

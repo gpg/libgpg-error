@@ -25,11 +25,16 @@ else
 extra_includes =
 endif
 
+gpg_error_lib = ../src/libgpg-error.la
 
-TESTS = t-version t-strerror t-syserror
+TESTS = t-version t-strerror t-syserror t-lock
 
 INCLUDES = -I$(top_builddir)/src $(extra_includes)
 
-LDADD = ../src/libgpg-error.la
+
+LDADD = $(gpg_error_lib)
 
 noinst_PROGRAMS = $(TESTS)
+noinst_HEADERS = t-common.h
+
+t_lock_LDADD = $(gpg_error_lib) $(LIBMULTITHREAD)

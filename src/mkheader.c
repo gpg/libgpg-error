@@ -132,7 +132,8 @@ write_errnos_in (char *line)
    is not further expanded.  It may have comments indicated by a
    double hash mark at the begin of a line.  OUTF is called for each
    read line and passed a buffer with the content of line sans line
-   line endings. */
+   line endings.  If NAME is prefixed with "./" it is included from
+   the current directory and not from the source directory. */
 static void
 include_file (const char *fname, int lnr, const char *name, void (*outf)(char*))
 {
@@ -147,7 +148,11 @@ include_file (const char *fname, int lnr, const char *name, void (*outf)(char*))
       fputs (PGM ": out of core\n", stderr);
       exit (1);
     }
-  strcpy (incfname, srcdir);
+
+  if (*name == '.' && name[1] == '/')
+    *incfname = 0;
+  else
+    strcpy (incfname, srcdir);
   strcat (incfname, name);
 
   fp = fopen (incfname, "r");
@@ -241,6 +246,15 @@ write_special (const char *fname, int lnr, const char *tag)
           include_file (fname, lnr, "w32-add.h", write_line);
           include_file (fname, lnr, "w32ce-add.h", write_line);
         }
+    }
+  else if (!strcmp (tag, "include:lock-obj"))
+    {
+      if (!strcmp (host_os, "mingw32"))
+        {
+          include_file (fname, lnr, "w32-lock-obj-pub.in", write_line);
+        }
+      else
+        include_file (fname, lnr, "./posix-lock-obj-pub.in", write_line);
     }
   else
     return 0; /* Unknown tag.  */

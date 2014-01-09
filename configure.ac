@@ -85,6 +85,9 @@ AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
 AC_GNU_SOURCE
 
+gl_THREADLIB_EARLY
+
+
 LT_PREREQ([2.2.6])
 LT_INIT([win32-dll disable-static])
 LT_LANG([Windows Resource])
@@ -156,11 +159,26 @@ AC_MSG_WARN([[Without strerror_r, gpg_strerror_r might not be thread-safe]]))
      ;;
 esac
 
+AC_CHECK_FUNCS([flockfile])
+
+
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 
+
+# Check for thread library
+gl_LOCK
+if test "$gl_threads_api" = posix; then
+  AC_CHECK_SIZEOF(pthread_mutex_t,,[AC_INCLUDES_DEFAULT
+                                    #include <pthread.h>])
+fi
+
+
 # Substitution used for gpg-error-config
 GPG_ERROR_CONFIG_LIBS="-lgpg-error"
+if test "x$LIBTHREAD" != x; then
+  GPG_ERROR_CONFIG_LIBS="${GPG_ERROR_CONFIG_LIBS} ${LIBTHREAD}"
+fi
 GPG_ERROR_CONFIG_CFLAGS=""
 GPG_ERROR_CONFIG_ISUBDIRAFTER=""
 GPG_ERROR_CONFIG_HOST="$host"

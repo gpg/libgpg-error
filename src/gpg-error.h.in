@@ -66,7 +66,10 @@ extern "C" {
 
    GPG_ERR_ENABLE_GETTEXT_MACROS: Define to provide macros to map the
    internal gettext API to standard names.  This has only an effect on
-   Windows platforms.  */
+   Windows platforms.
+
+   In addition to the error codes, Libgpg-error also provides a set of
+   functions used by most GnuPG components.  */
 
 
 /* The error source type gpg_err_source_t.
@@ -279,9 +282,35 @@ gpg_error_from_syserror (void)
   return gpg_error (gpg_err_code_from_syserror ());
 }
 
+
+
+/* Lock functions.  */
+
+@include:lock-obj@
+
+#define GPGRT_LOCK_DEFINE(name) \
+  static gpgrt_lock_t name  = GPGRT_LOCK_INITIALIZER
+
+
+gpg_err_code_t gpgrt_lock_init (gpgrt_lock_t *lockhd);
+gpg_err_code_t gpgrt_lock_lock (gpgrt_lock_t *lockhd);
+gpg_err_code_t gpgrt_lock_unlock (gpgrt_lock_t *lockhd);
+gpg_err_code_t gpgrt_lock_destroy (gpgrt_lock_t *lockhd);
+
+
+
+/* Thread functions.  */
+
+gpg_err_code_t gpgrt_yield (void);
+
+
+
+
+/* Estream */
+
+
+
 #ifdef __cplusplus
 }
 #endif
-
-
 #endif	/* GPG_ERROR_H */

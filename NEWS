@@ -1,9 +1,20 @@
 Noteworthy changes in version 1.13 (unreleased)
 -----------------------------------------------
 
- * Interface changes relative to the 1.11 release:
+ Add a portable mutex API.
+
+ * Interface changes relative to the 1.12 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_MAC_ALGO             NEW.
+ GPG_ERR_INV_LOCK_OBJ         NEW.
+ gpgrt_lock_t                 NEW.
+ GPGRT_LOCK_INITIALIZER       NEW.
+ GPGRT_LOCK_DEFINE            NEW.
+ gpgrt_lock_init              NEW.
+ gpgrt_lock_lock              NEW.
+ gpgrt_lock_unlock            NEW.
+ gpgrt_lock_destroy           NEW.
+ gpgrt_yield                  NEW.
 
 
 Noteworthy changes in version 1.12 (2013-06-24)
