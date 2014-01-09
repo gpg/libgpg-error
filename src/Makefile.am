@@ -41,8 +41,8 @@ endif
 
 # Distributed lock object definitions for cross compilation.
 lock_obj_pub = \
-	syscfg/lock-obj-pub.mingw32.h
-
+	syscfg/lock-obj-pub.mingw32.h \
+        syscfg/lock-obj.arm-unknown-linux-androideabi.h
 
 lib_LTLIBRARIES = libgpg-error.la
 include_HEADERS = gpg-error.h
