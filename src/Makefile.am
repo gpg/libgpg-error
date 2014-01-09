@@ -128,7 +128,7 @@ libgpg_error_la_SOURCES = gpg-error.h gettext.h $(arch_sources) \
 # without the extra_cppflags because they may include am -idirafter
 # which is not supported by the RC compiler.
 libgpg_error_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" $(extra_cppflags)
-libgpg_error_la_LIBADD = $(gpg_error_res) $(intllibs)
+libgpg_error_la_LIBADD = $(gpg_error_res) $(intllibs) $(LIBTHREAD)
 
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c
 gpg_error_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" $(extra_cppflags)
