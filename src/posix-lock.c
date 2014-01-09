@@ -122,7 +122,7 @@ gpgrt_lock_init (gpgrt_lock_t *lockhd)
 #if USE_POSIX_THREADS
   if (use_pthread_p())
     {
-      rc = pthread_mutex_init (&lock->mtx, NULL);
+      rc = pthread_mutex_init (&lock->u.mtx, NULL);
       if (rc)
         rc = gpg_err_code_from_errno (rc);
     }
@@ -145,7 +145,7 @@ gpgrt_lock_lock (gpgrt_lock_t *lockhd)
 #if USE_POSIX_THREADS
   if (use_pthread_p())
     {
-      rc = pthread_mutex_lock (&lock->mtx);
+      rc = pthread_mutex_lock (&lock->u.mtx);
       if (rc)
         rc = gpg_err_code_from_errno (rc);
     }
@@ -168,7 +168,7 @@ gpgrt_lock_unlock (gpgrt_lock_t *lockhd)
 #if USE_POSIX_THREADS
   if (use_pthread_p())
     {
-      rc = pthread_mutex_unlock (&lock->mtx);
+      rc = pthread_mutex_unlock (&lock->u.mtx);
       if (rc)
         rc = gpg_err_code_from_errno (rc);
     }
@@ -193,7 +193,7 @@ gpgrt_lock_destroy (gpgrt_lock_t *lockhd)
 #if USE_POSIX_THREADS
   if (use_pthread_p())
     {
-      rc = pthread_mutex_destroy (&lock->mtx);
+      rc = pthread_mutex_destroy (&lock->u.mtx);
       if (rc)
         rc = gpg_err_code_from_errno (rc);
       else

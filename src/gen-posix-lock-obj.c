@@ -70,30 +70,31 @@ main (void)
           "## File created by " PGM " - DO NOT EDIT\n"
           "## To be included by mkheader into gpg-error.h\n"
           "\n"
-          "typedef union\n"
+          "typedef struct\n"
           "{\n"
-          "  struct {\n"
+          "  long _vers;\n"
+          "  union {\n"
           "    volatile char _priv[%d];\n"
-          "    long _vers;\n"
-          "  } d;\n"
-          "  long _x_align;\n"
-          "  long *_xp_align;\n"
+          "    long _x_align;\n"
+          "    long *_xp_align;\n"
+          "  } u;\n"
           "} gpgrt_lock_t;\n"
           "\n"
-          "#define GPGRT_LOCK_INITIALIZER {{{",
+          "#define GPGRT_LOCK_INITIALIZER {%d,{{",
           HOST_TRIPLET_STRING,
-          SIZEOF_PTHREAD_MUTEX_T);
+          SIZEOF_PTHREAD_MUTEX_T,
+          LOCK_ABI_VERSION);
   p = (unsigned char *)&mtx;
   for (i=0; i < sizeof mtx; i++)
     {
       if (i && !(i % 8))
-        printf (" \\\n%*s", 34, "");
+        printf (" \\\n%*s", 36, "");
       printf ("%u", p[i]);
       if (i < sizeof mtx - 1)
         putchar (',');
     }
-  printf ("},%d}}\n", LOCK_ABI_VERSION);
-  fputs ("##\n"
+  fputs ("}}}\n"
+         "##\n"
          "## Loc" "al Variables:\n"
          "## mode: c\n"
          "## buffer-read-only: t\n"

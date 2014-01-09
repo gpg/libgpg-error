@@ -24,8 +24,11 @@
 
 typedef struct
 {
-  pthread_mutex_t mtx;
   long vers;
+  union {
+    pthread_mutex_t mtx;
+    long *dummy;
+  } u;
 } _gpgrt_lock_t;
 
 
