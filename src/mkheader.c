@@ -1,0 +1,363 @@
+/* mkheader.c - Create a header file for libgpg-error
+ * Copyright (C) 2010 Free Software Foundation, Inc.
+ * Copyright (C) 2014 g10 Code GmbH
+ *
+ * This file is free software; as a special exception the author gives
+ * unlimited permission to copy and/or distribute it, with or without
+ * modifications, as long as this notice is preserved.
+ *
+ * This file is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+
+#define PGM "mkheader"
+
+#define LINESIZE 1024
+
+static const char *host_os;
+static char *srcdir;
+static const char *hdr_version;
+static const char *hdr_version_number;
+
+
+/* Write LINE to stdout.  The function is allowed to modify LINE.  */
+static void
+write_str (char *line)
+{
+  if (fputs (line, stdout) == EOF)
+    {
+      fprintf (stderr, PGM ": error writing to stdout: %s\n", strerror (errno));
+      exit (1);
+    }
+}
+
+static void
+write_line (char *line)
+{
+  if (puts (line) == EOF)
+    {
+      fprintf (stderr, PGM ": error writing to stdout: %s\n", strerror (errno));
+      exit (1);
+    }
+}
+
+
+/* Write SOURCE or CODES line to stdout.  The function is allowed to
+   modify LINE.  Trailing white space is already removed.  Passing
+   NULL resets the internal state.  */
+static void
+write_sources_or_codes (char *line)
+{
+  static int in_intro;
+  char *p1, *p2;
+
+  if (!line)
+    {
+      in_intro = 1;
+      return;
+    }
+
+  if (!*line)
+    return;
+
+  if (in_intro)
+    {
+      if (!strchr ("0123456789", *line))
+        return;
+      in_intro = 0;
+    }
+
+  p1 = strtok (line, " \t");
+  p2 = p1? strtok (NULL, " \t") : NULL;
+
+  if (p1 && p2 && strchr ("0123456789", *p1) && *p2)
+    {
+      write_str ("    ");
+      write_str (p2);
+      write_str (" = ");
+      write_str (p1);
+      write_str (",\n");
+    }
+}
+
+
+/* Write system errnos to stdout.  The function is allowed to
+   modify LINE.  Trailing white space is already removed.  Passing
+   NULL resets the internal state.  */
+static void
+write_errnos_in (char *line)
+{
+  static int state;
+  char *p1, *p2;
+
+  if (!line)
+    {
+      state = 0;
+      return;
+    }
+
+  if (!*line)
+    return;
+
+  if (!state && strchr ("0123456789", *line))
+    state = 1;
+  else if (state == 1 && !strchr ("0123456789", *line))
+    state = 2;
+
+  if (state != 1)
+    return;
+
+  p1 = strtok (line, " \t");
+  p2 = p1? strtok (NULL, " \t") : NULL;
+
+  if (p1 && p2 && strchr ("0123456789", *p1) && *p2)
+    {
+      write_str ("    GPG_ERR_");
+      write_str (p2);
+      write_str (" = GPG_ERR_SYSTEM_ERROR | ");
+      write_str (p1);
+      write_str (",\n");
+    }
+}
+
+
+/* Include the file NAME from the source directory.  The included file
+   is not further expanded.  It may have comments indicated by a
+   double hash mark at the begin of a line.  OUTF is called for each
+   read line and passed a buffer with the content of line sans line
+   line endings. */
+static void
+include_file (const char *fname, int lnr, const char *name, void (*outf)(char*))
+{
+  FILE *fp;
+  char *incfname;
+  int inclnr;
+  char line[LINESIZE];
+
+  incfname = malloc (strlen (srcdir) + strlen (name) + 1);
+  if (!incfname)
+    {
+      fputs (PGM ": out of core\n", stderr);
+      exit (1);
+    }
+  strcpy (incfname, srcdir);
+  strcat (incfname, name);
+
+  fp = fopen (incfname, "r");
+  if (!fp)
+    {
+      fprintf (stderr, "%s:%d: error including `%s': %s\n",
+               fname, lnr, incfname, strerror (errno));
+      exit (1);
+    }
+
+  inclnr = 0;
+  while (fgets (line, LINESIZE, fp))
+    {
+      size_t n = strlen (line);
+
+      inclnr++;
+      if (!n || line[n-1] != '\n')
+        {
+          fprintf (stderr,
+                   "%s:%d: trailing linefeed missing, line too long or "
+                   "embedded nul character\n", incfname, inclnr);
+          fprintf (stderr,"%s:%d: note: file '%s' included from here\n",
+                   fname, lnr, incfname);
+          exit (1);
+        }
+      line[--n] = 0;
+      while (line[n] == ' ' || line[n] == '\t' || line[n] == '\r')
+        {
+          line[n] = 0;
+          if (!n)
+            break;
+          n--;
+        }
+
+      if (line[0] == '#' && line[1] == '#')
+        {
+          if (!strncmp (line+2, "EOF##", 5))
+            break; /* Forced EOF.  */
+        }
+      else
+        outf (line);
+    }
+  if (ferror (fp))
+    {
+      fprintf (stderr, "%s:%d: error reading `%s': %s\n",
+               fname, lnr, incfname, strerror (errno));
+      exit (1);
+    }
+  fclose (fp);
+  free (incfname);
+}
+
+
+static int
+write_special (const char *fname, int lnr, const char *tag)
+{
+  if (!strcmp (tag, "version"))
+    {
+      putchar ('\"');
+      fputs (hdr_version, stdout);
+      putchar ('\"');
+      putchar ('\n');
+    }
+  else if (!strcmp (tag, "version-number"))
+    {
+      fputs (hdr_version_number, stdout);
+      putchar ('\n');
+    }
+  else if (!strcmp (tag, "include:err-sources"))
+    {
+      write_sources_or_codes (NULL);
+      include_file (fname, lnr, "err-sources.h.in", write_sources_or_codes);
+    }
+  else if (!strcmp (tag, "include:err-codes"))
+    {
+      write_sources_or_codes (NULL);
+      include_file (fname, lnr, "err-codes.h.in", write_sources_or_codes);
+    }
+  else if (!strcmp (tag, "include:errnos"))
+    {
+      include_file (fname, lnr, "errnos.in", write_errnos_in);
+    }
+  else if (!strcmp (tag, "include:os-add"))
+    {
+      if (!strcmp (host_os, "mingw32"))
+        {
+          include_file (fname, lnr, "w32-add.h", write_line);
+        }
+      else if (!strcmp (host_os, "mingw32ce"))
+        {
+          include_file (fname, lnr, "w32-add.h", write_line);
+          include_file (fname, lnr, "w32ce-add.h", write_line);
+        }
+    }
+  else
+    return 0; /* Unknown tag.  */
+
+  return 1; /* Tag processed.  */
+}
+
+
+int
+main (int argc, char **argv)
+{
+  FILE *fp;
+  char line[LINESIZE];
+  int lnr = 0;
+  const char *fname, *s;
+  char *p1, *p2;
+
+  if (argc)
+    {
+      argc--; argv++;
+    }
+
+  if (argc != 4)
+    {
+      fputs ("usage: " PGM " host_os template.h version version_number\n",
+             stderr);
+      return 1;
+    }
+  host_os = argv[0];
+  fname = argv[1];
+  hdr_version = argv[2];
+  hdr_version_number = argv[3];
+
+  srcdir = malloc (strlen (fname) + 2 + 1);
+  if (!srcdir)
+    {
+      fputs (PGM ": out of core\n", stderr);
+      return 1;
+    }
+  strcpy (srcdir, fname);
+  p1 = strrchr (srcdir, '/');
+  if (p1)
+    p1[1] = 0;
+  else
+    strcpy (srcdir, "./");
+
+  fp = fopen (fname, "r");
+  if (!fp)
+    {
+      fprintf (stderr, "%s:%d: can't open file: %s",
+               fname, lnr, strerror (errno));
+      return 1;
+    }
+
+  while (fgets (line, LINESIZE, fp))
+    {
+      size_t n = strlen (line);
+
+      lnr++;
+      if (!n || line[n-1] != '\n')
+        {
+          fprintf (stderr,
+                   "%s:%d: trailing linefeed missing, line too long or "
+                   "embedded nul character\n", fname, lnr);
+          break;
+        }
+      line[--n] = 0;
+
+      p1 = strchr (line, '@');
+      p2 = p1? strchr (p1+1, '@') : NULL;
+      if (!p1 || !p2 || p2-p1 == 1)
+        {
+          puts (line);
+          continue;
+        }
+      *p1++ = 0;
+      *p2++ = 0;
+      fputs (line, stdout);
+
+      if (!strcmp (p1, "configure_input"))
+        {
+          s = strrchr (fname, '/');
+          printf ("Do not edit.  Generated from %s by %s for %s.",
+                  s? s+1 : fname, PGM, host_os);
+          fputs (p2, stdout);
+          putchar ('\n');
+        }
+      else if (!write_special (fname, lnr, p1))
+        {
+          putchar ('@');
+          fputs (p1, stdout);
+          putchar ('@');
+          fputs (p2, stdout);
+          putchar ('\n');
+        }
+    }
+
+  if (ferror (fp))
+    {
+      fprintf (stderr, "%s:%d: error reading file: %s\n",
+               fname, lnr, strerror (errno));
+      return 1;
+    }
+
+  fputs ("/*\n"
+         "Loc" "al Variables:\n"
+         "buffer-read-only: t\n"
+         "End:\n"
+         "*/\n", stdout);
+
+  if (ferror (stdout))
+    {
+      fprintf (stderr, PGM ": error writing to stdout: %s\n", strerror (errno));
+      return 1;
+    }
+
+  fclose (fp);
+
+  return 0;
+}

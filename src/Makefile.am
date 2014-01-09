@@ -1,5 +1,5 @@
 # Makefile.am for libgpg-error.
-# Copyright (C) 2003, 2004 g10 Code GmbH
+# Copyright (C) 2003, 2004, 2014 g10 Code GmbH
 #
 # This file is part of libgpg-error.
 #
@@ -14,8 +14,7 @@
 # GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public
-# License along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+# License along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 # We distribute the generated sources err-sources.h and err-codes.h,
 # because they are needed to build the po directory, and they don't
@@ -41,20 +40,20 @@ m4data_DATA = gpg-error.m4
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrnos.awk errnos.in README \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
-	mkheader.awk gpg-error.h.in mkw32errmap.c w32-add.h w32ce-add.h \
+	mkheader.c gpg-error.h.in mkw32errmap.c w32-add.h w32ce-add.h \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 \
 	gpg-error.def.in versioninfo.rc.in
 
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h \
-	gpg-error.def extra-h.in mkw32errmap.map.c
+	gpg-error.def mkw32errmap.map.c
 
 tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h mkw32errmap.map.c
 
 CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	gpg-error.h mkerrcodes mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
-	gpg-extra/errno.h extra-h.in $(tmp_files)
+	gpg-extra/errno.h mkheader $(tmp_files)
 
 if HAVE_W32_SYSTEM
 arch_sources = w32-gettext.c
@@ -98,6 +97,15 @@ endif
 libgpg_error_la_LDFLAGS = -version-info \
   @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@ \
   $(no_undefined) $(export_symbols)
+
+parts_of_gpg_error_h = 	 \
+	gpg-error.h.in   \
+	err-sources.h.in \
+	err-codes.h.in 	 \
+	errnos.in 	 \
+	w32-add.h	 \
+	w32ce-add.h
+
 
 libgpg_error_la_SOURCES = gpg-error.h gettext.h $(arch_sources) \
 	init.c init.h version.c \
@@ -187,32 +195,14 @@ errnos-sym.h: Makefile mkstrtable.awk errnos.in
 		-v prefix=GPG_ERR_ -v namespace=errnos_ \
 		$(srcdir)/errnos.in >$@
 
-# We depend on versioninfo.rc because that is build by config.status
-# and thus has up-to-date version numbers.
-extra-h.in: Makefile w32-add.h w32ce-add.h versioninfo.rc
-	-rm extra-h.in
-	echo "/* The version string of this header. */" >>extra-h.in
-	echo "#define GPG_ERROR_VERSION \"$(PACKAGE_VERSION)\"" >>extra-h.in
-	echo >>extra-h.in
-	echo "/* The version number of this header. */" >>extra-h.in
-	echo "#define GPG_ERROR_VERSION_NUMBER $(VERSION_NUMBER)" >>extra-h.in
-	echo >>extra-h.in
-if HAVE_W32_SYSTEM
-	cat $(srcdir)/w32-add.h >>extra-h.in
-endif
-if HAVE_W32CE_SYSTEM
-	cat $(srcdir)/w32ce-add.h >>extra-h.in
-endif
-	echo EOF >>extra-h.in
+mkheader: mkheader.c Makefile
+	$(CC_FOR_BUILD) -g -O0 -I. -I$(srcdir) -o $@ $(srcdir)/mkheader.c
 
-gpg-error.h: Makefile mkheader.awk err-sources.h.in err-codes.h.in \
-	    	 errnos.in extra-h.in gpg-error.h.in
-	$(AWK) -f $(srcdir)/mkheader.awk \
-		$(srcdir)/err-sources.h.in \
-		$(srcdir)/err-codes.h.in \
-		$(srcdir)/errnos.in \
-		extra-h.in \
-		$(srcdir)/gpg-error.h.in > $@
+# We also depend on versioninfo.rc because that is build by
+# config.status and thus has up-to-date version numbers.
+gpg-error.h: Makefile mkheader $(parts_of_gpg_error_h) versioninfo.rc
+	./mkheader $(host_os) $(srcdir)/gpg-error.h.in \
+                   $(PACKAGE_VERSION) $(VERSION_NUMBER) >$@
 
 
 install-data-local:
