@@ -64,11 +64,13 @@ VERSION_NUMBER=m4_esyscmd(printf "0x%02x%02x00" mym4_version_major \
                           mym4_version_minor)
 AC_SUBST(VERSION_NUMBER)
 
+AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/err-sources.h.in])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_MACRO_DIR([m4])
+AM_SILENT_RULES
 
 # We need to know about the host architecture to avoid spurious
 # warnings.
