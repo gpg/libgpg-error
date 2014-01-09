@@ -85,28 +85,6 @@ AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
 AC_GNU_SOURCE
 
-gl_THREADLIB_EARLY
-
-
-LT_PREREQ([2.2.6])
-LT_INIT([win32-dll disable-static])
-LT_LANG([Windows Resource])
-
-
-# We need to compile and run a program on the build machine.
-dnl The AC_PROG_CC_FOR_BUILD macro in the AC archive is broken for
-dnl autoconf 2.57.
-dnl AC_PROG_CC_FOR_BUILD
-AC_MSG_CHECKING(for cc for build)
-if test "$cross_compiling" = "yes"; then
-  CC_FOR_BUILD="${CC_FOR_BUILD-cc}"
-else
-  CC_FOR_BUILD="${CC_FOR_BUILD-$CC}"
-fi
-AC_MSG_RESULT($CC_FOR_BUILD)
-AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
-
-
 # Set some internal variables depending on the platform for later use.
 have_w32_system=no
 have_w64_system=no
@@ -126,6 +104,30 @@ case "${host}" in
     *)
        ;;
 esac
+
+
+if test "$have_w32_system" != yes; then
+  gl_THREADLIB_EARLY
+fi
+
+
+LT_PREREQ([2.2.6])
+LT_INIT([win32-dll disable-static])
+LT_LANG([Windows Resource])
+
+
+# We need to compile and run a program on the build machine.
+dnl The AC_PROG_CC_FOR_BUILD macro in the AC archive is broken for
+dnl autoconf 2.57.
+dnl AC_PROG_CC_FOR_BUILD
+AC_MSG_CHECKING(for cc for build)
+if test "$cross_compiling" = "yes"; then
+  CC_FOR_BUILD="${CC_FOR_BUILD-cc}"
+else
+  CC_FOR_BUILD="${CC_FOR_BUILD-$CC}"
+fi
+AC_MSG_RESULT($CC_FOR_BUILD)
+AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
 
 
 AH_BOTTOM([
@@ -166,11 +168,27 @@ AC_CHECK_FUNCS([flockfile])
 AC_C_CONST
 
 
-# Check for thread library
-gl_LOCK
-if test "$gl_threads_api" = posix; then
-  AC_CHECK_SIZEOF(pthread_mutex_t,,[AC_INCLUDES_DEFAULT
-                                    #include <pthread.h>])
+# Check for thread library.
+#
+# Windows has always thread support; thus we don't bother to test for
+# it as it may lead to false results when cross building.
+if test "$have_w32_system" = yes; then
+  AC_DEFINE([USE_WINDOWS_THREADS], [1])
+  LIBTHREAD=
+  LTLIBTHREAD=
+  LIBMULTITHREAD=
+  LTLIBMULTITHREAD=
+  THREADLIB_CPPFLAGS=""
+  AC_SUBST([LIBTHREAD])
+  AC_SUBST([LTLIBTHREAD])
+  AC_SUBST([LIBMULTITHREAD])
+  AC_SUBST([LTLIBMULTITHREAD])
+else
+  gl_LOCK
+  if test "$gl_threads_api" = posix; then
+    AC_CHECK_SIZEOF(pthread_mutex_t,,[AC_INCLUDES_DEFAULT
+                                      #include <pthread.h>])
+  fi
 fi
 
 
