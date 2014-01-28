@@ -66,7 +66,7 @@ main (void)
 
   /* To force a probably suitable alignment of the structure we use a
      union and include a long and a pointer to a long.  */
-  printf ("## lock-obj.%s.h\n"
+  printf ("## lock-obj-pub.%s.h\n"
           "## File created by " PGM " - DO NOT EDIT\n"
           "## To be included by mkheader into gpg-error.h\n"
           "\n"
