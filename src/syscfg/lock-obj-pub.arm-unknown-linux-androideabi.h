@@ -1,4 +1,4 @@
-## lock-obj.arm-unknown-linux-androideabi.h
+## lock-obj-pub.arm-unknown-linux-androideabi.h
 ## File created by gen-posix-lock-obj - DO NOT EDIT
 ## To be included by mkheader into gpg-error.h
 
