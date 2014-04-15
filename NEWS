@@ -1,4 +1,4 @@
-Noteworthy changes in version 1.13 (unreleased)
+Noteworthy changes in version 1.13 (2014-04-15)
 -----------------------------------------------
 
  * Added a portable mutex API.
@@ -10,6 +10,7 @@ Noteworthy changes in version 1.13 (unreleased)
 
  * Interface changes relative to the 1.12 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_KEY_ON_CARD          NEW.
  GPG_ERR_MAC_ALGO             NEW.
  GPG_ERR_INV_LOCK_OBJ         NEW.
  gpgrt_lock_t                 NEW.
