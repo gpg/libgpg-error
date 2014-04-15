@@ -705,6 +705,11 @@ msgid "Broken secret key"
 msgstr "Neniu sekreta ŝlosilo"
 
 #, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Malvalida resuma algoritmo"
+
+#, fuzzy
 #| msgid "Operation cancelled"
 msgid "Operation fully cancelled"
 msgstr "Operacio estas nuligita"
@@ -755,6 +760,14 @@ msgstr "Malparaj deksesumaj numeroj en S-esprimo"
 #| msgid "Bad octadecimal character in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Malĝusta okuma signo en S-esprimo"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Malvalida objekto"
 
 msgid "General IPC error"
 msgstr "Ĝenerala eraro de IPC"

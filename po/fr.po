@@ -691,6 +691,11 @@ msgstr "Pas de clef publique"
 msgid "Broken secret key"
 msgstr "Pas de clef secrète"
 
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Algorithme de hachage incorrect"
+
 msgid "Operation fully cancelled"
 msgstr "Opération complètement annulée"
 
@@ -738,6 +743,14 @@ msgstr "Nombre hexadécimal impair dans l'expression symbolique"
 
 msgid "Bad octal character in S-expression"
 msgstr "Mauvais caractère octal dans l'expression symbolique"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Objet incorrect"
 
 msgid "General IPC error"
 msgstr "Erreur générale IPC"

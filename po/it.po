@@ -705,6 +705,11 @@ msgid "Broken secret key"
 msgstr "Nessuna chiave segreta"
 
 #, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Algoritmo di digest non valido"
+
+#, fuzzy
 #| msgid "Operation cancelled"
 msgid "Operation fully cancelled"
 msgstr "Operazione annullata"
@@ -755,6 +760,14 @@ msgstr "Numeri esadecimali dispari in S-expression"
 #| msgid "Bad octadecimal character in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Carattere ottale errato in S-expression"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Oggetto non valido"
 
 msgid "General IPC error"
 msgstr "Errore IPC generale"

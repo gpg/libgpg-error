@@ -697,6 +697,11 @@ msgid "Broken secret key"
 msgstr "Không có khoá bí mật"
 
 #, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Thuật toán bộ tóm tắt (digest) không hợp lệ"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "Thao tác bị hủy bỏ"
 
@@ -745,6 +750,14 @@ msgstr "Có số thập lục lẻ trong biểu thức S"
 #, fuzzy
 msgid "Bad octal character in S-expression"
 msgstr "Ký tự bát phân sai trong biểu thức S"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Đối tượng không hợp lệ"
 
 msgid "General IPC error"
 msgstr "Lỗi IPC chung"

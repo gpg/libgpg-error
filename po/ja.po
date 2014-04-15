@@ -701,6 +701,11 @@ msgid "Broken secret key"
 msgstr "秘密鍵がありません"
 
 #, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "無効な要約アルゴリズムです"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "操作がキャンセルされました"
 
@@ -755,6 +760,14 @@ msgstr ""
 #, fuzzy
 msgid "Bad octal character in S-expression"
 msgstr "表現にシンタックスエラー"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "無効なオブジェクト"
 
 msgid "General IPC error"
 msgstr "一般的なIPCエラーです"

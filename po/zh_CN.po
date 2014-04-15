@@ -695,6 +695,11 @@ msgid "Broken secret key"
 msgstr "没有秘匙"
 
 #, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "无效的摘要算法"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "操作已取消"
 
@@ -742,6 +747,14 @@ msgstr ""
 
 msgid "Bad octal character in S-expression"
 msgstr ""
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "无效的对象"
 
 msgid "General IPC error"
 msgstr "一般IPC 错误"

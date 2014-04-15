@@ -693,6 +693,11 @@ msgid "Broken secret key"
 msgstr "Brak klucza tajnego"
 
 #, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Niepoprawny algorytm skrótu"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "Operacja anulowana"
 
@@ -740,6 +745,14 @@ msgstr "Nieparzysta liczba cyfr szesnastkowych w S-wyra¿eniu"
 
 msgid "Bad octal character in S-expression"
 msgstr "B³êdny znak ósemkowy w S-wyra¿eniu"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Niepoprawny obiekt"
 
 msgid "General IPC error"
 msgstr "B³±d ogólny IPC"

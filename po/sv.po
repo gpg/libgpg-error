@@ -695,6 +695,11 @@ msgid "Broken secret key"
 msgstr "Ingen hemlig nyckel"
 
 #, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Ogiltig sammandragsalgoritm"
+
+#, fuzzy
 msgid "Operation fully cancelled"
 msgstr "Åtgärden avbröts"
 
@@ -743,6 +748,14 @@ msgstr "Udda hexadecimala tal i S-uttryck"
 #, fuzzy
 msgid "Bad octal character in S-expression"
 msgstr "Felaktigt oktadecimalt tecken i S-uttryck"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Ogiltigt objekt"
 
 msgid "General IPC error"
 msgstr "Allmänt IPC-fel"

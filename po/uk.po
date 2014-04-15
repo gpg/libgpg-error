@@ -707,6 +707,11 @@ msgid "Broken secret key"
 msgstr "Немає закритого ключа"
 
 #, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Некоректний алгоритм контрольної суми"
+
+#, fuzzy
 #| msgid "Operation cancelled"
 msgid "Operation fully cancelled"
 msgstr "Дію скасовано"
@@ -757,6 +762,14 @@ msgstr "Дивні шістнадцяткові числа у S-виразі"
 #| msgid "Bad octadecimal character in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Помилковий вісімковий символ у S-виразі"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Некоректний об’єкт"
 
 msgid "General IPC error"
 msgstr "Загальна помилка IPC"

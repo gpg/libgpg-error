@@ -698,6 +698,11 @@ msgstr "Žádný veřejný klíč"
 msgid "Broken secret key"
 msgstr "Žádný tajný klíč"
 
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Neplatný hashovací algoritmus"
+
 msgid "Operation fully cancelled"
 msgstr "Operace zcela zrušena"
 
@@ -745,6 +750,14 @@ msgstr "Lichá šestnáctková čísla v S-výrazu"
 
 msgid "Bad octal character in S-expression"
 msgstr "Chybný osmičkový znak v S-výrazu"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Neplatný objekt"
 
 msgid "General IPC error"
 msgstr "Obecná chyba IPC"

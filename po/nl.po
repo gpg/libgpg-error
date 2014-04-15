@@ -690,6 +690,11 @@ msgstr "Geen publieke sleutel"
 msgid "Broken secret key"
 msgstr "Geen geheime sleutel"
 
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Ongeldig digest-algoritme"
+
 msgid "Operation fully cancelled"
 msgstr "Bewerking volledig geannuleerd"
 
@@ -737,6 +742,14 @@ msgstr "Vreemde hexadecimale getallen in S-expressie"
 
 msgid "Bad octal character in S-expression"
 msgstr "Fout octaal teken in S-expressie"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Ongeldig object"
 
 msgid "General IPC error"
 msgstr "Algemene IPC-fout"
