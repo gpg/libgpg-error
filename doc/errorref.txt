@@ -42,11 +42,15 @@ GPG_ERR_DIGEST_ALGO		Invalid digest algorithm
 GPG_ERR_BAD_PUBKEY		Bad public key
 
     GNUPG:  - Redefined to G10ERR_BAD_PUBKEY in gpg.
+            - Missing public or domain parameter in an s-expression.
+              If the curve name is mssing GPG_ERR_INV_CURVE may be
+              used as well.
 
 GPG_ERR_BAD_SECKEY		Bad secret key
 
     GNUPG:  - Invalid format of a S-expression encoded private key in
               gpg-agent.
+            - Missing secret parameter in an s-expression.
             - A protected or shadowed private key was passed to the
               OpenPGP card application for storing it on the card.
             - A private key passed to the OpenPGP card application does
@@ -463,8 +467,9 @@ GPG_ERR_LIMIT_REACHED           Limit reached
 
 GPG_ERR_INV_CURVE		Invalid elliptic curve
 
-        The curve is missing parameters or the curve is invald, for example
-        it is not possible to get affine coordinates for the public key.
+        The curve parameter is missing or the curve is invalid; for
+        example it is not possible to get affine coordinates for the
+        public key.
 
 188	GPG_ERR_UNKNOWN_CURVE		Unknown elliptic curve
 
@@ -522,3 +527,14 @@ GPG_ERR_MAC_ALGO
 198     GPG_ERR_FULLY_CANCELED          Operation fully cancelled
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
+
+GPG_ERR_KEY_ON_CARD		Not possible with a card based key
+
+    GNUPG: - The gpg-agent returns this if a DELETE_KEY commands is
+             used for a smartcard based key.
+
+254	GPG_ERR_INV_LOCK_OBJ		Invalid lock object
+
+    GPGRT: - The provided lock object is not valid.  This indicates an
+             internal problem in libgpg-error or more likely a
+             programming error.
