@@ -247,8 +247,9 @@
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
-# 214 to 252 are free to be used.
+# 214 to 251 are free to be used.
 
+252	GPG_ERR_KEY_DISABLED		Key disabled
 253	GPG_ERR_KEY_ON_CARD		Not possible with a card based key
 254	GPG_ERR_INV_LOCK_OBJ		Invalid lock object
 

@@ -3,6 +3,7 @@ Noteworthy changes in version 1.14 (unreleased)
 
  * Interface changes relative to the 1.13 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_KEY_DISABLED         NEW.
 
 
 Noteworthy changes in version 1.13 (2014-04-15)

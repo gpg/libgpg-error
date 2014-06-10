@@ -528,6 +528,11 @@ GPG_ERR_MAC_ALGO
 199	GPG_ERR_UNFINISHED		Operation not yet finished
 200	GPG_ERR_BUFFER_TOO_SHORT	Buffer too short
 
+
+GPG_ERR_KEY_DISABLED            Key disabled
+
+    GNUPG: - The key has been disabled by the user.
+
 GPG_ERR_KEY_ON_CARD		Not possible with a card based key
 
     GNUPG: - The gpg-agent returns this if a DELETE_KEY commands is
