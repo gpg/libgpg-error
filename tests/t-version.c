@@ -82,7 +82,7 @@ main (int argc, char **argv)
     }
   if (gpg_error_check_version ("15"))
     {
-      fprintf (stderr, "gpg_error_check_version did not return an error"
+      fprintf (stderr, "%s: gpg_error_check_version did not return an error"
                " for a newer version\n", logpfx);
       errorcount++;
     }
