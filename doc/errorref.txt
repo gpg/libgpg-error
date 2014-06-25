@@ -417,7 +417,8 @@ GPG_ERR_INV_CERT_OBJ		Invalid certificate object
         Used by GPG to indicate an unknown ECC curve name (may also
         indicate missing ECC support).  It is also used to indicate an
         unsuported parameter name in functions which take a name and
-        value to update state.
+        value to update state.  Note that GPG_ERR_UNKNOWN_CURVE is
+        used instead by newer code.
 
 166	GPG_ERR_LOCALE_PROBLEM		A locale function failed
 167	GPG_ERR_NOT_LOCKED		Not locked
@@ -471,7 +472,10 @@ GPG_ERR_INV_CURVE		Invalid elliptic curve
         example it is not possible to get affine coordinates for the
         public key.
 
-188	GPG_ERR_UNKNOWN_CURVE		Unknown elliptic curve
+GPG_ERR_UNKNOWN_CURVE		Unknown elliptic curve
+
+        The curve is not known or not supported by the protocol.
+
 
 GPG_ERR_DUP_KEY                 Duplicated key
 
