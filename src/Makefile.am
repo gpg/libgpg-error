@@ -41,8 +41,29 @@ endif
 
 # Distributed lock object definitions for cross compilation.
 lock_obj_pub = \
-	syscfg/lock-obj-pub.mingw32.h \
-        syscfg/lock-obj-pub.arm-unknown-linux-androideabi.h
+        syscfg/lock-obj-pub.aarch64-unknown-linux-gnu.h     \
+        syscfg/lock-obj-pub.alpha-unknown-linux-gnu.h       \
+        syscfg/lock-obj-pub.arm-unknown-linux-androideabi.h \
+        syscfg/lock-obj-pub.arm-unknown-linux-gnueabi.h     \
+        syscfg/lock-obj-pub.arm-unknown-linux-gnueabihf.h   \
+        syscfg/lock-obj-pub.hppa-unknown-linux-gnu.h        \
+        syscfg/lock-obj-pub.i486-pc-gnu.h                   \
+        syscfg/lock-obj-pub.i486-pc-kfreebsd-gnu.h          \
+        syscfg/lock-obj-pub.i486-pc-linux-gnu.h             \
+        syscfg/lock-obj-pub.m68k-unknown-linux-gnu.h        \
+        syscfg/lock-obj-pub.mips-unknown-linux-gnu.h        \
+        syscfg/lock-obj-pub.mipsel-unknown-linux-gnu.h      \
+        syscfg/lock-obj-pub.powerpc-unknown-linux-gnu.h     \
+        syscfg/lock-obj-pub.powerpc64-unknown-linux-gnu.h   \
+        syscfg/lock-obj-pub.s390x-ibm-linux-gnu.h           \
+        syscfg/lock-obj-pub.sh4-unknown-linux-gnu.h         \
+        syscfg/lock-obj-pub.sparc-unknown-linux-gnu.h       \
+        syscfg/lock-obj-pub.x86_64-pc-kfreebsd-gnu.h        \
+        syscfg/lock-obj-pub.x86_64-pc-linux-gnu.h           \
+        syscfg/lock-obj-pub.x86_64-pc-linux-gnux32.h        \
+	syscfg/lock-obj-pub.mingw32.h
+
+
 
 lib_LTLIBRARIES = libgpg-error.la
 include_HEADERS = gpg-error.h
