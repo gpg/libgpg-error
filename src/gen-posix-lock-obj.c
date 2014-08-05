@@ -40,6 +40,19 @@
 # error sizeof pthread_mutex_t is not known.
 #endif
 
+/* Special requirements for certain platforms.  */
+#if defined(__hppa__) && defined(__linux__)
+# define USE_16BYTE_ALIGNMENT 1
+#else
+# define USE_16BYTE_ALIGNMENT 0
+#endif
+
+
+#if USE_16BYTE_ALIGNMENT && !HAVE_GCC_ATTRIBUTE_ALIGNED
+# error compiler is not able to enforce a 16 byte alignment
+#endif
+
+
 static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 
 
@@ -76,6 +89,7 @@ main (void)
           "  long _vers;\n"
           "  union {\n"
           "    volatile char _priv[%d];\n"
+          "%s"
           "    long _x_align;\n"
           "    long *_xp_align;\n"
           "  } u;\n"
@@ -84,6 +98,11 @@ main (void)
           "#define GPGRT_LOCK_INITIALIZER {%d,{{",
           HOST_TRIPLET_STRING,
           SIZEOF_PTHREAD_MUTEX_T,
+#if USE_16BYTE_ALIGNMENT
+          "    int _x16_align __attribute__ ((aligned (16)));\n",
+#else
+          "",
+#endif
           LOCK_ABI_VERSION);
   p = (unsigned char *)&mtx;
   for (i=0; i < sizeof mtx; i++)
