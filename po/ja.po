@@ -1,15 +1,16 @@
 # Japanese messages for GnuPG libgpg-error
-# Copyright (C) 2010, 2012 Free Software Foundation, Inc.
+# Copyright (C) 2010, 2012, 2014 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 # Yasuaki Taniguchi <yasuakit@gmail.com>, 2010.
 # Takeshi Hamasaki <hmatrjp@users.sourceforge.jp>, 2012.
+# NIIBE Yutaka <gniibe@fsij.org>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:09+0100\n"
-"Last-Translator: Takeshi Hamasaki <hmatrjp@users.sourceforge.jp>\n"
-"Language-Team: Japanese <translation-team-ja@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2014-07-04 16:22+0900\n"
+"Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
+"Language-Team: none\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,7 +33,7 @@ msgid "GPG Agent"
 msgstr "GPG Agent"
 
 msgid "Pinentry"
-msgstr "PIN 入力"
+msgstr "Pinentry"
 
 msgid "SCD"
 msgstr "SCD"
@@ -59,13 +60,13 @@ msgid "Kleopatra"
 msgstr "Kleopatra"
 
 msgid "G13"
-msgstr ""
+msgstr "G13"
 
 msgid "Assuan"
 msgstr "Assuan"
 
 msgid "Any source"
-msgstr "全てのソース"
+msgstr "指定なしのソース"
 
 msgid "User defined source 1"
 msgstr "ユーザ定義ソース 1"
@@ -80,7 +81,7 @@ msgid "User defined source 4"
 msgstr "ユーザ定義ソース 4"
 
 msgid "Unknown source"
-msgstr "不明なソースです"
+msgstr "不明なソース"
 
 msgid "Success"
 msgstr "成功です"
@@ -92,13 +93,13 @@ msgid "Unknown packet"
 msgstr "不明なパケットです"
 
 msgid "Unknown version in packet"
-msgstr "パケット内で不明なバージョンです"
+msgstr "パケット内の不明なバージョンです"
 
 msgid "Invalid public key algorithm"
 msgstr "無効な公開鍵アルゴリズムです"
 
 msgid "Invalid digest algorithm"
-msgstr "無効な要約アルゴリズムです"
+msgstr "無効なダイジェスト・アルゴリズムです"
 
 msgid "Bad public key"
 msgstr "誤った公開鍵です"
@@ -128,7 +129,7 @@ msgid "Invalid packet"
 msgstr "無効なパケットです"
 
 msgid "Invalid armor"
-msgstr "無効なアスキー形式です"
+msgstr "無効なアスキー保護形式です"
 
 msgid "No user ID"
 msgstr "ユーザ ID がありません"
@@ -146,7 +147,7 @@ msgid "Unknown compression algorithm"
 msgstr "不明な圧縮アルゴリズムです"
 
 msgid "Number is not prime"
-msgstr "数値が素数ではありません"
+msgstr "数が素数ではありません"
 
 msgid "Invalid encoding method"
 msgstr "無効な符号化方法です"
@@ -170,25 +171,25 @@ msgid "Value not found"
 msgstr "値が見つかりません"
 
 msgid "Syntax error"
-msgstr "構文エラー"
+msgstr "構文エラーです"
 
 msgid "Bad MPI value"
-msgstr "誤った MPI の値"
+msgstr "誤った MPI の値です"
 
 msgid "Invalid passphrase"
-msgstr "無効なパスフレーズ"
+msgstr "無効なパスフレーズです"
 
 msgid "Invalid signature class"
-msgstr "無効な署名クラス"
+msgstr "無効な署名クラスです"
 
 msgid "Resources exhausted"
 msgstr "資源を使い果たしました"
 
 msgid "Invalid keyring"
-msgstr "無効な鍵リング"
+msgstr "無効な鍵リングです"
 
 msgid "Trust DB error"
-msgstr "信用 DB エラー"
+msgstr "信用 DB エラーです"
 
 msgid "Bad certificate"
 msgstr "誤った証明書です"
@@ -200,7 +201,7 @@ msgid "Unexpected error"
 msgstr "予期しないエラーです"
 
 msgid "Time conflict"
-msgstr "時間の競合です"
+msgstr "時間の不一致です"
 
 msgid "Keyserver error"
 msgstr "鍵サーバーエラーです"
@@ -208,9 +209,8 @@ msgstr "鍵サーバーエラーです"
 msgid "Wrong public key algorithm"
 msgstr "誤った公開鍵アルゴリズムです"
 
-#, fuzzy
 msgid "Tribute to D. A."
-msgstr " コピー"
+msgstr "ダグラス・アダムスに捧ぐ"
 
 msgid "Weak encryption key"
 msgstr "弱い暗号鍵です"
@@ -222,7 +222,7 @@ msgid "Invalid argument"
 msgstr "無効な引数です"
 
 msgid "Syntax error in URI"
-msgstr "URI で構文エラーです"
+msgstr "URIの構文エラーです"
 
 msgid "Invalid URI"
 msgstr "無効な URI です"
@@ -234,7 +234,7 @@ msgid "Unknown host"
 msgstr "不明なホストです"
 
 msgid "Selftest failed"
-msgstr "自己試験に失敗しました"
+msgstr "セルフテストに失敗しました"
 
 msgid "Data not encrypted"
 msgstr "データは暗号化されませんでした"
@@ -255,13 +255,13 @@ msgid "Bad certificate chain"
 msgstr "誤った証明書連鎖です"
 
 msgid "Missing certificate"
-msgstr "証明書がありません"
+msgstr "証明書が欠如しています"
 
 msgid "No data"
 msgstr "データがありません"
 
 msgid "Bug"
-msgstr "バグ"
+msgstr "バグです"
 
 msgid "Not supported"
 msgstr "サポートされていません"
@@ -270,16 +270,16 @@ msgid "Invalid operation code"
 msgstr "無効な操作コードです"
 
 msgid "Timeout"
-msgstr "タイムアウト"
+msgstr "タイムアウトです"
 
 msgid "Internal error"
-msgstr "内部エラー"
+msgstr "内部エラーです"
 
 msgid "EOF (gcrypt)"
-msgstr "EOF (gcrypt)"
+msgstr "EOF (gcrypt)です"
 
 msgid "Invalid object"
-msgstr "無効なオブジェクト"
+msgstr "無効なオブジェクトです"
 
 msgid "Provided object is too short"
 msgstr "与えられたオブジェクトが小さすぎます"
@@ -288,14 +288,13 @@ msgid "Provided object is too large"
 msgstr "与えられたオブジェクトが大きすぎます"
 
 msgid "Missing item in object"
-msgstr "オブジェクト内に項目がありません"
+msgstr "オブジェクト内に項目が欠如しています"
 
 msgid "Not implemented"
 msgstr "実装されていません"
 
-#, fuzzy
 msgid "Conflicting use"
-msgstr "一貫していない #~ の使用"
+msgstr "対立する使用です"
 
 msgid "Invalid cipher mode"
 msgstr "無効な暗号モードです"
@@ -310,16 +309,14 @@ msgid "Result truncated"
 msgstr "結果が切り詰められました"
 
 msgid "Incomplete line"
-msgstr "完全でない行です"
+msgstr "不完全な行です"
 
 msgid "Invalid response"
 msgstr "無効な応答です"
 
 msgid "No agent running"
-msgstr "エージェントが実行されていません"
+msgstr "エージェントが動いていません"
 
-#, fuzzy
-#| msgid "agent error"
 msgid "Agent error"
 msgstr "エージェントエラーです"
 
@@ -342,10 +339,10 @@ msgid "Unsupported algorithm"
 msgstr "サポートされていないアルゴリズムです"
 
 msgid "No pinentry"
-msgstr "PIN 入力がありません"
+msgstr "Pinentryがありません"
 
 msgid "pinentry error"
-msgstr "PIN 入力エラー"
+msgstr "Pinentryエラー"
 
 msgid "Bad PIN"
 msgstr "誤った PIN です"
@@ -362,16 +359,14 @@ msgstr "無効なパラメータです"
 msgid "Wrong card"
 msgstr "誤ったカードです"
 
-#, fuzzy
 msgid "No dirmngr"
-msgstr "-  < 翻訳がありません >"
+msgstr "dirmngrがありません"
 
-#, fuzzy
 msgid "dirmngr error"
-msgstr "%s サブプロセス入出力エラー"
+msgstr "dirmngr のエラー"
 
 msgid "Certificate revoked"
-msgstr "証明書が破棄されました"
+msgstr "証明書が廃止されました"
 
 msgid "No CRL known"
 msgstr "既知の CRL がありません"
@@ -428,7 +423,7 @@ msgid "Card not present"
 msgstr "カードが存在していません"
 
 msgid "No PKCS15 application"
-msgstr "PKCS15 アプリケーションではありません"
+msgstr "PKCS15 アプリケーションがありません"
 
 msgid "Not confirmed"
 msgstr "確認されていません"
@@ -476,7 +471,7 @@ msgid "Missing value"
 msgstr "値がありません"
 
 msgid "Hardware problem"
-msgstr "ハードウェア問題です"
+msgstr "ハードウェアの問題です"
 
 msgid "PIN blocked"
 msgstr "PIN がブロックされました"
@@ -542,7 +537,7 @@ msgid "Invalid crypto engine"
 msgstr "無効な暗号エンジンです"
 
 msgid "Public key not trusted"
-msgstr "信用していない公開鍵です"
+msgstr "信用されていない公開鍵です"
 
 msgid "Decryption failed"
 msgstr "復号に失敗しました"
@@ -562,9 +557,8 @@ msgstr "無効な状態です"
 msgid "Duplicated value"
 msgstr "重複した値です"
 
-#, fuzzy
 msgid "Missing action"
-msgstr "何もしない"
+msgstr "アクションが欠如しています"
 
 msgid "ASN.1 module not found"
 msgstr "ASN.1 モジュールがみつかりませんでした"
@@ -597,7 +591,7 @@ msgid "Protocol violation"
 msgstr "プロトコル違反"
 
 msgid "Invalid MAC"
-msgstr "無効な MAC アドレス"
+msgstr "無効な MACです"
 
 msgid "Invalid request"
 msgstr "無効なリクエスト"
@@ -605,115 +599,92 @@ msgstr "無効なリクエスト"
 msgid "Unknown extension"
 msgstr "未知の拡張子"
 
-#, fuzzy
 msgid "Unknown critical extension"
-msgstr "拡張ファイルを編集(&E)"
+msgstr "不明のクリチカル拡張です"
 
 msgid "Locked"
 msgstr "ロックされています"
 
 msgid "Unknown option"
-msgstr "未知のオプション"
+msgstr "未知のオプションです"
 
 msgid "Unknown command"
-msgstr "未知のコマンド"
+msgstr "未知のコマンドです"
 
-#, fuzzy
 msgid "Not operational"
-msgstr "オペアンプ"
+msgstr "操作できません"
 
 msgid "No passphrase given"
 msgstr "パスフレーズが与えられていません"
 
 msgid "No PIN given"
-msgstr "暗証番号が与えられていません"
+msgstr "PINが与えられていません"
 
-#, fuzzy
 msgid "Not enabled"
-msgstr "ロックされていません"
+msgstr "有効となってません"
 
-#, fuzzy
 msgid "No crypto engine"
-msgstr "無効な暗号エンジンです"
+msgstr "暗号エンジンがありません"
 
-#, fuzzy
 msgid "Missing key"
-msgstr "値がありません"
+msgstr "鍵がありません"
 
-#, fuzzy
 msgid "Too many objects"
-msgstr "CMS オブジェクトではありません"
+msgstr "オブジェクトが多すぎます"
 
 msgid "Limit reached"
-msgstr ""
+msgstr "限界に達しました"
 
-#, fuzzy
 msgid "Not initialized"
-msgstr "カードが初期化されていません"
+msgstr "初期化されていません"
 
-#, fuzzy
 msgid "Missing issuer certificate"
-msgstr "証明書がありません"
+msgstr "発行元証明書がありません"
 
 msgid "No keyserver available"
-msgstr ""
+msgstr "キーサーバが利用可能ではありません"
 
-#, fuzzy
 msgid "Invalid elliptic curve"
-msgstr "無効な時間です"
+msgstr "無効な楕円関数です"
 
-#, fuzzy
 msgid "Unknown elliptic curve"
-msgstr "不明なソースです"
+msgstr "不明の楕円関数です"
 
-#, fuzzy
 msgid "Duplicated key"
-msgstr "重複した値です"
+msgstr "重複した鍵です"
 
-#, fuzzy
 msgid "Ambiguous result"
-msgstr "曖昧な名前です"
+msgstr "曖昧な結果です"
 
-#, fuzzy
 msgid "No crypto context"
-msgstr "無効な暗号エンジンです"
+msgstr "暗号エンジンがありません"
 
-#, fuzzy
 msgid "Wrong crypto context"
-msgstr "無効な暗号エンジンです"
+msgstr "誤った暗号コンテクストです"
 
-#, fuzzy
-#| msgid "Invalid crypto engine"
 msgid "Bad crypto context"
-msgstr "無効な暗号エンジンです"
+msgstr "間違ったな暗号コンテクストです"
 
 msgid "Conflict in the crypto context"
-msgstr ""
+msgstr "暗号コンテクストが競合しています"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "Broken public key"
-msgstr "公開鍵がありません"
+msgstr "公開鍵が壊れています"
 
-#, fuzzy
-#| msgid "No secret key"
 msgid "Broken secret key"
-msgstr "秘密鍵がありません"
+msgstr "秘密鍵が壊れています"
 
-#, fuzzy
-#| msgid "Invalid digest algorithm"
 msgid "Invalid MAC algorithm"
-msgstr "無効な要約アルゴリズムです"
+msgstr "無効なMACアルゴリズムです"
 
-#, fuzzy
 msgid "Operation fully cancelled"
-msgstr "操作がキャンセルされました"
+msgstr "操作が完全にキャンセルされました"
 
 msgid "Operation not yet finished"
 msgstr "操作がまだ終了していません"
 
 msgid "Buffer too short"
-msgstr "バッファに入りきりません"
+msgstr "バッファが短すぎます"
 
 msgid "Invalid length specifier in S-expression"
 msgstr "S式の中の長さ指定が無効です"
@@ -722,65 +693,55 @@ msgid "String too long in S-expression"
 msgstr "S式の中の文字列が長すぎます"
 
 msgid "Unmatched parentheses in S-expression"
-msgstr "S式の中の括弧に相手がないものがあります"
+msgstr "S式の括弧が一致しません"
 
-#, fuzzy
 msgid "S-expression not canonical"
-msgstr "\"%expression:1\" は有効な正規表現ではありません。"
+msgstr "カノニカルなS式ではありません"
 
-#, fuzzy
 msgid "Bad character in S-expression"
-msgstr "表現にシンタックスエラー"
+msgstr "S式に誤ったキャラクタがあります"
 
-#, fuzzy
 msgid "Bad quotation in S-expression"
-msgstr "表現にシンタックスエラー"
+msgstr "S式の誤ったクオーテーションです"
 
-#, fuzzy
 msgid "Zero prefix in S-expression"
-msgstr "表現にシンタックスエラー"
+msgstr "S式のゼロ・プレフィックスです"
 
 msgid "Nested display hints in S-expression"
-msgstr ""
+msgstr "S式に表示ヒントが入れ子になっています"
 
-#, fuzzy
 msgid "Unmatched display hints"
-msgstr "ウィンドウマネージャのヒント"
+msgstr "表示ヒントが一致しません"
 
-#, fuzzy
 msgid "Unexpected reserved punctuation in S-expression"
-msgstr "条件式に構文エラー: 予期しないトークン `%s' です"
+msgstr "S式に予期しない予約された句読点があります"
 
 msgid "Bad hexadecimal character in S-expression"
-msgstr ""
+msgstr "S式に間違った16進キャラクタがあります"
 
 msgid "Odd hexadecimal numbers in S-expression"
-msgstr ""
+msgstr "S式におかしな16進キャラクタがあります"
 
-#, fuzzy
 msgid "Bad octal character in S-expression"
-msgstr "表現にシンタックスエラー"
+msgstr "S式に間違った8進キャラクタがあります"
 
 msgid "Not possible with a card based key"
-msgstr ""
+msgstr "カードの鍵では不可能です"
 
-#, fuzzy
-#| msgid "Invalid object"
 msgid "Invalid lock object"
-msgstr "無効なオブジェクト"
+msgstr "無効なロック・オブジェクト"
 
 msgid "General IPC error"
 msgstr "一般的なIPCエラーです"
 
-#, fuzzy
 msgid "IPC accept call failed"
-msgstr "dia_plugin_init() の呼び出しに失敗しました"
+msgstr "IPC accept 呼び出しに失敗"
 
 msgid "IPC connect call failed"
-msgstr "IPCの接続コールに失敗しました"
+msgstr "IPC connect 呼び出しに失敗しました"
 
 msgid "Invalid IPC response"
-msgstr "無効な IPC 応答"
+msgstr "無効な IPC 応答です"
 
 msgid "Invalid value passed to IPC"
 msgstr "無効な値がIPCに渡されました"
@@ -794,12 +755,11 @@ msgstr "IPCに渡された行が長すぎます"
 msgid "Nested IPC commands"
 msgstr "IPCコマンドが入れ子になっています"
 
-#, fuzzy
 msgid "No data callback in IPC"
-msgstr "この属性には '%s' (%p) という属性、またはデータ (%p) はありません"
+msgstr "IPC でデータのコールバックがありません"
 
 msgid "No inquire callback in IPC"
-msgstr ""
+msgstr "IPCで問い合わせコールバックがありません"
 
 msgid "Not an IPC server"
 msgstr "IPC サーバではありません"
@@ -808,7 +768,7 @@ msgid "Not an IPC client"
 msgstr "IPC クライアントではありません"
 
 msgid "Problem starting IPC server"
-msgstr "IPCサーバの開始時に問題が発生しました"
+msgstr "IPCサーバの開始に問題が発生しました"
 
 msgid "IPC read error"
 msgstr "IPC 読み取りエラー"
@@ -817,7 +777,7 @@ msgid "IPC write error"
 msgstr "IPC 書き込みエラー"
 
 msgid "Too much data for IPC layer"
-msgstr "IPC レイヤに対する多すぎるデータです"
+msgstr "IPC レイヤにデータが多すぎです"
 
 msgid "Unexpected IPC command"
 msgstr "予期しない IPC コマンドです"
@@ -898,7 +858,7 @@ msgid "Unknown system error"
 msgstr "不明なシステムエラー"
 
 msgid "End of file"
-msgstr "ファイル終端 (EOF)"
+msgstr "ファイル終端"
 
 msgid "Unknown error code"
 msgstr "不明なエラーコード"
