@@ -1,7 +1,7 @@
 # Danish translation libgpg-error.
-# Copyright (C) 2012 g10 Code GmbH og nedenstående oversættere.
+# Copyright (C) 2014 g10 Code GmbH og nedenstående oversættere.
 # This file is distributed under the same license as the libgpg-error package.
-# Joe Hansen <joedalton2@yahoo.dk>, 2012.
+# Joe Hansen <joedalton2@yahoo.dk>, 2012, 2014.
 #
 # invalid -> ugyldig
 # bad -> ødelagt
@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.10\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:08+0100\n"
+"PO-Revision-Date: 2014-07-07 20:08+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
 "Language: da\n"
@@ -320,10 +320,8 @@ msgstr "Ugyldigt svar"
 msgid "No agent running"
 msgstr "Ingen agent kører"
 
-#, fuzzy
-#| msgid "agent error"
 msgid "Agent error"
-msgstr "agentfejl"
+msgstr "Agentfejl"
 
 msgid "Invalid data"
 msgstr "Ugyldige data"
@@ -655,48 +653,32 @@ msgstr "Ugyldig elliptisk kurve"
 msgid "Unknown elliptic curve"
 msgstr "Ukendt elliptisk kurve"
 
-#, fuzzy
-#| msgid "Duplicated value"
 msgid "Duplicated key"
-msgstr "Duplikeret værdi"
+msgstr "Duplikeret nøgle"
 
-#, fuzzy
-#| msgid "Ambiguous name"
 msgid "Ambiguous result"
-msgstr "Tvetydigt navn"
+msgstr "Tvetydigt resultat"
 
-#, fuzzy
-#| msgid "No crypto engine"
 msgid "No crypto context"
-msgstr "Ingen cryptomotor"
+msgstr "Ingen cryptokontekst"
 
-#, fuzzy
-#| msgid "No crypto engine"
 msgid "Wrong crypto context"
-msgstr "Ingen cryptomotor"
+msgstr "Forkert cryptokontekst"
 
-#, fuzzy
-#| msgid "Invalid crypto engine"
 msgid "Bad crypto context"
-msgstr "Ugyldig cryptomotor"
+msgstr "Ugyldig cryptokontekst"
 
 msgid "Conflict in the crypto context"
-msgstr ""
+msgstr "Konflikt i cryptokonteksten"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "Broken public key"
-msgstr "Ingen offentlig nøgle"
+msgstr "Ødelagt offentlig nøgle"
 
-#, fuzzy
-#| msgid "No secret key"
 msgid "Broken secret key"
-msgstr "Ingen hemmelig nøgle"
+msgstr "Ødelagt hemmelig nøgle"
 
-#, fuzzy
-#| msgid "Invalid digest algorithm"
 msgid "Invalid MAC algorithm"
-msgstr "Ugyldig sammendragsalgoritme"
+msgstr "Ugyldig MAC-algoritme"
 
 msgid "Operation fully cancelled"
 msgstr "Handling fuldt afbrudt"
@@ -747,12 +729,10 @@ msgid "Bad octal character in S-expression"
 msgstr "Ødelagt oktalt tegn i S-udtryk"
 
 msgid "Not possible with a card based key"
-msgstr ""
+msgstr "Ikke muligt med en kortbaseret nøgle"
 
-#, fuzzy
-#| msgid "Invalid object"
 msgid "Invalid lock object"
-msgstr "Ugyldigt objekt"
+msgstr "Ugyldigt låseobjekt"
 
 msgid "General IPC error"
 msgstr "Generel IPC-fejl"
