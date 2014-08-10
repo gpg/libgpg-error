@@ -25,6 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <sys/types.h>
+#include <unistd.h>
 #ifdef _WIN32
 # include <windows.h>
 #else
@@ -132,7 +134,7 @@ static THREAD_RET_TYPE
 revision_thread (void *arg)
 {
   gpg_err_code_t rc;
-  int i;
+  int i = 0;
 
   (void)arg;
 
