@@ -240,7 +240,14 @@ GPG_ERR_MISSING_CERT		Missing certificate
 76	GPG_ERR_INV_RESPONSE		Invalid response
 77	GPG_ERR_NO_AGENT		No agent running
 78	GPG_ERR_AGENT			agent error
-79	GPG_ERR_INV_DATA		Invalid data
+
+GPG_ERR_INV_DATA		Invalid data
+
+    GNUPG:  - Used in app-openpgp.c for a badly formatted request.
+    GCRYPT: - No passphrase given for gcry_kdf_derive.
+            - An opaque MPI is given to a public key function but not
+              expected.
+
 80	GPG_ERR_ASSUAN_SERVER_FAULT	Unspecific Assuan server fault
 81	GPG_ERR_ASSUAN			General Assuan error
 82	GPG_ERR_INV_SESSION_KEY		Invalid session key
@@ -330,6 +337,8 @@ GPG_ERR_NOTHING_FOUND		Nothing found
 GPG_ERR_MISSING_VALUE		Missing value
 
     GNUPG: - Not enough parameters for a secret key send to gpg-agent.
+
+    GCRYPT: - A required parameter has not been given.
 
 
 129	GPG_ERR_HARDWARE		Hardware problem
