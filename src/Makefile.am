@@ -134,6 +134,7 @@ libgpg_error_la_LDFLAGS = -version-info \
 
 libgpg_error_la_SOURCES = gpg-error.h gettext.h $(arch_sources) \
 	init.c init.h version.c lock.h thread.h \
+	estream.c estream.h estream-printf.c estream-printf.h \
 	strsource.c strerror.c code-to-errno.c code-from-errno.c
 
 # Note that RCCOMPILE needs the same defines as ..._la_CPPFLAGS but

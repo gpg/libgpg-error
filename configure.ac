@@ -139,6 +139,8 @@ AH_BOTTOM([
 /* For building we need to define these macro.  */
 #define GPG_ERR_ENABLE_GETTEXT_MACROS 1
 #define GPG_ERR_ENABLE_ERRNO_MACROS 1
+/* The prefix for the internal estream functions.  */
+#define _ESTREAM_EXT_SYM_PREFIX _gpgrt_
 ])
 
 
@@ -167,6 +169,74 @@ AC_CHECK_FUNCS([flockfile])
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 
+
+#
+# Setup gcc specific options
+#
+AC_MSG_NOTICE([checking for cc features])
+if test "$GCC" = yes; then
+    # Check whether gcc does not emit a diagnostic for unknown -Wno-*
+    # options.  This is the case for gcc >= 4.6
+    AC_MSG_CHECKING([if gcc ignores unknown -Wno-* options])
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#if __GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 6 )
+#kickerror
+#endif]],[])],[_gcc_silent_wno=yes],[_gcc_silent_wno=no])
+    AC_MSG_RESULT($_gcc_silent_wno)
+
+    # Note that it is okay to use CFLAGS here because these are just
+    # warning options and the user should have a chance of overriding
+    # them.
+    if test "$USE_MAINTAINER_MODE" = "yes"; then
+        CFLAGS="$CFLAGS -O3 -Wall -Wcast-align -Wshadow -Wstrict-prototypes"
+        CFLAGS="$CFLAGS -Wformat -Wno-format-y2k -Wformat-security"
+        if test x"$_gcc_silent_wno" = xyes ; then
+          _gcc_wopt=yes
+        else
+          AC_MSG_CHECKING([if gcc supports -Wno-missing-field-initializers])
+          _gcc_cflags_save=$CFLAGS
+          CFLAGS="-Wno-missing-field-initializers"
+          AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[])],
+                            [_gcc_wopt=yes],[_gcc_wopt=no])
+          AC_MSG_RESULT($_gcc_wopt)
+          CFLAGS=$_gcc_cflags_save;
+        fi
+        if test x"$_gcc_wopt" = xyes ; then
+          CFLAGS="$CFLAGS -W -Wno-sign-compare -Wno-missing-field-initializers"
+        fi
+
+        AC_MSG_CHECKING([if gcc supports -Wdeclaration-after-statement])
+        _gcc_cflags_save=$CFLAGS
+        CFLAGS="-Wdeclaration-after-statement"
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[])],_gcc_wopt=yes,_gcc_wopt=no)
+        AC_MSG_RESULT($_gcc_wopt)
+        CFLAGS=$_gcc_cflags_save;
+        if test x"$_gcc_wopt" = xyes ; then
+          CFLAGS="$CFLAGS -Wdeclaration-after-statement"
+        fi
+    else
+        CFLAGS="$CFLAGS -Wall"
+    fi
+
+    AC_MSG_CHECKING([if gcc supports -Wpointer-arith])
+    _gcc_cflags_save=$CFLAGS
+    CFLAGS="-Wpointer-arith"
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[])],_gcc_psign=yes,_gcc_psign=no)
+    AC_MSG_RESULT($_gcc_psign)
+    CFLAGS=$_gcc_cflags_save;
+    if test x"$_gcc_psign" = xyes ; then
+       CFLAGS="$CFLAGS -Wpointer-arith"
+    fi
+
+    # The undocumented option -Wno-psabi suppresses the annoying
+    #   "the ABI of passing union with long double has changed in GCC 4.4"
+    # which is emitted in estream-printf.c but entirely irrelvant
+    # because that union is local to the file.
+    if test x"$_gcc_silent_wno" = xyes ; then
+       CFLAGS="$CFLAGS -Wno-psabi"
+    fi
+fi
+
 #
 # Check whether the compiler supports the GCC style aligned attribute
 #
@@ -182,6 +252,7 @@ if test "$gcry_cv_gcc_attribute_aligned" = "yes" ; then
 fi
 
 
+#
 # Check for thread library.
 #
 # Windows has always thread support; thus we don't bother to test for
@@ -205,8 +276,14 @@ else
   fi
 fi
 
+#
+# Prepare building of estream
+#
+estream_INIT
 
+#
 # Substitution used for gpg-error-config
+#
 GPG_ERROR_CONFIG_LIBS="-lgpg-error"
 if test "x$LIBTHREAD" != x; then
   GPG_ERROR_CONFIG_LIBS="${GPG_ERROR_CONFIG_LIBS} ${LIBTHREAD}"
@@ -232,7 +309,9 @@ AC_SUBST(GPG_ERROR_CONFIG_ISUBDIRAFTER)
 AC_SUBST(GPG_ERROR_CONFIG_HOST)
 
 
+#
 # Special defines for certain platforms
+#
 if test "$have_w32_system" = yes; then
     AC_DEFINE(HAVE_W32_SYSTEM,1,[Defined if we run on a W32 API based system])
     if test "$have_w64_system" = yes; then
@@ -276,8 +355,9 @@ AC_ARG_ENABLE(languages,
 [  --disable-languages     do not build support for other languages than C])
 AM_CONDITIONAL([LANGUAGES_SOME], [test "x$enable_languages" != xno])
 
-
+#
 # Substitution
+#
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([po/Makefile.in m4/Makefile])
 AC_CONFIG_FILES([src/Makefile tests/Makefile])
@@ -296,7 +376,7 @@ echo "
 if test "$gcry_cv_gcc_attribute_aligned" != "yes" ; then
 cat <<G10EOF
 ***
-***  Please not that your compiler does not support the GCC style
+***  Please note that your compiler does not support the GCC style
 ***  aligned attribute.  Using this software may evoke bus errors.
 ***
 G10EOF
