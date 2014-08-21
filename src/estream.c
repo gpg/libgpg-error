@@ -2898,7 +2898,7 @@ es_fopencookie (void *ES__RESTRICT cookie,
 
 
 
-estream_t
+static estream_t
 do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
 {
   unsigned int modeflags;
@@ -2948,7 +2948,7 @@ es_fdopen_nc (int filedes, const char *mode)
 
 
 
-estream_t
+static estream_t
 do_fpopen (FILE *fp, const char *mode, int no_close, int with_locked_list)
 {
   unsigned int modeflags, cmode;
