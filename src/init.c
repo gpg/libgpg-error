@@ -7,12 +7,12 @@
    modify it under the terms of the GNU Lesser General Public License
    as published by the Free Software Foundation; either version 2.1 of
    the License, or (at your option) any later version.
- 
+
    libgpg-error is distributed in the hope that it will be useful, but
    WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    Lesser General Public License for more details.
- 
+
    You should have received a copy of the GNU Lesser General Public
    License along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,6 +29,7 @@
 #include <gpg-error.h>
 
 #include "gettext.h"
+#include "estream.h"
 #include "init.h"
 
 #ifdef HAVE_W32CE_SYSTEM
@@ -49,7 +50,7 @@
 
 #include <windows.h>
 
-static int tls_index = TLS_OUT_OF_INDEXES;  /* Index for the TLS functions.  */ 
+static int tls_index = TLS_OUT_OF_INDEXES;  /* Index for the TLS functions.  */
 
 static char *get_locale_dir (void);
 static void drop_locale_dir (char *locale_dir);
@@ -76,6 +77,7 @@ real_init (void)
       drop_locale_dir (locale_dir);
     }
 #endif
+  _gpgrt_es_init ();
 }
 
 /* Initialize the library.  This function should be run early.  */
@@ -127,7 +129,7 @@ gpg_err_deinit (int mode)
 {
 #if defined (HAVE_W32_SYSTEM) && !defined(DLL_EXPORT)
   struct tls_space_s *tls;
-  
+
   tls = TlsGetValue (tls_index);
   if (tls)
     {
@@ -226,7 +228,7 @@ get_locale_dir (void)
       nbytes = WideCharToMultiByte (CP_UTF8, 0, moddir, -1, NULL, 0, NULL, NULL);
       if (nbytes < 0)
         return NULL;
-      
+
       result = malloc (nbytes + strlen (SLDIR) + 1);
       if (result)
         {
@@ -275,8 +277,8 @@ get_locale_dir (void)
           strcpy (result, "c:\\gnupg");
           strcat (result, SLDIR);
         }
-    }  
-#undef SLDIR  
+    }
+#undef SLDIR
   return result;
 }
 
@@ -309,7 +311,7 @@ get_tls (void)
       tls->gt_use_utf8 = 0;
       TlsSetValue (tls_index, tls);
     }
-        
+
   return tls;
 }
 
@@ -357,7 +359,7 @@ _gpg_w32ce_strerror (int err)
   if (n < 0)
     snprintf (tls->strerror_buffer, sizeof tls->strerror_buffer -1,
               "[w32err=%d]", err);
-  return tls->strerror_buffer;    
+  return tls->strerror_buffer;
 }
 #endif /*HAVE_W32CE_SYSTEM*/
 
@@ -386,7 +388,7 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
     case DLL_PROCESS_ATTACH:
       tls_index = TlsAlloc ();
       if (tls_index == TLS_OUT_OF_INDEXES)
-        return FALSE; 
+        return FALSE;
 #ifndef _GPG_ERR_HAVE_CONSTRUCTOR
       /* If we have not constructors (e.g. MSC) we call it here.  */
       _gpg_w32__init_gettext_module ();
@@ -420,7 +422,7 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
     default:
       break;
     }
-  
+
   return TRUE;
 }
 #endif /*DLL_EXPORT*/

@@ -103,16 +103,8 @@
 # include "../common/util.h"
 #endif
 
-#ifndef HAVE_MKSTEMP
-int mkstemp (char *template);
-#endif
-
-#ifndef HAVE_MEMRCHR
-void *memrchr (const void *block, int c, size_t size);
-#endif
-
-#include <estream.h>
-#include <estream-printf.h>
+#include "estream.h"
+#include "estream-printf.h"
 
 
 
@@ -340,6 +332,20 @@ map_w32_to_errno (DWORD w32_err)
 }
 #endif /*HAVE_W32_SYSTEM*/
 
+/* Replacement fucntions.  */
+
+#ifndef HAVE_MEMRCHR
+static void *
+memrchr (const void *buffer, int c, size_t n)
+{
+  const unsigned char *p = buffer;
+
+  for (p += n; n ; n--)
+    if (*--p == c)
+      return (void *)p;
+  return NULL;
+}
+#endif /*HAVE_MEMRCHR*/
 
 
 /*

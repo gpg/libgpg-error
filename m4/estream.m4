@@ -45,5 +45,5 @@ AC_DEFUN([estream_INIT],
 [
   AC_REQUIRE([estream_PRINTF_INIT])
   AC_MSG_NOTICE([checking system features for estream])
-
+  AC_CHECK_FUNCS([memrchr])
 ])
