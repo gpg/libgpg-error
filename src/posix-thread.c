@@ -45,7 +45,7 @@
 
 
 gpg_err_code_t
-gpgrt_yield (void)
+_gpgrt_yield (void)
 {
 #if USE_POSIX_THREADS
 # ifdef _POSIX_PRIORITY_SCHEDULING

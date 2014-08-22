@@ -37,7 +37,7 @@
 
 
 gpg_err_code_t
-gpgrt_yield (void)
+_gpgrt_yield (void)
 {
   Sleep (0);
   return 0;

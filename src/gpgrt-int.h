@@ -17,14 +17,33 @@
  * License along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ESTREAM_H
-#define ESTREAM_H
+#ifndef _GPGRT_GPGRT_INT_H
+#define _GPGRT_GPGRT_INT_H
 
 #include "gpg-error.h"
+#include "visibility.h"
+
+/* Local error function prototypes.  */
+const char *_gpg_strerror (gpg_error_t err);
+int _gpg_strerror_r (gpg_error_t err, char *buf, size_t buflen);
+const char *_gpg_strsource (gpg_error_t err);
+gpg_err_code_t _gpg_err_code_from_errno (int err);
+int _gpg_err_code_to_errno (gpg_err_code_t code);
+gpg_err_code_t _gpg_err_code_from_syserror (void);
+void _gpg_err_set_errno (int err);
+
+const char *_gpg_error_check_version (const char *req_version);
+
+gpg_err_code_t _gpgrt_lock_init (gpgrt_lock_t *lockhd);
+gpg_err_code_t _gpgrt_lock_lock (gpgrt_lock_t *lockhd);
+gpg_err_code_t _gpgrt_lock_unlock (gpgrt_lock_t *lockhd);
+gpg_err_code_t _gpgrt_lock_destroy (gpgrt_lock_t *lockhd);
+gpg_err_code_t _gpgrt_yield (void);
+
 
 /* Local prototypes for estream.  */
 int _gpgrt_es_init (void);
 
 
 
-#endif /*ESTREAM_H*/
+#endif /*_GPGRT_GPGRT_INT_H*/

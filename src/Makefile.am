@@ -76,7 +76,7 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
 	mkheader.c gpg-error.h.in mkw32errmap.c w32-add.h w32ce-add.h \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 \
-	gpg-error.def.in versioninfo.rc.in \
+	gpg-error.vers gpg-error.def.in versioninfo.rc.in \
 	$(lock_obj_pub)
 
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
@@ -90,6 +90,10 @@ CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
 	gpg-extra/errno.h mkheader $(tmp_files) lock-obj-pub.native.h
 
+
+#
+# {{{ Begin Windows part
+#
 if HAVE_W32_SYSTEM
 arch_sources = w32-gettext.c w32-lock.c w32-lock-obj.h w32-thread.c
 RCCOMPILE = $(RC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
@@ -115,7 +119,13 @@ uninstall-def-file:
 libgpg_error_la_DEPENDENCIES = $(gpg_error_res) gpg-error.def
 intllibs =
 
+#
+# }}} End Windows part
+#
 else
+#
+# {{{ Begin Unix part
+#
 arch_sources = posix-lock.c posix-lock-obj.h posix-thread.c
 gpg_error_res =
 no_undefined =
@@ -126,16 +136,29 @@ uninstall-def-file:
 intllibs = @LTLIBINTL@
 
 endif
+#
+# }}} End Unix part
+#
 
+if HAVE_LD_VERSION_SCRIPT
+  libgpg_error_vers_opt = -Wl,--version-script=$(srcdir)/gpg-error.vers
+else
+  libgpg_error_vers_opt =
+endif
 
-libgpg_error_la_LDFLAGS = -version-info \
-  @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@ \
-  $(no_undefined) $(export_symbols)
+libgpg_error_la_LDFLAGS = \
+  $(no_undefined) $(export_symbols) $(libgpg_error_vers_opt) \
+  -version-info \
+  @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@
 
 libgpg_error_la_SOURCES = gpg-error.h gettext.h $(arch_sources) \
-	init.c init.h version.c lock.h thread.h \
-	estream.c estream.h estream-printf.c estream-printf.h \
-	strsource.c strerror.c code-to-errno.c code-from-errno.c
+	gpgrt-int.h init.c init.h version.c lock.h thread.h \
+	estream.c estream-printf.c estream-printf.h \
+	strsource.c strerror.c code-to-errno.c code-from-errno.c \
+	visibility.c visibility.h
+
+# libgpg_error_la_DEPENDENCIES = \
+#        $(srcdir)/gpg-error.vers
 
 # Note that RCCOMPILE needs the same defines as ..._la_CPPFLAGS but
 # without the extra_cppflags because they may include am -idirafter

@@ -31,7 +31,7 @@ TESTS = t-version t-strerror t-syserror t-lock
 
 INCLUDES = -I$(top_builddir)/src $(extra_includes)
 
-
+AM_LDFLAGS = -no-install
 LDADD = $(gpg_error_lib)
 
 noinst_PROGRAMS = $(TESTS)

@@ -101,7 +101,7 @@
 # include "../common/util.h"
 #endif
 
-#include "estream.h"
+#include "gpgrt-int.h"
 #include "estream-printf.h"
 
 
@@ -1143,8 +1143,6 @@ es_func_w32_read (void *cookie, void *buffer, size_t size)
               else
                 {
                   _set_errno (map_w32_to_errno (ec));
-                  log_debug ("estream: ReadFile returned %d\n",
-                             (int)GetLastError ());
                   bytes_read = -1;
                 }
             }

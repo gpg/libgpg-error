@@ -26,10 +26,8 @@
 #include <string.h>
 #include <errno.h>
 
-#include <gpg-error.h>
-
+#include "gpgrt-int.h"
 #include "gettext.h"
-#include "estream.h"
 #include "init.h"
 
 #ifdef HAVE_W32CE_SYSTEM
@@ -365,7 +363,7 @@ _gpg_w32ce_strerror (int err)
 
 
 void
-gpg_err_set_errno (int err)
+_gpg_err_set_errno (int err)
 {
 #ifdef HAVE_W32CE_SYSTEM
   SetLastError (err);
@@ -430,7 +428,7 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
 #else /*!HAVE_W32_SYSTEM*/
 
 void
-gpg_err_set_errno (int err)
+_gpg_err_set_errno (int err)
 {
   errno = err;
 }
