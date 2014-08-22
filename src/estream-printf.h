@@ -123,23 +123,23 @@ extern "C"
 typedef int (*estream_printf_out_t)
      (void *outfncarg,  const char *buf, size_t buflen);
 
-int estream_format (estream_printf_out_t outfnc, void *outfncarg,
-                    const char *format, va_list vaargs)
+int _gpgrt_estream_format (estream_printf_out_t outfnc, void *outfncarg,
+                           const char *format, va_list vaargs)
      _ESTREAM_GCC_A_PRINTF(3,0);
-int estream_printf (const char *format, ...)
+int _gpgrt_estream_printf (const char *format, ...)
      _ESTREAM_GCC_A_PRINTF(1,2);
-int estream_fprintf (FILE *fp, const char *format, ... )
+int _gpgrt_estream_fprintf (FILE *fp, const char *format, ... )
      _ESTREAM_GCC_A_PRINTF(2,3);
-int estream_vfprintf (FILE *fp, const char *format, va_list arg_ptr)
+int _gpgrt_estream_vfprintf (FILE *fp, const char *format, va_list arg_ptr)
      _ESTREAM_GCC_A_PRINTF(2,0);
-int estream_snprintf (char *buf, size_t bufsize, const char *format, ...)
+int _gpgrt_estream_snprintf (char *buf, size_t bufsize, const char *format, ...)
      _ESTREAM_GCC_A_PRINTF(3,4);
-int estream_vsnprintf (char *buf,size_t bufsize,
+int _gpgrt_estream_vsnprintf (char *buf,size_t bufsize,
                        const char *format, va_list arg_ptr)
      _ESTREAM_GCC_A_PRINTF(3,0);
-int estream_asprintf (char **bufp, const char *format, ...)
+int _gpgrt_estream_asprintf (char **bufp, const char *format, ...)
      _ESTREAM_GCC_A_PRINTF(2,3);
-int estream_vasprintf (char **bufp, const char *format, va_list arg_ptr)
+int _gpgrt_estream_vasprintf (char **bufp, const char *format, va_list arg_ptr)
      _ESTREAM_GCC_A_PRINTF(2,0);
 
 

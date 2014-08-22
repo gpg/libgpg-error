@@ -1,5 +1,5 @@
 /* estream-printf.c - Versatile mostly C-99 compliant printf formatting
- * Copyright (C) 2007, 2008, 2009, 2010, 2012 g10 Code GmbH
+ * Copyright (C) 2007, 2008, 2009, 2010, 2012, 2014 g10 Code GmbH
  *
  * This file is part of Libestream.
  *
@@ -1476,9 +1476,9 @@ do_format (estream_printf_out_t outfnc, void *outfncarg,
    and VAARGS a variable argumemt list matching the arguments of
    FORMAT.  */
 int
-estream_format (estream_printf_out_t outfnc,
-                void *outfncarg,
-                const char *format, va_list vaargs)
+_gpgrt_estream_format (estream_printf_out_t outfnc,
+                       void *outfncarg,
+                       const char *format, va_list vaargs)
 {
   /* Buffer to hold the argspecs and a pointer to it.*/
   struct argspec_s argspecs_buffer[DEFAULT_MAX_ARGSPECS];
@@ -1636,13 +1636,13 @@ plain_stdio_out (void *outfncarg, const char *buf, size_t buflen)
 
 /* A replacement for printf.  */
 int
-estream_printf (const char *format, ...)
+_gpgrt_estream_printf (const char *format, ...)
 {
   int rc;
   va_list arg_ptr;
 
   va_start (arg_ptr, format);
-  rc = estream_format (plain_stdio_out, stderr, format, arg_ptr);
+  rc = _gpgrt_estream_format (plain_stdio_out, stderr, format, arg_ptr);
   va_end (arg_ptr);
 
   return rc;
@@ -1650,13 +1650,13 @@ estream_printf (const char *format, ...)
 
 /* A replacement for fprintf.  */
 int
-estream_fprintf (FILE *fp, const char *format, ...)
+_gpgrt_estream_fprintf (FILE *fp, const char *format, ...)
 {
   int rc;
   va_list arg_ptr;
 
   va_start (arg_ptr, format);
-  rc = estream_format (plain_stdio_out, fp, format, arg_ptr);
+  rc = _gpgrt_estream_format (plain_stdio_out, fp, format, arg_ptr);
   va_end (arg_ptr);
 
   return rc;
@@ -1664,9 +1664,9 @@ estream_fprintf (FILE *fp, const char *format, ...)
 
 /* A replacement for vfprintf.  */
 int
-estream_vfprintf (FILE *fp, const char *format, va_list arg_ptr)
+_gpgrt_estream_vfprintf (FILE *fp, const char *format, va_list arg_ptr)
 {
-  return estream_format (plain_stdio_out, fp, format, arg_ptr);
+  return _gpgrt_estream_format (plain_stdio_out, fp, format, arg_ptr);
 }
 
 
@@ -1711,7 +1711,7 @@ fixed_buffer_out (void *outfncarg, const char *buf, size_t buflen)
 
 /* A replacement for vsnprintf. */
 int
-estream_vsnprintf (char *buf, size_t bufsize,
+_gpgrt_estream_vsnprintf (char *buf, size_t bufsize,
                    const char *format, va_list arg_ptr)
 {
   struct fixed_buffer_parm_s parm;
@@ -1721,7 +1721,7 @@ estream_vsnprintf (char *buf, size_t bufsize,
   parm.count = 0;
   parm.used = 0;
   parm.buffer = bufsize?buf:NULL;
-  rc = estream_format (fixed_buffer_out, &parm, format, arg_ptr);
+  rc = _gpgrt_estream_format (fixed_buffer_out, &parm, format, arg_ptr);
   if (!rc)
     rc = fixed_buffer_out (&parm, "", 1); /* Print terminating Nul.  */
   if (rc == -1)
@@ -1736,13 +1736,13 @@ estream_vsnprintf (char *buf, size_t bufsize,
 
 /* A replacement for snprintf.  */
 int
-estream_snprintf (char *buf, size_t bufsize, const char *format, ...)
+_gpgrt_estream_snprintf (char *buf, size_t bufsize, const char *format, ...)
 {
   int rc;
   va_list arg_ptr;
 
   va_start (arg_ptr, format);
-  rc = estream_vsnprintf (buf, bufsize, format, arg_ptr);
+  rc = _gpgrt_estream_vsnprintf (buf, bufsize, format, arg_ptr);
   va_end (arg_ptr);
 
   return rc;
@@ -1797,11 +1797,11 @@ dynamic_buffer_out (void *outfncarg, const char *buf, size_t buflen)
 }
 
 
-/* A replacement for vasprintf.  As with the BSD of vasprintf version -1
-   will be returned on error and NULL stored at BUFP.  On success the
-   number of bytes printed will be returned. */
+/* A replacement for vasprintf.  As with the BSD version of vasprintf
+   -1 will be returned on error and NULL stored at BUFP.  On success
+   the number of bytes printed will be returned. */
 int
-estream_vasprintf (char **bufp, const char *format, va_list arg_ptr)
+_gpgrt_estream_vasprintf (char **bufp, const char *format, va_list arg_ptr)
 {
   struct dynamic_buffer_parm_s parm;
   int rc;
@@ -1816,7 +1816,7 @@ estream_vasprintf (char **bufp, const char *format, va_list arg_ptr)
       return -1;
     }
 
-  rc = estream_format (dynamic_buffer_out, &parm, format, arg_ptr);
+  rc = _gpgrt_estream_format (dynamic_buffer_out, &parm, format, arg_ptr);
   if (!rc)
     rc = dynamic_buffer_out (&parm, "", 1); /* Print terminating Nul.  */
   /* Fixme: Should we shrink the resulting buffer?  */
@@ -1842,13 +1842,13 @@ estream_vasprintf (char **bufp, const char *format, va_list arg_ptr)
    will be returned on error and NULL stored at BUFP.  On success the
    number of bytes printed will be returned. */
 int
-estream_asprintf (char **bufp, const char *format, ...)
+_gpgrt_estream_asprintf (char **bufp, const char *format, ...)
 {
   int rc;
   va_list arg_ptr;
 
   va_start (arg_ptr, format);
-  rc = estream_vasprintf (bufp, format, arg_ptr);
+  rc = _gpgrt_estream_vasprintf (bufp, format, arg_ptr);
   va_end (arg_ptr);
 
   return rc;

@@ -139,8 +139,7 @@ AH_BOTTOM([
 /* For building we need to define these macro.  */
 #define GPG_ERR_ENABLE_GETTEXT_MACROS 1
 #define GPG_ERR_ENABLE_ERRNO_MACROS 1
-/* The prefix for the internal estream functions.  */
-#define _ESTREAM_EXT_SYM_PREFIX _gpgrt_
+#define GPGRT_ENABLE_ES_MACROS 1
 ])
 
 
