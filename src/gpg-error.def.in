@@ -55,6 +55,77 @@ EXPORTS
  gpgrt_lock_destroy           @23
  gpgrt_yield                  @24
 
+ gpgrt_fopen                  @25
+ gpgrt_mopen                  @26
+ gpgrt_fopenmem               @27
+ gpgrt_fopenmem_init          @28
+ gpgrt_fdopen                 @29
+ gpgrt_fdopen_nc              @30
+ gpgrt_sysopen                @31
+ gpgrt_sysopen_nc             @32
+ gpgrt_fpopen                 @33
+ gpgrt_fpopen_nc              @34
+ gpgrt_freopen                @35
+ gpgrt_fopencookie            @36
+ gpgrt_fclose                 @37
+ gpgrt_fclose_snatch          @38
+ gpgrt_onclose                @39
+ gpgrt_fileno                 @40
+ gpgrt_fileno_unlocked        @41
+ gpgrt_syshd                  @42
+ gpgrt_syshd_unlocked         @43
+ _gpgrt_set_std_stream        @44
+ _gpgrt_get_std_stream        @45
+ gpgrt_flockfile              @46
+ gpgrt_ftrylockfile           @47
+ gpgrt_funlockfile            @48
+ gpgrt_feof                   @49
+ gpgrt_feof_unlocked          @50
+ gpgrt_ferror                 @51
+ gpgrt_ferror_unlocked        @52
+ gpgrt_clearerr               @53
+ gpgrt_clearerr_unlocked      @54
+ gpgrt_fflush                 @55
+ gpgrt_fseek                  @56
+ gpgrt_fseeko                 @57
+ gpgrt_ftell                  @58
+ gpgrt_ftello                 @59
+ gpgrt_rewind                 @60
+ gpgrt_fgetc                  @61
+ _gpgrt_getc_underflow        @62
+ gpgrt_fputc                  @63
+ _gpgrt_putc_overflow         @64
+ gpgrt_ungetc                 @65
+ gpgrt_read                   @66
+ gpgrt_write                  @67
+ gpgrt_write_sanitized        @68
+ gpgrt_write_hexstring        @69
+ gpgrt_fread                  @70
+ gpgrt_fwrite                 @71
+ gpgrt_fgets                  @72
+ gpgrt_fputs                  @73
+ gpgrt_fputs_unlocked         @74
+ gpgrt_getline                @75
+ gpgrt_read_line              @76
+ gpgrt_free                   @77
+ gpgrt_fprintf                @78
+ gpgrt_fprintf_unlocked       @79
+ gpgrt_printf                 @80
+ gpgrt_printf_unlocked        @81
+ gpgrt_vfprintf               @82
+ gpgrt_vfprintf_unlocked      @83
+ gpgrt_setvbuf                @84
+ gpgrt_setbuf                 @85
+ gpgrt_set_binary             @86
+ gpgrt_tmpfile                @87
+ gpgrt_opaque_set             @88
+ gpgrt_opaque_get             @89
+ gpgrt_fname_set              @90
+ gpgrt_fname_get              @91
+ gpgrt_asprintf               @92
+ gpgrt_vasprintf              @93
+ gpgrt_bsprintf               @94
+ gpgrt_vbsprintf              @95
 
 
 ;; end of file with public symbols for Windows.

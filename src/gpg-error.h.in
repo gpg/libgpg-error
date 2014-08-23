@@ -569,11 +569,6 @@ int gpgrt_vfprintf_unlocked (gpgrt_stream_t _GPGRT__RESTRICT stream,
                              const char *_GPGRT__RESTRICT format, va_list ap)
                              _GPGRT_GCC_A_PRINTF(2,0);
 
-char *gpgrt_asprintf (const char *_GPGRT__RESTRICT format, ...)
-                      _GPGRT_GCC_A_PRINTF(1,2);
-char *gpgrt_vasprintf (const char *_GPGRT__RESTRICT format, va_list ap)
-                       _GPGRT_GCC_A_PRINTF(1,0);
-
 int gpgrt_setvbuf (gpgrt_stream_t _GPGRT__RESTRICT stream,
                    char *_GPGRT__RESTRICT buf, int mode, size_t size);
 void gpgrt_setbuf (gpgrt_stream_t _GPGRT__RESTRICT stream,
@@ -589,6 +584,16 @@ void *gpgrt_opaque_get (gpgrt_stream_t stream);
 
 void gpgrt_fname_set (gpgrt_stream_t stream, const char *fname);
 const char *gpgrt_fname_get (gpgrt_stream_t stream);
+
+int gpgrt_asprintf (char **r_buf, const char *_GPGRT__RESTRICT format, ...)
+                    _GPGRT_GCC_A_PRINTF(2,3);
+int gpgrt_vasprintf (char **r_buf, const char *_GPGRT__RESTRICT format,
+                     va_list ap)
+                     _GPGRT_GCC_A_PRINTF(2,0);
+char *gpgrt_bsprintf (const char *_GPGRT__RESTRICT format, ...)
+                      _GPGRT_GCC_A_PRINTF(1,2);
+char *gpgrt_vbsprintf (const char *_GPGRT__RESTRICT format, va_list ap)
+                       _GPGRT_GCC_A_PRINTF(1,0);
 
 
 #ifdef GPGRT_ENABLE_ES_MACROS
@@ -654,8 +659,6 @@ const char *gpgrt_fname_get (gpgrt_stream_t stream);
 # define es_printf_unlocked   gpgrt_printf_unlocked
 # define es_vfprintf          gpgrt_vfprintf
 # define es_vfprintf_unlocked gpgrt_vfprintf_unlocked
-# define es_asprintf          gpgrt_asprintf
-# define es_vasprintf         gpgrt_vasprintf
 # define es_setvbuf           gpgrt_setvbuf
 # define es_setbuf            gpgrt_setbuf
 # define es_set_binary        gpgrt_set_binary
@@ -664,6 +667,10 @@ const char *gpgrt_fname_get (gpgrt_stream_t stream);
 # define es_opaque_get        gpgrt_opaque_get
 # define es_fname_set         gpgrt_fname_set
 # define es_fname_get         gpgrt_fname_get
+# define es_asprintf          gpgrt_asprintf
+# define es_vasprintf         gpgrt_vasprintf
+# define es_bsprintf          gpgrt_bsprintf
+# define es_vbsprintf         gpgrt_vbsprintf
 #endif /*GPGRT_ENABLE_ES_MACROS*/
 
 #ifdef __cplusplus

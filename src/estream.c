@@ -585,7 +585,7 @@ static void
 do_deinit (void)
 {
   /* Flush all streams. */
-  es_fflush (NULL);
+  _gpgrt_fflush (NULL);
 
   /* We should release the estream_list.  However there is one
      problem: That list is also used to search for the standard
@@ -2469,7 +2469,7 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
       if (newline)
 	{
 	  data_len = (newline - (char *) data) + 1;
-	  err = es_write (line_stream, data, data_len, NULL);
+	  err = _gpgrt_write (line_stream, data, data_len, NULL);
 	  if (! err)
 	    {
 	      space_left -= data_len;
@@ -2480,7 +2480,7 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
 	}
       else
 	{
-	  err = es_write (line_stream, data, data_len, NULL);
+	  err = _gpgrt_write (line_stream, data, data_len, NULL);
 	  if (! err)
 	    {
 	      space_left -= data_len;
@@ -2518,7 +2518,7 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
   else
     line_new = *line;
 
-  err = es_read (line_stream, line_new, line_size, NULL);
+  err = _gpgrt_read (line_stream, line_new, line_size, NULL);
   if (err)
     goto out;
 
@@ -2691,7 +2691,8 @@ es_opaque_ctrl (estream_t _GPGRT__RESTRICT stream, void *_GPGRT__RESTRICT opaque
 /* API.  */
 
 estream_t
-es_fopen (const char *_GPGRT__RESTRICT path, const char *_GPGRT__RESTRICT mode)
+_gpgrt_fopen (const char *_GPGRT__RESTRICT path,
+              const char *_GPGRT__RESTRICT mode)
 {
   unsigned int modeflags, cmode;
   int samethread, create_called;
@@ -2750,10 +2751,10 @@ es_fopen (const char *_GPGRT__RESTRICT path, const char *_GPGRT__RESTRICT mode)
    function but no free function.  Providing only a free function is
    allowed as long as GROW is false.  */
 estream_t
-es_mopen (void *_GPGRT__RESTRICT data, size_t data_n, size_t data_len,
-	  unsigned int grow,
-	  func_realloc_t func_realloc, func_free_t func_free,
-	  const char *_GPGRT__RESTRICT mode)
+_gpgrt_mopen (void *_GPGRT__RESTRICT data, size_t data_n, size_t data_len,
+              unsigned int grow,
+              func_realloc_t func_realloc, func_free_t func_free,
+              const char *_GPGRT__RESTRICT mode)
 {
   int create_called = 0;
   estream_t stream = NULL;
@@ -2789,7 +2790,7 @@ es_mopen (void *_GPGRT__RESTRICT data, size_t data_n, size_t data_len,
 
 
 estream_t
-es_fopenmem (size_t memlimit, const char *_GPGRT__RESTRICT mode)
+_gpgrt_fopenmem (size_t memlimit, const char *_GPGRT__RESTRICT mode)
 {
   unsigned int modeflags;
   int samethread;
@@ -2826,21 +2827,21 @@ es_fopenmem (size_t memlimit, const char *_GPGRT__RESTRICT mode)
    beginning.  If MEMLIMIT is not 0 but shorter than DATALEN it
    DATALEN will be used as the value for MEMLIMIT.  */
 estream_t
-es_fopenmem_init (size_t memlimit, const char *_GPGRT__RESTRICT mode,
-                  const void *data, size_t datalen)
+_gpgrt_fopenmem_init (size_t memlimit, const char *_GPGRT__RESTRICT mode,
+                      const void *data, size_t datalen)
 {
   estream_t stream;
 
   if (memlimit && memlimit < datalen)
     memlimit = datalen;
 
-  stream = es_fopenmem (memlimit, mode);
+  stream = _gpgrt_fopenmem (memlimit, mode);
   if (stream && data && datalen)
     {
       if (es_writen (stream, data, datalen, NULL))
         {
           int saveerrno = errno;
-          es_fclose (stream);
+          _gpgrt_fclose (stream);
           stream = NULL;
           _set_errno (saveerrno);
         }
@@ -2856,9 +2857,9 @@ es_fopenmem_init (size_t memlimit, const char *_GPGRT__RESTRICT mode,
 
 
 estream_t
-es_fopencookie (void *_GPGRT__RESTRICT cookie,
-		const char *_GPGRT__RESTRICT mode,
-		gpgrt_cookie_io_functions_t functions)
+_gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
+                    const char *_GPGRT__RESTRICT mode,
+                    gpgrt_cookie_io_functions_t functions)
 {
   unsigned int modeflags;
   int samethread;
@@ -2921,14 +2922,14 @@ do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
 }
 
 estream_t
-es_fdopen (int filedes, const char *mode)
+_gpgrt_fdopen (int filedes, const char *mode)
 {
   return do_fdopen (filedes, mode, 0, 0);
 }
 
 /* A variant of es_fdopen which does not close FILEDES at the end.  */
 estream_t
-es_fdopen_nc (int filedes, const char *mode)
+_gpgrt_fdopen_nc (int filedes, const char *mode)
 {
   return do_fdopen (filedes, mode, 1, 0);
 }
@@ -2983,7 +2984,7 @@ do_fpopen (FILE *fp, const char *mode, int no_close, int with_locked_list)
    is easier to keep on using the standard I/O stream as a backend for
    estream. */
 estream_t
-es_fpopen (FILE *fp, const char *mode)
+_gpgrt_fpopen (FILE *fp, const char *mode)
 {
   return do_fpopen (fp, mode, 0, 0);
 }
@@ -2991,7 +2992,7 @@ es_fpopen (FILE *fp, const char *mode)
 
 /* Same as es_fpopen but does not close  FP at the end.  */
 estream_t
-es_fpopen_nc (FILE *fp, const char *mode)
+_gpgrt_fpopen_nc (FILE *fp, const char *mode)
 {
   return do_fpopen (fp, mode, 1, 0);
 }
@@ -3064,7 +3065,7 @@ do_sysopen (es_syshd_t *syshd, const char *mode, int no_close)
    Windows it uses the bare W32 API and thus a HANDLE instead of a
    file descriptor.  */
 estream_t
-es_sysopen (es_syshd_t *syshd, const char *mode)
+_gpgrt_sysopen (es_syshd_t *syshd, const char *mode)
 {
   return do_sysopen (syshd, mode, 0);
 }
@@ -3072,7 +3073,7 @@ es_sysopen (es_syshd_t *syshd, const char *mode)
 /* Same as es_sysopen but the handle/fd will not be closed by
    es_fclose.  */
 estream_t
-es_sysopen_nc (es_syshd_t *syshd, const char *mode)
+_gpgrt_sysopen_nc (es_syshd_t *syshd, const char *mode)
 {
   return do_sysopen (syshd, mode, 1);
 }
@@ -3081,9 +3082,10 @@ es_sysopen_nc (es_syshd_t *syshd, const char *mode)
 
 /* Set custom standard descriptors to be used for stdin, stdout and
    stderr.  This function needs to be called before any of the
-   standard streams are accessed.  */
+   standard streams are accessed.  This internal version uses a double
+   dash inside its name. */
 void
-_gpgrt_set_std_fd (int no, int fd)
+_gpgrt__set_std_fd (int no, int fd)
 {
   /* fprintf (stderr, "es_set_std_fd(%d, %d)\n", no, fd); */
   lock_list ();
@@ -3096,9 +3098,10 @@ _gpgrt_set_std_fd (int no, int fd)
 }
 
 
-/* Return the stream used for stdin, stdout or stderr.  */
+/* Return the stream used for stdin, stdout or stderr.
+   This internal version uses a double dash inside its name. */
 estream_t
-_gpgrt_get_std_stream (int fd)
+_gpgrt__get_std_stream (int fd)
 {
   estream_list_t list_obj;
   estream_t stream = NULL;
@@ -3164,8 +3167,9 @@ _gpgrt_get_std_stream (int fd)
 /* Note: A "samethread" keyword given in "mode" is ignored and the
    value used by STREAM is used instead. */
 estream_t
-es_freopen (const char *_GPGRT__RESTRICT path, const char *_GPGRT__RESTRICT mode,
-	    estream_t _GPGRT__RESTRICT stream)
+_gpgrt_freopen (const char *_GPGRT__RESTRICT path,
+                const char *_GPGRT__RESTRICT mode,
+                estream_t _GPGRT__RESTRICT stream)
 {
   int err;
 
@@ -3232,7 +3236,7 @@ es_freopen (const char *_GPGRT__RESTRICT path, const char *_GPGRT__RESTRICT mode
 
 
 int
-es_fclose (estream_t stream)
+_gpgrt_fclose (estream_t stream)
 {
   int err;
 
@@ -3251,7 +3255,7 @@ es_fclose (estream_t stream)
    success.  The caller needs to release the returned memory using
    es_free.  */
 int
-es_fclose_snatch (estream_t stream, void **r_buffer, size_t *r_buflen)
+_gpgrt_fclose_snatch (estream_t stream, void **r_buffer, size_t *r_buflen)
 {
   int err;
 
@@ -3321,8 +3325,8 @@ es_fclose_snatch (estream_t stream, void **r_buffer, size_t *r_buflen)
    It may not call any estream function for STREAM, neither direct nor
    indirectly. */
 int
-es_onclose (estream_t stream, int mode,
-            void (*fnc) (estream_t, void*), void *fnc_value)
+_gpgrt_onclose (estream_t stream, int mode,
+                void (*fnc) (estream_t, void*), void *fnc_value)
 {
   int err;
 
@@ -3335,11 +3339,11 @@ es_onclose (estream_t stream, int mode,
 
 
 int
-es_fileno_unlocked (estream_t stream)
+_gpgrt_fileno_unlocked (estream_t stream)
 {
   es_syshd_t syshd;
 
-  if (es_syshd_unlocked (stream, &syshd))
+  if (_gpgrt_syshd_unlocked (stream, &syshd))
     return -1;
   switch (syshd.type)
     {
@@ -3357,7 +3361,7 @@ es_fileno_unlocked (estream_t stream)
    sys handle.  Return 0 on success or true on error and sets errno.
    This is the unlocked version.  */
 int
-es_syshd_unlocked (estream_t stream, es_syshd_t *syshd)
+_gpgrt_syshd_unlocked (estream_t stream, es_syshd_t *syshd)
 {
   if (!stream || !syshd || stream->intern->syshd.type == ES_SYSHD_NONE)
     {
@@ -3373,33 +3377,33 @@ es_syshd_unlocked (estream_t stream, es_syshd_t *syshd)
 
 
 void
-es_flockfile (estream_t stream)
+_gpgrt_flockfile (estream_t stream)
 {
   lock_stream (stream);
 }
 
 
 int
-es_ftrylockfile (estream_t stream)
+_gpgrt_ftrylockfile (estream_t stream)
 {
   return trylock_stream (stream);
 }
 
 
 void
-es_funlockfile (estream_t stream)
+_gpgrt_funlockfile (estream_t stream)
 {
   unlock_stream (stream);
 }
 
 
 int
-es_fileno (estream_t stream)
+_gpgrt_fileno (estream_t stream)
 {
   int ret;
 
   lock_stream (stream);
-  ret = es_fileno_unlocked (stream);
+  ret = _gpgrt_fileno_unlocked (stream);
   unlock_stream (stream);
 
   return ret;
@@ -3411,12 +3415,12 @@ es_fileno (estream_t stream)
    sys handle.  Return 0 on success or true on error and sets errno.
    This is the unlocked version.  */
 int
-es_syshd (estream_t stream, es_syshd_t *syshd)
+_gpgrt_syshd (estream_t stream, es_syshd_t *syshd)
 {
   int ret;
 
   lock_stream (stream);
-  ret = es_syshd_unlocked (stream, syshd);
+  ret = _gpgrt_syshd_unlocked (stream, syshd);
   unlock_stream (stream);
 
   return ret;
@@ -3424,19 +3428,19 @@ es_syshd (estream_t stream, es_syshd_t *syshd)
 
 
 int
-es_feof_unlocked (estream_t stream)
+_gpgrt_feof_unlocked (estream_t stream)
 {
   return es_get_indicator (stream, 0, 1);
 }
 
 
 int
-es_feof (estream_t stream)
+_gpgrt_feof (estream_t stream)
 {
   int ret;
 
   lock_stream (stream);
-  ret = es_feof_unlocked (stream);
+  ret = _gpgrt_feof_unlocked (stream);
   unlock_stream (stream);
 
   return ret;
@@ -3444,19 +3448,19 @@ es_feof (estream_t stream)
 
 
 int
-es_ferror_unlocked (estream_t stream)
+_gpgrt_ferror_unlocked (estream_t stream)
 {
   return es_get_indicator (stream, 1, 0);
 }
 
 
 int
-es_ferror (estream_t stream)
+_gpgrt_ferror (estream_t stream)
 {
   int ret;
 
   lock_stream (stream);
-  ret = es_ferror_unlocked (stream);
+  ret = _gpgrt_ferror_unlocked (stream);
   unlock_stream (stream);
 
   return ret;
@@ -3464,17 +3468,17 @@ es_ferror (estream_t stream)
 
 
 void
-es_clearerr_unlocked (estream_t stream)
+_gpgrt_clearerr_unlocked (estream_t stream)
 {
   es_set_indicators (stream, 0, 0);
 }
 
 
 void
-es_clearerr (estream_t stream)
+_gpgrt_clearerr (estream_t stream)
 {
   lock_stream (stream);
-  es_clearerr_unlocked (stream);
+  _gpgrt_clearerr_unlocked (stream);
   unlock_stream (stream);
 }
 
@@ -3497,7 +3501,7 @@ do_fflush (estream_t stream)
 
 
 int
-es_fflush (estream_t stream)
+_gpgrt_fflush (estream_t stream)
 {
   int err;
 
@@ -3527,7 +3531,7 @@ es_fflush (estream_t stream)
 
 
 int
-es_fseek (estream_t stream, long int offset, int whence)
+_gpgrt_fseek (estream_t stream, long int offset, int whence)
 {
   int err;
 
@@ -3540,7 +3544,7 @@ es_fseek (estream_t stream, long int offset, int whence)
 
 
 int
-es_fseeko (estream_t stream, off_t offset, int whence)
+_gpgrt_fseeko (estream_t stream, off_t offset, int whence)
 {
   int err;
 
@@ -3553,7 +3557,7 @@ es_fseeko (estream_t stream, off_t offset, int whence)
 
 
 long int
-es_ftell (estream_t stream)
+_gpgrt_ftell (estream_t stream)
 {
   long int ret;
 
@@ -3566,7 +3570,7 @@ es_ftell (estream_t stream)
 
 
 off_t
-es_ftello (estream_t stream)
+_gpgrt_ftello (estream_t stream)
 {
   off_t ret = -1;
 
@@ -3579,7 +3583,7 @@ es_ftello (estream_t stream)
 
 
 void
-es_rewind (estream_t stream)
+_gpgrt_rewind (estream_t stream)
 {
   lock_stream (stream);
   es_seek (stream, 0L, SEEK_SET, NULL);
@@ -3589,7 +3593,7 @@ es_rewind (estream_t stream)
 
 
 int
-_gpgrt_getc_underflow (estream_t stream)
+_gpgrt__getc_underflow (estream_t stream)
 {
   int err;
   unsigned char c;
@@ -3602,7 +3606,7 @@ _gpgrt_getc_underflow (estream_t stream)
 
 
 int
-_gpgrt_putc_overflow (int c, estream_t stream)
+_gpgrt__putc_overflow (int c, estream_t stream)
 {
   unsigned char d = c;
   int err;
@@ -3614,12 +3618,12 @@ _gpgrt_putc_overflow (int c, estream_t stream)
 
 
 int
-es_fgetc (estream_t stream)
+_gpgrt_fgetc (estream_t stream)
 {
   int ret;
 
   lock_stream (stream);
-  ret = es_getc_unlocked (stream);
+  ret = _gpgrt_getc_unlocked (stream);
   unlock_stream (stream);
 
   return ret;
@@ -3627,12 +3631,12 @@ es_fgetc (estream_t stream)
 
 
 int
-es_fputc (int c, estream_t stream)
+_gpgrt_fputc (int c, estream_t stream)
 {
   int ret;
 
   lock_stream (stream);
-  ret = es_putc_unlocked (c, stream);
+  ret = _gpgrt_putc_unlocked (c, stream);
   unlock_stream (stream);
 
   return ret;
@@ -3640,7 +3644,7 @@ es_fputc (int c, estream_t stream)
 
 
 int
-es_ungetc (int c, estream_t stream)
+_gpgrt_ungetc (int c, estream_t stream)
 {
   unsigned char data = (unsigned char) c;
   size_t data_unread;
@@ -3654,9 +3658,9 @@ es_ungetc (int c, estream_t stream)
 
 
 int
-es_read (estream_t _GPGRT__RESTRICT stream,
-	 void *_GPGRT__RESTRICT buffer, size_t bytes_to_read,
-	 size_t *_GPGRT__RESTRICT bytes_read)
+_gpgrt_read (estream_t _GPGRT__RESTRICT stream,
+             void *_GPGRT__RESTRICT buffer, size_t bytes_to_read,
+             size_t *_GPGRT__RESTRICT bytes_read)
 {
   int err;
 
@@ -3674,9 +3678,9 @@ es_read (estream_t _GPGRT__RESTRICT stream,
 
 
 int
-es_write (estream_t _GPGRT__RESTRICT stream,
-	  const void *_GPGRT__RESTRICT buffer, size_t bytes_to_write,
-	  size_t *_GPGRT__RESTRICT bytes_written)
+_gpgrt_write (estream_t _GPGRT__RESTRICT stream,
+              const void *_GPGRT__RESTRICT buffer, size_t bytes_to_write,
+              size_t *_GPGRT__RESTRICT bytes_written)
 {
   int err;
 
@@ -3694,8 +3698,8 @@ es_write (estream_t _GPGRT__RESTRICT stream,
 
 
 size_t
-es_fread (void *_GPGRT__RESTRICT ptr, size_t size, size_t nitems,
-	  estream_t _GPGRT__RESTRICT stream)
+_gpgrt_fread (void *_GPGRT__RESTRICT ptr, size_t size, size_t nitems,
+              estream_t _GPGRT__RESTRICT stream)
 {
   size_t ret, bytes;
 
@@ -3715,8 +3719,8 @@ es_fread (void *_GPGRT__RESTRICT ptr, size_t size, size_t nitems,
 
 
 size_t
-es_fwrite (const void *_GPGRT__RESTRICT ptr, size_t size, size_t nitems,
-	   estream_t _GPGRT__RESTRICT stream)
+_gpgrt_fwrite (const void *_GPGRT__RESTRICT ptr, size_t size, size_t nitems,
+               estream_t _GPGRT__RESTRICT stream)
 {
   size_t ret, bytes;
 
@@ -3736,7 +3740,8 @@ es_fwrite (const void *_GPGRT__RESTRICT ptr, size_t size, size_t nitems,
 
 
 char *
-es_fgets (char *_GPGRT__RESTRICT buffer, int length, estream_t _GPGRT__RESTRICT stream)
+_gpgrt_fgets (char *_GPGRT__RESTRICT buffer, int length,
+              estream_t _GPGRT__RESTRICT stream)
 {
   unsigned char *s = (unsigned char*)buffer;
   int c;
@@ -3746,7 +3751,7 @@ es_fgets (char *_GPGRT__RESTRICT buffer, int length, estream_t _GPGRT__RESTRICT 
 
   c = EOF;
   lock_stream (stream);
-  while (length > 1 && (c = es_getc_unlocked (stream)) != EOF && c != '\n')
+  while (length > 1 && (c = _gpgrt_getc_unlocked (stream)) != EOF && c != '\n')
     {
       *s++ = c;
       length--;
@@ -3765,7 +3770,8 @@ es_fgets (char *_GPGRT__RESTRICT buffer, int length, estream_t _GPGRT__RESTRICT 
 
 
 int
-es_fputs_unlocked (const char *_GPGRT__RESTRICT s, estream_t _GPGRT__RESTRICT stream)
+_gpgrt_fputs_unlocked (const char *_GPGRT__RESTRICT s,
+                       estream_t _GPGRT__RESTRICT stream)
 {
   size_t length;
   int err;
@@ -3776,7 +3782,7 @@ es_fputs_unlocked (const char *_GPGRT__RESTRICT s, estream_t _GPGRT__RESTRICT st
 }
 
 int
-es_fputs (const char *_GPGRT__RESTRICT s, estream_t _GPGRT__RESTRICT stream)
+_gpgrt_fputs (const char *_GPGRT__RESTRICT s, estream_t _GPGRT__RESTRICT stream)
 {
   size_t length;
   int err;
@@ -3791,8 +3797,8 @@ es_fputs (const char *_GPGRT__RESTRICT s, estream_t _GPGRT__RESTRICT stream)
 
 
 ssize_t
-es_getline (char *_GPGRT__RESTRICT *_GPGRT__RESTRICT lineptr, size_t *_GPGRT__RESTRICT n,
-	    estream_t _GPGRT__RESTRICT stream)
+_gpgrt_getline (char *_GPGRT__RESTRICT *_GPGRT__RESTRICT lineptr,
+                size_t *_GPGRT__RESTRICT n, estream_t _GPGRT__RESTRICT stream)
 {
   char *line = NULL;
   size_t line_n = 0;
@@ -3875,9 +3881,9 @@ es_getline (char *_GPGRT__RESTRICT *_GPGRT__RESTRICT lineptr, size_t *_GPGRT__RE
    released using es_free.
  */
 ssize_t
-es_read_line (estream_t stream,
-              char **addr_of_buffer, size_t *length_of_buffer,
-              size_t *max_length)
+_gpgrt_read_line (estream_t stream,
+                  char **addr_of_buffer, size_t *length_of_buffer,
+                  size_t *max_length)
 {
   int c;
   char  *buffer = *addr_of_buffer;
@@ -3913,7 +3919,7 @@ es_read_line (estream_t stream,
 
   lock_stream (stream);
   p = buffer;
-  while  ((c = es_getc_unlocked (stream)) != EOF)
+  while  ((c = _gpgrt_getc_unlocked (stream)) != EOF)
     {
       if (nbytes == length)
         {
@@ -3921,7 +3927,7 @@ es_read_line (estream_t stream,
           if (maxlen && length > maxlen)
             {
               /* We are beyond our limit: Skip the rest of the line. */
-              while (c != '\n' && (c=es_getc_unlocked (stream)) != EOF)
+              while (c != '\n' && (c=_gpgrt_getc_unlocked (stream)) != EOF)
                 ;
               *p++ = '\n'; /* Always append a LF (we reserved some space). */
               nbytes++;
@@ -3963,24 +3969,25 @@ es_read_line (estream_t stream,
    by estream.  Should be used for all buffers returned to the caller
    by libestream. */
 void
-es_free (void *a)
+_gpgrt_free (void *a)
 {
   mem_free (a);
 }
 
 
 int
-es_vfprintf_unlocked (estream_t _GPGRT__RESTRICT stream,
-                      const char *_GPGRT__RESTRICT format,
-                      va_list ap)
+_gpgrt_vfprintf_unlocked (estream_t _GPGRT__RESTRICT stream,
+                          const char *_GPGRT__RESTRICT format,
+                          va_list ap)
 {
   return es_print (stream, format, ap);
 }
 
 
 int
-es_vfprintf (estream_t _GPGRT__RESTRICT stream, const char *_GPGRT__RESTRICT format,
-	     va_list ap)
+_gpgrt_vfprintf (estream_t _GPGRT__RESTRICT stream,
+                 const char *_GPGRT__RESTRICT format,
+                 va_list ap)
 {
   int ret;
 
@@ -3993,8 +4000,8 @@ es_vfprintf (estream_t _GPGRT__RESTRICT stream, const char *_GPGRT__RESTRICT for
 
 
 int
-es_fprintf_unlocked (estream_t _GPGRT__RESTRICT stream,
-                     const char *_GPGRT__RESTRICT format, ...)
+_gpgrt_fprintf_unlocked (estream_t _GPGRT__RESTRICT stream,
+                         const char *_GPGRT__RESTRICT format, ...)
 {
   int ret;
 
@@ -4008,8 +4015,8 @@ es_fprintf_unlocked (estream_t _GPGRT__RESTRICT stream,
 
 
 int
-es_fprintf (estream_t _GPGRT__RESTRICT stream,
-	    const char *_GPGRT__RESTRICT format, ...)
+_gpgrt_fprintf (estream_t _GPGRT__RESTRICT stream,
+                const char *_GPGRT__RESTRICT format, ...)
 {
   int ret;
 
@@ -4021,76 +4028,6 @@ es_fprintf (estream_t _GPGRT__RESTRICT stream,
   va_end (ap);
 
   return ret;
-}
-
-
-int
-es_printf_unlocked (const char *_GPGRT__RESTRICT format, ...)
-{
-  int ret;
-
-  va_list ap;
-  va_start (ap, format);
-  ret = es_print (es_stdout, format, ap);
-  va_end (ap);
-
-  return ret;
-}
-
-
-int
-es_printf (const char *_GPGRT__RESTRICT format, ...)
-{
-  int ret;
-  estream_t stream = es_stdout;
-
-  va_list ap;
-  va_start (ap, format);
-  lock_stream (stream);
-  ret = es_print (stream, format, ap);
-  unlock_stream (stream);
-  va_end (ap);
-
-  return ret;
-}
-
-
-/* A variant of asprintf.  The function returns the allocated buffer
-   or NULL on error; ERRNO is set in the error case.  The caller
-   should use es_free to release the buffer.  This function actually
-   belongs into estream-printf but we put it here as a convenience
-   and because es_free is required anyway.  */
-char *
-es_asprintf (const char *_GPGRT__RESTRICT format, ...)
-{
-  int rc;
-  va_list ap;
-  char *buf;
-
-  va_start (ap, format);
-  rc = _gpgrt_estream_vasprintf (&buf, format, ap);
-  va_end (ap);
-  if (rc < 0)
-    return NULL;
-  return buf;
-}
-
-
-/* A variant of vasprintf.  The function returns the allocated buffer
-   or NULL on error; ERRNO is set in the error case.  The caller
-   should use es_free to release the buffer.  This function actually
-   belongs into estream-printf but we put it here as a convenience
-   and because es_free is required anyway.  */
-char *
-es_vasprintf (const char *_GPGRT__RESTRICT format, va_list ap)
-{
-  int rc;
-  char *buf;
-
-  rc = _gpgrt_estream_vasprintf (&buf, format, ap);
-  if (rc < 0)
-    return NULL;
-  return buf;
 }
 
 
@@ -4196,7 +4133,7 @@ tmpfd (void)
 }
 
 estream_t
-es_tmpfile (void)
+_gpgrt_tmpfile (void)
 {
   unsigned int modeflags;
   int create_called;
@@ -4243,8 +4180,8 @@ es_tmpfile (void)
 
 
 int
-es_setvbuf (estream_t _GPGRT__RESTRICT stream,
-	    char *_GPGRT__RESTRICT buf, int type, size_t size)
+_gpgrt_setvbuf (estream_t _GPGRT__RESTRICT stream,
+                char *_GPGRT__RESTRICT buf, int type, size_t size)
 {
   int err;
 
@@ -4265,21 +4202,12 @@ es_setvbuf (estream_t _GPGRT__RESTRICT stream,
 }
 
 
-void
-es_setbuf (estream_t _GPGRT__RESTRICT stream, char *_GPGRT__RESTRICT buf)
-{
-  lock_stream (stream);
-  es_set_buffering (stream, buf, buf ? _IOFBF : _IONBF, BUFSIZ);
-  unlock_stream (stream);
-}
-
-
 /* Put a stream into binary mode.  This is only needed for the
    standard streams if they are to be used in a binary way.  On Unix
    systems it is never needed but MSDOS based systems require such a
    call.  It needs to be called before any I/O is done on STREAM.  */
 void
-es_set_binary (estream_t stream)
+_gpgrt_set_binary (estream_t stream)
 {
   lock_stream (stream);
   if (!(stream->intern->modeflags & O_BINARY))
@@ -4307,7 +4235,7 @@ es_set_binary (estream_t stream)
 
 
 void
-es_opaque_set (estream_t stream, void *opaque)
+_gpgrt_opaque_set (estream_t stream, void *opaque)
 {
   lock_stream (stream);
   es_opaque_ctrl (stream, opaque, NULL);
@@ -4316,7 +4244,7 @@ es_opaque_set (estream_t stream, void *opaque)
 
 
 void *
-es_opaque_get (estream_t stream)
+_gpgrt_opaque_get (estream_t stream)
 {
   void *opaque;
 
@@ -4359,7 +4287,7 @@ fname_set_internal (estream_t stream, const char *fname, int quote)
    as long as STREAM is valid.  This function is called internally by
    functions which open a filename.  */
 void
-es_fname_set (estream_t stream, const char *fname)
+_gpgrt_fname_set (estream_t stream, const char *fname)
 {
   if (fname)
     {
@@ -4374,7 +4302,7 @@ es_fname_set (estream_t stream, const char *fname)
    been set, "[?]" will be returned.  The returned file name is valid
    as long as STREAM is valid.  */
 const char *
-es_fname_get (estream_t stream)
+_gpgrt_fname_get (estream_t stream)
 {
   const char *fname;
 
@@ -4395,10 +4323,10 @@ es_fname_get (estream_t stream)
    the number of bytes actually written are stored at this
    address.  */
 int
-es_write_sanitized (estream_t _GPGRT__RESTRICT stream,
-                    const void * _GPGRT__RESTRICT buffer, size_t length,
-                    const char * delimiters,
-                    size_t * _GPGRT__RESTRICT bytes_written)
+_gpgrt_write_sanitized (estream_t _GPGRT__RESTRICT stream,
+                        const void * _GPGRT__RESTRICT buffer, size_t length,
+                        const char * delimiters,
+                        size_t * _GPGRT__RESTRICT bytes_written)
 {
   const unsigned char *p = buffer;
   size_t count = 0;
@@ -4412,54 +4340,54 @@ es_write_sanitized (estream_t _GPGRT__RESTRICT stream,
           || (delimiters
               && (strchr (delimiters, *p) || *p == '\\')))
         {
-          es_putc_unlocked ('\\', stream);
+          _gpgrt_putc_unlocked ('\\', stream);
           count++;
           if (*p == '\n')
             {
-              es_putc_unlocked ('n', stream);
+              _gpgrt_putc_unlocked ('n', stream);
               count++;
             }
           else if (*p == '\r')
             {
-              es_putc_unlocked ('r', stream);
+              _gpgrt_putc_unlocked ('r', stream);
               count++;
             }
           else if (*p == '\f')
             {
-              es_putc_unlocked ('f', stream);
+              _gpgrt_putc_unlocked ('f', stream);
               count++;
             }
           else if (*p == '\v')
             {
-              es_putc_unlocked ('v', stream);
+              _gpgrt_putc_unlocked ('v', stream);
               count++;
             }
           else if (*p == '\b')
             {
-              es_putc_unlocked ('b', stream);
+              _gpgrt_putc_unlocked ('b', stream);
               count++;
             }
           else if (!*p)
             {
-              es_putc_unlocked('0', stream);
+              _gpgrt_putc_unlocked('0', stream);
               count++;
             }
           else
             {
-              es_fprintf_unlocked (stream, "x%02x", *p);
+              _gpgrt_fprintf_unlocked (stream, "x%02x", *p);
               count += 3;
             }
 	}
       else
         {
-          es_putc_unlocked (*p, stream);
+          _gpgrt_putc_unlocked (*p, stream);
           count++;
         }
     }
 
   if (bytes_written)
     *bytes_written = count;
-  ret =  es_ferror_unlocked (stream)? -1 : 0;
+  ret =  _gpgrt_ferror_unlocked (stream)? -1 : 0;
   unlock_stream (stream);
 
   return ret;
@@ -4471,9 +4399,9 @@ es_write_sanitized (estream_t _GPGRT__RESTRICT stream,
    BYTES_WRITTEN is not NULL the number of bytes actually written are
    stored at this address.  */
 int
-es_write_hexstring (estream_t _GPGRT__RESTRICT stream,
-                    const void *_GPGRT__RESTRICT buffer, size_t length,
-                    int reserved, size_t *_GPGRT__RESTRICT bytes_written )
+_gpgrt_write_hexstring (estream_t _GPGRT__RESTRICT stream,
+                        const void *_GPGRT__RESTRICT buffer, size_t length,
+                        int reserved, size_t *_GPGRT__RESTRICT bytes_written )
 {
   int ret;
   const unsigned char *s;
@@ -4490,14 +4418,14 @@ es_write_hexstring (estream_t _GPGRT__RESTRICT stream,
 
   for (s = buffer; length; s++, length--)
     {
-      es_putc_unlocked ( tohex ((*s>>4)&15), stream);
-      es_putc_unlocked ( tohex (*s&15), stream);
+      _gpgrt_putc_unlocked ( tohex ((*s>>4)&15), stream);
+      _gpgrt_putc_unlocked ( tohex (*s&15), stream);
       count += 2;
     }
 
   if (bytes_written)
     *bytes_written = count;
-  ret = es_ferror_unlocked (stream)? -1 : 0;
+  ret = _gpgrt_ferror_unlocked (stream)? -1 : 0;
 
   unlock_stream (stream);
 

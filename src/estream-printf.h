@@ -135,12 +135,14 @@ int _gpgrt_estream_vfprintf (FILE *fp, const char *format, va_list arg_ptr)
 int _gpgrt_estream_snprintf (char *buf, size_t bufsize, const char *format, ...)
      _ESTREAM_GCC_A_PRINTF(3,4);
 int _gpgrt_estream_vsnprintf (char *buf,size_t bufsize,
-                       const char *format, va_list arg_ptr)
+                              const char *format, va_list arg_ptr)
      _ESTREAM_GCC_A_PRINTF(3,0);
 int _gpgrt_estream_asprintf (char **bufp, const char *format, ...)
      _ESTREAM_GCC_A_PRINTF(2,3);
 int _gpgrt_estream_vasprintf (char **bufp, const char *format, va_list arg_ptr)
      _ESTREAM_GCC_A_PRINTF(2,0);
+char *_gpgrt_estream_bsprintf (const char *format, ...)
+       _ESTREAM_GCC_A_PRINTF(1,2);
 
 
 #ifdef __cplusplus

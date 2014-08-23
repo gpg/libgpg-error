@@ -1,4 +1,4 @@
-# libgpg-error.vers - What symbols to export              -*- std -*-
+# libgpg-error.vers - What symbols to export           -*- std -*-
 # Copyright (C) 2014 g10 Code GmbH
 #
 # This file is part of libgpg-error.
@@ -36,6 +36,79 @@ GPG_ERROR_1.0 {
     gpgrt_lock_unlock;
     gpgrt_lock_destroy;
     gpgrt_yield;
+
+    gpgrt_fopen;
+    gpgrt_mopen;
+    gpgrt_fopenmem;
+    gpgrt_fopenmem_init;
+    gpgrt_fdopen;
+    gpgrt_fdopen_nc;
+    gpgrt_sysopen;
+    gpgrt_sysopen_nc;
+    gpgrt_fpopen;
+    gpgrt_fpopen_nc;
+    gpgrt_freopen;
+    gpgrt_fopencookie;
+    gpgrt_fclose;
+    gpgrt_fclose_snatch;
+    gpgrt_onclose;
+    gpgrt_fileno;
+    gpgrt_fileno_unlocked;
+    gpgrt_syshd;
+    gpgrt_syshd_unlocked;
+    _gpgrt_set_std_stream;
+    _gpgrt_get_std_stream;
+    gpgrt_flockfile;
+    gpgrt_ftrylockfile;
+    gpgrt_funlockfile;
+    gpgrt_feof;
+    gpgrt_feof_unlocked;
+    gpgrt_ferror;
+    gpgrt_ferror_unlocked;
+    gpgrt_clearerr;
+    gpgrt_clearerr_unlocked;
+    gpgrt_fflush;
+    gpgrt_fseek;
+    gpgrt_fseeko;
+    gpgrt_ftell;
+    gpgrt_ftello;
+    gpgrt_rewind;
+    gpgrt_fgetc;
+    _gpgrt_getc_underflow;
+    gpgrt_fputc;
+    _gpgrt_putc_overflow;
+    gpgrt_ungetc;
+    gpgrt_read;
+    gpgrt_write;
+    gpgrt_write_sanitized;
+    gpgrt_write_hexstring;
+    gpgrt_fread;
+    gpgrt_fwrite;
+    gpgrt_fgets;
+    gpgrt_fputs;
+    gpgrt_fputs_unlocked;
+    gpgrt_getline;
+    gpgrt_read_line;
+    gpgrt_free;
+    gpgrt_fprintf;
+    gpgrt_fprintf_unlocked;
+    gpgrt_printf;
+    gpgrt_printf_unlocked;
+    gpgrt_vfprintf;
+    gpgrt_vfprintf_unlocked;
+    gpgrt_setvbuf;
+    gpgrt_setbuf;
+    gpgrt_set_binary;
+    gpgrt_tmpfile;
+    gpgrt_opaque_set;
+    gpgrt_opaque_get;
+    gpgrt_fname_set;
+    gpgrt_fname_get;
+
+    gpgrt_asprintf;
+    gpgrt_vasprintf;
+    gpgrt_bsprintf;
+    gpgrt_vbsprintf;
 
   local:
     *;
