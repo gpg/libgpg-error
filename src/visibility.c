@@ -72,6 +72,13 @@ gpg_error_check_version (const char *req_version)
   return _gpg_error_check_version (req_version);
 }
 
+
+void
+gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void))
+{
+  _gpgrt_set_syscall_clamp (pre, post);
+}
+
 
 gpg_err_code_t
 gpgrt_lock_init (gpgrt_lock_t *lockhd)
@@ -83,6 +90,12 @@ gpg_err_code_t
 gpgrt_lock_lock (gpgrt_lock_t *lockhd)
 {
   return _gpgrt_lock_lock (lockhd);
+}
+
+gpg_err_code_t
+gpgrt_lock_trylock (gpgrt_lock_t *lockhd)
+{
+  return _gpgrt_lock_trylock (lockhd);
 }
 
 gpg_err_code_t
@@ -634,8 +647,8 @@ gpgrt_snprintf (char *buf, size_t bufsize, const char *format, ...)
 }
 
 int
-gpgrt_estream_vsnprintf (char *buf, size_t bufsize,
-                         const char *format, va_list arg_ptr)
+gpgrt_vsnprintf (char *buf, size_t bufsize,
+                 const char *format, va_list arg_ptr)
 {
   return _gpgrt_estream_vsnprintf (buf, bufsize, format, arg_ptr);
 }

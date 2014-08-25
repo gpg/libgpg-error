@@ -1,12 +1,103 @@
 Noteworthy changes in version 1.14 (unreleased)
 -----------------------------------------------
 
+ * Added trylock function
+
+ * Added the estream library under the name gpgrt and a set of macros
+   to use them with their "es_" names.
+
  * Interface changes relative to the 1.13 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_KEY_DISABLED         NEW.
+ gpgrt_lock_trylock           NEW.
+ gpgrt_set_syscall_clamp      NEW.
+ gpgrt_stream_t               NEW.
+ gpgrt_cookie_io_functions_t  NEW.
+ gpgrt_syshd_t                NEW.
+ GPGRT_SYSHD_NONE             NEW.
+ GPGRT_SYSHD_FD               NEW.
+ GPGRT_SYSHD_SOCK             NEW.
+ GPGRT_SYSHD_RVID             NEW.
+ GPGRT_SYSHD_HANDLE           NEW.
+ gpgrt_stdin                  NEW macro.
+ gpgrt_stdout                 NEW macro.
+ gpgrt_stderr                 NEW macro.
+ gpgrt_fopen                  NEW.
+ gpgrt_mopen                  NEW.
+ gpgrt_fopenmem               NEW.
+ gpgrt_fopenmem_init          NEW.
+ gpgrt_fdopen                 NEW.
+ gpgrt_fdopen_nc              NEW.
+ gpgrt_sysopen                NEW.
+ gpgrt_sysopen_nc             NEW.
+ gpgrt_fpopen                 NEW.
+ gpgrt_fpopen_nc              NEW.
+ gpgrt_freopen                NEW.
+ gpgrt_fopencookie            NEW.
+ gpgrt_fclose                 NEW.
+ gpgrt_fclose_snatch          NEW.
+ gpgrt_onclose                NEW.
+ gpgrt_fileno                 NEW.
+ gpgrt_fileno_unlocked        NEW.
+ gpgrt_syshd                  NEW.
+ gpgrt_syshd_unlocked         NEW.
+ gpgrt_flockfile              NEW.
+ gpgrt_ftrylockfile           NEW.
+ gpgrt_funlockfile            NEW.
+ gpgrt_feof                   NEW.
+ gpgrt_feof_unlocked          NEW.
+ gpgrt_ferror                 NEW.
+ gpgrt_ferror_unlocked        NEW.
+ gpgrt_clearerr               NEW.
+ gpgrt_clearerr_unlocked      NEW.
+ gpgrt_fflush                 NEW.
+ gpgrt_fseek                  NEW.
+ gpgrt_fseeko                 NEW.
+ gpgrt_ftell                  NEW.
+ gpgrt_ftello                 NEW.
+ gpgrt_rewind                 NEW.
+ gpgrt_getc                   NEW macro.
+ gpgrt_getc_unlocked          NEW macro.
+ gpgrt_fgetc                  NEW.
+ gpgrt_fputc                  NEW.
+ gpgrt_ungetc                 NEW.
+ gpgrt_read                   NEW.
+ gpgrt_write                  NEW.
+ gpgrt_write_sanitized        NEW.
+ gpgrt_write_hexstring        NEW.
+ gpgrt_fread                  NEW.
+ gpgrt_fwrite                 NEW.
+ gpgrt_fgets                  NEW.
+ gpgrt_putc                   NEW macro.
+ gpgrt_putc_unlocked          NEW macro.
+ gpgrt_fputs                  NEW.
+ gpgrt_fputs_unlocked         NEW.
+ gpgrt_getline                NEW.
+ gpgrt_read_line              NEW.
+ gpgrt_free                   NEW.
+ gpgrt_fprintf                NEW.
+ gpgrt_fprintf_unlocked       NEW.
+ gpgrt_printf                 NEW.
+ gpgrt_printf_unlocked        NEW.
+ gpgrt_vfprintf               NEW.
+ gpgrt_vfprintf_unlocked      NEW.
+ gpgrt_setvbuf                NEW.
+ gpgrt_setbuf                 NEW.
+ gpgrt_set_binary             NEW.
+ gpgrt_tmpfile                NEW.
+ gpgrt_opaque_set             NEW.
+ gpgrt_opaque_get             NEW.
+ gpgrt_fname_set              NEW.
+ gpgrt_fname_get              NEW.
+ gpgrt_asprintf               NEW.
+ gpgrt_vasprintf              NEW.
+ gpgrt_bsprintf               NEW.
+ gpgrt_vbsprintf              NEW.
+ gpgrt_snprintf               NEW.
+ gpgrt_vsnprintf              NEW.
 
 
-Noteworthy changes in version 1.13 (2014-04-15)
+Noteworthy changes in version 1.13 (2014-04-15) [C11/A11/R0]
 -----------------------------------------------
 
  * Added a portable mutex API.

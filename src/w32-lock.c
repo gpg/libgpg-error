@@ -72,6 +72,7 @@ _gpgrt_lock_init (gpgrt_lock_t *lockhd)
 
   InitializeCriticalSection (&lock->csec);
   lock->initdone = 1;
+  return 0;
 }
 
 
@@ -101,6 +102,30 @@ _gpgrt_lock_lock (gpgrt_lock_t *lockhd)
     }
 
   EnterCriticalSection (&lock->csec);
+  return 0;
+}
+
+
+gpg_err_code_t
+_gpgrt_lock_trylock (gpgrt_lock_t *lockhd)
+{
+  _gpgrt_lock_t *lock = get_lock_object (lockhd);
+
+  if (!lock->initdone)
+    {
+      if (!InterlockedIncrement (&lock->started))
+        {
+          gpgrt_lock_init (lockhd);
+        }
+      else
+        {
+          while (!lock->initdone)
+            Sleep (0);
+        }
+    }
+
+  if (!TryEnterCriticalSection (&lock->csec))
+    return GPG_ERR_EBUSY;
   return 0;
 }
 

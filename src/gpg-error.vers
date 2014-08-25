@@ -36,6 +36,9 @@ GPG_ERROR_1.0 {
     gpgrt_lock_unlock;
     gpgrt_lock_destroy;
     gpgrt_yield;
+    gpgrt_lock_trylock;
+
+    gpgrt_set_syscall_clamp;
 
     gpgrt_fopen;
     gpgrt_mopen;
@@ -56,7 +59,7 @@ GPG_ERROR_1.0 {
     gpgrt_fileno_unlocked;
     gpgrt_syshd;
     gpgrt_syshd_unlocked;
-    _gpgrt_set_std_stream;
+    _gpgrt_set_std_fd;
     _gpgrt_get_std_stream;
     gpgrt_flockfile;
     gpgrt_ftrylockfile;

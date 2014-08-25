@@ -58,6 +58,7 @@ MARK_VISIBLE (gpgrt_lock_lock)
 MARK_VISIBLE (gpgrt_lock_unlock)
 MARK_VISIBLE (gpgrt_lock_destroy)
 MARK_VISIBLE (gpgrt_yield)
+MARK_VISIBLE (gpgrt_lock_trylock)
 
 MARK_VISIBLE (gpgrt_fopen)
 MARK_VISIBLE (gpgrt_mopen)
@@ -132,6 +133,7 @@ MARK_VISIBLE (gpgrt_bsprintf)
 MARK_VISIBLE (gpgrt_vbsprintf)
 MARK_VISIBLE (gpgrt_snprintf)
 MARK_VISIBLE (gpgrt_vsnprintf)
+MARK_VISIBLE (gpgrt_set_syscall_clamp)
 
 #undef MARK_VISIBLE
 
@@ -149,12 +151,14 @@ MARK_VISIBLE (gpgrt_vsnprintf)
 #define gpg_err_set_errno           _gpgrt_USE_UNDERSCORED_FUNCTION
 
 #define gpg_error_check_version     _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_set_syscall_clamp     _gpgrt_USE_UNDERSCORED_FUNCTION
 
 #define gpgrt_lock_init             _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_lock_lock             _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_lock_unlock           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_lock_destroy          _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_yield                 _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_lock_trylock          _gpgrt_USE_UNDERSCORED_FUNCTION
 
 #define gpgrt_fopen                 _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_mopen                 _gpgrt_USE_UNDERSCORED_FUNCTION

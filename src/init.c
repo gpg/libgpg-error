@@ -380,6 +380,7 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
 {
   struct tls_space_s *tls;
   (void)reserved;
+  (void)hinst;
 
   switch (reason)
     {

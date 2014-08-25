@@ -87,15 +87,6 @@
 #endif
 
 
-#ifdef WITHOUT_NPTH /* Give the Makefile a chance to build without Pth.  */
-# undef HAVE_NPTH
-# undef USE_NPTH
-#endif
-
-#ifdef HAVE_NPTH
-# include <npth.h>
-#endif
-
 #include "gpgrt-int.h"
 #include "estream-printf.h"
 
@@ -144,19 +135,6 @@ typedef void (*func_free_t) (void *mem);
 #define BUFFER_UNREAD_SIZE 16
 
 
-/* Primitive system I/O.  */
-
-#ifdef USE_NPTH
-# define ESTREAM_SYS_READ  do_npth_read
-# define ESTREAM_SYS_WRITE do_npth_write
-# define ESTREAM_SYS_YIELD() npth_usleep (0)
-#else
-# define ESTREAM_SYS_READ  read
-# define ESTREAM_SYS_WRITE write
-# define ESTREAM_SYS_YIELD() do { } while (0)
-#endif
-
-
 /* A linked list to hold notification functions. */
 struct notify_list_s
 {
@@ -181,9 +159,7 @@ struct _gpgrt_stream_internal
   unsigned char buffer[BUFFER_BLOCK_SIZE];
   unsigned char unread_buffer[BUFFER_UNREAD_SIZE];
 
-#ifdef USE_NPTH
-  npth_mutex_t lock;		 /* Lock. */
-#endif
+  gpgrt_lock_t lock;		 /* Lock. */
 
   void *cookie;			 /* Cookie.                */
   void *opaque;			 /* Opaque data.           */
@@ -220,16 +196,16 @@ struct estream_list_s
 };
 typedef struct estream_list_s *estream_list_t;
 static estream_list_t estream_list;
+/* A lock object for the estream list and the custom_std_fds array.  */
+GPGRT_LOCK_DEFINE (estream_list_lock);
 
 /* File descriptors registered to be used as the standard file handles. */
 static int custom_std_fds[3];
 static unsigned char custom_std_fds_valid[3];
 
-/* A lock object for the estream list and the custom_std_fds array.  */
-#ifdef USE_NPTH
-static npth_mutex_t estream_list_lock;
-#endif
-
+/* Functions called before and after blocking syscalls.  */
+static void (*pre_syscall_func)(void);
+static void (*post_syscall_func)(void);
 
 /* Error code replacements.  */
 #ifndef EOPNOTSUPP
@@ -356,114 +332,77 @@ memrchr (const void *buffer, int c, size_t n)
 static int
 init_stream_lock (estream_t _GPGRT__RESTRICT stream)
 {
-#ifdef USE_NPTH
   int rc;
 
   if (!stream->intern->samethread)
     {
       dbg_lock_1 ("enter init_stream_lock for %p\n", stream);
-      rc = npth_mutex_init (&stream->intern->lock, NULL);
+      memset (&stream->intern->lock, 0 , sizeof stream->intern->lock);
+      rc = _gpgrt_lock_init (&stream->intern->lock);
       dbg_lock_2 ("leave init_stream_lock for %p: rc=%d\n", stream, rc);
     }
   else
     rc = 0;
   return rc;
-#else
-  (void)stream;
-  return 0;
-#endif
 }
 
 
 static void
 lock_stream (estream_t _GPGRT__RESTRICT stream)
 {
-#ifdef USE_NPTH
   if (!stream->intern->samethread)
     {
       dbg_lock_1 ("enter lock_stream for %p\n", stream);
-      npth_mutex_lock (&stream->intern->lock);
+      _gpgrt_lock_lock (&stream->intern->lock);
       dbg_lock_1 ("leave lock_stream for %p\n", stream);
     }
-#else
-  (void)stream;
-#endif
 }
 
 
 static int
 trylock_stream (estream_t _GPGRT__RESTRICT stream)
 {
-#ifdef USE_NPTH
   int rc;
 
   if (!stream->intern->samethread)
     {
       dbg_lock_1 ("enter trylock_stream for %p\n", stream);
-      rc = npth_mutex_trylock (&stream->intern->lock)? 0 : -1;
+      rc = _gpgrt_lock_trylock (&stream->intern->lock)? 0 : -1;
       dbg_lock_2 ("leave trylock_stream for %p: rc=%d\n", stream, rc);
     }
   else
     rc = 0;
   return rc;
-#else
-  (void)stream;
-  return 0;
-#endif
 }
 
 
 static void
 unlock_stream (estream_t _GPGRT__RESTRICT stream)
 {
-#ifdef USE_NPTH
   if (!stream->intern->samethread)
     {
       dbg_lock_1 ("enter unlock_stream for %p\n", stream);
-      npth_mutex_unlock (&stream->intern->lock);
+      _gpgrt_lock_unlock (&stream->intern->lock);
       dbg_lock_1 ("leave unlock_stream for %p\n", stream);
     }
-#else
-  (void)stream;
-#endif
-}
-
-
-static int
-init_list_lock (void)
-{
-#ifdef USE_NPTH
-  int rc;
-
-  dbg_lock_0 ("enter init_list_lock\n");
-  rc = npth_mutex_init (&estream_list_lock, NULL);
-  dbg_lock_1 ("leave init_list_lock: rc=%d\n", rc);
-  return rc;
-#else
-  return 0;
-#endif
 }
 
 
 static void
 lock_list (void)
 {
-#ifdef USE_NPTH
   dbg_lock_0 ("enter lock_list\n");
-  npth_mutex_lock (&estream_list_lock);
+  _gpgrt_lock_lock (&estream_list_lock);
   dbg_lock_0 ("leave lock_list\n");
-#endif
 }
 
 
 static void
 unlock_list (void)
 {
-#ifdef USE_NPTH
   dbg_lock_0 ("enter unlock_list\n");
-  npth_mutex_unlock (&estream_list_lock);
+  _gpgrt_lock_unlock (&estream_list_lock);
   dbg_lock_0 ("leave unlock_list\n");
-#endif
 }
 
 
@@ -537,45 +476,6 @@ do_list_remove (estream_t stream, int with_locked_list)
 
 
 
-/*
- * I/O Helper
- *
- * Unfortunately our Pth emulation for Windows expects system handles
- * for npth_read and npth_write.  We use a simple approach to fix this:
- * If the function returns an error we fall back to a vanilla read or
- * write, assuming that we do I/O on a plain file where the operation
- * can't block.  FIXME:  Is this still needed for npth?
- */
-#ifdef USE_NPTH
-static int
-do_npth_read (int fd, void *buffer, size_t size)
-{
-# ifdef HAVE_W32_SYSTEM
-  int rc = npth_read (fd, buffer, size);
-  if (rc == -1 && errno == EINVAL)
-    rc = read (fd, buffer, size);
-  return rc;
-# else /*!HAVE_W32_SYSTEM*/
-  return npth_read (fd, buffer, size);
-# endif /* !HAVE_W32_SYSTEM*/
-}
-
-static int
-do_npth_write (int fd, const void *buffer, size_t size)
-{
-# ifdef HAVE_W32_SYSTEM
-  int rc = npth_write (fd, buffer, size);
-  if (rc == -1 && errno == EINVAL)
-    rc = write (fd, buffer, size);
-  return rc;
-# else /*!HAVE_W32_SYSTEM*/
-  return npth_write (fd, buffer, size);
-# endif /* !HAVE_W32_SYSTEM*/
-}
-#endif /*USE_NPTH*/
-
-
-
 static void
 do_deinit (void)
 {
@@ -589,6 +489,10 @@ do_deinit (void)
      list and the streams with possible undesirable effects.  Given
      that we don't close the stream either, it should not matter that
      we keep the list and let the OS clean it up at process end.  */
+
+  /* Reset the syscall clamp.  */
+  pre_syscall_func = NULL;
+  post_syscall_func = NULL;
 }
 
 
@@ -603,12 +507,28 @@ _gpgrt_es_init (void)
 
   if (!initialized)
     {
-      if (!init_list_lock ())
-        initialized = 1;
+      initialized = 1;
       atexit (do_deinit);
     }
   return 0;
 }
+
+/* Register the syscall clamp.  These two functions are called
+   immediately before and after a possible blocking system call.  This
+   should be used before any I/O happens.  The function is commonly
+   used with the nPth library:
+
+     gpgrt_set_syscall_clamp (npth_protect, npth_unprotect);
+
+   These functions may not modify ERRNO.
+*/
+void
+_gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void))
+{
+  pre_syscall_func = pre;
+  post_syscall_func = post;
+}
+
 
 
 
@@ -973,14 +893,20 @@ es_func_fd_read (void *cookie, void *buffer, size_t size)
 
   if (IS_INVALID_FD (file_cookie->fd))
     {
-      ESTREAM_SYS_YIELD ();
+      _gpgrt_yield ();
       bytes_read = 0;
     }
   else
     {
+      if (pre_syscall_func)
+        pre_syscall_func ();
       do
-        bytes_read = ESTREAM_SYS_READ (file_cookie->fd, buffer, size);
+        {
+          bytes_read = read (file_cookie->fd, buffer, size);
+        }
       while (bytes_read == -1 && errno == EINTR);
+      if (post_syscall_func)
+        post_syscall_func ();
     }
 
   return bytes_read;
@@ -995,14 +921,20 @@ es_func_fd_write (void *cookie, const void *buffer, size_t size)
 
   if (IS_INVALID_FD (file_cookie->fd))
     {
-      ESTREAM_SYS_YIELD ();
+      _gpgrt_yield ();
       bytes_written = size; /* Yeah:  Success writing to the bit bucket.  */
     }
   else
     {
+      if (pre_syscall_func)
+        pre_syscall_func ();
       do
-        bytes_written = ESTREAM_SYS_WRITE (file_cookie->fd, buffer, size);
+        {
+          bytes_written = write (file_cookie->fd, buffer, size);
+        }
       while (bytes_written == -1 && errno == EINTR);
+      if (post_syscall_func)
+        post_syscall_func ();
     }
 
   return bytes_written;
@@ -1023,7 +955,11 @@ es_func_fd_seek (void *cookie, off_t *offset, int whence)
     }
   else
     {
+      if (pre_syscall_func)
+        pre_syscall_func ();
       offset_new = lseek (file_cookie->fd, *offset, whence);
+      if (post_syscall_func)
+        post_syscall_func ();
       if (offset_new == -1)
         err = -1;
       else
@@ -1116,18 +1052,15 @@ es_func_w32_read (void *cookie, void *buffer, size_t size)
 
   if (w32_cookie->hd == INVALID_HANDLE_VALUE)
     {
-      ESTREAM_SYS_YIELD ();
+      _gpgrt_yield ();
       bytes_read = 0;
     }
   else
     {
+      if (pre_syscall_func)
+        pre_syscall_func ();
       do
         {
-#ifdef USE_NPTH
-          /* Note: Our pth_read actually uses HANDLE!
-             FIXME: Check  whether this is the case for npth. */
-          bytes_read = npth_read ((int)w32_cookie->hd, buffer, size);
-#else
           DWORD nread, ec;
 
           if (!ReadFile (w32_cookie->hd, buffer, size, &nread, NULL))
@@ -1143,9 +1076,10 @@ es_func_w32_read (void *cookie, void *buffer, size_t size)
             }
           else
             bytes_read = (int)nread;
-#endif
         }
       while (bytes_read == -1 && errno == EINTR);
+      if (post_syscall_func)
+        post_syscall_func ();
     }
 
   return bytes_read;
@@ -1160,17 +1094,15 @@ es_func_w32_write (void *cookie, const void *buffer, size_t size)
 
   if (w32_cookie->hd == INVALID_HANDLE_VALUE)
     {
-      ESTREAM_SYS_YIELD ();
+      _gpgrt_yield ();
       bytes_written = size; /* Yeah:  Success writing to the bit bucket.  */
     }
   else
     {
+      if (pre_syscall_func)
+        pre_syscall_func ();
       do
         {
-#ifdef USE_NPTH
-          /* Note: Our pth_write actually uses HANDLE! */
-          bytes_written = npth_write ((int)w32_cookie->hd, buffer, size);
-#else
           DWORD nwritten;
 
 	  if (!WriteFile (w32_cookie->hd, buffer, size, &nwritten, NULL))
@@ -1180,9 +1112,10 @@ es_func_w32_write (void *cookie, const void *buffer, size_t size)
 	    }
 	  else
 	    bytes_written = (int)nwritten;
-#endif
         }
       while (bytes_written == -1 && errno == EINTR);
+      if (post_syscall_func)
+        post_syscall_func ();
     }
 
   return bytes_written;
@@ -1225,11 +1158,17 @@ es_func_w32_seek (void *cookie, off_t *offset, int whence)
 #ifdef HAVE_W32CE_SYSTEM
 # warning need to use SetFilePointer
 #else
+  if (pre_syscall_func)
+    pre_syscall_func ();
   if (!SetFilePointerEx (w32_cookie->hd, distance, &newoff, method))
     {
       _set_errno (map_w32_to_errno (GetLastError ()));
+      if (post_syscall_func)
+        post_syscall_func ();
       return -1;
     }
+  if (post_syscall_func)
+    post_syscall_func ();
 #endif
   *offset = (unsigned long long)newoff.QuadPart;
   return 0;
@@ -1327,7 +1266,13 @@ es_func_fp_read (void *cookie, void *buffer, size_t size)
   ssize_t bytes_read;
 
   if (file_cookie->fp)
-    bytes_read = fread (buffer, 1, size, file_cookie->fp);
+    {
+      if (pre_syscall_func)
+        pre_syscall_func ();
+      bytes_read = fread (buffer, 1, size, file_cookie->fp);
+      if (post_syscall_func)
+        post_syscall_func ();
+    }
   else
     bytes_read = 0;
   if (!bytes_read && ferror (file_cookie->fp))
@@ -1344,6 +1289,8 @@ es_func_fp_write (void *cookie, const void *buffer, size_t size)
 
   if (file_cookie->fp)
     {
+      if (pre_syscall_func)
+        pre_syscall_func ();
 #ifdef HAVE_W32_SYSTEM
       /* Using an fwrite to stdout connected to the console fails with
 	 the error "Not enough space" for an fwrite size of >= 52KB
@@ -1365,6 +1312,8 @@ es_func_fp_write (void *cookie, const void *buffer, size_t size)
       bytes_written = fwrite (buffer, 1, size, file_cookie->fp);
 #endif
       fflush (file_cookie->fp);
+      if (post_syscall_func)
+        post_syscall_func ();
     }
   else
     bytes_written = size; /* Successfully written to the bit bucket.  */
@@ -1386,14 +1335,20 @@ es_func_fp_seek (void *cookie, off_t *offset, int whence)
       return -1;
     }
 
+  if (pre_syscall_func)
+    pre_syscall_func ();
   if ( fseek (file_cookie->fp, (long int)*offset, whence) )
     {
       /* fprintf (stderr, "\nfseek failed: errno=%d (%s)\n", */
       /*          errno,strerror (errno)); */
+      if (post_syscall_func)
+        post_syscall_func ();
       return -1;
     }
 
   offset_new = ftell (file_cookie->fp);
+  if (post_syscall_func)
+    post_syscall_func ();
   if (offset_new == -1)
     {
       /* fprintf (stderr, "\nftell failed: errno=%d (%s)\n",  */
@@ -1415,7 +1370,11 @@ es_func_fp_destroy (void *cookie)
     {
       if (fp_cookie->fp)
         {
+          if (pre_syscall_func)
+            pre_syscall_func ();
           fflush (fp_cookie->fp);
+          if (post_syscall_func)
+            post_syscall_func ();
           err = fp_cookie->no_close? 0 : fclose (fp_cookie->fp);
         }
       else
@@ -1865,6 +1824,8 @@ es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
       if (stream_new)
 	{
 	  es_deinitialize (stream_new);
+          _gpgrt_lock_destroy (&stream_new->intern->lock);
+	  mem_free (stream_new->intern);
 	  mem_free (stream_new);
 	}
     }
@@ -1892,6 +1853,7 @@ do_close (estream_t stream, int with_locked_list)
           stream->intern->onclose = tmp;
         }
       err = es_deinitialize (stream);
+      _gpgrt_lock_destroy (&stream->intern->lock);
       mem_free (stream->intern);
       mem_free (stream);
     }

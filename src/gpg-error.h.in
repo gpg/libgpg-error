@@ -177,6 +177,9 @@ gpg_error_t gpg_err_init (void) _GPG_ERR_CONSTRUCTOR;
 #define GPG_ERR_INITIALIZED	1
 #endif
 
+/* Register blocking system I/O clamping functions.  */
+void gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void));
+
 /* See the source on how to use the deinit function; it is usually not
    required.  */
 void gpg_err_deinit (int mode);
@@ -313,6 +316,7 @@ gpg_error_from_syserror (void)
    before passing it to gpgrt_lock_init.  */
 gpg_err_code_t gpgrt_lock_init (gpgrt_lock_t *lockhd);
 gpg_err_code_t gpgrt_lock_lock (gpgrt_lock_t *lockhd);
+gpg_err_code_t gpgrt_lock_trylock (gpgrt_lock_t *lockhd);
 gpg_err_code_t gpgrt_lock_unlock (gpgrt_lock_t *lockhd);
 gpg_err_code_t gpgrt_lock_destroy (gpgrt_lock_t *lockhd);
 
