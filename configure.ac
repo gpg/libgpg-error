@@ -162,7 +162,7 @@ AC_MSG_WARN([[Without strerror_r, gpg_strerror_r might not be thread-safe]]))
      ;;
 esac
 
-AC_CHECK_FUNCS([flockfile])
+AC_CHECK_FUNCS([flockfile vasprintf])
 
 
 # Checks for typedefs, structures, and compiler characteristics.
