@@ -96,14 +96,9 @@
 # include <npth.h>
 #endif
 
-/* This is for the special hack to use estream.c in GnuPG.  */
-#ifdef GNUPG_MAJOR_VERSION
-# include "../common/util.h"
-#endif
-
 #include "gpgrt-int.h"
 #include "estream-printf.h"
-
+
 
 #ifndef O_BINARY
 #define O_BINARY 0
@@ -4433,44 +4428,3 @@ _gpgrt_write_hexstring (estream_t _GPGRT__RESTRICT stream,
 
 #undef tohex
 }
-
-
-
-#ifdef GNUPG_MAJOR_VERSION
-/* Special estream function to print an UTF8 string in the native
-   encoding.  The interface is the same as es_write_sanitized, however
-   only one delimiter may be supported.
-
-   THIS IS NOT A STANDARD ESTREAM FUNCTION AND ONLY USED BY GNUPG!. */
-int
-es_write_sanitized_utf8_buffer (estream_t stream,
-                                const void *buffer, size_t length,
-                                const char *delimiters, size_t *bytes_written)
-{
-  const char *p = buffer;
-  size_t i;
-
-  /* We can handle plain ascii simpler, so check for it first. */
-  for (i=0; i < length; i++ )
-    {
-      if ( (p[i] & 0x80) )
-        break;
-    }
-  if (i < length)
-    {
-      int delim = delimiters? *delimiters : 0;
-      char *buf;
-      int ret;
-
-      /*(utf8 conversion already does the control character quoting). */
-      buf = utf8_to_native (p, length, delim);
-      if (bytes_written)
-        *bytes_written = strlen (buf);
-      ret = es_fputs (buf, stream);
-      xfree (buf);
-      return ret == EOF? ret : (int)i;
-    }
-  else
-    return es_write_sanitized (stream, p, length, delimiters, bytes_written);
-}
-#endif /*GNUPG_MAJOR_VERSION*/
