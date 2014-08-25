@@ -130,6 +130,8 @@ MARK_VISIBLE (gpgrt_asprintf)
 MARK_VISIBLE (gpgrt_vasprintf)
 MARK_VISIBLE (gpgrt_bsprintf)
 MARK_VISIBLE (gpgrt_vbsprintf)
+MARK_VISIBLE (gpgrt_snprintf)
+MARK_VISIBLE (gpgrt_vsnprintf)
 
 #undef MARK_VISIBLE
 
@@ -225,6 +227,8 @@ MARK_VISIBLE (gpgrt_vbsprintf)
 #define gpgrt_vasprintf             _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_bsprintf              _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_vbsprintf             _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_snprintf              _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_vsnprintf             _gpgrt_USE_UNDERSCORED_FUNCTION
 
 #endif /*!_GPGRT_INCL_BY_VISIBILITY_C*/
 

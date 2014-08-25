@@ -109,6 +109,8 @@ GPG_ERROR_1.0 {
     gpgrt_vasprintf;
     gpgrt_bsprintf;
     gpgrt_vbsprintf;
+    gpgrt_snprintf;
+    gpgrt_vsnprintf;
 
   local:
     *;

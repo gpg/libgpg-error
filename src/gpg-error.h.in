@@ -585,15 +585,21 @@ void *gpgrt_opaque_get (gpgrt_stream_t stream);
 void gpgrt_fname_set (gpgrt_stream_t stream, const char *fname);
 const char *gpgrt_fname_get (gpgrt_stream_t stream);
 
-int gpgrt_asprintf (char **r_buf, const char *_GPGRT__RESTRICT format, ...)
+int gpgrt_asprintf (char **r_buf, const char * _GPGRT__RESTRICT format, ...)
                     _GPGRT_GCC_A_PRINTF(2,3);
-int gpgrt_vasprintf (char **r_buf, const char *_GPGRT__RESTRICT format,
+int gpgrt_vasprintf (char **r_buf, const char * _GPGRT__RESTRICT format,
                      va_list ap)
                      _GPGRT_GCC_A_PRINTF(2,0);
-char *gpgrt_bsprintf (const char *_GPGRT__RESTRICT format, ...)
+char *gpgrt_bsprintf (const char * _GPGRT__RESTRICT format, ...)
                       _GPGRT_GCC_A_PRINTF(1,2);
-char *gpgrt_vbsprintf (const char *_GPGRT__RESTRICT format, va_list ap)
+char *gpgrt_vbsprintf (const char * _GPGRT__RESTRICT format, va_list ap)
                        _GPGRT_GCC_A_PRINTF(1,0);
+int gpgrt_snprintf (char *buf, size_t bufsize,
+                    const char * _GPGRT__RESTRICT format, ...)
+                    _GPGRT_GCC_A_PRINTF(3,4);
+int gpgrt_vsnprintf (char *buf,size_t bufsize,
+                     const char * _GPGRT__RESTRICT format, va_list arg_ptr)
+                     _GPGRT_GCC_A_PRINTF(3,0);
 
 
 #ifdef GPGRT_ENABLE_ES_MACROS

@@ -619,3 +619,23 @@ gpgrt_vbsprintf (const char *_GPGRT__RESTRICT format, va_list ap)
     return NULL;
   return buf;
 }
+
+int
+gpgrt_snprintf (char *buf, size_t bufsize, const char *format, ...)
+{
+  int rc;
+  va_list arg_ptr;
+
+  va_start (arg_ptr, format);
+  rc = _gpgrt_estream_vsnprintf (buf, bufsize, format, arg_ptr);
+  va_end (arg_ptr);
+
+  return rc;
+}
+
+int
+gpgrt_estream_vsnprintf (char *buf, size_t bufsize,
+                         const char *format, va_list arg_ptr)
+{
+  return _gpgrt_estream_vsnprintf (buf, bufsize, format, arg_ptr);
+}

@@ -126,6 +126,7 @@ EXPORTS
  gpgrt_vasprintf              @93
  gpgrt_bsprintf               @94
  gpgrt_vbsprintf              @95
-
+ gpgrt_snprintf               @96
+ gpgrt_vsnprintf              @97
 
 ;; end of file with public symbols for Windows.
