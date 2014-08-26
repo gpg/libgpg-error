@@ -181,12 +181,16 @@ gpg_error_t gpg_err_init (void) _GPG_ERR_CONSTRUCTOR;
 # define gpgrt_init() do { ; } while (0)
 #endif
 
-/* Register blocking system I/O clamping functions.  */
-void gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void));
-
 /* See the source on how to use the deinit function; it is usually not
    required.  */
 void gpg_err_deinit (int mode);
+
+/* Register blocking system I/O clamping functions.  */
+void gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void));
+
+/* Register a custom malloc/realloc/free function.  */
+void gpgrt_set_alloc_func  (void *(*f)(void *a, size_t n));
+
 
 
 /* Constructor and accessor functions.  */

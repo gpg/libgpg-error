@@ -118,6 +118,7 @@ GPG_ERROR_1.0 {
     gpgrt_check_version;
     gpg_err_init;
     gpg_err_deinit;
+    gpgrt_set_alloc_func;
 
   local:
     *;

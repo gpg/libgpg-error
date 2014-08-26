@@ -34,6 +34,12 @@ void _gpg_err_set_errno (int err);
 
 gpg_error_t _gpg_err_init (void);
 void _gpg_err_deinit (int mode);
+void _gpgrt_set_alloc_func (void *(*f)(void *a, size_t n));
+
+void *_gpgrt_realloc (void *a, size_t n);
+void *_gpgrt_malloc (size_t n);
+void _gpgrt_free (void *a);
+
 const char *_gpg_error_check_version (const char *req_version);
 
 gpg_err_code_t _gpgrt_lock_init (gpgrt_lock_t *lockhd);
@@ -162,7 +168,6 @@ ssize_t _gpgrt_getline (char *_GPGRT__RESTRICT *_GPGRT__RESTRICT lineptr,
 ssize_t _gpgrt_read_line (gpgrt_stream_t stream,
                           char **addr_of_buffer, size_t *length_of_buffer,
                           size_t *max_length);
-void _gpgrt_free (void *a);
 
 int _gpgrt_fprintf (gpgrt_stream_t _GPGRT__RESTRICT stream,
                     const char *_GPGRT__RESTRICT format, ...)

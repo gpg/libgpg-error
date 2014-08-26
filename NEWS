@@ -13,6 +13,7 @@ Noteworthy changes in version 1.14 (unreleased)
  gpgrt_check_version          NEW.
  gpgrt_lock_trylock           NEW.
  gpgrt_set_syscall_clamp      NEW.
+ gpgrt_set_alloc_func         NEW.
  gpgrt_stream_t               NEW.
  gpgrt_cookie_io_functions_t  NEW.
  gpgrt_syshd_t                NEW.

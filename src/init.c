@@ -60,6 +60,11 @@ static void drop_locale_dir (char *locale_dir);
 
 #endif /*!HAVE_W32_SYSTEM*/
 
+
+/* The realloc function as set by gpgrt_set_alloc_func.  */
+static void *(*custom_realloc)(void *a, size_t n);
+
+
 
 static void
 real_init (void)
@@ -144,6 +149,58 @@ _gpg_err_deinit (int mode)
   (void)mode;
 #endif
 }
+
+
+
+
+/* Register F as allocation function.  This function is used for all
+   APIs which return an allocated buffer.  F needs to have standard
+   realloc semantics.  It should be called as early as possible and
+   not changed later. */
+void
+_gpgrt_set_alloc_func (void *(*f)(void *a, size_t n))
+{
+  custom_realloc = f;
+}
+
+
+/* The realloc to be used for data returned by the public API.  */
+void *
+_gpgrt_realloc (void *a, size_t n)
+{
+  if (custom_realloc)
+    return custom_realloc (a, n);
+
+  if (!a)
+    return malloc (n);
+
+  if (!n)
+    {
+      free (a);
+      return NULL;
+    }
+
+  return realloc (a, n);
+}
+
+
+/* The malloc to be used for data returned by the public API.  */
+void *
+_gpgrt_malloc (size_t n)
+{
+  if (!n)
+    n++;
+  return _gpgrt_realloc (NULL, n);
+}
+
+
+/* The free to be used for data returned by the public API.  */
+void
+_gpgrt_free (void *a)
+{
+  _gpgrt_realloc (a, 0);
+}
+
 
 
 

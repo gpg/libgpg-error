@@ -446,7 +446,7 @@ compute_type (argspec_t arg)
    at the address ARGSPECS_ADDR.  The caller has provided enough space
    to store up to MAX_ARGSPECS in that buffer.  The function may
    however ignore the provided buffer and malloc a larger one.  On
-   success the addrrss of that larger buffer will be stored at
+   success the address of that larger buffer will be stored at
    ARGSPECS_ADDR.  The actual number of specifications will be
    returned at R_ARGSPECS_COUNT. */
 static int

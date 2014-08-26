@@ -242,28 +242,23 @@ static void fname_set_internal (estream_t stream, const char *fname, int quote);
 
 
 
-/* Malloc wrappers to overcome problems on some older OSes.  */
 static void *
 mem_alloc (size_t n)
 {
-  if (!n)
-    n++;
-  return malloc (n);
+  return _gpgrt_malloc (n);
 }
 
 static void *
 mem_realloc (void *p, size_t n)
 {
-  if (!p)
-    return mem_alloc (n);
-  return realloc (p, n);
+  return _gpgrt_realloc (p, n);
 }
 
 static void
 mem_free (void *p)
 {
   if (p)
-    free (p);
+    _gpgrt_free (p);
 }
 
 #ifdef HAVE_W32_SYSTEM
@@ -518,7 +513,7 @@ _gpgrt_es_init (void)
    should be used before any I/O happens.  The function is commonly
    used with the nPth library:
 
-     gpgrt_set_syscall_clamp (npth_protect, npth_unprotect);
+     gpgrt_set_syscall_clamp (npth_unprotect, npth_protect);
 
    These functions may not modify ERRNO.
 */
@@ -3210,7 +3205,7 @@ _gpgrt_fclose (estream_t stream)
    the buffer.  On error NULL is stored at R_BUFFER.  Note that if no
    write operation has happened, NULL may also be stored at BUFFER on
    success.  The caller needs to release the returned memory using
-   es_free.  */
+   gpgrt_free.  */
 int
 _gpgrt_fclose_snatch (estream_t stream, void **r_buffer, size_t *r_buflen)
 {
@@ -3835,7 +3830,7 @@ _gpgrt_getline (char *_GPGRT__RESTRICT *_GPGRT__RESTRICT lineptr,
 
    Note: The returned buffer is allocated with enough extra space to
    allow the caller to append a CR,LF,Nul.  The buffer should be
-   released using es_free.
+   released using gpgrt_free.
  */
 ssize_t
 _gpgrt_read_line (estream_t stream,
@@ -3922,14 +3917,16 @@ _gpgrt_read_line (estream_t stream,
   return nbytes;
 }
 
-/* Wrapper around free() to match the memory allocation system used
-   by estream.  Should be used for all buffers returned to the caller
-   by libestream. */
-void
-_gpgrt_free (void *a)
-{
-  mem_free (a);
-}
+/* Wrapper around free() to match the memory allocation system used by
+   estream.  Should be used for all buffers returned to the caller by
+   libestream.  If a custom allocation handler has been set with
+   gpgrt_set_alloc_func that register function may be used
+   instead.  This function has been moved to init.c.  */
+/* void */
+/* _gpgrt_free (void *a) */
+/* { */
+/*   mem_free (a); */
+/* } */
 
 
 int

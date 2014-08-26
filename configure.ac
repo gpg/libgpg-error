@@ -136,6 +136,11 @@ AH_BOTTOM([
 #if defined(HAVE_W32_SYSTEM) && !defined(ENABLE_NLS)
 #define ENABLE_NLS 1
 #endif
+
+/* Connect the generic estream-printf.c to our framework.  */
+#define _ESTREAM_PRINTF_REALLOC _gpgrt_realloc
+#define _ESTREAM_PRINTF_EXTRA_INCLUDE "gpgrt-int.h"
+
 /* For building we need to define these macro.  */
 #define GPG_ERR_ENABLE_GETTEXT_MACROS 1
 #define GPG_ERR_ENABLE_ERRNO_MACROS 1

@@ -135,6 +135,6 @@ EXPORTS
  gpgrt_check_version          @100
  gpg_err_init                 @101
  gpg_err_deinit               @102
-
+ gpgrt_set_alloc_func         @103
 
 ;; end of file with public symbols for Windows.
