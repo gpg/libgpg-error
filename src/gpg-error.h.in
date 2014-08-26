@@ -25,6 +25,7 @@
 
 #include <stddef.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 #ifdef __GNUC__
 #define GPG_ERR_INLINE __inline__
