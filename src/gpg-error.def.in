@@ -30,7 +30,7 @@ EXPORTS
  gpg_strsource                @3
  gpg_err_code_from_errno      @4
  gpg_err_code_to_errno        @5
- /* Not anymore used.  */
+ /* @6 - Not anymore used.  */
  gpg_err_code_from_syserror   @7
  gpg_err_set_errno            @8
 #ifdef HAVE_W32CE_SYSTEM
@@ -46,7 +46,7 @@ EXPORTS
    _gpg_w32_gettext_localename @16
    _gpg_w32_gettext_use_utf8   @17
 #endif
- /* Not anymore used. */
+ /* @18 - Not anymore used. */
  gpg_error_check_version      @19
 
  gpgrt_lock_init              @20
@@ -131,6 +131,10 @@ EXPORTS
  gpgrt_vbsprintf              @97
  gpgrt_snprintf               @98
  gpgrt_vsnprintf              @99
+
+ gpgrt_check_version          @100
+ gpg_err_init                 @101
+ gpg_err_deinit               @102
 
 
 ;; end of file with public symbols for Windows.

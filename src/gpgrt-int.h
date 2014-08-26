@@ -32,6 +32,8 @@ int _gpg_err_code_to_errno (gpg_err_code_t code);
 gpg_err_code_t _gpg_err_code_from_syserror (void);
 void _gpg_err_set_errno (int err);
 
+gpg_error_t _gpg_err_init (void);
+void _gpg_err_deinit (int mode);
 const char *_gpg_error_check_version (const char *req_version);
 
 gpg_err_code_t _gpgrt_lock_init (gpgrt_lock_t *lockhd);

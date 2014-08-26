@@ -7,12 +7,12 @@
    modify it under the terms of the GNU Lesser General Public License
    as published by the Free Software Foundation; either version 2.1 of
    the License, or (at your option) any later version.
- 
+
    libgpg-error is distributed in the hope that it will be useful, but
    WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    Lesser General Public License for more details.
- 
+
    You should have received a copy of the GNU Lesser General Public
    License along with libgpg-error; if not, write to the Free
    Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
@@ -30,7 +30,7 @@
 #include <stdio.h>
 
 #ifdef HAVE_LOCALE_H
-# include <locale.h>	
+# include <locale.h>
 #endif
 #ifdef ENABLE_NLS
 #ifdef HAVE_W32_SYSTEM
@@ -66,7 +66,7 @@ i18n_init (void)
 {
 #ifdef ENABLE_NLS
   char *locale_dir;
-  
+
 #ifdef HAVE_LC_MESSAGES
   setlocale (LC_TIME, "");
   setlocale (LC_MESSAGES, "");
@@ -75,7 +75,7 @@ i18n_init (void)
   setlocale (LC_ALL, "" );
 # endif
 #endif
-  
+
   /* Note that for this program we would only need the textdomain call
      because libgpg-error already initializes itself to its locale dir
      (via gpg_err_init or a constructor).  However this is only done
@@ -115,7 +115,7 @@ get_locale_dir (void)
       nbytes = WideCharToMultiByte (CP_UTF8, 0, moddir, -1, NULL, 0, NULL, NULL);
       if (nbytes < 0)
         return NULL;
-      
+
       result = malloc (nbytes + strlen (SLDIR) + 1);
       if (result)
         {
@@ -149,8 +149,8 @@ get_locale_dir (void)
           strcpy (result, "c:\\gnupg");
           strcat (result, SLDIR);
         }
-    }  
-#undef SLDIR  
+    }
+#undef SLDIR
   return result;
 }
 
@@ -314,7 +314,7 @@ get_err_from_str_one (char *str, gpg_error_t *err,
 	{
 	  if (*have_code)
 	    return 0;
-	  
+
 	  *have_code = 1;
 	  *err |= code;
 	  return 1;
@@ -380,16 +380,12 @@ main (int argc, char *argv[])
   const char *error_sym;
   gpg_error_t err;
 
-#ifndef GPG_ERR_INITIALIZED
-  gpg_err_init ();
-#endif
-
+  gpgrt_init ();
   i18n_init ();
-
 
   if (argc == 1)
     {
-      fprintf (stderr, _("Usage: %s GPG-ERROR [...]\n"), 
+      fprintf (stderr, _("Usage: %s GPG-ERROR [...]\n"),
                strrchr (argv[0],'/')? (strrchr (argv[0], '/')+1): argv[0]);
       exit (1);
     }
@@ -438,7 +434,7 @@ main (int argc, char *argv[])
 	{
 	  source_sym = gpg_strsource_sym (err);
 	  error_sym = gpg_strerror_sym (err);
-	  
+
 	  printf ("%u = (%u, %u) = (%s, %s) = (%s, %s)\n",
 		  err, gpg_err_source (err), gpg_err_code (err),
 		  source_sym ? source_sym : "-", error_sym ? error_sym : "-",

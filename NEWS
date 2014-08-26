@@ -9,6 +9,8 @@ Noteworthy changes in version 1.14 (unreleased)
  * Interface changes relative to the 1.13 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_KEY_DISABLED         NEW.
+ gpgrt_init                   NEW macro.
+ gpgrt_check_version          NEW.
  gpgrt_lock_trylock           NEW.
  gpgrt_set_syscall_clamp      NEW.
  gpgrt_stream_t               NEW.

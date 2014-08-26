@@ -80,7 +80,7 @@ real_init (void)
 
 /* Initialize the library.  This function should be run early.  */
 gpg_error_t
-gpg_err_init (void)
+_gpg_err_init (void)
 {
 #ifdef HAVE_W32_SYSTEM
 # ifdef DLL_EXPORT
@@ -123,7 +123,7 @@ gpg_err_init (void)
    this function may be called from the DllMain function of a DLL
    which statically links to libgpg-error.  */
 void
-gpg_err_deinit (int mode)
+_gpg_err_deinit (int mode)
 {
 #if defined (HAVE_W32_SYSTEM) && !defined(DLL_EXPORT)
   struct tls_space_s *tls;

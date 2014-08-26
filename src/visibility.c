@@ -66,12 +66,29 @@ gpg_err_set_errno (int err)
 }
 
 
+gpg_error_t
+gpg_err_init (void)
+{
+  return _gpg_err_init ();
+}
+
+void
+gpg_err_deinit (int mode)
+{
+  _gpg_err_deinit (mode);
+}
+
 const char *
 gpg_error_check_version (const char *req_version)
 {
   return _gpg_error_check_version (req_version);
 }
 
+const char *
+gpgrt_check_version (const char *req_version)
+{
+  return _gpg_error_check_version (req_version);
+}
 
 void
 gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void))

@@ -51,7 +51,9 @@ MARK_VISIBLE (gpg_err_code_to_errno)
 MARK_VISIBLE (gpg_err_code_from_syserror)
 MARK_VISIBLE (gpg_err_set_errno)
 
+MARK_VISIBLE (gpg_err_init)
 MARK_VISIBLE (gpg_error_check_version)
+MARK_VISIBLE (gpgrt_check_version)
 
 MARK_VISIBLE (gpgrt_lock_init)
 MARK_VISIBLE (gpgrt_lock_lock)
@@ -150,7 +152,9 @@ MARK_VISIBLE (gpgrt_set_syscall_clamp)
 #define gpg_err_code_from_syserror  _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpg_err_set_errno           _gpgrt_USE_UNDERSCORED_FUNCTION
 
+#define gpg_err_init                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpg_error_check_version     _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_check_version         _gpgrt_USE_OTHER_FUNCTION
 #define gpgrt_set_syscall_clamp     _gpgrt_USE_UNDERSCORED_FUNCTION
 
 #define gpgrt_lock_init             _gpgrt_USE_UNDERSCORED_FUNCTION
