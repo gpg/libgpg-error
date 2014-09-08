@@ -725,6 +725,11 @@ msgstr "Nieparzysta liczba cyfr szesnastkowych w S-wyrażeniu"
 msgid "Bad octal character in S-expression"
 msgstr "Błędny znak ósemkowy w S-wyrażeniu"
 
+#, fuzzy
+#| msgid "Key expired"
+msgid "Key disabled"
+msgstr "Klucz wygasł"
+
 msgid "Not possible with a card based key"
 msgstr ""
 

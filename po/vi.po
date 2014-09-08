@@ -751,6 +751,11 @@ msgstr "Có số thập lục lẻ trong biểu thức S"
 msgid "Bad octal character in S-expression"
 msgstr "Ký tự bát phân sai trong biểu thức S"
 
+#, fuzzy
+#| msgid "Key expired"
+msgid "Key disabled"
+msgstr "Khoá hết hạn"
+
 msgid "Not possible with a card based key"
 msgstr ""
 

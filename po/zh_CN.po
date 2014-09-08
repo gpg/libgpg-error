@@ -748,6 +748,11 @@ msgstr ""
 msgid "Bad octal character in S-expression"
 msgstr ""
 
+#, fuzzy
+#| msgid "Key expired"
+msgid "Key disabled"
+msgstr "密钥已过期"
+
 msgid "Not possible with a card based key"
 msgstr ""
 

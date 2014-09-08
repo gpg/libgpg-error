@@ -763,6 +763,11 @@ msgstr "Дивні шістнадцяткові числа у S-виразі"
 msgid "Bad octal character in S-expression"
 msgstr "Помилковий вісімковий символ у S-виразі"
 
+#, fuzzy
+#| msgid "Key expired"
+msgid "Key disabled"
+msgstr "Строк дії ключа вичерпано"
+
 msgid "Not possible with a card based key"
 msgstr ""
 

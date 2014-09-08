@@ -743,6 +743,11 @@ msgstr "Vreemde hexadecimale getallen in S-expressie"
 msgid "Bad octal character in S-expression"
 msgstr "Fout octaal teken in S-expressie"
 
+#, fuzzy
+#| msgid "Key expired"
+msgid "Key disabled"
+msgstr "Sleutel is verlopen"
+
 msgid "Not possible with a card based key"
 msgstr ""
 

@@ -744,6 +744,11 @@ msgstr "Nombre hexadécimal impair dans l'expression symbolique"
 msgid "Bad octal character in S-expression"
 msgstr "Mauvais caractère octal dans l'expression symbolique"
 
+#, fuzzy
+#| msgid "Key expired"
+msgid "Key disabled"
+msgstr "Clef expirée"
+
 msgid "Not possible with a card based key"
 msgstr ""
 

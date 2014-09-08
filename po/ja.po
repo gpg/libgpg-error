@@ -725,6 +725,11 @@ msgstr "S式におかしな16進キャラクタがあります"
 msgid "Bad octal character in S-expression"
 msgstr "S式に間違った8進キャラクタがあります"
 
+#, fuzzy
+#| msgid "Key expired"
+msgid "Key disabled"
+msgstr "鍵が期限切れです"
+
 msgid "Not possible with a card based key"
 msgstr "カードの鍵では不可能です"
 

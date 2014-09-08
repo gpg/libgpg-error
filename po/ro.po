@@ -762,6 +762,11 @@ msgstr "Numere hexazecimale ciudate în expresia-S"
 msgid "Bad octal character in S-expression"
 msgstr "Caracter octal incorect în expresia-S"
 
+#, fuzzy
+#| msgid "Key expired"
+msgid "Key disabled"
+msgstr "Cheie expiratã"
+
 msgid "Not possible with a card based key"
 msgstr ""
 
