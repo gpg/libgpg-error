@@ -1,7 +1,7 @@
-Noteworthy changes in version 1.14 (unreleased)
+Noteworthy changes in version 1.14 (2014-09-08) [C12/A12/R0]
 -----------------------------------------------
 
- * Added trylock function
+ * Added gpgrt_lock_trylock.
 
  * Added the estream library under the name gpgrt and a set of macros
    to use them with their "es_" names.
