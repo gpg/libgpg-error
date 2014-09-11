@@ -1,4 +1,4 @@
-Noteworthy changes in version 1.15 (unreleased) [C__/A__/R_]
+Noteworthy changes in version 1.15 (2014-09-11) [C12/A12/R1]
 -----------------------------------------------
 
  * This releases fixes problems with the use of off_t and ssize_t by
