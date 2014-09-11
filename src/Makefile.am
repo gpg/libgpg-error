@@ -66,7 +66,7 @@ lock_obj_pub = \
 
 
 lib_LTLIBRARIES = libgpg-error.la
-include_HEADERS = gpg-error.h
+nodist_include_HEADERS = gpg-error.h
 bin_SCRIPTS = gpg-error-config
 m4datadir = $(datadir)/aclocal
 m4data_DATA = gpg-error.m4
@@ -151,11 +151,12 @@ libgpg_error_la_LDFLAGS = \
   -version-info \
   @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@
 
-libgpg_error_la_SOURCES = gpg-error.h gettext.h $(arch_sources) \
+libgpg_error_la_SOURCES = gettext.h $(arch_sources) \
 	gpgrt-int.h init.c init.h version.c lock.h thread.h \
 	estream.c estream-printf.c estream-printf.h \
 	strsource.c strerror.c code-to-errno.c code-from-errno.c \
 	visibility.c visibility.h
+nodist_libgpg_error_la_SOURCES = gpg-error.h
 
 # libgpg_error_la_DEPENDENCIES = \
 #        $(srcdir)/gpg-error.vers
@@ -265,7 +266,7 @@ else
 pre_mkheader_cmds = :
 parts_of_gpg_error_h += ./lock-obj-pub.native.h
 
-lock-obj-pub.native.h: Makefile gen-posix-lock-obj posix-lock-obj.h
+./lock-obj-pub.native.h: Makefile gen-posix-lock-obj posix-lock-obj.h
 	./gen-posix-lock-obj >$@
 endif
 
