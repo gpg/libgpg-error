@@ -28,6 +28,105 @@ static char *srcdir;
 static const char *hdr_version;
 static const char *hdr_version_number;
 
+/* Values take from the supplied config.h.  */
+static int have_stdint_h;
+static int have_w32_system;
+static int have_w64_system;
+static char *replacement_for_off_type;
+
+/* Various state flags.  */
+static int stdint_h_included;
+
+
+/* The usual free wrapper.  */
+static void
+xfree (void *a)
+{
+  if (a)
+    free (a);
+}
+
+
+static char *
+xstrdup (const char *string)
+{
+  char *p;
+
+  p = malloc (strlen (string)+1);
+  if (!p)
+    {
+      fputs (PGM ": out of core\n", stderr);
+      exit (1);
+    }
+  strcpy (p, string);
+  return p;
+}
+
+
+/* Parse the supplied config.h file and extract required info.
+   Returns 0 on success.  */
+static int
+parse_config_h (const char *fname)
+{
+  FILE *fp;
+  char line[LINESIZE];
+  int lnr = 0;
+  char *p1;
+
+  fp = fopen (fname, "r");
+  if (!fp)
+    {
+      fprintf (stderr, "%s:%d: can't open file: %s",
+               fname, lnr, strerror (errno));
+      return 1;
+    }
+
+  while (fgets (line, LINESIZE, fp))
+    {
+      size_t n = strlen (line);
+
+      lnr++;
+      if (!n || line[n-1] != '\n')
+        {
+          fprintf (stderr,
+                   "%s:%d: trailing linefeed missing, line too long or "
+                   "embedded nul character\n", fname, lnr);
+          break;
+        }
+      line[--n] = 0;
+
+      if (strncmp (line, "#define ", 8))
+        continue; /* We are only interested in define lines.  */
+      p1 = strtok (line + 8, " \t");
+      if (!*p1)
+        continue; /* oops */
+      if (!strcmp (p1, "HAVE_STDINT_H"))
+        have_stdint_h = 1;
+      else if (!strcmp (p1, "HAVE_W32_SYSTEM"))
+        have_w32_system = 1;
+      else if (!strcmp (p1, "HAVE_W64_SYSTEM"))
+        have_w64_system = 1;
+      else if (!strcmp (p1, "REPLACEMENT_FOR_OFF_T"))
+        {
+          p1 = strtok (NULL, "\"");
+          if (!*p1)
+            continue; /* oops */
+          xfree (replacement_for_off_type);
+          replacement_for_off_type = xstrdup (p1);
+        }
+    }
+
+  if (ferror (fp))
+    {
+      fprintf (stderr, "%s:%d: error reading file: %s\n",
+               fname, lnr, strerror (errno));
+      return 1;
+    }
+
+  fclose (fp);
+  return 0;
+}
+
 
 /* Write LINE to stdout.  The function is allowed to modify LINE.  */
 static void
@@ -283,12 +382,57 @@ write_special (const char *fname, int lnr, const char *tag)
       putchar ('\"');
       fputs (hdr_version, stdout);
       putchar ('\"');
-      putchar ('\n');
     }
   else if (!strcmp (tag, "version-number"))
     {
       fputs (hdr_version_number, stdout);
-      putchar ('\n');
+    }
+  else if (!strcmp (tag, "define:gpgrt_off_t"))
+    {
+      if (!replacement_for_off_type)
+        {
+          fprintf (stderr, "%s:%d: replacement for off_t not defined\n",
+                   fname, lnr);
+          exit (1);
+        }
+      else
+        {
+          if (!strcmp (replacement_for_off_type, "int64_t")
+              && !stdint_h_included && have_stdint_h)
+            {
+              fputs ("#include <stdint.h>\n\n", stdout);
+              stdint_h_included = 1;
+            }
+          printf ("typedef %s gpgrt_off_t;\n", replacement_for_off_type);
+        }
+    }
+  else if (!strcmp (tag, "define:gpgrt_ssize_t"))
+    {
+      if (have_w64_system)
+        {
+          if (!stdint_h_included && have_stdint_h)
+            {
+              fputs ("# include <stdint.h>\n", stdout);
+              stdint_h_included = 1;
+            }
+          fputs ("typedef int64_t gpgrt_ssize_t;\n", stdout);
+        }
+      else if (have_w32_system)
+        {
+          fputs ("typedef long    gpgrt_ssize_t;\n", stdout);
+        }
+      else
+        {
+          fputs ("#include <sys/types.h>\n"
+                 "typedef ssize_t gpgrt_ssize_t;\n", stdout);
+        }
+    }
+  else if (!strcmp (tag, "api_ssize_t"))
+    {
+      if (have_w32_system)
+        fputs ("gpgrt_ssize_t", stdout);
+      else
+        fputs ("ssize_t", stdout);
     }
   else if (!strcmp (tag, "include:err-sources"))
     {
@@ -336,24 +480,27 @@ main (int argc, char **argv)
   int lnr = 0;
   const char *fname, *s;
   char *p1, *p2;
+  const char *config_h;
 
   if (argc)
     {
       argc--; argv++;
     }
 
-  if (argc != 5)
+  if (argc != 6)
     {
       fputs ("usage: " PGM
-             " host_os host_triplet template.h version version_number\n",
+             " host_os host_triplet template.h config.h"
+             " version version_number\n",
              stderr);
       return 1;
     }
   host_os = argv[0];
   host_triplet = argv[1];
   fname = argv[2];
-  hdr_version = argv[3];
-  hdr_version_number = argv[4];
+  config_h = argv[3];
+  hdr_version = argv[4];
+  hdr_version_number = argv[5];
 
   srcdir = malloc (strlen (fname) + 2 + 1);
   if (!srcdir)
@@ -367,6 +514,9 @@ main (int argc, char **argv)
     p1[1] = 0;
   else
     strcpy (srcdir, "./");
+
+  if (parse_config_h (config_h))
+    return 1;
 
   fp = fopen (fname, "r");
   if (!fp)
@@ -407,7 +557,6 @@ main (int argc, char **argv)
           printf ("Do not edit.  Generated from %s for %s.",
                   s? s+1 : fname, host_triplet);
           fputs (p2, stdout);
-          putchar ('\n');
         }
       else if (!write_special (fname, lnr, p1))
         {
@@ -415,8 +564,12 @@ main (int argc, char **argv)
           fputs (p1, stdout);
           putchar ('@');
           fputs (p2, stdout);
-          putchar ('\n');
         }
+      else if (p2 && *p2)
+        {
+          fputs (p2, stdout);
+        }
+      putchar ('\n');
     }
 
   if (ferror (fp))

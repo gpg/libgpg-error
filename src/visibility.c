@@ -346,7 +346,7 @@ gpgrt_fseek (estream_t stream, long int offset, int whence)
 }
 
 int
-gpgrt_fseeko (estream_t stream, off_t offset, int whence)
+gpgrt_fseeko (estream_t stream, gpgrt_off_t offset, int whence)
 {
   return _gpgrt_fseeko (stream, offset, whence);
 }
@@ -357,7 +357,7 @@ gpgrt_ftell (estream_t stream)
   return _gpgrt_ftell (stream);
 }
 
-off_t
+gpgrt_off_t
 gpgrt_ftello (estream_t stream)
 {
   return _gpgrt_ftello (stream);
@@ -468,14 +468,14 @@ gpgrt_fputs_unlocked (const char *_GPGRT__RESTRICT s,
   return _gpgrt_fputs_unlocked (s, stream);
 }
 
-ssize_t
+gpgrt_ssize_t
 gpgrt_getline (char *_GPGRT__RESTRICT *_GPGRT__RESTRICT lineptr,
                size_t *_GPGRT__RESTRICT n, estream_t _GPGRT__RESTRICT stream)
 {
   return _gpgrt_getline (lineptr, n, stream);
 }
 
-ssize_t
+gpgrt_ssize_t
 gpgrt_read_line (estream_t stream,
                  char **addr_of_buffer, size_t *length_of_buffer,
                  size_t *max_length)

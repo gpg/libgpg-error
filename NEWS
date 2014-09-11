@@ -1,6 +1,18 @@
 Noteworthy changes in version 1.15 (unreleased) [C__/A__/R_]
 -----------------------------------------------
 
+ * This releases fixes problems with the use of off_t and ssize_t by
+   the estream functions introduced with 1.14.  Although this is
+   technically an ABI break on some platforms, we take this as a
+   simple bug fix for 1.14.  The new functions are very unlikely in
+   use by any code and thus no breakage should happen.  The 1.14
+   tarball will be removed from the archive.
+
+ * Add type gpgrt_off_t which is guaranteed to be 64 bit.
+
+ * Add type gpgrt_ssize_t to make use on Windows easier.  On Unix
+   platforms this is an alias for ssize_t.
+
 
 Noteworthy changes in version 1.14 (2014-09-08) [C12/A12/R0]
 -----------------------------------------------

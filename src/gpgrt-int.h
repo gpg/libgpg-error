@@ -162,12 +162,12 @@ int _gpgrt_fputs (const char *_GPGRT__RESTRICT s,
 int _gpgrt_fputs_unlocked (const char *_GPGRT__RESTRICT s,
                            gpgrt_stream_t _GPGRT__RESTRICT stream);
 
-ssize_t _gpgrt_getline (char *_GPGRT__RESTRICT *_GPGRT__RESTRICT lineptr,
-                        size_t *_GPGRT__RESTRICT n,
-                        gpgrt_stream_t stream);
-ssize_t _gpgrt_read_line (gpgrt_stream_t stream,
-                          char **addr_of_buffer, size_t *length_of_buffer,
-                          size_t *max_length);
+gpgrt_ssize_t _gpgrt_getline (char *_GPGRT__RESTRICT *_GPGRT__RESTRICT lineptr,
+                              size_t *_GPGRT__RESTRICT n,
+                              gpgrt_stream_t stream);
+gpgrt_ssize_t _gpgrt_read_line (gpgrt_stream_t stream,
+                                char **addr_of_buffer, size_t *length_of_buffer,
+                                size_t *max_length);
 
 int _gpgrt_fprintf (gpgrt_stream_t _GPGRT__RESTRICT stream,
                     const char *_GPGRT__RESTRICT format, ...)

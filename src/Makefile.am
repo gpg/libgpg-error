@@ -271,10 +271,11 @@ endif
 
 # We also depend on versioninfo.rc because that is build by
 # config.status and thus has up-to-date version numbers.
-gpg-error.h: Makefile mkheader $(parts_of_gpg_error_h) versioninfo.rc
+gpg-error.h: Makefile mkheader $(parts_of_gpg_error_h) \
+             versioninfo.rc ../config.h
 	$(pre_mkheader_cmds)
 	./mkheader $(host_os) $(host_triplet)  $(srcdir)/gpg-error.h.in \
-                   $(PACKAGE_VERSION) $(VERSION_NUMBER) >$@
+                   ../config.h $(PACKAGE_VERSION) $(VERSION_NUMBER) >$@
 
 
 install-data-local:
