@@ -343,6 +343,18 @@ init_stream_lock (estream_t _GPGRT__RESTRICT stream)
 
 
 static void
+destroy_stream_lock (estream_t _GPGRT__RESTRICT stream)
+{
+  if (!stream->intern->samethread)
+    {
+      dbg_lock_1 ("enter destroy_stream_lock for %p\n", stream);
+      _gpgrt_lock_destroy (&stream->intern->lock);
+      dbg_lock_1 ("leave destroy_stream_lock for %p\n", stream);
+    }
+}
+
+
+static void
 lock_stream (estream_t _GPGRT__RESTRICT stream)
 {
   if (!stream->intern->samethread)
@@ -1821,7 +1833,7 @@ es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
       if (stream_new)
 	{
 	  es_deinitialize (stream_new);
-          _gpgrt_lock_destroy (&stream_new->intern->lock);
+          destroy_stream_lock (stream_new);
 	  mem_free (stream_new->intern);
 	  mem_free (stream_new);
 	}
@@ -1850,7 +1862,7 @@ do_close (estream_t stream, int with_locked_list)
           stream->intern->onclose = tmp;
         }
       err = es_deinitialize (stream);
-      _gpgrt_lock_destroy (&stream->intern->lock);
+      destroy_stream_lock (stream);
       mem_free (stream->intern);
       mem_free (stream);
     }
