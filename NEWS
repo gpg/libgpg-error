@@ -1,6 +1,12 @@
 Noteworthy changes in version 1.17 (unreleased) [C12/A12/R_]
 -----------------------------------------------
 
+ * Add an errot source code for an TLS protocol library.
+
+ * Interface changes relative to the 1.16 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_SOURCE_TLS           NEW.
+
 
 Noteworthy changes in version 1.16 (2014-09-18) [C12/A12/R2]
 -----------------------------------------------
