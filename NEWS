@@ -1,5 +1,11 @@
-Noteworthy changes in version 1.16 (unreleased) [C__/A__/R_]
+Noteworthy changes in version 1.16 (2014-09-18) [C12/A12/R2]
 -----------------------------------------------
+
+ * Support building for iOS.
+
+ * Fixed a prototype mismatch.
+
+ * Fix es_fclose for streams opened with "samethread".
 
 
 Noteworthy changes in version 1.15 (2014-09-11) [C12/A12/R1]
