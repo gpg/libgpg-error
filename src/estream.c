@@ -1749,7 +1749,7 @@ init_stream_obj (estream_t stream,
      reading mode.  This is required in case we are working on a
      stream which is not seeekable (like stdout).  Without this
      pre-initialization we would do a seek at the first write call and
-     as this will fail no utput will be delivered. */
+     as this will fail no output will be delivered. */
   if ((modeflags & O_WRONLY) || (modeflags & O_RDWR) )
     stream->flags.writing = 1;
   else
