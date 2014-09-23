@@ -1,7 +1,9 @@
 Noteworthy changes in version 1.17 (unreleased) [C12/A12/R_]
 -----------------------------------------------
 
- * Add an errot source code for an TLS protocol library.
+ * New error source code for TLS protocol libraries.
+
+ * New configure option --enable-build-timestamp.
 
  * Interface changes relative to the 1.16 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
