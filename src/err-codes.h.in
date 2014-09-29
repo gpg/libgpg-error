@@ -247,7 +247,34 @@
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
-# 214 to 251 are free to be used.
+# 214 to 225 are free to be used.
+
+226	GPG_ERR_NO_CERT_CHAIN		No certificate chain
+227	GPG_ERR_CERT_TOO_LARGE		Certificate is too large
+228	GPG_ERR_INV_RECORD		Invalid record
+229	GPG_ERR_BAD_MAC			The MAC does not verify
+230	GPG_ERR_UNEXPECTED_MSG		Unexpected message
+231	GPG_ERR_COMPR_FAILED		Compression or decompression failed
+232	GPG_ERR_WOULD_WRAP		A counter would wrap
+233	GPG_ERR_FATAL_ALERT		Fatal alert message received
+234	GPG_ERR_NO_CIPHER		No cipher algorithm
+235	GPG_ERR_MISSING_CLIENT_CERT	Missing client certificate
+236	GPG_ERR_CLOSE_NOTIFY		Close notification received
+237	GPG_ERR_TICKET_EXPIRED		Ticket expired
+238	GPG_ERR_BAD_TICKET		Bad ticket
+239	GPG_ERR_UNKNOWN_IDENTITY	Unknown identity
+240	GPG_ERR_BAD_HS_CERT		Bad certificate message in handshake
+241	GPG_ERR_BAD_HS_CERT_REQ		Bad certificate request message in handshake
+242	GPG_ERR_BAD_HS_CERT_VER		Bad certificate verify message in handshake
+243	GPG_ERR_BAD_HS_CHANGE_CIPHER	Bad change cipher messsage in handshake
+244	GPG_ERR_BAD_HS_CLIENT_HELLO	Bad client hello message in handshake
+245	GPG_ERR_BAD_HS_SERVER_HELLO	Bad server hello message in handshake
+246	GPG_ERR_BAD_HS_SERVER_HELLO_DONE	Bad server hello done message in hanshake
+247	GPG_ERR_BAD_HS_FINISHED		Bad finished message in handshake
+248	GPG_ERR_BAD_HS_SERVER_KEX	Bad server key exchange message in handshake
+249	GPG_ERR_BAD_HS_CLIENT_KEX	Bad client key exchange message in handshake
+
+# 250 and 251 are free to be used.
 
 252	GPG_ERR_KEY_DISABLED		Key disabled
 253	GPG_ERR_KEY_ON_CARD		Not possible with a card based key

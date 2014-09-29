@@ -1,13 +1,37 @@
 Noteworthy changes in version 1.17 (unreleased) [C12/A12/R_]
 -----------------------------------------------
 
- * New error source code for TLS protocol libraries.
+ * New error codes for TLS protocol libraries.
 
  * New configure option --enable-build-timestamp.
 
  * Interface changes relative to the 1.16 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- GPG_ERR_SOURCE_TLS           NEW.
+ GPG_ERR_SOURCE_TLS               NEW.
+ GPG_ERR_NO_CERT_CHAIN            NEW.
+ GPG_ERR_CERT_TOO_LARGE	          NEW.
+ GPG_ERR_INV_RECORD               NEW.
+ GPG_ERR_BAD_MAC	          NEW.
+ GPG_ERR_UNEXPECTED_MSG           NEW.
+ GPG_ERR_COMPR_FAILED             NEW.
+ GPG_ERR_WOULD_WRAP               NEW.
+ GPG_ERR_FATAL_ALERT              NEW.
+ GPG_ERR_NO_CIPHER                NEW.
+ GPG_ERR_MISSING_CLIENT_CERT      NEW.
+ GPG_ERR_CLOSE_NOTIFY             NEW.
+ GPG_ERR_TICKET_EXPIRED           NEW.
+ GPG_ERR_BAD_TICKET               NEW.
+ GPG_ERR_UNKNOWN_IDENTITY         NEW.
+ GPG_ERR_BAD_HS_CERT              NEW.
+ GPG_ERR_BAD_HS_CERT_REQ          NEW.
+ GPG_ERR_BAD_HS_CERT_VER          NEW.
+ GPG_ERR_BAD_HS_CHANGE_CIPHER     NEW.
+ GPG_ERR_BAD_HS_CLIENT_HELLO      NEW.
+ GPG_ERR_BAD_HS_SERVER_HELLO      NEW.
+ GPG_ERR_BAD_HS_SERVER_HELLO_DONE NEW.
+ GPG_ERR_BAD_HS_FINISHED          NEW.
+ GPG_ERR_BAD_HS_SERVER_KEX        NEW.
+ GPG_ERR_BAD_HS_CLIENT_KEX        NEW.
 
 
 Noteworthy changes in version 1.16 (2014-09-18) [C12/A12/R2]

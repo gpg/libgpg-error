@@ -46,7 +46,7 @@
 14	GPG_ERR_SOURCE_G13		G13
 15	GPG_ERR_SOURCE_ASSUAN		Assuan
 
-17	GPG_ERR_SOURCE_TLS              TLS
+17	GPG_ERR_SOURCE_TLS		TLS
 
 # 15 to 30 are free to be used.
 
