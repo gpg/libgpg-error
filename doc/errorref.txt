@@ -219,7 +219,12 @@ GPG_ERR_INV_ARG			Invalid argument
 52	GPG_ERR_NOT_PROCESSED		Data not processed
 53	GPG_ERR_UNUSABLE_PUBKEY		Unusable public key
 54	GPG_ERR_UNUSABLE_SECKEY		Unusable secret key
-55	GPG_ERR_INV_VALUE		Invalid value
+
+GPG_ERR_INV_VALUE		Invalid value
+
+    NTBTLS: - A DH parameter is out of range
+
+
 56	GPG_ERR_BAD_CERT_CHAIN		Bad certificate chain
 
 GPG_ERR_MISSING_CERT		Missing certificate
@@ -516,7 +521,13 @@ GPG_ERR_LIMIT_REACHED           Limit reached
         GnuPG: gpgtar: Extract directory can't be created because too
         many of directories with a similar name are already existing.
 
-184	GPG_ERR_NOT_INITIALIZED		Not initialized
+GPG_ERR_NOT_INITIALIZED		Not initialized
+
+    An operation can't be performed because something has not been
+    initialized.  This might be a missing initialization of an entire
+    subsystems or a prerequisite for using a function is not
+    fulfilled.
+
 185	GPG_ERR_MISSING_ISSUER_CERT	Missing issuer certificate
 186	GPG_ERR_NO_KEYSERVER		No keyserver available
 
@@ -699,6 +710,13 @@ GPG_ERR_BAD_HS_CLIENT_KEX       Bad client key exchange message in handshake
     NTBTLS: - As the description says.
 
 
+GPG_ERR_BOGUS_STRING            Bogus string
+
+    Used if a protocol sends length prefixed strings which contain a
+    Nul byte and further processing would discard the rest of the
+    string.  May also be used if a string contains unexpected and
+    possible dangerous characters (e.g. control characters in a domain
+    name).
 
 
 GPG_ERR_KEY_DISABLED            Key disabled

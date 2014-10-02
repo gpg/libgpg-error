@@ -102,6 +102,8 @@ int _gpgrt_ferror (gpgrt_stream_t stream);
 int _gpgrt_ferror_unlocked (gpgrt_stream_t stream);
 void _gpgrt_clearerr (gpgrt_stream_t stream);
 void _gpgrt_clearerr_unlocked (gpgrt_stream_t stream);
+int _gpgrt_pending (gpgrt_stream_t stream);
+int _gpgrt_pending_unlocked (gpgrt_stream_t stream);
 
 int _gpgrt_fflush (gpgrt_stream_t stream);
 int _gpgrt_fseek (gpgrt_stream_t stream, long int offset, int whence);

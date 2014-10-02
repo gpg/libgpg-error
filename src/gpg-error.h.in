@@ -496,6 +496,8 @@ int gpgrt_ferror (gpgrt_stream_t stream);
 int gpgrt_ferror_unlocked (gpgrt_stream_t stream);
 void gpgrt_clearerr (gpgrt_stream_t stream);
 void gpgrt_clearerr_unlocked (gpgrt_stream_t stream);
+int gpgrt_pending (gpgrt_stream_t stream);
+int gpgrt_pending_unlocked (gpgrt_stream_t stream);
 
 int gpgrt_fflush (gpgrt_stream_t stream);
 int gpgrt_fseek (gpgrt_stream_t stream, long int offset, int whence);
@@ -648,6 +650,8 @@ int gpgrt_vsnprintf (char *buf,size_t bufsize,
 # define es_ferror_unlocked   gpgrt_ferror_unlocked
 # define es_clearerr          gpgrt_clearerr
 # define es_clearerr_unlocked gpgrt_clearerr_unlocked
+# define es_pending           gpgrt_pending
+# define es_pending_unlocked  gpgrt_pending_unlocked
 # define es_fflush            gpgrt_fflush
 # define es_fseek             gpgrt_fseek
 # define es_fseeko            gpgrt_fseeko

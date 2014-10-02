@@ -625,6 +625,9 @@ es_func_mem_read (void *cookie, void *buffer, size_t size)
   estream_cookie_mem_t mem_cookie = cookie;
   gpgrt_ssize_t ret;
 
+  if (!size)  /* Just the pending data check.  */
+    return (mem_cookie->data_len - mem_cookie->offset)? 0 : -1;
+
   if (size > mem_cookie->data_len - mem_cookie->offset)
     size = mem_cookie->data_len - mem_cookie->offset;
 
@@ -898,7 +901,9 @@ es_func_fd_read (void *cookie, void *buffer, size_t size)
   estream_cookie_fd_t file_cookie = cookie;
   gpgrt_ssize_t bytes_read;
 
-  if (IS_INVALID_FD (file_cookie->fd))
+  if (!size)
+    bytes_read = -1; /* We don't know whether anything is pending.  */
+  else if (IS_INVALID_FD (file_cookie->fd))
     {
       _gpgrt_yield ();
       bytes_read = 0;
@@ -1057,7 +1062,9 @@ es_func_w32_read (void *cookie, void *buffer, size_t size)
   estream_cookie_w32_t w32_cookie = cookie;
   gpgrt_ssize_t bytes_read;
 
-  if (w32_cookie->hd == INVALID_HANDLE_VALUE)
+  if (!size)
+    bytes_to_read = -1; /* We don't know whether anything is pending.  */
+  else if (w32_cookie->hd == INVALID_HANDLE_VALUE)
     {
       _gpgrt_yield ();
       bytes_read = 0;
@@ -1272,6 +1279,9 @@ es_func_fp_read (void *cookie, void *buffer, size_t size)
 {
   estream_cookie_fp_t file_cookie = cookie;
   gpgrt_ssize_t bytes_read;
+
+  if (!size)
+    return -1; /* We don't know whether anything is pending.  */
 
   if (file_cookie->fp)
     {
@@ -1602,6 +1612,8 @@ es_fill (estream_t stream)
       _set_errno (EOPNOTSUPP);
       err = -1;
     }
+  else if (!stream->buffer_size)
+    err = 0;
   else
     {
       gpgrt_cookie_read_function_t func_read = stream->intern->func_read;
@@ -1937,6 +1949,18 @@ es_read_nbf (estream_t _GPGRT__RESTRICT stream,
   return err;
 }
 
+static int
+check_pending_nbf (estream_t _GPGRT__RESTRICT stream)
+{
+  gpgrt_cookie_read_function_t func_read = stream->intern->func_read;
+  char buffer[1];
+
+  if (!(*func_read) (stream->intern->cookie, buffer, 0))
+    return 1; /* Pending bytes.  */
+  return 0; /* No pending bytes or error.  */
+}
+
+
 /* Try to read BYTES_TO_READ bytes FROM STREAM into BUFFER in
    fully-buffered-mode, storing the amount of bytes read in
    *BYTES_READ.  */
@@ -1987,6 +2011,26 @@ es_read_fbf (estream_t _GPGRT__RESTRICT stream,
   return err;
 }
 
+
+static int
+check_pending_fbf (estream_t _GPGRT__RESTRICT stream)
+{
+  gpgrt_cookie_read_function_t func_read = stream->intern->func_read;
+  char buffer[1];
+
+  if (stream->data_offset == stream->data_len)
+    {
+      /* Nothing more to read in current container, check whetehr it
+         would be possible to fill the container with new data.  */
+      if (!(*func_read) (stream->intern->cookie, buffer, 0))
+        return 1; /* Pending bytes.  */
+    }
+  else
+    return 1;
+  return 0;
+}
+
+
 /* Try to read BYTES_TO_READ bytes FROM STREAM into BUFFER in
    line-buffered-mode, storing the amount of bytes read in
    *BYTES_READ.  */
@@ -2003,7 +2047,7 @@ es_read_lbf (estream_t _GPGRT__RESTRICT stream,
 }
 
 /* Try to read BYTES_TO_READ bytes FROM STREAM into BUFFER, storing
-   *the amount of bytes read in BYTES_READ.  */
+   the amount of bytes read in BYTES_READ.  */
 static int
 es_readn (estream_t _GPGRT__RESTRICT stream,
 	  void *_GPGRT__RESTRICT buffer_arg,
@@ -2061,6 +2105,39 @@ es_readn (estream_t _GPGRT__RESTRICT stream,
 
   return err;
 }
+
+
+/* Return true if at least one byte is pending for read.  This is a
+   best effort check and it it possible that bytes are still pending
+   even if false is returned.  If the stream is in writing mode it is
+   switched to read mode.  */
+static int
+check_pending (estream_t _GPGRT__RESTRICT stream)
+{
+  if (stream->flags.writing)
+    {
+      /* Switching to reading mode -> flush output.  */
+      if (es_flush (stream))
+	return 0; /* Better return 0 on error.  */
+      stream->flags.writing = 0;
+    }
+
+  /* Check unread data first.  */
+  if (stream->unread_data_len)
+    return 1;
+
+  switch (stream->intern->strategy)
+    {
+    case _IONBF:
+      return check_pending_nbf (stream);
+    case _IOLBF:
+    case _IOFBF:
+      return check_pending_fbf (stream);
+    }
+
+  return 0;
+}
+
 
 /* Try to unread DATA_N bytes from DATA into STREAM, storing the
    amount of bytes successfully unread in *BYTES_UNREAD.  */
@@ -3387,6 +3464,34 @@ _gpgrt_syshd (estream_t stream, es_syshd_t *syshd)
 
   lock_stream (stream);
   ret = _gpgrt_syshd_unlocked (stream, syshd);
+  unlock_stream (stream);
+
+  return ret;
+}
+
+
+int
+_gpgrt_pending_unlocked (estream_t stream)
+{
+  return check_pending (stream);
+}
+
+
+/* Return true if there is at least one byte pending for read on
+   STREAM.  This does only work if the backend supports checking for
+   pending bytes and is thus mostly useful with cookie based backends.
+
+   Note that if this function is used with cookie based functions, the
+   read cookie may be called with 0 for the SIZE argument.  If bytes
+   are pending the function is expected to return -1 in this case and
+   thus deviates from the standard behavior of read(2).   */
+int
+_gpgrt_pending (estream_t stream)
+{
+  int ret;
+
+  lock_stream (stream);
+  ret = _gpgrt_pending_unlocked (stream);
   unlock_stream (stream);
 
   return ret;

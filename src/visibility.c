@@ -298,6 +298,18 @@ gpgrt_funlockfile (estream_t stream)
 }
 
 int
+gpgrt_pending (estream_t stream)
+{
+  return _gpgrt_pending (stream);
+}
+
+int
+gpgrt_pending_unlocked (estream_t stream)
+{
+  return _gpgrt_pending_unlocked (stream);
+}
+
+int
 gpgrt_feof (estream_t stream)
 {
   return _gpgrt_feof (stream);

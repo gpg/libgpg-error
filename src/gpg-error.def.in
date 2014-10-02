@@ -137,4 +137,7 @@ EXPORTS
  gpg_err_deinit               @102
  gpgrt_set_alloc_func         @103
 
+ gpgrt_pending                @104
+ gpgrt_pending_unlocked       @105
+
 ;; end of file with public symbols for Windows.

@@ -273,8 +273,8 @@
 247	GPG_ERR_BAD_HS_FINISHED		Bad finished message in handshake
 248	GPG_ERR_BAD_HS_SERVER_KEX	Bad server key exchange message in handshake
 249	GPG_ERR_BAD_HS_CLIENT_KEX	Bad client key exchange message in handshake
-
-# 250 and 251 are free to be used.
+250	GPG_ERR_BOGUS_STRING		Bogus string
+# 251 is free to be used.
 
 252	GPG_ERR_KEY_DISABLED		Key disabled
 253	GPG_ERR_KEY_ON_CARD		Not possible with a card based key

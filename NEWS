@@ -32,6 +32,9 @@ Noteworthy changes in version 1.17 (unreleased) [C12/A12/R_]
  GPG_ERR_BAD_HS_FINISHED          NEW.
  GPG_ERR_BAD_HS_SERVER_KEX        NEW.
  GPG_ERR_BAD_HS_CLIENT_KEX        NEW.
+ GPG_ERR_BOGUS_STRING             NEW.
+ gpgrt_pending                    NEW.
+ gpgrt_pending_unlocked           NEW.
 
 
 Noteworthy changes in version 1.16 (2014-09-18) [C12/A12/R2]
