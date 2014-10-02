@@ -1063,7 +1063,7 @@ es_func_w32_read (void *cookie, void *buffer, size_t size)
   gpgrt_ssize_t bytes_read;
 
   if (!size)
-    bytes_to_read = -1; /* We don't know whether anything is pending.  */
+    bytes_read = -1; /* We don't know whether anything is pending.  */
   else if (w32_cookie->hd == INVALID_HANDLE_VALUE)
     {
       _gpgrt_yield ();
