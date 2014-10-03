@@ -64,8 +64,8 @@ GPG_ERROR_1.0 {
     gpgrt_flockfile;
     gpgrt_ftrylockfile;
     gpgrt_funlockfile;
-    gpgrt_pending;
-    gpgrt_pending_unlocked;
+    _gpgrt_pending;
+    _gpgrt_pending_unlocked;
     gpgrt_feof;
     gpgrt_feof_unlocked;
     gpgrt_ferror;

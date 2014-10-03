@@ -87,8 +87,8 @@ MARK_VISIBLE (_gpgrt_get_std_stream)
 MARK_VISIBLE (gpgrt_flockfile)
 MARK_VISIBLE (gpgrt_ftrylockfile)
 MARK_VISIBLE (gpgrt_funlockfile)
-MARK_VISIBLE (gpgrt_pending)
-MARK_VISIBLE (gpgrt_pending_unlocked)
+MARK_VISIBLE (_gpgrt_pending)
+MARK_VISIBLE (_gpgrt_pending_unlocked)
 MARK_VISIBLE (gpgrt_feof)
 MARK_VISIBLE (gpgrt_feof_unlocked)
 MARK_VISIBLE (gpgrt_ferror)
@@ -192,8 +192,8 @@ MARK_VISIBLE (gpgrt_set_alloc_func)
 #define gpgrt_flockfile             _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_ftrylockfile          _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_funlockfile           _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_pending               _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_pending_unlocked      _gpgrt_USE_UNDERSCORED_FUNCTION
+#define _gpgrt_pending              _gpgrt_USE_UNDERSCORED_FUNCTION
+#define _gpgrt_pending_unlocked     _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_feof                  _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_feof_unlocked         _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_ferror                _gpgrt_USE_UNDERSCORED_FUNCTION

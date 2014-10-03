@@ -496,8 +496,17 @@ int gpgrt_ferror (gpgrt_stream_t stream);
 int gpgrt_ferror_unlocked (gpgrt_stream_t stream);
 void gpgrt_clearerr (gpgrt_stream_t stream);
 void gpgrt_clearerr_unlocked (gpgrt_stream_t stream);
-int gpgrt_pending (gpgrt_stream_t stream);
-int gpgrt_pending_unlocked (gpgrt_stream_t stream);
+
+int _gpgrt_pending (gpgrt_stream_t stream);          /* (private) */
+int _gpgrt_pending_unlocked (gpgrt_stream_t stream); /* (private) */
+
+#define gpgrt_pending(stream) _gpgrt_pending (stream)
+
+#define gpgrt_pending_unlocked(stream)				\
+  (((!(stream)->flags.writing)					\
+    && (((stream)->data_offset < (stream)->data_len)		\
+        || ((stream)->unread_data_len)))                        \
+   ? 1 : _gpgrt_pending_unlocked ((stream)))
 
 int gpgrt_fflush (gpgrt_stream_t stream);
 int gpgrt_fseek (gpgrt_stream_t stream, long int offset, int whence);
@@ -509,8 +518,8 @@ void gpgrt_rewind (gpgrt_stream_t stream);
 int gpgrt_fgetc (gpgrt_stream_t stream);
 int gpgrt_fputc (int c, gpgrt_stream_t stream);
 
-int _gpgrt_getc_underflow (gpgrt_stream_t stream);
-int _gpgrt_putc_overflow (int c, gpgrt_stream_t stream);
+int _gpgrt_getc_underflow (gpgrt_stream_t stream);       /* (private) */
+int _gpgrt_putc_overflow (int c, gpgrt_stream_t stream); /* (private) */
 
 #define gpgrt_getc_unlocked(stream)				\
   (((!(stream)->flags.writing)					\

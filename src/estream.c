@@ -3471,7 +3471,7 @@ _gpgrt_syshd (estream_t stream, es_syshd_t *syshd)
 
 
 int
-_gpgrt_pending_unlocked (estream_t stream)
+_gpgrt__pending_unlocked (estream_t stream)
 {
   return check_pending (stream);
 }
@@ -3486,12 +3486,12 @@ _gpgrt_pending_unlocked (estream_t stream)
    are pending the function is expected to return -1 in this case and
    thus deviates from the standard behavior of read(2).   */
 int
-_gpgrt_pending (estream_t stream)
+_gpgrt__pending (estream_t stream)
 {
   int ret;
 
   lock_stream (stream);
-  ret = _gpgrt_pending_unlocked (stream);
+  ret = _gpgrt__pending_unlocked (stream);
   unlock_stream (stream);
 
   return ret;

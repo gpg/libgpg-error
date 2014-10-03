@@ -298,15 +298,15 @@ gpgrt_funlockfile (estream_t stream)
 }
 
 int
-gpgrt_pending (estream_t stream)
+_gpgrt_pending (estream_t stream)
 {
-  return _gpgrt_pending (stream);
+  return _gpgrt__pending (stream);
 }
 
 int
-gpgrt_pending_unlocked (estream_t stream)
+_gpgrt_pending_unlocked (estream_t stream)
 {
-  return _gpgrt_pending_unlocked (stream);
+  return _gpgrt__pending_unlocked (stream);
 }
 
 int
