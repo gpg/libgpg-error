@@ -262,9 +262,9 @@ parts_of_gpg_error_h = 	 	\
 	w32ce-add.h      	\
 	$(lock_obj_pub)
 
-# If we are cross-compiling we better make sure that no stale native
-# lock include file will be found by mkheader.
-if CROSS_COMPILING
+# If we are cross-compiling or building on Windows we better make sure
+# that no stale native lock include file will be found by mkheader.
+if FORCE_USE_SYSCFG
 pre_mkheader_cmds = -rm lock-obj-pub.native.h 2>/dev/null
 else
 pre_mkheader_cmds = :

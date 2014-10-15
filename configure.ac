@@ -452,6 +452,7 @@ AC_SUBST(GPG_ERROR_CONFIG_HOST)
 #
 # Special defines for certain platforms
 #
+force_use_syscfg=no
 if test "$have_w32_system" = yes; then
     AC_DEFINE(HAVE_W32_SYSTEM,1,[Defined if we run on a W32 API based system])
     if test "$have_w64_system" = yes; then
@@ -461,11 +462,17 @@ if test "$have_w32_system" = yes; then
       AC_DEFINE(HAVE_W32CE_SYSTEM,1,[Defined if we run on WindowsCE])
       GPG_ERROR_CONFIG_ISUBDIRAFTER="gpg-extra"
     fi
+    force_use_syscfg=yes
 fi
+if test x$cross_compiling = xyes; then
+    force_use_syscfg=yes
+fi
+
 AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
 AM_CONDITIONAL(HAVE_W64_SYSTEM, test "$have_w64_system" = yes)
 AM_CONDITIONAL(HAVE_W32CE_SYSTEM, test "$have_w32ce_system" = yes)
 AM_CONDITIONAL(CROSS_COMPILING, test x$cross_compiling = xyes)
+AM_CONDITIONAL(FORCE_USE_SYSCFG, test x$force_use_syscfg = xyes)
 
 AC_DEFINE_UNQUOTED(HOST_TRIPLET_STRING, "$host", [The host triplet])
 
