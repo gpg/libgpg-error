@@ -63,6 +63,9 @@ msgstr "G13"
 msgid "Assuan"
 msgstr "Assuan"
 
+msgid "TLS"
+msgstr ""
+
 msgid "Any source"
 msgstr "Alla källor"
 
@@ -748,6 +751,102 @@ msgstr "Udda hexadecimala tal i S-uttryck"
 #, fuzzy
 msgid "Bad octal character in S-expression"
 msgstr "Felaktigt oktadecimalt tecken i S-uttryck"
+
+#, fuzzy
+#| msgid "Bad certificate chain"
+msgid "No certificate chain"
+msgstr "Felaktig certifikatkedja"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Certificate is too large"
+msgstr "Certifikatet är för ungt"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "Invalid record"
+msgstr "Ogiltigt kort"
+
+msgid "The MAC does not verify"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected message"
+msgstr "Oväntad tagg"
+
+msgid "Compression or decompression failed"
+msgstr ""
+
+msgid "A counter would wrap"
+msgstr ""
+
+msgid "Fatal alert message received"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid cipher algorithm"
+msgid "No cipher algorithm"
+msgstr "Ogiltig chifferalgoritm"
+
+#, fuzzy
+msgid "Missing client certificate"
+msgstr "Saknar certifikat"
+
+#, fuzzy
+#| msgid "Certificate revoked"
+msgid "Close notification received"
+msgstr "Certifikatet är spärrat"
+
+#, fuzzy
+#| msgid "Key expired"
+msgid "Ticket expired"
+msgstr "Nyckeln har gått ut"
+
+#, fuzzy
+#| msgid "Bad public key"
+msgid "Bad ticket"
+msgstr "Felaktig publik nyckel"
+
+#, fuzzy
+#| msgid "Unknown packet"
+msgid "Unknown identity"
+msgstr "Okänt paket"
+
+#, fuzzy
+#| msgid "Bad certificate chain"
+msgid "Bad certificate message in handshake"
+msgstr "Felaktig certifikatkedja"
+
+msgid "Bad certificate request message in handshake"
+msgstr ""
+
+msgid "Bad certificate verify message in handshake"
+msgstr ""
+
+msgid "Bad change cipher messsage in handshake"
+msgstr ""
+
+msgid "Bad client hello message in handshake"
+msgstr ""
+
+msgid "Bad server hello message in handshake"
+msgstr ""
+
+msgid "Bad server hello done message in hanshake"
+msgstr ""
+
+msgid "Bad finished message in handshake"
+msgstr ""
+
+msgid "Bad server key exchange message in handshake"
+msgstr ""
+
+msgid "Bad client key exchange message in handshake"
+msgstr ""
+
+msgid "Bogus string"
+msgstr ""
 
 #, fuzzy
 #| msgid "Key expired"

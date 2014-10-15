@@ -63,6 +63,9 @@ msgstr "G13"
 msgid "Assuan"
 msgstr "Assuan"
 
+msgid "TLS"
+msgstr ""
+
 msgid "Any source"
 msgstr "Unspezifische Quelle"
 
@@ -725,6 +728,106 @@ msgstr "Ungerade Anzahl von Hex-Zeichen in S-expression"
 
 msgid "Bad octal character in S-expression"
 msgstr "Falsches Oktal-Zeichen in S-expression"
+
+#, fuzzy
+#| msgid "Bad certificate chain"
+msgid "No certificate chain"
+msgstr "Fehlerhafte Zertifikatkette"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Certificate is too large"
+msgstr "Zertifikat ist noch nicht gültig"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "Invalid record"
+msgstr "Ungültige Karte"
+
+msgid "The MAC does not verify"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected message"
+msgstr "Unerwartetes \"Tag\""
+
+msgid "Compression or decompression failed"
+msgstr ""
+
+msgid "A counter would wrap"
+msgstr ""
+
+msgid "Fatal alert message received"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid cipher algorithm"
+msgid "No cipher algorithm"
+msgstr "Ungültiges Verschlüsselungsverfahren"
+
+# "in der Kette" ist part of the message because many users know about
+# certificate chains and thus that keyword might give them a good hint
+# what might be wrong.
+#, fuzzy
+#| msgid "Missing issuer certificate"
+msgid "Missing client certificate"
+msgstr "Fehlendes Herausgeberzertifikat in der Kette"
+
+#, fuzzy
+#| msgid "Certificate revoked"
+msgid "Close notification received"
+msgstr "Zertifikat ist widerrufen"
+
+#, fuzzy
+#| msgid "Key expired"
+msgid "Ticket expired"
+msgstr "Schlüssel abgelaufen"
+
+#, fuzzy
+#| msgid "Bad public key"
+msgid "Bad ticket"
+msgstr "Fehlerhafter öffentlicher Schlüssel"
+
+#, fuzzy
+#| msgid "Unknown packet"
+msgid "Unknown identity"
+msgstr "Unbekanntes Paket"
+
+#, fuzzy
+#| msgid "Bad certificate chain"
+msgid "Bad certificate message in handshake"
+msgstr "Fehlerhafte Zertifikatkette"
+
+msgid "Bad certificate request message in handshake"
+msgstr ""
+
+msgid "Bad certificate verify message in handshake"
+msgstr ""
+
+msgid "Bad change cipher messsage in handshake"
+msgstr ""
+
+msgid "Bad client hello message in handshake"
+msgstr ""
+
+msgid "Bad server hello message in handshake"
+msgstr ""
+
+msgid "Bad server hello done message in hanshake"
+msgstr ""
+
+msgid "Bad finished message in handshake"
+msgstr ""
+
+msgid "Bad server key exchange message in handshake"
+msgstr ""
+
+msgid "Bad client key exchange message in handshake"
+msgstr ""
+
+msgid "Bogus string"
+msgstr ""
 
 msgid "Key disabled"
 msgstr "Schlüssel abgeschaltet"
