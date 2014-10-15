@@ -1,9 +1,11 @@
-Noteworthy changes in version 1.17 (unreleased) [C12/A12/R_]
+Noteworthy changes in version 1.17 (2014-10-15) [C13/A13/R0]
 -----------------------------------------------
 
  * New error codes for TLS protocol libraries.
 
  * New configure option --enable-build-timestamp.
+
+ * New man page for gpg-error-config.
 
  * Interface changes relative to the 1.16 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

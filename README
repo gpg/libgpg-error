@@ -1,11 +1,11 @@
-libgpg-error
+Libgpg-error
 ============
 
 This is a library that defines common error values for all GnuPG
 components.  Among these are GPG, GPGSM, GPGME, GPG-Agent, libgcrypt,
 Libksba, DirMngr, Pinentry, SmartCard Daemon and more.
 
-libgpg-error is free software; you can redistribute it and/or modify
+Libgpg-error is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as
 published by the Free Software Foundation; either version 2.1 of the
 License, or (at your option) any later version.  See the file
@@ -13,12 +13,12 @@ COPYING.LIB for copyright and warranty information.  See the file
 AUTHORS for a list of authors and important mail addresses.
 
 However, some files (for example src/mkerrnos.awk) used in the build
-process of the library are covered by a different license.  Please see
-the header of these files and the file COPYING for copyright and
-warranty information on these files.  A special exception in the
-copyright license of these files makes sure that the output in the
-build process, which is used in libgpg-error, is not affected by the
-GPL.
+process of the library and the manual are covered by a different
+license.  Please see the header of these files and the file COPYING
+for copyright and warranty information on these files.  A special
+exception in the copyright license of these files makes sure that the
+output in the build process, which is used in libgpg-error, is not
+affected by the GPL.
 
 
 Installation
@@ -57,7 +57,8 @@ a) If you already have a trusted version of GnuPG installed, you can
    $ gpg --verify libgpg-error-x.y.tar.bz2.sig
 
    This checks that the detached signature libgpg-error-x.y.tar.bz2.sig
-   is indeed a a signature of libgpg-error-x.y.tar.bz2.
+   is indeed a signature of libgpg-error-x.y.tar.bz2.  Make sure that
+   the signature has been created by a trusted keys.
 
    Please note that you have to use an old version of GnuPG to do all
    this stuff.  *Never* use the version which was built using the
