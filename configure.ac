@@ -516,7 +516,7 @@ AM_CONDITIONAL([LANGUAGES_SOME], [test "x$enable_languages" != xno])
 # Substitution
 #
 AC_CONFIG_FILES([Makefile])
-AC_CONFIG_FILES([po/Makefile.in m4/Makefile])
+AC_CONFIG_FILES([doc/Makefile po/Makefile.in m4/Makefile])
 AC_CONFIG_FILES([src/Makefile tests/Makefile])
 AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc])

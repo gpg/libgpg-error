@@ -45,3 +45,6 @@ src/err-sources.h
 /tests/Makefile
 /tests/t-strerror
 /tests/t-syserror
+/doc/gpgrt.info
+/doc/stamp-vti
+/doc/version.texi
