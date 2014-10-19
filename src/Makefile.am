@@ -52,9 +52,11 @@ lock_obj_pub = \
         syscfg/lock-obj-pub.i486-pc-gnu.h                   \
         syscfg/lock-obj-pub.i486-pc-kfreebsd-gnu.h          \
         syscfg/lock-obj-pub.i486-pc-linux-gnu.h             \
+        syscfg/lock-obj-pub.i586-pc-linux-gnu.h             \
         syscfg/lock-obj-pub.m68k-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.mips-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.mipsel-unknown-linux-gnu.h      \
+        syscfg/lock-obj-pub.or1k-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.powerpc-unknown-linux-gnu.h     \
         syscfg/lock-obj-pub.powerpc64-unknown-linux-gnu.h   \
 	syscfg/lock-obj-pub.powerpc64le-unknown-linux-gnu.h \
@@ -66,7 +68,6 @@ lock_obj_pub = \
         syscfg/lock-obj-pub.x86_64-pc-linux-gnu.h           \
         syscfg/lock-obj-pub.x86_64-pc-linux-gnux32.h        \
 	syscfg/lock-obj-pub.mingw32.h
-
 
 
 lib_LTLIBRARIES = libgpg-error.la
