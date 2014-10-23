@@ -1,13 +1,13 @@
 # Polish translation for libgpg-error.
 # Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
-# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2013.
+# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.12\n"
+"Project-Id-Version: libgpg-error 1.17\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-06-25 18:22+0200\n"
+"PO-Revision-Date: 2014-10-16 21:15+0200\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "Language: pl\n"
@@ -64,7 +64,7 @@ msgid "Assuan"
 msgstr "Assuan"
 
 msgid "TLS"
-msgstr ""
+msgstr "TLS"
 
 msgid "Any source"
 msgstr "Dowolne źródło"
@@ -675,10 +675,8 @@ msgstr "Uszkodzony klucz publiczny"
 msgid "Broken secret key"
 msgstr "Uszkodzony klucz tajny"
 
-#, fuzzy
-#| msgid "Invalid digest algorithm"
 msgid "Invalid MAC algorithm"
-msgstr "Niepoprawny algorytm skrótu"
+msgstr "Niepoprawny algorytm MAC"
 
 msgid "Operation fully cancelled"
 msgstr "Operacja całkowicie anulowana"
@@ -728,115 +726,89 @@ msgstr "Nieparzysta liczba cyfr szesnastkowych w S-wyrażeniu"
 msgid "Bad octal character in S-expression"
 msgstr "Błędny znak ósemkowy w S-wyrażeniu"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "No certificate chain"
-msgstr "Błędny łańcuch certyfikatów"
+msgstr "Brak łańcucha certyfikatów"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Certificate is too large"
-msgstr "Certyfikat zbyt młody"
+msgstr "Certyfikat jest zbyt duży"
 
-#, fuzzy
-#| msgid "Invalid card"
 msgid "Invalid record"
-msgstr "Niepoprawna karta"
+msgstr "Niepoprawny rekord"
 
 msgid "The MAC does not verify"
-msgstr ""
+msgstr "Niepomyślna weryfikacja MAC"
 
-#, fuzzy
-#| msgid "Unexpected tag"
 msgid "Unexpected message"
-msgstr "Nieoczekiwany znacznik"
+msgstr "Nieoczekiwany komunikat"
 
 msgid "Compression or decompression failed"
-msgstr ""
+msgstr "Kompresja lub dekompresja nie powiodła się"
 
 msgid "A counter would wrap"
-msgstr ""
+msgstr "Licznik by się przekręcił"
 
 msgid "Fatal alert message received"
-msgstr ""
+msgstr "Otrzymano komunikat alarmu krytycznego"
 
-#, fuzzy
-#| msgid "Invalid cipher algorithm"
 msgid "No cipher algorithm"
-msgstr "Niepoprawny algorytm szyfru"
+msgstr "Brak algorytmu szyfru"
 
-#, fuzzy
-#| msgid "Missing issuer certificate"
 msgid "Missing client certificate"
-msgstr "Brak certyfikatu wystawcy"
+msgstr "Brak certyfikatu klienta"
 
-#, fuzzy
-#| msgid "Certificate revoked"
 msgid "Close notification received"
-msgstr "Certyfikat anulowany"
+msgstr "Otrzymano powiadomienie o zamknięciu"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Ticket expired"
-msgstr "Klucz wygasł"
+msgstr "Bilet wygasł"
 
-#, fuzzy
-#| msgid "Bad public key"
 msgid "Bad ticket"
-msgstr "Błędny klucz publiczny"
+msgstr "Błędny bilet"
 
-#, fuzzy
-#| msgid "Unknown packet"
 msgid "Unknown identity"
-msgstr "Nieznany pakiet"
+msgstr "Nieznana tożsamość"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "Bad certificate message in handshake"
-msgstr "Błędny łańcuch certyfikatów"
+msgstr "Błędny komunikat certyfikatu przy powitaniu"
 
 msgid "Bad certificate request message in handshake"
-msgstr ""
+msgstr "Błędny komunikat żądania certyfikatu przy powitaniu"
 
 msgid "Bad certificate verify message in handshake"
-msgstr ""
+msgstr "Błędny komunikat weryfikacji certyfikatu przy powitaniu"
 
 msgid "Bad change cipher messsage in handshake"
-msgstr ""
+msgstr "Błędny komunikat zmiany szyfru przy powitaniu"
 
 msgid "Bad client hello message in handshake"
-msgstr ""
+msgstr "Błędny komunikat przywitania klienta w powitaniu"
 
 msgid "Bad server hello message in handshake"
-msgstr ""
+msgstr "Błędny komunikat przywitania serwera w powitaniu"
 
 msgid "Bad server hello done message in hanshake"
-msgstr ""
+msgstr "Błędny komunikat zakończenia przywitania serwera w powitaniu"
 
 msgid "Bad finished message in handshake"
-msgstr ""
+msgstr "Błędny komunikat zakończenia w powitaniu"
 
 msgid "Bad server key exchange message in handshake"
-msgstr ""
+msgstr "Błędny komunikat wymiany klucza serwera w powitaniu"
 
 msgid "Bad client key exchange message in handshake"
-msgstr ""
+msgstr "Błędny komunikat wymiany klucza klienta w powitaniu"
 
 msgid "Bogus string"
-msgstr ""
+msgstr "Fałszywy łańcuch"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Key disabled"
-msgstr "Klucz wygasł"
+msgstr "Klucz dezaktywowany"
 
 msgid "Not possible with a card based key"
-msgstr ""
+msgstr "Niemożliwe przy użyciu klucza opartego na karcie"
 
-#, fuzzy
-#| msgid "Invalid object"
 msgid "Invalid lock object"
-msgstr "Niepoprawny obiekt"
+msgstr "Niepoprawny obiekt blokady"
 
 msgid "General IPC error"
 msgstr "Błąd ogólny IPC"
