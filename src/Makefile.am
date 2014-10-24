@@ -55,6 +55,7 @@ lock_obj_pub = \
         syscfg/lock-obj-pub.i586-pc-linux-gnu.h             \
         syscfg/lock-obj-pub.m68k-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.mips-unknown-linux-gnu.h        \
+        syscfg/lock-obj-pub.mips64el-unknown-linux-gnuabi64.h \
         syscfg/lock-obj-pub.mipsel-unknown-linux-gnu.h      \
         syscfg/lock-obj-pub.or1k-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.powerpc-unknown-linux-gnu.h     \
