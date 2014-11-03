@@ -1,21 +1,21 @@
 # French translation of Libgpg-error
-# Copyright (C) 2005, 2011, 2012 Free Software Foundation, Inc.
+# Copyright (C) 2005, 2011, 2012, 2014 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 #
 # Stephane Roy <sroy@j2n.net>, 2005.
-# David Prévot <david@tilapin.org>, 2011, 2012.
+# David Prévot <david@tilapin.org>, 2011, 2012, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error-1.10\n"
+"Project-Id-Version: libgpg-error-1.17\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:09+0100\n"
+"PO-Revision-Date: 2014-11-01 22:07-0400\n"
 "Last-Translator: David Prévot <david@tilapin.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgid "Unspecified source"
@@ -67,7 +67,7 @@ msgid "Assuan"
 msgstr "Assuan"
 
 msgid "TLS"
-msgstr ""
+msgstr "TLS"
 
 msgid "Any source"
 msgstr "N'importe quelle source"
@@ -121,7 +121,7 @@ msgid "Checksum error"
 msgstr "Erreur de somme de contrôle"
 
 msgid "Bad passphrase"
-msgstr "Mauvaise phrase de passe"
+msgstr "Mauvaise phrase secrète"
 
 msgid "Invalid cipher algorithm"
 msgstr "Algorithme de chiffrement incorrect"
@@ -321,8 +321,6 @@ msgstr "Réponse incorrecte"
 msgid "No agent running"
 msgstr "Pas d'agent en cours d'exécution"
 
-#, fuzzy
-#| msgid "agent error"
 msgid "Agent error"
 msgstr "Erreur d'agent"
 
@@ -411,7 +409,7 @@ msgid "Corrupted protection"
 msgstr "Protection corrompue"
 
 msgid "Ambiguous name"
-msgstr "Nom ambiguë"
+msgstr "Nom ambigu"
 
 msgid "Card error"
 msgstr "Erreur de carte"
@@ -621,7 +619,7 @@ msgid "Not operational"
 msgstr "Non opérationnel"
 
 msgid "No passphrase given"
-msgstr "Aucune phrase de passe fournie"
+msgstr "Aucune phrase secrète fournie"
 
 msgid "No PIN given"
 msgstr "Aucun code personnel fourni"
@@ -656,48 +654,32 @@ msgstr "Courbe elliptique incorrecte"
 msgid "Unknown elliptic curve"
 msgstr "Courbe elliptique inconnue"
 
-#, fuzzy
-#| msgid "Duplicated value"
 msgid "Duplicated key"
-msgstr "Valeur dupliquée"
+msgstr "Clef dupliquée"
 
-#, fuzzy
-#| msgid "Ambiguous name"
 msgid "Ambiguous result"
-msgstr "Nom ambiguë"
+msgstr "Résultat ambigu"
 
-#, fuzzy
-#| msgid "No crypto engine"
 msgid "No crypto context"
-msgstr "Aucun moteur de chiffrement"
+msgstr "Aucun contexte de chiffrement"
 
-#, fuzzy
-#| msgid "No crypto engine"
 msgid "Wrong crypto context"
-msgstr "Aucun moteur de chiffrement"
+msgstr "Contexte de chiffrement incorrect"
 
-#, fuzzy
-#| msgid "Invalid crypto engine"
 msgid "Bad crypto context"
-msgstr "Moteur de chiffrement incorrect"
+msgstr "Mauvais contexte de chiffrement"
 
 msgid "Conflict in the crypto context"
-msgstr ""
+msgstr "Conflit dans le contexte de chiffrement"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "Broken public key"
-msgstr "Pas de clef publique"
+msgstr "Clef publique cassée"
 
-#, fuzzy
-#| msgid "No secret key"
 msgid "Broken secret key"
-msgstr "Pas de clef secrète"
+msgstr "Clef secrète cassée"
 
-#, fuzzy
-#| msgid "Invalid digest algorithm"
 msgid "Invalid MAC algorithm"
-msgstr "Algorithme de hachage incorrect"
+msgstr "Algorithme MAC incorrect"
 
 msgid "Operation fully cancelled"
 msgstr "Opération complètement annulée"
@@ -747,115 +729,91 @@ msgstr "Nombre hexadécimal impair dans l'expression symbolique"
 msgid "Bad octal character in S-expression"
 msgstr "Mauvais caractère octal dans l'expression symbolique"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "No certificate chain"
-msgstr "Mauvaise chaîne de certificat"
+msgstr "Aucune chaîne de certificat"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Certificate is too large"
-msgstr "Certificat trop récent"
+msgstr "Le certificat est trop grand"
 
-#, fuzzy
-#| msgid "Invalid card"
 msgid "Invalid record"
-msgstr "Carte incorrecte"
+msgstr "Enregistrement incorrect"
 
 msgid "The MAC does not verify"
-msgstr ""
+msgstr "Le MAC ne peut pas être vérifié"
 
-#, fuzzy
-#| msgid "Unexpected tag"
 msgid "Unexpected message"
-msgstr "Balise inattendue"
+msgstr "Message inattendu"
 
 msgid "Compression or decompression failed"
-msgstr ""
+msgstr "Échec de compression ou décompression"
 
 msgid "A counter would wrap"
-msgstr ""
+msgstr "Un compteur devrait envelopper"
 
 msgid "Fatal alert message received"
-msgstr ""
+msgstr "Message d’alerte fatale reçu"
 
-#, fuzzy
-#| msgid "Invalid cipher algorithm"
 msgid "No cipher algorithm"
-msgstr "Algorithme de chiffrement incorrect"
+msgstr "Aucun algorithme de chiffrement"
 
-#, fuzzy
-#| msgid "Missing issuer certificate"
 msgid "Missing client certificate"
-msgstr "Certificat de l'émetteur manquant"
+msgstr "Certificat de client manquant"
 
-#, fuzzy
-#| msgid "Certificate revoked"
 msgid "Close notification received"
-msgstr "Certificat révoqué"
+msgstr "Notification de fermeture reçue"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Ticket expired"
-msgstr "Clef expirée"
+msgstr "Ticket expiré"
 
-#, fuzzy
-#| msgid "Bad public key"
 msgid "Bad ticket"
-msgstr "Mauvaise clef publique"
+msgstr "Mauvais ticket"
 
-#, fuzzy
-#| msgid "Unknown packet"
 msgid "Unknown identity"
-msgstr "Paquet inconnu"
+msgstr "Identité inconnue"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "Bad certificate message in handshake"
-msgstr "Mauvaise chaîne de certificat"
+msgstr "Mauvais message de certificat dans l’initialisation"
 
 msgid "Bad certificate request message in handshake"
-msgstr ""
+msgstr "Mauvais message de demande de certificat dans l’initialisation"
 
 msgid "Bad certificate verify message in handshake"
-msgstr ""
+msgstr "Mauvais message de vérification de certificat dans l’initialisation"
 
+# NOTE: s/messsage/message/
 msgid "Bad change cipher messsage in handshake"
-msgstr ""
+msgstr "Mauvais message de modification d’algorithme dans l’initialisation"
 
 msgid "Bad client hello message in handshake"
-msgstr ""
+msgstr "Mauvais message de salut du client dans l’initialisation"
 
 msgid "Bad server hello message in handshake"
-msgstr ""
+msgstr "Mauvais message de salut du serveur dans l’initialisation"
 
+# NOTE: s/hanshake/handshake/
 msgid "Bad server hello done message in hanshake"
-msgstr ""
+msgstr "Mauvais message de fin de salut du serveur dans l’initialisation"
 
 msgid "Bad finished message in handshake"
-msgstr ""
+msgstr "Mauvais message fini dans l’initialisation"
 
 msgid "Bad server key exchange message in handshake"
-msgstr ""
+msgstr "Mauvais message d’échange de clef du serveur dans l’initialisation"
 
 msgid "Bad client key exchange message in handshake"
-msgstr ""
+msgstr "Mauvais message d’échange de clef du client dans l’initialisation"
 
 msgid "Bogus string"
-msgstr ""
+msgstr "Chaîne erronée"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Key disabled"
-msgstr "Clef expirée"
+msgstr "Clef désactivée"
 
 msgid "Not possible with a card based key"
-msgstr ""
+msgstr "Impossible avec une clef basée sur carte"
 
-#, fuzzy
-#| msgid "Invalid object"
 msgid "Invalid lock object"
-msgstr "Objet incorrect"
+msgstr "Objet de verrouillage incorrect"
 
 msgid "General IPC error"
 msgstr "Erreur générale IPC"
