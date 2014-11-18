@@ -6,9 +6,9 @@
 # NIIBE Yutaka <gniibe@fsij.org>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.7\n"
+"Project-Id-Version: libgpg-error 1.17\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-07-04 16:22+0900\n"
+"PO-Revision-Date: 2014-11-18 10:03+0900\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -66,7 +66,7 @@ msgid "Assuan"
 msgstr "Assuan"
 
 msgid "TLS"
-msgstr ""
+msgstr "TLS"
 
 msgid "Any source"
 msgstr "指定なしのソース"
@@ -660,7 +660,7 @@ msgid "Ambiguous result"
 msgstr "曖昧な結果です"
 
 msgid "No crypto context"
-msgstr "暗号エンジンがありません"
+msgstr "暗号コンテクストがありません"
 
 msgid "Wrong crypto context"
 msgstr "誤った暗号コンテクストです"
@@ -728,113 +728,89 @@ msgstr "S式におかしな16進キャラクタがあります"
 msgid "Bad octal character in S-expression"
 msgstr "S式に間違った8進キャラクタがあります"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "No certificate chain"
-msgstr "誤った証明書連鎖です"
+msgstr "証明書連鎖がありません"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Certificate is too large"
-msgstr "証明書が若すぎます"
+msgstr "証明書が大きすぎです"
 
-#, fuzzy
-#| msgid "Invalid card"
 msgid "Invalid record"
-msgstr "無効なカードです"
+msgstr "無効なレコードです"
 
 msgid "The MAC does not verify"
-msgstr ""
+msgstr "MACが検証できません"
 
-#, fuzzy
-#| msgid "Unexpected tag"
 msgid "Unexpected message"
-msgstr "予期しないタグです"
+msgstr "予期しないメッセージです"
 
 msgid "Compression or decompression failed"
-msgstr ""
+msgstr "圧縮/伸長が失敗しました"
 
 msgid "A counter would wrap"
-msgstr ""
+msgstr "カウンタが一回りするかもしれません"
 
 msgid "Fatal alert message received"
-msgstr ""
+msgstr "致命的な警告メッセージを受信しました"
 
-#, fuzzy
-#| msgid "Invalid cipher algorithm"
 msgid "No cipher algorithm"
-msgstr "無効な暗号アルゴリズムです"
+msgstr "暗号アルゴリズムがありません"
 
-#, fuzzy
-#| msgid "Missing issuer certificate"
 msgid "Missing client certificate"
-msgstr "発行元証明書がありません"
+msgstr "クライアント証明書がありません"
 
-#, fuzzy
-#| msgid "Certificate revoked"
 msgid "Close notification received"
-msgstr "証明書が廃止されました"
+msgstr "クローズの知らせを受信しました"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Ticket expired"
-msgstr "鍵が期限切れです"
+msgstr "チケットが期限切れです"
 
-#, fuzzy
-#| msgid "Bad public key"
 msgid "Bad ticket"
-msgstr "誤った公開鍵です"
+msgstr "誤ったチケットです"
 
-#, fuzzy
-#| msgid "Unknown packet"
 msgid "Unknown identity"
-msgstr "不明なパケットです"
+msgstr "不明なアイデンテティです"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "Bad certificate message in handshake"
-msgstr "誤った証明書連鎖です"
+msgstr "ハンドシェークで誤った証明書メッセージです"
 
 msgid "Bad certificate request message in handshake"
-msgstr ""
+msgstr "ハンドシェークで誤った証明書要求メッセージです"
 
 msgid "Bad certificate verify message in handshake"
-msgstr ""
+msgstr "ハンドシェークで誤った証明書検証メッセージです"
 
 msgid "Bad change cipher messsage in handshake"
-msgstr ""
+msgstr "ハンドシェークで誤った暗号変更メッセージです"
 
 msgid "Bad client hello message in handshake"
-msgstr ""
+msgstr "ハンドシェークで誤ったクライアントハローメッセージです"
 
 msgid "Bad server hello message in handshake"
-msgstr ""
+msgstr "ハンドシェークで誤ったサーバハローメッセージです"
 
 msgid "Bad server hello done message in hanshake"
-msgstr ""
+msgstr "ハンドシェークで誤ったサーバハロー了解メッセージです"
 
 msgid "Bad finished message in handshake"
-msgstr ""
+msgstr "ハンドシェークで誤った終了メッセージです"
 
 msgid "Bad server key exchange message in handshake"
-msgstr ""
+msgstr "ハンドシェークで誤ったサーバ鍵交換メッセージです"
 
 msgid "Bad client key exchange message in handshake"
-msgstr ""
+msgstr "ハンドシェークで誤ったクライアント鍵交換メッセージです"
 
 msgid "Bogus string"
-msgstr ""
+msgstr "おかしな文字列です"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Key disabled"
-msgstr "鍵が期限切れです"
+msgstr "鍵が停止されています"
 
 msgid "Not possible with a card based key"
 msgstr "カードの鍵では不可能です"
 
 msgid "Invalid lock object"
-msgstr "無効なロック・オブジェクト"
+msgstr "無効なロック・オブジェクトです"
 
 msgid "General IPC error"
 msgstr "一般的なIPCエラーです"
