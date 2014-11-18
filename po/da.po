@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.10\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-07-07 20:08+0100\n"
+"PO-Revision-Date: 2014-11-17 20:08+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
 "Language: da\n"
@@ -68,7 +68,7 @@ msgid "Assuan"
 msgstr "Assuan"
 
 msgid "TLS"
-msgstr ""
+msgstr "TLS"
 
 msgid "Any source"
 msgstr "Enhver kilde"
@@ -731,107 +731,84 @@ msgstr "Ulige hexadecimalt tal i S-udtryk"
 msgid "Bad octal character in S-expression"
 msgstr "Ødelagt oktalt tegn i S-udtryk"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "No certificate chain"
-msgstr "Ødelagt certifikatkæde"
+msgstr "Ingen certifikatkæde"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Certificate is too large"
-msgstr "Certifikat for ungt"
+msgstr "Certifikatet er for stort"
 
-#, fuzzy
-#| msgid "Invalid card"
 msgid "Invalid record"
-msgstr "Ugyldigt kort"
+msgstr "Ugyldig post"
 
 msgid "The MAC does not verify"
-msgstr ""
+msgstr "MAC'en verificerer ikke"
 
-#, fuzzy
-#| msgid "Unexpected tag"
 msgid "Unexpected message"
-msgstr "Uventet mærke"
+msgstr "Uventet besked"
 
 msgid "Compression or decompression failed"
-msgstr ""
+msgstr "Pakning eller udpakning mislykkedes"
 
 msgid "A counter would wrap"
-msgstr ""
+msgstr "En tæller ville pakke ind"
 
 msgid "Fatal alert message received"
-msgstr ""
+msgstr "Modtog »fatal alarm«-besked"
 
-#, fuzzy
-#| msgid "Invalid cipher algorithm"
 msgid "No cipher algorithm"
-msgstr "Ugyldig chifferalgoritme"
+msgstr "Ingen chifferalgoritme"
 
-#, fuzzy
-#| msgid "Missing issuer certificate"
 msgid "Missing client certificate"
-msgstr "Manglende udstedercertfikat"
+msgstr "Manglende klientcertfikat"
 
-#, fuzzy
-#| msgid "Certificate revoked"
 msgid "Close notification received"
-msgstr "Certifikat tilbagekaldt"
+msgstr "Luk modtaget påmindelse"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Ticket expired"
-msgstr "Nøgle udløbet"
+msgstr "Billetten udløbet"
 
-#, fuzzy
-#| msgid "Bad public key"
 msgid "Bad ticket"
-msgstr "Ødelagt offentlig nøgle"
+msgstr "Ødelagt billet"
 
-#, fuzzy
-#| msgid "Unknown packet"
 msgid "Unknown identity"
-msgstr "Ukendt pakke"
+msgstr "Ukendt identitet"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "Bad certificate message in handshake"
-msgstr "Ødelagt certifikatkæde"
+msgstr "Besked om ødelagt certifikat i håndtrykket"
 
 msgid "Bad certificate request message in handshake"
-msgstr ""
+msgstr "Besked om ødelagt certifikatforespørgsel i håndtrykket"
 
 msgid "Bad certificate verify message in handshake"
-msgstr ""
+msgstr "Besked om ødelagt certifikatforespørgsel i håndtrykket"
 
 msgid "Bad change cipher messsage in handshake"
-msgstr ""
+msgstr "Ødelagt »ændr chiffer«-besked i håndtrykket"
 
 msgid "Bad client hello message in handshake"
-msgstr ""
+msgstr "Besked om ødelagt klienthilsen i håndtrykket"
 
 msgid "Bad server hello message in handshake"
-msgstr ""
+msgstr "Besked om ødelagt serverhilsen i håndtrykket"
 
+# engelsk fejl
 msgid "Bad server hello done message in hanshake"
-msgstr ""
+msgstr "Ødelagt »afsluttet serverhilsen«-besked i håndtrykket"
 
 msgid "Bad finished message in handshake"
-msgstr ""
+msgstr "Ødelagt »afsluttet«-besked i håndtrykket"
 
 msgid "Bad server key exchange message in handshake"
-msgstr ""
+msgstr "Besked om ødelagt udveksling af servernøgle i håndtrykket"
 
 msgid "Bad client key exchange message in handshake"
-msgstr ""
+msgstr "Besked om ødelagt udveksling af klientnøgle i håndtrykket"
 
 msgid "Bogus string"
-msgstr ""
+msgstr "Fejlbehæftet streng"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Key disabled"
-msgstr "Nøgle udløbet"
+msgstr "Nøglen er deaktiveret"
 
 msgid "Not possible with a card based key"
 msgstr "Ikke muligt med en kortbaseret nøgle"
