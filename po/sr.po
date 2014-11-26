@@ -1,0 +1,798 @@
+# Serbian translation for libgpg-error.
+# Copyright (C) 2014 Free Software Foundation, Inc.
+# This file is distributed under the same license as the libgpg-error package.
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: libgpg-error-1.7\n"
+"Report-Msgid-Bugs-To: translations@gnupg.org\n"
+"PO-Revision-Date: 2014-11-03 11:42+0200\n"
+"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
+"Language-Team: Serbian <(nothing)>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "Unspecified source"
+msgstr "Ненаведени извор"
+
+msgid "gcrypt"
+msgstr "гкрипт"
+
+msgid "GnuPG"
+msgstr "ГнуПГ"
+
+msgid "GpgSM"
+msgstr "ГпгСМ"
+
+msgid "GPG Agent"
+msgstr "ГПГ агент"
+
+msgid "Pinentry"
+msgstr "Унос пина"
+
+msgid "SCD"
+msgstr "СЦД"
+
+msgid "GPGME"
+msgstr "ГПГМЕ"
+
+msgid "Keybox"
+msgstr "Поље кључа"
+
+msgid "KSBA"
+msgstr "КСБА"
+
+msgid "Dirmngr"
+msgstr "Управник директоријума"
+
+msgid "GSTI"
+msgstr "ГСТИ"
+
+msgid "GPA"
+msgstr "ГПА"
+
+msgid "Kleopatra"
+msgstr "Клеопатра"
+
+msgid "Any source"
+msgstr "Било који извор"
+
+msgid "User defined source 1"
+msgstr "1. корисников извор"
+
+msgid "User defined source 2"
+msgstr "2. корисников извор"
+
+msgid "User defined source 3"
+msgstr "3. корисников извор"
+
+msgid "User defined source 4"
+msgstr "4. корисников извор"
+
+msgid "Unknown source"
+msgstr "Непознат извор"
+
+msgid "Success"
+msgstr "Успешно"
+
+msgid "General error"
+msgstr "Општа грешка"
+
+msgid "Unknown packet"
+msgstr "Непознат пакет"
+
+msgid "Unknown version in packet"
+msgstr "Непознато издање у пакету"
+
+msgid "Invalid public key algorithm"
+msgstr "Неисправан алгоритам јавног кључа"
+
+msgid "Invalid digest algorithm"
+msgstr "Непознат алгоритам апсорпције"
+
+msgid "Bad public key"
+msgstr "Лош јавни кључ"
+
+msgid "Bad secret key"
+msgstr "Лош тајни кључ"
+
+msgid "Bad signature"
+msgstr "Лош потпис"
+
+msgid "No public key"
+msgstr "Нема јавног кључа"
+
+msgid "Checksum error"
+msgstr "Грешка провере суме"
+
+msgid "Bad passphrase"
+msgstr "Лоша пропусна реч"
+
+msgid "Invalid cipher algorithm"
+msgstr "Неисправан алгоритам шифровања"
+
+msgid "Keyring open"
+msgstr "Привезак кључева је отворен"
+
+msgid "Invalid packet"
+msgstr "Неисправан пакет"
+
+msgid "Invalid armor"
+msgstr "Неисправан штит"
+
+msgid "No user ID"
+msgstr "Нема ИБ-а корисника"
+
+msgid "No secret key"
+msgstr "Нема тајног кључа"
+
+msgid "Wrong secret key used"
+msgstr "Коришћен је погрешан тајни кључ"
+
+msgid "Bad session key"
+msgstr "Лош кључ сесије"
+
+msgid "Unknown compression algorithm"
+msgstr "Непознат алгоритам сажимања"
+
+msgid "Number is not prime"
+msgstr "Број није прост"
+
+msgid "Invalid encoding method"
+msgstr "Неисправан начин кодирања"
+
+msgid "Invalid encryption scheme"
+msgstr "Неисправна шема шифровања"
+
+msgid "Invalid signature scheme"
+msgstr "Неисправна шема потписа"
+
+msgid "Invalid attribute"
+msgstr "Неисправна особина"
+
+msgid "No value"
+msgstr "Нема вредности"
+
+msgid "Not found"
+msgstr "Нисам пронашао"
+
+msgid "Value not found"
+msgstr "Нисам пронашао вредност"
+
+msgid "Syntax error"
+msgstr "Садржајна грешка"
+
+msgid "Bad MPI value"
+msgstr "Лоша МПИ вредност"
+
+msgid "Invalid passphrase"
+msgstr "Неисправна пропусна реч"
+
+msgid "Invalid signature class"
+msgstr "Неисправан разред потписа"
+
+msgid "Resources exhausted"
+msgstr "Изворишта су истрошена"
+
+msgid "Invalid keyring"
+msgstr "Неисправан прстен кључа"
+
+msgid "Trust DB error"
+msgstr "Грешка поверења БП-а"
+
+msgid "Bad certificate"
+msgstr "Лош уверење"
+
+msgid "Invalid user ID"
+msgstr "Неисправан ИБ-а корисника"
+
+msgid "Unexpected error"
+msgstr "Неочекивана грешка"
+
+msgid "Time conflict"
+msgstr "Сукоб времена"
+
+msgid "Keyserver error"
+msgstr "Грешка сервера кључа"
+
+msgid "Wrong public key algorithm"
+msgstr "Погрешан алгоритам јавног кључа"
+
+msgid "Tribute to D. A."
+msgstr "У част Д. А."
+
+msgid "Weak encryption key"
+msgstr "Слаб кључ шифровања"
+
+msgid "Invalid key length"
+msgstr "Неисправна дужина кључа"
+
+msgid "Invalid argument"
+msgstr "Неисправан аргумент"
+
+msgid "Syntax error in URI"
+msgstr "Грешка израза у путањи"
+
+msgid "Invalid URI"
+msgstr "Неисправна путања"
+
+msgid "Network error"
+msgstr "Грешка мреже"
+
+msgid "Unknown host"
+msgstr "Непознат домаћин"
+
+msgid "Selftest failed"
+msgstr "Самопроба није успела"
+
+msgid "Data not encrypted"
+msgstr "Подаци нису шифровани"
+
+msgid "Data not processed"
+msgstr "Подаци нису обрађени"
+
+msgid "Unusable public key"
+msgstr "Неупотребљив јавни кључ"
+
+msgid "Unusable secret key"
+msgstr "Неупотребљив тајни кључ"
+
+msgid "Invalid value"
+msgstr "Неисправна вредност"
+
+msgid "Bad certificate chain"
+msgstr "Лош ланац уверења"
+
+msgid "Missing certificate"
+msgstr "Недостаје уверење"
+
+msgid "No data"
+msgstr "Нема података"
+
+msgid "Bug"
+msgstr "Грешка"
+
+msgid "Not supported"
+msgstr "Није подржано"
+
+msgid "Invalid operation code"
+msgstr "Неисправна шифра радње"
+
+msgid "Timeout"
+msgstr "Време је истекло"
+
+msgid "Internal error"
+msgstr "Унутрашња грешка"
+
+msgid "EOF (gcrypt)"
+msgstr "КРД (gcrypt)"
+
+msgid "Invalid object"
+msgstr "Неисправан предмет"
+
+msgid "Provided object is too short"
+msgstr "Достављени предмет је прекратак"
+
+msgid "Provided object is too large"
+msgstr "Достављени предмет је предуг"
+
+msgid "Missing item in object"
+msgstr "Недостаје ставка у предмету"
+
+msgid "Not implemented"
+msgstr "Није примењено"
+
+msgid "Conflicting use"
+msgstr "Противна употреба"
+
+msgid "Invalid cipher mode"
+msgstr "Неисправан код шифрера"
+
+msgid "Invalid flag"
+msgstr "Неисправна опција"
+
+msgid "Invalid handle"
+msgstr "Неисправна ручка"
+
+msgid "Result truncated"
+msgstr "Резултат је скраћен"
+
+msgid "Incomplete line"
+msgstr "Непотпун ред"
+
+msgid "Invalid response"
+msgstr "Неисправан одговор"
+
+msgid "No agent running"
+msgstr "Нема покренутог агента"
+
+msgid "agent error"
+msgstr "грешка агента"
+
+msgid "Invalid data"
+msgstr "Неисправни подаци"
+
+msgid "Unspecific Assuan server fault"
+msgstr "Необичан неуспех Асуан сервера"
+
+msgid "General Assuan error"
+msgstr "Општа грешка Асуана"
+
+msgid "Invalid session key"
+msgstr "Неисправан кључ сесије"
+
+msgid "Invalid S-expression"
+msgstr "Неисправан С-израз"
+
+msgid "Unsupported algorithm"
+msgstr "Неподржани алгоритам"
+
+msgid "No pinentry"
+msgstr "Нема уноса пина"
+
+msgid "pinentry error"
+msgstr "грешка уноса пина"
+
+msgid "Bad PIN"
+msgstr "Лош ПИН"
+
+msgid "Invalid name"
+msgstr "Неисправан назив"
+
+msgid "Bad data"
+msgstr "Лоши подаци"
+
+msgid "Invalid parameter"
+msgstr "Неисправан параметар"
+
+msgid "Wrong card"
+msgstr "Лоша картица"
+
+msgid "No dirmngr"
+msgstr "Нема управника директоријумом"
+
+msgid "dirmngr error"
+msgstr "грешка управника директоријумом"
+
+msgid "Certificate revoked"
+msgstr "Уверење је опозвано"
+
+msgid "No CRL known"
+msgstr "Нема познатог ЦРЛ-а"
+
+msgid "CRL too old"
+msgstr "ЦРЛ је престар"
+
+msgid "Line too long"
+msgstr "Ред је предуг"
+
+msgid "Not trusted"
+msgstr "Није од поверења"
+
+msgid "Operation cancelled"
+msgstr "Радња је отказана"
+
+msgid "Bad CA certificate"
+msgstr "Лоше уверење издавача"
+
+msgid "Certificate expired"
+msgstr "Уверење је истекло"
+
+msgid "Certificate too young"
+msgstr "Уверење је превише ново"
+
+msgid "Unsupported certificate"
+msgstr "Неподржано уверење"
+
+msgid "Unknown S-expression"
+msgstr "Непознат С-израз"
+
+msgid "Unsupported protection"
+msgstr "Неподржана заштита"
+
+msgid "Corrupted protection"
+msgstr "Оштећена заштита"
+
+msgid "Ambiguous name"
+msgstr "Нејасан назив"
+
+msgid "Card error"
+msgstr "Грешка картице"
+
+msgid "Card reset required"
+msgstr "Потребно је поновно постављање картице"
+
+msgid "Card removed"
+msgstr "Картица је уклоњена"
+
+msgid "Invalid card"
+msgstr "Неисправна картица"
+
+msgid "Card not present"
+msgstr "Картица није присутна"
+
+msgid "No PKCS15 application"
+msgstr "Нема ПКЦС15 програма"
+
+msgid "Not confirmed"
+msgstr "Није потврђено"
+
+msgid "Configuration error"
+msgstr "Грешка подешавања"
+
+msgid "No policy match"
+msgstr "Нема одговарајуће политике"
+
+msgid "Invalid index"
+msgstr "Неисправан индекс"
+
+msgid "Invalid ID"
+msgstr "Неисправан ИБ"
+
+msgid "No SmartCard daemon"
+msgstr "Нема позадинца паметне картице"
+
+msgid "SmartCard daemon error"
+msgstr "Грешка позадинца паметне картице"
+
+msgid "Unsupported protocol"
+msgstr "Неподржан протокол"
+
+msgid "Bad PIN method"
+msgstr "Лош начин ПИН-а"
+
+msgid "Card not initialized"
+msgstr "Картица није покренута"
+
+msgid "Unsupported operation"
+msgstr "Неподржана радња"
+
+msgid "Wrong key usage"
+msgstr "Погрешна употреба кључа"
+
+msgid "Nothing found"
+msgstr "Нисам нашао ништа"
+
+msgid "Wrong blob type"
+msgstr "Погрешна врста бвоб-а"
+
+msgid "Missing value"
+msgstr "Недостаје вредност"
+
+msgid "Hardware problem"
+msgstr "Хардверски проблем"
+
+msgid "PIN blocked"
+msgstr "ПИН је блокиран"
+
+msgid "Conditions of use not satisfied"
+msgstr "Услови коришћења нису задовољени"
+
+msgid "PINs are not synced"
+msgstr "ПИН-ови нису усаглашени"
+
+msgid "Invalid CRL"
+msgstr "Неисправан ЦРЛ"
+
+msgid "BER error"
+msgstr "Грешка БЕР-а"
+
+msgid "Invalid BER"
+msgstr "Неисправан БЕР"
+
+msgid "Element not found"
+msgstr "Нисам пронашао елемент"
+
+msgid "Identifier not found"
+msgstr "Нисам пронашао одредника"
+
+msgid "Invalid tag"
+msgstr "Неисправна ознака"
+
+msgid "Invalid length"
+msgstr "Неисправна дужина"
+
+msgid "Invalid key info"
+msgstr "Неисправни подаци кључа"
+
+msgid "Unexpected tag"
+msgstr "Неочекивана ознака"
+
+msgid "Not DER encoded"
+msgstr "Није кодирано ДЕР-ом"
+
+msgid "No CMS object"
+msgstr "Није ЦМС предмет"
+
+msgid "Invalid CMS object"
+msgstr "Неисправан ЦМС предмет"
+
+msgid "Unknown CMS object"
+msgstr "Непознат ЦМС предмет"
+
+msgid "Unsupported CMS object"
+msgstr "Неподржан ЦМС предмет"
+
+msgid "Unsupported encoding"
+msgstr "Неподржано кодирање"
+
+msgid "Unsupported CMS version"
+msgstr "Неподржано ЦМС издање"
+
+msgid "Unknown algorithm"
+msgstr "Непознат алгоритам"
+
+msgid "Invalid crypto engine"
+msgstr "Неисправан погон шифровања"
+
+msgid "Public key not trusted"
+msgstr "Јавни кључ није поверљив"
+
+msgid "Decryption failed"
+msgstr "Дешифровање није успело"
+
+msgid "Key expired"
+msgstr "Кључ је истекао"
+
+msgid "Signature expired"
+msgstr "Потпис је истекао"
+
+msgid "Encoding problem"
+msgstr "Проблем кодирања"
+
+msgid "Invalid state"
+msgstr "Неисправно стање"
+
+msgid "Duplicated value"
+msgstr "Удвостручена вредност"
+
+msgid "Missing action"
+msgstr "Недостаје радња"
+
+msgid "ASN.1 module not found"
+msgstr "Нисам пронашао модул АСН.1"
+
+msgid "Invalid OID string"
+msgstr "Неисправна ОИД ниска"
+
+msgid "Invalid time"
+msgstr "Неисправно време"
+
+msgid "Invalid CRL object"
+msgstr "Неисправан ЦРЛ предмет"
+
+msgid "Unsupported CRL version"
+msgstr "Неподржано ЦРЛ издање"
+
+msgid "Invalid certificate object"
+msgstr "Неисправан предмет уверења"
+
+msgid "Unknown name"
+msgstr "Непознат назив"
+
+msgid "A locale function failed"
+msgstr "Језичка функција није успела"
+
+msgid "Not locked"
+msgstr "Није закључано"
+
+msgid "Protocol violation"
+msgstr "Кршење протокола"
+
+msgid "Invalid MAC"
+msgstr "Неисправан МАК"
+
+msgid "Invalid request"
+msgstr "Неисправан захтев"
+
+msgid "Unknown extension"
+msgstr "Непознато проширење"
+
+msgid "Unknown critical extension"
+msgstr "Непознат критичан израз"
+
+msgid "Locked"
+msgstr "Закључано"
+
+msgid "Unknown option"
+msgstr "Непозната опција"
+
+msgid "Unknown command"
+msgstr "Непозната наредба"
+
+msgid "Not operational"
+msgstr "Није делотворно"
+
+msgid "No passphrase given"
+msgstr "Није дата пропусна реч"
+
+msgid "No PIN given"
+msgstr "Није дат ПИН"
+
+msgid "Operation not yet finished"
+msgstr "Радња није још завршена"
+
+msgid "Buffer too short"
+msgstr "Међумеморија је прекратка"
+
+msgid "Invalid length specifier in S-expression"
+msgstr "Неисправан одредник дужине у С-изразу"
+
+msgid "String too long in S-expression"
+msgstr "Ниска је предуга у С-изразу"
+
+msgid "Unmatched parentheses in S-expression"
+msgstr "Неодговарајуће заграде у С-изразу"
+
+msgid "S-expression not canonical"
+msgstr "С-израз није правилан"
+
+msgid "Bad character in S-expression"
+msgstr "Лош знак у С-изразу"
+
+msgid "Bad quotation in S-expression"
+msgstr "Лоше цитирање у С-изразу"
+
+msgid "Zero prefix in S-expression"
+msgstr "Нулти префикс у С-изразу"
+
+msgid "Nested display hints in S-expression"
+msgstr "Уграђени савети приказа у С-изразу"
+
+msgid "Unmatched display hints"
+msgstr "Неодговарајући савети приказа"
+
+msgid "Unexpected reserved punctuation in S-expression"
+msgstr "Неочекивана резервисана тачка у С-изразу"
+
+msgid "Bad hexadecimal character in S-expression"
+msgstr "Лош хексадецимални знак у С-изразу"
+
+msgid "Odd hexadecimal numbers in S-expression"
+msgstr "Непарни хексадецимални бројеви у С-изразу"
+
+msgid "Bad octadecimal character in S-expression"
+msgstr "Лош октадецимални знак у С-изразу"
+
+msgid "General IPC error"
+msgstr "Општа грешка ИПЦ-а"
+
+msgid "IPC accept call failed"
+msgstr "Прихватање позива ИПЦ-а није успело"
+
+msgid "IPC connect call failed"
+msgstr "Повезивање позива ИПЦ-а није успело"
+
+msgid "Invalid IPC response"
+msgstr "Неисправан ИПЦ одговор"
+
+msgid "Invalid value passed to IPC"
+msgstr "Неисправна вредност прослеђена ИПЦ-у"
+
+msgid "Incomplete line passed to IPC"
+msgstr "Непотпун ред је прослеђен ИПЦ-у"
+
+msgid "Line passed to IPC too long"
+msgstr "Ред прослеђен ИПЦ-у је предуг"
+
+msgid "Nested IPC commands"
+msgstr "Уграђене ИПЦ наредбе"
+
+msgid "No data callback in IPC"
+msgstr "Нема опозива података у ИПЦ-у"
+
+msgid "No inquire callback in IPC"
+msgstr "Нема опозива распитивања у ИПЦ-у"
+
+msgid "Not an IPC server"
+msgstr "Није ИПЦ сервер"
+
+msgid "Not an IPC client"
+msgstr "Није ИПЦ клијент"
+
+msgid "Problem starting IPC server"
+msgstr "Проблем покретања ИПЦ сервера"
+
+msgid "IPC read error"
+msgstr "Грешка читања ИПЦ-а"
+
+msgid "IPC write error"
+msgstr "Грешка писања ИПЦ-а"
+
+msgid "Too much data for IPC layer"
+msgstr "Превише података за ИПЦ слој"
+
+msgid "Unexpected IPC command"
+msgstr "Неочекивана ИПЦ наредба"
+
+msgid "Unknown IPC command"
+msgstr "Непозната ИПЦ наредба"
+
+msgid "IPC syntax error"
+msgstr "Садржајна грешка ИПЦ-а"
+
+msgid "IPC call has been cancelled"
+msgstr "ИПЦ позив је отказан"
+
+msgid "No input source for IPC"
+msgstr "Нема извора улаза за ИПЦ"
+
+msgid "No output source for IPC"
+msgstr "Нема извора излаза за ИПЦ"
+
+msgid "IPC parameter error"
+msgstr "Грешка параметра ИПЦ-а"
+
+msgid "Unknown IPC inquire"
+msgstr "Непознато распитивање ИПЦ-а"
+
+msgid "User defined error code 1"
+msgstr "1. код грешке који је одредио корисник"
+
+msgid "User defined error code 2"
+msgstr "2. код грешке који је одредио корисник"
+
+msgid "User defined error code 3"
+msgstr "3. код грешке који је одредио корисник"
+
+msgid "User defined error code 4"
+msgstr "4. код грешке који је одредио корисник"
+
+msgid "User defined error code 5"
+msgstr "5. код грешке који је одредио корисник"
+
+msgid "User defined error code 6"
+msgstr "6. код грешке који је одредио корисник"
+
+msgid "User defined error code 7"
+msgstr "7. код грешке који је одредио корисник"
+
+msgid "User defined error code 8"
+msgstr "8. код грешке који је одредио корисник"
+
+msgid "User defined error code 9"
+msgstr "9. код грешке који је одредио корисник"
+
+msgid "User defined error code 10"
+msgstr "10. код грешке који је одредио корисник"
+
+msgid "User defined error code 11"
+msgstr "11. код грешке који је одредио корисник"
+
+msgid "User defined error code 12"
+msgstr "12. код грешке који је одредио корисник"
+
+msgid "User defined error code 13"
+msgstr "13. код грешке који је одредио корисник"
+
+msgid "User defined error code 14"
+msgstr "14. код грешке који је одредио корисник"
+
+msgid "User defined error code 15"
+msgstr "15. код грешке који је одредио корисник"
+
+msgid "User defined error code 16"
+msgstr "16. код грешке који је одредио корисник"
+
+msgid "System error w/o errno"
+msgstr "Број в/о грешке системске грешке"
+
+msgid "Unknown system error"
+msgstr "Непозната грешка система"
+
+msgid "End of file"
+msgstr "Крај датотеке"
+
+msgid "Unknown error code"
+msgstr "Непознат код грешке"
+
+#, c-format
+msgid "Usage: %s GPG-ERROR [...]\n"
+msgstr "Употреба: %s GPG-ERROR [...]\n"
+
+#, c-format
+msgid "%s: warning: could not recognize %s\n"
+msgstr "%s: упозорење: не могу да препознам „%s“\n"
