@@ -718,6 +718,10 @@ GPG_ERR_BOGUS_STRING            Bogus string
     possible dangerous characters (e.g. control characters in a domain
     name).
 
+GPG_ERR_FORBIDDEN		Forbidden
+
+    The use of a features is not allowed to to insuffcient rights.
+    Use by gpg-agent as aerror codes for restricted commands.
 
 GPG_ERR_KEY_DISABLED            Key disabled
 
