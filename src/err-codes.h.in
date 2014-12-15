@@ -247,8 +247,9 @@
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
-# 214 to 225 are free to be used.
+# 214 to 224 are free to be used.
 
+225	GPG_ERR_OBJ_TERM_STATE		Object is in termination state
 226	GPG_ERR_NO_CERT_CHAIN		No certificate chain
 227	GPG_ERR_CERT_TOO_LARGE		Certificate is too large
 228	GPG_ERR_INV_RECORD		Invalid record

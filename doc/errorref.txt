@@ -509,11 +509,6 @@ GPG_ERR_TOO_MANY                Too many objects
            maximum Assuan line length would overflow.
     GPGME: - To many patterns in gpgme-tools's KEYLIST command.
 
-GPG_ERR_NO_KEYSERVER		No keyserver available
-
-        No keyserver configured or no keyserver available due to
-        missing support for the requested protocol.  Found in Dirmngr.
-
 GPG_ERR_LIMIT_REACHED           Limit reached
 
         A programmed limit has been reached.
@@ -529,7 +524,11 @@ GPG_ERR_NOT_INITIALIZED		Not initialized
     fulfilled.
 
 185	GPG_ERR_MISSING_ISSUER_CERT	Missing issuer certificate
-186	GPG_ERR_NO_KEYSERVER		No keyserver available
+
+GPG_ERR_NO_KEYSERVER		No keyserver available
+
+        No keyserver configured or no keyserver available due to
+        missing support for the requested protocol.  Found in Dirmngr.
 
 GPG_ERR_INV_CURVE		Invalid elliptic curve
 
@@ -611,6 +610,11 @@ GPG_ERR_MAC_ALGO
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
+
+GPG_ERR_OBJ_TERM_STATE		Object is in termination state
+
+    For cards this is the ISO status word 0x6285 (file is in
+    termnation state).
 
 
 GPG_ERR_NO_CERT_CHAIN		No certificate chain
