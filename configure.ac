@@ -508,9 +508,16 @@ AC_DEFINE_UNQUOTED(BUILD_TIMESTAMP, "$BUILD_TIMESTAMP",
 
 
 
-AC_ARG_ENABLE(languages,
-[  --disable-languages     do not build support for other languages than C])
+AC_ARG_ENABLE(languages, AC_HELP_STRING([--disable-languages],
+                        [do not build support for other languages than C]))
 AM_CONDITIONAL([LANGUAGES_SOME], [test "x$enable_languages" != xno])
+
+build_doc=yes
+AC_ARG_ENABLE([doc], AC_HELP_STRING([--disable-doc],
+                                    [do not build the documentation]),
+                     build_doc=$enableval, build_doc=yes)
+AM_CONDITIONAL([BUILD_DOC], [test "x$enable_languages" != xno])
+
 
 #
 # Substitution

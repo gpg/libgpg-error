@@ -33,7 +33,13 @@ else
 lang_subdirs =
 endif
 
-SUBDIRS = m4 src doc tests po $(lang_subdirs)
+if BUILD_DOC
+doc = doc
+else
+doc =
+endif
+
+SUBDIRS = m4 src $(doc) tests po $(lang_subdirs)
 
 
 dist-hook: gen-ChangeLog
