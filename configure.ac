@@ -65,7 +65,7 @@ VERSION_NUMBER=m4_esyscmd(printf "0x%02x%02x00" mym4_version_major \
 AC_SUBST(VERSION_NUMBER)
 
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([dist-bzip2])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/err-sources.h.in])
 AC_CONFIG_HEADER([config.h])
@@ -516,7 +516,7 @@ build_doc=yes
 AC_ARG_ENABLE([doc], AC_HELP_STRING([--disable-doc],
                                     [do not build the documentation]),
                      build_doc=$enableval, build_doc=yes)
-AM_CONDITIONAL([BUILD_DOC], [test "x$enable_languages" != xno])
+AM_CONDITIONAL([BUILD_DOC], [test "x$build_doc" != xno])
 
 
 #

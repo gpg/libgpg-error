@@ -17,7 +17,7 @@
 # License along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 ACLOCAL_AMFLAGS = -I m4
-AUTOMAKE_OPTIONS = dist-bzip2
+DISTCHECK_CONFIGURE_FLAGS = --enable-doc
 
 # (A suitable gitlog-to-changelog script can be found in GnuPG master.)
 GITLOG_TO_CHANGELOG=gitlog-to-changelog
