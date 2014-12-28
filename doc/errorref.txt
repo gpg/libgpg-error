@@ -610,12 +610,20 @@ GPG_ERR_MAC_ALGO
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
+GPG_ERR_REQUEST_TOO_SHORT       Request too short
+
+    A received request is too short to continue processing.
+
+GPG_ERR_REQUEST_TOO_LONG        Request too long
+
+    A received request is too long to continue processing.  This may
+    be due to an internal limitation, a protocol violation, or due to
+    the use of a newer version of a protocol.
 
 GPG_ERR_OBJ_TERM_STATE		Object is in termination state
 
     For cards this is the ISO status word 0x6285 (file is in
     termnation state).
-
 
 GPG_ERR_NO_CERT_CHAIN		No certificate chain
 
