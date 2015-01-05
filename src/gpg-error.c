@@ -333,7 +333,7 @@ get_err_from_str (char *str, gpg_error_t *err)
   int have_code = 0;
   int ret;
   char *saved_pos = NULL;
-  char saved_char;
+  char saved_char = 0; /* (avoid warning) */
 
   *err = 0;
   ret = get_err_from_str_one (str, err, &have_source, &have_code);
