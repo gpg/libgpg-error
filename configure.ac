@@ -19,7 +19,7 @@
 # (Process this file with autoconf to produce a configure script.)
 # The following lines are used by ./autogen.sh.
 AC_PREREQ(2.59)
-min_automake_version="1.11"
+min_automake_version="1.14"
 
 # To build a release you need to create a tag with the version number
 # (git tag -s libgpg-error-n.m) and run "./autogen.sh --force".
@@ -65,7 +65,7 @@ VERSION_NUMBER=m4_esyscmd(printf "0x%02x%02x00" mym4_version_major \
 AC_SUBST(VERSION_NUMBER)
 
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE([dist-bzip2])
+AM_INIT_AUTOMAKE([serial-tests dist-bzip2])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/err-sources.h.in])
 AC_CONFIG_HEADER([config.h])

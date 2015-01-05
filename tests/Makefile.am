@@ -29,7 +29,7 @@ gpg_error_lib = ../src/libgpg-error.la
 
 TESTS = t-version t-strerror t-syserror t-lock t-printf
 
-INCLUDES = -I$(top_builddir)/src $(extra_includes)
+AM_CPPFLAGS = -I$(top_builddir)/src $(extra_includes)
 
 AM_LDFLAGS = -no-install
 LDADD = $(gpg_error_lib)
