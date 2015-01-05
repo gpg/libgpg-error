@@ -155,7 +155,7 @@ AH_BOTTOM([
 
 
 # Note, that autogen.sh greps for the next line.
-AM_GNU_GETTEXT_VERSION([0.17])
+AM_GNU_GETTEXT_VERSION([0.19.3])
 AM_GNU_GETTEXT([external])
 
 # Checks for header files.
