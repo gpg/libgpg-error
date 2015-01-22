@@ -7,6 +7,7 @@ Noteworthy changes in version 1.18 (unreleased) [C13/A13/R_]
  GPG_ERR_OBJ_TERM_STATE           NEW.
  GPG_ERR_REQUEST_TOO_SHORT        NEW.
  GPG_ERR_REQUEST_TOO_LONG         NEW.
+ GPG_ERR_LEGACY_KEY               NEW.
 
 
 Noteworthy changes in version 1.17 (2014-10-15) [C13/A13/R0]

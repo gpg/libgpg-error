@@ -2,15 +2,14 @@
 #        -name '*.[ch]' -print0 | xargs -0 grep -n GPG_ERR_
 
 
-GPG_ERR_UNKNOWN_PACKET		Unknown packet
+GPG_ERR_UNKNOWN_PACKET (1)	Unknown packet
 
     GNUPG:  - Redefined to G10ERR_UNKNOWN_PACKET in gpg.
 
-GPG_ERR_UNKNOWN_VERSION		Unknown version in packet
+GPG_ERR_UNKNOWN_VERSION (2)	Unknown version in packet
 
-    Not used.  Fixme: We might want to use it in gpg instead of some
-    of the INV_PACKET in gpg.  The error string does not make sense
-    otherwise.
+    Used by GnuPG 2.1 to identify valid OpenPGP packets with an
+    unknown version.
 
 GPG_ERR_PUBKEY_ALGO		Invalid public key algorithm
 
@@ -609,6 +608,10 @@ GPG_ERR_MAC_ALGO
 211	GPG_ERR_SEXP_BAD_HEX_CHAR	Bad hexadecimal character in S-expression
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
+
+GPG_ERR_LEGACY_KEY (222)        Legacy key
+
+    Used by GnuPG to identify version 2 and 3 OpenPGP key packets.
 
 GPG_ERR_REQUEST_TOO_SHORT       Request too short
 

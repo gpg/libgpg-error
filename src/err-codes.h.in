@@ -247,8 +247,9 @@
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
-# 214 to 222 are free to be used.
+# 214 to 221 are free to be used.
 
+222	GPG_ERR_LEGACY_KEY		Legacy key
 223	GPG_ERR_REQUEST_TOO_SHORT	Request too short
 224	GPG_ERR_REQUEST_TOO_LONG	Request too long
 225	GPG_ERR_OBJ_TERM_STATE		Object is in termination state
