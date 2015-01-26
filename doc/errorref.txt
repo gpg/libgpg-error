@@ -299,6 +299,9 @@ GPG_ERR_INV_NAME		Invalid name
               an embedded Nul byte when given as escaped string.
             - In SCDAEMON for an unknown attribute name.
 
+    Also used for URLs which have non-acceptable characters for the
+    specific application.
+
     [more to come]
 
 89	GPG_ERR_BAD_DATA		Bad data
