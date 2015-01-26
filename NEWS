@@ -1,5 +1,10 @@
-Noteworthy changes in version 1.18 (unreleased) [C13/A13/R_]
+Noteworthy changes in version 1.18 (2015-01-26) [C14/A14/R0]
 -----------------------------------------------
+
+ * New translations for Hungarian, Portuguese, Russian, and
+   traditional Chinese.  Updated other translations.
+
+ * New error codes.
 
  * Interface changes relative to the 1.17 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
