@@ -1,0 +1,800 @@
+# Hungarian translations of libgpg-error.
+# Copyright (C) 2015 Free Software Foundation, Inc.
+# This file is distributed under the same license as the libgpg-error package.
+#
+# Balázs Úr <urbalazs@gmail.com>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: libgpg-error-1.7\n"
+"Report-Msgid-Bugs-To: translations@gnupg.org\n"
+"PO-Revision-Date: 2015-01-09 10:00+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Unspecified source"
+msgstr "Meghatározatlan forrás"
+
+msgid "gcrypt"
+msgstr "gcrypt"
+
+msgid "GnuPG"
+msgstr "GnuPG"
+
+msgid "GpgSM"
+msgstr "GpgSM"
+
+msgid "GPG Agent"
+msgstr "GPG ügynök"
+
+msgid "Pinentry"
+msgstr "Pinentry"
+
+msgid "SCD"
+msgstr "SCD"
+
+msgid "GPGME"
+msgstr "GPGME"
+
+msgid "Keybox"
+msgstr "Keybox"
+
+msgid "KSBA"
+msgstr "KSBA"
+
+msgid "Dirmngr"
+msgstr "Dirmngr"
+
+msgid "GSTI"
+msgstr "GSTI"
+
+msgid "GPA"
+msgstr "GPA"
+
+msgid "Kleopatra"
+msgstr "Kleopatra"
+
+msgid "Any source"
+msgstr "Bármilyen forrás"
+
+msgid "User defined source 1"
+msgstr "1. felhasználó által megadott forrás"
+
+msgid "User defined source 2"
+msgstr "2. felhasználó által megadott forrás"
+
+msgid "User defined source 3"
+msgstr "3. felhasználó által megadott forrás"
+
+msgid "User defined source 4"
+msgstr "4. felhasználó által megadott forrás"
+
+msgid "Unknown source"
+msgstr "Ismeretlen forrás"
+
+msgid "Success"
+msgstr "Sikeres"
+
+msgid "General error"
+msgstr "Általános hiba"
+
+msgid "Unknown packet"
+msgstr "Ismeretlen csomag"
+
+msgid "Unknown version in packet"
+msgstr "Ismeretlen verzió a csomagban"
+
+msgid "Invalid public key algorithm"
+msgstr "Érvénytelen nyilvános kulcs algoritmus"
+
+msgid "Invalid digest algorithm"
+msgstr "Érvénytelen kivonat algoritmus"
+
+msgid "Bad public key"
+msgstr "Rossz nyilvános kulcs"
+
+msgid "Bad secret key"
+msgstr "Rossz titkos kulcs"
+
+msgid "Bad signature"
+msgstr "Rossz aláírás"
+
+msgid "No public key"
+msgstr "Nincs nyilvános kulcs"
+
+msgid "Checksum error"
+msgstr "Ellenőrzőösszeg hiba"
+
+msgid "Bad passphrase"
+msgstr "Rossz jelmondat"
+
+msgid "Invalid cipher algorithm"
+msgstr "Érvénytelen titkosító algoritmus"
+
+msgid "Keyring open"
+msgstr "Kulcstartó nyitva"
+
+msgid "Invalid packet"
+msgstr "Érvénytelen csomag"
+
+msgid "Invalid armor"
+msgstr "Érvénytelen páncél"
+
+msgid "No user ID"
+msgstr "Nincs felhasználóazonosító"
+
+msgid "No secret key"
+msgstr "Nincs titkos kulcs"
+
+msgid "Wrong secret key used"
+msgstr "Hibás titkos kulcs lett használva"
+
+msgid "Bad session key"
+msgstr "Rossz munkamenet kulcs"
+
+msgid "Unknown compression algorithm"
+msgstr "Ismeretlen tömörítő algoritmus"
+
+msgid "Number is not prime"
+msgstr "A szám nem prím"
+
+msgid "Invalid encoding method"
+msgstr "Érvénytelen kódolási módszer"
+
+msgid "Invalid encryption scheme"
+msgstr "Érvénytelen titkosítás séma"
+
+msgid "Invalid signature scheme"
+msgstr "Érvénytelen aláírás séma"
+
+msgid "Invalid attribute"
+msgstr "Érvénytelen attribútum"
+
+msgid "No value"
+msgstr "Nincs érték"
+
+msgid "Not found"
+msgstr "Nem található"
+
+msgid "Value not found"
+msgstr "Nem található érték"
+
+msgid "Syntax error"
+msgstr "Szintaktikai hiba"
+
+msgid "Bad MPI value"
+msgstr "Rossz MPI érték"
+
+msgid "Invalid passphrase"
+msgstr "Érvénytelen jelmondat"
+
+msgid "Invalid signature class"
+msgstr "Érvénytelen aláírás osztály"
+
+msgid "Resources exhausted"
+msgstr "Az erőforrások kimerültek"
+
+msgid "Invalid keyring"
+msgstr "Érvénytelen kulcstartó"
+
+msgid "Trust DB error"
+msgstr "Megbízhatósági adatbázis hiba"
+
+msgid "Bad certificate"
+msgstr "Rossz tanúsítvány"
+
+msgid "Invalid user ID"
+msgstr "Érvénytelen felhasználóazonosító"
+
+msgid "Unexpected error"
+msgstr "Váratlan hiba"
+
+msgid "Time conflict"
+msgstr "Időütközés"
+
+msgid "Keyserver error"
+msgstr "Kulcskiszolgáló hiba"
+
+msgid "Wrong public key algorithm"
+msgstr "Hibás nyilvános kulcs algoritmus"
+
+msgid "Tribute to D. A."
+msgstr "Sarc a D. A. részére"
+
+msgid "Weak encryption key"
+msgstr "Gyenge titkosítási kulcs"
+
+msgid "Invalid key length"
+msgstr "Érvénytelen kulcshossz"
+
+msgid "Invalid argument"
+msgstr "Érvénytelen argumentum"
+
+msgid "Syntax error in URI"
+msgstr "Szintaktikai hiba az URI-ban"
+
+msgid "Invalid URI"
+msgstr "Érvénytelen URI"
+
+msgid "Network error"
+msgstr "Hálózati hiba"
+
+msgid "Unknown host"
+msgstr "Ismeretlen gép"
+
+msgid "Selftest failed"
+msgstr "Önellenőrzés sikertelen"
+
+msgid "Data not encrypted"
+msgstr "Az adatok nincsenek titkosítva"
+
+msgid "Data not processed"
+msgstr "Az adatok nincsenek feldolgozva"
+
+msgid "Unusable public key"
+msgstr "Használhatatlan nyilvános kulcs"
+
+msgid "Unusable secret key"
+msgstr "Használhatatlan titkos kulcs"
+
+msgid "Invalid value"
+msgstr "Érvénytelen érték"
+
+msgid "Bad certificate chain"
+msgstr "Rossz tanúsítványlánc"
+
+msgid "Missing certificate"
+msgstr "Hiányzó tanúsítvány"
+
+msgid "No data"
+msgstr "Nincsenek adatok"
+
+msgid "Bug"
+msgstr "Hiba"
+
+msgid "Not supported"
+msgstr "Nem támogatott"
+
+msgid "Invalid operation code"
+msgstr "Érvénytelen műveletkód"
+
+msgid "Timeout"
+msgstr "Időtúllépés"
+
+msgid "Internal error"
+msgstr "Belső hiba"
+
+msgid "EOF (gcrypt)"
+msgstr "EOF (gcrypt)"
+
+msgid "Invalid object"
+msgstr "Érvénytelen objektum"
+
+msgid "Provided object is too short"
+msgstr "A megadott objektum túl kicsi"
+
+msgid "Provided object is too large"
+msgstr "A megadott objektum túl nagy"
+
+msgid "Missing item in object"
+msgstr "Hiányzó elem az objektumban"
+
+msgid "Not implemented"
+msgstr "Nincs megvalósítva"
+
+msgid "Conflicting use"
+msgstr "Ütköző használat"
+
+msgid "Invalid cipher mode"
+msgstr "Érvénytelen titkosító mód"
+
+msgid "Invalid flag"
+msgstr "Érvénytelen jelző"
+
+msgid "Invalid handle"
+msgstr "Érvénytelen leíró"
+
+msgid "Result truncated"
+msgstr "Az eredmény csonkított"
+
+msgid "Incomplete line"
+msgstr "Befejezetlen sor"
+
+msgid "Invalid response"
+msgstr "Érvénytelen válasz"
+
+msgid "No agent running"
+msgstr "Nincs futó ügynök"
+
+msgid "agent error"
+msgstr "ügynökhiba"
+
+msgid "Invalid data"
+msgstr "Érvénytelen adatok"
+
+msgid "Unspecific Assuan server fault"
+msgstr "Nem specifikus Assuan kiszolgáló hiba"
+
+msgid "General Assuan error"
+msgstr "Általános Assuan hiba"
+
+msgid "Invalid session key"
+msgstr "Érvénytelen munkamenet kulcs"
+
+msgid "Invalid S-expression"
+msgstr "Érvénytelen S-kifejezés"
+
+msgid "Unsupported algorithm"
+msgstr "Nem támogatott algoritmus "
+
+msgid "No pinentry"
+msgstr "Nincs pinentry"
+
+msgid "pinentry error"
+msgstr "pinentry hiba"
+
+msgid "Bad PIN"
+msgstr "Rossz PIN-kód"
+
+msgid "Invalid name"
+msgstr "Érvénytelen név"
+
+msgid "Bad data"
+msgstr "Rossz adatok"
+
+msgid "Invalid parameter"
+msgstr "Érvénytelen paraméter"
+
+msgid "Wrong card"
+msgstr "Hibás kártya"
+
+msgid "No dirmngr"
+msgstr "Nincs dirmngr"
+
+msgid "dirmngr error"
+msgstr "dirmngr hiba"
+
+msgid "Certificate revoked"
+msgstr "Tanúsítvány visszavonva"
+
+msgid "No CRL known"
+msgstr "Nincs ismert CRL"
+
+msgid "CRL too old"
+msgstr "Túl régi CRL"
+
+msgid "Line too long"
+msgstr "Túl hosszú sor"
+
+msgid "Not trusted"
+msgstr "Nem megbízható"
+
+msgid "Operation cancelled"
+msgstr "A művelet megszakítva"
+
+msgid "Bad CA certificate"
+msgstr "Rossz CA tanúsítvány"
+
+msgid "Certificate expired"
+msgstr "A tanúsítvány lejárt"
+
+msgid "Certificate too young"
+msgstr "Túl fiatal tanúsítvány"
+
+msgid "Unsupported certificate"
+msgstr "Nem támogatott tanúsítvány"
+
+msgid "Unknown S-expression"
+msgstr "Ismeretlen S-kifejezés"
+
+msgid "Unsupported protection"
+msgstr "Nem támogatott védelem"
+
+msgid "Corrupted protection"
+msgstr "Sérült védelem"
+
+msgid "Ambiguous name"
+msgstr "Nem egyértelmű név"
+
+msgid "Card error"
+msgstr "Kártyahiba"
+
+msgid "Card reset required"
+msgstr "Kártya visszaállítás szükséges"
+
+msgid "Card removed"
+msgstr "Kártya eltávolítva"
+
+msgid "Invalid card"
+msgstr "Érvénytelen kártya"
+
+msgid "Card not present"
+msgstr "A kártya nincs jelen"
+
+msgid "No PKCS15 application"
+msgstr "Nincs PKCS15 alkalmazás"
+
+msgid "Not confirmed"
+msgstr "Nem megerősített"
+
+msgid "Configuration error"
+msgstr "Beállítási hiba"
+
+msgid "No policy match"
+msgstr "Nincs egyező házirend"
+
+msgid "Invalid index"
+msgstr "Érvénytelen index"
+
+msgid "Invalid ID"
+msgstr "Érvénytelen azonosító"
+
+msgid "No SmartCard daemon"
+msgstr "Nincs SmartCard démon"
+
+msgid "SmartCard daemon error"
+msgstr "SmartCard démon hiba"
+
+msgid "Unsupported protocol"
+msgstr "Nem támogatott protokoll"
+
+msgid "Bad PIN method"
+msgstr "Rossz PIN-kód módszer"
+
+msgid "Card not initialized"
+msgstr "A kártya nincs előkészítve"
+
+msgid "Unsupported operation"
+msgstr "Nem támogatott művelet"
+
+msgid "Wrong key usage"
+msgstr "Hibás kulcshasználat"
+
+msgid "Nothing found"
+msgstr "Semmi sem található"
+
+msgid "Wrong blob type"
+msgstr "Hibás blob típus"
+
+msgid "Missing value"
+msgstr "Hiányzó érték"
+
+msgid "Hardware problem"
+msgstr "Hardverprobléma"
+
+msgid "PIN blocked"
+msgstr "PIN-kód blokkolva"
+
+msgid "Conditions of use not satisfied"
+msgstr "A használati feltételek nem teljesülnek"
+
+msgid "PINs are not synced"
+msgstr "A PIN-kódok nincsenek szinkronizálva"
+
+msgid "Invalid CRL"
+msgstr "Érvénytelen CRL"
+
+msgid "BER error"
+msgstr "BER hiba"
+
+msgid "Invalid BER"
+msgstr "Érvénytelen BER"
+
+msgid "Element not found"
+msgstr "Az elem nem található"
+
+msgid "Identifier not found"
+msgstr "Az azonosító nem található"
+
+msgid "Invalid tag"
+msgstr "Érvénytelen címke"
+
+msgid "Invalid length"
+msgstr "Érvénytelen hossz"
+
+msgid "Invalid key info"
+msgstr "Érvénytelen kulcsinformációk"
+
+msgid "Unexpected tag"
+msgstr "Váratlan címke"
+
+msgid "Not DER encoded"
+msgstr "Nem DER kódolású"
+
+msgid "No CMS object"
+msgstr "Nincs CMS objektum"
+
+msgid "Invalid CMS object"
+msgstr "Érvénytelen CMS objektum"
+
+msgid "Unknown CMS object"
+msgstr "Ismeretlen CMS objektum"
+
+msgid "Unsupported CMS object"
+msgstr "Nem támogatott CMS objektum"
+
+msgid "Unsupported encoding"
+msgstr "Nem támogatott kódolás"
+
+msgid "Unsupported CMS version"
+msgstr "Nem támogatott CMS verzió"
+
+msgid "Unknown algorithm"
+msgstr "Ismeretlen algoritmus"
+
+msgid "Invalid crypto engine"
+msgstr "Érvénytelen titkosítási motor"
+
+msgid "Public key not trusted"
+msgstr "A nyilvános kulcs nem megbízható"
+
+msgid "Decryption failed"
+msgstr "Visszafejtés sikertelen"
+
+msgid "Key expired"
+msgstr "A kulcs lejárt"
+
+msgid "Signature expired"
+msgstr "Az aláírás lejárt"
+
+msgid "Encoding problem"
+msgstr "Kódolási probléma"
+
+msgid "Invalid state"
+msgstr "Érvénytelen állapot"
+
+msgid "Duplicated value"
+msgstr "Kettőzött érték"
+
+msgid "Missing action"
+msgstr "Hiányzó művelet"
+
+msgid "ASN.1 module not found"
+msgstr "Nem található ASN.1 modul"
+
+msgid "Invalid OID string"
+msgstr "Érvénytelen OID karakterlánc"
+
+msgid "Invalid time"
+msgstr "Érvénytelen időpont"
+
+msgid "Invalid CRL object"
+msgstr "Érvénytelen CRL objektum"
+
+msgid "Unsupported CRL version"
+msgstr "Nem támogatott CRL verzió"
+
+msgid "Invalid certificate object"
+msgstr "Érvénytelen tanúsítványobjektum"
+
+msgid "Unknown name"
+msgstr "Ismeretlen név"
+
+msgid "A locale function failed"
+msgstr "Egy területi beállítás függvény meghiúsult"
+
+msgid "Not locked"
+msgstr "Nincs zárolva"
+
+msgid "Protocol violation"
+msgstr "Protokollsértés"
+
+msgid "Invalid MAC"
+msgstr "Érvénytelen MAC"
+
+msgid "Invalid request"
+msgstr "Érvénytelen kérés"
+
+msgid "Unknown extension"
+msgstr "Ismeretlen kiterjesztés"
+
+msgid "Unknown critical extension"
+msgstr "Ismeretlen kritikus kiterjesztés"
+
+msgid "Locked"
+msgstr "Zárolva"
+
+msgid "Unknown option"
+msgstr "Ismeretlen kapcsoló"
+
+msgid "Unknown command"
+msgstr "Ismeretlen parancs"
+
+msgid "Not operational"
+msgstr "Nem működik"
+
+msgid "No passphrase given"
+msgstr "Nincs jelmondat megadva"
+
+msgid "No PIN given"
+msgstr "Nincs PIN-kód megadva"
+
+msgid "Operation not yet finished"
+msgstr "A művelet még nem fejeződött be"
+
+msgid "Buffer too short"
+msgstr "Túl rövid puffer"
+
+msgid "Invalid length specifier in S-expression"
+msgstr "Érvénytelen hosszmegadó az S-kifejezésben"
+
+msgid "String too long in S-expression"
+msgstr "Túl hosszú karakterlánc az S-kifejezésben"
+
+msgid "Unmatched parentheses in S-expression"
+msgstr "Lezáratlan zárójelek az S-kifejezésben"
+
+msgid "S-expression not canonical"
+msgstr "Az S-kifejezés nem hitelesnek elismert"
+
+msgid "Bad character in S-expression"
+msgstr "Rossz karakter az S-kifejezésben"
+
+msgid "Bad quotation in S-expression"
+msgstr "Rossz idézés az S-kifejezésben"
+
+msgid "Zero prefix in S-expression"
+msgstr "Nulla előtag az S-kifejezésben"
+
+msgid "Nested display hints in S-expression"
+msgstr "Beágyazott megjelenítési tippek az S-kifejezésben"
+
+msgid "Unmatched display hints"
+msgstr "Nem egyező megjelenítési tippek"
+
+msgid "Unexpected reserved punctuation in S-expression"
+msgstr "Váratlan fenntartott központozás az S-kifejezésben"
+
+msgid "Bad hexadecimal character in S-expression"
+msgstr "Rossz hexadecimális karakter az S-kifejezésben"
+
+msgid "Odd hexadecimal numbers in S-expression"
+msgstr "Páratlan hexadecimális számok az S-kifejezésben"
+
+msgid "Bad octadecimal character in S-expression"
+msgstr "Rossz oktadecimális karakter az S-kifejezésben"
+
+msgid "General IPC error"
+msgstr "Általános IPC hiba"
+
+msgid "IPC accept call failed"
+msgstr "Az IPC elfogadási hívás meghiúsult"
+
+msgid "IPC connect call failed"
+msgstr "Az IPC kapcsolódási hívás meghiúsult"
+
+msgid "Invalid IPC response"
+msgstr "Érvénytelen IPC válasz"
+
+msgid "Invalid value passed to IPC"
+msgstr "Érvénytelen érték került átadásra az IPC-nek"
+
+msgid "Incomplete line passed to IPC"
+msgstr "Befejezetlen sor került átadásra az IPC-nek"
+
+msgid "Line passed to IPC too long"
+msgstr "Az IPC-nek átadott sor túl hosszú"
+
+msgid "Nested IPC commands"
+msgstr "Beágyazott IPC parancsok"
+
+msgid "No data callback in IPC"
+msgstr "Nincs adatvisszahívás az IPC-ben"
+
+msgid "No inquire callback in IPC"
+msgstr "Nincs érdeklődés visszahívás az IPC-ben"
+
+msgid "Not an IPC server"
+msgstr "Nem IPC kiszolgáló"
+
+msgid "Not an IPC client"
+msgstr "Nem IPC kliens"
+
+msgid "Problem starting IPC server"
+msgstr "Probléma adódott az IPC kiszolgáló indításakor"
+
+msgid "IPC read error"
+msgstr "IPC olvasási hiba"
+
+msgid "IPC write error"
+msgstr "IPC írási hiba"
+
+msgid "Too much data for IPC layer"
+msgstr "Túl sok adat az IPC réteghez"
+
+msgid "Unexpected IPC command"
+msgstr "Váratlan IPC parancs"
+
+msgid "Unknown IPC command"
+msgstr "Ismeretlen IPC parancs"
+
+msgid "IPC syntax error"
+msgstr "IPC szintaktikai hiba"
+
+msgid "IPC call has been cancelled"
+msgstr "Az IPC hívás megszakításra került"
+
+msgid "No input source for IPC"
+msgstr "Nincs bemeneti forrás az IPC-hez"
+
+msgid "No output source for IPC"
+msgstr "Nincs kimeneti forrás az IPC-hez"
+
+msgid "IPC parameter error"
+msgstr "IPC paraméterhiba"
+
+msgid "Unknown IPC inquire"
+msgstr "Ismeretlen IPC érdeklődés"
+
+msgid "User defined error code 1"
+msgstr "1. felhasználó által megadott hibakód"
+
+msgid "User defined error code 2"
+msgstr "2. felhasználó által megadott hibakód"
+
+msgid "User defined error code 3"
+msgstr "3. felhasználó által megadott hibakód"
+
+msgid "User defined error code 4"
+msgstr "4. felhasználó által megadott hibakód"
+
+msgid "User defined error code 5"
+msgstr "5. felhasználó által megadott hibakód"
+
+msgid "User defined error code 6"
+msgstr "6. felhasználó által megadott hibakód"
+
+msgid "User defined error code 7"
+msgstr "7. felhasználó által megadott hibakód"
+
+msgid "User defined error code 8"
+msgstr "8. felhasználó által megadott hibakód"
+
+msgid "User defined error code 9"
+msgstr "9. felhasználó által megadott hibakód"
+
+msgid "User defined error code 10"
+msgstr "10. felhasználó által megadott hibakód"
+
+msgid "User defined error code 11"
+msgstr "11. felhasználó által megadott hibakód"
+
+msgid "User defined error code 12"
+msgstr "12. felhasználó által megadott hibakód"
+
+msgid "User defined error code 13"
+msgstr "13. felhasználó által megadott hibakód"
+
+msgid "User defined error code 14"
+msgstr "14. felhasználó által megadott hibakód"
+
+msgid "User defined error code 15"
+msgstr "15. felhasználó által megadott hibakód"
+
+msgid "User defined error code 16"
+msgstr "16. felhasználó által megadott hibakód"
+
+msgid "System error w/o errno"
+msgstr "Rendszerhiba w/o hibaszám"
+
+msgid "Unknown system error"
+msgstr "Ismeretlen rendszerhiba"
+
+msgid "End of file"
+msgstr "Fájl vége"
+
+msgid "Unknown error code"
+msgstr "Ismeretlen hibakód"
+
+#, c-format
+msgid "Usage: %s GPG-ERROR [...]\n"
+msgstr "Használat: %s GPG-ERROR […]\n"
+
+#, c-format
+msgid "%s: warning: could not recognize %s\n"
+msgstr "%s: figyelmeztetés: nem sikerült felismerni: %s\n"
