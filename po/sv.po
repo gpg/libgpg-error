@@ -752,6 +752,22 @@ msgstr "Udda hexadecimala tal i S-uttryck"
 msgid "Bad octal character in S-expression"
 msgstr "Felaktigt oktadecimalt tecken i S-uttryck"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Buffert för liten"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Raden är för lång"
+
+msgid "Object is in termination state"
+msgstr ""
+
 #, fuzzy
 #| msgid "Bad certificate chain"
 msgid "No certificate chain"
@@ -846,6 +862,9 @@ msgid "Bad client key exchange message in handshake"
 msgstr ""
 
 msgid "Bogus string"
+msgstr ""
+
+msgid "Forbidden"
 msgstr ""
 
 #, fuzzy

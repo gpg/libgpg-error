@@ -754,6 +754,22 @@ msgstr "Có số thập lục lẻ trong biểu thức S"
 msgid "Bad octal character in S-expression"
 msgstr "Ký tự bát phân sai trong biểu thức S"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Vùng đệm quá ngắn"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Dòng quá dài"
+
+msgid "Object is in termination state"
+msgstr ""
+
 #, fuzzy
 #| msgid "Bad certificate chain"
 msgid "No certificate chain"
@@ -848,6 +864,9 @@ msgid "Bad client key exchange message in handshake"
 msgstr ""
 
 msgid "Bogus string"
+msgstr ""
+
+msgid "Forbidden"
 msgstr ""
 
 #, fuzzy

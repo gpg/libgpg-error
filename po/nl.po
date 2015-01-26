@@ -728,6 +728,22 @@ msgstr "Vreemde hexadecimale getallen in S-expressie"
 msgid "Bad octal character in S-expression"
 msgstr "Fout octaal teken in S-expressie"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Buffer is te kort"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Regel te lang"
+
+msgid "Object is in termination state"
+msgstr ""
+
 msgid "No certificate chain"
 msgstr "Geen certificaatketting"
 
@@ -802,6 +818,9 @@ msgstr "Slecht sleuteluitwisselingsbericht van client in uitwisseling"
 
 msgid "Bogus string"
 msgstr "Onzintekenreeks"
+
+msgid "Forbidden"
+msgstr ""
 
 msgid "Key disabled"
 msgstr "Sleutel uitgeschakeld"

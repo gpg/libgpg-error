@@ -320,7 +320,6 @@ msgstr "Некоректна відповідь"
 msgid "No agent running"
 msgstr "Агент не запущено"
 
-#| msgid "agent error"
 msgid "Agent error"
 msgstr "Помилка агента"
 
@@ -624,80 +623,63 @@ msgstr "Не вказано пароля"
 msgid "No PIN given"
 msgstr "Не вказано пінкоду"
 
-#| msgid "Not locked"
 msgid "Not enabled"
 msgstr "Не увімкнено"
 
-#| msgid "Invalid crypto engine"
 msgid "No crypto engine"
 msgstr "Немає рушія шифрування"
 
-#| msgid "Missing value"
 msgid "Missing key"
 msgstr "Пропущено ключ"
 
-#| msgid "No CMS object"
 msgid "Too many objects"
 msgstr "Забагато об’єктів"
 
 msgid "Limit reached"
 msgstr "Досягнуто обмеження"
 
-#| msgid "Card not initialized"
 msgid "Not initialized"
 msgstr "Не ініціалізовано"
 
-#| msgid "Missing certificate"
 msgid "Missing issuer certificate"
 msgstr "Не вистачає сертифіката видавця"
 
 msgid "No keyserver available"
 msgstr "Немає доступних серверів ключів"
 
-#| msgid "Invalid time"
 msgid "Invalid elliptic curve"
 msgstr "Некоректна еліптична крива"
 
-#| msgid "Unknown source"
 msgid "Unknown elliptic curve"
 msgstr "Невідома еліптична крива"
 
-#| msgid "Duplicated value"
 msgid "Duplicated key"
 msgstr "Дублювання ключа"
 
-#| msgid "Ambiguous name"
 msgid "Ambiguous result"
 msgstr "Неоднозначний результат"
 
-#| msgid "Invalid crypto engine"
 msgid "No crypto context"
 msgstr "Немає контексту шифрування"
 
-#| msgid "Invalid crypto engine"
 msgid "Wrong crypto context"
 msgstr "Помилковий контекст шифрування"
 
-#| msgid "Invalid crypto engine"
 msgid "Bad crypto context"
 msgstr "Некоректний контекст шифрування"
 
 msgid "Conflict in the crypto context"
 msgstr "Конфлікт у контексті шифрування"
 
-#| msgid "No public key"
 msgid "Broken public key"
 msgstr "Пошкоджений відкритий ключ"
 
-#| msgid "No secret key"
 msgid "Broken secret key"
 msgstr "Пошкоджений закритий ключ"
 
-#| msgid "Invalid digest algorithm"
 msgid "Invalid MAC algorithm"
 msgstr "Некоректний алгоритм MAC"
 
-#| msgid "Operation cancelled"
 msgid "Operation fully cancelled"
 msgstr "Дію повністю скасовано"
 
@@ -743,26 +725,37 @@ msgstr "Помилковий шістнадцятковий символ у S-в
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Дивні шістнадцяткові числа у S-виразі"
 
-#| msgid "Bad octadecimal character in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Помилковий вісімковий символ у S-виразі"
 
-#| msgid "Bad certificate chain"
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Занадто короткий буфер"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Рядок надто довгий"
+
+msgid "Object is in termination state"
+msgstr ""
+
 msgid "No certificate chain"
 msgstr "Немає ланцюжка сертифікації"
 
-#| msgid "Certificate too young"
 msgid "Certificate is too large"
 msgstr "Сертифікат є надто великим"
 
-#| msgid "Invalid card"
 msgid "Invalid record"
 msgstr "Некоректний запис"
 
 msgid "The MAC does not verify"
 msgstr "MAC не пройшов перевірку"
 
-#| msgid "Unexpected tag"
 msgid "Unexpected message"
 msgstr "Неочікуване повідомлення"
 
@@ -775,31 +768,24 @@ msgstr "Відлік буде автоматично розпочато з по�
 msgid "Fatal alert message received"
 msgstr "Отримано критичне попереджувальне повідомлення"
 
-#| msgid "Invalid cipher algorithm"
 msgid "No cipher algorithm"
 msgstr "Немає алгоритму шифрування"
 
-#| msgid "Missing certificate"
 msgid "Missing client certificate"
 msgstr "Не вистачає сертифіката клієнта"
 
-#| msgid "Certificate revoked"
 msgid "Close notification received"
 msgstr "Отримано сповіщення щодо закриття"
 
-#| msgid "Key expired"
 msgid "Ticket expired"
 msgstr "Строк дії квитка вичерпано"
 
-#| msgid "Bad public key"
 msgid "Bad ticket"
 msgstr "Помилковий квиток"
 
-#| msgid "Unknown packet"
 msgid "Unknown identity"
 msgstr "Невідомий профіль"
 
-#| msgid "Bad certificate chain"
 msgid "Bad certificate message in handshake"
 msgstr "Помилкове повідомлення щодо сертифікації під час підтвердження зв’язку"
 
@@ -842,14 +828,15 @@ msgstr ""
 msgid "Bogus string"
 msgstr "Фіктивний рядок"
 
-#| msgid "Key expired"
+msgid "Forbidden"
+msgstr ""
+
 msgid "Key disabled"
 msgstr "Ключ вимкнено"
 
 msgid "Not possible with a card based key"
 msgstr "Неможливе для ключа, заснованого на картці"
 
-#| msgid "Invalid object"
 msgid "Invalid lock object"
 msgstr "Некоректний об’єкт блокування"
 

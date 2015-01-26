@@ -764,6 +764,22 @@ msgstr "Malparaj deksesumaj numeroj en S-esprimo"
 msgid "Bad octal character in S-expression"
 msgstr "Malĝusta okuma signo en S-esprimo"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Bufro tro mallongas"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Linio tro longas"
+
+msgid "Object is in termination state"
+msgstr ""
+
 #, fuzzy
 #| msgid "Bad certificate chain"
 msgid "No certificate chain"
@@ -859,6 +875,9 @@ msgid "Bad client key exchange message in handshake"
 msgstr ""
 
 msgid "Bogus string"
+msgstr ""
+
+msgid "Forbidden"
 msgstr ""
 
 #, fuzzy

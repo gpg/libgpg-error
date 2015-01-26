@@ -5,7 +5,8 @@
 # Milo Casagrande <milo@milo.name>, 2014.
 #
 msgid ""
-msgstr "Project-Id-Version: libgpg-error\n"
+msgstr ""
+"Project-Id-Version: libgpg-error\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
 "PO-Revision-Date: 2014-11-17 09:06+0100\n"
 "Last-Translator: Milo Casagrande <milo@milo.name>\n"
@@ -726,6 +727,22 @@ msgstr "Numeri esadecimali dispari in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Carattere ottale errato in S-expression"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Buffer troppo breve"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Riga troppo lunga"
+
+msgid "Object is in termination state"
+msgstr ""
+
 msgid "No certificate chain"
 msgstr "Nessuna catena di certificazione"
 
@@ -768,7 +785,6 @@ msgstr "Ticket errato"
 msgid "Unknown identity"
 msgstr "Identità sconosciuta"
 
-#| msgid "Bad certificate chain"
 msgid "Bad certificate message in handshake"
 msgstr "Messaggio del certificato errato nell'handshake"
 
@@ -801,6 +817,9 @@ msgstr "Messaggio client scambio di chiavi errato nell'handshake"
 
 msgid "Bogus string"
 msgstr "Stringa fasulla"
+
+msgid "Forbidden"
+msgstr ""
 
 msgid "Key disabled"
 msgstr "Chiave disabilitata"

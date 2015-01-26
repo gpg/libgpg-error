@@ -10,10 +10,10 @@ msgstr ""
 "PO-Revision-Date: 2014-11-17 12:04+0000\n"
 "Last-Translator: Ineiev <ineiev@gnu.org>\n"
 "Language-Team: Russian <gnupg-ru@gnupg.org>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
 
 msgid "Unspecified source"
 msgstr "Неуказанный источник"
@@ -726,6 +726,22 @@ msgstr "Шестнадцатеричные числа нечетной длин�
 msgid "Bad octal character in S-expression"
 msgstr "Плохой восьмеричный символ в S-выражении"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Слишком короткий буфер"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Слишком длинная строка"
+
+msgid "Object is in termination state"
+msgstr ""
+
 msgid "No certificate chain"
 msgstr "Нет сертификатной цепи"
 
@@ -800,6 +816,9 @@ msgstr "Плохое сообщение обмена ключами клиент
 
 msgid "Bogus string"
 msgstr "Несуразная строка"
+
+msgid "Forbidden"
+msgstr ""
 
 msgid "Key disabled"
 msgstr "Ключ отключен"

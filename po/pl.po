@@ -726,6 +726,22 @@ msgstr "Nieparzysta liczba cyfr szesnastkowych w S-wyrażeniu"
 msgid "Bad octal character in S-expression"
 msgstr "Błędny znak ósemkowy w S-wyrażeniu"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Bufor zbyt mały"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Linia zbyt długa"
+
+msgid "Object is in termination state"
+msgstr ""
+
 msgid "No certificate chain"
 msgstr "Brak łańcucha certyfikatów"
 
@@ -800,6 +816,9 @@ msgstr "Błędny komunikat wymiany klucza klienta w powitaniu"
 
 msgid "Bogus string"
 msgstr "Fałszywy łańcuch"
+
+msgid "Forbidden"
+msgstr ""
 
 msgid "Key disabled"
 msgstr "Klucz dezaktywowany"

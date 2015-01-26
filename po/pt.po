@@ -728,6 +728,22 @@ msgstr "Números hexadecimais ímpares na expressão simbólica"
 msgid "Bad octal character in S-expression"
 msgstr "Carácter octal errado na expressão simbólica"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Buffer demasiado curto"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Linha demasiado longa"
+
+msgid "Object is in termination state"
+msgstr ""
+
 msgid "No certificate chain"
 msgstr "Sem cadeia de certificados"
 
@@ -802,6 +818,9 @@ msgstr "Mensagem de troca de chaves do cliente errada no handshake"
 
 msgid "Bogus string"
 msgstr "Sequência de caracteres adulterada"
+
+msgid "Forbidden"
+msgstr ""
 
 msgid "Key disabled"
 msgstr "Chave desabilitada"

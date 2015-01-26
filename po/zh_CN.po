@@ -751,6 +751,22 @@ msgstr ""
 msgid "Bad octal character in S-expression"
 msgstr ""
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "缓冲区太短"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "线太长"
+
+msgid "Object is in termination state"
+msgstr ""
+
 #, fuzzy
 #| msgid "Bad certificate chain"
 msgid "No certificate chain"
@@ -845,6 +861,9 @@ msgid "Bad client key exchange message in handshake"
 msgstr ""
 
 msgid "Bogus string"
+msgstr ""
+
+msgid "Forbidden"
 msgstr ""
 
 #, fuzzy

@@ -754,6 +754,22 @@ msgstr "Lichá šestnáctková čísla v S-výrazu"
 msgid "Bad octal character in S-expression"
 msgstr "Chybný osmičkový znak v S-výrazu"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Vyrovnávací paměť je příliš malá"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Příliš dlouhý řádek"
+
+msgid "Object is in termination state"
+msgstr ""
+
 #, fuzzy
 #| msgid "Bad certificate chain"
 msgid "No certificate chain"
@@ -849,6 +865,9 @@ msgid "Bad client key exchange message in handshake"
 msgstr ""
 
 msgid "Bogus string"
+msgstr ""
+
+msgid "Forbidden"
 msgstr ""
 
 #, fuzzy

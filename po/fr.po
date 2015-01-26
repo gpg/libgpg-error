@@ -729,6 +729,22 @@ msgstr "Nombre hexadécimal impair dans l'expression symbolique"
 msgid "Bad octal character in S-expression"
 msgstr "Mauvais caractère octal dans l'expression symbolique"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Tampon trop court"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Ligne trop longue"
+
+msgid "Object is in termination state"
+msgstr ""
+
 msgid "No certificate chain"
 msgstr "Aucune chaîne de certificat"
 
@@ -805,6 +821,9 @@ msgstr "Mauvais message d’échange de clef du client dans l’initialisation"
 
 msgid "Bogus string"
 msgstr "Chaîne erronée"
+
+msgid "Forbidden"
+msgstr ""
 
 msgid "Key disabled"
 msgstr "Clef désactivée"

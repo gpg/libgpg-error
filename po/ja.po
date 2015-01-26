@@ -728,6 +728,22 @@ msgstr "S式におかしな16進キャラクタがあります"
 msgid "Bad octal character in S-expression"
 msgstr "S式に間違った8進キャラクタがあります"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "バッファが短すぎます"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "行が長すぎます"
+
+msgid "Object is in termination state"
+msgstr ""
+
 msgid "No certificate chain"
 msgstr "証明書連鎖がありません"
 
@@ -802,6 +818,9 @@ msgstr "ハンドシェークで誤ったクライアント鍵交換メッセー
 
 msgid "Bogus string"
 msgstr "おかしな文字列です"
+
+msgid "Forbidden"
+msgstr ""
 
 msgid "Key disabled"
 msgstr "鍵が停止されています"

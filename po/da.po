@@ -731,6 +731,22 @@ msgstr "Ulige hexadecimalt tal i S-udtryk"
 msgid "Bad octal character in S-expression"
 msgstr "Ødelagt oktalt tegn i S-udtryk"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Buffer for kort"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Linje er for lang"
+
+msgid "Object is in termination state"
+msgstr ""
+
 msgid "No certificate chain"
 msgstr "Ingen certifikatkæde"
 
@@ -806,6 +822,9 @@ msgstr "Besked om ødelagt udveksling af klientnøgle i håndtrykket"
 
 msgid "Bogus string"
 msgstr "Fejlbehæftet streng"
+
+msgid "Forbidden"
+msgstr ""
 
 msgid "Key disabled"
 msgstr "Nøglen er deaktiveret"

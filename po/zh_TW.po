@@ -10,12 +10,12 @@ msgstr ""
 "PO-Revision-Date: 2014-11-17 21:25+0800\n"
 "Last-Translator: Jedi Lin <Jedi@Jedi.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: zh_TW\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: libgpg-error-1.17\n"
 
@@ -730,6 +730,22 @@ msgstr "S-表示式中有奇怪的十六進制數字"
 msgid "Bad octal character in S-expression"
 msgstr "S-表示式中有不良的八進制字符"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "緩衝區太短"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "列太長"
+
+msgid "Object is in termination state"
+msgstr ""
+
 msgid "No certificate chain"
 msgstr "沒有憑證鏈"
 
@@ -804,6 +820,9 @@ msgstr "交握中的不良用戶端金鑰交換訊息"
 
 msgid "Bogus string"
 msgstr "假造的字串"
+
+msgid "Forbidden"
+msgstr ""
 
 msgid "Key disabled"
 msgstr "金鑰已停用"

@@ -59,6 +59,15 @@ msgstr "GPA"
 msgid "Kleopatra"
 msgstr "Kleopatra"
 
+msgid "G13"
+msgstr ""
+
+msgid "Assuan"
+msgstr ""
+
+msgid "TLS"
+msgstr ""
+
 msgid "Any source"
 msgstr "Bármilyen forrás"
 
@@ -311,7 +320,9 @@ msgstr "Érvénytelen válasz"
 msgid "No agent running"
 msgstr "Nincs futó ügynök"
 
-msgid "agent error"
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
 msgstr "ügynökhiba"
 
 msgid "Invalid data"
@@ -614,6 +625,96 @@ msgstr "Nincs jelmondat megadva"
 msgid "No PIN given"
 msgstr "Nincs PIN-kód megadva"
 
+#, fuzzy
+#| msgid "Not locked"
+msgid "Not enabled"
+msgstr "Nincs zárolva"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "No crypto engine"
+msgstr "Érvénytelen titkosítási motor"
+
+#, fuzzy
+#| msgid "Missing value"
+msgid "Missing key"
+msgstr "Hiányzó érték"
+
+#, fuzzy
+#| msgid "No CMS object"
+msgid "Too many objects"
+msgstr "Nincs CMS objektum"
+
+msgid "Limit reached"
+msgstr ""
+
+#, fuzzy
+#| msgid "Card not initialized"
+msgid "Not initialized"
+msgstr "A kártya nincs előkészítve"
+
+#, fuzzy
+#| msgid "Missing certificate"
+msgid "Missing issuer certificate"
+msgstr "Hiányzó tanúsítvány"
+
+msgid "No keyserver available"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid time"
+msgid "Invalid elliptic curve"
+msgstr "Érvénytelen időpont"
+
+#, fuzzy
+#| msgid "Unknown source"
+msgid "Unknown elliptic curve"
+msgstr "Ismeretlen forrás"
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated key"
+msgstr "Kettőzött érték"
+
+#, fuzzy
+#| msgid "Ambiguous name"
+msgid "Ambiguous result"
+msgstr "Nem egyértelmű név"
+
+msgid "No crypto context"
+msgstr ""
+
+msgid "Wrong crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Érvénytelen titkosítási motor"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Nincs nyilvános kulcs"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Nincs titkos kulcs"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Érvénytelen kivonat algoritmus"
+
+#, fuzzy
+#| msgid "Operation cancelled"
+msgid "Operation fully cancelled"
+msgstr "A művelet megszakítva"
+
 msgid "Operation not yet finished"
 msgstr "A művelet még nem fejeződött be"
 
@@ -656,8 +757,139 @@ msgstr "Rossz hexadecimális karakter az S-kifejezésben"
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Páratlan hexadecimális számok az S-kifejezésben"
 
-msgid "Bad octadecimal character in S-expression"
+#, fuzzy
+#| msgid "Bad octadecimal character in S-expression"
+msgid "Bad octal character in S-expression"
 msgstr "Rossz oktadecimális karakter az S-kifejezésben"
+
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Túl rövid puffer"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Túl hosszú sor"
+
+msgid "Object is in termination state"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bad certificate chain"
+msgid "No certificate chain"
+msgstr "Rossz tanúsítványlánc"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Certificate is too large"
+msgstr "Túl fiatal tanúsítvány"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "Invalid record"
+msgstr "Érvénytelen kártya"
+
+msgid "The MAC does not verify"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected message"
+msgstr "Váratlan címke"
+
+msgid "Compression or decompression failed"
+msgstr ""
+
+msgid "A counter would wrap"
+msgstr ""
+
+msgid "Fatal alert message received"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid cipher algorithm"
+msgid "No cipher algorithm"
+msgstr "Érvénytelen titkosító algoritmus"
+
+#, fuzzy
+#| msgid "Missing certificate"
+msgid "Missing client certificate"
+msgstr "Hiányzó tanúsítvány"
+
+#, fuzzy
+#| msgid "Certificate revoked"
+msgid "Close notification received"
+msgstr "Tanúsítvány visszavonva"
+
+#, fuzzy
+#| msgid "Key expired"
+msgid "Ticket expired"
+msgstr "A kulcs lejárt"
+
+#, fuzzy
+#| msgid "Bad public key"
+msgid "Bad ticket"
+msgstr "Rossz nyilvános kulcs"
+
+#, fuzzy
+#| msgid "Unknown packet"
+msgid "Unknown identity"
+msgstr "Ismeretlen csomag"
+
+#, fuzzy
+#| msgid "Bad certificate chain"
+msgid "Bad certificate message in handshake"
+msgstr "Rossz tanúsítványlánc"
+
+msgid "Bad certificate request message in handshake"
+msgstr ""
+
+msgid "Bad certificate verify message in handshake"
+msgstr ""
+
+msgid "Bad change cipher messsage in handshake"
+msgstr ""
+
+msgid "Bad client hello message in handshake"
+msgstr ""
+
+msgid "Bad server hello message in handshake"
+msgstr ""
+
+msgid "Bad server hello done message in hanshake"
+msgstr ""
+
+msgid "Bad finished message in handshake"
+msgstr ""
+
+msgid "Bad server key exchange message in handshake"
+msgstr ""
+
+msgid "Bad client key exchange message in handshake"
+msgstr ""
+
+msgid "Bogus string"
+msgstr ""
+
+msgid "Forbidden"
+msgstr ""
+
+#, fuzzy
+#| msgid "Key expired"
+msgid "Key disabled"
+msgstr "A kulcs lejárt"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Érvénytelen objektum"
 
 msgid "General IPC error"
 msgstr "Általános IPC hiba"

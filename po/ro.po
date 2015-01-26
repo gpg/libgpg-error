@@ -765,6 +765,22 @@ msgstr "Numere hexazecimale ciudate în expresia-S"
 msgid "Bad octal character in S-expression"
 msgstr "Caracter octal incorect în expresia-S"
 
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Buffer prea scurt"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Linie prea lungã"
+
+msgid "Object is in termination state"
+msgstr ""
+
 #, fuzzy
 #| msgid "Bad certificate chain"
 msgid "No certificate chain"
@@ -859,6 +875,9 @@ msgid "Bad client key exchange message in handshake"
 msgstr ""
 
 msgid "Bogus string"
+msgstr ""
+
+msgid "Forbidden"
 msgstr ""
 
 #, fuzzy

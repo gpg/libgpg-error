@@ -13,7 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "Unspecified source"
 msgstr "Ненаведени извор"
@@ -56,6 +57,15 @@ msgstr "ГПА"
 
 msgid "Kleopatra"
 msgstr "Клеопатра"
+
+msgid "G13"
+msgstr ""
+
+msgid "Assuan"
+msgstr ""
+
+msgid "TLS"
+msgstr ""
 
 msgid "Any source"
 msgstr "Било који извор"
@@ -309,7 +319,9 @@ msgstr "Неисправан одговор"
 msgid "No agent running"
 msgstr "Нема покренутог агента"
 
-msgid "agent error"
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
 msgstr "грешка агента"
 
 msgid "Invalid data"
@@ -612,6 +624,96 @@ msgstr "Није дата пропусна реч"
 msgid "No PIN given"
 msgstr "Није дат ПИН"
 
+#, fuzzy
+#| msgid "Not locked"
+msgid "Not enabled"
+msgstr "Није закључано"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "No crypto engine"
+msgstr "Неисправан погон шифровања"
+
+#, fuzzy
+#| msgid "Missing value"
+msgid "Missing key"
+msgstr "Недостаје вредност"
+
+#, fuzzy
+#| msgid "No CMS object"
+msgid "Too many objects"
+msgstr "Није ЦМС предмет"
+
+msgid "Limit reached"
+msgstr ""
+
+#, fuzzy
+#| msgid "Card not initialized"
+msgid "Not initialized"
+msgstr "Картица није покренута"
+
+#, fuzzy
+#| msgid "Missing certificate"
+msgid "Missing issuer certificate"
+msgstr "Недостаје уверење"
+
+msgid "No keyserver available"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid time"
+msgid "Invalid elliptic curve"
+msgstr "Неисправно време"
+
+#, fuzzy
+#| msgid "Unknown source"
+msgid "Unknown elliptic curve"
+msgstr "Непознат извор"
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated key"
+msgstr "Удвостручена вредност"
+
+#, fuzzy
+#| msgid "Ambiguous name"
+msgid "Ambiguous result"
+msgstr "Нејасан назив"
+
+msgid "No crypto context"
+msgstr ""
+
+msgid "Wrong crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Неисправан погон шифровања"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Нема јавног кључа"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Нема тајног кључа"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Непознат алгоритам апсорпције"
+
+#, fuzzy
+#| msgid "Operation cancelled"
+msgid "Operation fully cancelled"
+msgstr "Радња је отказана"
+
 msgid "Operation not yet finished"
 msgstr "Радња није још завршена"
 
@@ -654,8 +756,139 @@ msgstr "Лош хексадецимални знак у С-изразу"
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Непарни хексадецимални бројеви у С-изразу"
 
-msgid "Bad octadecimal character in S-expression"
+#, fuzzy
+#| msgid "Bad octadecimal character in S-expression"
+msgid "Bad octal character in S-expression"
 msgstr "Лош октадецимални знак у С-изразу"
+
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Међумеморија је прекратка"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Ред је предуг"
+
+msgid "Object is in termination state"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bad certificate chain"
+msgid "No certificate chain"
+msgstr "Лош ланац уверења"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Certificate is too large"
+msgstr "Уверење је превише ново"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "Invalid record"
+msgstr "Неисправна картица"
+
+msgid "The MAC does not verify"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected message"
+msgstr "Неочекивана ознака"
+
+msgid "Compression or decompression failed"
+msgstr ""
+
+msgid "A counter would wrap"
+msgstr ""
+
+msgid "Fatal alert message received"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid cipher algorithm"
+msgid "No cipher algorithm"
+msgstr "Неисправан алгоритам шифровања"
+
+#, fuzzy
+#| msgid "Missing certificate"
+msgid "Missing client certificate"
+msgstr "Недостаје уверење"
+
+#, fuzzy
+#| msgid "Certificate revoked"
+msgid "Close notification received"
+msgstr "Уверење је опозвано"
+
+#, fuzzy
+#| msgid "Key expired"
+msgid "Ticket expired"
+msgstr "Кључ је истекао"
+
+#, fuzzy
+#| msgid "Bad public key"
+msgid "Bad ticket"
+msgstr "Лош јавни кључ"
+
+#, fuzzy
+#| msgid "Unknown packet"
+msgid "Unknown identity"
+msgstr "Непознат пакет"
+
+#, fuzzy
+#| msgid "Bad certificate chain"
+msgid "Bad certificate message in handshake"
+msgstr "Лош ланац уверења"
+
+msgid "Bad certificate request message in handshake"
+msgstr ""
+
+msgid "Bad certificate verify message in handshake"
+msgstr ""
+
+msgid "Bad change cipher messsage in handshake"
+msgstr ""
+
+msgid "Bad client hello message in handshake"
+msgstr ""
+
+msgid "Bad server hello message in handshake"
+msgstr ""
+
+msgid "Bad server hello done message in hanshake"
+msgstr ""
+
+msgid "Bad finished message in handshake"
+msgstr ""
+
+msgid "Bad server key exchange message in handshake"
+msgstr ""
+
+msgid "Bad client key exchange message in handshake"
+msgstr ""
+
+msgid "Bogus string"
+msgstr ""
+
+msgid "Forbidden"
+msgstr ""
+
+#, fuzzy
+#| msgid "Key expired"
+msgid "Key disabled"
+msgstr "Кључ је истекао"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Неисправан предмет"
 
 msgid "General IPC error"
 msgstr "Општа грешка ИПЦ-а"
