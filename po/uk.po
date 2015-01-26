@@ -2,12 +2,12 @@
 # Copyright (C) 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2012.
+# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:25+0100\n"
+"PO-Revision-Date: 2014-11-15 19:40+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
 "Language: uk\n"
@@ -66,7 +66,7 @@ msgid "Assuan"
 msgstr "Assuan"
 
 msgid "TLS"
-msgstr ""
+msgstr "TLS"
 
 msgid "Any source"
 msgstr "Будь-яке джерело"
@@ -320,7 +320,6 @@ msgstr "Некоректна відповідь"
 msgid "No agent running"
 msgstr "Агент не запущено"
 
-#, fuzzy
 #| msgid "agent error"
 msgid "Agent error"
 msgstr "Помилка агента"
@@ -625,99 +624,82 @@ msgstr "Не вказано пароля"
 msgid "No PIN given"
 msgstr "Не вказано пінкоду"
 
-#, fuzzy
 #| msgid "Not locked"
 msgid "Not enabled"
-msgstr "Не заблоковано"
+msgstr "Не увімкнено"
 
-#, fuzzy
 #| msgid "Invalid crypto engine"
 msgid "No crypto engine"
-msgstr "Некоректний рушій шифрування"
+msgstr "Немає рушія шифрування"
 
-#, fuzzy
 #| msgid "Missing value"
 msgid "Missing key"
-msgstr "Не вистачає значення"
+msgstr "Пропущено ключ"
 
-#, fuzzy
 #| msgid "No CMS object"
 msgid "Too many objects"
-msgstr "Немає об’єкта CMS"
+msgstr "Забагато об’єктів"
 
 msgid "Limit reached"
-msgstr ""
+msgstr "Досягнуто обмеження"
 
-#, fuzzy
 #| msgid "Card not initialized"
 msgid "Not initialized"
-msgstr "Картку не ініціалізовано"
+msgstr "Не ініціалізовано"
 
-#, fuzzy
 #| msgid "Missing certificate"
 msgid "Missing issuer certificate"
-msgstr "Не вистачає сертифіката"
+msgstr "Не вистачає сертифіката видавця"
 
 msgid "No keyserver available"
-msgstr ""
+msgstr "Немає доступних серверів ключів"
 
-#, fuzzy
 #| msgid "Invalid time"
 msgid "Invalid elliptic curve"
-msgstr "Некоректний час"
+msgstr "Некоректна еліптична крива"
 
-#, fuzzy
 #| msgid "Unknown source"
 msgid "Unknown elliptic curve"
-msgstr "Невідоме джерело"
+msgstr "Невідома еліптична крива"
 
-#, fuzzy
 #| msgid "Duplicated value"
 msgid "Duplicated key"
-msgstr "Дублювання значення"
+msgstr "Дублювання ключа"
 
-#, fuzzy
 #| msgid "Ambiguous name"
 msgid "Ambiguous result"
-msgstr "Неоднозначна назва"
+msgstr "Неоднозначний результат"
 
-#, fuzzy
 #| msgid "Invalid crypto engine"
 msgid "No crypto context"
-msgstr "Некоректний рушій шифрування"
+msgstr "Немає контексту шифрування"
 
-#, fuzzy
 #| msgid "Invalid crypto engine"
 msgid "Wrong crypto context"
-msgstr "Некоректний рушій шифрування"
+msgstr "Помилковий контекст шифрування"
 
-#, fuzzy
 #| msgid "Invalid crypto engine"
 msgid "Bad crypto context"
-msgstr "Некоректний рушій шифрування"
+msgstr "Некоректний контекст шифрування"
 
 msgid "Conflict in the crypto context"
-msgstr ""
+msgstr "Конфлікт у контексті шифрування"
 
-#, fuzzy
 #| msgid "No public key"
 msgid "Broken public key"
-msgstr "Немає відкритого ключа"
+msgstr "Пошкоджений відкритий ключ"
 
-#, fuzzy
 #| msgid "No secret key"
 msgid "Broken secret key"
-msgstr "Немає закритого ключа"
+msgstr "Пошкоджений закритий ключ"
 
-#, fuzzy
 #| msgid "Invalid digest algorithm"
 msgid "Invalid MAC algorithm"
-msgstr "Некоректний алгоритм контрольної суми"
+msgstr "Некоректний алгоритм MAC"
 
-#, fuzzy
 #| msgid "Operation cancelled"
 msgid "Operation fully cancelled"
-msgstr "Дію скасовано"
+msgstr "Дію повністю скасовано"
 
 msgid "Operation not yet finished"
 msgstr "Виконання дії ще не завершено"
@@ -761,120 +743,115 @@ msgstr "Помилковий шістнадцятковий символ у S-в
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Дивні шістнадцяткові числа у S-виразі"
 
-#, fuzzy
 #| msgid "Bad octadecimal character in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Помилковий вісімковий символ у S-виразі"
 
-#, fuzzy
 #| msgid "Bad certificate chain"
 msgid "No certificate chain"
-msgstr "Помилковий ланцюжок сертифікації"
+msgstr "Немає ланцюжка сертифікації"
 
-#, fuzzy
 #| msgid "Certificate too young"
 msgid "Certificate is too large"
-msgstr "Сертифікат є надто новим"
+msgstr "Сертифікат є надто великим"
 
-#, fuzzy
 #| msgid "Invalid card"
 msgid "Invalid record"
-msgstr "Некоректна картка"
+msgstr "Некоректний запис"
 
 msgid "The MAC does not verify"
-msgstr ""
+msgstr "MAC не пройшов перевірку"
 
-#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected message"
-msgstr "Неочікуваний теґ"
+msgstr "Неочікуване повідомлення"
 
 msgid "Compression or decompression failed"
-msgstr ""
+msgstr "Помилка під час стискання або видобування"
 
 msgid "A counter would wrap"
-msgstr ""
+msgstr "Відлік буде автоматично розпочато з початку"
 
 msgid "Fatal alert message received"
-msgstr ""
+msgstr "Отримано критичне попереджувальне повідомлення"
 
-#, fuzzy
 #| msgid "Invalid cipher algorithm"
 msgid "No cipher algorithm"
-msgstr "Некоректний алгоритм шифрування"
+msgstr "Немає алгоритму шифрування"
 
-#, fuzzy
 #| msgid "Missing certificate"
 msgid "Missing client certificate"
-msgstr "Не вистачає сертифіката"
+msgstr "Не вистачає сертифіката клієнта"
 
-#, fuzzy
 #| msgid "Certificate revoked"
 msgid "Close notification received"
-msgstr "Сертифікат відкликано"
+msgstr "Отримано сповіщення щодо закриття"
 
-#, fuzzy
 #| msgid "Key expired"
 msgid "Ticket expired"
-msgstr "Строк дії ключа вичерпано"
+msgstr "Строк дії квитка вичерпано"
 
-#, fuzzy
 #| msgid "Bad public key"
 msgid "Bad ticket"
-msgstr "Помилковий відкритий ключ"
+msgstr "Помилковий квиток"
 
-#, fuzzy
 #| msgid "Unknown packet"
 msgid "Unknown identity"
-msgstr "Невідомий пакет"
+msgstr "Невідомий профіль"
 
-#, fuzzy
 #| msgid "Bad certificate chain"
 msgid "Bad certificate message in handshake"
-msgstr "Помилковий ланцюжок сертифікації"
+msgstr "Помилкове повідомлення щодо сертифікації під час підтвердження зв’язку"
 
 msgid "Bad certificate request message in handshake"
 msgstr ""
+"Помилкове повідомлення щодо запиту сертифікації під час підтвердження зв’язку"
 
 msgid "Bad certificate verify message in handshake"
 msgstr ""
+"Помилкове повідомлення щодо перевірки сертифікації під час підтвердження "
+"зв’язку"
 
 msgid "Bad change cipher messsage in handshake"
-msgstr ""
+msgstr "Помилкове повідомлення щодо зміни шифру під час підтвердження зв’язку"
 
 msgid "Bad client hello message in handshake"
-msgstr ""
+msgstr "Помилкове вітальне повідомлення клієнта під час підтвердження зв’язку"
 
 msgid "Bad server hello message in handshake"
-msgstr ""
+msgstr "Помилкове вітальне повідомлення сервера під час підтвердження зв’язку"
 
 msgid "Bad server hello done message in hanshake"
 msgstr ""
+"Помилкове повідомлення про завершення вітання від сервера під час "
+"підтвердження зв’язку"
 
 msgid "Bad finished message in handshake"
-msgstr ""
+msgstr "Помилкове завершальне повідомлення під час підтвердження зв’язку"
 
 msgid "Bad server key exchange message in handshake"
 msgstr ""
+"Помилкове повідомлення щодо обміну ключами із сервером під час підтвердження "
+"зв’язку"
 
 msgid "Bad client key exchange message in handshake"
 msgstr ""
+"Помилкове повідомлення щодо обміну ключами із клієнтом під час підтвердження "
+"зв’язку"
 
 msgid "Bogus string"
-msgstr ""
+msgstr "Фіктивний рядок"
 
-#, fuzzy
 #| msgid "Key expired"
 msgid "Key disabled"
-msgstr "Строк дії ключа вичерпано"
+msgstr "Ключ вимкнено"
 
 msgid "Not possible with a card based key"
-msgstr ""
+msgstr "Неможливе для ключа, заснованого на картці"
 
-#, fuzzy
 #| msgid "Invalid object"
 msgid "Invalid lock object"
-msgstr "Некоректний об’єкт"
+msgstr "Некоректний об’єкт блокування"
 
 msgid "General IPC error"
 msgstr "Загальна помилка IPC"
