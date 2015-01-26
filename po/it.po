@@ -1,14 +1,14 @@
 # Italian messages for libgpg-error.
-# Copyright (C) 2009 Free Software Foundation, Inc.
+# Copyright (C) 2009, 2014 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 # Francesco Groccia <francesco.groccia@poste.it>, 2009.
+# Milo Casagrande <milo@milo.name>, 2014.
 #
 msgid ""
-msgstr ""
-"Project-Id-Version: libgpg-error 1.7\n"
+msgstr "Project-Id-Version: libgpg-error\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:09+0100\n"
-"Last-Translator: Francesco Groccia <francesco.groccia@poste.it>\n"
+"PO-Revision-Date: 2014-11-17 09:06+0100\n"
+"Last-Translator: Milo Casagrande <milo@milo.name>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -58,13 +58,13 @@ msgid "Kleopatra"
 msgstr "Kleopatra"
 
 msgid "G13"
-msgstr ""
+msgstr "G13"
 
 msgid "Assuan"
 msgstr "Assuan"
 
 msgid "TLS"
-msgstr ""
+msgstr "TLS"
 
 msgid "Any source"
 msgstr "Qualsiasi fonte"
@@ -318,10 +318,8 @@ msgstr "Risposta non valida"
 msgid "No agent running"
 msgstr "Nessun agente in esecuzione"
 
-#, fuzzy
-#| msgid "agent error"
 msgid "Agent error"
-msgstr "errore dell'agente"
+msgstr "Errore dell'agente"
 
 msgid "Invalid data"
 msgstr "Dati non validi"
@@ -623,99 +621,65 @@ msgstr "Nessuna passphrase fornita"
 msgid "No PIN given"
 msgstr "Nessun PIN fornito"
 
-#, fuzzy
-#| msgid "Not locked"
 msgid "Not enabled"
-msgstr "Non bloccato"
+msgstr "Disabilitato"
 
-#, fuzzy
-#| msgid "Invalid crypto engine"
 msgid "No crypto engine"
-msgstr "Motore crittografico non valido"
+msgstr "Nessun motore di cifratura"
 
-#, fuzzy
-#| msgid "Missing value"
 msgid "Missing key"
-msgstr "Valore assente"
+msgstr "Chiave mancate"
 
-#, fuzzy
-#| msgid "No CMS object"
 msgid "Too many objects"
-msgstr "Non esiste alcun oggetto CMS"
+msgstr "Troppi oggetti"
 
 msgid "Limit reached"
-msgstr ""
+msgstr "Raggiunto limite"
 
-#, fuzzy
-#| msgid "Card not initialized"
 msgid "Not initialized"
-msgstr "La scheda non è stata inizializzata"
+msgstr "Non inizializzato"
 
-#, fuzzy
-#| msgid "Missing certificate"
 msgid "Missing issuer certificate"
-msgstr "Certificato mancante"
+msgstr "Manca il certificato dell'emittente"
 
 msgid "No keyserver available"
-msgstr ""
+msgstr "Nessun server di chiavi disponibile"
 
-#, fuzzy
-#| msgid "Invalid time"
 msgid "Invalid elliptic curve"
-msgstr "Data non valida"
+msgstr "Curva ellittica non valida"
 
-#, fuzzy
-#| msgid "Unknown source"
 msgid "Unknown elliptic curve"
-msgstr "Fonte sconosciuta"
+msgstr "Curva ellittica sconosciuta"
 
-#, fuzzy
-#| msgid "Duplicated value"
 msgid "Duplicated key"
-msgstr "Valore duplicato"
+msgstr "Chiave duplicata"
 
-#, fuzzy
-#| msgid "Ambiguous name"
 msgid "Ambiguous result"
-msgstr "Nome ambiguo"
+msgstr "Risultato ambiguo"
 
-#, fuzzy
-#| msgid "Invalid crypto engine"
 msgid "No crypto context"
-msgstr "Motore crittografico non valido"
+msgstr "Nessun contesto di cifratura"
 
-#, fuzzy
-#| msgid "Invalid crypto engine"
 msgid "Wrong crypto context"
-msgstr "Motore crittografico non valido"
+msgstr "Contesto di cifratura errato"
 
-#, fuzzy
-#| msgid "Invalid crypto engine"
 msgid "Bad crypto context"
-msgstr "Motore crittografico non valido"
+msgstr "Contesto di cifratura rovinato"
 
 msgid "Conflict in the crypto context"
-msgstr ""
+msgstr "Conflitto nel contesto di cifratura"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "Broken public key"
-msgstr "Nessuna chiave pubblica"
+msgstr "Chiave pubblica danneggiata"
 
-#, fuzzy
-#| msgid "No secret key"
 msgid "Broken secret key"
-msgstr "Nessuna chiave segreta"
+msgstr "Chiave segreta danneggiata"
 
-#, fuzzy
-#| msgid "Invalid digest algorithm"
 msgid "Invalid MAC algorithm"
-msgstr "Algoritmo di digest non valido"
+msgstr "Algoritmo MAC non valido"
 
-#, fuzzy
-#| msgid "Operation cancelled"
 msgid "Operation fully cancelled"
-msgstr "Operazione annullata"
+msgstr "Operazione annullata completamente"
 
 msgid "Operation not yet finished"
 msgstr "Operazione non ancora terminata"
@@ -759,120 +723,93 @@ msgstr "Carattere esadecimale errato in S-expression"
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Numeri esadecimali dispari in S-expression"
 
-#, fuzzy
-#| msgid "Bad octadecimal character in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Carattere ottale errato in S-expression"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "No certificate chain"
-msgstr "Catena del certificato errata"
+msgstr "Nessuna catena di certificazione"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Certificate is too large"
-msgstr "Certificato troppo nuovo"
+msgstr "Il certificato è troppo grande"
 
-#, fuzzy
-#| msgid "Invalid card"
 msgid "Invalid record"
-msgstr "Scheda non valida"
+msgstr "Record non valido"
 
 msgid "The MAC does not verify"
-msgstr ""
+msgstr "Impossibile verificare il MAC"
 
-#, fuzzy
-#| msgid "Unexpected tag"
 msgid "Unexpected message"
-msgstr "Etichetta inaspettata"
+msgstr "Messaggio inaspettato"
 
 msgid "Compression or decompression failed"
-msgstr ""
+msgstr "Compressione o estrazione non riuscita"
 
 msgid "A counter would wrap"
-msgstr ""
+msgstr "Un contatore si azzererebbe (troppi messaggi...)"
 
 msgid "Fatal alert message received"
-msgstr ""
+msgstr "Ricevuto un messaggio di avviso fatale"
 
-#, fuzzy
-#| msgid "Invalid cipher algorithm"
 msgid "No cipher algorithm"
-msgstr "Algoritmo di cifratura non valido"
+msgstr "Nessun algoritmo di cifratura"
 
-#, fuzzy
-#| msgid "Missing certificate"
 msgid "Missing client certificate"
-msgstr "Certificato mancante"
+msgstr "Certificato client mancante"
 
-#, fuzzy
-#| msgid "Certificate revoked"
 msgid "Close notification received"
-msgstr "Certificato revocato"
+msgstr "Ricevuta notifica di chiusura"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Ticket expired"
-msgstr "Chiave scaduta"
+msgstr "Ticket scaduto"
 
-#, fuzzy
-#| msgid "Bad public key"
 msgid "Bad ticket"
-msgstr "Chiave pubblica errata"
+msgstr "Ticket errato"
 
-#, fuzzy
-#| msgid "Unknown packet"
 msgid "Unknown identity"
-msgstr "Pacchetto sconosciuto"
+msgstr "Identità sconosciuta"
 
-#, fuzzy
 #| msgid "Bad certificate chain"
 msgid "Bad certificate message in handshake"
-msgstr "Catena del certificato errata"
+msgstr "Messaggio del certificato errato nell'handshake"
 
 msgid "Bad certificate request message in handshake"
-msgstr ""
+msgstr "Messaggio di richiesta del certificato errato nell'handshake"
 
 msgid "Bad certificate verify message in handshake"
-msgstr ""
+msgstr "Messaggio di verifica del certificato errato nell'handshake"
 
 msgid "Bad change cipher messsage in handshake"
-msgstr ""
+msgstr "Messaggi di modifica cifrario errato nell'handshake"
 
 msgid "Bad client hello message in handshake"
-msgstr ""
+msgstr "Messaggio client hello errato nell'handshake"
 
 msgid "Bad server hello message in handshake"
-msgstr ""
+msgstr "Messaggio server hello errato nell'handshake"
 
 msgid "Bad server hello done message in hanshake"
-msgstr ""
+msgstr "Messaggio server hello completato errato nell'handshake"
 
 msgid "Bad finished message in handshake"
-msgstr ""
+msgstr "Messaggio completato errato nell'handshake"
 
 msgid "Bad server key exchange message in handshake"
-msgstr ""
+msgstr "Messaggio server scambio di chiavi errato nell'handshake"
 
 msgid "Bad client key exchange message in handshake"
-msgstr ""
+msgstr "Messaggio client scambio di chiavi errato nell'handshake"
 
 msgid "Bogus string"
-msgstr ""
+msgstr "Stringa fasulla"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Key disabled"
-msgstr "Chiave scaduta"
+msgstr "Chiave disabilitata"
 
 msgid "Not possible with a card based key"
-msgstr ""
+msgstr "Non possibile con una chiave su scheda"
 
-#, fuzzy
-#| msgid "Invalid object"
 msgid "Invalid lock object"
-msgstr "Oggetto non valido"
+msgstr "Oggetto di blocco non valido"
 
 msgid "General IPC error"
 msgstr "Errore IPC generale"
@@ -914,10 +851,10 @@ msgid "Problem starting IPC server"
 msgstr "Problema nell'avviare il server IPC"
 
 msgid "IPC read error"
-msgstr "errore di lettura IPC"
+msgstr "Errore di lettura IPC"
 
 msgid "IPC write error"
-msgstr "errore di scrittura IPC"
+msgstr "Errore di scrittura IPC"
 
 msgid "Too much data for IPC layer"
 msgstr "Troppi dati per il livello IPC"
@@ -929,7 +866,7 @@ msgid "Unknown IPC command"
 msgstr "Comando IPC sconosciuto"
 
 msgid "IPC syntax error"
-msgstr "errore di sintassi IPC"
+msgstr "Errore di sintassi IPC"
 
 msgid "IPC call has been cancelled"
 msgstr "La chiamata IPC è stata annullata"
