@@ -114,6 +114,12 @@ SUFFIXES = .rc .lo
 gpg_error_res = versioninfo.lo
 no_undefined = -no-undefined
 export_symbols = -export-symbols gpg-error.def
+# i686-w64-mingw32.gcc version 4.9.1 takes the long long helper
+# functions from libgcc_s_sjlj-1.dll and not from a static libgcc.  As
+# a plain C program we do not use exception handler and thus there is
+# no need to use this DLL.  Thus we force gcc to link that statically.
+extra_ltoptions = -XCClinker -static-libgcc
+
 
 install-def-file: gpg-error.def
 	-$(INSTALL) -d $(DESTDIR)$(libdir)
@@ -136,6 +142,8 @@ arch_sources = posix-lock.c posix-lock-obj.h posix-thread.c
 gpg_error_res =
 no_undefined =
 export_symbols =
+extra_ltoptions =
+
 install-def-file:
 uninstall-def-file:
 
@@ -154,7 +162,7 @@ endif
 
 libgpg_error_la_LDFLAGS = \
   $(no_undefined) $(export_symbols) $(libgpg_error_vers_opt) \
-  -version-info \
+  $(extra_ltoptions) -version-info \
   @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@
 
 libgpg_error_la_SOURCES = gettext.h $(arch_sources) \
