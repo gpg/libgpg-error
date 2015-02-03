@@ -82,7 +82,8 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
 	mkheader.c gpg-error.h.in mkw32errmap.c w32-add.h w32ce-add.h \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 \
-	gpg-error.vers gpg-error.def.in versioninfo.rc.in \
+	gpg-error.vers gpg-error.def.in \
+        versioninfo.rc.in gpg-error.w32-manifest.in \
 	$(lock_obj_pub)
 
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
@@ -120,6 +121,7 @@ export_symbols = -export-symbols gpg-error.def
 # no need to use this DLL.  Thus we force gcc to link that statically.
 extra_ltoptions = -XCClinker -static-libgcc
 
+versioninfo.lo : gpg-error.w32-manifest
 
 install-def-file: gpg-error.def
 	-$(INSTALL) -d $(DESTDIR)$(libdir)

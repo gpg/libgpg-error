@@ -50,3 +50,4 @@ BEGIN
     END
 END
 
+1 RT_MANIFEST "gpg-error.w32-manifest"

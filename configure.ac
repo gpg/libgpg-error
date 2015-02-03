@@ -486,11 +486,12 @@ AC_DEFINE_UNQUOTED(BUILD_REVISION, "$BUILD_REVISION",
                    [GIT commit id revision used to build this package])
 
 changequote(,)dnl
-BUILD_FILEVERSION=`echo "$PACKAGE_VERSION"|sed 's/\([0-9.]*\).*/\1./;s/\./,/g'`
+BUILD_VERSION=`echo "$PACKAGE_VERSION"|sed 's/\([0-9.]*\).*/\1./'`
 changequote([,])dnl
-BUILD_FILEVERSION="${BUILD_FILEVERSION}0,mym4_revision_dec"
+BUILD_VERSION="${BUILD_VERSION}0.mym4_revision_dec"
+BUILD_FILEVERSION=`echo "${BUILD_VERSION}" | tr . ,`
+AC_SUBST(BUILD_VERSION)
 AC_SUBST(BUILD_FILEVERSION)
-
 
 AC_ARG_ENABLE([build-timestamp],
               AC_HELP_STRING([--enable-build-timestamp],
@@ -526,7 +527,7 @@ AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([doc/Makefile po/Makefile.in m4/Makefile])
 AC_CONFIG_FILES([src/Makefile tests/Makefile])
 AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
-AC_CONFIG_FILES([src/versioninfo.rc])
+AC_CONFIG_FILES([src/versioninfo.rc src/gpg-error.w32-manifest])
 AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
 
 AC_OUTPUT
