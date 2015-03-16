@@ -4347,12 +4347,9 @@ fname_set_internal (estream_t stream, const char *fname, int quote)
     quote = !!quote;
 
   stream->intern->printable_fname = mem_alloc (strlen (fname) + quote + 1);
-  if (fname)
-    {
-      if (quote)
-        stream->intern->printable_fname[0] = '\\';
-      strcpy (stream->intern->printable_fname+quote, fname);
-    }
+  if (quote)
+    stream->intern->printable_fname[0] = '\\';
+  strcpy (stream->intern->printable_fname+quote, fname);
 }
 
 

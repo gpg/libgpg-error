@@ -606,7 +606,7 @@ main (int argc, char **argv)
           putchar ('@');
           fputs (p2, stdout);
         }
-      else if (p2 && *p2)
+      else if (*p2)
         {
           fputs (p2, stdout);
         }
