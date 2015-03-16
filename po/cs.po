@@ -1,7 +1,7 @@
 # Czech translation of libgpg-error.
 # Copyright (C) 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
-# Petr Pisar <petr.pisar@atlas.cz>, 2009, 2012.
+# Petr Pisar <petr.pisar@atlas.cz>, 2009, 2012, 2014.
 #
 # certificate chain → řetězec (posloupnost) certifikátů
 # keybox → schránka (na klíče)
@@ -12,9 +12,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.10\n"
+"Project-Id-Version: libgpg-error 1.18\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:08+0100\n"
+"PO-Revision-Date: 2014-11-27 19:31+0100\n"
 "Last-Translator: Petr Pisar <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "Language: cs\n"
@@ -72,7 +72,7 @@ msgid "Assuan"
 msgstr "Assuan"
 
 msgid "TLS"
-msgstr ""
+msgstr "TLS"
 
 msgid "Any source"
 msgstr "Nespecifikovaný zdroj"
@@ -327,10 +327,8 @@ msgstr "Neplatná odpověď"
 msgid "No agent running"
 msgstr "Agent neběží"
 
-#, fuzzy
-#| msgid "agent error"
 msgid "Agent error"
-msgstr "chyba agenta"
+msgstr "Chyba agenta"
 
 msgid "Invalid data"
 msgstr "Neplatná data"
@@ -663,48 +661,32 @@ msgstr "Neplatná eliptická křivka"
 msgid "Unknown elliptic curve"
 msgstr "Neznámá eliptická křivka"
 
-#, fuzzy
-#| msgid "Duplicated value"
 msgid "Duplicated key"
-msgstr "Zdvojená hodnota"
+msgstr "Zdvojený klíč"
 
-#, fuzzy
-#| msgid "Ambiguous name"
 msgid "Ambiguous result"
-msgstr "Nejednoznačné jméno"
+msgstr "Nejednoznačný výsledek"
 
-#, fuzzy
-#| msgid "No crypto engine"
 msgid "No crypto context"
-msgstr "Chybí kryptografická jednotka"
+msgstr "Chybí kryptografický kontext"
 
-#, fuzzy
-#| msgid "No crypto engine"
 msgid "Wrong crypto context"
-msgstr "Chybí kryptografická jednotka"
+msgstr "Chybný kryptografický kontext"
 
-#, fuzzy
-#| msgid "Invalid crypto engine"
 msgid "Bad crypto context"
-msgstr "Neplatná kryptografická jednotka"
+msgstr "Špatný kryptografický kontext"
 
 msgid "Conflict in the crypto context"
-msgstr ""
+msgstr "Rozpor v kryptografickém kontextu"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "Broken public key"
-msgstr "Žádný veřejný klíč"
+msgstr "Rozbitý veřejný klíč"
 
-#, fuzzy
-#| msgid "No secret key"
 msgid "Broken secret key"
-msgstr "Žádný tajný klíč"
+msgstr "Rozbitý tajný klíč"
 
-#, fuzzy
-#| msgid "Invalid digest algorithm"
 msgid "Invalid MAC algorithm"
-msgstr "Neplatný hashovací algoritmus"
+msgstr "Neplatný algoritmus MAC"
 
 msgid "Operation fully cancelled"
 msgstr "Operace zcela zrušena"
@@ -770,116 +752,90 @@ msgstr "Příliš dlouhý řádek"
 msgid "Object is in termination state"
 msgstr ""
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "No certificate chain"
-msgstr "Chybný řetězec certifikátů"
+msgstr "Chybí řetězec certifikátů"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Certificate is too large"
-msgstr "Certifikát je příliš mladý"
+msgstr "Certifikát je příliš velký"
 
-#, fuzzy
-#| msgid "Invalid card"
 msgid "Invalid record"
-msgstr "Neplatná karta"
+msgstr "Neplatný záznam"
 
 msgid "The MAC does not verify"
-msgstr ""
+msgstr "Ověření MAC selhalo"
 
-#, fuzzy
-#| msgid "Unexpected tag"
 msgid "Unexpected message"
-msgstr "Neočekávaná značka"
+msgstr "Neočekávaná zpráva"
 
 msgid "Compression or decompression failed"
-msgstr ""
+msgstr "Komprese nebo dekomprese selhala"
 
 msgid "A counter would wrap"
-msgstr ""
+msgstr "Počítadlo by přeteklo"
 
 msgid "Fatal alert message received"
-msgstr ""
+msgstr "Přijata nepřekonatelná chybová zpráva"
 
-#, fuzzy
-#| msgid "Invalid cipher algorithm"
 msgid "No cipher algorithm"
-msgstr "Neplatný šifrovací algoritmus"
+msgstr "Žádný šifrovací algoritmus"
 
-#, fuzzy
-#| msgid "Missing issuer certificate"
 msgid "Missing client certificate"
-msgstr "Chybí certifikát vydavatele"
+msgstr "Chybí certifikát klienta"
 
-#, fuzzy
-#| msgid "Certificate revoked"
 msgid "Close notification received"
-msgstr "Certifikát odvolán"
+msgstr "Přijato oznámení o uzavření"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Ticket expired"
-msgstr "Klíči vypršela platnost"
+msgstr "Lístku vypršela platnost"
 
-#, fuzzy
-#| msgid "Bad public key"
 msgid "Bad ticket"
-msgstr "Chybný veřejný klíč"
+msgstr "Chybný lístek"
 
-#, fuzzy
-#| msgid "Unknown packet"
 msgid "Unknown identity"
-msgstr "Neznámý packet"
+msgstr "Neznámá totožnost"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "Bad certificate message in handshake"
-msgstr "Chybný řetězec certifikátů"
+msgstr "Chybná zpráva s certifikátem v zahájení"
 
 msgid "Bad certificate request message in handshake"
-msgstr ""
+msgstr "Chybná zpráva s požadavkem na certifikát v zahájení"
 
 msgid "Bad certificate verify message in handshake"
-msgstr ""
+msgstr "Chybná zpráva o ověření certifikátu v zahájení"
 
 msgid "Bad change cipher messsage in handshake"
-msgstr ""
+msgstr "Chybná zpráva se změnou šifry v zahájení"
 
 msgid "Bad client hello message in handshake"
-msgstr ""
+msgstr "Chybná zpráva s pozdravem klienta v zahájení"
 
 msgid "Bad server hello message in handshake"
-msgstr ""
+msgstr "Chybná zpráva s pozdravem serveru v zahájení"
 
 msgid "Bad server hello done message in hanshake"
-msgstr ""
+msgstr "Chybná zpráva o dokončení pozdravu serveru v zahájení"
 
 msgid "Bad finished message in handshake"
-msgstr ""
+msgstr "Chybná zpráva o dokončení v zahájení"
 
 msgid "Bad server key exchange message in handshake"
-msgstr ""
+msgstr "Chybná zpráva o výměně klíče serveru v zahájení"
 
 msgid "Bad client key exchange message in handshake"
-msgstr ""
+msgstr "Chybná zpráva o výměně klíče klienta v zahájení"
 
 msgid "Bogus string"
-msgstr ""
+msgstr "Chybný řetězec"
 
 msgid "Forbidden"
 msgstr ""
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Key disabled"
-msgstr "Klíči vypršela platnost"
+msgstr "Klíč zakázán"
 
 msgid "Not possible with a card based key"
-msgstr ""
+msgstr "Nelze provést s klíčem na kartě"
 
-#, fuzzy
-#| msgid "Invalid object"
 msgid "Invalid lock object"
 msgstr "Neplatný objekt"
 
