@@ -314,9 +314,110 @@
 
 # 282 to 299 are reserved for future assuan codes.
 
-# 300 to 1023 are free to be used.
+# 300 to 720 are free to be used.
 
-# For free use by non-GnuPG components.
+#
+# Mapping of LDAP error codes
+#
+# The numbers reflect the OpenLDAP code with an offset of 768.
+# Some error names are shortened
+#
+721	GPG_ERR_LDAP_GENERAL		LDAP General error
+722	GPG_ERR_LDAP_ATTR_GENERAL	LDAP General attribute error
+723	GPG_ERR_LDAP_NAME_GENERAL	LDAP General name error
+724	GPG_ERR_LDAP_SECURITY_GENERAL	LDAP General security error
+725	GPG_ERR_LDAP_SERVICE_GENERAL	LDAP General service error
+726	GPG_ERR_LDAP_UPDATE_GENERAL	LDAP General update error
+727	GPG_ERR_LDAP_E_GENERAL		LDAP Experimental error code
+728	GPG_ERR_LDAP_X_GENERAL		LDAP Private error code
+729	GPG_ERR_LDAP_OTHER_GENERAL	LDAP Other general error
+# 730 to 749 not used
+750	GPG_ERR_LDAP_X_CONNECTING	Connecting failed (X)
+751	GPG_ERR_LDAP_REFERRAL_LIMIT	Referral limit exceeded
+752	GPG_ERR_LDAP_CLIENT_LOOP	Client loop
+# 753 is an obsolete error code
+754	GPG_ERR_LDAP_NO_RESULTS		No results returned
+755	GPG_ERR_LDAP_CONTROL_NOT_FOUND	Control not found
+756	GPG_ERR_LDAP_NOT_SUPPORTED	Not supported
+757	GPG_ERR_LDAP_CONNECT		Connect error
+758	GPG_ERR_LDAP_NO_MEMORY		Out of memory
+759	GPG_ERR_LDAP_PARAM		Bad parameter to an LDAP routine
+760	GPG_ERR_LDAP_USER_CANCELLED	User cancelled operation
+761	GPG_ERR_LDAP_FILTER		Bad search filter
+762	GPG_ERR_LDAP_AUTH_UNKNOWN	Unknown authentication method
+763	GPG_ERR_LDAP_TIMEOUT		Timeout
+764	GPG_ERR_LDAP_DECODING		Decoding error
+765	GPG_ERR_LDAP_ENCODING		Encoding error
+766	GPG_ERR_LDAP_LOCAL		LDAP Local error
+767	GPG_ERR_LDAP_SERVER_DOWN	Cannot contact LDAP server
+768	GPG_ERR_LDAP_SUCCESS		Success
+769	GPG_ERR_LDAP_OPERATIONS		Operations error
+770	GPG_ERR_LDAP_PROTOCOL		Protocol error
+771	GPG_ERR_LDAP_TIMELIMIT		Time limit exceeded
+772	GPG_ERR_LDAP_SIZELIMIT		Size limit exceeded
+773	GPG_ERR_LDAP_COMPARE_FALSE	Compare false
+774	GPG_ERR_LDAP_COMPARE_TRUE	Compare true
+775	GPG_ERR_LDAP_UNSUPPORTED_AUTH	Authentication method not supported
+776	GPG_ERR_LDAP_STRONG_AUTH_RQRD	Strong(er) authentication required
+777	GPG_ERR_LDAP_PARTIAL_RESULTS	Partial results and referral received
+778	GPG_ERR_LDAP_REFERRAL		Referral
+779	GPG_ERR_LDAP_ADMINLIMIT		Administrative limit exceeded
+780	GPG_ERR_LDAP_UNAVAIL_CRIT_EXTN	Critical extension is unavailable
+781	GPG_ERR_LDAP_CONFIDENT_RQRD	Confidentiality required
+782	GPG_ERR_LDAP_SASL_BIND_INPROG	SASL bind in progress
+# 783 not used
+784	GPG_ERR_LDAP_NO_SUCH_ATTRIBUTE	No such attribute
+785	GPG_ERR_LDAP_UNDEFINED_TYPE	Undefined attribute type
+786	GPG_ERR_LDAP_BAD_MATCHING	Inappropriate matching
+787	GPG_ERR_LDAP_CONST_VIOLATION	Constraint violation
+788	GPG_ERR_LDAP_TYPE_VALUE_EXISTS	Type or value exists
+789	GPG_ERR_LDAP_INV_SYNTAX		Invalid syntax
+# 790 to 799 not used
+800	GPG_ERR_LDAP_NO_SUCH_OBJ	No such object
+801	GPG_ERR_LDAP_ALIAS_PROBLEM	Alias problem
+802	GPG_ERR_LDAP_INV_DN_SYNTAX	Invalid DN syntax
+803	GPG_ERR_LDAP_IS_LEAF		Entry is a leaf
+804	GPG_ERR_LDAP_ALIAS_DEREF	Alias dereferencing problem
+# 805 to 814 not used
+815	GPG_ERR_LDAP_X_PROXY_AUTH_FAIL	Proxy authorization failure (X)
+816	GPG_ERR_LDAP_BAD_AUTH		Inappropriate authentication
+817	GPG_ERR_LDAP_INV_CREDENTIALS	Invalid credentials
+818	GPG_ERR_LDAP_INSUFFICIENT_ACC	Insufficient access
+819	GPG_ERR_LDAP_BUSY		Server is busy
+820	GPG_ERR_LDAP_UNAVAILABLE	Server is unavailable
+821	GPG_ERR_LDAP_UNWILL_TO_PERFORM	Server is unwilling to perform
+822	GPG_ERR_LDAP_LOOP_DETECT	Loop detected
+# 823 to 831 not used
+832	GPG_ERR_LDAP_NAMING_VIOLATION	Naming violation
+833	GPG_ERR_LDAP_OBJ_CLS_VIOLATION	Object class violation
+834	GPG_ERR_LDAP_NOT_ALLOW_NONLEAF	Operation not allowed on non-leaf
+835	GPG_ERR_LDAP_NOT_ALLOW_ON_RDN	Operation not allowed on RDN
+836	GPG_ERR_LDAP_ALREADY_EXISTS	Already exists
+837	GPG_ERR_LDAP_NO_OBJ_CLASS_MODS	Cannot modify object class
+838	GPG_ERR_LDAP_RESULTS_TOO_LARGE	Results too large
+839	GPG_ERR_LDAP_AFFECTS_MULT_DSAS	Operation affects multiple DSAs
+# 840 to 843 not used
+844	GPG_ERR_LDAP_VLV		Virtual list view error
+# 845 to 847 not used
+848	GPG_ERR_LDAP_OTHER		Other LDAP error
+# 849 to 880 not used
+881	GPG_ERR_LDAP_CUP_RESOURCE_LIMIT	LCUP Resources exhausted
+882	GPG_ERR_LDAP_CUP_SEC_VIOLATION	LCUP Security violation
+883	GPG_ERR_LDAP_CUP_INV_DATA	LCUP Invalid data
+884	GPG_ERR_LDAP_CUP_UNSUP_SCHEME	LCUP Unsupported scheme
+885	GPG_ERR_LDAP_CUP_RELOAD		LCUP Reload required
+886	GPG_ERR_LDAP_CANCELLED		LDAP Cancelled
+887	GPG_ERR_LDAP_NO_SUCH_OPERATION	No operation to cancel
+888	GPG_ERR_LDAP_TOO_LATE		Too late to cancel
+889	GPG_ERR_LDAP_CANNOT_CANCEL	Cannot cancel
+890	GPG_ERR_LDAP_ASSERTION_FAILED	Assertion failed
+891	GPG_ERR_LDAP_PROX_AUTH_DENIED	Proxied authorization denied
+
+# 892 to 950 are reserved for future LDAP codes.
+
+# 951 to 1023 are free to be used.
+
+# For free use by non-GnuPG components:
 1024	GPG_ERR_USER_1			User defined error code 1
 1025	GPG_ERR_USER_2			User defined error code 2
 1026	GPG_ERR_USER_3			User defined error code 3

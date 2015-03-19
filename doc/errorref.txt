@@ -755,3 +755,33 @@ GPG_ERR_INV_LOCK_OBJ		Invalid lock object
     GPGRT: - The provided lock object is not valid.  This indicates an
              internal problem in libgpg-error or more likely a
              programming error.
+
+
+
+
+GPG_ERR_LDAP_GENERAL		LDAP General error
+
+   Catch all error for LDAP.  Use if if can't map an erro rocde to an
+   gpg-error code.
+
+GPG_ERR_LDAP_ATTR_GENERAL	LDAP General attribute error
+GPG_ERR_LDAP_NAME_GENERAL	LDAP General name error
+GPG_ERR_LDAP_SECURITY_GENERAL	LDAP General security error
+GPG_ERR_LDAP_SERVICE_GENERAL	LDAP General service error
+GPG_ERR_LDAP_UPDATE_GENERAL	LDAP General update error
+GPG_ERR_LDAP_E_GENERAL		LDAP Experimental error code
+GPG_ERR_LDAP_X_GENERAL	        LDAP Private error code
+GPG_ERR_LDAP_OTHER_GENERAL	LDAP Other general error
+
+  All above may be used to map ranges of LDAP errors to one specific
+  code. OpenLDAP uses LDAP_xxx_RANGE(n) macros for tha mapping.
+  "Other general error" may be used similar to "General error" for
+  mapping of ranges.  Here are macros from OpenLDAP for reference
+
+  #define LDAP_ATTR_ERROR(n)	 LDAP_RANGE((n),0x10,0x15) /* 16-21 */
+  #define LDAP_NAME_ERROR(n)	 LDAP_RANGE((n),0x20,0x24) /* 32-34,36 */
+  #define LDAP_SECURITY_ERROR(n) LDAP_RANGE((n),0x2F,0x32) /* 47-50 */
+  #define LDAP_SERVICE_ERROR(n)	 LDAP_RANGE((n),0x33,0x36) /* 51-54 */
+  #define LDAP_UPDATE_ERROR(n)	 LDAP_RANGE((n),0x40,0x47) /* 64-69,71 */
+  #define LDAP_E_ERROR(n)	 LDAP_RANGE((n),0x1000,0x3FFF)
+  #define LDAP_X_ERROR(n)	 LDAP_RANGE((n),0x4000,0xFFFF)

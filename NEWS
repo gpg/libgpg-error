@@ -1,8 +1,11 @@
 Noteworthy changes in version 1.19 (unreleased) [C/A/R]
 -----------------------------------------------
 
+ * New set of error codes for use with LDAP.
+
  * Interface changes relative to the 1.18 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_LDAP_*                   NEW.
 
 
 Noteworthy changes in version 1.18 (2015-01-26) [C14/A14/R0]
