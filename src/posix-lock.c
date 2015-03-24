@@ -33,6 +33,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <assert.h>
 
 #if USE_POSIX_THREADS
 # include <pthread.h>
@@ -88,7 +89,10 @@ use_pthread_p (void)
           /* Thread creation works.  */
           void *retval;
           if (pthread_join (thread, &retval) != 0)
-            abort ();
+            {
+              assert (!"pthread_join");
+              abort ();
+            }
           result = 1;
         }
       tested = 1;
@@ -106,9 +110,15 @@ get_lock_object (gpgrt_lock_t *lockhd)
   _gpgrt_lock_t *lock = (_gpgrt_lock_t*)lockhd;
 
   if (lock->vers != LOCK_ABI_VERSION)
-    abort ();
+    {
+      assert (!"lock ABI version");
+      abort ();
+    }
   if (sizeof (gpgrt_lock_t) < sizeof (_gpgrt_lock_t))
-    abort ();
+    {
+      assert (!"sizeof lock obj");
+      abort ();
+    }
 
   return lock;
 }
@@ -126,7 +136,10 @@ _gpgrt_lock_init (gpgrt_lock_t *lockhd)
   if (!lock->vers)
     {
       if (sizeof (gpgrt_lock_t) < sizeof (_gpgrt_lock_t))
-        abort ();
+        {
+          assert (!"sizeof lock obj");
+          abort ();
+        }
       lock->vers = LOCK_ABI_VERSION;
     }
   else /* Run the usual check.  */
