@@ -1,7 +1,11 @@
-Noteworthy changes in version 1.19 (unreleased) [C/A/R]
+Noteworthy changes in version 1.19 (2015-04-10) [C15/A15/R0]
 -----------------------------------------------
 
  * New set of error codes for use with LDAP.
+
+ * New options --help and --defines for gpg-error.
+
+ * Allow building with gcc 5.
 
  * Interface changes relative to the 1.18 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
