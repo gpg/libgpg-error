@@ -202,70 +202,22 @@ _gpgrt_free (void *a)
 }
 
 
+void
+_gpg_err_set_errno (int err)
+{
+#ifdef HAVE_W32CE_SYSTEM
+  SetLastError (err);
+#else /*!HAVE_W32CE_SYSTEM*/
+  errno = err;
+#endif /*!HAVE_W32CE_SYSTEM*/
+}
+
 
 
 #ifdef HAVE_W32_SYSTEM
-
-/* Return a malloced string encoded in UTF-8 from the wide char input
-   string STRING.  Caller must free this value.  Returns NULL on
-   failure.  Caller may use GetLastError to get the actual error
-   number.  The result of calling this function with STRING set to
-   NULL is not defined.  */
-static char *
-wchar_to_utf8 (const wchar_t *string)
-{
-  int n;
-  char *result;
-
-  /* Note, that CP_UTF8 is not defined in Windows versions earlier
-     than NT.  */
-  n = WideCharToMultiByte (CP_UTF8, 0, string, -1, NULL, 0, NULL, NULL);
-  if (n < 0)
-    return NULL;
-
-  result = malloc (n+1);
-  if (result)
-    {
-      n = WideCharToMultiByte (CP_UTF8, 0, string, -1, result, n, NULL, NULL);
-      if (n < 0)
-        {
-          free (result);
-          result = NULL;
-        }
-    }
-  return result;
-}
-
-
-/* Return a malloced wide char string from an UTF-8 encoded input
-   string STRING.  Caller must free this value.  Returns NULL on
-   failure.  Caller may use GetLastError to get the actual error
-   number.  The result of calling this function with STRING set to
-   NULL is not defined.  */
-static wchar_t *
-utf8_to_wchar (const char *string)
-{
-  int n;
-  wchar_t *result;
-
-  n = MultiByteToWideChar (CP_UTF8, 0, string, -1, NULL, 0);
-  if (n < 0)
-    return NULL;
-
-  result = malloc ((n+1) * sizeof *result);
-  if (result)
-    {
-      n = MultiByteToWideChar (CP_UTF8, 0, string, -1, result, n);
-      if (n < 0)
-        {
-          free (result);
-          result = NULL;
-        }
-      return NULL;
-    }
-  return result;
-}
-
+/*****************************************
+ ******** Below is only Windows code. ****
+ *****************************************/
 
 static char *
 get_locale_dir (void)
@@ -419,17 +371,6 @@ _gpg_w32ce_strerror (int err)
 #endif /*HAVE_W32CE_SYSTEM*/
 
 
-void
-_gpg_err_set_errno (int err)
-{
-#ifdef HAVE_W32CE_SYSTEM
-  SetLastError (err);
-#else /*!HAVE_W32CE_SYSTEM*/
-  errno = err;
-#endif /*!HAVE_W32CE_SYSTEM*/
-}
-
-
 /* Entry point called by the DLL loader.  */
 #ifdef DLL_EXPORT
 int WINAPI
@@ -483,12 +424,4 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
 }
 #endif /*DLL_EXPORT*/
 
-#else /*!HAVE_W32_SYSTEM*/
-
-void
-_gpg_err_set_errno (int err)
-{
-  errno = err;
-}
-
-#endif /*!HAVE_W32_SYSTEM*/
+#endif /*HAVE_W32_SYSTEM*/

@@ -282,7 +282,13 @@ GPG_ERR_INV_DATA		Invalid data
               expected.
 
 80	GPG_ERR_ASSUAN_SERVER_FAULT	Unspecific Assuan server fault
-81	GPG_ERR_ASSUAN			General Assuan error
+
+GPG_ERR_ASSUAN			General Assuan error
+
+    GNUPG: - Used by Assuan command handler if they fail to do basic
+             things like an es_fdopen or es_fopencookie.
+
+
 82	GPG_ERR_INV_SESSION_KEY		Invalid session key
 83	GPG_ERR_INV_SEXP		Invalid S-expression
 84	GPG_ERR_UNSUPPORTED_ALGORITHM	Unsupported algorithm
