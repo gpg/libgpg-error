@@ -977,6 +977,343 @@ msgstr "Eroare card"
 msgid "Unknown IPC inquire"
 msgstr "Sursã necunoscutã"
 
+#, fuzzy
+msgid "General LDAP error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP attribute error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP name error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+msgid "General LDAP security error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP service error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+msgid "General LDAP update error"
+msgstr "Eroare generalã"
+
+msgid "Experimental LDAP error code"
+msgstr ""
+
+#, fuzzy
+msgid "Private LDAP error code"
+msgstr "Eroare card"
+
+#, fuzzy
+msgid "Other general LDAP error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "LDAP connecting failed (X)"
+msgstr "Decriptarea a eºuat"
+
+#, fuzzy
+#| msgid "General error"
+msgid "LDAP referral limit exceeded"
+msgstr "Eroare generalã"
+
+msgid "LDAP client loop"
+msgstr ""
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "No LDAP results returned"
+msgstr "Este necesarã resetarea cardului"
+
+#, fuzzy
+#| msgid "Element not found"
+msgid "LDAP control not found"
+msgstr "Elementul nu a fost gãsit"
+
+#, fuzzy
+#| msgid "Not supported"
+msgid "Not supported by LDAP"
+msgstr "Nu este suportat(ã)"
+
+#, fuzzy
+#| msgid "Unexpected error"
+msgid "LDAP connect error"
+msgstr "Eroare neaºteptatã"
+
+msgid "Out of memory in LDAP"
+msgstr ""
+
+msgid "Bad parameter to an LDAP routine"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unsupported operation"
+msgid "User cancelled LDAP operation"
+msgstr "Operaþie nesuportatã"
+
+#, fuzzy
+#| msgid "Bad certificate"
+msgid "Bad LDAP search filter"
+msgstr "Certificat incorect"
+
+#, fuzzy
+msgid "Unknown LDAP authentication method"
+msgstr "Expresie-S necunoscutã"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "Timeout in LDAP"
+msgstr "Pauzã"
+
+#, fuzzy
+#| msgid "dirmngr error"
+msgid "LDAP decoding error"
+msgstr "eroare dirmngr"
+
+#, fuzzy
+#| msgid "dirmngr error"
+msgid "LDAP encoding error"
+msgstr "eroare dirmngr"
+
+#, fuzzy
+msgid "LDAP local error"
+msgstr "Eroare card"
+
+msgid "Cannot contact LDAP server"
+msgstr ""
+
+#, fuzzy
+#| msgid "Success"
+msgid "LDAP success"
+msgstr "Succes"
+
+#, fuzzy
+#| msgid "Configuration error"
+msgid "LDAP operations error"
+msgstr "Eroare de configurare"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "LDAP protocol error"
+msgstr "Violare de protocol"
+
+msgid "Time limit exceeded in LDAP"
+msgstr ""
+
+msgid "Size limit exceeded in LDAP"
+msgstr ""
+
+msgid "LDAP compare false"
+msgstr ""
+
+msgid "LDAP compare true"
+msgstr ""
+
+#, fuzzy
+msgid "LDAP authentication method not supported"
+msgstr "Expresie-S necunoscutã"
+
+msgid "Strong(er) LDAP authentication required"
+msgstr ""
+
+msgid "Partial LDAP results+referral received"
+msgstr ""
+
+#, fuzzy
+#| msgid "General error"
+msgid "LDAP referral"
+msgstr "Eroare generalã"
+
+msgid "Administrative LDAP limit exceeded"
+msgstr ""
+
+msgid "Critical LDAP extension is unavailable"
+msgstr ""
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "Confidentiality required by LDAP"
+msgstr "Este necesarã resetarea cardului"
+
+msgid "LDAP SASL bind in progress"
+msgstr ""
+
+msgid "No such LDAP attribute"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid attribute"
+msgid "Undefined LDAP attribute type"
+msgstr "Argument invalid"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Inappropriate matching in LDAP"
+msgstr "Protecþie nesuportatã"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "Constraint violation in LDAP"
+msgstr "Violare de protocol"
+
+msgid "LDAP type or value exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid syntax in LDAP"
+msgstr "Stare invalidã"
+
+#, fuzzy
+#| msgid "No CMS object"
+msgid "No such LDAP object"
+msgstr "Nici un obiect CMS"
+
+#, fuzzy
+#| msgid "Hardware problem"
+msgid "LDAP alias problem"
+msgstr "Problemã hardware"
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid DN syntax in LDAP"
+msgstr "Stare invalidã"
+
+msgid "LDAP entry is a leaf"
+msgstr ""
+
+#, fuzzy
+#| msgid "Encoding problem"
+msgid "LDAP alias dereferencing problem"
+msgstr "Problemã de encodare"
+
+msgid "LDAP proxy authorization failure (X)"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Inappropriate LDAP authentication"
+msgstr "Protecþie nesuportatã"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "Invalid LDAP credentials"
+msgstr "Card invalid"
+
+msgid "Insufficient access for LDAP"
+msgstr ""
+
+msgid "LDAP server is busy"
+msgstr ""
+
+msgid "LDAP server is unavailable"
+msgstr ""
+
+msgid "LDAP server is unwilling to perform"
+msgstr ""
+
+msgid "Loop detected by LDAP"
+msgstr ""
+
+#, fuzzy
+#| msgid "Missing action"
+msgid "LDAP naming violation"
+msgstr "Acþiune lipsã"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "LDAP object class violation"
+msgstr "Violare de protocol"
+
+#, fuzzy
+msgid "LDAP operation not allowed on non-leaf"
+msgstr "Operaþiune anulatã"
+
+#, fuzzy
+#| msgid "Operation cancelled"
+msgid "LDAP operation not allowed on RDN"
+msgstr "Operaþiune anulatã"
+
+msgid "Already exists (LDAP)"
+msgstr ""
+
+msgid "Cannot modify LDAP object class"
+msgstr ""
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "LDAP results too large"
+msgstr "Linie prea lungã"
+
+#, fuzzy
+#| msgid "Operation cancelled"
+msgid "LDAP operation affects multiple DSAs"
+msgstr "Operaþiune anulatã"
+
+msgid "Virtual LDAP list view error"
+msgstr ""
+
+#, fuzzy
+msgid "Other LDAP error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+#| msgid "Resources exhausted"
+msgid "Resources exhausted in LCUP"
+msgstr "Resurse epuizate"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "Security violation in LCUP"
+msgstr "Violare de protocol"
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid data in LCUP"
+msgstr "Stare invalidã"
+
+#, fuzzy
+#| msgid "Unsupported certificate"
+msgid "Unsupported scheme in LCUP"
+msgstr "Certificat nesuportat"
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "Reload required in LCUP"
+msgstr "Este necesarã resetarea cardului"
+
+#, fuzzy
+#| msgid "Success"
+msgid "LDAP cancelled"
+msgstr "Succes"
+
+#, fuzzy
+msgid "No LDAP operation to cancel"
+msgstr "Operaþie nesuportatã"
+
+#, fuzzy
+msgid "Too late to cancel LDAP"
+msgstr "Operaþie nesuportatã"
+
+msgid "Cannot cancel LDAP"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "LDAP assertion failed"
+msgstr "Decriptarea a eºuat"
+
+msgid "Proxied authorization denied by LDAP"
+msgstr ""
+
 msgid "User defined error code 1"
 msgstr "Cod de eroare definit de utilizator 1"
 
@@ -1044,3 +1381,28 @@ msgstr "Folosire: %s EROARE-GPG [...]\n"
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: avertisment: nu am putut recunoaºte %s\n"
+
+#, fuzzy
+#~| msgid "Resources exhausted"
+#~ msgid "LCUP Resources exhausted"
+#~ msgstr "Resurse epuizate"
+
+#, fuzzy
+#~| msgid "Invalid data"
+#~ msgid "LCUP Invalid data"
+#~ msgstr "Date invalide"
+
+#, fuzzy
+#~| msgid "Decryption failed"
+#~ msgid "Assertion failed in lDAP"
+#~ msgstr "Decriptarea a eºuat"
+
+#, fuzzy
+#~| msgid "General error"
+#~ msgid "LDAP Other general error"
+#~ msgstr "Eroare generalã"
+
+#, fuzzy
+#~| msgid "dirmngr error"
+#~ msgid "Encoding error"
+#~ msgstr "eroare dirmngr"

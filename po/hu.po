@@ -963,6 +963,359 @@ msgstr "IPC paraméterhiba"
 msgid "Unknown IPC inquire"
 msgstr "Ismeretlen IPC érdeklődés"
 
+#, fuzzy
+#| msgid "General IPC error"
+msgid "General LDAP error"
+msgstr "Általános IPC hiba"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP attribute error"
+msgstr "Általános hiba"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP name error"
+msgstr "Általános hiba"
+
+#, fuzzy
+#| msgid "General Assuan error"
+msgid "General LDAP security error"
+msgstr "Általános Assuan hiba"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP service error"
+msgstr "Általános hiba"
+
+#, fuzzy
+#| msgid "General Assuan error"
+msgid "General LDAP update error"
+msgstr "Általános Assuan hiba"
+
+msgid "Experimental LDAP error code"
+msgstr ""
+
+#, fuzzy
+#| msgid "IPC write error"
+msgid "Private LDAP error code"
+msgstr "IPC írási hiba"
+
+#, fuzzy
+#| msgid "General IPC error"
+msgid "Other general LDAP error"
+msgstr "Általános IPC hiba"
+
+#, fuzzy
+#| msgid "IPC connect call failed"
+msgid "LDAP connecting failed (X)"
+msgstr "Az IPC kapcsolódási hívás meghiúsult"
+
+#, fuzzy
+#| msgid "General error"
+msgid "LDAP referral limit exceeded"
+msgstr "Általános hiba"
+
+msgid "LDAP client loop"
+msgstr ""
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "No LDAP results returned"
+msgstr "Kártya visszaállítás szükséges"
+
+#, fuzzy
+#| msgid "Element not found"
+msgid "LDAP control not found"
+msgstr "Az elem nem található"
+
+#, fuzzy
+#| msgid "Not supported"
+msgid "Not supported by LDAP"
+msgstr "Nem támogatott"
+
+#, fuzzy
+#| msgid "Unexpected error"
+msgid "LDAP connect error"
+msgstr "Váratlan hiba"
+
+msgid "Out of memory in LDAP"
+msgstr ""
+
+msgid "Bad parameter to an LDAP routine"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unsupported operation"
+msgid "User cancelled LDAP operation"
+msgstr "Nem támogatott művelet"
+
+#, fuzzy
+#| msgid "Bad certificate"
+msgid "Bad LDAP search filter"
+msgstr "Rossz tanúsítvány"
+
+#, fuzzy
+#| msgid "Unknown extension"
+msgid "Unknown LDAP authentication method"
+msgstr "Ismeretlen kiterjesztés"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "Timeout in LDAP"
+msgstr "Időtúllépés"
+
+#, fuzzy
+#| msgid "dirmngr error"
+msgid "LDAP decoding error"
+msgstr "dirmngr hiba"
+
+#, fuzzy
+#| msgid "dirmngr error"
+msgid "LDAP encoding error"
+msgstr "dirmngr hiba"
+
+#, fuzzy
+#| msgid "IPC read error"
+msgid "LDAP local error"
+msgstr "IPC olvasási hiba"
+
+#, fuzzy
+#| msgid "Not an IPC server"
+msgid "Cannot contact LDAP server"
+msgstr "Nem IPC kiszolgáló"
+
+#, fuzzy
+#| msgid "Success"
+msgid "LDAP success"
+msgstr "Sikeres"
+
+#, fuzzy
+#| msgid "Configuration error"
+msgid "LDAP operations error"
+msgstr "Beállítási hiba"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "LDAP protocol error"
+msgstr "Protokollsértés"
+
+msgid "Time limit exceeded in LDAP"
+msgstr ""
+
+msgid "Size limit exceeded in LDAP"
+msgstr ""
+
+msgid "LDAP compare false"
+msgstr ""
+
+msgid "LDAP compare true"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown extension"
+msgid "LDAP authentication method not supported"
+msgstr "Ismeretlen kiterjesztés"
+
+msgid "Strong(er) LDAP authentication required"
+msgstr ""
+
+msgid "Partial LDAP results+referral received"
+msgstr ""
+
+#, fuzzy
+#| msgid "General error"
+msgid "LDAP referral"
+msgstr "Általános hiba"
+
+msgid "Administrative LDAP limit exceeded"
+msgstr ""
+
+msgid "Critical LDAP extension is unavailable"
+msgstr ""
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "Confidentiality required by LDAP"
+msgstr "Kártya visszaállítás szükséges"
+
+msgid "LDAP SASL bind in progress"
+msgstr ""
+
+msgid "No such LDAP attribute"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid attribute"
+msgid "Undefined LDAP attribute type"
+msgstr "Érvénytelen attribútum"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Inappropriate matching in LDAP"
+msgstr "Nem támogatott védelem"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "Constraint violation in LDAP"
+msgstr "Protokollsértés"
+
+msgid "LDAP type or value exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid syntax in LDAP"
+msgstr "Érvénytelen állapot"
+
+#, fuzzy
+#| msgid "No CMS object"
+msgid "No such LDAP object"
+msgstr "Nincs CMS objektum"
+
+#, fuzzy
+#| msgid "Hardware problem"
+msgid "LDAP alias problem"
+msgstr "Hardverprobléma"
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid DN syntax in LDAP"
+msgstr "Érvénytelen állapot"
+
+msgid "LDAP entry is a leaf"
+msgstr ""
+
+#, fuzzy
+#| msgid "Encoding problem"
+msgid "LDAP alias dereferencing problem"
+msgstr "Kódolási probléma"
+
+msgid "LDAP proxy authorization failure (X)"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Inappropriate LDAP authentication"
+msgstr "Nem támogatott védelem"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "Invalid LDAP credentials"
+msgstr "Érvénytelen kártya"
+
+msgid "Insufficient access for LDAP"
+msgstr ""
+
+msgid "LDAP server is busy"
+msgstr ""
+
+msgid "LDAP server is unavailable"
+msgstr ""
+
+msgid "LDAP server is unwilling to perform"
+msgstr ""
+
+msgid "Loop detected by LDAP"
+msgstr ""
+
+#, fuzzy
+#| msgid "Missing action"
+msgid "LDAP naming violation"
+msgstr "Hiányzó művelet"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "LDAP object class violation"
+msgstr "Protokollsértés"
+
+#, fuzzy
+#| msgid "Operation not yet finished"
+msgid "LDAP operation not allowed on non-leaf"
+msgstr "A művelet még nem fejeződött be"
+
+#, fuzzy
+#| msgid "Operation cancelled"
+msgid "LDAP operation not allowed on RDN"
+msgstr "A művelet megszakítva"
+
+msgid "Already exists (LDAP)"
+msgstr ""
+
+msgid "Cannot modify LDAP object class"
+msgstr ""
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "LDAP results too large"
+msgstr "Túl hosszú sor"
+
+#, fuzzy
+#| msgid "Operation cancelled"
+msgid "LDAP operation affects multiple DSAs"
+msgstr "A művelet megszakítva"
+
+msgid "Virtual LDAP list view error"
+msgstr ""
+
+#, fuzzy
+#| msgid "General IPC error"
+msgid "Other LDAP error"
+msgstr "Általános IPC hiba"
+
+#, fuzzy
+#| msgid "Resources exhausted"
+msgid "Resources exhausted in LCUP"
+msgstr "Az erőforrások kimerültek"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "Security violation in LCUP"
+msgstr "Protokollsértés"
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid data in LCUP"
+msgstr "Érvénytelen állapot"
+
+#, fuzzy
+#| msgid "Unsupported certificate"
+msgid "Unsupported scheme in LCUP"
+msgstr "Nem támogatott tanúsítvány"
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "Reload required in LCUP"
+msgstr "Kártya visszaállítás szükséges"
+
+#, fuzzy
+#| msgid "Success"
+msgid "LDAP cancelled"
+msgstr "Sikeres"
+
+#, fuzzy
+#| msgid "Not operational"
+msgid "No LDAP operation to cancel"
+msgstr "Nem működik"
+
+#, fuzzy
+#| msgid "Not operational"
+msgid "Too late to cancel LDAP"
+msgstr "Nem működik"
+
+#, fuzzy
+#| msgid "Not an IPC server"
+msgid "Cannot cancel LDAP"
+msgstr "Nem IPC kiszolgáló"
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "LDAP assertion failed"
+msgstr "Visszafejtés sikertelen"
+
+msgid "Proxied authorization denied by LDAP"
+msgstr ""
+
 msgid "User defined error code 1"
 msgstr "1. felhasználó által megadott hibakód"
 
@@ -1030,3 +1383,28 @@ msgstr "Használat: %s GPG-ERROR […]\n"
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: figyelmeztetés: nem sikerült felismerni: %s\n"
+
+#, fuzzy
+#~| msgid "Resources exhausted"
+#~ msgid "LCUP Resources exhausted"
+#~ msgstr "Az erőforrások kimerültek"
+
+#, fuzzy
+#~| msgid "Invalid data"
+#~ msgid "LCUP Invalid data"
+#~ msgstr "Érvénytelen adatok"
+
+#, fuzzy
+#~| msgid "Decryption failed"
+#~ msgid "Assertion failed in lDAP"
+#~ msgstr "Visszafejtés sikertelen"
+
+#, fuzzy
+#~| msgid "General error"
+#~ msgid "LDAP Other general error"
+#~ msgstr "Általános hiba"
+
+#, fuzzy
+#~| msgid "dirmngr error"
+#~ msgid "Encoding error"
+#~ msgstr "dirmngr hiba"

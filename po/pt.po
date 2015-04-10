@@ -903,6 +903,363 @@ msgstr "Erro de parâmetro IPC"
 msgid "Unknown IPC inquire"
 msgstr "Inquirição IPC desconhecida"
 
+#, fuzzy
+#| msgid "General IPC error"
+msgid "General LDAP error"
+msgstr "Erro genérico de IPC"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP attribute error"
+msgstr "Erro genérico"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP name error"
+msgstr "Erro genérico"
+
+#, fuzzy
+#| msgid "General Assuan error"
+msgid "General LDAP security error"
+msgstr "Erro Assuan genérico"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP service error"
+msgstr "Erro genérico"
+
+#, fuzzy
+#| msgid "General Assuan error"
+msgid "General LDAP update error"
+msgstr "Erro Assuan genérico"
+
+msgid "Experimental LDAP error code"
+msgstr ""
+
+#, fuzzy
+#| msgid "IPC write error"
+msgid "Private LDAP error code"
+msgstr "Erro de escrita de IPC"
+
+#, fuzzy
+#| msgid "General IPC error"
+msgid "Other general LDAP error"
+msgstr "Erro genérico de IPC"
+
+#, fuzzy
+#| msgid "IPC connect call failed"
+msgid "LDAP connecting failed (X)"
+msgstr "Chamada de conexão de IPC falhada"
+
+#, fuzzy
+#| msgid "General error"
+msgid "LDAP referral limit exceeded"
+msgstr "Erro genérico"
+
+msgid "LDAP client loop"
+msgstr ""
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "No LDAP results returned"
+msgstr "Reinicialização de cartão necessária"
+
+#, fuzzy
+#| msgid "Element not found"
+msgid "LDAP control not found"
+msgstr "Elemento não encontrado"
+
+#, fuzzy
+#| msgid "Not supported"
+msgid "Not supported by LDAP"
+msgstr "Não suportado"
+
+#, fuzzy
+#| msgid "Unexpected error"
+msgid "LDAP connect error"
+msgstr "Erro inesperado"
+
+msgid "Out of memory in LDAP"
+msgstr ""
+
+msgid "Bad parameter to an LDAP routine"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unsupported operation"
+msgid "User cancelled LDAP operation"
+msgstr "Operação não suportada"
+
+#, fuzzy
+#| msgid "Bad certificate"
+msgid "Bad LDAP search filter"
+msgstr "Certificado errado"
+
+#, fuzzy
+#| msgid "Unknown extension"
+msgid "Unknown LDAP authentication method"
+msgstr "Extensão desconhecida"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "Timeout in LDAP"
+msgstr "Tempo limite"
+
+#, fuzzy
+#| msgid "dirmngr error"
+msgid "LDAP decoding error"
+msgstr "Erro no dirmngr"
+
+#, fuzzy
+#| msgid "dirmngr error"
+msgid "LDAP encoding error"
+msgstr "Erro no dirmngr"
+
+#, fuzzy
+#| msgid "IPC read error"
+msgid "LDAP local error"
+msgstr "Erro de leitura de IPC"
+
+#, fuzzy
+#| msgid "Not an IPC server"
+msgid "Cannot contact LDAP server"
+msgstr "Não é um servidor IPC"
+
+#, fuzzy
+#| msgid "Success"
+msgid "LDAP success"
+msgstr "Sucesso"
+
+#, fuzzy
+#| msgid "Configuration error"
+msgid "LDAP operations error"
+msgstr "Erro de configuração"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "LDAP protocol error"
+msgstr "Violação de protocolo"
+
+msgid "Time limit exceeded in LDAP"
+msgstr ""
+
+msgid "Size limit exceeded in LDAP"
+msgstr ""
+
+msgid "LDAP compare false"
+msgstr ""
+
+msgid "LDAP compare true"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown extension"
+msgid "LDAP authentication method not supported"
+msgstr "Extensão desconhecida"
+
+msgid "Strong(er) LDAP authentication required"
+msgstr ""
+
+#, fuzzy
+#| msgid "Fatal alert message received"
+msgid "Partial LDAP results+referral received"
+msgstr "Mensagem de alerta fatal recebida"
+
+#, fuzzy
+#| msgid "General error"
+msgid "LDAP referral"
+msgstr "Erro genérico"
+
+msgid "Administrative LDAP limit exceeded"
+msgstr ""
+
+msgid "Critical LDAP extension is unavailable"
+msgstr ""
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "Confidentiality required by LDAP"
+msgstr "Reinicialização de cartão necessária"
+
+msgid "LDAP SASL bind in progress"
+msgstr ""
+
+msgid "No such LDAP attribute"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid attribute"
+msgid "Undefined LDAP attribute type"
+msgstr "Atributo inválido"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Inappropriate matching in LDAP"
+msgstr "Protecção não suportada"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "Constraint violation in LDAP"
+msgstr "Violação de protocolo"
+
+msgid "LDAP type or value exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid syntax in LDAP"
+msgstr "Estado inválido"
+
+#, fuzzy
+#| msgid "No CMS object"
+msgid "No such LDAP object"
+msgstr "Sem objecto CMS"
+
+#, fuzzy
+#| msgid "Hardware problem"
+msgid "LDAP alias problem"
+msgstr "Problema de hardware"
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid DN syntax in LDAP"
+msgstr "Estado inválido"
+
+msgid "LDAP entry is a leaf"
+msgstr ""
+
+#, fuzzy
+#| msgid "Encoding problem"
+msgid "LDAP alias dereferencing problem"
+msgstr "Problema de codificação"
+
+msgid "LDAP proxy authorization failure (X)"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Inappropriate LDAP authentication"
+msgstr "Protecção não suportada"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "Invalid LDAP credentials"
+msgstr "Cartão inválido"
+
+msgid "Insufficient access for LDAP"
+msgstr ""
+
+msgid "LDAP server is busy"
+msgstr ""
+
+#, fuzzy
+#| msgid "No keyserver available"
+msgid "LDAP server is unavailable"
+msgstr "Sem servidor de chaves disponível"
+
+msgid "LDAP server is unwilling to perform"
+msgstr ""
+
+msgid "Loop detected by LDAP"
+msgstr ""
+
+#, fuzzy
+#| msgid "Missing action"
+msgid "LDAP naming violation"
+msgstr "Acção em falta"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "LDAP object class violation"
+msgstr "Violação de protocolo"
+
+#, fuzzy
+#| msgid "Operation not yet finished"
+msgid "LDAP operation not allowed on non-leaf"
+msgstr "Operação ainda não completada"
+
+#, fuzzy
+#| msgid "Operation cancelled"
+msgid "LDAP operation not allowed on RDN"
+msgstr "Operação cancelada"
+
+msgid "Already exists (LDAP)"
+msgstr ""
+
+msgid "Cannot modify LDAP object class"
+msgstr ""
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "LDAP results too large"
+msgstr "Linha demasiado longa"
+
+#, fuzzy
+#| msgid "Operation cancelled"
+msgid "LDAP operation affects multiple DSAs"
+msgstr "Operação cancelada"
+
+msgid "Virtual LDAP list view error"
+msgstr ""
+
+#, fuzzy
+#| msgid "General IPC error"
+msgid "Other LDAP error"
+msgstr "Erro genérico de IPC"
+
+#, fuzzy
+#| msgid "Resources exhausted"
+msgid "Resources exhausted in LCUP"
+msgstr "Recursos esgotados"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "Security violation in LCUP"
+msgstr "Violação de protocolo"
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid data in LCUP"
+msgstr "Estado inválido"
+
+#, fuzzy
+#| msgid "Unsupported certificate"
+msgid "Unsupported scheme in LCUP"
+msgstr "Certificado não suportado"
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "Reload required in LCUP"
+msgstr "Reinicialização de cartão necessária"
+
+#, fuzzy
+#| msgid "Success"
+msgid "LDAP cancelled"
+msgstr "Sucesso"
+
+#, fuzzy
+#| msgid "Not operational"
+msgid "No LDAP operation to cancel"
+msgstr "Não operacional"
+
+#, fuzzy
+#| msgid "Not operational"
+msgid "Too late to cancel LDAP"
+msgstr "Não operacional"
+
+#, fuzzy
+#| msgid "Not an IPC server"
+msgid "Cannot cancel LDAP"
+msgstr "Não é um servidor IPC"
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "LDAP assertion failed"
+msgstr "Desencriptação falhada"
+
+msgid "Proxied authorization denied by LDAP"
+msgstr ""
+
 msgid "User defined error code 1"
 msgstr "Código de erro definido pelo utilizador 1"
 
@@ -970,3 +1327,28 @@ msgstr "Utilização: %s GPG-ERROR [...]\n"
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: aviso: não consegui reconhecer %s\n"
+
+#, fuzzy
+#~| msgid "Resources exhausted"
+#~ msgid "LCUP Resources exhausted"
+#~ msgstr "Recursos esgotados"
+
+#, fuzzy
+#~| msgid "Invalid data"
+#~ msgid "LCUP Invalid data"
+#~ msgstr "Dados inválidos"
+
+#, fuzzy
+#~| msgid "Decryption failed"
+#~ msgid "Assertion failed in lDAP"
+#~ msgstr "Desencriptação falhada"
+
+#, fuzzy
+#~| msgid "General error"
+#~ msgid "LDAP Other general error"
+#~ msgstr "Erro genérico"
+
+#, fuzzy
+#~| msgid "dirmngr error"
+#~ msgid "Encoding error"
+#~ msgstr "Erro no dirmngr"
