@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error-1.14\n"
+"Project-Id-Version: libgpg-error-1.19\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2015-01-26 10:06+0100\n"
+"PO-Revision-Date: 2015-04-10 18:54+0200\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -903,6 +903,249 @@ msgstr "IPC Parameterfehler"
 msgid "Unknown IPC inquire"
 msgstr "Unbekanntes IPC \"Inquire\""
 
+msgid "General LDAP error"
+msgstr "Allgemeiner LDAP Fehler"
+
+msgid "General LDAP attribute error"
+msgstr "Allgemeiner LDAP Attributfehler"
+
+msgid "General LDAP name error"
+msgstr "Allgemeiner LDAP Namensfehler"
+
+msgid "General LDAP security error"
+msgstr "Allgemeiner LDAP Sicherheitsfehler"
+
+msgid "General LDAP service error"
+msgstr "Allgemeiner LDAP Servicefehler"
+
+msgid "General LDAP update error"
+msgstr "Allgemeiner LDAP \"Update\" Fehler"
+
+msgid "Experimental LDAP error code"
+msgstr "Experimenteller LDAP Fehlercode"
+
+msgid "Private LDAP error code"
+msgstr "Privater LDAP Fehlercode"
+
+msgid "Other general LDAP error"
+msgstr "Sonstiger allgemeiner LDAP Fehler"
+
+msgid "LDAP connecting failed (X)"
+msgstr "Fehler beim LDAP Verbindungsaufbau (X)"
+
+msgid "LDAP referral limit exceeded"
+msgstr "Grenze für LDAP Verweise überschritten"
+
+msgid "LDAP client loop"
+msgstr "Schleife im LDAP Client entdeckt"
+
+msgid "No LDAP results returned"
+msgstr "Keine LDAP Ergebnisse"
+
+msgid "LDAP control not found"
+msgstr "LDAP \"Control\" nicht gefunden"
+
+msgid "Not supported by LDAP"
+msgstr "Von LDAP nicht unterstützt"
+
+msgid "LDAP connect error"
+msgstr "LDAP Verbindungsfehler"
+
+msgid "Out of memory in LDAP"
+msgstr "Nicht genügend Speicher für LDAP Operation"
+
+msgid "Bad parameter to an LDAP routine"
+msgstr "Ungültiger Parameter an LDAP Funktion übergeben"
+
+msgid "User cancelled LDAP operation"
+msgstr "LDAP Verarbeitung durch Benutzer abgebrochen"
+
+msgid "Bad LDAP search filter"
+msgstr "Fehlerhaftes LDAP Suchfilter"
+
+msgid "Unknown LDAP authentication method"
+msgstr "Unbekanntes LDAP Authentifizierungsverfahren"
+
+msgid "Timeout in LDAP"
+msgstr "Zeitüberschreitung (LDAP)"
+
+msgid "LDAP decoding error"
+msgstr "LDAP Dekodierungsfehler"
+
+msgid "LDAP encoding error"
+msgstr "LDAP Kodierungsfehler"
+
+msgid "LDAP local error"
+msgstr "Lokaler LDAP Fehler"
+
+msgid "Cannot contact LDAP server"
+msgstr "Verbindung zum LDAP Server nicht möglich"
+
+msgid "LDAP success"
+msgstr "LDAP erfolgreich"
+
+msgid "LDAP operations error"
+msgstr "LDAP Konfigurationsfehler"
+
+msgid "LDAP protocol error"
+msgstr "LDAP Protokollverletzung"
+
+msgid "Time limit exceeded in LDAP"
+msgstr "Zeitgrenze von LDAP überschritten"
+
+msgid "Size limit exceeded in LDAP"
+msgstr "Größengrenze von LDAP überschritten"
+
+msgid "LDAP compare false"
+msgstr "LDAP Vergleich falsch"
+
+msgid "LDAP compare true"
+msgstr "LDAP Vergleich richtig"
+
+msgid "LDAP authentication method not supported"
+msgstr "LDAP Authentifizierungsverfahren nicht unterstützt"
+
+msgid "Strong(er) LDAP authentication required"
+msgstr "Starke LDAP Authentifizierung benötigt"
+
+msgid "Partial LDAP results+referral received"
+msgstr "Partielle LDAP Ergebnisse und Verweise erhalten"
+
+msgid "LDAP referral"
+msgstr "LDAP Verweise"
+
+msgid "Administrative LDAP limit exceeded"
+msgstr "Administrative LDAP Grenze überschritten"
+
+msgid "Critical LDAP extension is unavailable"
+msgstr "Kritische LDAP Erweiterung nicht vorhanden"
+
+msgid "Confidentiality required by LDAP"
+msgstr "Vertraulichkeit von LDAP angefordert"
+
+msgid "LDAP SASL bind in progress"
+msgstr "LDAP SALS \"bind\" wird durchgeführt"
+
+msgid "No such LDAP attribute"
+msgstr "Kein solches LDAP Attribut"
+
+msgid "Undefined LDAP attribute type"
+msgstr "Ungültiger LDAP Attributtyp"
+
+msgid "Inappropriate matching in LDAP"
+msgstr "Unpassende Zusammenstellung in LDAP"
+
+msgid "Constraint violation in LDAP"
+msgstr "Bedingung nicht eingehalten in LDAP"
+
+msgid "LDAP type or value exists"
+msgstr "LDAP Typ oder Wert existiert"
+
+msgid "Invalid syntax in LDAP"
+msgstr "Ungültiger Status in LDAP"
+
+msgid "No such LDAP object"
+msgstr "Kein solches LDAP Objekt"
+
+msgid "LDAP alias problem"
+msgstr "Problem mit LDAP Alias"
+
+msgid "Invalid DN syntax in LDAP"
+msgstr "Ungültiger DN Synatx in LDAP"
+
+msgid "LDAP entry is a leaf"
+msgstr "LDAP Element ist ein \"leaf\""
+
+msgid "LDAP alias dereferencing problem"
+msgstr "Problem bei der Auflösung eines LDAP Aliases"
+
+msgid "LDAP proxy authorization failure (X)"
+msgstr "LDAP Proxy Authentifizierung fehlgeschlagen (X)"
+
+msgid "Inappropriate LDAP authentication"
+msgstr "Unpassende LDAP Authentifizierung"
+
+msgid "Invalid LDAP credentials"
+msgstr "Ungültige LDAP Credentials"
+
+msgid "Insufficient access for LDAP"
+msgstr "Ungenügende Zugriffsrechte für LDAP"
+
+msgid "LDAP server is busy"
+msgstr "LDAP Server ist beschäftigt"
+
+msgid "LDAP server is unavailable"
+msgstr "LDAP Server nicht verfügbar"
+
+msgid "LDAP server is unwilling to perform"
+msgstr "LDAP Server weigert sich etwas durchzuführen"
+
+msgid "Loop detected by LDAP"
+msgstr "LDAP hat eine Schleife erkannt"
+
+msgid "LDAP naming violation"
+msgstr "LDAP Benennungsverletzung"
+
+msgid "LDAP object class violation"
+msgstr "Verletzung der LDAP Objektklasse"
+
+msgid "LDAP operation not allowed on non-leaf"
+msgstr "LDAP Operation auf einem Nicht-\"Leaf\" ist nicht erlaubt"
+
+msgid "LDAP operation not allowed on RDN"
+msgstr "LDAP Operation nicht erlaubt auf einem RDN"
+
+msgid "Already exists (LDAP)"
+msgstr "Existiert bereits (LDAP)"
+
+msgid "Cannot modify LDAP object class"
+msgstr "Die LDAP Objektklasse kann nicht geändert werden"
+
+msgid "LDAP results too large"
+msgstr "LDAP Ergebnisse sind zu lang"
+
+msgid "LDAP operation affects multiple DSAs"
+msgstr "LDAP Operation betrifft mehrere DSAs"
+
+msgid "Virtual LDAP list view error"
+msgstr "Fehler in virtueller LDAP \"list view\""
+
+msgid "Other LDAP error"
+msgstr "Sonstiger allgemeiner LDAP Fehler"
+
+msgid "Resources exhausted in LCUP"
+msgstr "Ressourcen erschöpft in LCUP"
+
+msgid "Security violation in LCUP"
+msgstr "Sicherheitsverletzung in LCUP"
+
+msgid "Invalid data in LCUP"
+msgstr "Ungültige Daten in LDAP"
+
+msgid "Unsupported scheme in LCUP"
+msgstr "Nicht unterstütztes Schema in LCUP"
+
+msgid "Reload required in LCUP"
+msgstr "\"Reload\" notwendig in LCUP"
+
+msgid "LDAP cancelled"
+msgstr "LDAP wurde abgebrochen"
+
+msgid "No LDAP operation to cancel"
+msgstr "Fehlende LDAP Operation zum abbrechen"
+
+msgid "Too late to cancel LDAP"
+msgstr "Zu spät um LDAP Operation abzubrechen"
+
+msgid "Cannot cancel LDAP"
+msgstr "LDAP Operation kann nicht abgebrochen werden"
+
+msgid "LDAP assertion failed"
+msgstr "LDAP \"Assertion\" fehlgeschlagen"
+
+msgid "Proxied authorization denied by LDAP"
+msgstr "LDAP Authentifizierung via Proxy wurde verweigert"
+
 msgid "User defined error code 1"
 msgstr "Benutzerdefinierter Fehlercode 1"
 
@@ -970,3 +1213,20 @@ msgstr "Aufruf: %s GPG-FEHLER [...]\n"
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: Warnung: %s konnte nicht erkannt werden\n"
+
+#~ msgid "LCUP Resources exhausted"
+#~ msgstr "LCUP Ressourcen erschöpft"
+
+#~ msgid "LCUP Invalid data"
+#~ msgstr "LCUP Ungültige Daten"
+
+#~ msgid "Assertion failed in lDAP"
+#~ msgstr "\"Assertion\" in LDAP fehlgeschlagen"
+
+#~ msgid "LDAP Other general error"
+#~ msgstr "Sonstiger allgemeiner LDAP Fehler"
+
+#, fuzzy
+#~| msgid "dirmngr error"
+#~ msgid "Encoding error"
+#~ msgstr "Fehler im Dirmngr"
