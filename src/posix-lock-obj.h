@@ -20,15 +20,22 @@
 #ifndef POSIX_LOCK_OBJ_H
 #define POSIX_LOCK_OBJ_H
 
-#define LOCK_ABI_VERSION 1
+#define LOCK_ABI_NOT_AVAILABLE (-1)
+#if USE_POSIX_THREADS
+# define LOCK_ABI_VERSION 1
+#else
+# define LOCK_ABI_VERSION LOCK_ABI_NOT_AVAILABLE
+#endif
 
 typedef struct
 {
   long vers;
+#if USE_POSIX_THREADS
   union {
     pthread_mutex_t mtx;
     long *dummy;
   } u;
+#endif
 } _gpgrt_lock_t;
 
 

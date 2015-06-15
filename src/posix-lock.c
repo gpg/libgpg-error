@@ -155,7 +155,7 @@ _gpgrt_lock_init (gpgrt_lock_t *lockhd)
   else
     rc = 0; /* Threads are not used.  */
 #else /* Unknown thread system.  */
-  rc = GPG_ERR_NOT_IMPLEMENTED;
+  rc = lock->vers == LOCK_ABI_NOT_AVAILABLE? 0 : GPG_ERR_NOT_IMPLEMENTED;
 #endif /* Unknown thread system.  */
 
   return rc;
@@ -178,7 +178,7 @@ _gpgrt_lock_lock (gpgrt_lock_t *lockhd)
   else
     rc = 0; /* Threads are not used.  */
 #else /* Unknown thread system.  */
-  rc = GPG_ERR_NOT_IMPLEMENTED;
+  rc = lock->vers == LOCK_ABI_NOT_AVAILABLE? 0 : GPG_ERR_NOT_IMPLEMENTED;
 #endif /* Unknown thread system.  */
 
   return rc;
@@ -201,7 +201,7 @@ _gpgrt_lock_trylock (gpgrt_lock_t *lockhd)
   else
     rc = 0; /* Threads are not used.  */
 #else /* Unknown thread system.  */
-  rc = GPG_ERR_NOT_IMPLEMENTED;
+  rc = lock->vers == LOCK_ABI_NOT_AVAILABLE? 0 : GPG_ERR_NOT_IMPLEMENTED;
 #endif /* Unknown thread system.  */
 
   return rc;
@@ -224,7 +224,7 @@ _gpgrt_lock_unlock (gpgrt_lock_t *lockhd)
   else
     rc = 0; /* Threads are not used.  */
 #else /* Unknown thread system.  */
-  rc = GPG_ERR_NOT_IMPLEMENTED;
+  rc = lock->vers == LOCK_ABI_NOT_AVAILABLE? 0 : GPG_ERR_NOT_IMPLEMENTED;
 #endif /* Unknown thread system.  */
 
   return rc;
@@ -255,7 +255,7 @@ _gpgrt_lock_destroy (gpgrt_lock_t *lockhd)
   else
     rc = 0; /* Threads are not used.  */
 #else /* Unknown thread system.  */
-  rc = GPG_ERR_NOT_IMPLEMENTED;
+  rc = lock->vers == LOCK_ABI_NOT_AVAILABLE? 0 : GPG_ERR_NOT_IMPLEMENTED;
 #endif /* Unknown thread system.  */
 
   return rc;

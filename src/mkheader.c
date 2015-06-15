@@ -33,6 +33,7 @@ static int have_stdint_h;
 static int have_w32_system;
 static int have_w64_system;
 static char *replacement_for_off_type;
+static int use_posix_threads;
 
 /* Various state flags.  */
 static int stdint_h_included;
@@ -148,6 +149,8 @@ parse_config_h (const char *fname)
           xfree (replacement_for_off_type);
           replacement_for_off_type = xstrdup (p1);
         }
+      else if (!strcmp (p1, "USE_POSIX_THREADS"))
+        use_posix_threads = 1;
     }
 
   if (ferror (fp))
@@ -597,6 +600,8 @@ main (int argc, char **argv)
             printf ("%s", host_triplet);
           else
             printf ("%s (%s)", host_triplet, host_triplet_raw);
+          if (!use_posix_threads && !have_w32_system && !have_w64_system)
+            fputs (" NO-THREADS", stdout);
           fputs (p2, stdout);
         }
       else if (!write_special (fname, lnr, p1))

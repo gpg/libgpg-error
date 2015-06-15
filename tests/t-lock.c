@@ -1,5 +1,5 @@
 /* t-lock.c - Check the lock functions
- * Copyright (C) 2013 g10 Code GmbH
+ * Copyright (C) 2013, 2015 g10 Code GmbH
  *
  * This file is part of libgpg-error.
  *
@@ -105,6 +105,7 @@ print_accounts (void)
 }
 
 
+#if defined(_WIN32) || defined(USE_POSIX_THREADS)
 /* Get a a random integer value in the range 0 to HIGH.  */
 static unsigned int
 get_rand (int high)
@@ -190,6 +191,7 @@ accountant_thread (void *arg)
     }
   return THREAD_RET_VALUE;
 }
+#endif /*_WIN32||USE_POSIX_THREADS*/
 
 
 static void
@@ -234,6 +236,7 @@ run_test (void)
   CloseHandle (rthread);
 
 #else /*!_WIN32*/
+# ifdef USE_POSIX_THREADS
   pthread_t rthread;
   pthread_t athreads[N_ACCOUNTANTS];
   int i;
@@ -253,7 +256,11 @@ run_test (void)
   stop_revision_thread = 1;
   pthread_join (rthread, NULL);
   show ("revision thread has terminated");
-
+# else /*!USE_POSIX_THREADS*/
+  verbose++;
+  show ("no thread support - skipping test\n", PGM);
+  verbose--;
+# endif /*!USE_POSIX_THREADS*/
 #endif /*!_WIN32*/
 
   gpgrt_lock_destroy (&accounts_lock);

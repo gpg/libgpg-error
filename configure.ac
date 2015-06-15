@@ -532,11 +532,17 @@ AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
 
 AC_OUTPUT
 
+tmp=
+if test "$have_w32_system" != yes; then
+   if test x"$gl_use_threads" = xno; then
+     tmp=" NO-THREADS"
+   fi
+fi
 echo "
         $PACKAGE_NAME-$PACKAGE_VERSION prepared for make
 
         Revision: mym4_revision  (mym4_revision_dec)
-        Platform: $host
+        Platform: $host$tmp
 "
 if test "$gcry_cv_gcc_attribute_aligned" != "yes" ; then
 cat <<G10EOF

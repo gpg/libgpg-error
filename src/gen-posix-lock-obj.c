@@ -36,8 +36,10 @@
 #define PGM "gen-posix-lock-obj"
 
 /* Check that configure did its job.  */
+#ifdef USE_POSIX_THREADS
 #if SIZEOF_PTHREAD_MUTEX_T < 4
 # error sizeof pthread_mutex_t is not known.
+#endif
 #endif
 
 /* Special requirements for certain platforms.  */
@@ -52,25 +54,32 @@
 # error compiler is not able to enforce a 16 byte alignment
 #endif
 
-
+#ifdef USE_POSIX_THREADS
 static pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
-
+#endif
 
 int
 main (void)
 {
+#ifdef USE_POSIX_THREADS
   unsigned char *p;
   int i;
+#endif
   struct {
-    pthread_mutex_t mtx;
     long vers;
+#ifdef USE_POSIX_THREADS
+    pthread_mutex_t mtx;
+#endif
   } dummyobj;
 
+
+#ifdef USE_POSIX_THREADS
   if (sizeof mtx != SIZEOF_PTHREAD_MUTEX_T)
     {
       fprintf (stderr, PGM ": pthread_mutex_t mismatch\n");
       exit (1);
     }
+#endif /*USE_POSIX_THREADS*/
 
   if (sizeof (dummyobj) != sizeof (_gpgrt_lock_t))
     {
@@ -78,13 +87,23 @@ main (void)
       exit (1);
     }
 
-  /* To force a probably suitable alignment of the structure we use a
-     union and include a long and a pointer to a long.  */
-  printf ("## lock-obj-pub.%s.h\n"
+  printf ("## lock-obj-pub.%s.h%s\n"
           "## File created by " PGM " - DO NOT EDIT\n"
           "## To be included by mkheader into gpg-error.h\n"
-          "\n"
-          "typedef struct\n"
+          "\n",
+          HOST_TRIPLET_STRING,
+#ifdef USE_POSIX_THREADS
+          ""
+#else
+          " - NO LOCK SUPPORT"
+#endif
+          );
+
+#ifdef USE_POSIX_THREADS
+
+  /* To force a probably suitable alignment of the structure we use a
+     union and include a long and a pointer to a long.  */
+  printf ("typedef struct\n"
           "{\n"
           "  long _vers;\n"
           "  union {\n"
@@ -96,13 +115,12 @@ main (void)
           "} gpgrt_lock_t;\n"
           "\n"
           "#define GPGRT_LOCK_INITIALIZER {%d,{{",
-          HOST_TRIPLET_STRING,
           SIZEOF_PTHREAD_MUTEX_T,
-#if USE_16BYTE_ALIGNMENT
+# if USE_16BYTE_ALIGNMENT
           "    int _x16_align __attribute__ ((aligned (16)));\n",
-#else
+# else
           "",
-#endif
+# endif
           LOCK_ABI_VERSION);
   p = (unsigned char *)&mtx;
   for (i=0; i < sizeof mtx; i++)
@@ -113,8 +131,22 @@ main (void)
       if (i < sizeof mtx - 1)
         putchar (',');
     }
-  fputs ("}}}\n"
-         "##\n"
+  fputs ("}}}\n", stdout);
+
+#else /*!USE_POSIX_THREADS*/
+
+  printf ("/* Dummy object - no locking available.  */\n"
+          "typedef struct\n"
+          "{\n"
+          "  long _vers;\n"
+          "} gpgrt_lock_t;\n"
+          "\n"
+          "#define GPGRT_LOCK_INITIALIZER {%d}\n",
+          LOCK_ABI_VERSION);
+
+#endif /*!USE_POSIX_THREADS*/
+
+  fputs ("##\n"
          "## Loc" "al Variables:\n"
          "## mode: c\n"
          "## buffer-read-only: t\n"
