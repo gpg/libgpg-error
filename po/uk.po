@@ -2,12 +2,12 @@
 # Copyright (C) 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2014.
+# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2014, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-15 19:40+0200\n"
+"PO-Revision-Date: 2015-07-12 16:21+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
 "Language: uk\n"
@@ -729,20 +729,18 @@ msgid "Bad octal character in S-expression"
 msgstr "Помилковий вісімковий символ у S-виразі"
 
 msgid "Legacy key"
-msgstr ""
+msgstr "Застарілий ключ"
 
-#, fuzzy
 #| msgid "Buffer too short"
 msgid "Request too short"
-msgstr "Занадто короткий буфер"
+msgstr "Занадто короткий запит"
 
-#, fuzzy
 #| msgid "Line too long"
 msgid "Request too long"
-msgstr "Рядок надто довгий"
+msgstr "Надто довгий запит"
 
 msgid "Object is in termination state"
-msgstr ""
+msgstr "Об’єкт перебуває у стані переривання"
 
 msgid "No certificate chain"
 msgstr "Немає ланцюжка сертифікації"
@@ -829,7 +827,7 @@ msgid "Bogus string"
 msgstr "Фіктивний рядок"
 
 msgid "Forbidden"
-msgstr ""
+msgstr "Заборонено"
 
 msgid "Key disabled"
 msgstr "Ключ вимкнено"
@@ -912,362 +910,305 @@ msgstr "Помилка у параметрі IPC"
 msgid "Unknown IPC inquire"
 msgstr "Невідомий запит IPC"
 
-#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
-msgstr "Загальна помилка IPC"
+msgstr "Загальна помилка LDAP"
 
-#, fuzzy
 #| msgid "General error"
 msgid "General LDAP attribute error"
-msgstr "Загальна помилка"
+msgstr "Загальна помилка атрибута LDAP"
 
-#, fuzzy
 #| msgid "General error"
 msgid "General LDAP name error"
-msgstr "Загальна помилка"
+msgstr "Загальна помилка назви LDAP"
 
-#, fuzzy
 #| msgid "General Assuan error"
 msgid "General LDAP security error"
-msgstr "Загальна помилка бібліотеки Assuan"
+msgstr "Загальна помилка захисту LDAP"
 
-#, fuzzy
 #| msgid "General error"
 msgid "General LDAP service error"
-msgstr "Загальна помилка"
+msgstr "Загальна помилка служби LDAP"
 
-#, fuzzy
 #| msgid "General Assuan error"
 msgid "General LDAP update error"
-msgstr "Загальна помилка бібліотеки Assuan"
+msgstr "Загальна помилка оновлення LDAP"
 
 msgid "Experimental LDAP error code"
-msgstr ""
+msgstr "Експериментальний код помилки LDAP"
 
-#, fuzzy
 #| msgid "IPC write error"
 msgid "Private LDAP error code"
-msgstr "Помилка запису IPC"
+msgstr "Код конфіденційної помилки LDAP"
 
-#, fuzzy
 #| msgid "General IPC error"
 msgid "Other general LDAP error"
-msgstr "Загальна помилка IPC"
+msgstr "Інша загальна помилка LDAP"
 
-#, fuzzy
 #| msgid "IPC connect call failed"
 msgid "LDAP connecting failed (X)"
-msgstr "Помилка з’єднувального виклику IPC"
+msgstr "Не вдалося з’єднатися із LDAP (X)"
 
-#, fuzzy
 #| msgid "General error"
 msgid "LDAP referral limit exceeded"
-msgstr "Загальна помилка"
+msgstr "Перевищення обмежень щодо спрямовування у LDAP"
 
 msgid "LDAP client loop"
-msgstr ""
+msgstr "Циклічний клієнт LDAP"
 
-#, fuzzy
 #| msgid "Card reset required"
 msgid "No LDAP results returned"
-msgstr "Надіслано запит на скидання картки"
+msgstr "Не повернуто результатів LDAP"
 
-#, fuzzy
 #| msgid "Element not found"
 msgid "LDAP control not found"
-msgstr "Елемента не знайдено"
+msgstr "Не знайдено керування LDAP"
 
-#, fuzzy
 #| msgid "Not supported"
 msgid "Not supported by LDAP"
-msgstr "Не підтримується"
+msgstr "Не підтримується LDAP"
 
-#, fuzzy
 #| msgid "Unexpected error"
 msgid "LDAP connect error"
-msgstr "Неочікувана помилка"
+msgstr "Помилка з’єднання LDAP"
 
 msgid "Out of memory in LDAP"
-msgstr ""
+msgstr "Не вистачає пам’яті у LDAP"
 
 msgid "Bad parameter to an LDAP routine"
-msgstr ""
+msgstr "Помилковий параметр підпрограми LDAP"
 
-#, fuzzy
 #| msgid "Unsupported operation"
 msgid "User cancelled LDAP operation"
-msgstr "Непідтримувана дія"
+msgstr "Дію LDAP скасовано користувачем"
 
-#, fuzzy
 #| msgid "Bad certificate"
 msgid "Bad LDAP search filter"
-msgstr "Помилковий сертифікат"
+msgstr "Помилковий фільтр пошуку LDAP"
 
-#, fuzzy
 #| msgid "Unknown extension"
 msgid "Unknown LDAP authentication method"
-msgstr "Невідоме розширення"
+msgstr "Невідомий спосіб розпізнавання LDAP"
 
-#, fuzzy
 #| msgid "Timeout"
 msgid "Timeout in LDAP"
-msgstr "Час очікування"
+msgstr "Перевищення часу очікування у LDAP"
 
-#, fuzzy
 #| msgid "dirmngr error"
 msgid "LDAP decoding error"
-msgstr "Помилка dirmngr"
+msgstr "Помилка декодування LDAP"
 
-#, fuzzy
 #| msgid "dirmngr error"
 msgid "LDAP encoding error"
-msgstr "Помилка dirmngr"
+msgstr "Помилка кодування LDAP"
 
-#, fuzzy
 #| msgid "IPC read error"
 msgid "LDAP local error"
-msgstr "Помилка читання IPC"
+msgstr "Локальна помилка LDAP"
 
-#, fuzzy
 #| msgid "Not an IPC server"
 msgid "Cannot contact LDAP server"
-msgstr "Не є сервером IPC"
+msgstr "Не вдалося встановити зв’язок із сервером LDAP"
 
-#, fuzzy
 #| msgid "Success"
 msgid "LDAP success"
-msgstr "Виконано"
+msgstr "Успіх LDAP"
 
-#, fuzzy
 #| msgid "Configuration error"
 msgid "LDAP operations error"
-msgstr "Помилка налаштування"
+msgstr "Помилка дій LDAP"
 
-#, fuzzy
 #| msgid "Protocol violation"
 msgid "LDAP protocol error"
-msgstr "Порушення протоколу"
+msgstr "Помилка протоколу LDAP"
 
 msgid "Time limit exceeded in LDAP"
-msgstr ""
+msgstr "Перевищено час очікування у LDAP"
 
 msgid "Size limit exceeded in LDAP"
-msgstr ""
+msgstr "Перевищено обмеження на розмір у LDAP"
 
 msgid "LDAP compare false"
-msgstr ""
+msgstr "Порівняння LDAP: не збігаються"
 
 msgid "LDAP compare true"
-msgstr ""
+msgstr "Порівняння LDAP: збігаються"
 
-#, fuzzy
 #| msgid "Unknown extension"
 msgid "LDAP authentication method not supported"
-msgstr "Невідоме розширення"
+msgstr "Підтримки методу розпізнавання LDAP не передбачено"
 
 msgid "Strong(er) LDAP authentication required"
-msgstr ""
+msgstr "Потрібен потужніший спосіб розпізнавання LDAP"
 
-#, fuzzy
 #| msgid "Fatal alert message received"
 msgid "Partial LDAP results+referral received"
-msgstr "Отримано критичне попереджувальне повідомлення"
+msgstr "Отримано часткові результати і спрямування LDAP"
 
-#, fuzzy
 #| msgid "General error"
 msgid "LDAP referral"
-msgstr "Загальна помилка"
+msgstr "Спрямування LDAP"
 
 msgid "Administrative LDAP limit exceeded"
-msgstr ""
+msgstr "Перевищено адміністративне обмеження LDAP"
 
 msgid "Critical LDAP extension is unavailable"
-msgstr ""
+msgstr "Недоступне критичне розширення LDAP"
 
-#, fuzzy
 #| msgid "Card reset required"
 msgid "Confidentiality required by LDAP"
-msgstr "Надіслано запит на скидання картки"
+msgstr "Конфіденційно потрібне LDAP"
 
 msgid "LDAP SASL bind in progress"
-msgstr ""
+msgstr "Виконуємо прив’язування SASL LDAP"
 
 msgid "No such LDAP attribute"
-msgstr ""
+msgstr "Немає такого атрибута LDAP"
 
-#, fuzzy
 #| msgid "Invalid attribute"
 msgid "Undefined LDAP attribute type"
-msgstr "Некоректний атрибут"
+msgstr "Невизначний тип атрибута LDAP"
 
-#, fuzzy
 #| msgid "Unsupported protection"
 msgid "Inappropriate matching in LDAP"
-msgstr "Непідтримуваний захист"
+msgstr "Неприйнятна відповідність у LDAP"
 
-#, fuzzy
 #| msgid "Protocol violation"
 msgid "Constraint violation in LDAP"
-msgstr "Порушення протоколу"
+msgstr "Порушення обмежень у LDAP"
 
 msgid "LDAP type or value exists"
-msgstr ""
+msgstr "Тип або значення LDAP існує"
 
-#, fuzzy
 #| msgid "Invalid state"
 msgid "Invalid syntax in LDAP"
-msgstr "Некоректний стан"
+msgstr "Некоректний синтаксис у LDAP"
 
-#, fuzzy
 #| msgid "No CMS object"
 msgid "No such LDAP object"
-msgstr "Немає об’єкта CMS"
+msgstr "Немає такого об’єкта LDAP"
 
-#, fuzzy
 #| msgid "Hardware problem"
 msgid "LDAP alias problem"
-msgstr "Апаратні проблеми"
+msgstr "Проблема псевдоніма LDAP"
 
-#, fuzzy
 #| msgid "Invalid state"
 msgid "Invalid DN syntax in LDAP"
-msgstr "Некоректний стан"
+msgstr "Некоректний синтаксис DN у LDAP"
 
 msgid "LDAP entry is a leaf"
-msgstr ""
+msgstr "Запис LDAP є листком"
 
-#, fuzzy
 #| msgid "Encoding problem"
 msgid "LDAP alias dereferencing problem"
-msgstr "Проблема з кодуванням"
+msgstr "Проблемі з скасування прив’язки псевдоніма LDAP"
 
 msgid "LDAP proxy authorization failure (X)"
-msgstr ""
+msgstr "Помилка уповноваження проксі LDAP (X)"
 
-#, fuzzy
 #| msgid "Unsupported protection"
 msgid "Inappropriate LDAP authentication"
-msgstr "Непідтримуваний захист"
+msgstr "Неприйнятне розпізнавання LDAP"
 
-#, fuzzy
 #| msgid "Invalid card"
 msgid "Invalid LDAP credentials"
-msgstr "Некоректна картка"
+msgstr "Некоректні реєстраційні дані LDAP"
 
 msgid "Insufficient access for LDAP"
-msgstr ""
+msgstr "Недостатні права доступу до LDAP"
 
 msgid "LDAP server is busy"
-msgstr ""
+msgstr "Сервер LDAP зайнято виконанням завдання"
 
-#, fuzzy
 #| msgid "No keyserver available"
 msgid "LDAP server is unavailable"
-msgstr "Немає доступних серверів ключів"
+msgstr "Сервер LDAP недоступний"
 
 msgid "LDAP server is unwilling to perform"
-msgstr ""
+msgstr "Сервер LDAP не бажає працювати"
 
 msgid "Loop detected by LDAP"
-msgstr ""
+msgstr "LDAP виявлено цикл"
 
-#, fuzzy
 #| msgid "Missing action"
 msgid "LDAP naming violation"
-msgstr "Не вистачає дії"
+msgstr "Порушення іменування LDAP"
 
-#, fuzzy
 #| msgid "Protocol violation"
 msgid "LDAP object class violation"
-msgstr "Порушення протоколу"
+msgstr "Порушення класу об’єктів LDAP"
 
-#, fuzzy
 #| msgid "Operation not yet finished"
 msgid "LDAP operation not allowed on non-leaf"
-msgstr "Виконання дії ще не завершено"
+msgstr "Дію LDAP не дозволено для об’єктів, які не є листками"
 
-#, fuzzy
 #| msgid "Operation cancelled"
 msgid "LDAP operation not allowed on RDN"
-msgstr "Дію скасовано"
+msgstr "Дію LDAP не дозволено над RDN"
 
 msgid "Already exists (LDAP)"
-msgstr ""
+msgstr "Вже існує (LDAP)"
 
 msgid "Cannot modify LDAP object class"
-msgstr ""
+msgstr "Не вдалося змінити клас об’єкта LDAP"
 
-#, fuzzy
 #| msgid "Line too long"
 msgid "LDAP results too large"
-msgstr "Рядок надто довгий"
+msgstr "Результати LDAP є надто великими"
 
-#, fuzzy
 #| msgid "Operation cancelled"
 msgid "LDAP operation affects multiple DSAs"
-msgstr "Дію скасовано"
+msgstr "Дія LDAP стосується декількох DSA"
 
 msgid "Virtual LDAP list view error"
-msgstr ""
+msgstr "Помилка перегляду списку віртуальної LDAP"
 
-#, fuzzy
 #| msgid "General IPC error"
 msgid "Other LDAP error"
-msgstr "Загальна помилка IPC"
+msgstr "Інша помилка LDAP"
 
-#, fuzzy
 #| msgid "Resources exhausted"
 msgid "Resources exhausted in LCUP"
-msgstr "Вичерпано ресурси"
+msgstr "Вичерпано ресурси у LCUP"
 
-#, fuzzy
 #| msgid "Protocol violation"
 msgid "Security violation in LCUP"
-msgstr "Порушення протоколу"
+msgstr "Порушення захисту у LCUP"
 
-#, fuzzy
 #| msgid "Invalid state"
 msgid "Invalid data in LCUP"
-msgstr "Некоректний стан"
+msgstr "Некоректні дані у LCUP"
 
-#, fuzzy
 #| msgid "Unsupported certificate"
 msgid "Unsupported scheme in LCUP"
-msgstr "Непідтримуваний сертифікат"
+msgstr "Непідтримувана схема у LCUP"
 
-#, fuzzy
 #| msgid "Card reset required"
 msgid "Reload required in LCUP"
-msgstr "Надіслано запит на скидання картки"
+msgstr "Потрібне перезавантаження у LCUP"
 
-#, fuzzy
 #| msgid "Success"
 msgid "LDAP cancelled"
-msgstr "Виконано"
+msgstr "LDAP скасовано"
 
-#, fuzzy
 #| msgid "Not operational"
 msgid "No LDAP operation to cancel"
-msgstr "Використання неможливе"
+msgstr "Немає дії LDAP для скасовування"
 
-#, fuzzy
 #| msgid "Not operational"
 msgid "Too late to cancel LDAP"
-msgstr "Використання неможливе"
+msgstr "Запізно для скасовування LDAP"
 
-#, fuzzy
 #| msgid "Not an IPC server"
 msgid "Cannot cancel LDAP"
-msgstr "Не є сервером IPC"
+msgstr "Не вдалося скасувати LDAP"
 
-#, fuzzy
 #| msgid "Decryption failed"
 msgid "LDAP assertion failed"
-msgstr "Спроба розшифрування зазнала невдачі"
+msgstr "Помилка оцінки LDAP"
 
 msgid "Proxied authorization denied by LDAP"
-msgstr ""
+msgstr "Уповноваження за допомогою проксі заборонено LDAP"
 
 msgid "User defined error code 1"
 msgstr "Визначений користувачем код помилки 1"
