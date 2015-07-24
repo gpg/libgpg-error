@@ -173,17 +173,17 @@ gpgrt_ssize_t _gpgrt_read_line (gpgrt_stream_t stream,
 
 int _gpgrt_fprintf (gpgrt_stream_t _GPGRT__RESTRICT stream,
                     const char *_GPGRT__RESTRICT format, ...)
-                    _GPGRT_GCC_A_PRINTF(2,3);
+                    GPGRT_ATTR_PRINTF(2,3);
 int _gpgrt_fprintf_unlocked (gpgrt_stream_t _GPGRT__RESTRICT stream,
                              const char *_GPGRT__RESTRICT format, ...)
-                             _GPGRT_GCC_A_PRINTF(2,3);
+                             GPGRT_ATTR_PRINTF(2,3);
 
 int _gpgrt_vfprintf (gpgrt_stream_t _GPGRT__RESTRICT stream,
                      const char *_GPGRT__RESTRICT format, va_list ap)
-                     _GPGRT_GCC_A_PRINTF(2,0);
+                     GPGRT_ATTR_PRINTF(2,0);
 int _gpgrt_vfprintf_unlocked (gpgrt_stream_t _GPGRT__RESTRICT stream,
                               const char *_GPGRT__RESTRICT format, va_list ap)
-                              _GPGRT_GCC_A_PRINTF(2,0);
+                              GPGRT_ATTR_PRINTF(2,0);
 
 int _gpgrt_setvbuf (gpgrt_stream_t _GPGRT__RESTRICT stream,
                     char *_GPGRT__RESTRICT buf, int mode, size_t size);

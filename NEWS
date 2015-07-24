@@ -1,6 +1,22 @@
 Noteworthy changes in version 1.20 (unreleased) [C__/A__/R_]
 -----------------------------------------------
 
+ * Interface changes relative to the 1.19 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPGRT_GCC_VERSION                NEW macro.
+ GPGRT_ATTR_NORETURN              NEW macro.
+ GPGRT_ATTR_PRINTF                NEW macro.
+ GPGRT_ATTR_NR_PRINTF             NEW macro.
+ GPGRT_ATTR_FORMAT_ARG            NEW macro.
+ GPGRT_ATTR_SENTINEL              NEW macro.
+ GPGRT_ATTR_USED                  NEW macro.
+ GPGRT_ATTR_UNUSED                NEW macro.
+ GPGRT_ATTR_DEPRECATED            NEW macro.
+ GPGRT_ATTR_PURE                  NEW macro.
+ GPGRT_ATTR_MALLOC                NEW macro.
+ GPGRT_HAVE_MACRO_FUNCTION        NEW macro.
+ GPGRT_HAVE_PRAGMA_GCC_PUSH       NEW macro.
+
 
 Noteworthy changes in version 1.19 (2015-04-10) [C15/A15/R0]
 -----------------------------------------------
