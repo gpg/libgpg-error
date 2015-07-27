@@ -398,10 +398,20 @@ main (int argc, char *argv[])
     {
       fputs ("gpg-error (" PACKAGE_NAME ") " PACKAGE_VERSION "\n", stdout);
       fputs ("Options:\n"
-             "  --version  Print version\n"
-             "  --help     Print this help\n"
-             "  --list     Print all error codes\n"
-             "  --defines  Print all error codes as #define lines\n", stdout);
+             "  --version      Print version\n"
+             "  --lib-version  Print library version\n"
+             "  --help         Print this help\n"
+             "  --list         Print all error codes\n"
+             "  --defines      Print all error codes as #define lines\n"
+             , stdout);
+      exit (0);
+    }
+  else if (argc == 2 && !strcmp (argv[1], "--lib-version"))
+    {
+      printf ("Version from header: %s (0x%06x)\n",
+              GPG_ERROR_VERSION, GPG_ERROR_VERSION_NUMBER);
+      printf ("Version from binary: %s\n", gpg_error_check_version (NULL));
+      printf ("Copyright blurb ...:%s\n", gpg_error_check_version ("\x01\x01"));
       exit (0);
     }
   else if (argc == 2 && !strcmp (argv[1], "--list"))
