@@ -92,8 +92,14 @@
 
 
 #ifndef O_BINARY
-#define O_BINARY 0
+# define O_BINARY 0
 #endif
+#ifndef HAVE_DOSISH_SYSTEM
+# ifdef HAVE_W32_SYSTEM
+#  define HAVE_DOSISH_SYSTEM 1
+# endif
+#endif
+
 
 #ifdef HAVE_W32_SYSTEM
 # define S_IRGRP S_IRUSR
