@@ -1,8 +1,19 @@
-Noteworthy changes in version 1.20 (unreleased) [C__/A__/R_]
+Noteworthy changes in version 1.20 (2015-08-26) [C16/A16/R0]
 -----------------------------------------------
+
+ * New macros for GCC attributes.
+
+ * Make es_set_binary actually work for Windows.
+
+ * Allow building without thread support.
+
+ * Build without a build timestamp by default.
 
  * Interface changes relative to the 1.19 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPGRT_VERSION                    NEW macro.
+ GPGRT_VERSION_NUMBER             NEW macro.
+ GPGRT_INLINE                     NEW macro.
  GPGRT_GCC_VERSION                NEW macro.
  GPGRT_ATTR_NORETURN              NEW macro.
  GPGRT_ATTR_PRINTF                NEW macro.

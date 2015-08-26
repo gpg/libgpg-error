@@ -267,6 +267,10 @@ GPG_ERR_CONFLICT		Conflicting use
 
 71	GPG_ERR_INV_CIPHER_MODE		Invalid cipher mode
 72	GPG_ERR_INV_FLAG		Invalid flag
+
+   GPGME: Used to indicate an invalid combination of flags.
+
+
 73	GPG_ERR_INV_HANDLE		Invalid handle
 74	GPG_ERR_TRUNCATED		Result truncated
 75	GPG_ERR_INCOMPLETE_LINE		Incomplete line
@@ -515,6 +519,7 @@ GPG_ERR_TOO_MANY                Too many objects
 
     GPG: - Dirmngr KS_GET called with too many pattern so that the
            maximum Assuan line length would overflow.
+         - gpgsm's command export --secret called with too man keys.
     GPGME: - To many patterns in gpgme-tools's KEYLIST command.
 
 GPG_ERR_LIMIT_REACHED           Limit reached
@@ -552,7 +557,8 @@ GPG_ERR_UNKNOWN_CURVE		Unknown elliptic curve
 GPG_ERR_DUP_KEY                 Duplicated key
 
         A duplicated key was detected.  For example a unique key in a
-        database occurred more than once.
+        database occurred more than once.  Also used if in a protocol
+        an expected key was returned more than once.
 
 GPG_ERR_AMBIGUOUS		Ambiguous search
 
@@ -744,8 +750,8 @@ GPG_ERR_BOGUS_STRING            Bogus string
 
 GPG_ERR_FORBIDDEN		Forbidden
 
-    The use of a features is not allowed to to insuffcient rights.
-    Use by gpg-agent as aerror codes for restricted commands.
+    The use of a features is not allowed due to insuffcient rights.
+    Use by gpg-agent as an error codes for restricted commands.
 
 GPG_ERR_KEY_DISABLED            Key disabled
 
