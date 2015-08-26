@@ -26,6 +26,15 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+/* The version string of this header. */
+#define GPG_ERROR_VERSION @version@
+#define GPGRT_VERSION     @version@
+
+/* The version number of this header. */
+#define GPG_ERROR_VERSION_NUMBER @version-number@
+#define GPGRT_VERSION_NUMBER     @version-number@
+
+
 #ifdef __GNUC__
 # define GPG_ERR_INLINE __inline__
 #elif defined(_MSC_VER) && _MSC_VER >= 1300
@@ -358,12 +367,6 @@ void gpg_err_set_errno (int err);
 /* Return or check the version.  Both functions are identical.  */
 const char *gpgrt_check_version (const char *req_version);
 const char *gpg_error_check_version (const char *req_version);
-
-/* The version string of this header. */
-#define GPG_ERROR_VERSION @version@
-
-/* The version number of this header. */
-#define GPG_ERROR_VERSION_NUMBER @version-number@
 
 /* System specific type definitions.  */
 @define:gpgrt_ssize_t@
