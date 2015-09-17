@@ -77,6 +77,10 @@ canon_host_triplet (const char *triplet)
   } tbl[] = {
     {"i486-pc-linux-gnu", "i686-pc-linux-gnu" },
     {"i586-pc-linux-gnu" },
+    {"i486-pc-gnu", "i686-pc-gnu"},
+    {"i586-pc-gnu"},
+    {"i486-pc-kfreebsd-gnu", "i686-pc-kfreebsd-gnu"},
+    {"i586-pc-kfreebsd-gnu"},
 
     { NULL }
   };

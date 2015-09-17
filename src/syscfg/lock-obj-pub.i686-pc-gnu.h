@@ -1,4 +1,4 @@
-## lock-obj-pub.i486-pc-gnu.h
+## lock-obj-pub.i686-pc-gnu.h
 ## File created by gen-posix-lock-obj - DO NOT EDIT
 ## To be included by mkheader into gpg-error.h
 
