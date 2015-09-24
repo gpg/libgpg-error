@@ -2026,7 +2026,7 @@ check_pending_fbf (estream_t _GPGRT__RESTRICT stream)
 
   if (stream->data_offset == stream->data_len)
     {
-      /* Nothing more to read in current container, check whetehr it
+      /* Nothing more to read in current container, check whether it
          would be possible to fill the container with new data.  */
       if (!(*func_read) (stream->intern->cookie, buffer, 0))
         return 1; /* Pending bytes.  */
@@ -2596,7 +2596,7 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
 }
 
 
-/* Output fucntion used for estream_format.  */
+/* Output function used by estream_format.  */
 static int
 print_writer (void *outfncarg, const char *buf, size_t buflen)
 {
@@ -2626,30 +2626,6 @@ es_print (estream_t _GPGRT__RESTRICT stream,
 }
 
 
-static void
-es_set_indicators (estream_t stream, int ind_err, int ind_eof)
-{
-  if (ind_err != -1)
-    stream->intern->indicators.err = ind_err ? 1 : 0;
-  if (ind_eof != -1)
-    stream->intern->indicators.eof = ind_eof ? 1 : 0;
-}
-
-
-static int
-es_get_indicator (estream_t stream, int ind_err, int ind_eof)
-{
-  int ret = 0;
-
-  if (ind_err)
-    ret = stream->intern->indicators.err;
-  else if (ind_eof)
-    ret = stream->intern->indicators.eof;
-
-  return ret;
-}
-
-
 static int
 es_set_buffering (estream_t _GPGRT__RESTRICT stream,
 		  char *_GPGRT__RESTRICT buffer, int mode, size_t size)
@@ -2666,7 +2642,7 @@ es_set_buffering (estream_t _GPGRT__RESTRICT stream,
   else
     es_empty (stream);
 
-  es_set_indicators (stream, -1, 0);
+  stream->intern->indicators.eof = 0;
 
   /* Free old buffer in case that was allocated by this function.  */
   if (stream->intern->deallocate_buffer)
@@ -2727,7 +2703,8 @@ es_offset_calculate (estream_t stream)
 
 
 static void
-es_opaque_ctrl (estream_t _GPGRT__RESTRICT stream, void *_GPGRT__RESTRICT opaque_new,
+es_opaque_ctrl (estream_t _GPGRT__RESTRICT stream,
+                void *_GPGRT__RESTRICT opaque_new,
 		void **_GPGRT__RESTRICT opaque_old)
 {
   if (opaque_old)
@@ -2897,7 +2874,8 @@ _gpgrt_fopenmem_init (size_t memlimit, const char *_GPGRT__RESTRICT mode,
       else
         {
           es_seek (stream, 0L, SEEK_SET, NULL);
-          es_set_indicators (stream, 0, 0);
+          stream->intern->indicators.eof = 0;
+          stream->intern->indicators.err = 0;
         }
     }
   return stream;
@@ -3507,7 +3485,7 @@ _gpgrt__pending (estream_t stream)
 int
 _gpgrt_feof_unlocked (estream_t stream)
 {
-  return es_get_indicator (stream, 0, 1);
+  return stream->intern->indicators.eof;
 }
 
 
@@ -3527,7 +3505,7 @@ _gpgrt_feof (estream_t stream)
 int
 _gpgrt_ferror_unlocked (estream_t stream)
 {
-  return es_get_indicator (stream, 1, 0);
+  return stream->intern->indicators.err;
 }
 
 
@@ -3547,7 +3525,8 @@ _gpgrt_ferror (estream_t stream)
 void
 _gpgrt_clearerr_unlocked (estream_t stream)
 {
-  es_set_indicators (stream, 0, 0);
+  stream->intern->indicators.eof = 0;
+  stream->intern->indicators.err = 0;
 }
 
 
@@ -3664,7 +3643,8 @@ _gpgrt_rewind (estream_t stream)
 {
   lock_stream (stream);
   es_seek (stream, 0L, SEEK_SET, NULL);
-  es_set_indicators (stream, 0, -1);
+  /* Note that es_seek already cleared the EOF flag.  */
+  stream->intern->indicators.err = 0;
   unlock_stream (stream);
 }
 
