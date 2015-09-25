@@ -127,6 +127,9 @@ MARK_VISIBLE (gpgrt_vfprintf_unlocked)
 MARK_VISIBLE (gpgrt_setvbuf)
 MARK_VISIBLE (gpgrt_setbuf)
 MARK_VISIBLE (gpgrt_set_binary)
+MARK_VISIBLE (gpgrt_set_nonblock)
+MARK_VISIBLE (gpgrt_get_nonblock)
+MARK_VISIBLE (gpgrt_poll)
 MARK_VISIBLE (gpgrt_tmpfile)
 MARK_VISIBLE (gpgrt_opaque_set)
 MARK_VISIBLE (gpgrt_opaque_get)
@@ -232,6 +235,9 @@ MARK_VISIBLE (gpgrt_set_alloc_func)
 #define gpgrt_setvbuf               _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_setbuf                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_set_binary            _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_set_nonblock          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_get_nonblock          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_poll                  _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_tmpfile               _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_opaque_set            _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_opaque_get            _gpgrt_USE_UNDERSCORED_FUNCTION

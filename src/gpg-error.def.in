@@ -140,4 +140,8 @@ EXPORTS
  _gpgrt_pending               @104
  _gpgrt_pending_unlocked      @105
 
+ gpgrt_set_nonblock           @106
+ gpgrt_get_nonblock           @107
+ gpgrt_poll                   @108
+
 ;; end of file with public symbols for Windows.

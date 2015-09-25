@@ -189,6 +189,10 @@ int _gpgrt_setvbuf (gpgrt_stream_t _GPGRT__RESTRICT stream,
                     char *_GPGRT__RESTRICT buf, int mode, size_t size);
 
 void _gpgrt_set_binary (gpgrt_stream_t stream);
+int  _gpgrt_set_nonblock (gpgrt_stream_t stream, int onoff);
+int  _gpgrt_get_nonblock (gpgrt_stream_t stream);
+
+int _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout);
 
 gpgrt_stream_t _gpgrt_tmpfile (void);
 

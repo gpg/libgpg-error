@@ -750,7 +750,7 @@ GPG_ERR_BOGUS_STRING            Bogus string
 
 GPG_ERR_FORBIDDEN		Forbidden
 
-    The use of a features is not allowed due to insuffcient rights.
+    The use of a features is not allowed due to insufficient rights.
     Use by gpg-agent as an error codes for restricted commands.
 
 GPG_ERR_KEY_DISABLED            Key disabled

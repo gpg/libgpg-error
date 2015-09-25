@@ -1,5 +1,19 @@
-Noteworthy changes in version 1.21 (unreleased) [C16/A16/R_]
+Noteworthy changes in version 1.21 (unreleased) [C17/A17/R0]
 -----------------------------------------------
+
+ * New functions gpgrt_poll and gpgrt_set_nonblock.  For now only
+   pipes and sockets on Unix are supported.
+
+ * Interface changes relative to the 1.20 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_set_nonblock               NEW.
+ gpgrt_get_nonblock               NEW.
+ gpgrt_poll                       NEW.
+ gpgrt_poll_t                     NEW type.
+ es_poll_t                        NEW type.
+ es_set_nonblock                  NEW macro.
+ es_get_nonblock                  NEW macro.
+ es_poll                          NEW macro.
 
 
 Noteworthy changes in version 1.20 (2015-08-26) [C16/A16/R0]

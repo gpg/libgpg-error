@@ -592,6 +592,24 @@ gpgrt_set_binary (estream_t stream)
   _gpgrt_set_binary (stream);
 }
 
+int
+gpgrt_set_nonblock (estream_t stream, int onoff)
+{
+  return _gpgrt_set_nonblock (stream, onoff);
+}
+
+int
+gpgrt_get_nonblock (estream_t stream)
+{
+  return _gpgrt_get_nonblock (stream);
+}
+
+int
+gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
+{
+  return _gpgrt_poll (fds, nfds, timeout);
+}
+
 estream_t
 gpgrt_tmpfile (void)
 {

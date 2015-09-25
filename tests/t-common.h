@@ -24,6 +24,9 @@
 #ifndef PGM
 # error Macro PGM not defined.
 #endif
+#ifndef DIM
+# define DIM(array) (sizeof (array) / sizeof (*array))
+#endif
 
 
 static int verbose;

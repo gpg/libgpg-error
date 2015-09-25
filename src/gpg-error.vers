@@ -104,6 +104,9 @@ GPG_ERROR_1.0 {
     gpgrt_setvbuf;
     gpgrt_setbuf;
     gpgrt_set_binary;
+    gpgrt_set_nonblock;
+    gpgrt_get_nonblock;
+    gpgrt_poll;
     gpgrt_tmpfile;
     gpgrt_opaque_set;
     gpgrt_opaque_get;

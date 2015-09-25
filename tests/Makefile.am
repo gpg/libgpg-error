@@ -27,7 +27,7 @@ endif
 
 gpg_error_lib = ../src/libgpg-error.la
 
-TESTS = t-version t-strerror t-syserror t-lock t-printf
+TESTS = t-version t-strerror t-syserror t-lock t-printf t-poll
 
 AM_CPPFLAGS = -I$(top_builddir)/src $(extra_includes)
 
@@ -38,3 +38,4 @@ noinst_PROGRAMS = $(TESTS)
 noinst_HEADERS = t-common.h
 
 t_lock_LDADD = $(gpg_error_lib) $(LIBMULTITHREAD)
+t_poll_LDADD = $(gpg_error_lib) $(LIBMULTITHREAD)
