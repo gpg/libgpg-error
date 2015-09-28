@@ -768,8 +768,14 @@ GPG_ERR_INV_LOCK_OBJ		Invalid lock object
              internal problem in libgpg-error or more likely a
              programming error.
 
+GPG_ERR_TRUE			True
 
+    Used to retrun the boolena value True.  Note that GPG_ERR_NO_ERROR
+    (with the value 0) is also often used to indicate the value true.
 
+GPG_ERR_FALSE			False
+
+    Used to return the boolean value False.
 
 GPG_ERR_LDAP_GENERAL		LDAP General error
 

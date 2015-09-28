@@ -283,7 +283,8 @@
 253	GPG_ERR_KEY_ON_CARD		Not possible with a card based key
 254	GPG_ERR_INV_LOCK_OBJ		Invalid lock object
 
-# 255 and 256 are RFU.
+255	GPG_ERR_TRUE			True
+256	GPG_ERR_FALSE			False
 
 # Error codes pertaining to the Assuan IPC interface
 257	GPG_ERR_ASS_GENERAL		General IPC error

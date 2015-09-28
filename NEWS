@@ -14,6 +14,8 @@ Noteworthy changes in version 1.21 (unreleased) [C17/A17/R0]
  es_set_nonblock                  NEW macro.
  es_get_nonblock                  NEW macro.
  es_poll                          NEW macro.
+ GPG_ERR_TRUE                     NEW.
+ GPG_ERR_FALSE                    NEW.
 
 
 Noteworthy changes in version 1.20 (2015-08-26) [C16/A16/R0]
