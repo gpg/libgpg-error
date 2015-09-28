@@ -195,6 +195,7 @@ struct _gpgrt_stream_internal
   {
     unsigned int err: 1;
     unsigned int eof: 1;
+    unsigned int hup: 1;
   } indicators;
   unsigned int deallocate_buffer: 1;
   unsigned int is_stdstream:1;   /* This is a standard stream.  */
@@ -1713,7 +1714,11 @@ es_fill (estream_t stream)
   if (err)
     {
       if (errno != EAGAIN)
-        stream->intern->indicators.err = 1;
+        {
+          if (errno == EPIPE)
+            stream->intern->indicators.hup = 1;
+          stream->intern->indicators.err = 1;
+        }
     }
   else if (!bytes_read)
     stream->intern->indicators.eof = 1;
@@ -1793,8 +1798,12 @@ es_flush (estream_t stream)
 
  out:
 
-  if (err)
-    stream->intern->indicators.err = 1;
+  if (err && errno != EAGAIN)
+    {
+      if (errno == EPIPE)
+        stream->intern->indicators.hup = 1;
+      stream->intern->indicators.err = 1;
+    }
 
   return err;
 }
@@ -1829,6 +1838,7 @@ init_stream_obj (estream_t stream,
   stream->intern->print_ntotal = 0;
   stream->intern->indicators.err = 0;
   stream->intern->indicators.eof = 0;
+  stream->intern->indicators.hup = 0;
   stream->intern->is_stdstream = 0;
   stream->intern->stdstream_fd = 0;
   stream->intern->deallocate_buffer = 0;
@@ -2310,7 +2320,11 @@ es_seek (estream_t _GPGRT__RESTRICT stream, gpgrt_off_t offset, int whence,
  out:
 
   if (err)
-    stream->intern->indicators.err = 1;
+    {
+      if (errno == EPIPE)
+        stream->intern->indicators.hup = 1;
+      stream->intern->indicators.err = 1;
+    }
 
   return err;
 }
@@ -3624,6 +3638,8 @@ _gpgrt_clearerr_unlocked (estream_t stream)
 {
   stream->intern->indicators.eof = 0;
   stream->intern->indicators.err = 0;
+  /* We do not reset the HUP indicator because there is no way to
+     get out of this state.  */
 }
 
 
@@ -4609,6 +4625,11 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
         }
 
       any = 0;
+      if (item->stream->intern->indicators.hup)
+        {
+          item->got_hup = 1;
+          any = 1;
+        }
       if (item->want_read && FD_ISSET (fd, &readfds))
         {
           item->got_read = 1;
