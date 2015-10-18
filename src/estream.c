@@ -955,7 +955,7 @@ es_func_fd_write (void *cookie, const void *buffer, size_t size)
       _gpgrt_yield ();
       bytes_written = size; /* Yeah:  Success writing to the bit bucket.  */
     }
-  else
+  else if (buffer)
     {
       if (pre_syscall_func)
         pre_syscall_func ();
@@ -967,6 +967,8 @@ es_func_fd_write (void *cookie, const void *buffer, size_t size)
       if (post_syscall_func)
         post_syscall_func ();
     }
+  else
+    bytes_written = size; /* Note that for a flush SIZE should be 0.  */
 
   return bytes_written;
 }
@@ -1171,7 +1173,7 @@ es_func_w32_write (void *cookie, const void *buffer, size_t size)
       _gpgrt_yield ();
       bytes_written = size; /* Yeah:  Success writing to the bit bucket.  */
     }
-  else
+  else if (buffer)
     {
       if (pre_syscall_func)
         pre_syscall_func ();
@@ -1191,6 +1193,8 @@ es_func_w32_write (void *cookie, const void *buffer, size_t size)
       if (post_syscall_func)
         post_syscall_func ();
     }
+  else
+    bytes_written = size; /* Note that for a flush SIZE should be 0.  */
 
   return bytes_written;
 }
@@ -1369,32 +1373,39 @@ es_func_fp_write (void *cookie, const void *buffer, size_t size)
     {
       if (pre_syscall_func)
         pre_syscall_func ();
-#ifdef HAVE_W32_SYSTEM
-      /* Using an fwrite to stdout connected to the console fails with
-	 the error "Not enough space" for an fwrite size of >= 52KB
-	 (tested on Windows XP SP2).  To solve this we always chunk
-	 the writes up into smaller blocks.  */
-      bytes_written = 0;
-      while (bytes_written < size)
+      if (buffer)
         {
-          size_t cnt = size - bytes_written;
+#ifdef HAVE_W32_SYSTEM
+          /* Using an fwrite to stdout connected to the console fails
+             with the error "Not enough space" for an fwrite size of
+             >= 52KB (tested on Windows XP SP2).  To solve this we
+             always chunk the writes up into smaller blocks.  */
+          bytes_written = 0;
+          while (bytes_written < size)
+            {
+              size_t cnt = size - bytes_written;
 
-          if (cnt > 32*1024)
-            cnt = 32*1024;
-          if (fwrite ((const char*)buffer + bytes_written,
-                      cnt, 1, file_cookie->fp) != 1)
-            break; /* Write error.  */
-          bytes_written += cnt;
-        }
+              if (cnt > 32*1024)
+                cnt = 32*1024;
+              if (fwrite ((const char*)buffer + bytes_written,
+                          cnt, 1, file_cookie->fp) != 1)
+                break; /* Write error.  */
+              bytes_written += cnt;
+            }
 #else
-      bytes_written = fwrite (buffer, 1, size, file_cookie->fp);
+          bytes_written = fwrite (buffer, 1, size, file_cookie->fp);
 #endif
+        }
+      else /* Only flush requested.  */
+        bytes_written = size;
+
       fflush (file_cookie->fp);
       if (post_syscall_func)
         post_syscall_func ();
     }
   else
     bytes_written = size; /* Successfully written to the bit bucket.  */
+
   if (bytes_written != size)
     return -1;
   return bytes_written;
@@ -2515,7 +2526,8 @@ es_writen (estream_t _GPGRT__RESTRICT stream,
 
 
 static int
-es_peek (estream_t _GPGRT__RESTRICT stream, unsigned char **_GPGRT__RESTRICT data,
+es_peek (estream_t _GPGRT__RESTRICT stream,
+         unsigned char **_GPGRT__RESTRICT data,
 	 size_t *_GPGRT__RESTRICT data_len)
 {
   int err;

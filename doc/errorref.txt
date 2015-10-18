@@ -670,6 +670,7 @@ GPG_ERR_COMPR_FAILED           Compression or decompression failed
 GPG_ERR_WOULD_WRAP             A counter would wrap
 
     NTBTLS: - Too many messages exchanged
+    Other:  - A counter would wrap.
 
 GPG_ERR_FATAL_ALERT            Fatal alert message received
 
