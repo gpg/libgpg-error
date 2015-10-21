@@ -16,6 +16,9 @@ Noteworthy changes in version 1.21 (unreleased) [C17/A17/R0]
  es_poll                          NEW macro.
  GPG_ERR_TRUE                     NEW.
  GPG_ERR_FALSE                    NEW.
+ GPG_ERR_NO_NAME                  NEW.
+ GPG_ERR_NO_KEY                   NEW.
+ GPG_ERR_SERVER_FAILED            NEW.
 
 
 Noteworthy changes in version 1.20 (2015-08-26) [C16/A16/R0]

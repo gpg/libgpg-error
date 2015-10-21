@@ -247,8 +247,11 @@
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
-# 214 to 221 are free to be used.
+# 214 to 218 are free to be used.
 
+219	GPG_ERR_SERVER_FAILED		Server indicated a failure
+220	GPG_ERR_NO_NAME			No name
+221	GPG_ERR_NO_KEY			No key
 222	GPG_ERR_LEGACY_KEY		Legacy key
 223	GPG_ERR_REQUEST_TOO_SHORT	Request too short
 224	GPG_ERR_REQUEST_TOO_LONG	Request too long

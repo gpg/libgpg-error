@@ -624,6 +624,16 @@ GPG_ERR_MAC_ALGO
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
+GPG_ERR_SERVER_FAILED (219)		Server indicated a failure
+
+GPG_ERR_NO_NAME	(220)		No name
+
+    EAI_NONAME may be mapped to this code.
+
+GPG_ERR_NO_KEY (221)		No key
+
+    Some kind of key was not found.
+
 GPG_ERR_LEGACY_KEY (222)        Legacy key
 
     Used by GnuPG to identify version 2 and 3 OpenPGP key packets.
