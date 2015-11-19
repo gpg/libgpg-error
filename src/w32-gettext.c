@@ -108,7 +108,7 @@ MyCreateFileA (LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwSharedMode,
 
 /* Written by Ulrich Drepper <drepper@gnu.org>, 1995.  */
 /* Win32 code written by Tor Lillqvist <tml@iki.fi>.  */
-/* Renamed _nl_locale_name, removed unsed args, removed include files,
+/* Renamed _nl_locale_name, removed unused args, removed include files,
    non-W32 code and changed comments <wk@gnupg.org>.  */
 
 /* Mingw headers don't have latest language and sublanguage codes.  */

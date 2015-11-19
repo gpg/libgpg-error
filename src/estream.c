@@ -190,7 +190,7 @@ struct _gpgrt_stream_internal
   gpgrt_cookie_close_function_t func_close;
   cookie_ioctl_function_t func_ioctl;
   int strategy;
-  es_syshd_t syshd;              /* A copy of the sytem handle.  */
+  es_syshd_t syshd;              /* A copy of the system handle.  */
   struct
   {
     unsigned int err: 1;
@@ -587,7 +587,7 @@ typedef struct estream_cookie_mem
    supplied buffer with the initial conetnt of the memory buffer.  If
    DATA is NULL, DATA_N and DATA_LEN need to be 0 as well.  If DATA is
    not NULL, DATA_N gives the allocated size of DATA and DATA_LEN the
-   used length in DATA.  If this fucntion succeeds DATA is now owned
+   used length in DATA.  If this function succeeds DATA is now owned
    by this function.  If GROW is false FUNC_REALLOC is not
    required. */
 static int
@@ -2965,7 +2965,7 @@ _gpgrt_fopenmem (size_t memlimit, const char *_GPGRT__RESTRICT mode)
 
 
 /* This is the same as es_fopenmem but intializes the memory with a
-   copy of (DATA,DATALEN).  The stream is initally set to the
+   copy of (DATA,DATALEN).  The stream is initially set to the
    beginning.  If MEMLIMIT is not 0 but shorter than DATALEN it
    DATALEN will be used as the value for MEMLIMIT.  */
 estream_t

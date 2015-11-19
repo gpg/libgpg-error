@@ -119,7 +119,7 @@ typedef enum
 
 /* We would really like to use bit-fields in a struct, but using
    structs as return values can cause binary compatibility issues, in
-   particular if you want to do it effeciently (also see
+   particular if you want to do it efficiently (also see
    -freg-struct-return option to GCC).  */
 typedef unsigned int gpg_error_t;
 
@@ -501,7 +501,7 @@ enum gpgrt_syshd_types
     GPGRT_SYSHD_NONE = 0,  /* No system handle available.                   */
     GPGRT_SYSHD_FD = 1,    /* A file descriptor as returned by open().      */
     GPGRT_SYSHD_SOCK = 2,  /* A socket as returned by socket().             */
-    GPGRT_SYSHD_RVID = 3,  /* A rendevous id (see libassuan's gpgcedev.c).  */
+    GPGRT_SYSHD_RVID = 3,  /* A rendezvous id (see libassuan's gpgcedev.c).  */
     GPGRT_SYSHD_HANDLE = 4 /* A HANDLE object (Windows).                    */
   };
 
