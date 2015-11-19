@@ -171,14 +171,14 @@ _gpgrt_realloc (void *a, size_t n)
   if (custom_realloc)
     return custom_realloc (a, n);
 
-  if (!a)
-    return malloc (n);
-
   if (!n)
     {
       free (a);
       return NULL;
     }
+
+  if (!a)
+    return malloc (n);
 
   return realloc (a, n);
 }
