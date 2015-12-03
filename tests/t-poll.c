@@ -288,7 +288,9 @@ test_poll (void)
               if (!ret)
                 {
                   assert (nwritten <= used);
-                  memmove (buffer, buffer + nwritten, nwritten);
+                  /* Move the remaining data to the front of buffer.  */
+                  memmove (buffer, buffer + nwritten,
+                           sizeof buffer - nwritten);
                   used -= nwritten;
                 }
               ret = es_fflush (fds[1].stream);
