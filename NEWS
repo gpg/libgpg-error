@@ -1,8 +1,10 @@
-Noteworthy changes in version 1.21 (unreleased) [C17/A17/R0]
+Noteworthy changes in version 1.21 (2015-12-12) [C17/A17/R0]
 -----------------------------------------------
 
  * New functions gpgrt_poll and gpgrt_set_nonblock.  For now only
    pipes and sockets on Unix are supported.
+
+ * Fixes gettext output encoding problems on Windows.
 
  * Interface changes relative to the 1.20 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
