@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.19\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2015-04-10 18:54+0200\n"
+"PO-Revision-Date: 2015-12-12 12:52+0100\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -729,6 +729,15 @@ msgstr "Ungerade Anzahl von Hex-Zeichen in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Falsches Oktal-Zeichen in S-expression"
 
+msgid "Server indicated a failure"
+msgstr "Server zeigt einen unbestimmten Fehler an"
+
+msgid "No name"
+msgstr "Kein Name"
+
+msgid "No key"
+msgstr "Kein Schlüssel"
+
 msgid "Legacy key"
 msgstr "Veralteter Schlüssel"
 
@@ -830,6 +839,12 @@ msgstr "Nicht möglich mit einem kartenbasierten Schlüssel"
 
 msgid "Invalid lock object"
 msgstr "Ungültiges Sperr-Objekt"
+
+msgid "True"
+msgstr "Wahr"
+
+msgid "False"
+msgstr "Falsch"
 
 msgid "General IPC error"
 msgstr "Allgemeiner IPC Fehler"
