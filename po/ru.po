@@ -1,13 +1,13 @@
 # Russian translation for libgpg-error.
-# Copyright (C) 2014 Free Software Foundation, Inc.
+# Copyright (C) 2015 Free Software Foundation, Inc.
 # This file is distributed under the same license as the original package.
-# Ineiev <ineiev@gnu.org>, 2014
+# Ineiev <ineiev@gnu.org>, 2014, 2015
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-17 12:04+0000\n"
+"PO-Revision-Date: 2015-09-27 12:04+0000\n"
 "Last-Translator: Ineiev <ineiev@gnu.org>\n"
 "Language-Team: Russian <gnupg-ru@gnupg.org>\n"
 "Language: ru\n"
@@ -727,20 +727,16 @@ msgid "Bad octal character in S-expression"
 msgstr "Плохой восьмеричный символ в S-выражении"
 
 msgid "Legacy key"
-msgstr ""
+msgstr "Старый ключ"
 
-#, fuzzy
-#| msgid "Buffer too short"
 msgid "Request too short"
-msgstr "Слишком короткий буфер"
+msgstr "Слишком короткий запрос"
 
-#, fuzzy
-#| msgid "Line too long"
 msgid "Request too long"
-msgstr "Слишком длинная строка"
+msgstr "Слишком длинный запрос"
 
 msgid "Object is in termination state"
-msgstr ""
+msgstr "Объект прекращает работу"
 
 msgid "No certificate chain"
 msgstr "Нет сертификатной цепи"
@@ -818,7 +814,7 @@ msgid "Bogus string"
 msgstr "Несуразная строка"
 
 msgid "Forbidden"
-msgstr ""
+msgstr "Запрещено"
 
 msgid "Key disabled"
 msgstr "Ключ отключен"
@@ -901,362 +897,248 @@ msgstr "Ошибка в параметре IPC"
 msgid "Unknown IPC inquire"
 msgstr "Неизвестный запрос IPC"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "General LDAP error"
-msgstr "Общая ошибка IPC"
+msgstr "Общая ошибка LDAP"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP attribute error"
-msgstr "Общая ошибка"
+msgstr "Общая ошибка в атрибуте LDAP"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP name error"
-msgstr "Общая ошибка"
+msgstr "Общая ошибка в имени LDAP"
 
-#, fuzzy
-#| msgid "General Assuan error"
 msgid "General LDAP security error"
-msgstr "Общая ошибка Assuan"
+msgstr "Общая ошибка безопасности LDAP"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP service error"
-msgstr "Общая ошибка"
+msgstr "Общая ошибка службы LDAP"
 
-#, fuzzy
-#| msgid "General Assuan error"
 msgid "General LDAP update error"
-msgstr "Общая ошибка Assuan"
+msgstr "Общая ошибка обновления LDAP"
 
 msgid "Experimental LDAP error code"
-msgstr ""
+msgstr "Экспериментальный код ошибки LDAP"
 
-#, fuzzy
-#| msgid "IPC write error"
 msgid "Private LDAP error code"
-msgstr "Ошибка записи IPC"
+msgstr "Внутренний код ошибки LDAP"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "Other general LDAP error"
-msgstr "Общая ошибка IPC"
+msgstr "Другая общая ошибка LDAP"
 
-#, fuzzy
-#| msgid "IPC connect call failed"
 msgid "LDAP connecting failed (X)"
-msgstr "Сбой вызова соединения IPC"
+msgstr "Отказ соединения LDAP (X)"
 
-#, fuzzy
-#| msgid "General error"
 msgid "LDAP referral limit exceeded"
-msgstr "Общая ошибка"
+msgstr "Исчерпан лимит ссылок LDAP"
 
 msgid "LDAP client loop"
-msgstr ""
+msgstr "Цикл клиента LDAP"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "No LDAP results returned"
-msgstr "Требуется перезапуск карты"
+msgstr "Нет результатов LDAP"
 
-#, fuzzy
-#| msgid "Element not found"
 msgid "LDAP control not found"
-msgstr "Элемент не найден"
+msgstr "Элемент управления LDAP не найден"
 
-#, fuzzy
-#| msgid "Not supported"
 msgid "Not supported by LDAP"
-msgstr "Не поддерживается"
+msgstr "Не поддерживается функцией LDAP"
 
-#, fuzzy
-#| msgid "Unexpected error"
 msgid "LDAP connect error"
-msgstr "Неожиданная ошибка"
+msgstr "Ошибка соединения LDAP"
 
 msgid "Out of memory in LDAP"
-msgstr ""
+msgstr "Исчерпана память в LDAP"
 
 msgid "Bad parameter to an LDAP routine"
-msgstr ""
+msgstr "Неверный параметр процедуры LDAP"
 
-#, fuzzy
-#| msgid "Unsupported operation"
 msgid "User cancelled LDAP operation"
-msgstr "Операция не поддерживается"
+msgstr "Пользователь отменил операцию LDAP"
 
-#, fuzzy
-#| msgid "Bad certificate"
 msgid "Bad LDAP search filter"
-msgstr "Плохой сертификат"
+msgstr "Плохой фильтр поиска LDAP"
 
-#, fuzzy
-#| msgid "Unknown extension"
 msgid "Unknown LDAP authentication method"
-msgstr "Неизвестное расширение"
+msgstr "Неизвестный метод аутентификации LDAP"
 
-#, fuzzy
-#| msgid "Timeout"
 msgid "Timeout in LDAP"
-msgstr "Лимит времени"
+msgstr "Лимит времени в LDAP"
 
-#, fuzzy
-#| msgid "dirmngr error"
 msgid "LDAP decoding error"
-msgstr "ошибка dirmngr"
+msgstr "Ошибка декодирования LDAP"
 
-#, fuzzy
-#| msgid "dirmngr error"
 msgid "LDAP encoding error"
-msgstr "ошибка dirmngr"
+msgstr "Ошибка кодирования LDAP"
 
-#, fuzzy
-#| msgid "IPC read error"
 msgid "LDAP local error"
-msgstr "Ошибка чтения IPC"
+msgstr "Локальная ошибка LDAP"
 
-#, fuzzy
-#| msgid "Not an IPC server"
 msgid "Cannot contact LDAP server"
-msgstr "Не сервер IPC"
+msgstr "Не удалось связаться с сервером LDAP"
 
-#, fuzzy
-#| msgid "Success"
 msgid "LDAP success"
-msgstr "Успешное завершение"
+msgstr "Успешное выполнение LDAP"
 
-#, fuzzy
-#| msgid "Configuration error"
 msgid "LDAP operations error"
-msgstr "Ошибка конфигурации"
+msgstr "Ошибка операций LDAP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "LDAP protocol error"
-msgstr "Нарушение протокола"
+msgstr "Ошибка протокола LDAP"
 
 msgid "Time limit exceeded in LDAP"
-msgstr ""
+msgstr "Исчерпан лимит времени в LDAP"
 
 msgid "Size limit exceeded in LDAP"
-msgstr ""
+msgstr "Исчерпан лимит размера в LDAP"
 
 msgid "LDAP compare false"
-msgstr ""
+msgstr "Сравнение LDAP: ложь"
 
 msgid "LDAP compare true"
-msgstr ""
+msgstr "Сравнение LDAP: истина"
 
-#, fuzzy
-#| msgid "Unknown extension"
 msgid "LDAP authentication method not supported"
-msgstr "Неизвестное расширение"
+msgstr "Метод аутентификации LDAP не поддерживается"
 
 msgid "Strong(er) LDAP authentication required"
-msgstr ""
+msgstr "Требуется (более) сильная аутентификация LDAP"
 
-#, fuzzy
-#| msgid "Fatal alert message received"
 msgid "Partial LDAP results+referral received"
-msgstr "Получено критическое предупреждение"
+msgstr "Получены частичные результаты LDAP со ссылкой"
 
-#, fuzzy
-#| msgid "General error"
 msgid "LDAP referral"
-msgstr "Общая ошибка"
+msgstr "Ссылка LDAP"
 
 msgid "Administrative LDAP limit exceeded"
-msgstr ""
+msgstr "Исчерпан административный лимит LDAP"
 
 msgid "Critical LDAP extension is unavailable"
-msgstr ""
+msgstr "Недоступно критичное расширение LDAP"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "Confidentiality required by LDAP"
-msgstr "Требуется перезапуск карты"
+msgstr "Конфиденциальность, требуемая LDAP"
 
 msgid "LDAP SASL bind in progress"
-msgstr ""
+msgstr "Выполняется связка SASL LDAP"
 
 msgid "No such LDAP attribute"
-msgstr ""
+msgstr "Такого атрибута LDAP нет"
 
-#, fuzzy
-#| msgid "Invalid attribute"
 msgid "Undefined LDAP attribute type"
-msgstr "Недопустимый атрибут"
+msgstr "Неопределенный тип атрибута LDAP"
 
-#, fuzzy
-#| msgid "Unsupported protection"
 msgid "Inappropriate matching in LDAP"
-msgstr "Защита не поддерживается"
+msgstr "Неподходящее соответствие в LDAP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "Constraint violation in LDAP"
-msgstr "Нарушение протокола"
+msgstr "Нарушение ограничений в LDAP"
 
 msgid "LDAP type or value exists"
-msgstr ""
+msgstr "Тип или значение LDAP существует"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid syntax in LDAP"
-msgstr "Недопустимое состояние"
+msgstr "Ошибка синтаксиса в LDAP"
 
-#, fuzzy
-#| msgid "No CMS object"
 msgid "No such LDAP object"
-msgstr "Нет объекта CMS"
+msgstr "Такого объекта LDAP нет"
 
-#, fuzzy
-#| msgid "Hardware problem"
 msgid "LDAP alias problem"
-msgstr "Аппаратная проблема"
+msgstr "Проблема синонима LDAP"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid DN syntax in LDAP"
-msgstr "Недопустимое состояние"
+msgstr "Ошибка синтаксиса DN в LDAP"
 
 msgid "LDAP entry is a leaf"
-msgstr ""
+msgstr "Элемент LDAP - лист"
 
-#, fuzzy
-#| msgid "Encoding problem"
 msgid "LDAP alias dereferencing problem"
-msgstr "Проблема с кодировкой"
+msgstr "Проблема разыменования синонима LDAP"
 
 msgid "LDAP proxy authorization failure (X)"
-msgstr ""
+msgstr "Отказ авторизации промежуточного сервера (X)"
 
-#, fuzzy
-#| msgid "Unsupported protection"
 msgid "Inappropriate LDAP authentication"
-msgstr "Защита не поддерживается"
+msgstr "Неподходящая аутентификация LDAP"
 
-#, fuzzy
-#| msgid "Invalid card"
 msgid "Invalid LDAP credentials"
-msgstr "Непригодная карта"
+msgstr "Неверная верительная грамота LDAP"
 
 msgid "Insufficient access for LDAP"
-msgstr ""
+msgstr "Недостаточный доступ для LDAP"
 
 msgid "LDAP server is busy"
-msgstr ""
+msgstr "Сервер LDAP занят"
 
-#, fuzzy
-#| msgid "No keyserver available"
 msgid "LDAP server is unavailable"
-msgstr "Серверы ключей недоступны"
+msgstr "Сервер LDAP недоступен"
 
 msgid "LDAP server is unwilling to perform"
-msgstr ""
+msgstr "Сервер LDAP отказывается работать"
 
 msgid "Loop detected by LDAP"
-msgstr ""
+msgstr "Функцией LDAP обнаружен цикл"
 
-#, fuzzy
-#| msgid "Missing action"
 msgid "LDAP naming violation"
-msgstr "Не хватает действия"
+msgstr "Нарушение в именах LDAP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "LDAP object class violation"
-msgstr "Нарушение протокола"
+msgstr "Нарушение в классе объекта LDAP"
 
-#, fuzzy
-#| msgid "Operation not yet finished"
 msgid "LDAP operation not allowed on non-leaf"
-msgstr "Операция еще не завершена"
+msgstr "Операция LDAP допустима только для листов"
 
-#, fuzzy
-#| msgid "Operation cancelled"
 msgid "LDAP operation not allowed on RDN"
-msgstr "Операция отменена"
+msgstr "Операция LDAP над RDN не разрешена"
 
 msgid "Already exists (LDAP)"
-msgstr ""
+msgstr "Уже есть (LDAP)"
 
 msgid "Cannot modify LDAP object class"
-msgstr ""
+msgstr "Невозможно изменить класс объекта LDAP"
 
-#, fuzzy
-#| msgid "Line too long"
 msgid "LDAP results too large"
-msgstr "Слишком длинная строка"
+msgstr "Слишком большой объем результатов LDAP"
 
-#, fuzzy
-#| msgid "Operation cancelled"
 msgid "LDAP operation affects multiple DSAs"
-msgstr "Операция отменена"
+msgstr "Операция LDAP влияет на многие DSA"
 
 msgid "Virtual LDAP list view error"
-msgstr ""
+msgstr "Ошибка просмотра виртуального списка LDAP"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "Other LDAP error"
-msgstr "Общая ошибка IPC"
+msgstr "Другая ошибка LDAP"
 
-#, fuzzy
-#| msgid "Resources exhausted"
 msgid "Resources exhausted in LCUP"
-msgstr "Нехватка ресурсов"
+msgstr "Нехватка ресурсов в LCUP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "Security violation in LCUP"
-msgstr "Нарушение протокола"
+msgstr "Нарушение безопасности в LCUP"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid data in LCUP"
-msgstr "Недопустимое состояние"
+msgstr "Недопустимые данные в LCUP"
 
-#, fuzzy
-#| msgid "Unsupported certificate"
 msgid "Unsupported scheme in LCUP"
-msgstr "Сертификат не поддерживается"
+msgstr "Схема не поддерживается в LCUP"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "Reload required in LCUP"
-msgstr "Требуется перезапуск карты"
+msgstr "Требуется перезапуск в LCUP"
 
-#, fuzzy
-#| msgid "Success"
 msgid "LDAP cancelled"
-msgstr "Успешное завершение"
+msgstr "Отбой LDAP"
 
-#, fuzzy
-#| msgid "Not operational"
 msgid "No LDAP operation to cancel"
-msgstr "Не работоспособно"
+msgstr "Нет операции LDAP, которую можно было бы отменить"
 
-#, fuzzy
-#| msgid "Not operational"
 msgid "Too late to cancel LDAP"
-msgstr "Не работоспособно"
+msgstr "Отменять LDAP слишком поздно"
 
-#, fuzzy
-#| msgid "Not an IPC server"
 msgid "Cannot cancel LDAP"
-msgstr "Не сервер IPC"
+msgstr "Не удается отменить LDAP"
 
-#, fuzzy
-#| msgid "Decryption failed"
 msgid "LDAP assertion failed"
-msgstr "Сбой расшифровки"
+msgstr "Отказ в установке LDAP"
 
 msgid "Proxied authorization denied by LDAP"
-msgstr ""
+msgstr "LDAP отказал в опосредованной авторизации"
 
 msgid "User defined error code 1"
 msgstr "Пользовательский код ошибки 1"
@@ -1325,28 +1207,3 @@ msgstr "Вызов: %s GPG-ERROR [...]\n"
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: внимание: не распознано %s\n"
-
-#, fuzzy
-#~| msgid "Resources exhausted"
-#~ msgid "LCUP Resources exhausted"
-#~ msgstr "Нехватка ресурсов"
-
-#, fuzzy
-#~| msgid "Invalid data"
-#~ msgid "LCUP Invalid data"
-#~ msgstr "Недопустимые данные"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Сбой расшифровки"
-
-#, fuzzy
-#~| msgid "General error"
-#~ msgid "LDAP Other general error"
-#~ msgstr "Общая ошибка"
-
-#, fuzzy
-#~| msgid "dirmngr error"
-#~ msgid "Encoding error"
-#~ msgstr "ошибка dirmngr"
