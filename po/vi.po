@@ -754,6 +754,19 @@ msgstr "Có số thập lục lẻ trong biểu thức S"
 msgid "Bad octal character in S-expression"
 msgstr "Ký tự bát phân sai trong biểu thức S"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Tên không rõ"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Không có khoá công"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -881,6 +894,12 @@ msgstr ""
 #| msgid "Invalid object"
 msgid "Invalid lock object"
 msgstr "Đối tượng không hợp lệ"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Lỗi IPC chung"

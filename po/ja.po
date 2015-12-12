@@ -728,6 +728,19 @@ msgstr "S式におかしな16進キャラクタがあります"
 msgid "Bad octal character in S-expression"
 msgstr "S式に間違った8進キャラクタがあります"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "不明な名前です"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "公開鍵がありません"
+
 msgid "Legacy key"
 msgstr "レガシーな鍵"
 
@@ -826,6 +839,12 @@ msgstr "カードの鍵では不可能です"
 
 msgid "Invalid lock object"
 msgstr "無効なロック・オブジェクトです"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "一般IPCエラーです"

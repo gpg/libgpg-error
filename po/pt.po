@@ -728,6 +728,19 @@ msgstr "Números hexadecimais ímpares na expressão simbólica"
 msgid "Bad octal character in S-expression"
 msgstr "Carácter octal errado na expressão simbólica"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Nome desconhecido"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Sem chave pública"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -830,6 +843,12 @@ msgstr "Não possível com uma chave baseada num cartão"
 
 msgid "Invalid lock object"
 msgstr "Objecto de tranca inválido"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Erro genérico de IPC"

@@ -727,6 +727,19 @@ msgstr "Numeri esadecimali dispari in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Carattere ottale errato in S-expression"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Nome sconosciuto"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Nessuna chiave pubblica"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -829,6 +842,12 @@ msgstr "Non possibile con una chiave su scheda"
 
 msgid "Invalid lock object"
 msgstr "Oggetto di blocco non valido"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Errore IPC generale"

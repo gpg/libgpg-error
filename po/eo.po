@@ -764,6 +764,19 @@ msgstr "Malparaj deksesumaj numeroj en S-esprimo"
 msgid "Bad octal character in S-expression"
 msgstr "Malĝusta okuma signo en S-esprimo"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Nekonata nomo"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Neniu publika ŝlosilo"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -892,6 +905,12 @@ msgstr ""
 #| msgid "Invalid object"
 msgid "Invalid lock object"
 msgstr "Malvalida objekto"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Ĝenerala eraro de IPC"

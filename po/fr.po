@@ -729,6 +729,19 @@ msgstr "Nombre hexadécimal impair dans l'expression symbolique"
 msgid "Bad octal character in S-expression"
 msgstr "Mauvais caractère octal dans l'expression symbolique"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Nom inconnu"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Pas de clef publique"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -833,6 +846,12 @@ msgstr "Impossible avec une clef basée sur carte"
 
 msgid "Invalid lock object"
 msgstr "Objet de verrouillage incorrect"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Erreur générale IPC"

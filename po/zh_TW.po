@@ -730,6 +730,19 @@ msgstr "S-表示式中有奇怪的十六進制數字"
 msgid "Bad octal character in S-expression"
 msgstr "S-表示式中有不良的八進制字符"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "無效的名稱"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "沒有公鑰"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -832,6 +845,12 @@ msgstr "不可能以卡片式金鑰進行"
 
 msgid "Invalid lock object"
 msgstr "無效的鎖定物件"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "一般性的 IPC 錯誤"

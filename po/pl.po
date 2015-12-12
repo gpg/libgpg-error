@@ -726,6 +726,19 @@ msgstr "Nieparzysta liczba cyfr szesnastkowych w S-wyrażeniu"
 msgid "Bad octal character in S-expression"
 msgstr "Błędny znak ósemkowy w S-wyrażeniu"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Nieznana nazwa"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Brak klucza publicznego"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -828,6 +841,12 @@ msgstr "Niemożliwe przy użyciu klucza opartego na karcie"
 
 msgid "Invalid lock object"
 msgstr "Niepoprawny obiekt blokady"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Błąd ogólny IPC"

@@ -751,6 +751,19 @@ msgstr ""
 msgid "Bad octal character in S-expression"
 msgstr ""
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "未知名称"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "没有公钥"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -878,6 +891,12 @@ msgstr ""
 #| msgid "Invalid object"
 msgid "Invalid lock object"
 msgstr "无效的对象"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "一般IPC 错误"

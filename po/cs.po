@@ -736,6 +736,19 @@ msgstr "Lichá šestnáctková čísla v S-výrazu"
 msgid "Bad octal character in S-expression"
 msgstr "Chybný osmičkový znak v S-výrazu"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Neznámé jméno"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Žádný veřejný klíč"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -838,6 +851,12 @@ msgstr "Nelze provést s klíčem na kartě"
 
 msgid "Invalid lock object"
 msgstr "Neplatný objekt"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Obecná chyba IPC"

@@ -762,6 +762,19 @@ msgstr "Páratlan hexadecimális számok az S-kifejezésben"
 msgid "Bad octal character in S-expression"
 msgstr "Rossz oktadecimális karakter az S-kifejezésben"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Ismeretlen név"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Nincs nyilvános kulcs"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -890,6 +903,12 @@ msgstr ""
 #| msgid "Invalid object"
 msgid "Invalid lock object"
 msgstr "Érvénytelen objektum"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Általános IPC hiba"

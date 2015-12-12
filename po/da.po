@@ -731,6 +731,19 @@ msgstr "Ulige hexadecimalt tal i S-udtryk"
 msgid "Bad octal character in S-expression"
 msgstr "Ødelagt oktalt tegn i S-udtryk"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Ukendt navn"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Ingen offentlig nøgle"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -834,6 +847,12 @@ msgstr "Ikke muligt med en kortbaseret nøgle"
 
 msgid "Invalid lock object"
 msgstr "Ugyldigt låseobjekt"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Generel IPC-fejl"

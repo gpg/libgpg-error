@@ -761,6 +761,19 @@ msgstr "Непарни хексадецимални бројеви у С-изр�
 msgid "Bad octal character in S-expression"
 msgstr "Лош октадецимални знак у С-изразу"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Непознат назив"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Нема јавног кључа"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -889,6 +902,12 @@ msgstr ""
 #| msgid "Invalid object"
 msgid "Invalid lock object"
 msgstr "Неисправан предмет"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Општа грешка ИПЦ-а"

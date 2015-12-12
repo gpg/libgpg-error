@@ -728,6 +728,19 @@ msgstr "Vreemde hexadecimale getallen in S-expressie"
 msgid "Bad octal character in S-expression"
 msgstr "Fout octaal teken in S-expressie"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Onbekende naam"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Geen publieke sleutel"
+
 msgid "Legacy key"
 msgstr ""
 
@@ -830,6 +843,12 @@ msgstr "Niet mogelijk met een sleutel van een kaart"
 
 msgid "Invalid lock object"
 msgstr "Ongeldig vergrendelobject"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Algemene IPC-fout"

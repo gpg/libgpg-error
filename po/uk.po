@@ -728,6 +728,19 @@ msgstr "Дивні шістнадцяткові числа у S-виразі"
 msgid "Bad octal character in S-expression"
 msgstr "Помилковий вісімковий символ у S-виразі"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Невідома назва"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Немає відкритого ключа"
+
 msgid "Legacy key"
 msgstr "Застарілий ключ"
 
@@ -835,6 +848,12 @@ msgstr "Неможливе для ключа, заснованого на кар
 
 msgid "Invalid lock object"
 msgstr "Некоректний об’єкт блокування"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Загальна помилка IPC"

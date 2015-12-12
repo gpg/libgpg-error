@@ -726,6 +726,19 @@ msgstr "Шестнадцатеричные числа нечетной длин�
 msgid "Bad octal character in S-expression"
 msgstr "Плохой восьмеричный символ в S-выражении"
 
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Неизвестное имя"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Нет открытого ключа"
+
 msgid "Legacy key"
 msgstr "Старый ключ"
 
@@ -824,6 +837,12 @@ msgstr "Невозможно для ключа на карте"
 
 msgid "Invalid lock object"
 msgstr "Недопустимый объект блокировки"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
 
 msgid "General IPC error"
 msgstr "Общая ошибка IPC"
