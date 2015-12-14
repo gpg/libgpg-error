@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.19\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2015-04-14 16:35+0900\n"
+"PO-Revision-Date: 2015-12-14 11:19+0900\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -729,17 +729,13 @@ msgid "Bad octal character in S-expression"
 msgstr "S式に間違った8進キャラクタがあります"
 
 msgid "Server indicated a failure"
-msgstr ""
+msgstr "サーバが失敗を示しています"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "No name"
-msgstr "不明な名前です"
+msgstr "名前がありません"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "No key"
-msgstr "公開鍵がありません"
+msgstr "鍵がありません"
 
 msgid "Legacy key"
 msgstr "レガシーな鍵"
@@ -841,10 +837,10 @@ msgid "Invalid lock object"
 msgstr "無効なロック・オブジェクトです"
 
 msgid "True"
-msgstr ""
+msgstr "真"
 
 msgid "False"
-msgstr ""
+msgstr "偽"
 
 msgid "General IPC error"
 msgstr "一般IPCエラーです"
