@@ -56,6 +56,7 @@ lock_obj_pub = \
         syscfg/lock-obj-pub.mips-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.mips64el-unknown-linux-gnuabi64.h \
         syscfg/lock-obj-pub.mipsel-unknown-linux-gnu.h      \
+	syscfg/lock-obj-pub.nios2-unknown-linux-gnu.h       \
         syscfg/lock-obj-pub.or1k-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.powerpc-unknown-linux-gnu.h     \
         syscfg/lock-obj-pub.powerpc64-unknown-linux-gnu.h   \
