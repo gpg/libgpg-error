@@ -81,6 +81,7 @@ canon_host_triplet (const char *triplet)
     {"i586-pc-gnu"},
     {"i486-pc-kfreebsd-gnu", "i686-pc-kfreebsd-gnu"},
     {"i586-pc-kfreebsd-gnu"},
+    {"x86_64-pc-linux-gnuhardened1", "x86_64-pc-linux-gnu" },
 
     { NULL }
   };
