@@ -1039,11 +1039,7 @@ my_nl_locale_name (const char *categoryname)
 	}
       return "uz";
     case LANG_VENDA:
-      /* FIXME: It's not clear whether Venda has the ISO 639-2 two-letter code
-	 "ve" or not.
-	 http://www.loc.gov/standards/iso639-2/englangn.html has it, but
-	 http://lcweb.loc.gov/standards/iso639-2/codechanges.html doesn't,  */
-      return "ven_ZA"; /* or "ve_ZA"? */
+      return "ve_ZA";
     case LANG_VIETNAMESE: return "vi_VN";
     case LANG_WELSH: return "cy_GB";
     case LANG_XHOSA: return "xh_ZA";
