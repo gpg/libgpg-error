@@ -15,7 +15,7 @@
    Lesser General Public License for more details.
 
    You should have received a copy of the GNU Lesser General Public
-   License along with this program; if not, see <http://www.gnu.org/licenses/>.
+   License along with this program; if not, see <https://www.gnu.org/licenses/>.
  */
 
 #if HAVE_CONFIG_H
@@ -681,7 +681,7 @@ my_nl_locale_name (const char *categoryname)
 
   /* Dispatch on language.
      See also http://www.unicode.org/unicode/onlinedat/languages.html .
-     For details about languages, see http://www.ethnologue.com/ .  */
+     For details about languages, see https://www.ethnologue.com/ .  */
   switch (primary)
     {
     case LANG_AFRIKAANS: return "af_ZA";

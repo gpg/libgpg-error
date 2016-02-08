@@ -1,5 +1,5 @@
 dnl Available from the GNU Autoconf Macro Archive at:
-dnl http://www.gnu.org/software/ac-archive/htmldoc/ac_prog_cc_for_build.html
+dnl https://www.gnu.org/software/ac-archive/htmldoc/ac_prog_cc_for_build.html
 dnl
 dnl All content of this archive is free software;
 dnl you can redistribute it and/or modify it under the terms of the GNU

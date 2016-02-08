@@ -14,7 +14,7 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with Libestream; if not, see <http://www.gnu.org/licenses/>.
+ * License along with Libestream; if not, see <https://www.gnu.org/licenses/>.
  *
  * ALTERNATIVELY, Libestream may be distributed under the terms of the
  * following license, in which case the provisions of this license are
