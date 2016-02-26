@@ -7,7 +7,7 @@ typedef struct
   long _vers;
   union {
     volatile char _priv[48];
-    int _x16_align __attribute__ ((aligned (16)));
+    long double _xld_align;
     long _x_align;
     long *_xp_align;
   } u;

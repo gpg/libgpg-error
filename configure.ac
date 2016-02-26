@@ -274,20 +274,6 @@ if test "$GCC" = yes; then
 fi
 
 #
-# Check whether the compiler supports the GCC style aligned attribute
-#
-AC_CACHE_CHECK([whether the GCC style aligned attribute is supported],
-       [gcry_cv_gcc_attribute_aligned],
-       [gcry_cv_gcc_attribute_aligned=no
-        AC_COMPILE_IFELSE([AC_LANG_SOURCE(
-          [[struct { int a; } foo __attribute__ ((aligned (16)));]])],
-          [gcry_cv_gcc_attribute_aligned=yes])])
-if test "$gcry_cv_gcc_attribute_aligned" = "yes" ; then
-   AC_DEFINE(HAVE_GCC_ATTRIBUTE_ALIGNED,1,
-     [Defined if a GCC style "__attribute__ ((aligned (n))" is supported])
-fi
-
-#
 # Check for ELF visibility support.
 #
 AC_CACHE_CHECK(whether the visibility attribute is supported,
@@ -416,6 +402,25 @@ else
   fi
 fi
 
+# Default value for GPG_ERROR_CONFIG_LIBS
+config_libs="-lgpg-error"
+
+#
+# Check for other libraries (now only for -lrt).
+#
+# Save and restore LIBS so e.g., -lrt, isn't added to it.  Otherwise, *all*
+# programs in the package would end up linked with that potentially-shared
+# library, inducing unnecessary run-time overhead.
+LIB_SCHED_YIELD=
+AC_SUBST([LIB_SCHED_YIELD])
+gl_saved_libs=$LIBS
+AC_SEARCH_LIBS([sched_yield], [rt posix4],
+               [if test "$ac_cv_search_sched_yield" != "none required"; then
+                  LIB_SCHED_YIELD=$ac_cv_search_sched_yield
+                  config_libs="$config_libs $LIB_SCHED_YIELD"
+                fi])
+LIBS=$gl_saved_libs
+
 #
 # Prepare building of estream
 #
@@ -424,7 +429,7 @@ estream_INIT
 #
 # Substitution used for gpg-error-config
 #
-GPG_ERROR_CONFIG_LIBS="-lgpg-error"
+GPG_ERROR_CONFIG_LIBS="$config_libs"
 if test "x$LIBTHREAD" != x; then
   GPG_ERROR_CONFIG_LIBS="${GPG_ERROR_CONFIG_LIBS} ${LIBTHREAD}"
 fi
@@ -544,11 +549,3 @@ echo "
         Revision: mym4_revision  (mym4_revision_dec)
         Platform: $host$tmp
 "
-if test "$gcry_cv_gcc_attribute_aligned" != "yes" ; then
-cat <<G10EOF
-***
-***  Please note that your compiler does not support the GCC style
-***  aligned attribute.  Using this software may evoke bus errors.
-***
-G10EOF
-fi

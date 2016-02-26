@@ -43,15 +43,15 @@
 #endif
 
 /* Special requirements for certain platforms.  */
-#if defined(__hppa__) && defined(__linux__)
-# define USE_16BYTE_ALIGNMENT 1
+#if defined(__solaris__) && (defined (__ILP32__) || defined(_ILP32))
+# define USE_DOUBLE_FOR_ALIGNMENT 1
 #else
-# define USE_16BYTE_ALIGNMENT 0
+# define USE_DOUBLE_FOR_ALIGNMENT 0
 #endif
-
-
-#if USE_16BYTE_ALIGNMENT && !HAVE_GCC_ATTRIBUTE_ALIGNED
-# error compiler is not able to enforce a 16 byte alignment
+#if defined(__hppa__)
+# define USE_LONG_DOUBLE_FOR_ALIGNMENT 1
+#else
+# define USE_LONG_DOUBLE_FOR_ALIGNMENT 0
 #endif
 
 #ifdef USE_POSIX_THREADS
@@ -116,8 +116,10 @@ main (void)
           "\n"
           "#define GPGRT_LOCK_INITIALIZER {%d,{{",
           SIZEOF_PTHREAD_MUTEX_T,
-# if USE_16BYTE_ALIGNMENT
-          "    int _x16_align __attribute__ ((aligned (16)));\n",
+# if USE_DOUBLE_FOR_ALIGNMENT
+          "    double _xd_align;\n",
+# elif USE_LONG_DOUBLE_FOR_ALIGNMENT
+          "    long double _xld_align;\n",
 # else
           "",
 # endif
