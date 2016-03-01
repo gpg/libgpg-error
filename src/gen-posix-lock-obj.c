@@ -43,7 +43,7 @@
 #endif
 
 /* Special requirements for certain platforms.  */
-#if defined(__solaris__) && (defined (__ILP32__) || defined(_ILP32))
+#if defined(__solaris__) && !defined (__LP64__) && !defined(_LP64)
 # define USE_DOUBLE_FOR_ALIGNMENT 1
 #else
 # define USE_DOUBLE_FOR_ALIGNMENT 0
