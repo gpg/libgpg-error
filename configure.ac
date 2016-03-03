@@ -408,18 +408,13 @@ config_libs="-lgpg-error"
 #
 # Check for other libraries (now only for -lrt).
 #
-# Save and restore LIBS so e.g., -lrt, isn't added to it.  Otherwise, *all*
-# programs in the package would end up linked with that potentially-shared
-# library, inducing unnecessary run-time overhead.
 LIB_SCHED_YIELD=
 AC_SUBST([LIB_SCHED_YIELD])
-gl_saved_libs=$LIBS
 AC_SEARCH_LIBS([sched_yield], [rt posix4],
                [if test "$ac_cv_search_sched_yield" != "none required"; then
                   LIB_SCHED_YIELD=$ac_cv_search_sched_yield
                   config_libs="$config_libs $LIB_SCHED_YIELD"
                 fi])
-LIBS=$gl_saved_libs
 
 #
 # Prepare building of estream
