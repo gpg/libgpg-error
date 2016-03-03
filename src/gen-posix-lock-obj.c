@@ -43,7 +43,8 @@
 #endif
 
 /* Special requirements for certain platforms.  */
-#if defined(__solaris__) && !defined (__LP64__) && !defined(_LP64)
+#if defined(__sun) && !defined (__LP64__) && !defined(_LP64)
+/* Solaris on 32-bit architecture.  */
 # define USE_DOUBLE_FOR_ALIGNMENT 1
 #else
 # define USE_DOUBLE_FOR_ALIGNMENT 0
