@@ -48,6 +48,8 @@ lock_obj_pub = \
         syscfg/lock-obj-pub.arm-unknown-linux-gnueabi.h     \
         syscfg/lock-obj-pub.arm-unknown-linux-gnueabihf.h   \
 	syscfg/lock-obj-pub.arm-apple-darwin.h              \
+        syscfg/lock-obj-pub.armv5-unknown-linux-musleabi.h  \
+        syscfg/lock-obj-pub.armv6-unknown-linux-musleabihf.h \
         syscfg/lock-obj-pub.hppa-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.i686-pc-gnu.h                   \
         syscfg/lock-obj-pub.i686-pc-kfreebsd-gnu.h          \
@@ -68,6 +70,7 @@ lock_obj_pub = \
         syscfg/lock-obj-pub.x86_64-pc-kfreebsd-gnu.h        \
         syscfg/lock-obj-pub.x86_64-pc-linux-gnu.h           \
         syscfg/lock-obj-pub.x86_64-pc-linux-gnux32.h        \
+        syscfg/lock-obj-pub.x86_64-pc-linux-musl.h          \
 	syscfg/lock-obj-pub.mingw32.h
 
 
