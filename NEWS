@@ -5,6 +5,7 @@ Noteworthy changes in version 1.22 (unreleased) [C17/A17/R_)
  * Interface changes relative to the 1.20 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_DB_CORRUPTED             NEW.
+ gpgrt_annotate_leaked_object     NEW inline func.
 
 
 Noteworthy changes in version 1.21 (2015-12-12) [C17/A17/R0]
