@@ -248,18 +248,6 @@ static void fname_set_internal (estream_t stream, const char *fname, int quote);
 #define tohex(n) ((n) < 10 ? ((n) + '0') : (((n) - 10) + 'A'))
 
 
-/* Evaluate EXPRESSION, setting VARIABLE to the return code, if
-   VARIABLE is zero.  */
-#define SET_UNLESS_NONZERO(variable, tmp_variable, expression) \
-  do                                                           \
-    {                                                          \
-      tmp_variable = expression;                               \
-      if ((! variable) && tmp_variable)                        \
-        variable = tmp_variable;                               \
-    }                                                          \
-  while (0)
-
-
 
 static void *
 mem_alloc (size_t n)
@@ -1884,9 +1872,17 @@ es_deinitialize (estream_t stream)
 
   err = 0;
   if (stream->flags.writing)
-    SET_UNLESS_NONZERO (err, tmp_err, es_flush (stream));
+    {
+      tmp_err = es_flush (stream);
+      if (!err)
+        err = tmp_err;
+    }
   if (func_close)
-    SET_UNLESS_NONZERO (err, tmp_err, (*func_close) (stream->intern->cookie));
+    {
+      tmp_err = func_close (stream->intern->cookie);
+      if (!err)
+        err = tmp_err;
+    }
 
   mem_free (stream->intern->printable_fname);
   stream->intern->printable_fname = NULL;
@@ -4483,7 +4479,7 @@ _gpgrt_get_nonblock (estream_t stream)
 
 /* A version of poll(2) working on estream handles.  Note that not all
    estream types work with this function.  In contrast to the standard
-   poll function the gpgrt_poll_t object uses a set of names bit flags
+   poll function the gpgrt_poll_t object uses a set of bit flags
    instead of the EVENTS and REVENTS members.  An item with the IGNORE
    flag set is entirely ignored.  The TIMEOUT values is given in
    milliseconds, a value of -1 waits indefinitely, and a value of 0
