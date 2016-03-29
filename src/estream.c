@@ -667,7 +667,7 @@ func_mem_create (void *_GPGRT__RESTRICT *_GPGRT__RESTRICT cookie,
  * Read function for memory objects.
  */
 static gpgrt_ssize_t
-es_func_mem_read (void *cookie, void *buffer, size_t size)
+func_mem_read (void *cookie, void *buffer, size_t size)
 {
   estream_cookie_mem_t mem_cookie = cookie;
   gpgrt_ssize_t ret;
@@ -693,7 +693,7 @@ es_func_mem_read (void *cookie, void *buffer, size_t size)
  * Write function for memory objects.
  */
 static gpgrt_ssize_t
-es_func_mem_write (void *cookie, const void *buffer, size_t size)
+func_mem_write (void *cookie, const void *buffer, size_t size)
 {
   estream_cookie_mem_t mem_cookie = cookie;
   gpgrt_ssize_t ret;
@@ -781,7 +781,7 @@ es_func_mem_write (void *cookie, const void *buffer, size_t size)
  * Seek function for memory objects.
  */
 static int
-es_func_mem_seek (void *cookie, gpgrt_off_t *offset, int whence)
+func_mem_seek (void *cookie, gpgrt_off_t *offset, int whence)
 {
   estream_cookie_mem_t mem_cookie = cookie;
   gpgrt_off_t pos_new;
@@ -859,7 +859,7 @@ es_func_mem_seek (void *cookie, gpgrt_off_t *offset, int whence)
  * The IOCTL function for memory objects.
  */
 static int
-es_func_mem_ioctl (void *cookie, int cmd, void *ptr, size_t *len)
+func_mem_ioctl (void *cookie, int cmd, void *ptr, size_t *len)
 {
   estream_cookie_mem_t mem_cookie = cookie;
   int ret;
@@ -889,7 +889,7 @@ es_func_mem_ioctl (void *cookie, int cmd, void *ptr, size_t *len)
  * The destroy function for memory objects.
  */
 static int
-es_func_mem_destroy (void *cookie)
+func_mem_destroy (void *cookie)
 {
   estream_cookie_mem_t mem_cookie = cookie;
 
@@ -906,10 +906,10 @@ es_func_mem_destroy (void *cookie)
  */
 static gpgrt_cookie_io_functions_t estream_functions_mem =
   {
-    es_func_mem_read,
-    es_func_mem_write,
-    es_func_mem_seek,
-    es_func_mem_destroy
+    func_mem_read,
+    func_mem_write,
+    func_mem_seek,
+    func_mem_destroy
   };
 
 
@@ -961,7 +961,7 @@ func_fd_create (void **cookie, int fd, unsigned int modeflags, int no_close)
  * Read function for fd objects.
  */
 static gpgrt_ssize_t
-es_func_fd_read (void *cookie, void *buffer, size_t size)
+func_fd_read (void *cookie, void *buffer, size_t size)
 
 {
   estream_cookie_fd_t file_cookie = cookie;
@@ -995,7 +995,7 @@ es_func_fd_read (void *cookie, void *buffer, size_t size)
  * Write function for fd objects.
  */
 static gpgrt_ssize_t
-es_func_fd_write (void *cookie, const void *buffer, size_t size)
+func_fd_write (void *cookie, const void *buffer, size_t size)
 {
   estream_cookie_fd_t file_cookie = cookie;
   gpgrt_ssize_t bytes_written;
@@ -1028,7 +1028,7 @@ es_func_fd_write (void *cookie, const void *buffer, size_t size)
  * Seek function for fd objects.
  */
 static int
-es_func_fd_seek (void *cookie, gpgrt_off_t *offset, int whence)
+func_fd_seek (void *cookie, gpgrt_off_t *offset, int whence)
 {
   estream_cookie_fd_t file_cookie = cookie;
   gpgrt_off_t offset_new;
@@ -1063,7 +1063,7 @@ es_func_fd_seek (void *cookie, gpgrt_off_t *offset, int whence)
  * The IOCTL function for fd objects.
  */
 static int
-es_func_fd_ioctl (void *cookie, int cmd, void *ptr, size_t *len)
+func_fd_ioctl (void *cookie, int cmd, void *ptr, size_t *len)
 {
   estream_cookie_fd_t fd_cookie = cookie;
   int ret;
@@ -1106,7 +1106,7 @@ es_func_fd_ioctl (void *cookie, int cmd, void *ptr, size_t *len)
  * The destroy function for fd objects.
  */
 static int
-es_func_fd_destroy (void *cookie)
+func_fd_destroy (void *cookie)
 {
   estream_cookie_fd_t fd_cookie = cookie;
   int err;
@@ -1131,10 +1131,10 @@ es_func_fd_destroy (void *cookie)
  */
 static gpgrt_cookie_io_functions_t estream_functions_fd =
   {
-    es_func_fd_read,
-    es_func_fd_write,
-    es_func_fd_seek,
-    es_func_fd_destroy
+    func_fd_read,
+    func_fd_write,
+    func_fd_seek,
+    func_fd_destroy
   };
 
 
@@ -1157,7 +1157,7 @@ typedef struct estream_cookie_w32
  * Create function for w32 handle objects.
  */
 static int
-es_func_w32_create (void **cookie, HANDLE hd,
+func_w32_create (void **cookie, HANDLE hd,
                     unsigned int modeflags, int no_close)
 {
   estream_cookie_w32_t w32_cookie;
@@ -1186,7 +1186,7 @@ es_func_w32_create (void **cookie, HANDLE hd,
  * Read function for W32 handle objects.
  */
 static gpgrt_ssize_t
-es_func_w32_read (void *cookie, void *buffer, size_t size)
+func_w32_read (void *cookie, void *buffer, size_t size)
 {
   estream_cookie_w32_t w32_cookie = cookie;
   gpgrt_ssize_t bytes_read;
@@ -1233,7 +1233,7 @@ es_func_w32_read (void *cookie, void *buffer, size_t size)
  * Write function for W32 handle objects.
  */
 static gpgrt_ssize_t
-es_func_w32_write (void *cookie, const void *buffer, size_t size)
+func_w32_write (void *cookie, const void *buffer, size_t size)
 {
   estream_cookie_w32_t w32_cookie = cookie;
   gpgrt_ssize_t bytes_written;
@@ -1274,7 +1274,7 @@ es_func_w32_write (void *cookie, const void *buffer, size_t size)
  * Seek function for W32 handle objects.
  */
 static int
-es_func_w32_seek (void *cookie, gpgrt_off_t *offset, int whence)
+func_w32_seek (void *cookie, gpgrt_off_t *offset, int whence)
 {
   estream_cookie_w32_t w32_cookie = cookie;
   DWORD method;
@@ -1331,7 +1331,7 @@ es_func_w32_seek (void *cookie, gpgrt_off_t *offset, int whence)
  * Destroy function for W32 handle objects.
  */
 static int
-es_func_w32_destroy (void *cookie)
+func_w32_destroy (void *cookie)
 {
   estream_cookie_w32_t w32_cookie = cookie;
   int err;
@@ -1366,10 +1366,10 @@ es_func_w32_destroy (void *cookie)
  */
 static gpgrt_cookie_io_functions_t estream_functions_w32 =
   {
-    es_func_w32_read,
-    es_func_w32_write,
-    es_func_w32_seek,
-    es_func_w32_destroy
+    func_w32_read,
+    func_w32_write,
+    func_w32_seek,
+    func_w32_destroy
   };
 #endif /*HAVE_W32_SYSTEM*/
 
@@ -1424,7 +1424,7 @@ func_fp_create (void **cookie, FILE *fp,
  * Read function for stdio based objects.
  */
 static gpgrt_ssize_t
-es_func_fp_read (void *cookie, void *buffer, size_t size)
+func_fp_read (void *cookie, void *buffer, size_t size)
 
 {
   estream_cookie_fp_t file_cookie = cookie;
@@ -1453,7 +1453,7 @@ es_func_fp_read (void *cookie, void *buffer, size_t size)
  * Write function for stdio bases objects.
  */
 static gpgrt_ssize_t
-es_func_fp_write (void *cookie, const void *buffer, size_t size)
+func_fp_write (void *cookie, const void *buffer, size_t size)
 {
   estream_cookie_fp_t file_cookie = cookie;
   size_t bytes_written;
@@ -1505,7 +1505,7 @@ es_func_fp_write (void *cookie, const void *buffer, size_t size)
  * Seek function for stdio based objects.
  */
 static int
-es_func_fp_seek (void *cookie, gpgrt_off_t *offset, int whence)
+func_fp_seek (void *cookie, gpgrt_off_t *offset, int whence)
 {
   estream_cookie_fp_t file_cookie = cookie;
   long int offset_new;
@@ -1545,7 +1545,7 @@ es_func_fp_seek (void *cookie, gpgrt_off_t *offset, int whence)
  * Destroy function for stdio based objects.
  */
 static int
-es_func_fp_destroy (void *cookie)
+func_fp_destroy (void *cookie)
 {
   estream_cookie_fp_t fp_cookie = cookie;
   int err;
@@ -1577,10 +1577,10 @@ es_func_fp_destroy (void *cookie)
  */
 static gpgrt_cookie_io_functions_t estream_functions_fp =
   {
-    es_func_fp_read,
-    es_func_fp_write,
-    es_func_fp_seek,
-    es_func_fp_destroy
+    func_fp_read,
+    func_fp_write,
+    func_fp_seek,
+    func_fp_destroy
   };
 
 
@@ -2856,7 +2856,7 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
   if (line_stream)
     do_close (line_stream, 0);
   else if (line_stream_cookie)
-    es_func_mem_destroy (line_stream_cookie);
+    func_mem_destroy (line_stream_cookie);
 
   if (err)
     {
@@ -3115,7 +3115,7 @@ _gpgrt_fopenmem (size_t memlimit, const char *_GPGRT__RESTRICT mode)
     (*estream_functions_mem.func_close) (cookie);
 
   if (stream)
-    stream->intern->func_ioctl = es_func_mem_ioctl;
+    stream->intern->func_ioctl = func_mem_ioctl;
 
   return stream;
 }
@@ -3216,9 +3216,9 @@ do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
 
   if (!err && stream)
     {
-      stream->intern->func_ioctl = es_func_fd_ioctl;
+      stream->intern->func_ioctl = func_fd_ioctl;
       if ((modeflags & O_NONBLOCK))
-        err = es_func_fd_ioctl (cookie, COOKIE_IOCTL_NONBLOCK, "", NULL);
+        err = func_fd_ioctl (cookie, COOKIE_IOCTL_NONBLOCK, "", NULL);
     }
 
  out:
@@ -3323,7 +3323,7 @@ do_w32open (HANDLE hd, const char *mode,
   if (err)
     goto leave;
 
-  err = es_func_w32_create (&cookie, hd, modeflags, no_close);
+  err = func_w32_create (&cookie, hd, modeflags, no_close);
   if (err)
     goto leave;
 
@@ -3517,7 +3517,7 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
       if (err)
 	{
 	  if (create_called)
-	    es_func_fd_destroy (cookie);
+	    func_fd_destroy (cookie);
 
 	  do_close (stream, 0);
 	  stream = NULL;
@@ -4510,7 +4510,7 @@ _gpgrt_tmpfile (void)
   if (err)
     {
       if (create_called)
-	es_func_fd_destroy (cookie);
+	func_fd_destroy (cookie);
       else if (fd != -1)
 	close (fd);
       stream = NULL;
@@ -4555,14 +4555,14 @@ _gpgrt_set_binary (estream_t stream)
     {
       stream->intern->modeflags |= O_BINARY;
 #ifdef HAVE_DOSISH_SYSTEM
-      if (stream->intern->func_read == es_func_fd_read)
+      if (stream->intern->func_read == func_fd_read)
         {
           estream_cookie_fd_t fd_cookie = stream->intern->cookie;
 
           if (!IS_INVALID_FD (fd_cookie->fd))
             setmode (fd_cookie->fd, O_BINARY);
         }
-      else if (stream->intern->func_read == es_func_fp_read)
+      else if (stream->intern->func_read == func_fp_read)
         {
           estream_cookie_fp_t fp_cookie = stream->intern->cookie;
 
