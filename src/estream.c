@@ -4832,6 +4832,9 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
           item->got_hup = 1;
           any = 1;
         }
+#ifndef _WIN32
+      /* NB.: We can't use FD_ISSET under windows - but we don't have
+       * support for it anyway.  */
       if (item->want_read && FD_ISSET (fd, &readfds))
         {
           item->got_read = 1;
@@ -4847,6 +4850,7 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
           item->got_oob = 1;
           any = 1;
         }
+#endif /*!_WIN32*/
 
       if (any)
         count++;
