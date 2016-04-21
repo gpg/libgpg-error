@@ -38,3 +38,21 @@ int _gpg_w32_gettext_use_utf8 (int value);
 #endif /*GPG_ERR_ENABLE_GETTEXT_MACROS*/
 
 
+/* A simple iconv implementation w/o the need for an extra DLL.  */
+struct _gpgrt_w32_iconv_s;
+typedef struct _gpgrt_w32_iconv_s *gpgrt_w32_iconv_t;
+
+gpgrt_w32_iconv_t gpgrt_w32_iconv_open (const char *tocode,
+                                        const char *fromcode);
+int     gpgrt_w32_iconv_close (gpgrt_w32_iconv_t cd);
+size_t  gpgrt_w32_iconv (gpgrt_w32_iconv_t cd,
+                         const char **inbuf, size_t *inbytesleft,
+                         char **outbuf, size_t *outbytesleft);
+
+#ifdef GPGRT_ENABLE_W32_ICONV_MACROS
+# define ICONV_CONST const
+# define iconv_t gpgrt_w32_iconv_t
+# define iconv_open(a,b)  gpgrt_w32_iconv_open ((a), (b))
+# define iconv_close(a)   gpgrt_w32_iconv_close ((a))
+# define iconv(a,b,c,d,e) gpgrt_w32_iconv ((a),(b),(c),(d),(e))
+#endif /*GPGRT_ENABLE_W32_ICONV_MACROS*/

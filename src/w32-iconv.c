@@ -1,4 +1,21 @@
 /* w32-iconv.c - iconv implementation for Windows.
+ * Copyright (C) 2016 g10 Code GmbH
+ *
+ * This file is part of libgpg-error.
+ *
+ * libgpg-error is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * libgpg-error is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program; if not, see <https://www.gnu.org/licenses/>.
+ *
  **************************************************************
  * This code code is based on the file win_iconv.c as found
  * at https://github.com/win-iconv/win-iconv with the commit id
@@ -12,37 +29,26 @@
  *---------------------------------------------------
  */
 
+#if HAVE_CONFIG_H
+#include <config.h>
+#endif
+#if !defined (_WIN32) && !defined (__CYGWIN32__)
+#  error This module may only be build for Windows or Cygwin32
+#endif
+
 /* for WC_NO_BEST_FIT_CHARS */
 #ifndef WINVER
 # define WINVER 0x0500
 #endif
 
-#define STRICT
 #include <windows.h>
 #include <errno.h>
 #include <string.h>
 #include <stdlib.h>
 
-#ifdef __GNUC__
-#define UNUSED __attribute__((unused))
-#else
-#define UNUSED
-#endif
+#include "gpgrt-int.h"
 
-/* WORKAROUND: */
-#ifndef UNDER_CE
-#define GetProcAddressA GetProcAddress
-#endif
-
-#if 0
-# define MAKE_EXE
-# define MAKE_DLL
-# define USE_LIBICONV_DLL
-#endif
-
-#if !defined(DEFAULT_LIBICONV_DLL)
-# define DEFAULT_LIBICONV_DLL ""
-#endif
+#undef USE_MLANG_DLL
 
 #define MB_CHAR_MAX 16
 
@@ -57,29 +63,9 @@ typedef unsigned char uchar;
 typedef unsigned short ushort;
 typedef unsigned int uint;
 
-typedef void* iconv_t;
-
-iconv_t iconv_open(const char *tocode, const char *fromcode);
-int iconv_close(iconv_t cd);
-size_t iconv(iconv_t cd, const char **inbuf, size_t *inbytesleft, char **outbuf, size_t *outbytesleft);
-
-/* libiconv interface for vim */
-#if defined(MAKE_DLL)
-int
-iconvctl (iconv_t cd, int request, void* argument)
-{
-    /* not supported */
-    return 0;
-}
-#endif
-
 typedef struct compat_t compat_t;
 typedef struct csconv_t csconv_t;
-typedef struct rec_iconv_t rec_iconv_t;
 
-typedef iconv_t (*f_iconv_open)(const char *tocode, const char *fromcode);
-typedef int (*f_iconv_close)(iconv_t cd);
-typedef size_t (*f_iconv)(iconv_t cd, const char **inbuf, size_t *inbytesleft, char **outbuf, size_t *outbytesleft);
 typedef int* (*f_errno)(void);
 typedef int (*f_mbtowc)(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbufsize);
 typedef int (*f_wctomb)(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize);
@@ -107,23 +93,16 @@ struct csconv_t {
     compat_t *compat;
 };
 
-struct rec_iconv_t {
-    iconv_t cd;
-    f_iconv_close iconv_close;
-    f_iconv iconv;
+struct _gpgrt_w32_iconv_s {
     f_errno _errno;
     csconv_t from;
     csconv_t to;
-#if defined(USE_LIBICONV_DLL)
-    HMODULE hlibiconv;
-#endif
 };
 
-static int win_iconv_open(rec_iconv_t *cd, const char *tocode, const char *fromcode);
-static int win_iconv_close(iconv_t cd);
-static size_t win_iconv(iconv_t cd, const char **inbuf, size_t *inbytesleft, char **outbuf, size_t *outbytesleft);
-
+#if USE_MLANG_DLL
 static int load_mlang(void);
+#endif /*USE_MLANG_DLL*/
+
 static int make_csconv(const char *name, csconv_t *cv);
 static int name_to_codepage(const char *name);
 static uint utf16_to_ucs4(const ushort *wbuf);
@@ -134,31 +113,32 @@ static char *strrstr(const char *str, const char *token);
 static char *xstrndup(const char *s, size_t n);
 static int seterror(int err);
 
-#if defined(USE_LIBICONV_DLL)
-static int libiconv_iconv_open(rec_iconv_t *cd, const char *tocode, const char *fromcode);
-static PVOID MyImageDirectoryEntryToData(LPVOID Base, BOOLEAN MappedAsImage, USHORT DirectoryEntry, PULONG Size);
-static FARPROC find_imported_function(HMODULE hModule, const char *funcname);
-
-static HMODULE hwiniconv;
-#endif
-
 static int sbcs_mblen(csconv_t *cv, const uchar *buf, int bufsize);
 static int dbcs_mblen(csconv_t *cv, const uchar *buf, int bufsize);
 static int mbcs_mblen(csconv_t *cv, const uchar *buf, int bufsize);
 static int utf8_mblen(csconv_t *cv, const uchar *buf, int bufsize);
+#if USE_MLANG_DLL
 static int eucjp_mblen(csconv_t *cv, const uchar *buf, int bufsize);
+#endif /*USE_MLANG_DLL*/
 
 static int kernel_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbufsize);
 static int kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize);
+
+#if USE_MLANG_DLL
 static int mlang_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbufsize);
 static int mlang_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize);
+#endif /*USE_MLANG_DLL*/
+
 static int utf16_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbufsize);
 static int utf16_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize);
 static int utf32_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbufsize);
 static int utf32_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize);
+
+#if USE_MLANG_DLL
 static int iso2022jp_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbufsize);
 static int iso2022jp_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize);
 static int iso2022jp_flush(csconv_t *cv, uchar *buf, int bufsize);
+#endif /*USE_MLANG_DLL*/
 
 static struct {
     int codepage;
@@ -194,7 +174,6 @@ static struct {
     {12001, "UCS4BE"},
     {12001, "UCS-4BE"},
 
-#ifndef GLIB_COMPILATION
     /*
      * Default is big endian.
      * See rfc2781 4.3 Interpreting text labelled as UTF-16.
@@ -207,17 +186,6 @@ static struct {
     {12001, "UTF-32"},
     {12001, "UCS-4"},
     {12001, "UCS4"},
-#else
-    /* Default is little endian, because the platform is */
-    {1200, "UTF16"},
-    {1200, "UTF-16"},
-    {1200, "UCS2"},
-    {1200, "UCS-2"},
-    {12000, "UTF32"},
-    {12000, "UTF-32"},
-    {12000, "UCS4"},
-    {12000, "UCS-4"},
-#endif
 
     /* copy from libiconv `iconv -l` */
     /* !IsValidCodePage(367) */
@@ -663,6 +631,7 @@ static compat_t *cp51932_compat = cp932_compat;
 /* cp20932_compat for kernel.  cp932_compat for mlang. */
 static compat_t *cp5022x_compat = cp932_compat;
 
+#if USE_MLANG_DLL
 typedef HRESULT (WINAPI *CONVERTINETSTRING)(
     LPDWORD lpdwMode,
     DWORD dwSrcEncoding,
@@ -716,7 +685,9 @@ static CONVERTINETUNICODETOMULTIBYTE ConvertINetUnicodeToMultiByte;
 static ISCONVERTINETSTRINGAVAILABLE IsConvertINetStringAvailable;
 static LCIDTORFC1766A LcidToRfc1766A;
 static RFC1766TOLCIDA Rfc1766ToLcidA;
+#endif /*USE_MLANG_DLL*/
 
+#if USE_MLANG_DLL
 static int
 load_mlang(void)
 {
@@ -734,79 +705,23 @@ load_mlang(void)
     Rfc1766ToLcidA = (RFC1766TOLCIDA)GetProcAddressA(h, "Rfc1766ToLcidA");
     return TRUE;
 }
-
-iconv_t
-iconv_open(const char *tocode, const char *fromcode)
-{
-    rec_iconv_t *cd;
-
-    cd = (rec_iconv_t *)calloc(1, sizeof(rec_iconv_t));
-    if (cd == NULL)
-        return (iconv_t)(-1);
-
-#if defined(USE_LIBICONV_DLL)
-    errno = 0;
-    if (libiconv_iconv_open(cd, tocode, fromcode))
-        return (iconv_t)cd;
 #endif
 
-    /* reset the errno to prevent reporting wrong error code.
-     * 0 for unsorted error. */
-    errno = 0;
-    if (win_iconv_open(cd, tocode, fromcode))
-        return (iconv_t)cd;
-
-    free(cd);
-
-    return (iconv_t)(-1);
-}
-
-int
-iconv_close(iconv_t _cd)
-{
-    rec_iconv_t *cd = (rec_iconv_t *)_cd;
-    int r = cd->iconv_close(cd->cd);
-    int e = *(cd->_errno());
-#if defined(USE_LIBICONV_DLL)
-    if (cd->hlibiconv != NULL)
-        FreeLibrary(cd->hlibiconv);
-#endif
-    free(cd);
-    errno = e;
-    return r;
-}
-
-size_t
-iconv(iconv_t _cd, const char **inbuf, size_t *inbytesleft, char **outbuf, size_t *outbytesleft)
-{
-    rec_iconv_t *cd = (rec_iconv_t *)_cd;
-    size_t r = cd->iconv(cd->cd, inbuf, inbytesleft, outbuf, outbytesleft);
-    errno = *(cd->_errno());
-    return r;
-}
 
 static int
-win_iconv_open(rec_iconv_t *cd, const char *tocode, const char *fromcode)
+win_iconv_open(gpgrt_w32_iconv_t cd, const char *tocode, const char *fromcode)
 {
     if (!make_csconv(fromcode, &cd->from) || !make_csconv(tocode, &cd->to))
         return FALSE;
-    cd->iconv_close = win_iconv_close;
-    cd->iconv = win_iconv;
     cd->_errno = _errno;
-    cd->cd = (iconv_t)cd;
     return TRUE;
 }
 
-static int
-win_iconv_close(iconv_t cd UNUSED)
-{
-    return 0;
-}
-
 static size_t
-win_iconv(iconv_t _cd, const char **inbuf, size_t *inbytesleft, char **outbuf, size_t *outbytesleft)
+win_iconv (gpgrt_w32_iconv_t cd,
+           const char **inbuf, size_t *inbytesleft,
+           char **outbuf, size_t *outbytesleft)
 {
-    rec_iconv_t *cd = (rec_iconv_t *)_cd;
     ushort wbuf[MB_CHAR_MAX]; /* enough room for one character */
     int insize;
     int outsize;
@@ -979,6 +894,7 @@ make_csconv(const char *_name, csconv_t *cv)
         cv->wctomb = kernel_wctomb;
         cv->mblen = utf8_mblen;
     }
+#if USE_MLANG_DLL
     else if ((cv->codepage == 50220 || cv->codepage == 50221 || cv->codepage == 50222) && load_mlang())
     {
         cv->mbtowc = iso2022jp_mbtowc;
@@ -991,6 +907,7 @@ make_csconv(const char *_name, csconv_t *cv)
         cv->wctomb = mlang_wctomb;
         cv->mblen = eucjp_mblen;
     }
+#endif /*USE_MLANG_DLL*/
     else if (IsValidCodePage(cv->codepage)
 	     && GetCPInfo(cv->codepage, &cpinfo) != 0)
     {
@@ -1148,150 +1065,18 @@ xstrndup(const char *s, size_t n)
 static int
 seterror(int err)
 {
-    errno = err;
+    _gpg_err_set_errno (err);
     return -1;
 }
 
-#if defined(USE_LIBICONV_DLL)
-static int
-libiconv_iconv_open(rec_iconv_t *cd, const char *tocode, const char *fromcode)
-{
-    HMODULE hlibiconv = NULL;
-    char *dllname;
-    const char *p;
-    const char *e;
-    f_iconv_open _iconv_open;
-
-    /*
-     * always try to load dll, so that we can switch dll in runtime.
-     */
-
-    /* XXX: getenv() can't get variable set by SetEnvironmentVariable() */
-    p = getenv("WINICONV_LIBICONV_DLL");
-    if (p == NULL)
-        p = DEFAULT_LIBICONV_DLL;
-    /* parse comma separated value */
-    for ( ; *p != 0; p = (*e == ',') ? e + 1 : e)
-    {
-        e = strchr(p, ',');
-        if (p == e)
-            continue;
-        else if (e == NULL)
-            e = p + strlen(p);
-        dllname = xstrndup(p, e - p);
-        if (dllname == NULL)
-            return FALSE;
-        hlibiconv = LoadLibraryA(dllname);
-        free(dllname);
-        if (hlibiconv != NULL)
-        {
-            if (hlibiconv == hwiniconv)
-            {
-                FreeLibrary(hlibiconv);
-                hlibiconv = NULL;
-                continue;
-            }
-            break;
-        }
-    }
-
-    if (hlibiconv == NULL)
-        goto failed;
-
-    _iconv_open = (f_iconv_open)GetProcAddressA(hlibiconv, "libiconv_open");
-    if (_iconv_open == NULL)
-        _iconv_open = (f_iconv_open)GetProcAddressA(hlibiconv, "iconv_open");
-    cd->iconv_close = (f_iconv_close)GetProcAddressA(hlibiconv, "libiconv_close");
-    if (cd->iconv_close == NULL)
-        cd->iconv_close = (f_iconv_close)GetProcAddressA(hlibiconv, "iconv_close");
-    cd->iconv = (f_iconv)GetProcAddressA(hlibiconv, "libiconv");
-    if (cd->iconv == NULL)
-        cd->iconv = (f_iconv)GetProcAddressA(hlibiconv, "iconv");
-    cd->_errno = (f_errno)find_imported_function(hlibiconv, "_errno");
-    if (_iconv_open == NULL || cd->iconv_close == NULL
-            || cd->iconv == NULL || cd->_errno == NULL)
-        goto failed;
-
-    cd->cd = _iconv_open(tocode, fromcode);
-    if (cd->cd == (iconv_t)(-1))
-        goto failed;
-
-    cd->hlibiconv = hlibiconv;
-    return TRUE;
-
-failed:
-    if (hlibiconv != NULL)
-        FreeLibrary(hlibiconv);
-    return FALSE;
-}
-
-/*
- * Reference:
- * http://forums.belution.com/ja/vc/000/234/78s.shtml
- * http://nienie.com/~masapico/api_ImageDirectoryEntryToData.html
- *
- * The formal way is
- *   imagehlp.h or dbghelp.h
- *   imagehlp.lib or dbghelp.lib
- *   ImageDirectoryEntryToData()
- */
-#define TO_DOS_HEADER(base) ((PIMAGE_DOS_HEADER)(base))
-#define TO_NT_HEADERS(base) ((PIMAGE_NT_HEADERS)((LPBYTE)(base) + TO_DOS_HEADER(base)->e_lfanew))
-static PVOID
-MyImageDirectoryEntryToData(LPVOID Base, BOOLEAN MappedAsImage, USHORT DirectoryEntry, PULONG Size)
-{
-    /* TODO: MappedAsImage? */
-    PIMAGE_DATA_DIRECTORY p;
-    p = TO_NT_HEADERS(Base)->OptionalHeader.DataDirectory + DirectoryEntry;
-    if (p->VirtualAddress == 0) {
-      *Size = 0;
-      return NULL;
-    }
-    *Size = p->Size;
-    return (PVOID)((LPBYTE)Base + p->VirtualAddress);
-}
-
-static FARPROC
-find_imported_function(HMODULE hModule, const char *funcname)
-{
-    DWORD_PTR Base;
-    ULONG Size;
-    PIMAGE_IMPORT_DESCRIPTOR Imp;
-    PIMAGE_THUNK_DATA Address;      /* Import Address Table */
-    PIMAGE_THUNK_DATA Name;         /* Import Name Table */
-    PIMAGE_IMPORT_BY_NAME ImpName;
-
-    Base = (DWORD_PTR)hModule;
-    Imp = (PIMAGE_IMPORT_DESCRIPTOR)MyImageDirectoryEntryToData(
-            (LPVOID)Base,
-            TRUE,
-            IMAGE_DIRECTORY_ENTRY_IMPORT,
-            &Size);
-    if (Imp == NULL)
-        return NULL;
-    for ( ; Imp->OriginalFirstThunk != 0; ++Imp)
-    {
-        Address = (PIMAGE_THUNK_DATA)(Base + Imp->FirstThunk);
-        Name = (PIMAGE_THUNK_DATA)(Base + Imp->OriginalFirstThunk);
-        for ( ; Name->u1.Ordinal != 0; ++Name, ++Address)
-        {
-            if (!IMAGE_SNAP_BY_ORDINAL(Name->u1.Ordinal))
-            {
-                ImpName = (PIMAGE_IMPORT_BY_NAME)
-                    (Base + (DWORD_PTR)Name->u1.AddressOfData);
-                if (strcmp((char *)ImpName->Name, funcname) == 0)
-                    return (FARPROC)Address->u1.Function;
-            }
-        }
-    }
-    return NULL;
-}
-#endif
 
 static int
-sbcs_mblen(csconv_t *cv UNUSED, const uchar *buf UNUSED, int bufsize UNUSED)
+sbcs_mblen(csconv_t *cv, const uchar *buf, int bufsize)
 {
-    return 1;
+  (void)cv;
+  (void)buf;
+  (void)bufsize;
+  return 1;
 }
 
 static int
@@ -1326,9 +1111,11 @@ mbcs_mblen(csconv_t *cv, const uchar *buf, int bufsize)
 }
 
 static int
-utf8_mblen(csconv_t *cv UNUSED, const uchar *buf, int bufsize)
+utf8_mblen(csconv_t *cv, const uchar *buf, int bufsize)
 {
     int len = 0;
+
+    (void) cv;
 
     if (buf[0] < 0x80) len = 1;
     else if ((buf[0] & 0xE0) == 0xC0) len = 2;
@@ -1344,9 +1131,12 @@ utf8_mblen(csconv_t *cv UNUSED, const uchar *buf, int bufsize)
     return len;
 }
 
+#if USE_MLANG_DLL
 static int
-eucjp_mblen(csconv_t *cv UNUSED, const uchar *buf, int bufsize)
+eucjp_mblen(csconv_t *cv, const uchar *buf, int bufsize)
 {
+    (void) cv;
+
     if (buf[0] < 0x80) /* ASCII */
         return 1;
     else if (buf[0] == 0x8E) /* JIS X 0201 */
@@ -1376,6 +1166,7 @@ eucjp_mblen(csconv_t *cv UNUSED, const uchar *buf, int bufsize)
         return 2;
     }
 }
+#endif /*USE_MLANG_DLL*/
 
 static int
 kernel_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbufsize)
@@ -1439,6 +1230,7 @@ kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
  * "C42C" is same for each convert session.
  * It should be: ((codepage-1)<<16)|state
  */
+#if USE_MLANG_DLL
 static int
 mlang_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbufsize)
 {
@@ -1476,6 +1268,7 @@ mlang_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
     memcpy(buf, tmpbuf, tmpsize);
     return tmpsize;
 }
+#endif /*USE_MLANG_DLL*/
 
 static int
 utf16_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbufsize)
@@ -1702,6 +1495,7 @@ struct iso2022_esc_t {
 #define ISO2022JP_CS_JISX0208_1983    4
 #define ISO2022JP_CS_JISX0212         5
 
+#if USE_MLANG_DLL
 static iso2022_esc_t iso2022jp_esc[] = {
     {"\x1B\x28\x42", 3, 1, ISO2022JP_CS_ASCII},
     {"\x1B\x28\x4A", 3, 1, ISO2022JP_CS_JISX0201_ROMAN},
@@ -1711,9 +1505,12 @@ static iso2022_esc_t iso2022jp_esc[] = {
     {"\x1B\x24\x28\x44", 4, 2, ISO2022JP_CS_JISX0212},
     {NULL, 0, 0, 0}
 };
+#endif /*USE_MLANG_DLL*/
 
+#if USE_MLANG_DLL
 static int
-iso2022jp_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int *wbufsize)
+iso2022jp_mbtowc(csconv_t *cv, const uchar *buf, int bufsize,
+                 ushort *wbuf, int *wbufsize)
 {
     iso2022_esc_t *iesc = iso2022jp_esc;
     char tmp[MB_CHAR_MAX];
@@ -1815,7 +1612,10 @@ iso2022jp_mbtowc(csconv_t *cv, const uchar *buf, int bufsize, ushort *wbuf, int 
 
     return len;
 }
+#endif /*USE_MLANG_DLL*/
 
+
+#if USE_MLANG_DLL
 static int
 iso2022jp_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 {
@@ -1911,7 +1711,9 @@ iso2022jp_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsi
     cv->mode = ISO2022_MODE(cs, shift);
     return len + esc_len;
 }
+#endif /*USE_MLANG_DLL*/
 
+#if USE_MLANG_DLL
 static int
 iso2022jp_flush(csconv_t *cv, uchar *buf, int bufsize)
 {
@@ -1944,143 +1746,48 @@ iso2022jp_flush(csconv_t *cv, uchar *buf, int bufsize)
     }
     return 0;
 }
+#endif /*USE_MLANG_DLL*/
 
-#if defined(MAKE_DLL) && defined(USE_LIBICONV_DLL)
-BOOL WINAPI
-DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
+
+gpgrt_w32_iconv_t
+gpgrt_w32_iconv_open (const char *tocode, const char *fromcode)
 {
-    switch( fdwReason )
-    {
-    case DLL_PROCESS_ATTACH:
-        hwiniconv = (HMODULE)hinstDLL;
-        break;
-    case DLL_THREAD_ATTACH:
-    case DLL_THREAD_DETACH:
-    case DLL_PROCESS_DETACH:
-        break;
-    }
-    return TRUE;
+    gpgrt_w32_iconv_t cd;
+
+    cd = calloc(1, sizeof *cd);
+    if (!cd)
+         return (gpgrt_w32_iconv_t)(-1);
+
+    /* reset the errno to prevent reporting wrong error code.
+     * 0 for unsorted error. */
+    _gpg_err_set_errno (0);
+    if (win_iconv_open(cd, tocode, fromcode))
+        return cd;
+
+    free(cd);
+
+    return (gpgrt_w32_iconv_t)(-1);
 }
-#endif
 
-#if defined(MAKE_EXE)
-#include <stdio.h>
-#include <fcntl.h>
-#include <io.h>
 int
-main(int argc, char **argv)
+gpgrt_w32_iconv_close (gpgrt_w32_iconv_t cd)
 {
-    char *fromcode = NULL;
-    char *tocode = NULL;
-    int i;
-    char inbuf[BUFSIZ];
-    char outbuf[BUFSIZ];
-    const char *pin;
-    char *pout;
-    size_t inbytesleft;
-    size_t outbytesleft;
-    size_t rest = 0;
-    iconv_t cd;
-    size_t r;
-    FILE *in = stdin;
-    FILE *out = stdout;
-    int ignore = 0;
-    char *p;
-
-    _setmode(_fileno(stdin), _O_BINARY);
-    _setmode(_fileno(stdout), _O_BINARY);
-
-    for (i = 1; i < argc; ++i)
+    if (cd)
     {
-        if (strcmp(argv[i], "-l") == 0)
-        {
-            for (i = 0; codepage_alias[i].name != NULL; ++i)
-                printf("%s\n", codepage_alias[i].name);
-            return 0;
-        }
-
-        if (strcmp(argv[i], "-f") == 0)
-            fromcode = argv[++i];
-        else if (strcmp(argv[i], "-t") == 0)
-            tocode = argv[++i];
-        else if (strcmp(argv[i], "-c") == 0)
-            ignore = 1;
-        else if (strcmp(argv[i], "--output") == 0)
-        {
-            out = fopen(argv[++i], "wb");
-            if(out == NULL)
-            {
-                fprintf(stderr, "cannot open %s\n", argv[i]);
-                return 1;
-            }
-        }
-        else
-        {
-            in = fopen(argv[i], "rb");
-            if (in == NULL)
-            {
-                fprintf(stderr, "cannot open %s\n", argv[i]);
-                return 1;
-            }
-            break;
-        }
+         free (cd);
     }
-
-    if (fromcode == NULL || tocode == NULL)
-    {
-        printf("usage: %s [-c] -f from-enc -t to-enc [file]\n", argv[0]);
-        return 0;
-    }
-
-    if (ignore)
-    {
-        p = tocode;
-        tocode = (char *)malloc(strlen(p) + strlen("//IGNORE") + 1);
-        if (tocode == NULL)
-        {
-            perror("fatal error");
-            return 1;
-        }
-        strcpy(tocode, p);
-        strcat(tocode, "//IGNORE");
-    }
-
-    cd = iconv_open(tocode, fromcode);
-    if (cd == (iconv_t)(-1))
-    {
-        perror("iconv_open error");
-        return 1;
-    }
-
-    while ((inbytesleft = fread(inbuf + rest, 1, sizeof(inbuf) - rest, in)) != 0
-            || rest != 0)
-    {
-        inbytesleft += rest;
-        pin = inbuf;
-        pout = outbuf;
-        outbytesleft = sizeof(outbuf);
-        r = iconv(cd, &pin, &inbytesleft, &pout, &outbytesleft);
-        fwrite(outbuf, 1, sizeof(outbuf) - outbytesleft, out);
-        if (r == (size_t)(-1) && errno != E2BIG && (errno != EINVAL || feof(in)))
-        {
-            perror("conversion error");
-            return 1;
-        }
-        memmove(inbuf, pin, inbytesleft);
-        rest = inbytesleft;
-    }
-    pout = outbuf;
-    outbytesleft = sizeof(outbuf);
-    r = iconv(cd, NULL, NULL, &pout, &outbytesleft);
-    fwrite(outbuf, 1, sizeof(outbuf) - outbytesleft, out);
-    if (r == (size_t)(-1))
-    {
-        perror("conversion error");
-        return 1;
-    }
-
-    iconv_close(cd);
 
     return 0;
 }
-#endif
+
+size_t
+gpgrt_w32_iconv (gpgrt_w32_iconv_t cd,
+                  const char **inbuf, size_t *inbytesleft,
+                  char **outbuf, size_t *outbytesleft)
+{
+     size_t r;
+
+     r = win_iconv (cd, inbuf, inbytesleft, outbuf, outbytesleft);
+     _gpg_err_set_errno (*(cd->_errno()));
+     return r;
+}

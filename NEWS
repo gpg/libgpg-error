@@ -6,6 +6,10 @@ Noteworthy changes in version 1.22 (unreleased) [C17/A17/R_)
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_DB_CORRUPTED             NEW.
  gpgrt_annotate_leaked_object     NEW inline func.
+ GPGRT_ENABLE_W32_ICONV_MACROS    NEW.
+ gpgrt_w32_iconv_open             NEW.
+ gpgrt_w32_iconv_close            NEW.
+ gpgrt_w32_iconv                  NEW.
 
 
 Noteworthy changes in version 1.21 (2015-12-12) [C17/A17/R0]

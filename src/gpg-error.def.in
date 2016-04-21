@@ -144,4 +144,10 @@ EXPORTS
  gpgrt_get_nonblock           @107
  gpgrt_poll                   @108
 
+#ifdef HAVE_W32_SYSTEM
+ gpgrt_w32_iconv_open         @109
+ gpgrt_w32_iconv_close        @110
+ gpgrt_w32_iconv              @111
+#endif
+
 ;; end of file with public symbols for Windows.
