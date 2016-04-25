@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.19\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2015-12-12 12:52+0100\n"
+"PO-Revision-Date: 2016-04-25 10:33+0200\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -728,6 +728,9 @@ msgstr "Ungerade Anzahl von Hex-Zeichen in S-expression"
 
 msgid "Bad octal character in S-expression"
 msgstr "Falsches Oktal-Zeichen in S-expression"
+
+msgid "Database is corrupted"
+msgstr "Beschädigte Datenbank"
 
 msgid "Server indicated a failure"
 msgstr "Server zeigt einen unbestimmten Fehler an"
