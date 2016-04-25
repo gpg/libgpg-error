@@ -6,60 +6,11 @@ Security related bug reports: security@gnupg.org
 License (library): LGPLv2.1+
 License (manual tools): GPLv2+ with exception
 
-
-Aron Xu <happyaron.xu at gmail.com>
- - TRANSLATION [zh_CN]
-
-Clytie Siddall <clytie at riverland.net.au>
- - TRANSLATION [vi]
-
-Daniel Nylander <po at danielnylander.se>
- - TRANSLATION [sv]
-
-David Prévot <david at tilapin.org>
- - TRANSLATION [fr]
-
-Felipe Castro <fefcas at gmail.com>
- - TRANSLATION [eo]
-
-Francesco Groccia <fgr at anche.no>
- - TRANSLATION [it]
-
-Freek de Kruijf <f.de.kruijf at gmail.com>
- - TRANSLATION [nl]
-
-g10 Code GmbH <code at g10code.com>
- - Design and implementation.
-
-Jakub Bogusz <qboosh at pld-linux.org>
- - TRANSLATION [pl]
-
-Joe Hansen <joedalton2 at yahoo.dk>
- - TRANSLATION [da]
-
-Laurentiu Buzdugan <lbuz at rolix.org>
- - TRANSLATION [ro]
-
-Petr Pisar <petr.pisar at atlas.cz>
- - TRANSLATION [cs]
-
-Robert Schiele <rschiele at uni-mannheim.de>
- - libgpg-error.spec
-
-Stephane Roy <sroy at j2n.net>
- - TRANSLATION [fr]
-
-Takeshi Hamasaki <hmatrjp at users.sourceforge.jp>
- - TRANSLATION [fp]
-
-Werner Koch <wk at gnupg.org>
- - TRANSLATION [de]
-
-Yasuaki Taniguchi <yasuakit at gmail.com>
- - TRANSLATION [fp]
-
-Yuri Chornoivan <yurchor at ukr.net>
- - TRANSLATION [uk]
+Libgpg-error is free software.  See the files COPYING.LIB and COPYING
+for copying conditions.  License copyright years may be listed using
+range notation, e.g., 2000-2013, indicating that every year in the
+range, inclusive, is a copyrightable year that would otherwise be
+listed individually.
 
 
 Authors with a DCO
@@ -70,8 +21,37 @@ GnuPG, Libgcrypt, and GPGME a DCO for any of these projects is
 sufficient.
 
 
+Translators
+===========
 
- Copyright 2003, 2004, 2005, 2006, 2007, 2013, 2014, 2015 g10 Code GmbH
+cs    - Petr Pisar <petr.pisar at atlas.cz>
+da    - Joe Hansen <joedalton2 at yahoo.dk>
+de    - Werner Koch <wk at gnupg.org>
+eo    - Felipe Castro <fefcas at gmail.com>
+fr    - David Prévot <david at tilapin.org>
+        Stephane Roy <sroy at j2n.net>
+it    - Francesco Groccia <fgr at anche.no>
+jp    - Takeshi Hamasaki <hmatrjp at users.sourceforge.jp>
+        Yasuaki Taniguchi <yasuakit at gmail.com>
+nl    - Freek de Kruijf <f.de.kruijf at gmail.com>
+pl    - Jakub Bogusz <qboosh at pld-linux.org>
+ro    - Laurentiu Buzdugan <lbuz at rolix.org>
+sv    - Daniel Nylander <po at danielnylander.se>
+uk    - Yuri Chornoivan <yurchor at ukr.net>
+vi    - Clytie Siddall <clytie at riverland.net.au>
+zh_CN - Aron Xu <happyaron.xu at gmail.com>
+
+
+More credits
+============
+
+Robert Schiele <rschiele at uni-mannheim.de> wrote libgpg-error.spec.
+
+Thanks to Yukihiro Nakadaira for his public domain iconv
+implementation for Windows.
+
+
+ Copyright 2003-2007, 2013-2016 g10 Code GmbH
 
  This file is free software; as a special exception the author gives
  unlimited permission to copy and/or distribute it, with or without

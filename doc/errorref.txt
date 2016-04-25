@@ -263,6 +263,8 @@ GPG_ERR_CONFLICT		Conflicting use
 
     NTBTLS: - Function has already been called and may not be called
               again at this protocol state.
+    GNUPG:  - Returned by g13 when creating a new container on a device
+              which seems to be in use.
 
 
 71	GPG_ERR_INV_CIPHER_MODE		Invalid cipher mode

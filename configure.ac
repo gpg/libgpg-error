@@ -1,5 +1,5 @@
 # configure.ac for libgpg-error
-# Copyright (C) 2003, 2004, 2006, 2010, 2013, 2014, 2015 g10 Code GmbH
+# Copyright (C) 2003, 2004, 2006, 2010, 2013, 2014, 2015, 2016 g10 Code GmbH
 #
 # This file is part of libgpg-error.
 #
@@ -51,8 +51,8 @@ AC_INIT([libgpg-error],[mym4_full_version],[https://bugs.gnupg.org])
 #   (Interfaces added:			AGE++)
 #   (Interfaces removed:		AGE=0)
 # Note that added error codes don't constitute an interface change.
-LIBGPG_ERROR_LT_CURRENT=17
-LIBGPG_ERROR_LT_AGE=17
+LIBGPG_ERROR_LT_CURRENT=18
+LIBGPG_ERROR_LT_AGE=18
 LIBGPG_ERROR_LT_REVISION=0
 ################################################
 
