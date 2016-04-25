@@ -728,6 +728,11 @@ msgstr "Números hexadecimais ímpares na expressão simbólica"
 msgid "Bad octal character in S-expression"
 msgstr "Carácter octal errado na expressão simbólica"
 
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "Dados não encriptados"
+
 msgid "Server indicated a failure"
 msgstr ""
 

@@ -762,6 +762,11 @@ msgstr "Páratlan hexadecimális számok az S-kifejezésben"
 msgid "Bad octal character in S-expression"
 msgstr "Rossz oktadecimális karakter az S-kifejezésben"
 
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "Az adatok nincsenek titkosítva"
+
 msgid "Server indicated a failure"
 msgstr ""
 

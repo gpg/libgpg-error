@@ -751,6 +751,11 @@ msgstr ""
 msgid "Bad octal character in S-expression"
 msgstr ""
 
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "数据未加密"
+
 msgid "Server indicated a failure"
 msgstr ""
 

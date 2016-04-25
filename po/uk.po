@@ -728,6 +728,11 @@ msgstr "Дивні шістнадцяткові числа у S-виразі"
 msgid "Bad octal character in S-expression"
 msgstr "Помилковий вісімковий символ у S-виразі"
 
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "Дані не зашифровано"
+
 msgid "Server indicated a failure"
 msgstr ""
 

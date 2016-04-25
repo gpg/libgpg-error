@@ -761,6 +761,11 @@ msgstr "Непарни хексадецимални бројеви у С-изр�
 msgid "Bad octal character in S-expression"
 msgstr "Лош октадецимални знак у С-изразу"
 
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "Подаци нису шифровани"
+
 msgid "Server indicated a failure"
 msgstr ""
 

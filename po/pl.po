@@ -726,6 +726,11 @@ msgstr "Nieparzysta liczba cyfr szesnastkowych w S-wyrażeniu"
 msgid "Bad octal character in S-expression"
 msgstr "Błędny znak ósemkowy w S-wyrażeniu"
 
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "Dane nie zaszyfrowane"
+
 msgid "Server indicated a failure"
 msgstr ""
 

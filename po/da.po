@@ -731,6 +731,11 @@ msgstr "Ulige hexadecimalt tal i S-udtryk"
 msgid "Bad octal character in S-expression"
 msgstr "Ødelagt oktalt tegn i S-udtryk"
 
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "Data er ikke krypteret"
+
 msgid "Server indicated a failure"
 msgstr ""
 

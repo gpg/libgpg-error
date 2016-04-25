@@ -730,6 +730,11 @@ msgstr "S-表示式中有奇怪的十六進制數字"
 msgid "Bad octal character in S-expression"
 msgstr "S-表示式中有不良的八進制字符"
 
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "資料未經加密"
+
 msgid "Server indicated a failure"
 msgstr ""
 

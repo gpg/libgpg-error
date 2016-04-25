@@ -727,6 +727,11 @@ msgstr "Numeri esadecimali dispari in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Carattere ottale errato in S-expression"
 
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "Dati non cifrati"
+
 msgid "Server indicated a failure"
 msgstr ""
 

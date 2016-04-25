@@ -728,6 +728,11 @@ msgstr "Vreemde hexadecimale getallen in S-expressie"
 msgid "Bad octal character in S-expression"
 msgstr "Fout octaal teken in S-expressie"
 
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "Gegevens niet versleuteld"
+
 msgid "Server indicated a failure"
 msgstr ""
 

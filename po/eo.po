@@ -764,6 +764,11 @@ msgstr "Malparaj deksesumaj numeroj en S-esprimo"
 msgid "Bad octal character in S-expression"
 msgstr "Malĝusta okuma signo en S-esprimo"
 
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "Datumaro ne ĉifrita"
+
 msgid "Server indicated a failure"
 msgstr ""
 
