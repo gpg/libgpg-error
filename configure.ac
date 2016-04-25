@@ -274,6 +274,20 @@ if test "$GCC" = yes; then
 fi
 
 #
+# Check whether the compiler supports the GCC style aligned attribute
+#
+AC_CACHE_CHECK([whether the GCC style aligned attribute is supported],
+       [gcry_cv_gcc_attribute_aligned],
+       [gcry_cv_gcc_attribute_aligned=no
+        AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+          [[struct { int a; } foo __attribute__ ((aligned (16)));]])],
+          [gcry_cv_gcc_attribute_aligned=yes])])
+if test "$gcry_cv_gcc_attribute_aligned" = "yes" ; then
+   AC_DEFINE(HAVE_GCC_ATTRIBUTE_ALIGNED,1,
+     [Defined if a GCC style "__attribute__ ((aligned (n))" is supported])
+fi
+
+#
 # Check for ELF visibility support.
 #
 AC_CACHE_CHECK(whether the visibility attribute is supported,
@@ -544,3 +558,11 @@ echo "
         Revision: mym4_revision  (mym4_revision_dec)
         Platform: $host$tmp
 "
+if test "$gcry_cv_gcc_attribute_aligned" != "yes" ; then
+cat <<G10EOF
+***
+***  Please note that your compiler does not support the GCC style
+***  aligned attribute.  Using this software may evoke bus errors.
+***
+G10EOF
+fi
