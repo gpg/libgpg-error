@@ -316,7 +316,7 @@ GPG_ERR_INV_NAME		Invalid name
 
     [more to come]
 
-89	GPG_ERR_BAD_DATA		Bad data
+GPG_ERR_BAD_DATA		Bad data
 
 GPG_ERR_INV_PARAMETER		Invalid parameter
 
@@ -439,6 +439,10 @@ GPG_ERR_UNSUPPORTED_ENCODING	Unsupported encoding
     GCRYPT:  gcry_kdf_proc for an unknown kdf algorithm
 
 150	GPG_ERR_INV_ENGINE		Invalid crypto engine
+
+    GPGME: Several uses use cases.  For example:
+           - Unexpected format of a status line.
+
 151	GPG_ERR_PUBKEY_NOT_TRUSTED	Public key not trusted
 152	GPG_ERR_DECRYPT_FAILED		Decryption failed
 153	GPG_ERR_KEY_EXPIRED		Key expired
@@ -488,7 +492,10 @@ GPG_ERR_INV_CERT_OBJ		Invalid certificate object
 
 166	GPG_ERR_LOCALE_PROBLEM		A locale function failed
 167	GPG_ERR_NOT_LOCKED		Not locked
-168	GPG_ERR_PROTOCOL_VIOLATION	Protocol violation
+
+GPG_ERR_PROTOCOL_VIOLATION	Protocol violation
+
+    GNUPG: - Used for invalid HTTP responses.
 
 
 GPG_ERR_INV_MAC			Invalid MAC
@@ -625,6 +632,9 @@ GPG_ERR_MAC_ALGO
 211	GPG_ERR_SEXP_BAD_HEX_CHAR	Bad hexadecimal character in S-expression
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
+
+
+GPG_ERR_SUBKEYS_EXP_REV (217)           All subkeys are expired or revoked
 
 GPG_ERR_DB_CORRUPTED (218)		Database is corrupted
 

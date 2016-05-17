@@ -247,7 +247,8 @@
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
-# 214 to 217 are free to be used.
+# 214 to 216 are free to be used.
+217	GPG_ERR_SUBKEYS_EXP_OR_REV	All subkeys are expired or revoked
 218	GPG_ERR_DB_CORRUPTED		Database is corrupted
 219	GPG_ERR_SERVER_FAILED		Server indicated a failure
 220	GPG_ERR_NO_NAME			No name

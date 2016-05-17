@@ -1,6 +1,10 @@
 Noteworthy changes in version 1.23 (unreleased) [C18/A18/R_)
 -----------------------------------------------
 
+ * Interface changes relative to the 1.22 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_SUBKEYS_EXP_OR_REV       NEW.
+
 
 Noteworthy changes in version 1.22 (2016-04-25) [C18/A18/R0)
 -----------------------------------------------
