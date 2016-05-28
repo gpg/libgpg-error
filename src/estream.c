@@ -639,6 +639,14 @@ func_mem_create (void *_GPGRT__RESTRICT *_GPGRT__RESTRICT cookie,
       return -1;
     }
 
+  /* Round a memory limit up to the next block length.  */
+  if (memory_limit && block_size)
+    {
+      memory_limit += block_size - 1;
+      memory_limit /= block_size;
+      memory_limit *= block_size;
+    }
+
   mem_cookie = mem_alloc (sizeof (*mem_cookie));
   if (!mem_cookie)
     err = -1;
