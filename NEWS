@@ -1,5 +1,12 @@
-Noteworthy changes in version 1.23 (unreleased) [C18/A18/R_)
+Noteworthy changes in version 1.23 (2016-06-15) [C19/A19/R0)
 -----------------------------------------------
+
+ * Fixes an assertion failure due to es_flush on read/write streams.
+
+ * Fixes a bug with a too short memory limit is es_fopenmen.
+
+ * Cross-build support for powerpc-unknown-linux-gnuspe and
+   tilegx-unknown-linux-gnu architectures.
 
  * Interface changes relative to the 1.22 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
