@@ -736,6 +736,9 @@ msgstr "Lichá šestnáctková čísla v S-výrazu"
 msgid "Bad octal character in S-expression"
 msgstr "Chybný osmičkový znak v S-výrazu"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 #, fuzzy
 #| msgid "Data not encrypted"
 msgid "Database is corrupted"

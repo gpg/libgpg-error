@@ -728,6 +728,9 @@ msgstr "S式におかしな16進キャラクタがあります"
 msgid "Bad octal character in S-expression"
 msgstr "S式に間違った8進キャラクタがあります"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 msgid "Database is corrupted"
 msgstr "データベースがおかしくなってます"
 

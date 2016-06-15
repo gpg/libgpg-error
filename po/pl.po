@@ -726,6 +726,9 @@ msgstr "Nieparzysta liczba cyfr szesnastkowych w S-wyrażeniu"
 msgid "Bad octal character in S-expression"
 msgstr "Błędny znak ósemkowy w S-wyrażeniu"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 msgid "Database is corrupted"
 msgstr "Baza danych jest uszkodzona"
 

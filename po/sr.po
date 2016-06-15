@@ -761,6 +761,9 @@ msgstr "Непарни хексадецимални бројеви у С-изр�
 msgid "Bad octal character in S-expression"
 msgstr "Лош октадецимални знак у С-изразу"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 #, fuzzy
 #| msgid "Data not encrypted"
 msgid "Database is corrupted"

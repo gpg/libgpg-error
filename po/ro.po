@@ -765,6 +765,9 @@ msgstr "Numere hexazecimale ciudate în expresia-S"
 msgid "Bad octal character in S-expression"
 msgstr "Caracter octal incorect în expresia-S"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 #, fuzzy
 #| msgid "Data not encrypted"
 msgid "Database is corrupted"
