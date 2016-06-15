@@ -729,6 +729,9 @@ msgstr "Ungerade Anzahl von Hex-Zeichen in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Falsches Oktal-Zeichen in S-expression"
 
+msgid "All subkeys are expired or revoked"
+msgstr "Alle Unterschlüssel sind abgelaufen oder widerrufen"
+
 msgid "Database is corrupted"
 msgstr "Beschädigte Datenbank"
 
@@ -1244,7 +1247,5 @@ msgstr "%s: Warnung: %s konnte nicht erkannt werden\n"
 #~ msgid "LDAP Other general error"
 #~ msgstr "Sonstiger allgemeiner LDAP Fehler"
 
-#, fuzzy
-#~| msgid "dirmngr error"
 #~ msgid "Encoding error"
-#~ msgstr "Fehler im Dirmngr"
+#~ msgstr "Kodierungsfehler"
