@@ -2679,6 +2679,7 @@ es_writen (estream_t _GPGRT__RESTRICT stream,
               else
                 goto out;
             }
+          stream->flags.writing = 1;
         }
     }
 
@@ -2701,9 +2702,6 @@ es_writen (estream_t _GPGRT__RESTRICT stream,
 
   if (bytes_written)
     *bytes_written = data_written;
-  if (data_written)
-    if (!stream->flags.writing)
-      stream->flags.writing = 1;
 
   return err;
 }
