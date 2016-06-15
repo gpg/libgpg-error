@@ -122,19 +122,22 @@ consumer_thread (void *argaddr)
 static void
 launch_thread (THREAD_RET_TYPE (*fnc)(void *), struct thread_arg *th)
 {
+  int fd;
+
+  th->stop_me = 0;
+  fd = es_fileno (th->stream);
 #ifdef _WIN32
 
   th->thread = CreateThread (NULL, 0, fnc, th, 0, NULL);
   if (!th->thread)
     die ("creating thread '%s' failed: rc=%d", th->name, (int)GetLastError ());
-  show ("thread '%s' launched (fd=%d)\n", th->name, es_fileno (th->stream));
+  show ("thread '%s' launched (fd=%d)\n", th->name, fd);
 
 #elif USE_POSIX_THREADS
 
-  th->stop_me = 0;
   if (pthread_create (&th->thread, NULL, fnc, th))
     die ("creating thread '%s' failed: %s\n", th->name, strerror (errno));
-  show ("thread '%s' launched (fd=%d)\n", th->name, es_fileno (th->stream));
+  show ("thread '%s' launched (fd=%d)\n", th->name, fd);
 
 # else /* no thread support */
 
