@@ -1611,7 +1611,6 @@ func_file_create (void **cookie, int *filedes,
   int fd;
 
   err = 0;
-  fd = -1;
 
   file_cookie = mem_alloc (sizeof (*file_cookie));
   if (! file_cookie)
@@ -2769,7 +2768,6 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
             char *_GPGRT__RESTRICT *_GPGRT__RESTRICT line,
             size_t *_GPGRT__RESTRICT line_length)
 {
-  size_t space_left;
   size_t line_size;
   estream_t line_stream;
   char *line_new;
@@ -2798,46 +2796,49 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
   if (err)
     goto out;
 
-  space_left = max_length;
-  line_size = 0;
-  while (1)
-    {
-      if (max_length && (space_left == 1))
-	break;
+  {
+    size_t space_left = max_length;
 
-      err = es_peek (stream, &data, &data_len);
-      if (err || (! data_len))
-	break;
+    line_size = 0;
+    for (;;)
+      {
+        if (max_length && (space_left == 1))
+          break;
 
-      if (data_len > (space_left - 1))
-	data_len = space_left - 1;
+        err = es_peek (stream, &data, &data_len);
+        if (err || (! data_len))
+          break;
 
-      newline = memchr (data, '\n', data_len);
-      if (newline)
-	{
-	  data_len = (newline - (char *) data) + 1;
-	  err = _gpgrt_write (line_stream, data, data_len, NULL);
-	  if (! err)
-	    {
-	      space_left -= data_len;
-	      line_size += data_len;
-	      es_skip (stream, data_len);
-	      break;
-	    }
-	}
-      else
-	{
-	  err = _gpgrt_write (line_stream, data, data_len, NULL);
-	  if (! err)
-	    {
-	      space_left -= data_len;
-	      line_size += data_len;
-	      es_skip (stream, data_len);
-	    }
-	}
-      if (err)
-	break;
-    }
+        if (data_len > (space_left - 1))
+          data_len = space_left - 1;
+
+        newline = memchr (data, '\n', data_len);
+        if (newline)
+          {
+            data_len = (newline - (char *) data) + 1;
+            err = _gpgrt_write (line_stream, data, data_len, NULL);
+            if (! err)
+              {
+                /* Not needed: space_left -= data_len */
+                line_size += data_len;
+                es_skip (stream, data_len);
+                break; /* endless loop */
+              }
+          }
+        else
+          {
+            err = _gpgrt_write (line_stream, data, data_len, NULL);
+            if (! err)
+              {
+                space_left -= data_len;
+                line_size += data_len;
+                es_skip (stream, data_len);
+              }
+          }
+        if (err)
+          break;
+      }
+  }
   if (err)
     goto out;
 
@@ -4240,7 +4241,7 @@ _gpgrt_getline (char *_GPGRT__RESTRICT *_GPGRT__RESTRICT lineptr,
    Returns the length of the line. EOF is indicated by a line of
    length zero. A truncated line is indicated my setting the value at
    MAX_LENGTH to 0.  If the returned value is less then 0 not enough
-   memory was enable or another error occurred; ERRNO is then set
+   memory was available or another error occurred; ERRNO is then set
    accordingly.
 
    If a line has been truncated, the file pointer is moved forward to
