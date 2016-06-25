@@ -65,4 +65,4 @@ $(myman_pages) : yat2m-stamp
 # been modified.  This is required so that the version.texi magic
 # updates the release date.
 gpgrt.texi : $(gpgrt_TEXINFOS)
-	touch $(srcdir)/gcrypt.texi
+	touch $(srcdir)/gpgrt.texi
