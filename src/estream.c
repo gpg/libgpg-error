@@ -890,7 +890,7 @@ func_mem_ioctl (void *cookie, int cmd, void *ptr, size_t *len)
       /* Return the internal buffer of the stream to the caller and
          invalidate it for the stream.  */
       *(void**)ptr = mem_cookie->memory;
-      *len = mem_cookie->offset;
+      *len = mem_cookie->data_len;
       mem_cookie->memory = NULL;
       mem_cookie->memory_size = 0;
       mem_cookie->offset = 0;
