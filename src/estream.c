@@ -130,6 +130,11 @@
 # define O_NONBLOCK  0  /* FIXME: Not yet supported.  */
 #endif
 
+#if !defined (EWOULDBLOCK) && defined (HAVE_W32_SYSTEM)
+/* Compatibility with errno.h from mingw-2.0 */
+# define EWOULDBLOCK 140
+#endif
+
 #ifndef EAGAIN
 # define EAGAIN  EWOULDBLOCK
 #endif
