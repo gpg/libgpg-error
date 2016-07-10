@@ -533,6 +533,11 @@ AC_ARG_ENABLE([doc], AC_HELP_STRING([--disable-doc],
                      build_doc=$enableval, build_doc=yes)
 AM_CONDITIONAL([BUILD_DOC], [test "x$build_doc" != xno])
 
+build_tests=yes
+AC_ARG_ENABLE([tests], AC_HELP_STRING([--disable-tests],
+                                    [do not build the tests]),
+                     build_tests=$enableval, build_tests=yes)
+AM_CONDITIONAL([BUILD_TESTS], [test "x$build_tests" != xno])
 
 #
 # Substitution
