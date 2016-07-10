@@ -29,7 +29,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>
-#include <pthread.h>
+#ifdef USE_POSIX_THREADS
+# include <pthread.h>
+#endif
 
 #include "posix-lock-obj.h"
 

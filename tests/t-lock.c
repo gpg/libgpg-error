@@ -31,7 +31,9 @@
 # include <windows.h>
 # include <time.h>
 #else
-# include <pthread.h>
+# ifdef USE_POSIX_THREADS
+#  include <pthread.h>
+# endif
 #endif
 
 #define PGM "t-lock"
