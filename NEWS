@@ -1,5 +1,12 @@
-Noteworthy changes in version 1.24 (unreleased) [C19/A19/R_)
+Noteworthy changes in version 1.24 (2016-07-14) [C19/A19/R1)
 -----------------------------------------------
+
+ * Fixes a bug in es_fclose_snatch when used used after es_fseek.
+
+ * Fixes building without thread support.
+
+ * New configure option --disable-tests.
+
 
 Noteworthy changes in version 1.23 (2016-06-15) [C19/A19/R0)
 -----------------------------------------------

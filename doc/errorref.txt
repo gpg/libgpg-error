@@ -687,6 +687,7 @@ GPG_ERR_BAD_MAC			The MAC does not verify
 
 GPG_ERR_UNEXPECTED_MSG         Unexpected message
 
+    GNUPG:  - An unexpected WKS message was received.
     NTBTLS: - Unexpected message received.
 
 GPG_ERR_COMPR_FAILED           Compression or decompression failed

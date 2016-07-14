@@ -53,7 +53,7 @@ AC_INIT([libgpg-error],[mym4_full_version],[https://bugs.gnupg.org])
 # Note that added error codes don't constitute an interface change.
 LIBGPG_ERROR_LT_CURRENT=19
 LIBGPG_ERROR_LT_AGE=19
-LIBGPG_ERROR_LT_REVISION=0
+LIBGPG_ERROR_LT_REVISION=1
 ################################################
 
 AC_SUBST(LIBGPG_ERROR_LT_CURRENT)
