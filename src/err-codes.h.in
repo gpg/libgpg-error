@@ -319,7 +319,8 @@
 
 # 282 to 299 are reserved for future assuan codes.
 
-# 300 to 720 are free to be used.
+300	GPG_ERR_ENGINE_TOO_OLD		Crypto engine too old
+# 301 to 720 are free to be used.
 
 #
 # Mapping of LDAP error codes
