@@ -184,6 +184,20 @@ AC_C_CONST
 AC_CHECK_SIZEOF(int)
 AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(long long)
+AC_HEADER_TIME
+AC_CHECK_SIZEOF(time_t,,[[
+#include <stdio.h>
+#if TIME_WITH_SYS_TIME
+# include <sys/time.h>
+# include <time.h>
+#else
+# if HAVE_SYS_TIME_H
+#  include <sys/time.h>
+# else
+#  include <time.h>
+# endif
+#endif
+]])
 
 # Find a 64 bit integer type to be used instead of off_t.  We prefer
 # the standard integer types over int64_t and finally try long long.
