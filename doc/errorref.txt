@@ -805,6 +805,45 @@ GPG_ERR_FALSE			False
 
     Used to return the boolean value False.
 
+
+GPG_ERR_ASS_GENERAL (257)            General IPC error
+GPG_ERR_ASS_ACCEPT_FAILED (258)      IPC accept call failed
+GPG_ERR_ASS_CONNECT_FAILED (259)     IPC connect call failed
+GPG_ERR_ASS_INV_RESPONSE (260)       Invalid IPC response
+GPG_ERR_ASS_INV_VALUE (261)          Invalid value passed to IPC
+GPG_ERR_ASS_INCOMPLETE_LINE (262)    Incomplete line passed to IPC
+GPG_ERR_ASS_LINE_TOO_LONG (263)      Line passed to IPC too long
+GPG_ERR_ASS_NESTED_COMMANDS (264)    Nested IPC commands
+GPG_ERR_ASS_NO_DATA_CB (265)         No data callback in IPC
+GPG_ERR_ASS_NO_INQUIRE_CB (266)      No inquire callback in IPC
+GPG_ERR_ASS_NOT_A_SERVER (267)       Not an IPC server
+GPG_ERR_ASS_NOT_A_CLIENT (268)       Not an IPC client
+GPG_ERR_ASS_SERVER_START (269)       Problem starting IPC server
+GPG_ERR_ASS_READ_ERROR (270)         IPC read error
+GPG_ERR_ASS_WRITE_ERROR	(271)        IPC write error
+GPG_ERR_ASS_TOO_MUCH_DATA  (273)     Too much data for IPC layer
+GPG_ERR_ASS_UNEXPECTED_CMD (274)     Unexpected IPC command
+GPG_ERR_ASS_UNKNOWN_CMD	(275)        Unknown IPC command
+GPG_ERR_ASS_SYNTAX (276)             IPC syntax error
+GPG_ERR_ASS_CANCELED (277)           IPC call has been cancelled
+GPG_ERR_ASS_NO_INPUT (278)           No input source for IPC
+GPG_ERR_ASS_NO_OUTPUT (279)          No output source for IPC
+GPG_ERR_ASS_PARAMETER (280)          IPC parameter error
+GPG_ERR_ASS_UNKNOWN_INQUIRE (281)    Unknown IPC inquire
+
+
+GPG_ERR_ENGINE_TOO_OLD (300)	Crypto engine too old
+
+GPG_ERR_WINDOW_TOO_SMALL(301)	Screen or window too small
+
+    Pinentry: - The size of the screen is too small.
+
+GPG_ERR_WINDOW_TOO_LARGE (302)	Screen or window too large
+
+GPG_ERR_MISSING_ENVVAR (303)	Required environment variable not set
+
+    Pinentry: - The size of the screen can't be determined.
+
 GPG_ERR_LDAP_GENERAL		LDAP General error
 
    Catch all error for LDAP.  Use if if can't map an erro rocde to an

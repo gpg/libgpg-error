@@ -320,7 +320,11 @@
 # 282 to 299 are reserved for future assuan codes.
 
 300	GPG_ERR_ENGINE_TOO_OLD		Crypto engine too old
-# 301 to 720 are free to be used.
+301	GPG_ERR_WINDOW_TOO_SMALL	Screen or window too small
+302	GPG_ERR_WINDOW_TOO_LARGE	Screen or window too large
+303	GPG_ERR_MISSING_ENVVAR		Required environment variable not set
+
+# This range is free for use.
 
 #
 # Mapping of LDAP error codes
