@@ -7,6 +7,9 @@ Noteworthy changes in version 1.25 (unreleased) [C19/A19/R_)
  GPG_ERR_WINDOW_TOO_SMALL         NEW.
  GPG_ERR_WINDOW_TOO_LARGE         NEW.
  GPG_ERR_MISSING_ENVVAR	          NEW.
+ GPG_ERR_USER_ID_EXISTS           NEW.
+ GPG_ERR_NAME_EXISTS              NEW.
+ GPG_ERR_DUP_NAME                 NEW.
 
 
 Noteworthy changes in version 1.24 (2016-07-14) [C19/A19/R1)

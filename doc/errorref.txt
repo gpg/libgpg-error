@@ -798,7 +798,7 @@ GPG_ERR_INV_LOCK_OBJ		Invalid lock object
 
 GPG_ERR_TRUE			True
 
-    Used to retrun the boolena value True.  Note that GPG_ERR_NO_ERROR
+    Used to return the boolean value True.  Note that GPG_ERR_NO_ERROR
     (with the value 0) is also often used to indicate the value true.
 
 GPG_ERR_FALSE			False
@@ -843,6 +843,14 @@ GPG_ERR_WINDOW_TOO_LARGE (302)	Screen or window too large
 GPG_ERR_MISSING_ENVVAR (303)	Required environment variable not set
 
     Pinentry: - The size of the screen can't be determined.
+
+GPG_ERR_USER_ID_EXISTS (304)	User ID already exists
+
+    GNUPG: - Existing user ID in --quick-gen-key.
+
+GPG_ERR_NAME_EXISTS (305)	Name already exists
+GPG_ERR_DUP_NAME (306)		Duplicated name
+
 
 GPG_ERR_LDAP_GENERAL		LDAP General error
 
