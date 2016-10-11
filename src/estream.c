@@ -1809,7 +1809,7 @@ parse_mode (const char *modestr,
         }
       else if (!strncmp (modestr, "sysopen", 7))
         {
-          modestr += 8;
+          modestr += 7;
           if (*modestr && !strchr (" \t,", *modestr))
             {
               _set_errno (EINVAL);
