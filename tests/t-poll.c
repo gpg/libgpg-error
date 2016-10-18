@@ -39,7 +39,7 @@
 # endif
 #endif
 
-#define PGM "t-lock"
+#define PGM "t-poll"
 
 #include "t-common.h"
 
