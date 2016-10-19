@@ -69,6 +69,17 @@ struct cookie_io_functions_s
   cookie_ioctl_function_t func_ioctl;
 };
 
+typedef enum
+  {
+    BACKEND_MEM,
+    BACKEND_FD,
+    BACKEND_W32,
+    BACKEND_FP,
+    BACKEND_USER,
+    BACKEND_W32_POLLABLE,
+  } gpgrt_stream_backend_kind_t;
+
+
 
 /* Local prototypes for estream.  */
 int _gpgrt_es_init (void);
