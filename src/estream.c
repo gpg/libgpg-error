@@ -1680,6 +1680,10 @@ func_file_create (void **cookie, int *filedes,
 
 
 
+/* Flags used by parse_mode and friends.  */
+#define X_SAMETHREAD	(1 << 0)
+#define X_SYSOPEN	(1 << 1)
+
 /* Parse the mode flags of fopen et al.  In addition to the POSIX
  * defined mode flags keyword parameters are supported.  These are
  * key/value pairs delimited by comma and optional white spaces.
@@ -1721,15 +1725,14 @@ func_file_create (void **cookie, int *filedes,
  */
 static int
 parse_mode (const char *modestr,
-            unsigned int *modeflags, int *samethread, int *sysopen,
+            unsigned int *modeflags,
+            unsigned int *r_xmode,
             unsigned int *r_cmode)
 {
   unsigned int omode, oflags, cmode;
   int got_cmode = 0;
 
-  *samethread = 0;
-  if (sysopen)
-    *sysopen = 0;
+  *r_xmode = 0;
 
   switch (*modestr)
     {
@@ -1811,7 +1814,7 @@ parse_mode (const char *modestr,
               _set_errno (EINVAL);
               return -1;
             }
-          *samethread = 1;
+          *r_xmode |= X_SAMETHREAD;
         }
       else if (!strncmp (modestr, "nonblock", 8))
         {
@@ -1831,8 +1834,7 @@ parse_mode (const char *modestr,
               _set_errno (EINVAL);
               return -1;
             }
-          if (sysopen)
-            *sysopen = 1;
+          *r_xmode |= X_SYSOPEN;
         }
     }
   if (!got_cmode)
@@ -2004,7 +2006,7 @@ static void
 init_stream_obj (estream_t stream,
                  void *cookie, es_syshd_t *syshd,
                  gpgrt_cookie_io_functions_t functions,
-                 unsigned int modeflags, int samethread)
+                 unsigned int modeflags, unsigned int xmode)
 {
   stream->intern->cookie = cookie;
   stream->intern->opaque = NULL;
@@ -2025,7 +2027,7 @@ init_stream_obj (estream_t stream,
   stream->intern->deallocate_buffer = 0;
   stream->intern->printable_fname = NULL;
   stream->intern->printable_fname_inuse = 0;
-  stream->intern->samethread = !!samethread;
+  stream->intern->samethread = !! (xmode & X_SAMETHREAD);
   stream->intern->onclose = NULL;
 
   stream->data_len = 0;
@@ -2089,7 +2091,7 @@ es_deinitialize (estream_t stream)
 static int
 es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
 	   gpgrt_cookie_io_functions_t functions, unsigned int modeflags,
-           int samethread, int with_locked_list)
+           unsigned int xmode, int with_locked_list)
 {
   estream_internal_t stream_internal_new;
   estream_t stream_new;
@@ -2118,7 +2120,7 @@ es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
   stream_new->unread_buffer_size = sizeof (stream_internal_new->unread_buffer);
   stream_new->intern = stream_internal_new;
 
-  init_stream_obj (stream_new, cookie, syshd, functions, modeflags, samethread);
+  init_stream_obj (stream_new, cookie, syshd, functions, modeflags, xmode);
   init_stream_lock (stream_new);
 
   err = do_list_add (stream_new, with_locked_list);
@@ -3053,8 +3055,8 @@ estream_t
 _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
               const char *_GPGRT__RESTRICT mode)
 {
-  unsigned int modeflags, cmode;
-  int samethread, sysopen, create_called;
+  unsigned int modeflags, cmode, xmode;
+  int create_called;
   estream_t stream;
   void *cookie;
   int err;
@@ -3065,7 +3067,7 @@ _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
   cookie = NULL;
   create_called = 0;
 
-  err = parse_mode (mode, &modeflags, &samethread, &sysopen, &cmode);
+  err = parse_mode (mode, &modeflags, &xmode, &cmode);
   if (err)
     goto out;
 
@@ -3077,7 +3079,7 @@ _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
   syshd.u.fd = fd;
   create_called = 1;
   err = es_create (&stream, cookie, &syshd, estream_functions_fd, modeflags,
-                   samethread, 0);
+                   xmode, 0);
   if (err)
     goto out;
 
@@ -3117,12 +3119,11 @@ _gpgrt_mopen (void *_GPGRT__RESTRICT data, size_t data_n, size_t data_len,
   int create_called = 0;
   estream_t stream = NULL;
   void *cookie = NULL;
-  unsigned int modeflags;
-  int samethread;
+  unsigned int modeflags, xmode;
   int err;
   es_syshd_t syshd;
 
-  err = parse_mode (mode, &modeflags, &samethread, NULL, NULL);
+  err = parse_mode (mode, &modeflags, &xmode, NULL);
   if (err)
     goto out;
 
@@ -3135,7 +3136,7 @@ _gpgrt_mopen (void *_GPGRT__RESTRICT data, size_t data_n, size_t data_len,
   memset (&syshd, 0, sizeof syshd);
   create_called = 1;
   err = es_create (&stream, cookie, &syshd,
-                   estream_functions_mem, modeflags, samethread, 0);
+                   estream_functions_mem, modeflags, xmode, 0);
 
  out:
 
@@ -3150,15 +3151,14 @@ _gpgrt_mopen (void *_GPGRT__RESTRICT data, size_t data_n, size_t data_len,
 estream_t
 _gpgrt_fopenmem (size_t memlimit, const char *_GPGRT__RESTRICT mode)
 {
-  unsigned int modeflags;
-  int samethread;
+  unsigned int modeflags, xmode;
   estream_t stream = NULL;
   void *cookie = NULL;
   es_syshd_t syshd;
 
   /* Memory streams are always read/write.  We use MODE only to get
      the append flag.  */
-  if (parse_mode (mode, &modeflags, &samethread, NULL, NULL))
+  if (parse_mode (mode, &modeflags, &xmode, NULL))
     return NULL;
   modeflags |= O_RDWR;
 
@@ -3170,7 +3170,7 @@ _gpgrt_fopenmem (size_t memlimit, const char *_GPGRT__RESTRICT mode)
 
   memset (&syshd, 0, sizeof syshd);
   if (es_create (&stream, cookie, &syshd, estream_functions_mem, modeflags,
-                 samethread, 0))
+                 xmode, 0))
     (*estream_functions_mem.func_close) (cookie);
 
   if (stream)
@@ -3220,8 +3220,7 @@ _gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
                     const char *_GPGRT__RESTRICT mode,
                     gpgrt_cookie_io_functions_t functions)
 {
-  unsigned int modeflags;
-  int samethread;
+  unsigned int modeflags, xmode;
   estream_t stream;
   int err;
   es_syshd_t syshd;
@@ -3229,13 +3228,13 @@ _gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
   stream = NULL;
   modeflags = 0;
 
-  err = parse_mode (mode, &modeflags, &samethread, NULL, NULL);
+  err = parse_mode (mode, &modeflags, &xmode, NULL);
   if (err)
     goto out;
 
   memset (&syshd, 0, sizeof syshd);
   err = es_create (&stream, cookie, &syshd, functions, modeflags,
-                   samethread, 0);
+                   xmode, 0);
   if (err)
     goto out;
 
@@ -3248,8 +3247,8 @@ _gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
 static estream_t
 do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
 {
-  unsigned int modeflags;
-  int samethread, sysopen, create_called;
+  unsigned int modeflags, xmode;
+  int create_called;
   estream_t stream;
   void *cookie;
   int err;
@@ -3259,10 +3258,10 @@ do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
   cookie = NULL;
   create_called = 0;
 
-  err = parse_mode (mode, &modeflags, &samethread, &sysopen, NULL);
+  err = parse_mode (mode, &modeflags, &xmode, NULL);
   if (err)
     goto out;
-  if (sysopen)
+  if (xmode & X_SYSOPEN)
     {
       /* Not allowed for fdopen.  */
       _set_errno (EINVAL);
@@ -3278,7 +3277,7 @@ do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
   syshd.u.fd = filedes;
   create_called = 1;
   err = es_create (&stream, cookie, &syshd, estream_functions_fd,
-                   modeflags, samethread, with_locked_list);
+                   modeflags, xmode, with_locked_list);
 
   if (!err && stream)
     {
@@ -3312,8 +3311,8 @@ _gpgrt_fdopen_nc (int filedes, const char *mode)
 static estream_t
 do_fpopen (FILE *fp, const char *mode, int no_close, int with_locked_list)
 {
-  unsigned int modeflags, cmode;
-  int samethread, sysopen, create_called;
+  unsigned int modeflags, cmode, xmode;
+  int create_called;
   estream_t stream;
   void *cookie;
   int err;
@@ -3323,10 +3322,10 @@ do_fpopen (FILE *fp, const char *mode, int no_close, int with_locked_list)
   cookie = NULL;
   create_called = 0;
 
-  err = parse_mode (mode, &modeflags, &samethread, &sysopen, &cmode);
+  err = parse_mode (mode, &modeflags, &xmode, &cmode);
   if (err)
     goto out;
-  if (sysopen)
+  if (xmode & X_SYSOPEN)
     {
       /* Not allowed for fpopen.  */
       _set_errno (EINVAL);
@@ -3344,7 +3343,7 @@ do_fpopen (FILE *fp, const char *mode, int no_close, int with_locked_list)
   syshd.u.fd = fp? fileno (fp): -1;
   create_called = 1;
   err = es_create (&stream, cookie, &syshd, estream_functions_fp,
-                   modeflags, samethread, with_locked_list);
+                   modeflags, xmode, with_locked_list);
 
  out:
 
@@ -3384,8 +3383,7 @@ estream_t
 do_w32open (HANDLE hd, const char *mode,
             int no_close, int with_locked_list)
 {
-  unsigned int modeflags, cmode;
-  int samethread;
+  unsigned int modeflags, cmode, xmode;
   int create_called = 0;
   estream_t stream = NULL;
   void *cookie = NULL;
@@ -3393,7 +3391,7 @@ do_w32open (HANDLE hd, const char *mode,
   es_syshd_t syshd;
 
   /* For obvious reasons we ignore sysmode here.  */
-  err = parse_mode (mode, &modeflags, &samethread, NULL, &cmode);
+  err = parse_mode (mode, &modeflags, &xmode, &cmode);
   if (err)
     goto leave;
 
@@ -3405,7 +3403,7 @@ do_w32open (HANDLE hd, const char *mode,
   syshd.u.handle = hd;
   create_called = 1;
   err = es_create (&stream, cookie, &syshd, estream_functions_w32,
-                   modeflags, samethread, with_locked_list);
+                   modeflags, xmode, with_locked_list);
 
  leave:
   if (err && create_called)
@@ -3556,8 +3554,8 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
 
   if (path)
     {
-      unsigned int modeflags, cmode;
-      int dummy, samethread, create_called;
+      unsigned int modeflags, cmode, xmode, dummy;
+      int create_called;
       void *cookie;
       int fd;
       es_syshd_t syshd;
@@ -3565,13 +3563,13 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
       cookie = NULL;
       create_called = 0;
 
-      samethread = stream->intern->samethread;
+      xmode = stream->intern->samethread ? X_SAMETHREAD : 0;
 
       lock_stream (stream);
 
       es_deinitialize (stream);
 
-      err = parse_mode (mode, &modeflags, &dummy, NULL, &cmode);
+      err = parse_mode (mode, &modeflags, &dummy, &cmode);
       if (err)
 	goto leave;
       (void)dummy;
@@ -3584,7 +3582,7 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
       syshd.u.fd = fd;
       create_called = 1;
       init_stream_obj (stream, cookie, &syshd, estream_functions_fd,
-                       modeflags, samethread);
+                       modeflags, xmode);
 
     leave:
 
