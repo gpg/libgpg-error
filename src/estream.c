@@ -127,8 +127,6 @@
 # ifndef  S_IXOTH
 #  define S_IXOTH S_IXUSR
 # endif
-# undef  O_NONBLOCK
-# define O_NONBLOCK  0  /* FIXME: Not yet supported.  */
 #endif
 
 #if !defined (EWOULDBLOCK) && defined (HAVE_W32_SYSTEM)
@@ -172,66 +170,6 @@ typedef void (*func_free_t) (void *mem);
 
 
 
-
-/*
- * Buffer management layer.
- */
-
-#define BUFFER_BLOCK_SIZE  BUFSIZ
-#define BUFFER_UNREAD_SIZE 16
-
-
-/*
- * A type to hold notification functions.
- */
-struct notify_list_s
-{
-  struct notify_list_s *next;
-  void (*fnc) (estream_t, void*); /* The notification function.  */
-  void *fnc_value;                /* The value to be passed to FNC.  */
-};
-typedef struct notify_list_s *notify_list_t;
-
-
-/*
- * The private object describing a stream.
- */
-struct _gpgrt_stream_internal
-{
-  unsigned char buffer[BUFFER_BLOCK_SIZE];
-  unsigned char unread_buffer[BUFFER_UNREAD_SIZE];
-
-  gpgrt_lock_t lock;		 /* Lock.  Used by *_stream_lock(). */
-
-  gpgrt_stream_backend_kind_t kind;
-  void *cookie;			 /* Cookie.                */
-  void *opaque;			 /* Opaque data.           */
-  unsigned int modeflags;	 /* Flags for the backend. */
-  char *printable_fname;         /* Malloced filename for es_fname_get.  */
-  gpgrt_off_t offset;
-  gpgrt_cookie_read_function_t  func_read;
-  gpgrt_cookie_write_function_t func_write;
-  gpgrt_cookie_seek_function_t  func_seek;
-  gpgrt_cookie_close_function_t func_close;
-  cookie_ioctl_function_t func_ioctl;
-  int strategy;
-  es_syshd_t syshd;              /* A copy of the system handle.  */
-  struct
-  {
-    unsigned int err: 1;
-    unsigned int eof: 1;
-    unsigned int hup: 1;
-  } indicators;
-  unsigned int deallocate_buffer: 1;
-  unsigned int is_stdstream:1;   /* This is a standard stream.  */
-  unsigned int stdstream_fd:2;   /* 0, 1 or 2 for a standard stream.  */
-  unsigned int printable_fname_inuse: 1;  /* es_fname_get has been used.  */
-  unsigned int samethread: 1;    /* The "samethread" mode keyword.  */
-  size_t print_ntotal;           /* Bytes written from in print_writer. */
-  notify_list_t onclose;         /* On close notify function list.  */
-};
-typedef struct _gpgrt_stream_internal *estream_internal_t;
-
 
 /*
  * A linked list to hold active stream objects.
@@ -1686,6 +1624,7 @@ func_file_create (void **cookie, int *filedes,
 /* Flags used by parse_mode and friends.  */
 #define X_SAMETHREAD	(1 << 0)
 #define X_SYSOPEN	(1 << 1)
+#define X_POLLABLE	(1 << 2)
 
 /* Parse the mode flags of fopen et al.  In addition to the POSIX
  * defined mode flags keyword parameters are supported.  These are
@@ -1722,6 +1661,13 @@ func_file_create (void **cookie, int *filedes,
  *    The object is opened in sysmode.  On POSIX this is a NOP but
  *    under Windows the direct W32 API functions (HANDLE) are used
  *    instead of their libc counterparts (fd).
+ *
+ * pollable
+ *
+ *    The object is opened in a way suitable for use with es_poll.  On
+ *    POSIX this is a NOP but under Windows we create up to two
+ *    threads, one for reading and one for writing, do any I/O there,
+ *    and synchronize with them in order to support es_poll.
  *
  * Note: R_CMODE is optional because is only required by functions
  * which are able to creat a file.
@@ -1828,6 +1774,10 @@ parse_mode (const char *modestr,
               return -1;
             }
           oflags |= O_NONBLOCK;
+#if HAVE_W32_SYSTEM
+          /* Currently, nonblock implies pollable on Windows.  */
+          *r_xmode |= X_POLLABLE;
+#endif
         }
       else if (!strncmp (modestr, "sysopen", 7))
         {
@@ -1838,6 +1788,16 @@ parse_mode (const char *modestr,
               return -1;
             }
           *r_xmode |= X_SYSOPEN;
+        }
+      else if (!strncmp (modestr, "pollable", 8))
+        {
+          modestr += 8;
+          if (*modestr && !strchr (" \t,", *modestr))
+            {
+              _set_errno (EINVAL);
+              return -1;
+            }
+          *r_xmode |= X_POLLABLE;
         }
     }
   if (!got_cmode)
@@ -2125,6 +2085,23 @@ es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
   stream_new->unread_buffer = stream_internal_new->unread_buffer;
   stream_new->unread_buffer_size = sizeof (stream_internal_new->unread_buffer);
   stream_new->intern = stream_internal_new;
+
+#if _WIN32
+  if (xmode & X_POLLABLE)
+    {
+      void *new_cookie;
+
+      err = _gpgrt_w32_pollable_create (&new_cookie, modeflags,
+                                        functions, cookie);
+      if (err)
+        goto out;
+
+      modeflags &= ~O_NONBLOCK;
+      cookie = new_cookie;
+      kind = BACKEND_W32_POLLABLE;
+      functions = _gpgrt_functions_w32_pollable;
+    }
+#endif
 
   init_stream_obj (stream_new, cookie, syshd, kind, functions, modeflags,
                    xmode);
@@ -4731,11 +4708,13 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
 {
   gpgrt_poll_t *item;
   int count = 0;
+#ifndef _WIN32
   fd_set readfds, writefds, exceptfds;
   int any_readfd, any_writefd, any_exceptfd;
-  int idx;
   int max_fd;
   int fd, ret, any;
+#endif
+  int idx;
 
   if (!fds)
     {
@@ -4783,6 +4762,15 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
     return count;  /* Early return without waiting.  */
 
   /* Now do the real select.  */
+#ifdef _WIN32
+  if (pre_syscall_func)
+    pre_syscall_func ();
+
+  count = _gpgrt_w32_poll (fds, nfds, timeout);
+
+  if (post_syscall_func)
+    post_syscall_func ();
+#else
   any_readfd = any_writefd = any_exceptfd = 0;
   max_fd = 0;
   for (item = fds, idx = 0; idx < nfds; item++, idx++)
@@ -4828,11 +4816,6 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
         }
     }
 
-#ifdef _WIN32
-  (void)timeout;
-  ret = -1;
-  _set_errno (EOPNOTSUPP);
-#else
   if (pre_syscall_func)
     pre_syscall_func ();
   do
@@ -4850,7 +4833,6 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
   while (ret == -1 && errno == EINTR);
   if (post_syscall_func)
     post_syscall_func ();
-#endif
 
   if (ret == -1)
     return -1;
@@ -4876,9 +4858,6 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
           item->got_hup = 1;
           any = 1;
         }
-#ifndef _WIN32
-      /* NB.: We can't use FD_ISSET under windows - but we don't have
-       * support for it anyway.  */
       if (item->want_read && FD_ISSET (fd, &readfds))
         {
           item->got_read = 1;
@@ -4894,11 +4873,11 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
           item->got_oob = 1;
           any = 1;
         }
-#endif /*!_WIN32*/
 
       if (any)
         count++;
     }
+#endif
 
   return count;
 }

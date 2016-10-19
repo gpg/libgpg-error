@@ -52,6 +52,12 @@ gpg_err_code_t _gpgrt_yield (void);
 
 /* Local definitions for estream.  */
 
+#if HAVE_W32_SYSTEM
+# ifndef  O_NONBLOCK
+#  define O_NONBLOCK  0x40000000	/* FIXME: Is that safe?  */
+# endif
+#endif
+
 /*
  * A private cookie function to implement an internal IOCTL service.
  * and ist IOCTL numbers.
@@ -79,6 +85,65 @@ typedef enum
     BACKEND_W32_POLLABLE,
   } gpgrt_stream_backend_kind_t;
 
+
+/*
+ * A type to hold notification functions.
+ */
+struct notify_list_s
+{
+  struct notify_list_s *next;
+  void (*fnc) (estream_t, void*); /* The notification function.  */
+  void *fnc_value;                /* The value to be passed to FNC.  */
+};
+typedef struct notify_list_s *notify_list_t;
+
+
+/*
+ * Buffer management layer.
+ */
+
+#define BUFFER_BLOCK_SIZE  BUFSIZ
+#define BUFFER_UNREAD_SIZE 16
+
+
+/*
+ * The private object describing a stream.
+ */
+struct _gpgrt_stream_internal
+{
+  unsigned char buffer[BUFFER_BLOCK_SIZE];
+  unsigned char unread_buffer[BUFFER_UNREAD_SIZE];
+
+  gpgrt_lock_t lock;		 /* Lock.  Used by *_stream_lock(). */
+
+  gpgrt_stream_backend_kind_t kind;
+  void *cookie;			 /* Cookie.                */
+  void *opaque;			 /* Opaque data.           */
+  unsigned int modeflags;	 /* Flags for the backend. */
+  char *printable_fname;         /* Malloced filename for es_fname_get.  */
+  gpgrt_off_t offset;
+  gpgrt_cookie_read_function_t  func_read;
+  gpgrt_cookie_write_function_t func_write;
+  gpgrt_cookie_seek_function_t  func_seek;
+  gpgrt_cookie_close_function_t func_close;
+  cookie_ioctl_function_t func_ioctl;
+  int strategy;
+  es_syshd_t syshd;              /* A copy of the system handle.  */
+  struct
+  {
+    unsigned int err: 1;
+    unsigned int eof: 1;
+    unsigned int hup: 1;
+  } indicators;
+  unsigned int deallocate_buffer: 1;
+  unsigned int is_stdstream:1;   /* This is a standard stream.  */
+  unsigned int stdstream_fd:2;   /* 0, 1 or 2 for a standard stream.  */
+  unsigned int printable_fname_inuse: 1;  /* es_fname_get has been used.  */
+  unsigned int samethread: 1;    /* The "samethread" mode keyword.  */
+  size_t print_ntotal;           /* Bytes written from in print_writer. */
+  notify_list_t onclose;         /* On close notify function list.  */
+};
+typedef struct _gpgrt_stream_internal *estream_internal_t;
 
 
 /* Local prototypes for estream.  */
@@ -237,5 +302,14 @@ const char *_gpgrt_fname_get (gpgrt_stream_t stream);
 
 #include "estream-printf.h"
 
+#if _WIN32
+/* Prototypes for w32-estream.c.  */
+struct cookie_io_functions_s _gpgrt_functions_w32_pollable;
+int _gpgrt_w32_pollable_create (void *_GPGRT__RESTRICT *_GPGRT__RESTRICT cookie,
+                                unsigned int modeflags,
+                                struct cookie_io_functions_s next_functions,
+                                void *next_cookie);
+int _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout);
+#endif
 
 #endif /*_GPGRT_GPGRT_INT_H*/

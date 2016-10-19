@@ -109,7 +109,8 @@ CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 # {{{ Begin Windows part
 #
 if HAVE_W32_SYSTEM
-arch_sources = w32-gettext.c w32-lock.c w32-lock-obj.h w32-thread.c w32-iconv.c
+arch_sources = w32-gettext.c w32-lock.c w32-lock-obj.h w32-thread.c \
+	       w32-iconv.c w32-estream.c
 RCCOMPILE = $(RC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
             -DLOCALEDIR=\"$(localedir)\" $(AM_CPPFLAGS) $(CPPFLAGS)
 LTRCCOMPILE = $(LIBTOOL) --mode=compile --tag=RC $(RCCOMPILE)

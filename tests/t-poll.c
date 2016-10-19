@@ -191,14 +191,14 @@ create_pipe (estream_t *r_in, estream_t *r_out)
 
   show ("created pipe [%d, %d]\n", filedes[0], filedes[1]);
 
-  *r_in = es_fdopen (filedes[0], "r");
+  *r_in = es_fdopen (filedes[0], "r,pollable");
   if (!*r_in)
     {
       err = gpg_error_from_syserror ();
       die ("error creating a stream for a pipe: %s\n", gpg_strerror (err));
     }
 
-  *r_out = es_fdopen (filedes[1], "w");
+  *r_out = es_fdopen (filedes[1], "w,pollable");
   if (!*r_out)
     {
       err = gpg_error_from_syserror ();
