@@ -50,6 +50,26 @@ gpg_err_code_t _gpgrt_lock_destroy (gpgrt_lock_t *lockhd);
 gpg_err_code_t _gpgrt_yield (void);
 
 
+/* Local definitions for estream.  */
+
+/*
+ * A private cookie function to implement an internal IOCTL service.
+ * and ist IOCTL numbers.
+ */
+typedef int (*cookie_ioctl_function_t) (void *cookie, int cmd,
+					void *ptr, size_t *len);
+#define COOKIE_IOCTL_SNATCH_BUFFER 1
+#define COOKIE_IOCTL_NONBLOCK      2
+
+/* An internal variant of gpgrt_cookie_close_function_t with a slot
+   for the ioctl function.  */
+struct cookie_io_functions_s
+{
+  struct _gpgrt_cookie_io_functions public;
+  cookie_ioctl_function_t func_ioctl;
+};
+
+
 /* Local prototypes for estream.  */
 int _gpgrt_es_init (void);
 void _gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void));

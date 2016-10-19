@@ -194,16 +194,6 @@ typedef struct notify_list_s *notify_list_t;
 
 
 /*
- * A private cookie function to implement an internal IOCTL service.
- * and ist IOCTL numbers.
- */
-typedef int (*cookie_ioctl_function_t) (void *cookie, int cmd,
-					void *ptr, size_t *len);
-#define COOKIE_IOCTL_SNATCH_BUFFER 1
-#define COOKIE_IOCTL_NONBLOCK      2
-
-
-/*
  * The private object describing a stream.
  */
 struct _gpgrt_stream_internal
@@ -946,12 +936,15 @@ func_mem_destroy (void *cookie)
 /*
  * Access object for the memory functions.
  */
-static gpgrt_cookie_io_functions_t estream_functions_mem =
+static struct cookie_io_functions_s estream_functions_mem =
   {
-    func_mem_read,
-    func_mem_write,
-    func_mem_seek,
-    func_mem_destroy
+    {
+      func_mem_read,
+      func_mem_write,
+      func_mem_seek,
+      func_mem_destroy,
+    },
+    func_mem_ioctl,
   };
 
 
@@ -1171,12 +1164,15 @@ func_fd_destroy (void *cookie)
 /*
  * Access object for the fd functions.
  */
-static gpgrt_cookie_io_functions_t estream_functions_fd =
+static struct cookie_io_functions_s estream_functions_fd =
   {
-    func_fd_read,
-    func_fd_write,
-    func_fd_seek,
-    func_fd_destroy
+    {
+      func_fd_read,
+      func_fd_write,
+      func_fd_seek,
+      func_fd_destroy,
+    },
+    func_fd_ioctl,
   };
 
 
@@ -1406,12 +1402,15 @@ func_w32_destroy (void *cookie)
 /*
  * Access object for the W32 handle based objects.
  */
-static gpgrt_cookie_io_functions_t estream_functions_w32 =
+static struct cookie_io_functions_s estream_functions_w32 =
   {
-    func_w32_read,
-    func_w32_write,
-    func_w32_seek,
-    func_w32_destroy
+    {
+      func_w32_read,
+      func_w32_write,
+      func_w32_seek,
+      func_w32_destroy,
+    },
+    NULL,
   };
 #endif /*HAVE_W32_SYSTEM*/
 
@@ -1617,12 +1616,15 @@ func_fp_destroy (void *cookie)
 /*
  * Access object for stdio based objects.
  */
-static gpgrt_cookie_io_functions_t estream_functions_fp =
+static struct cookie_io_functions_s estream_functions_fp =
   {
-    func_fp_read,
-    func_fp_write,
-    func_fp_seek,
-    func_fp_destroy
+    {
+      func_fp_read,
+      func_fp_write,
+      func_fp_seek,
+      func_fp_destroy,
+    },
+    NULL,
   };
 
 
@@ -2005,17 +2007,17 @@ es_empty (estream_t stream)
 static void
 init_stream_obj (estream_t stream,
                  void *cookie, es_syshd_t *syshd,
-                 gpgrt_cookie_io_functions_t functions,
+                 struct cookie_io_functions_s functions,
                  unsigned int modeflags, unsigned int xmode)
 {
   stream->intern->cookie = cookie;
   stream->intern->opaque = NULL;
   stream->intern->offset = 0;
-  stream->intern->func_read = functions.func_read;
-  stream->intern->func_write = functions.func_write;
-  stream->intern->func_seek = functions.func_seek;
-  stream->intern->func_ioctl = NULL;
-  stream->intern->func_close = functions.func_close;
+  stream->intern->func_read = functions.public.func_read;
+  stream->intern->func_write = functions.public.func_write;
+  stream->intern->func_seek = functions.public.func_seek;
+  stream->intern->func_ioctl = functions.func_ioctl;
+  stream->intern->func_close = functions.public.func_close;
   stream->intern->strategy = _IOFBF;
   stream->intern->syshd = *syshd;
   stream->intern->print_ntotal = 0;
@@ -2090,7 +2092,7 @@ es_deinitialize (estream_t stream)
  */
 static int
 es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
-	   gpgrt_cookie_io_functions_t functions, unsigned int modeflags,
+	   struct cookie_io_functions_s functions, unsigned int modeflags,
            unsigned int xmode, int with_locked_list)
 {
   estream_internal_t stream_internal_new;
@@ -3089,7 +3091,7 @@ _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
  out:
 
   if (err && create_called)
-    (*estream_functions_fd.func_close) (cookie);
+    (*estream_functions_fd.public.func_close) (cookie);
 
   return stream;
 }
@@ -3141,7 +3143,7 @@ _gpgrt_mopen (void *_GPGRT__RESTRICT data, size_t data_n, size_t data_len,
  out:
 
   if (err && create_called)
-    (*estream_functions_mem.func_close) (cookie);
+    (*estream_functions_mem.public.func_close) (cookie);
 
   return stream;
 }
@@ -3171,10 +3173,7 @@ _gpgrt_fopenmem (size_t memlimit, const char *_GPGRT__RESTRICT mode)
   memset (&syshd, 0, sizeof syshd);
   if (es_create (&stream, cookie, &syshd, estream_functions_mem, modeflags,
                  xmode, 0))
-    (*estream_functions_mem.func_close) (cookie);
-
-  if (stream)
-    stream->intern->func_ioctl = func_mem_ioctl;
+    (*estream_functions_mem.public.func_close) (cookie);
 
   return stream;
 }
@@ -3224,6 +3223,7 @@ _gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
   estream_t stream;
   int err;
   es_syshd_t syshd;
+  struct cookie_io_functions_s io_functions = { functions, NULL, };
 
   stream = NULL;
   modeflags = 0;
@@ -3233,7 +3233,7 @@ _gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
     goto out;
 
   memset (&syshd, 0, sizeof syshd);
-  err = es_create (&stream, cookie, &syshd, functions, modeflags,
+  err = es_create (&stream, cookie, &syshd, io_functions, modeflags,
                    xmode, 0);
   if (err)
     goto out;
@@ -3281,14 +3281,14 @@ do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
 
   if (!err && stream)
     {
-      stream->intern->func_ioctl = func_fd_ioctl;
       if ((modeflags & O_NONBLOCK))
-        err = func_fd_ioctl (cookie, COOKIE_IOCTL_NONBLOCK, "", NULL);
+        err = stream->intern->func_ioctl (cookie, COOKIE_IOCTL_NONBLOCK,
+                                          "", NULL);
     }
 
  out:
   if (err && create_called)
-    (*estream_functions_fd.func_close) (cookie);
+    (*estream_functions_fd.public.func_close) (cookie);
 
   return stream;
 }
@@ -3348,7 +3348,7 @@ do_fpopen (FILE *fp, const char *mode, int no_close, int with_locked_list)
  out:
 
   if (err && create_called)
-    (*estream_functions_fp.func_close) (cookie);
+    (*estream_functions_fp.public.func_close) (cookie);
 
   return stream;
 }
@@ -3407,7 +3407,7 @@ do_w32open (HANDLE hd, const char *mode,
 
  leave:
   if (err && create_called)
-    (*estream_functions_w32.func_close) (cookie);
+    (*estream_functions_w32.public.func_close) (cookie);
 
   return stream;
 }
