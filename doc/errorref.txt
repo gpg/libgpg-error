@@ -851,6 +851,14 @@ GPG_ERR_USER_ID_EXISTS (304)	User ID already exists
 GPG_ERR_NAME_EXISTS (305)	Name already exists
 GPG_ERR_DUP_NAME (306)		Duplicated name
 
+GPG_ERR_TOO_YOUNG (307)		Objects is too young
+
+    For example used if a file is younger than expected.
+
+GPG_ERR_TOO_OLD	(308		Objects is too old
+
+    Used if an object is too old to be used.  This is a more generic
+    code than GPG_ERR_ENGINE_TOO_OLD or GPG_ERR_CRL_TOO_OLD.
 
 GPG_ERR_LDAP_GENERAL		LDAP General error
 
