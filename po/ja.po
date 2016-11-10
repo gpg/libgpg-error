@@ -125,7 +125,7 @@ msgstr "誤ったパスフレーズです"
 msgid "Invalid cipher algorithm"
 msgstr "無効な暗号アルゴリズムです"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "鍵リングオープン"
 
 msgid "Invalid packet"

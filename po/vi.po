@@ -125,7 +125,7 @@ msgstr "Cụm từ mật khẩu sai"
 msgid "Invalid cipher algorithm"
 msgstr "Thuật toán mật mã không hợp lệ"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Vòng khoá đã mở"
 
 msgid "Invalid packet"

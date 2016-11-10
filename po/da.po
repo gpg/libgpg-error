@@ -127,7 +127,7 @@ msgstr "Ødelagt adgangsfrase"
 msgid "Invalid cipher algorithm"
 msgstr "Ugyldig chifferalgoritme"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Nøglering åben"
 
 msgid "Invalid packet"

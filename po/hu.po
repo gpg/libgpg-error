@@ -125,7 +125,7 @@ msgstr "Rossz jelmondat"
 msgid "Invalid cipher algorithm"
 msgstr "Érvénytelen titkosító algoritmus"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Kulcstartó nyitva"
 
 msgid "Invalid packet"

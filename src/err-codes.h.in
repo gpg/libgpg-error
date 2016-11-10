@@ -42,7 +42,7 @@
 10	GPG_ERR_CHECKSUM		Checksum error
 11	GPG_ERR_BAD_PASSPHRASE		Bad passphrase
 12	GPG_ERR_CIPHER_ALGO		Invalid cipher algorithm
-13	GPG_ERR_KEYRING_OPEN		Keyring open
+13	GPG_ERR_KEYRING_OPEN		Cannot open keyring
 14	GPG_ERR_INV_PACKET		Invalid packet
 15	GPG_ERR_INV_ARMOR		Invalid armor
 16	GPG_ERR_NO_USER_ID		No user ID

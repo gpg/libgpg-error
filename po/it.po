@@ -124,7 +124,7 @@ msgstr "Passphrase errata"
 msgid "Invalid cipher algorithm"
 msgstr "Algoritmo di cifratura non valido"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Apertura del portachiavi"
 
 msgid "Invalid packet"

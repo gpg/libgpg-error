@@ -126,7 +126,7 @@ msgstr "Mauvaise phrase secrète"
 msgid "Invalid cipher algorithm"
 msgstr "Algorithme de chiffrement incorrect"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Porte-clefs ouvert"
 
 msgid "Invalid packet"

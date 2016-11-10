@@ -125,7 +125,7 @@ msgstr "Помилковий пароль"
 msgid "Invalid cipher algorithm"
 msgstr "Некоректний алгоритм шифрування"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Відкриття сховища ключів"
 
 msgid "Invalid packet"

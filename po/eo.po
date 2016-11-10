@@ -123,7 +123,7 @@ msgstr "Malĝusta pasfrazo"
 msgid "Invalid cipher algorithm"
 msgstr "Malvalida ĉifra algoritmo"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Malfermo de ŝlosilringo"
 
 msgid "Invalid packet"

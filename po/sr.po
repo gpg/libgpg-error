@@ -124,7 +124,7 @@ msgstr "Лоша пропусна реч"
 msgid "Invalid cipher algorithm"
 msgstr "Неисправан алгоритам шифровања"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Привезак кључева је отворен"
 
 msgid "Invalid packet"

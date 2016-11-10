@@ -125,7 +125,7 @@ msgstr "损坏的密码"
 msgid "Invalid cipher algorithm"
 msgstr "无效的密码算法"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr ""
 
 msgid "Invalid packet"

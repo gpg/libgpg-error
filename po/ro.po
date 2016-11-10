@@ -127,7 +127,7 @@ msgstr "Frazã-parolã incorectã"
 msgid "Invalid cipher algorithm"
 msgstr "Algoritm cifrare invalid"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Inel de chei deschis"
 
 msgid "Invalid packet"

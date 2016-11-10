@@ -125,7 +125,7 @@ msgstr "Ongeldige wachtwoordzin"
 msgid "Invalid cipher algorithm"
 msgstr "Ongeldig versleutelingsalgoritme"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Sleutelring open"
 
 msgid "Invalid packet"

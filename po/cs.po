@@ -131,7 +131,7 @@ msgstr "Chybné heslo"
 msgid "Invalid cipher algorithm"
 msgstr "Neplatný šifrovací algoritmus"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Klíčenka otevřena"
 
 msgid "Invalid packet"

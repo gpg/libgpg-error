@@ -123,7 +123,7 @@ msgstr "Плохая фраза-пароль"
 msgid "Invalid cipher algorithm"
 msgstr "Недопустимый алгоритм симметричного шифрования"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Таблица ключей открыта"
 
 msgid "Invalid packet"
