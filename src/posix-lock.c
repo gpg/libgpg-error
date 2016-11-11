@@ -44,6 +44,14 @@
 #include "posix-lock-obj.h"
 
 
+/*
+ * Functions called before and after blocking syscalls.
+ * gpgrt_set_syscall_clamp is used to set them.
+ */
+static void (*pre_lock_func)(void);
+static void (*post_lock_func)(void);
+
+
 #if USE_POSIX_THREADS
 # if USE_POSIX_THREADS_WEAK
    /* On ELF systems it is easy to use pthreads using weak
@@ -101,6 +109,16 @@ use_pthread_p (void)
 }
 #endif /*PTHREAD_IN_USE_DETECTION_HARD*/
 #endif /*USE_POSIX_THREADS*/
+
+
+/* Helper to set the clamp functions.  This is called as a helper from
+ * _gpgrt_set_syscall_clamp to keep the function pointers local. */
+void
+_gpgrt_lock_set_lock_clamp (void (*pre)(void), void (*post)(void))
+{
+  pre_lock_func = pre;
+  post_lock_func = post;
+}
 
 
 
@@ -171,9 +189,13 @@ _gpgrt_lock_lock (gpgrt_lock_t *lockhd)
 #if USE_POSIX_THREADS
   if (use_pthread_p())
     {
+      if (pre_lock_func)
+        pre_lock_func ();
       rc = pthread_mutex_lock (&lock->u.mtx);
       if (rc)
         rc = gpg_err_code_from_errno (rc);
+      if (post_lock_func)
+        post_lock_func ();
     }
   else
     rc = 0; /* Threads are not used.  */

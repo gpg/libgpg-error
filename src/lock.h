@@ -20,5 +20,7 @@
 #ifndef LOCK_H
 #define LOCK_H
 
+void _gpgrt_lock_set_lock_clamp (void (*pre)(void), void (*post)(void));
+
 
 #endif /*LOCK_H*/

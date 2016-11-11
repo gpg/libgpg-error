@@ -95,7 +95,8 @@
 
 #include "gpgrt-int.h"
 #include "estream-printf.h"
-
+#include "thread.h"
+#include "lock.h"
 
 #ifndef O_BINARY
 # define O_BINARY 0
@@ -564,6 +565,8 @@ do_deinit (void)
   /* Reset the syscall clamp.  */
   pre_syscall_func = NULL;
   post_syscall_func = NULL;
+  _gpgrt_thread_set_syscall_clamp (NULL, NULL);
+  _gpgrt_lock_set_lock_clamp (NULL, NULL);
 }
 
 
@@ -598,6 +601,8 @@ _gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void))
 {
   pre_syscall_func = pre;
   post_syscall_func = post;
+  _gpgrt_thread_set_syscall_clamp (pre, post);
+  _gpgrt_lock_set_lock_clamp (pre, post);
 }
 
 

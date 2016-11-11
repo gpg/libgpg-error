@@ -37,6 +37,26 @@
 #include "w32-lock-obj.h"
 
 
+
+/*
+ * Functions called before and after blocking syscalls.
+ * gpgrt_set_syscall_clamp is used to set them.
+ */
+static void (*pre_lock_func)(void);
+static void (*post_lock_func)(void);
+
+
+/* Helper to set the clamp functions.  This is called as a helper from
+ * _gpgrt_set_syscall_clamp to keep the function pointers local. */
+void
+_gpgrt_lock_set_lock_clamp (void (*pre)(void), void (*post)(void))
+{
+  pre_lock_func = pre;
+  post_lock_func = post;
+}
+
+
+
 static _gpgrt_lock_t *
 get_lock_object (gpgrt_lock_t *lockhd)
 {
@@ -101,7 +121,11 @@ _gpgrt_lock_lock (gpgrt_lock_t *lockhd)
         }
     }
 
+  if (pre_lock_func)
+    pre_lock_func ();
   EnterCriticalSection (&lock->csec);
+  if (post_lock_func)
+    post_lock_func ();
   return 0;
 }
 

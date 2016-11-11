@@ -20,5 +20,7 @@
 #ifndef THREAD_H
 #define THREAD_H
 
+void _gpgrt_thread_set_syscall_clamp (void (*pre)(void), void (*post)(void));
+
 
 #endif /*THREAD_H*/
