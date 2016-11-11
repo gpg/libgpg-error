@@ -20,7 +20,7 @@
 #pragma pack(push, 8)
 typedef struct
 {
-  volatile char priv[56];
+  volatile unsigned char priv[56];
 } gpgrt_lock_t;
 #pragma pack(pop)
 
@@ -34,7 +34,7 @@ typedef struct
 #pragma pack(push, 8)
 typedef struct
 {
-  volatile char priv[36];
+  volatile unsigned char priv[36];
 } gpgrt_lock_t;
 #pragma pack(pop)
 
