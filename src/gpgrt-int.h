@@ -82,7 +82,7 @@ typedef enum
     BACKEND_W32,
     BACKEND_FP,
     BACKEND_USER,
-    BACKEND_W32_POLLABLE,
+    BACKEND_W32_POLLABLE
   } gpgrt_stream_backend_kind_t;
 
 

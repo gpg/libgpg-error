@@ -2087,7 +2087,7 @@ es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
   stream_new->intern = stream_internal_new;
 
 #if _WIN32
-  if (xmode & X_POLLABLE)
+  if ((xmode & X_POLLABLE))
     {
       void *new_cookie;
 
@@ -3243,7 +3243,7 @@ do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
   err = parse_mode (mode, &modeflags, &xmode, NULL);
   if (err)
     goto out;
-  if (xmode & X_SYSOPEN)
+  if ((xmode & X_SYSOPEN))
     {
       /* Not allowed for fdopen.  */
       _set_errno (EINVAL);
@@ -3307,7 +3307,7 @@ do_fpopen (FILE *fp, const char *mode, int no_close, int with_locked_list)
   err = parse_mode (mode, &modeflags, &xmode, &cmode);
   if (err)
     goto out;
-  if (xmode & X_SYSOPEN)
+  if ((xmode & X_SYSOPEN))
     {
       /* Not allowed for fpopen.  */
       _set_errno (EINVAL);
