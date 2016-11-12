@@ -605,6 +605,17 @@ _gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void))
   _gpgrt_lock_set_lock_clamp (pre, post);
 }
 
+/*
+ * Return the current sycall clamp functions.  This can be used by
+ * other libraries which have blocking functions.
+ */
+void
+_gpgrt_get_syscall_clamp (void (**r_pre)(void), void (**r_post)(void))
+{
+  *r_pre  = pre_syscall_func;
+  *r_post = post_syscall_func;
+}
+
 
 
 /*

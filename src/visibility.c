@@ -97,6 +97,12 @@ gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void))
 }
 
 void
+gpgrt_get_syscall_clamp (void (**r_pre)(void), void (**r_post)(void))
+{
+  _gpgrt_get_syscall_clamp (r_pre, r_post);
+}
+
+void
 gpgrt_set_alloc_func (void *(*f)(void *a, size_t n))
 {
   _gpgrt_set_alloc_func (f);

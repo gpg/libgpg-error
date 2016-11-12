@@ -39,6 +39,7 @@ GPG_ERROR_1.0 {
     gpgrt_lock_trylock;
 
     gpgrt_set_syscall_clamp;
+    gpgrt_get_syscall_clamp;
 
     gpgrt_fopen;
     gpgrt_mopen;

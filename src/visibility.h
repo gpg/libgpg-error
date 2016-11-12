@@ -142,6 +142,7 @@ MARK_VISIBLE (gpgrt_vbsprintf)
 MARK_VISIBLE (gpgrt_snprintf)
 MARK_VISIBLE (gpgrt_vsnprintf)
 MARK_VISIBLE (gpgrt_set_syscall_clamp)
+MARK_VISIBLE (gpgrt_get_syscall_clamp)
 MARK_VISIBLE (gpgrt_set_alloc_func)
 
 #undef MARK_VISIBLE
@@ -251,6 +252,7 @@ MARK_VISIBLE (gpgrt_set_alloc_func)
 #define gpgrt_vsnprintf             _gpgrt_USE_UNDERSCORED_FUNCTION
 
 #define gpgrt_set_syscall_clamp     _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_get_syscall_clamp     _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_set_alloc_func        _gpgrt_USE_UNDERSCORED_FUNCTION
 
 

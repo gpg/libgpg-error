@@ -150,4 +150,6 @@ EXPORTS
  gpgrt_w32_iconv              @111
 #endif
 
+ gpgrt_get_syscall_clamp      @112
+
 ;; end of file with public symbols for Windows.

@@ -12,6 +12,7 @@ Noteworthy changes in version 1.25 (unreleased) [C19/A19/R_)
  GPG_ERR_DUP_NAME                 NEW.
  GPG_ERR_TOO_OLD                  NEW.
  GPG_ERR_TOO_YOUNG                NEW.
+ gpgrt_get_syscall_clamp          NEW.
 
 
 Noteworthy changes in version 1.24 (2016-07-14) [C19/A19/R1)
