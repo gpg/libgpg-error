@@ -326,8 +326,8 @@
 304	GPG_ERR_USER_ID_EXISTS		User ID already exists
 305	GPG_ERR_NAME_EXISTS		Name already exists
 306	GPG_ERR_DUP_NAME		Duplicated name
-307	GPG_ERR_TOO_YOUNG		Objects is too young
-308	GPG_ERR_TOO_OLD			Objects is too old
+307	GPG_ERR_TOO_YOUNG		Object is too young
+308	GPG_ERR_TOO_OLD			Object is too old
 # This range is free for use.
 
 #

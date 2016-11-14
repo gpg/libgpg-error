@@ -20,7 +20,7 @@
  */
 
 #ifndef GPG_ERROR_H
-#define GPG_ERROR_H	1
+#define GPG_ERROR_H 1
 
 #include <stddef.h>
 #include <stdio.h>
