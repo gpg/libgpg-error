@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.19\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2016-04-25 10:33+0200\n"
+"PO-Revision-Date: 2016-11-14 17:12+0100\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -923,6 +923,33 @@ msgstr "IPC Parameterfehler"
 
 msgid "Unknown IPC inquire"
 msgstr "Unbekanntes IPC \"Inquire\""
+
+msgid "Crypto engine too old"
+msgstr "Die Krypto-Engine ist zu alt"
+
+msgid "Screen or window too small"
+msgstr "Bildschirmfenster ist zu klein"
+
+msgid "Screen or window too large"
+msgstr "Bildschirmfenster ist zu groß"
+
+msgid "Required environment variable not set"
+msgstr "Eine notwendige Umgebungsvariable ist nicht gesetzt"
+
+msgid "User ID already exists"
+msgstr "Die User-ID existiert bereits"
+
+msgid "Name already exists"
+msgstr "Der Name existiert bereits"
+
+msgid "Duplicated name"
+msgstr "Doppelter Name"
+
+msgid "Object is too young"
+msgstr "Objekt zu jung"
+
+msgid "Object is too old"
+msgstr "Objekt zu alt"
 
 msgid "General LDAP error"
 msgstr "Allgemeiner LDAP Fehler"
