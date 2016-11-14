@@ -1,9 +1,28 @@
-Libgpg-error
-============
+What is Libgpg-error
+====================
 
-This is a library that defines common error values for all GnuPG
-components.  Among these are GPG, GPGSM, GPGME, GPG-Agent, libgcrypt,
-Libksba, DirMngr, Pinentry, SmartCard Daemon and more.
+Libgpg-error is a library that defines common error values for all
+GnuPG components.  Among these are GPG, GPGSM, GPGME, GPG-Agent,
+libgcrypt, Libksba, DirMngr, Pinentry, SmartCard Daemon and more.
+Meanwhile Libgcrypt also sports functions commonly used by all GnuPG
+components and which are believed to be generally useful.  The main
+components are
+
+ - Structured error codes and utility functions.
+
+ - Replacement functions for stdio stream (estream) to provide a
+   reliable set of printf features on all platforms.  For convenience
+   macros are provided to make migration from stdio to estream easier
+   (ie. the prefix "es_")
+
+ - Generic Mutex implementation for all platforms using an ABI
+   independent of the underlying implementation.
+
+ - A lean gettext and iconv implementation for Windows.
+
+More components will be added over time.  Most functions are prefixed
+with "gpgrt" (GnuPG Run Time) instead of "gpg_err" to indicate the
+long term plan to rename this library to gpgrt.
 
 Libgpg-error is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as
@@ -22,7 +41,7 @@ affected by the GPL.
 
 
 Installation
-------------
+============
 
 Please read the file INSTALL!
 
@@ -45,7 +64,7 @@ Here is a quick summary:
 
 
 How to Verify the Source
-------------------------
+========================
 
 In order to check that the version of libgpg-error which you are going
 to install is an original and unmodified copy of the original, you can
@@ -54,7 +73,7 @@ do it in one of the following ways:
 a) If you already have a trusted version of GnuPG installed, you can
    simply check the supplied signature:
 
-   $ gpg --verify libgpg-error-x.y.tar.bz2.sig
+   $ gpg --verify libgpg-error-x.y.tar.bz2.sig libgpg-error-x.y.tar.bz2
 
    This checks that the detached signature libgpg-error-x.y.tar.bz2.sig
    is indeed a signature of libgpg-error-x.y.tar.bz2.  Make sure that
@@ -79,7 +98,7 @@ b) If you don't have any a trusted version of GnuPG, you can attempt
 
 
 Hints
------
+=====
 
 To build for Windows you you may use the convenience command:
 
@@ -97,7 +116,7 @@ version:
 
 
 Cross-Compiling
----------------
+===============
 
 Libgpg-error needs to figure out some platform specific properties.
 These are used to build the platform specific gpg-error.h file.  The
@@ -123,7 +142,7 @@ extra aliasing to avoid having too much identical syscfg files.
 
 
 Known Problems
---------------
+==============
 
 On Windows, WSA Error Codes can be provided as system error codes and
 will be transparently converted to the corresponding gpg error codes.
@@ -140,9 +159,9 @@ There are two problems with this support:
   translations).
 
 * The translation to a gpg error code and back to a system error code
-  in some cases does not preserve information.  For example, the error code
-  WSAEACCES translates to GPG_ERR_EACCES, which translates back to
-  EACCES.
+  in some cases does not preserve information.  For example, the error
+  code WSAEACCES translates to GPG_ERR_EACCES, which translates back
+  to EACCES.
 
 Any WSA Error code has either the first problem or the second (but not
 both), depending on if there is a corresponding Windows error code.

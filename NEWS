@@ -1,8 +1,21 @@
-Noteworthy changes in version 1.25 (unreleased) [C19/A19/R_)
+Noteworthy changes in version 1.25 (2016-11-14) [C20/A20/R0]
 -----------------------------------------------
+
+ * New interface gpgrt_get_syscall_clamp to allow libaries to make use
+   of Libgpg-error's system call wrapper functions.
+
+ * gpgrt_poll does now work under Windows.
+
+ * Fixed bug in the locking code when used with the nPth threading
+   library.
+
+ * Added support for {i686,x86_64}-apple-darwin.
+
+ * Added new error codes.
 
  * Interface changes relative to the 1.23 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_get_syscall_clamp          NEW.
  GPG_ERR_ENGINE_TOO_OLD	          NEW.
  GPG_ERR_WINDOW_TOO_SMALL         NEW.
  GPG_ERR_WINDOW_TOO_LARGE         NEW.
@@ -12,10 +25,9 @@ Noteworthy changes in version 1.25 (unreleased) [C19/A19/R_)
  GPG_ERR_DUP_NAME                 NEW.
  GPG_ERR_TOO_OLD                  NEW.
  GPG_ERR_TOO_YOUNG                NEW.
- gpgrt_get_syscall_clamp          NEW.
 
 
-Noteworthy changes in version 1.24 (2016-07-14) [C19/A19/R1)
+Noteworthy changes in version 1.24 (2016-07-14) [C19/A19/R1]
 -----------------------------------------------
 
  * Fixes a bug in es_fclose_snatch when used used after es_fseek.
@@ -25,7 +37,7 @@ Noteworthy changes in version 1.24 (2016-07-14) [C19/A19/R1)
  * New configure option --disable-tests.
 
 
-Noteworthy changes in version 1.23 (2016-06-15) [C19/A19/R0)
+Noteworthy changes in version 1.23 (2016-06-15) [C19/A19/R0]
 -----------------------------------------------
 
  * Fixes an assertion failure due to es_flush on read/write streams.
@@ -40,7 +52,7 @@ Noteworthy changes in version 1.23 (2016-06-15) [C19/A19/R0)
  GPG_ERR_SUBKEYS_EXP_OR_REV       NEW.
 
 
-Noteworthy changes in version 1.22 (2016-04-25) [C18/A18/R0)
+Noteworthy changes in version 1.22 (2016-04-25) [C18/A18/R0]
 -----------------------------------------------
 
  * New functions and macros to to provide iconv(3) on Windows.
