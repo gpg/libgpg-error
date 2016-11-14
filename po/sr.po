@@ -990,6 +990,41 @@ msgid "Unknown IPC inquire"
 msgstr "Непознато распитивање ИПЦ-а"
 
 #, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Crypto engine too old"
+msgstr "Неисправан погон шифровања"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Удвостручена вредност"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Уверење је превише ново"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Достављени предмет је прекратак"
+
+#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
 msgstr "Општа грешка ИПЦ-а"

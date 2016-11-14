@@ -935,6 +935,45 @@ msgstr "Помилка у параметрі IPC"
 msgid "Unknown IPC inquire"
 msgstr "Невідомий запит IPC"
 
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Crypto engine too old"
+msgstr "Немає рушія шифрування"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+#, fuzzy
+#| msgid "Already exists (LDAP)"
+msgid "User ID already exists"
+msgstr "Вже існує (LDAP)"
+
+#, fuzzy
+#| msgid "Already exists (LDAP)"
+msgid "Name already exists"
+msgstr "Вже існує (LDAP)"
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Дублювання значення"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Сертифікат є надто новим"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Наданий об’єкт є надто коротким"
+
 msgid "General LDAP error"
 msgstr "Загальна помилка LDAP"
 

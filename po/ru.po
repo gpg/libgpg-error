@@ -924,6 +924,45 @@ msgstr "Ошибка в параметре IPC"
 msgid "Unknown IPC inquire"
 msgstr "Неизвестный запрос IPC"
 
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Crypto engine too old"
+msgstr "Нет криптомеханизма"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+#, fuzzy
+#| msgid "Already exists (LDAP)"
+msgid "User ID already exists"
+msgstr "Уже есть (LDAP)"
+
+#, fuzzy
+#| msgid "Already exists (LDAP)"
+msgid "Name already exists"
+msgstr "Уже есть (LDAP)"
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Величина продублирована"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Сертификат слишком новый"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Введенный объект слишком мал"
+
 msgid "General LDAP error"
 msgstr "Общая ошибка LDAP"
 

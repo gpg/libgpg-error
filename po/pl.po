@@ -918,6 +918,45 @@ msgstr "Błąd parametru IPC"
 msgid "Unknown IPC inquire"
 msgstr "Nieznane zapytanie IPC"
 
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Crypto engine too old"
+msgstr "Brak silnika kryptograficznego"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+#, fuzzy
+#| msgid "Already exists (LDAP)"
+msgid "User ID already exists"
+msgstr "Już istnieje (LDAP)"
+
+#, fuzzy
+#| msgid "Already exists (LDAP)"
+msgid "Name already exists"
+msgstr "Już istnieje (LDAP)"
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Powtórzona wartość"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Certyfikat zbyt młody"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Dostarczony obiekt jest zbyt mały"
+
 msgid "General LDAP error"
 msgstr "Błąd ogólny LDAP"
 

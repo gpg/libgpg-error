@@ -982,6 +982,40 @@ msgid "Unknown IPC inquire"
 msgstr "Yêu cầu IPC không rõ"
 
 #, fuzzy
+msgid "Crypto engine too old"
+msgstr "Cơ chế mật mã không hợp lệ"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Giá trị trùng"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Chứng nhận quá mới"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Đã cung cấp một đối tượng quá ngắn"
+
+#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
 msgstr "Lỗi IPC chung"

@@ -1005,6 +1005,40 @@ msgid "Unknown IPC inquire"
 msgstr "Sursã necunoscutã"
 
 #, fuzzy
+msgid "Crypto engine too old"
+msgstr "Motor cifrare invalid"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Valoare dublã"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Certificat prea recent"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Obiectul furnizat e prea scurt"
+
+#, fuzzy
 msgid "General LDAP error"
 msgstr "Eroare generalã"
 

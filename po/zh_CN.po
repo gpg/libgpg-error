@@ -979,6 +979,40 @@ msgid "Unknown IPC inquire"
 msgstr ""
 
 #, fuzzy
+msgid "Crypto engine too old"
+msgstr "无效的加密引擎"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "重复值"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "证书太新"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "提供对象太短"
+
+#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
 msgstr "一般IPC 错误"

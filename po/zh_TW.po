@@ -933,6 +933,41 @@ msgid "Unknown IPC inquire"
 msgstr "未知的 IPC 查詢"
 
 #, fuzzy
+#| msgid "No crypto engine"
+msgid "Crypto engine too old"
+msgstr "沒有密碼法引擎"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "重複的值"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "憑證太年輕"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "提供的物件太短"
+
+#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
 msgstr "一般性的 IPC 錯誤"

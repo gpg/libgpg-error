@@ -935,6 +935,41 @@ msgid "Unknown IPC inquire"
 msgstr "Ukendt IPC-inquire"
 
 #, fuzzy
+#| msgid "No crypto engine"
+msgid "Crypto engine too old"
+msgstr "Ingen cryptomotor"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Duplikeret værdi"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Certifikat for ungt"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Angivet objekt er for kort"
+
+#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
 msgstr "Generel IPC-fejl"
