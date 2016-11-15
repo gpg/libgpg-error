@@ -739,7 +739,7 @@ GPG_ERR_BAD_HS_CERT_VER         Bad certificate verify message in handshake
 
     NTBTLS: - As the description says.
 
-GPG_ERR_BAD_HS_CHANGE_CIPHER    Bad change cipher messsage in handshake
+GPG_ERR_BAD_HS_CHANGE_CIPHER    Bad change cipher message in handshake
 
     NTBTLS: - As the description says.
 

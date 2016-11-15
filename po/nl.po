@@ -816,7 +816,7 @@ msgstr "Slecht verzoek om certificaatbericht in uitwisseling"
 msgid "Bad certificate verify message in handshake"
 msgstr "Slecht certificaatbericht over verificatie in uitwisseling"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Slecht wijzigingsbericht over vercijfering in uitwisseling"
 
 msgid "Bad client hello message in handshake"
@@ -825,7 +825,7 @@ msgstr "Slecht hello-bericht van client in uitwisseling"
 msgid "Bad server hello message in handshake"
 msgstr "Slecht hello-bericht van server in uitwisseling"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Slecht hello-gedaan-bericht van server in uitwisseling"
 
 msgid "Bad finished message in handshake"

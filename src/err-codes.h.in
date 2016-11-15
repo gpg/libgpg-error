@@ -274,10 +274,10 @@
 240	GPG_ERR_BAD_HS_CERT		Bad certificate message in handshake
 241	GPG_ERR_BAD_HS_CERT_REQ		Bad certificate request message in handshake
 242	GPG_ERR_BAD_HS_CERT_VER		Bad certificate verify message in handshake
-243	GPG_ERR_BAD_HS_CHANGE_CIPHER	Bad change cipher messsage in handshake
+243	GPG_ERR_BAD_HS_CHANGE_CIPHER	Bad change cipher message in handshake
 244	GPG_ERR_BAD_HS_CLIENT_HELLO	Bad client hello message in handshake
 245	GPG_ERR_BAD_HS_SERVER_HELLO	Bad server hello message in handshake
-246	GPG_ERR_BAD_HS_SERVER_HELLO_DONE	Bad server hello done message in hanshake
+246	GPG_ERR_BAD_HS_SERVER_HELLO_DONE	Bad server hello done message in handshake
 247	GPG_ERR_BAD_HS_FINISHED		Bad finished message in handshake
 248	GPG_ERR_BAD_HS_SERVER_KEX	Bad server key exchange message in handshake
 249	GPG_ERR_BAD_HS_CLIENT_KEX	Bad client key exchange message in handshake

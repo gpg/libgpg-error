@@ -818,7 +818,7 @@ msgstr "交握中的不良憑證請求訊息"
 msgid "Bad certificate verify message in handshake"
 msgstr "交握中的不良憑證驗證訊息"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "交握中的不良變更密碼法訊息"
 
 msgid "Bad client hello message in handshake"
@@ -827,7 +827,7 @@ msgstr "交握中的不良用戶端問候訊息"
 msgid "Bad server hello message in handshake"
 msgstr "交握中的不良伺服器問候訊息"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "交握中的不良伺服器問候完成訊息"
 
 msgid "Bad finished message in handshake"

@@ -806,7 +806,7 @@ msgstr "ハンドシェークで誤った証明書要求メッセージです"
 msgid "Bad certificate verify message in handshake"
 msgstr "ハンドシェークで誤った証明書検証メッセージです"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "ハンドシェークで誤った暗号変更メッセージです"
 
 msgid "Bad client hello message in handshake"
@@ -815,7 +815,7 @@ msgstr "ハンドシェークで誤ったクライアントハローメッセー
 msgid "Bad server hello message in handshake"
 msgstr "ハンドシェークで誤ったサーバハローメッセージです"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "ハンドシェークで誤ったサーバハロー了解メッセージです"
 
 msgid "Bad finished message in handshake"

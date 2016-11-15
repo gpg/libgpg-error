@@ -804,7 +804,7 @@ msgstr "Błędny komunikat żądania certyfikatu przy powitaniu"
 msgid "Bad certificate verify message in handshake"
 msgstr "Błędny komunikat weryfikacji certyfikatu przy powitaniu"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Błędny komunikat zmiany szyfru przy powitaniu"
 
 msgid "Bad client hello message in handshake"
@@ -813,7 +813,7 @@ msgstr "Błędny komunikat przywitania klienta w powitaniu"
 msgid "Bad server hello message in handshake"
 msgstr "Błędny komunikat przywitania serwera w powitaniu"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Błędny komunikat zakończenia przywitania serwera w powitaniu"
 
 msgid "Bad finished message in handshake"

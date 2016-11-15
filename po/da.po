@@ -819,7 +819,7 @@ msgstr "Besked om ødelagt certifikatforespørgsel i håndtrykket"
 msgid "Bad certificate verify message in handshake"
 msgstr "Besked om ødelagt certifikatforespørgsel i håndtrykket"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Ødelagt »ændr chiffer«-besked i håndtrykket"
 
 msgid "Bad client hello message in handshake"
@@ -829,7 +829,7 @@ msgid "Bad server hello message in handshake"
 msgstr "Besked om ødelagt serverhilsen i håndtrykket"
 
 # engelsk fejl
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Ødelagt »afsluttet serverhilsen«-besked i håndtrykket"
 
 msgid "Bad finished message in handshake"

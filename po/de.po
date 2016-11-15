@@ -810,7 +810,7 @@ msgstr "Fehlerhafte Zertifikatsanforderungsnachricht im Handshake"
 msgid "Bad certificate verify message in handshake"
 msgstr "Fehlerhafte Zertifikatsüberprüfungsnachricht im Handshake"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Fehlerhafte Verschlüsselungsalgorithmuswechselnachricht im Handshake"
 
 msgid "Bad client hello message in handshake"
@@ -819,7 +819,7 @@ msgstr "Fehlerhafte \"Client Hello\" Nachricht im Handshake"
 msgid "Bad server hello message in handshake"
 msgstr "Fehlerhafte \"Server Hello\" Nachricht im Handshake"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Fehlerhafte \"Server Hello Done\" Nachricht im Handshake"
 
 msgid "Bad finished message in handshake"

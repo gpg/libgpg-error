@@ -810,7 +810,7 @@ msgstr "Плохое сообщение-запрос сертификата пр
 msgid "Bad certificate verify message in handshake"
 msgstr "Плохое сообщение-проверка сертификата при установлении связи"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Плохое сообщение смены шифра при установлении связи"
 
 msgid "Bad client hello message in handshake"
@@ -819,7 +819,7 @@ msgstr "Плохое начальное сообщение клиента при
 msgid "Bad server hello message in handshake"
 msgstr "Плохое начальное сообщение сервера при установлении связи"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Плохая квитанция сервера на начальное сообщение при установлении связи"
 
 msgid "Bad finished message in handshake"

@@ -871,7 +871,7 @@ msgstr ""
 msgid "Bad certificate verify message in handshake"
 msgstr ""
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr ""
 
 msgid "Bad client hello message in handshake"
@@ -880,7 +880,7 @@ msgstr ""
 msgid "Bad server hello message in handshake"
 msgstr ""
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr ""
 
 msgid "Bad finished message in handshake"

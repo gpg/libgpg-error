@@ -817,8 +817,7 @@ msgstr "Mauvais message de demande de certificat dans l’initialisation"
 msgid "Bad certificate verify message in handshake"
 msgstr "Mauvais message de vérification de certificat dans l’initialisation"
 
-# NOTE: s/messsage/message/
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Mauvais message de modification d’algorithme dans l’initialisation"
 
 msgid "Bad client hello message in handshake"
@@ -827,8 +826,7 @@ msgstr "Mauvais message de salut du client dans l’initialisation"
 msgid "Bad server hello message in handshake"
 msgstr "Mauvais message de salut du serveur dans l’initialisation"
 
-# NOTE: s/hanshake/handshake/
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Mauvais message de fin de salut du serveur dans l’initialisation"
 
 msgid "Bad finished message in handshake"

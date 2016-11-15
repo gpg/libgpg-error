@@ -815,7 +815,7 @@ msgstr "Messaggio di richiesta del certificato errato nell'handshake"
 msgid "Bad certificate verify message in handshake"
 msgstr "Messaggio di verifica del certificato errato nell'handshake"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Messaggi di modifica cifrario errato nell'handshake"
 
 msgid "Bad client hello message in handshake"
@@ -824,7 +824,7 @@ msgstr "Messaggio client hello errato nell'handshake"
 msgid "Bad server hello message in handshake"
 msgstr "Messaggio server hello errato nell'handshake"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Messaggio server hello completato errato nell'handshake"
 
 msgid "Bad finished message in handshake"

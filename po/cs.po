@@ -824,7 +824,7 @@ msgstr "Chybná zpráva s požadavkem na certifikát v zahájení"
 msgid "Bad certificate verify message in handshake"
 msgstr "Chybná zpráva o ověření certifikátu v zahájení"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Chybná zpráva se změnou šifry v zahájení"
 
 msgid "Bad client hello message in handshake"
@@ -833,7 +833,7 @@ msgstr "Chybná zpráva s pozdravem klienta v zahájení"
 msgid "Bad server hello message in handshake"
 msgstr "Chybná zpráva s pozdravem serveru v zahájení"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Chybná zpráva o dokončení pozdravu serveru v zahájení"
 
 msgid "Bad finished message in handshake"
