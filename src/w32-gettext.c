@@ -680,7 +680,6 @@ my_nl_locale_name (const char *categoryname)
   sub = SUBLANGID (langid);
 
   /* Dispatch on language.
-     See also http://www.unicode.org/unicode/onlinedat/languages.html .
      For details about languages, see https://www.ethnologue.com/ .  */
   switch (primary)
     {
