@@ -389,7 +389,7 @@ static struct {
 
     /*
      * Code Page Identifiers
-     * http://msdn2.microsoft.com/en-us/library/ms776446.aspx
+     * https://msdn.microsoft.com/en-us/library/dd317756.aspx
      */
     {37, "IBM037"}, /* IBM EBCDIC US-Canada */
     {437, "IBM437"}, /* OEM United States */
@@ -968,7 +968,7 @@ name_to_codepage(const char *name)
 }
 
 /*
- * http://www.faqs.org/rfcs/rfc2781.html
+ * https://tools.ietf.org/html/rfc2781
  */
 static uint
 utf16_to_ucs4(const ushort *wbuf)
