@@ -1784,7 +1784,7 @@ dynamic_buffer_out (void *outfncarg, const char *buf, size_t buflen)
         {
           parm->error_flag = errno ? errno : ENOMEM;
           /* Wipe out what we already accumulated.  This is useful in
-             case sensitive data is formated.  */
+             case sensitive data is formatted.  */
           memset (parm->buffer, 0, parm->used);
           return -1;
         }

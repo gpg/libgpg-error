@@ -128,7 +128,7 @@ RunTime).
 This manual documents the Libgpg-error library application programming
 interface (API).  The goal is to that all functions and data types
 provided by the library are explained.  However, for now this is only
-a stub and not very usefull.
+a stub and not very useful.
 
 
 @node Features
@@ -327,7 +327,7 @@ TBD.
 @node Generalities
 @chapter Generalities
 
-TBD.  (Description of the error fucntion may be taken from Libgcrypt.)
+TBD.  (Description of the error function may be taken from Libgcrypt.)
 
 
 

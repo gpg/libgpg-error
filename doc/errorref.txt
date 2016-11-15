@@ -78,7 +78,7 @@ GPG_ERR_NO_PUBKEY		No public key
             - The public key could not be retrieved from a corresponding
               certificate on a card (command READKEY in scd).
             - A requested certificate was not found or an unspecified
-              error occured while selecting a X.509 certificate in
+              error occurred while selecting a X.509 certificate in
               gpgsm.
             - The specified certificate or key was not found.  This
               does not necessary mean that the certifciate is not

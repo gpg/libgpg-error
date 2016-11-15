@@ -478,8 +478,8 @@ Noteworthy changes in version 1.4 (2006-09-14)
  * New error codes for the Assuan IPC library.
 
  * New error code GPG_ERR_MISSING_ERRNO to be used in cases when a
-   system accidently does not set errno but a system error definitely
-   occured.
+   system accidentally does not set errno but a system error
+   definitely occurred.
 
  * New error source GPG_ERR_SOURCE_ANY to allow proper use of
    libgpg-error even if a specific source is not available.
