@@ -291,7 +291,7 @@ else
 pre_mkheader_cmds = :
 parts_of_gpg_error_h += ./lock-obj-pub.native.h
 
-./lock-obj-pub.native.h: Makefile gen-posix-lock-obj posix-lock-obj.h
+./lock-obj-pub.native.h: Makefile gen-posix-lock-obj$(EXEEXT) posix-lock-obj.h
 	./gen-posix-lock-obj >$@
 endif
 
