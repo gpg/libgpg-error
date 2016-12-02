@@ -21,7 +21,7 @@ EXTRA_DIST = HACKING errorref.txt \
 	     yat2m.c
 
 DISTCLEANFILES = gpgrt.cps yat2m-stamp.tmp yat2m-stamp $(myman_pages)
-CLEANFILES = yat2m
+CLEANFILES = yat2m errorref.txt.x
 
 info_TEXINFOS = gpgrt.texi
 gpgrt_TEXINFOS = lgpl.texi gpl.texi
@@ -66,3 +66,14 @@ $(myman_pages) : yat2m-stamp
 # updates the release date.
 gpgrt.texi : $(gpgrt_TEXINFOS)
 	touch $(srcdir)/gpgrt.texi
+
+errorref.txt.x : errorref.txt
+	sed '/^##/ d' $< >$@
+	echo "# Installed by $(PACKAGE_NAME) $(PACKAGE_VERSION)" >>$@
+
+install-data-local: errorref.txt.x
+	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)
+	$(INSTALL_DATA) errorref.txt.x $(DESTDIR)$(pkgdatadir)/errorref.txt
+
+uninstall-local:
+	-@rm $(DESTDIR)$(pkgdatadir)/errorref.txt

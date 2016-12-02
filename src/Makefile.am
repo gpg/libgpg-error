@@ -192,8 +192,9 @@ libgpg_error_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" $(extra_cppflags)
 libgpg_error_la_LIBADD = $(gpg_error_res) $(intllibs) $(LIBTHREAD)
 
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c
-gpg_error_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" $(extra_cppflags)
-gpg_error_LDADD = ./libgpg-error.la @LTLIBINTL@
+gpg_error_CPPFLAGS = -DPKGDATADIR=\"$(pkgdatadir)\" \
+                     -DLOCALEDIR=\"$(localedir)\" $(extra_cppflags)
+gpg_error_LDADD = ./libgpg-error.la $(LTLIBINTL)
 
 # We build err-sources.h and err-codes.h in the source directory.
 # This is needed because gettext does only look into the source
