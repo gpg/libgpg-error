@@ -381,6 +381,9 @@ print_desc (const char *symbol)
   int blanklines = 0;
   int last_was_keyword = 0;
 
+  if (!symbol)
+    return;
+
   if (!initialized)
     {
       initialized = 1;
