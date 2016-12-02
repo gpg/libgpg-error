@@ -328,6 +328,7 @@
 306	GPG_ERR_DUP_NAME		Duplicated name
 307	GPG_ERR_TOO_YOUNG		Object is too young
 308	GPG_ERR_TOO_OLD			Object is too old
+309	GPG_ERR_UNKNOWN_FLAG		Unknown flag
 # This range is free for use.
 
 #

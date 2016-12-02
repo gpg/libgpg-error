@@ -1016,6 +1016,14 @@ GPG_ERR_TOO_OLD                         Objects is too old
     Used if an object is too old to be used.  This is a more generic
     code than GPG_ERR_ENGINE_TOO_OLD or GPG_ERR_CRL_TOO_OLD.
 
+GPG_ERR_UNKNOWN_FLAG            Unknown flag
+
+    The flag is not known.
+
+    GNUPG: - The flag part of the string given to the
+             option --default-new-key-algo value is not known.
+
+
 GPG_ERR_LDAP_GENERAL            LDAP General error
 
    Catch all error for LDAP.  Use if if can't map an erro rocde to an

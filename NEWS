@@ -1,6 +1,12 @@
 Noteworthy changes in version 1.26 (unreleased) [C20/A20/R_]
 -----------------------------------------------
 
+ * New option --desc for gpg-error.
+
+ * Interface changes relative to the 1.25 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_UNKNOWN_FLAG             NEW.
+
 
 Noteworthy changes in version 1.25 (2016-11-14) [C20/A20/R0]
 -----------------------------------------------
