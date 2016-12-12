@@ -6,6 +6,16 @@ Noteworthy changes in version 1.26 (unreleased) [C20/A20/R_]
  * Interface changes relative to the 1.25 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_UNKNOWN_FLAG             NEW.
+ GPG_ERR_INV_ORDER                NEW.
+ GPG_ERR_ALREADY_FETCHED          NEW.
+ GPG_ERR_SYSTEM_BUG               NEW.
+ GPG_ERR_DNS_UNKNOWN	          NEW.
+ GPG_ERR_DNS_SECTION	          NEW.
+ GPG_ERR_DNS_ADDRESS	          NEW.
+ GPG_ERR_DNS_NO_QUERY	          NEW.
+ GPG_ERR_DNS_NO_ANSWER	          NEW.
+ GPG_ERR_DNS_CLOSED	          NEW.
+ GPG_ERR_DNS_VERIFY	          NEW.
 
 
 Noteworthy changes in version 1.25 (2016-11-14) [C20/A20/R0]

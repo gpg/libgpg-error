@@ -1023,6 +1023,50 @@ GPG_ERR_UNKNOWN_FLAG            Unknown flag
     GNUPG: - The flag part of the string given to the
              option --default-new-key-algo value is not known.
 
+GPG_ERR_INV_ORDER               Invalid execution order
+
+    GNUPG: - In Dirmngr used for the libdns error code DNS_EORDER.
+
+GPG_ERR_ALREADY_FETCHED         Already fetched
+
+    GNUPG: - In Dirmngr used for the libdns error code DNS_EFETCHED.
+
+
+GPG_ERR_SYSTEM_BUG              System bug detected
+
+   The underlying operating system misbehaved.  For example it wrote
+   more to a buffer than the told maximum size.
+
+
+GPG_ERR_DNS_UNKNOWN             Unknown DNS error
+
+   Used by Dirmngr for DNS errors from libdns (DNS_EUNKNOWN);
+
+GPG_ERR_DNS_SECTION             Invalid DNS section
+
+   Used by Dirmngr for DNS errors from libdns (DNS_ESECTION);
+
+GPG_ERR_DNS_ADDRESS             Invalid textual address form
+
+   Used by Dirmngr for DNS errors from libdns (DNS_EADDRESS);
+
+GPG_ERR_DNS_NO_QUERY            Missing DNS query packet
+
+   Used by Dirmngr for DNS errors from libdns (DNS_ENOQUERY);
+
+GPG_ERR_DNS_NO_ANSWER           Missing DNS answer packet
+
+   Used by Dirmngr for DNS errors from libdns (DNS_ENOANSWER);
+
+GPG_ERR_DNS_CLOSED              Connection closed in DNS
+
+   Used by Dirmngr for DNS errors from libdns (DNS_ECONNFIN);
+
+GPG_ERR_DNS_VERIFY              Verification failed in DNS
+
+   Used by Dirmngr for DNS errors from libdns (DNS_EVERIFY);
+
+
 
 GPG_ERR_LDAP_GENERAL            LDAP General error
 

@@ -329,7 +329,22 @@
 307	GPG_ERR_TOO_YOUNG		Object is too young
 308	GPG_ERR_TOO_OLD			Object is too old
 309	GPG_ERR_UNKNOWN_FLAG		Unknown flag
+310	GPG_ERR_INV_ORDER		Invalid execution order
+311	GPG_ERR_ALREADY_FETCHED		Already fetched
 # This range is free for use.
+
+666	GPG_ERR_SYSTEM_BUG		System bug detected
+
+#
+# Mapping of some error codes from libdns.
+#
+711	GPG_ERR_DNS_UNKNOWN		Unknown DNS error
+712	GPG_ERR_DNS_SECTION		Invalid DNS section
+713	GPG_ERR_DNS_ADDRESS		Invalid textual address form
+714	GPG_ERR_DNS_NO_QUERY		Missing DNS query packet
+715	GPG_ERR_DNS_NO_ANSWER		Missing DNS answer packet
+716	GPG_ERR_DNS_CLOSED		Connection closed in DNS
+717	GPG_ERR_DNS_VERIFY		Verification failed in DNS
 
 #
 # Mapping of LDAP error codes
