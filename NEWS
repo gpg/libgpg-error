@@ -16,6 +16,7 @@ Noteworthy changes in version 1.26 (unreleased) [C20/A20/R_]
  GPG_ERR_DNS_NO_ANSWER	          NEW.
  GPG_ERR_DNS_CLOSED	          NEW.
  GPG_ERR_DNS_VERIFY	          NEW.
+ GPG_ERR_DNS_TIMEOUT	          NEW.
 
 
 Noteworthy changes in version 1.25 (2016-11-14) [C20/A20/R0]

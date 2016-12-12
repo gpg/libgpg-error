@@ -336,7 +336,7 @@
 666	GPG_ERR_SYSTEM_BUG		System bug detected
 
 #
-# Mapping of some error codes from libdns.
+# Mapping of some error codes from libdns and other DNS specific error codes
 #
 711	GPG_ERR_DNS_UNKNOWN		Unknown DNS error
 712	GPG_ERR_DNS_SECTION		Invalid DNS section
@@ -345,6 +345,7 @@
 715	GPG_ERR_DNS_NO_ANSWER		Missing DNS answer packet
 716	GPG_ERR_DNS_CLOSED		Connection closed in DNS
 717	GPG_ERR_DNS_VERIFY		Verification failed in DNS
+718	GPG_ERR_DNS_TIMEOUT		DNS Timeout
 
 #
 # Mapping of LDAP error codes

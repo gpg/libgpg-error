@@ -293,7 +293,9 @@ GPG_ERR_NOT_SUPPORTED           Not supported
 
 GPG_ERR_INV_OP                  Invalid operation code
 
-GPG_ERR_TIMEOUT                         Timeout
+GPG_ERR_TIMEOUT                 Timeout
+
+    Some function or network access timed out.
 
 GPG_ERR_INTERNAL                Internal error
 
@@ -1066,12 +1068,14 @@ GPG_ERR_DNS_VERIFY              Verification failed in DNS
 
    Used by Dirmngr for DNS errors from libdns (DNS_EVERIFY);
 
+GPG_ERR_DNS_TIMEOUT             DNS Timeout
 
+   A DNS query timed out
 
 GPG_ERR_LDAP_GENERAL            LDAP General error
 
-   Catch all error for LDAP.  Use if if can't map an erro rocde to an
-   gpg-error code.
+   Catch all error for LDAP.  Use when an error code could not be
+   mapped to a gpg-error code.
 
 GPG_ERR_LDAP_ATTR_GENERAL       LDAP General attribute error
 GPG_ERR_LDAP_NAME_GENERAL       LDAP General name error
