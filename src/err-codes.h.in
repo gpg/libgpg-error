@@ -331,6 +331,7 @@
 309	GPG_ERR_UNKNOWN_FLAG		Unknown flag
 310	GPG_ERR_INV_ORDER		Invalid execution order
 311	GPG_ERR_ALREADY_FETCHED		Already fetched
+312	GPG_ERR_TRY_LATER		Try again later
 # This range is free for use.
 
 666	GPG_ERR_SYSTEM_BUG		System bug detected

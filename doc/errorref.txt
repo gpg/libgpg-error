@@ -248,7 +248,7 @@ GPG_ERR_NETWORK                         Network error
 
 GPG_ERR_UNKNOWN_HOST            Unknown host
 
-        Used instead of the non-portbale EHOSTNOTFOUND which is
+        Used instead of the non-portable EHOSTNOTFOUND which is
         returned by some systems as a mapping of h_errno's
         HOST_NOT_FOUND
 
@@ -1033,6 +1033,11 @@ GPG_ERR_ALREADY_FETCHED         Already fetched
 
     GNUPG: - In Dirmngr used for the libdns error code DNS_EFETCHED.
 
+GPG_ERR_TRY_LATER               Try again later
+
+    This indicates that a server asked to try again later; thus it is
+    different from EAGAIN which is used by the local system.  This
+    code is for example used instead of h_error's TRY_AGAIN.
 
 GPG_ERR_SYSTEM_BUG              System bug detected
 

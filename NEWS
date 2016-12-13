@@ -8,6 +8,7 @@ Noteworthy changes in version 1.26 (unreleased) [C20/A20/R_]
  GPG_ERR_UNKNOWN_FLAG             NEW.
  GPG_ERR_INV_ORDER                NEW.
  GPG_ERR_ALREADY_FETCHED          NEW.
+ GPG_ERR_TRY_LATER                NEW.
  GPG_ERR_SYSTEM_BUG               NEW.
  GPG_ERR_DNS_UNKNOWN	          NEW.
  GPG_ERR_DNS_SECTION	          NEW.
