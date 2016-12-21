@@ -51,8 +51,8 @@ AC_INIT([libgpg-error],[mym4_full_version],[https://bugs.gnupg.org])
 #   (Interfaces added:			AGE++)
 #   (Interfaces removed:		AGE=0)
 # Note that added error codes don't constitute an interface change.
-LIBGPG_ERROR_LT_CURRENT=20
-LIBGPG_ERROR_LT_AGE=20
+LIBGPG_ERROR_LT_CURRENT=21
+LIBGPG_ERROR_LT_AGE=21
 LIBGPG_ERROR_LT_REVISION=0
 ################################################
 
