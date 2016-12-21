@@ -1039,6 +1039,60 @@ msgid "Object is too old"
 msgstr "Obiectul furnizat e prea scurt"
 
 #, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Nume necunoscut"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Cod operaţie invalid"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Eroare de sistem necunoscută"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Şir OID invalid"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Expresie-S invalidă"
+
+#, fuzzy
+msgid "Missing DNS query packet"
+msgstr "Certificat lipsă"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Decriptarea a eşuat"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Pauză"
+
+#, fuzzy
 msgid "General LDAP error"
 msgstr "Eroare generală"
 
@@ -1452,11 +1506,6 @@ msgstr "%s: avertisment: nu am putut recunoaşte %s\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Date invalide"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Decriptarea a eşuat"
 
 #, fuzzy
 #~| msgid "General error"

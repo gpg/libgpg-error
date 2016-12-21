@@ -1028,6 +1028,61 @@ msgid "Object is too old"
 msgstr "Provizita objekto tro mallongas"
 
 #, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Nekonata nomo"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Malvalida operacia kodo"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Nekonata sistem-eraro"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Malvalida ĉeno OID"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Malvalida S-esprimo"
+
+#, fuzzy
+#| msgid "Missing certificate"
+msgid "Missing DNS query packet"
+msgstr "Mankas atestilo"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Malĉifro fiaskis"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Tempofino"
+
+#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
 msgstr "Ĝenerala eraro de IPC"
@@ -1457,11 +1512,6 @@ msgstr "%s: averto: ne eblis rekoni %s\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Malvalida datumaro"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Malĉifro fiaskis"
 
 #, fuzzy
 #~| msgid "General error"

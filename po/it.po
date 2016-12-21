@@ -965,6 +965,61 @@ msgid "Object is too old"
 msgstr "L'oggetto fornito è troppo piccolo"
 
 #, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Nome sconosciuto"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Codice di operazione non valido"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Errore di sistema sconosciuto"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Testo per l'OID non valido"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "S-expression non valida"
+
+#, fuzzy
+#| msgid "Missing issuer certificate"
+msgid "Missing DNS query packet"
+msgstr "Manca il certificato dell'emittente"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Decifratura non riuscita"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Tempo scaduto"
+
+#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
 msgstr "Errore IPC generale"
@@ -1398,11 +1453,6 @@ msgstr "%s: avviso: impossibile riconoscere %s\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Dati non validi"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Decifratura non riuscita"
 
 #, fuzzy
 #~| msgid "General error"

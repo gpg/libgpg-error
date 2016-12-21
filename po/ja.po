@@ -959,6 +959,61 @@ msgstr "証明書が若すぎます"
 msgid "Object is too old"
 msgstr "与えられたオブジェクトが小さすぎます"
 
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "不明な名前です"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "無効な操作コードです"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "不明なシステムエラー"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "無効な OID 文字列です"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "無効な S-式です"
+
+#, fuzzy
+#| msgid "Missing issuer certificate"
+msgid "Missing DNS query packet"
+msgstr "発行元証明書がありません"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "復号に失敗しました"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "タイムアウトです"
+
 msgid "General LDAP error"
 msgstr "一般LDAPエラーです"
 

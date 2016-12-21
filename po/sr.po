@@ -1025,6 +1025,61 @@ msgid "Object is too old"
 msgstr "Достављени предмет је прекратак"
 
 #, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Непознат назив"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Неисправна шифра радње"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Непозната грешка система"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Неисправна ОИД ниска"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Неисправан С-израз"
+
+#, fuzzy
+#| msgid "Missing certificate"
+msgid "Missing DNS query packet"
+msgstr "Недостаје уверење"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Дешифровање није успело"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Време је истекло"
+
+#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
 msgstr "Општа грешка ИПЦ-а"
@@ -1454,11 +1509,6 @@ msgstr "%s: упозорење: не могу да препознам „%s“\n
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Неисправни подаци"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Дешифровање није успело"
 
 #, fuzzy
 #~| msgid "General error"

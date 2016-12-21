@@ -966,6 +966,61 @@ msgid "Object is too old"
 msgstr "Geleverd object is te kort"
 
 #, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Onbekende naam"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Ongeldige bewerkingscode"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Onbekende systeemfout"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Ongeldige OID-tekenreeks"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Ongeldige S-expressie"
+
+#, fuzzy
+#| msgid "Missing issuer certificate"
+msgid "Missing DNS query packet"
+msgstr "Ontbrekend certificaat van uitgever"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Ontcijfering is mislukt"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Tijdslimiet"
+
+#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
 msgstr "Algemene IPC-fout"
@@ -1399,11 +1454,6 @@ msgstr "%s: waarschuwing: kon %s niet herkennen\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Ongeldige gegevens"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Ontcijfering is mislukt"
 
 #, fuzzy
 #~| msgid "General error"
