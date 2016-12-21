@@ -1,14 +1,14 @@
 # Japanese messages for GnuPG libgpg-error
-# Copyright (C) 2010, 2012, 2014, 2015 Free Software Foundation, Inc.
+# Copyright (C) 2010, 2012, 2014, 2015, 2016 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 # Yasuaki Taniguchi <yasuakit@gmail.com>, 2010.
 # Takeshi Hamasaki <hmatrjp@users.sourceforge.jp>, 2012.
 # NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.19\n"
+"Project-Id-Version: libgpg-error 1.26\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2016-02-26 09:42+0900\n"
+"PO-Revision-Date: 2016-12-22 08:12+0900\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -125,7 +125,7 @@ msgstr "誤ったパスフレーズです"
 msgid "Invalid cipher algorithm"
 msgstr "無効な暗号アルゴリズムです"
 
-msgid "Cannot open keyring"
+msgid "Keyring open"
 msgstr "鍵リングオープン"
 
 msgid "Invalid packet"
@@ -728,9 +728,6 @@ msgstr "S式におかしな16進キャラクタがあります"
 msgid "Bad octal character in S-expression"
 msgstr "S式に間違った8進キャラクタがあります"
 
-msgid "All subkeys are expired or revoked"
-msgstr ""
-
 msgid "Database is corrupted"
 msgstr "データベースがおかしくなってます"
 
@@ -919,45 +916,6 @@ msgstr "IPCパラメータエラーです"
 
 msgid "Unknown IPC inquire"
 msgstr "不明なIPC問い合わせです"
-
-#, fuzzy
-#| msgid "No crypto engine"
-msgid "Crypto engine too old"
-msgstr "暗号エンジンがありません"
-
-msgid "Screen or window too small"
-msgstr ""
-
-msgid "Screen or window too large"
-msgstr ""
-
-msgid "Required environment variable not set"
-msgstr ""
-
-#, fuzzy
-#| msgid "Already exists (LDAP)"
-msgid "User ID already exists"
-msgstr "既に存在します (LDAP)"
-
-#, fuzzy
-#| msgid "Already exists (LDAP)"
-msgid "Name already exists"
-msgstr "既に存在します (LDAP)"
-
-#, fuzzy
-#| msgid "Duplicated value"
-msgid "Duplicated name"
-msgstr "重複した値です"
-
-#, fuzzy
-#| msgid "Certificate too young"
-msgid "Object is too young"
-msgstr "証明書が若すぎます"
-
-#, fuzzy
-#| msgid "Provided object is too short"
-msgid "Object is too old"
-msgstr "与えられたオブジェクトが小さすぎます"
 
 msgid "General LDAP error"
 msgstr "一般LDAPエラーです"
