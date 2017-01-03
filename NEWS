@@ -1,6 +1,8 @@
 Noteworthy changes in version 1.27 (unreleased) [C2_/A2_/R_]
 -----------------------------------------------
 
+ * Fixed macro GPGRT_GCC_VERSION.
+
 
 Noteworthy changes in version 1.26 (2016-12-21) [C21/A21/R0]
 -----------------------------------------------

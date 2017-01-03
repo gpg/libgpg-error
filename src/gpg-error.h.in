@@ -155,7 +155,7 @@ typedef unsigned int gpg_error_t;
 # define _GPG_ERR_CONSTRUCTOR
 #endif
 
-#define GPGRT_GCC_VERSION  _GCC_ERR_GCC_VERSION
+#define GPGRT_GCC_VERSION  _GPG_ERR_GCC_VERSION
 
 #if _GPG_ERR_GCC_VERSION >= 29200
 # define _GPGRT__RESTRICT __restrict__
