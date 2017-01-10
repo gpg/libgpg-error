@@ -100,7 +100,7 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
 *** The config script $GPG_ERROR_CONFIG was
 *** built for $gpg_error_config_host and thus may not match the
 *** used host $host.
-*** You may want to use the configure option --with-gpg-error-prefix
+*** You may want to use the configure option --with-libgpg-error-prefix
 *** to specify a matching config script or use \$SYSROOT.
 ***]])
         gpg_config_script_warn="$gpg_config_script_warn libgpg-error"
