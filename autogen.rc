@@ -1,5 +1,7 @@
 # autogen.sh configuration for libgpg-error                   -*- sh -*-
 
+version_parts=2
+
 case "$myhost:$myhostsub" in
   w32:ce)
     extraoptions=

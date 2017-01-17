@@ -1,5 +1,5 @@
 # configure.ac for libgpg-error
-# Copyright (C) 2003, 2004, 2006, 2010, 2013, 2014, 2015, 2016 g10 Code GmbH
+# Copyright (C) 2003, 2004, 2006, 2010, 2013-2017 g10 Code GmbH
 #
 # This file is part of libgpg-error.
 #
@@ -26,25 +26,22 @@ min_automake_version="1.14"
 # Please bump the version number immediately after the release, do
 # another commit, and a push so that the git magic is able to work.
 # See below for the LT versions.
-m4_define([mym4_version_major], [1])
-m4_define([mym4_version_minor], [27])
+m4_define([mym4_package],[libgpg-error])
+m4_define([mym4_major], [1])
+m4_define([mym4_minor], [27])
 
 # Below is m4 magic to extract and compute the revision number, the
 # decimalized short revision number, a beta version string, and a flag
 # indicating a development version (mym4_isgit). Note that the m4
 # processing is done by autoconf and not during the configure run.
-m4_define([mym4_version], [mym4_version_major.mym4_version_minor])
-m4_define([mym4_revision],
-          m4_esyscmd([git rev-parse --short HEAD | tr -d '\n\r']))
-m4_define([mym4_revision_dec],
-          m4_esyscmd_s([echo $((0x$(echo ]mym4_revision[|head -c 4)))]))
-m4_define([mym4_betastring],
-       m4_esyscmd_s([git describe --match 'libgpg-error-[0-9].*[0-9]' --long|\
-                        awk -F- '$4!=0{print"-beta"$4}']))
-m4_define([mym4_isgit],m4_if(mym4_betastring,[],[no],[yes]))
-m4_define([mym4_full_version],[mym4_version[]mym4_betastring])
-
-AC_INIT([libgpg-error],[mym4_full_version],[https://bugs.gnupg.org])
+m4_define([mym4_verslist], m4_split(m4_esyscmd([./autogen.sh --find-version] \
+                           mym4_package mym4_major mym4_minor),[:]))
+m4_define([mym4_isbeta],       m4_argn(2, mym4_verslist))
+m4_define([mym4_version],      m4_argn(4, mym4_verslist))
+m4_define([mym4_revision],     m4_argn(7, mym4_verslist))
+m4_define([mym4_revision_dec], m4_argn(8, mym4_verslist))
+m4_esyscmd([echo ]mym4_version[>VERSION])
+AC_INIT([mym4_package],[mym4_version], [https://bugs.gnupg.org])
 # LT Version numbers, remember to change them just *before* a release.
 #   (Code changed:			REVISION++)
 #   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)
@@ -60,8 +57,7 @@ AC_SUBST(LIBGPG_ERROR_LT_CURRENT)
 AC_SUBST(LIBGPG_ERROR_LT_AGE)
 AC_SUBST(LIBGPG_ERROR_LT_REVISION)
 
-VERSION_NUMBER=m4_esyscmd(printf "0x%02x%02x00" mym4_version_major \
-                          mym4_version_minor)
+VERSION_NUMBER=m4_esyscmd(printf "0x%02x%02x00" mym4_major mym4_minor)
 AC_SUBST(VERSION_NUMBER)
 
 AC_CONFIG_AUX_DIR([build-aux])
@@ -572,7 +568,7 @@ if test "$have_w32_system" != yes; then
    fi
 fi
 echo "
-        $PACKAGE_NAME-$PACKAGE_VERSION prepared for make
+        $PACKAGE_NAME v$PACKAGE_VERSION has been configured as follows:
 
         Revision: mym4_revision  (mym4_revision_dec)
         Platform: $host$tmp

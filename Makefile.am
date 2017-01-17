@@ -23,7 +23,7 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-doc
 GITLOG_TO_CHANGELOG=gitlog-to-changelog
 
 EXTRA_DIST = autogen.sh autogen.rc libgpg-error.spec.in 		\
-             COPYING COPYING.LIB potomo doc/HACKING ChangeLog-2011   	\
+             VERSION COPYING COPYING.LIB potomo doc/HACKING ChangeLog-2011 \
 	     po/ChangeLog-2011 m4/ChangeLog-2011 contrib/ChangeLog-2011 \
              build-aux/git-log-footer  build-aux/git-log-fix
 
@@ -51,7 +51,6 @@ SUBDIRS = m4 src $(doc) $(tests) po $(lang_subdirs)
 dist-hook: gen-ChangeLog
 	sed -e 's/@pkg_version@/$(VERSION)/g' \
 	    $(top_srcdir)/libgpg-error.spec.in  > $(distdir)/libgpg-error.spec
-	@set -e; echo "$(VERSION)" > $(distdir)/VERSION
 
 distcheck-hook:
 	set -e; ( \
