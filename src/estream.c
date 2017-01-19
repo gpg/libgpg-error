@@ -1886,7 +1886,8 @@ es_flush (estream_t stream)
 
       if (! func_write)
 	{
-	  err = EOPNOTSUPP;
+          _set_errno (EOPNOTSUPP);
+          err = -1;
 	  goto out;
 	}
 
@@ -2555,7 +2556,8 @@ es_write_nbf (estream_t _GPGRT__RESTRICT stream,
 
   if (bytes_to_write && (! func_write))
     {
-      err = EOPNOTSUPP;
+      _set_errno (EOPNOTSUPP);
+      err = -1;
       goto out;
     }
 
