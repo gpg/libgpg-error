@@ -853,6 +853,16 @@ int gpgrt_vsnprintf (char *buf,size_t bufsize,
 # define es_bsprintf          gpgrt_bsprintf
 # define es_vbsprintf         gpgrt_vbsprintf
 #endif /*GPGRT_ENABLE_ES_MACROS*/
+
+/* Base64 decode functions.  */
+
+struct _gpgrt_b64state;
+typedef struct _gpgrt_b64state *gpgrt_b64state_t;
+
+gpgrt_b64state_t gpgrt_b64dec_start (const char *title);
+gpg_error_t gpgrt_b64dec_proc (gpgrt_b64state_t state,
+                               void *buffer, size_t length, size_t *r_nbytes);
+gpg_error_t gpgrt_b64dec_finish (gpgrt_b64state_t state);
 
 #ifdef __cplusplus
 }

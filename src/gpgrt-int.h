@@ -312,4 +312,10 @@ int _gpgrt_w32_pollable_create (void *_GPGRT__RESTRICT *_GPGRT__RESTRICT cookie,
 int _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout);
 #endif
 
+gpgrt_b64state_t _gpgrt_b64dec_start (const char *title);
+gpg_error_t _gpgrt_b64dec_proc (gpgrt_b64state_t state, void *buffer,
+                                size_t length, size_t *r_nbytes);
+gpg_error_t _gpgrt_b64dec_finish (gpgrt_b64state_t state);
+
+
 #endif /*_GPGRT_GPGRT_INT_H*/

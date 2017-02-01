@@ -3,6 +3,13 @@ Noteworthy changes in version 1.27 (unreleased) [C2_/A2_/R_]
 
  * Fixed macro GPGRT_GCC_VERSION.
 
+ * Interface changes relative to the 1.26 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_b64state_t                 NEW type.
+ gpgrt_b64dec_start               NEW.
+ gpgrt_b64dec_proc                NEW.
+ gpgrt_b64dec_finish              NEW.
+
 
 Noteworthy changes in version 1.26 (2016-12-21) [C21/A21/R0]
 -----------------------------------------------

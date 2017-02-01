@@ -145,6 +145,10 @@ MARK_VISIBLE (gpgrt_set_syscall_clamp)
 MARK_VISIBLE (gpgrt_get_syscall_clamp)
 MARK_VISIBLE (gpgrt_set_alloc_func)
 
+MARK_VISIBLE (gpgrt_b64dec_start)
+MARK_VISIBLE (gpgrt_b64dec_proc)
+MARK_VISIBLE (gpgrt_b64dec_finish)
+
 #undef MARK_VISIBLE
 
 #else /*!_GPGRT_INCL_BY_VISIBILITY_C*/
@@ -255,6 +259,9 @@ MARK_VISIBLE (gpgrt_set_alloc_func)
 #define gpgrt_get_syscall_clamp     _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_set_alloc_func        _gpgrt_USE_UNDERSCORED_FUNCTION
 
+#define gpgrt_b64dec_start          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_b64dec_proc           _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_b64dec_finish         _gpgrt_USE_UNDERSCORED_FUNCTION
 
 #endif /*!_GPGRT_INCL_BY_VISIBILITY_C*/
 

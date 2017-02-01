@@ -152,4 +152,8 @@ EXPORTS
 
  gpgrt_get_syscall_clamp      @112
 
+ gpgrt_b64dec_start           @113
+ gpgrt_b64dec_proc            @114
+ gpgrt_b64dec_finish          @115
+
 ;; end of file with public symbols for Windows.

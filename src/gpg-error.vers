@@ -126,6 +126,10 @@ GPG_ERROR_1.0 {
     gpg_err_deinit;
     gpgrt_set_alloc_func;
 
+    gpgrt_b64dec_start;
+    gpgrt_b64dec_proc;
+    gpgrt_b64dec_finish;
+
   local:
     *;
 };

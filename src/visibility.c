@@ -711,3 +711,22 @@ gpgrt_vsnprintf (char *buf, size_t bufsize,
 {
   return _gpgrt_estream_vsnprintf (buf, bufsize, format, arg_ptr);
 }
+
+gpgrt_b64state_t
+gpgrt_b64dec_start (const char *title)
+{
+  return _gpgrt_b64dec_start (title);
+}
+
+gpg_error_t
+gpgrt_b64dec_proc (gpgrt_b64state_t state, void *buffer,
+                   size_t length, size_t *r_nbytes)
+{
+  return _gpgrt_b64dec_proc (state, buffer, length, r_nbytes);
+}
+
+gpg_error_t
+gpgrt_b64dec_finish (gpgrt_b64state_t state)
+{
+  return _gpgrt_b64dec_finish (state);
+}
