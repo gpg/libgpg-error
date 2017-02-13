@@ -81,7 +81,7 @@ AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
 AC_GNU_SOURCE
 
-# Set some internal variables depending on the platform for later use.
+# Set some variables depending on the platform for later use.
 have_w32_system=no
 have_w64_system=no
 have_w32ce_system=no
@@ -96,6 +96,12 @@ case "${host}" in
         ;;
     *-mingw32*)
         have_w32_system=yes
+        ;;
+    *-apple-darwin*)
+        # This is the equivalent of the _GNU_SOURCE feature-test-macro
+        # on GNU libc systems.
+        AC_DEFINE(_DARWIN_C_SOURCE, 900000L,
+                  Expose all libc features (__DARWIN_C_FULL).)
         ;;
     *)
        ;;
