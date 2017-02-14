@@ -50,6 +50,7 @@ lock_obj_pub = \
 	syscfg/lock-obj-pub.arm-apple-darwin.h                \
 	syscfg/lock-obj-pub.armv5-unknown-linux-musleabi.h    \
 	syscfg/lock-obj-pub.armv6-unknown-linux-musleabihf.h  \
+	syscfg/lock-obj-pub.armv7-unknown-linux-gnueabihf.h   \
 	syscfg/lock-obj-pub.hppa-unknown-linux-gnu.h          \
 	syscfg/lock-obj-pub.i386-apple-darwin.h               \
 	syscfg/lock-obj-pub.i686-pc-gnu.h                     \
