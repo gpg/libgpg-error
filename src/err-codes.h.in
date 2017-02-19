@@ -332,6 +332,7 @@
 310	GPG_ERR_INV_ORDER		Invalid execution order
 311	GPG_ERR_ALREADY_FETCHED		Already fetched
 312	GPG_ERR_TRY_LATER		Try again later
+313	GPG_ERR_WRONG_NAME		Wrong name
 # This range is free for use.
 
 666	GPG_ERR_SYSTEM_BUG		System bug detected

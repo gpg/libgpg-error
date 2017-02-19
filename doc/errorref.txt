@@ -301,7 +301,7 @@ GPG_ERR_INTERNAL                Internal error
 
 GPG_ERR_EOF_GCRYPT              EOF (gcrypt)
 
-GPG_ERR_INV_OBJ                         Invalid object
+GPG_ERR_INV_OBJ                 Invalid object
 
 GPG_ERR_TOO_SHORT               Provided object is too short
 
@@ -564,7 +564,7 @@ GPG_ERR_INV_STATE               Invalid state
     The state (of a protocol) is not possible or not defined at all.
 
     NTBTLS: - Data received in an unexpected state.
-
+            - A function is called while not being in the right state.
 
 
 GPG_ERR_DUP_VALUE               Duplicated value
@@ -575,7 +575,7 @@ GPG_ERR_MISSING_ACTION          Missing action
              use of the command "OPEN".
 
     others: - The libassuan ce-server test program uses this to
-              indicate that the client did not conncted to the server
+              indicate that the client did not connect to the server
               as requested.
 
 GPG_ERR_MODULE_NOT_FOUND        ASN.1 module not found
@@ -647,6 +647,14 @@ GPG_ERR_NOT_ENABLED             Not enabled
 GPG_ERR_NO_ENGINE               No crypto engine
 
 GPG_ERR_MISSING_KEY             Missing key
+
+    GNUPG:  - gpg-agent returns this error on import or export if a key
+              wrapping transport key has not been specified.
+            - It is used when the name "Key" is not found while looking
+              up name value pairs of the extended private key format
+
+    GCRYPT: - A key has not been set when calling a symmetric
+              encryption function.
 
 GPG_ERR_TOO_MANY                Too many objects
 
@@ -802,7 +810,7 @@ GPG_ERR_REQUEST_TOO_LONG        Request too long
 GPG_ERR_OBJ_TERM_STATE          Object is in termination state
 
     For cards this is the ISO status word 0x6285 (file is in
-    termnation state).
+    termination state).
 
 GPG_ERR_NO_CERT_CHAIN           No certificate chain
 
@@ -1038,6 +1046,10 @@ GPG_ERR_TRY_LATER               Try again later
     This indicates that a server asked to try again later; thus it is
     different from EAGAIN which is used by the local system.  This
     code is for example used instead of h_error's TRY_AGAIN.
+
+GPG_ERR_WRONG_NAME              Wrong name
+
+    NTBTLS: - Hostname does not match the certificate
 
 GPG_ERR_SYSTEM_BUG              System bug detected
 

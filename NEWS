@@ -11,6 +11,11 @@ Noteworthy changes in version 1.27 (unreleased) [C2_/A2_/R_]
  gpgrt_b64dec_finish              NEW.
 
 
+ * Interface changes relative to the 1.26 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_WRONG_NAME               NEW.
+
+
 Noteworthy changes in version 1.26 (2016-12-21) [C21/A21/R0]
 -----------------------------------------------
 
