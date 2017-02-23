@@ -65,8 +65,8 @@
                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),    \
                   (LPTSTR) &error_message,                      \
                   sizeof error_message, NULL );                 \
-    fprintf (stderr, "%p: " msg ": %s\n", ctx,                  \
-             ## __VA_ARGS__, error_message);                    \
+    fprintf (stderr, "%p: " msg ": %d (%s)\n", ctx,             \
+             ## __VA_ARGS__, (int)(err), error_message);        \
   } while (0)
 #else
 #define TRACE(msg, ...)			(void) 0
@@ -92,7 +92,7 @@ struct reader_context_s
   estream_cookie_w32_pollable_t pcookie;
   HANDLE thread_hd;
 
-  gpgrt_lock_t mutex;
+  CRITICAL_SECTION mutex;
 
   int stop_me;
   int eof;
@@ -116,7 +116,7 @@ struct writer_context_s
   estream_cookie_w32_pollable_t pcookie;
   HANDLE thread_hd;
 
-  gpgrt_lock_t mutex;
+  CRITICAL_SECTION mutex;
 
   int stop_me;
   int error;
@@ -179,7 +179,7 @@ reader (void *arg)
 
   for (;;)
     {
-      _gpgrt_lock_lock (&ctx->mutex);
+      EnterCriticalSection (&ctx->mutex);
       /* Leave a 1 byte gap so that we can see whether it is empty or
 	 full.  */
       while ((ctx->writepos + 1) % READBUF_SIZE == ctx->readpos)
@@ -187,16 +187,16 @@ reader (void *arg)
 	  /* Wait for space.  */
 	  if (!ResetEvent (ctx->have_space_ev))
 	    TRACE_ERR (ctx, GetLastError (), "ResetEvent failed");
-	  _gpgrt_lock_unlock (&ctx->mutex);
+          LeaveCriticalSection (&ctx->mutex);
 	  TRACE_CTX (ctx, "waiting for space");
 	  WaitForSingleObject (ctx->have_space_ev, INFINITE);
 	  TRACE_CTX (ctx, "got space");
-	  _gpgrt_lock_lock (&ctx->mutex);
+          EnterCriticalSection (&ctx->mutex);
         }
       assert (((ctx->writepos + 1) % READBUF_SIZE != ctx->readpos));
       if (ctx->stop_me)
 	{
-	  _gpgrt_lock_unlock (&ctx->mutex);
+          LeaveCriticalSection (&ctx->mutex);
 	  break;
         }
       nbytes = (ctx->readpos + READBUF_SIZE
@@ -204,7 +204,7 @@ reader (void *arg)
       assert (nbytes);
       if (nbytes > READBUF_SIZE - ctx->writepos)
 	nbytes = READBUF_SIZE - ctx->writepos;
-      _gpgrt_lock_unlock (&ctx->mutex);
+      LeaveCriticalSection (&ctx->mutex);
 
       TRACE_CTX (ctx, "reading up to %d bytes", nbytes);
 
@@ -229,17 +229,17 @@ reader (void *arg)
           break;
         }
 
-      _gpgrt_lock_lock (&ctx->mutex);
+      EnterCriticalSection (&ctx->mutex);
       if (ctx->stop_me)
 	{
-	  _gpgrt_lock_unlock (&ctx->mutex);
+          LeaveCriticalSection (&ctx->mutex);
 	  break;
         }
       if (!nread)
 	{
 	  ctx->eof = 1;
 	  TRACE_CTX (ctx, "got eof");
-	  _gpgrt_lock_unlock (&ctx->mutex);
+          LeaveCriticalSection (&ctx->mutex);
 	  break;
         }
 
@@ -247,7 +247,7 @@ reader (void *arg)
       if (!SetEvent (ctx->have_data_ev))
 	TRACE_ERR (ctx, GetLastError (), "SetEvent (%p) failed",
                    ctx->have_data_ev);
-      _gpgrt_lock_unlock (&ctx->mutex);
+      LeaveCriticalSection (&ctx->mutex);
     }
   /* Indicate that we have an error or EOF.  */
   if (!SetEvent (ctx->have_data_ev))
@@ -261,7 +261,7 @@ reader (void *arg)
   CloseHandle (ctx->have_data_ev);
   CloseHandle (ctx->have_space_ev);
   CloseHandle (ctx->thread_hd);
-  _gpgrt_lock_destroy (&ctx->mutex);
+  DeleteCriticalSection (&ctx->mutex);
   _gpgrt_free (ctx);
 
   return 0;
@@ -306,7 +306,7 @@ create_reader (estream_cookie_w32_pollable_t pcookie)
     }
 
   ctx->have_data_ev = set_synchronize (ctx->have_data_ev);
-  _gpgrt_lock_init (&ctx->mutex);
+  InitializeCriticalSection (&ctx->mutex);
 
 #ifdef HAVE_W32CE_SYSTEM
   ctx->thread_hd = CreateThread (&sec_attr, 64 * 1024, reader, ctx,
@@ -318,7 +318,7 @@ create_reader (estream_cookie_w32_pollable_t pcookie)
   if (!ctx->thread_hd)
     {
       TRACE_ERR (ctx, GetLastError (), "CreateThread failed");
-      _gpgrt_lock_destroy (&ctx->mutex);
+      DeleteCriticalSection (&ctx->mutex);
       if (ctx->have_data_ev)
 	CloseHandle (ctx->have_data_ev);
       if (ctx->have_space_ev)
@@ -348,11 +348,11 @@ create_reader (estream_cookie_w32_pollable_t pcookie)
 static void
 destroy_reader (struct reader_context_s *ctx)
 {
-  _gpgrt_lock_lock (&ctx->mutex);
+  EnterCriticalSection (&ctx->mutex);
   ctx->stop_me = 1;
   if (ctx->have_space_ev)
     SetEvent (ctx->have_space_ev);
-  _gpgrt_lock_unlock (&ctx->mutex);
+  LeaveCriticalSection (&ctx->mutex);
 
 #ifdef HAVE_W32CE_SYSTEM
   /* Scenario: We never create a full pipe, but already started
@@ -402,13 +402,14 @@ func_w32_pollable_read (void *cookie, void *buffer, size_t count)
   if (ctx->eof_shortcut)
     return 0;
 
-  _gpgrt_lock_lock (&ctx->mutex);
+  EnterCriticalSection (&ctx->mutex);
   TRACE_CTX (ctx, "readpos: %d, writepos %d", ctx->readpos, ctx->writepos);
   if (ctx->readpos == ctx->writepos && !ctx->error)
     {
       /* No data available.  */
       int eof = ctx->eof;
-      _gpgrt_lock_unlock (&ctx->mutex);
+
+      LeaveCriticalSection (&ctx->mutex);
 
       if (pcookie->modeflags & O_NONBLOCK && ! eof)
         {
@@ -419,12 +420,12 @@ func_w32_pollable_read (void *cookie, void *buffer, size_t count)
       TRACE_CTX (ctx, "waiting for data");
       WaitForSingleObject (ctx->have_data_ev, INFINITE);
       TRACE_CTX (ctx, "data available");
-      _gpgrt_lock_lock (&ctx->mutex);
+      EnterCriticalSection (&ctx->mutex);
     }
 
   if (ctx->readpos == ctx->writepos || ctx->error)
     {
-      _gpgrt_lock_unlock (&ctx->mutex);
+      LeaveCriticalSection (&ctx->mutex);
       ctx->eof_shortcut = 1;
       if (ctx->eof)
 	return 0;
@@ -449,7 +450,7 @@ func_w32_pollable_read (void *cookie, void *buffer, size_t count)
       if (!ResetEvent (ctx->have_data_ev))
 	{
 	  TRACE_ERR (ctx, GetLastError (), "ResetEvent failed");
-	  _gpgrt_lock_unlock (&ctx->mutex);
+          LeaveCriticalSection (&ctx->mutex);
 	  /* FIXME: Should translate the error code.  */
 	  _gpg_err_set_errno (EIO);
 	  return -1;
@@ -459,12 +460,12 @@ func_w32_pollable_read (void *cookie, void *buffer, size_t count)
     {
       TRACE_ERR (ctx, GetLastError (), "SetEvent (%p) failed",
                  ctx->have_space_ev);
-      _gpgrt_lock_unlock (&ctx->mutex);
+      LeaveCriticalSection (&ctx->mutex);
       /* FIXME: Should translate the error code.  */
       _gpg_err_set_errno (EIO);
       return -1;
     }
-  _gpgrt_lock_unlock (&ctx->mutex);
+  LeaveCriticalSection (&ctx->mutex);
 
   return nread;
 }
@@ -483,10 +484,10 @@ writer (void *arg)
 
   for (;;)
     {
-      _gpgrt_lock_lock (&ctx->mutex);
+      EnterCriticalSection (&ctx->mutex);
       if (ctx->stop_me && !ctx->nbytes)
 	{
-	  _gpgrt_lock_unlock (&ctx->mutex);
+          LeaveCriticalSection (&ctx->mutex);
 	  break;
         }
       if (!ctx->nbytes)
@@ -495,18 +496,18 @@ writer (void *arg)
 	    TRACE_ERR (ctx, GetLastError (), "SetEvent failed");
 	  if (!ResetEvent (ctx->have_data))
 	    TRACE_ERR (ctx, GetLastError (), "ResetEvent failed");
-	  _gpgrt_lock_unlock (&ctx->mutex);
+          LeaveCriticalSection (&ctx->mutex);
 	  TRACE_CTX (ctx, "idle");
 	  WaitForSingleObject (ctx->have_data, INFINITE);
 	  TRACE_CTX (ctx, "got data to write");
-	  _gpgrt_lock_lock (&ctx->mutex);
+          EnterCriticalSection (&ctx->mutex);
         }
       if (ctx->stop_me && !ctx->nbytes)
 	{
-	  _gpgrt_lock_unlock (&ctx->mutex);
+          LeaveCriticalSection (&ctx->mutex);
 	  break;
         }
-      _gpgrt_lock_unlock (&ctx->mutex);
+      LeaveCriticalSection (&ctx->mutex);
 
       TRACE_CTX (ctx, "writing up to %d bytes", ctx->nbytes);
 
@@ -529,9 +530,9 @@ writer (void *arg)
           break;
         }
 
-      _gpgrt_lock_lock (&ctx->mutex);
+      EnterCriticalSection (&ctx->mutex);
       ctx->nbytes -= nwritten;
-      _gpgrt_lock_unlock (&ctx->mutex);
+      LeaveCriticalSection (&ctx->mutex);
     }
   /* Indicate that we have an error.  */
   if (!SetEvent (ctx->is_empty))
@@ -547,7 +548,7 @@ writer (void *arg)
   CloseHandle (ctx->have_data);
   CloseHandle (ctx->is_empty);
   CloseHandle (ctx->thread_hd);
-  _gpgrt_lock_destroy (&ctx->mutex);
+  DeleteCriticalSection (&ctx->mutex);
   _gpgrt_free (ctx);
 
   return 0;
@@ -592,7 +593,7 @@ create_writer (estream_cookie_w32_pollable_t pcookie)
     }
 
   ctx->is_empty = set_synchronize (ctx->is_empty);
-  _gpgrt_lock_init (&ctx->mutex);
+  InitializeCriticalSection (&ctx->mutex);
 
 #ifdef HAVE_W32CE_SYSTEM
   ctx->thread_hd = CreateThread (&sec_attr, 64 * 1024, writer, ctx,
@@ -604,7 +605,7 @@ create_writer (estream_cookie_w32_pollable_t pcookie)
   if (!ctx->thread_hd)
     {
       TRACE_ERR (ctx, GetLastError (), "CreateThread failed");
-      _gpgrt_lock_destroy (&ctx->mutex);
+      DeleteCriticalSection (&ctx->mutex);
       if (ctx->have_data)
 	CloseHandle (ctx->have_data);
       if (ctx->is_empty)
@@ -631,11 +632,11 @@ create_writer (estream_cookie_w32_pollable_t pcookie)
 static void
 destroy_writer (struct writer_context_s *ctx)
 {
-  _gpgrt_lock_lock (&ctx->mutex);
+  EnterCriticalSection (&ctx->mutex);
   ctx->stop_me = 1;
   if (ctx->have_data)
     SetEvent (ctx->have_data);
-  _gpgrt_lock_unlock (&ctx->mutex);
+  LeaveCriticalSection (&ctx->mutex);
 
   /* Give the writer a chance to flush the buffer.  */
   WaitForSingleObject (ctx->is_empty, INFINITE);
@@ -678,7 +679,7 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
         return -1;
     }
 
-  _gpgrt_lock_lock (&ctx->mutex);
+  EnterCriticalSection (&ctx->mutex);
   TRACE_CTX (ctx, "pollable write buffer: %p, count: %d, nbytes: %d",
          buffer, count, ctx->nbytes);
   if (!ctx->error && ctx->nbytes)
@@ -689,12 +690,12 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
       if (!ResetEvent (ctx->is_empty))
 	{
 	  TRACE_ERR (ctx, GetLastError (), "ResetEvent failed");
-	  _gpgrt_lock_unlock (&ctx->mutex);
+          LeaveCriticalSection (&ctx->mutex);
 	  /* FIXME: Should translate the error code.  */
 	  _gpg_err_set_errno (EIO);
 	  return -1;
 	}
-      _gpgrt_lock_unlock (&ctx->mutex);
+      LeaveCriticalSection (&ctx->mutex);
 
       if (pcookie->modeflags & O_NONBLOCK)
         {
@@ -706,12 +707,12 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
       TRACE_CTX (ctx, "waiting for empty buffer");
       WaitForSingleObject (ctx->is_empty, INFINITE);
       TRACE_CTX (ctx, "buffer is empty");
-      _gpgrt_lock_lock (&ctx->mutex);
+      EnterCriticalSection (&ctx->mutex);
     }
 
   if (ctx->error)
     {
-      _gpgrt_lock_unlock (&ctx->mutex);
+      LeaveCriticalSection (&ctx->mutex);
       if (ctx->error_code == ERROR_NO_DATA)
         _gpg_err_set_errno (EPIPE);
       else
@@ -733,7 +734,7 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
   if (!ResetEvent (ctx->is_empty))
     {
       TRACE_ERR (ctx, GetLastError (), "ResetEvent failed");
-      _gpgrt_lock_unlock (&ctx->mutex);
+      LeaveCriticalSection (&ctx->mutex);
       /* FIXME: Should translate the error code.  */
       _gpg_err_set_errno (EIO);
       return -1;
@@ -741,12 +742,12 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
   if (!SetEvent (ctx->have_data))
     {
       TRACE_ERR (ctx, GetLastError (), "SetEvent failed");
-      _gpgrt_lock_unlock (&ctx->mutex);
+      LeaveCriticalSection (&ctx->mutex);
       /* FIXME: Should translate the error code.  */
       _gpg_err_set_errno (EIO);
       return -1;
     }
-  _gpgrt_lock_unlock (&ctx->mutex);
+  LeaveCriticalSection (&ctx->mutex);
 
   return (int) count;
 }
@@ -757,7 +758,7 @@ _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
 {
   HANDLE waitbuf[MAXIMUM_WAIT_OBJECTS];
   int waitidx[MAXIMUM_WAIT_OBJECTS];
-  int code;
+  unsigned int code;
   int nwait;
   int i;
   int any;
@@ -850,7 +851,7 @@ _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
 
   code = WaitForMultipleObjects (nwait, waitbuf, 0,
                                  timeout == -1 ? INFINITE : timeout);
-  if (code >= WAIT_OBJECT_0 && code < WAIT_OBJECT_0 + nwait)
+  if (code < WAIT_OBJECT_0 + nwait)
     {
       /* This WFMO is a really silly function: It does return either
 	 the index of the signaled object or if 2 objects have been
@@ -908,7 +909,7 @@ _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
     }
   else
     {
-      TRACE ("WFMO returned %d\n", code);
+      TRACE ("WFMO returned %u\n", code);
       count = -1;
     }
 
