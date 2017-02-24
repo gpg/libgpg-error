@@ -1127,6 +1127,7 @@ typedef struct estream_cookie_w32
 {
   HANDLE hd;     /* The handle we are using for actual output.  */
   int no_close;  /* If set we won't close the handle.  */
+  int no_syscall_clamp; /* Do not use the syscall clamp. */
 } *estream_cookie_w32_t;
 
 
@@ -1135,7 +1136,7 @@ typedef struct estream_cookie_w32
  */
 static int
 func_w32_create (void **cookie, HANDLE hd,
-                    unsigned int modeflags, int no_close)
+                 unsigned int modeflags, int no_close, int no_syscall_clamp)
 {
   estream_cookie_w32_t w32_cookie;
   int err;
@@ -1152,6 +1153,7 @@ func_w32_create (void **cookie, HANDLE hd,
 
       w32_cookie->hd = hd;
       w32_cookie->no_close = no_close;
+      w32_cookie->no_syscall_clamp = no_syscall_clamp;
       *cookie = w32_cookie;
       err = 0;
     }
@@ -1161,6 +1163,9 @@ func_w32_create (void **cookie, HANDLE hd,
 
 /*
  * Read function for W32 handle objects.
+ *
+ * Note that this function may also be used by the reader thread of
+ * w32-stream.  In that case the NO_SYSCALL_CLAMP is set.
  */
 static gpgrt_ssize_t
 func_w32_read (void *cookie, void *buffer, size_t size)
@@ -1177,7 +1182,7 @@ func_w32_read (void *cookie, void *buffer, size_t size)
     }
   else
     {
-      if (pre_syscall_func)
+      if (pre_syscall_func && !w32_cookie->no_syscall_clamp)
         pre_syscall_func ();
       do
         {
@@ -1198,7 +1203,7 @@ func_w32_read (void *cookie, void *buffer, size_t size)
             bytes_read = (int)nread;
         }
       while (bytes_read == -1 && errno == EINTR);
-      if (post_syscall_func)
+      if (post_syscall_func && !w32_cookie->no_syscall_clamp)
         post_syscall_func ();
     }
 
@@ -1208,6 +1213,9 @@ func_w32_read (void *cookie, void *buffer, size_t size)
 
 /*
  * Write function for W32 handle objects.
+ *
+ * Note that this function may also be used by the writer thread of
+ * w32-stream.  In that case the NO_SYSCALL_CLAMP is set.
  */
 static gpgrt_ssize_t
 func_w32_write (void *cookie, const void *buffer, size_t size)
@@ -1222,7 +1230,7 @@ func_w32_write (void *cookie, const void *buffer, size_t size)
     }
   else if (buffer)
     {
-      if (pre_syscall_func)
+      if (pre_syscall_func && !w32_cookie->no_syscall_clamp)
         pre_syscall_func ();
       do
         {
@@ -1237,7 +1245,7 @@ func_w32_write (void *cookie, const void *buffer, size_t size)
 	    bytes_written = (int)nwritten;
         }
       while (bytes_written == -1 && errno == EINTR);
-      if (post_syscall_func)
+      if (post_syscall_func && !w32_cookie->no_syscall_clamp)
         post_syscall_func ();
     }
   else
@@ -1286,7 +1294,7 @@ func_w32_seek (void *cookie, gpgrt_off_t *offset, int whence)
 #ifdef HAVE_W32CE_SYSTEM
 # warning need to use SetFilePointer
 #else
-  if (pre_syscall_func)
+  if (pre_syscall_func && !w32_cookie->no_syscall_clamp)
     pre_syscall_func ();
   if (!SetFilePointerEx (w32_cookie->hd, distance, &newoff, method))
     {
@@ -1295,7 +1303,7 @@ func_w32_seek (void *cookie, gpgrt_off_t *offset, int whence)
         post_syscall_func ();
       return -1;
     }
-  if (post_syscall_func)
+  if (post_syscall_func && !w32_cookie->no_syscall_clamp)
     post_syscall_func ();
 #endif
   /* Note that gpgrt_off_t is always 64 bit.  */
@@ -1661,6 +1669,7 @@ func_file_create (void **cookie, int *filedes,
  *    The object is opened in sysmode.  On POSIX this is a NOP but
  *    under Windows the direct W32 API functions (HANDLE) are used
  *    instead of their libc counterparts (fd).
+ *    FIXME: The functionality is not yet implemented.
  *
  * pollable
  *
@@ -2067,6 +2076,19 @@ es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
   stream_new = NULL;
   stream_internal_new = NULL;
 
+#if HAVE_W32_SYSTEM
+  if ((xmode & X_POLLABLE) && kind != BACKEND_W32)
+    {
+      /* We require the W32 backend, because only that allows us to
+       * write directly using the native W32 API and to disable the
+       * system clamp.  Note that func_w32_create has already been
+       * called with the flag to disable the system call clamp.  */
+      _set_errno (EINVAL);
+      err = -1;
+      goto out;
+    }
+#endif /*HAVE_W32_SYSTEM*/
+
   stream_new = mem_alloc (sizeof (*stream_new));
   if (! stream_new)
     {
@@ -2087,7 +2109,7 @@ es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
   stream_new->unread_buffer_size = sizeof (stream_internal_new->unread_buffer);
   stream_new->intern = stream_internal_new;
 
-#if _WIN32
+#if HAVE_W32_SYSTEM
   if ((xmode & X_POLLABLE))
     {
       void *new_cookie;
@@ -2102,7 +2124,7 @@ es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
       kind = BACKEND_W32_POLLABLE;
       functions = _gpgrt_functions_w32_pollable;
     }
-#endif
+#endif /*HAVE_W32_SYSTEM*/
 
   init_stream_obj (stream_new, cookie, syshd, kind, functions, modeflags,
                    xmode);
@@ -3379,7 +3401,11 @@ do_w32open (HANDLE hd, const char *mode,
   if (err)
     goto leave;
 
-  err = func_w32_create (&cookie, hd, modeflags, no_close);
+  /* If we are pollable we create the function cookie with syscall
+   * clamp disabled.  This is because functions are called from
+   * separatre reader and writer threads in w32-stream.  */
+  err = func_w32_create (&cookie, hd, modeflags,
+                         no_close, !!(xmode & X_POLLABLE));
   if (err)
     goto leave;
 
