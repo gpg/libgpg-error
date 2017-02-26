@@ -214,6 +214,83 @@ _gpg_err_set_errno (int err)
 
 
 
+/* Internal tracing functions.  We use flockfile and funlockfile to
+ * protect their use. */
+static int trace_save_errno;
+static const char *trace_arg_module;
+static const char *trace_arg_file;
+static int trace_arg_line;
+
+void
+_gpgrt_internal_trace_begin (const char *module, const char *file, int line)
+{
+  int save_errno = errno;
+#ifdef HAVE_FLOCKFILE
+  flockfile (stderr);
+#endif
+  trace_save_errno = save_errno;
+  trace_arg_module = module;
+  trace_arg_file = file;
+  trace_arg_line = line;
+}
+
+
+static void
+do_internal_trace (const char *format, va_list arg_ptr, int with_errno)
+{
+  fprintf (stderr, "%s:%s:%d: ",
+           trace_arg_module, trace_arg_file, trace_arg_line);
+  vfprintf (stderr, format, arg_ptr);
+  if (with_errno)
+    fprintf (stderr, " errno=%s", strerror (trace_save_errno));
+  fputc ('\n', stderr);
+}
+
+void
+_gpgrt_internal_trace_printf (const char *format, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, format) ;
+  vfprintf (stderr, format, arg_ptr);
+  va_end (arg_ptr);
+}
+
+
+void
+_gpgrt_internal_trace (const char *format, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, format) ;
+  do_internal_trace (format, arg_ptr, 0);
+  va_end (arg_ptr);
+}
+
+
+void
+_gpgrt_internal_trace_errno (const char *format, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, format) ;
+  do_internal_trace (format, arg_ptr, 1);
+  va_end (arg_ptr);
+}
+
+
+void
+_gpgrt_internal_trace_end (void)
+{
+  int save_errno = trace_save_errno;
+#ifdef HAVE_FLOCKFILE
+  funlockfile (stderr);
+#endif
+  errno = save_errno;
+}
+
+
+
 #ifdef HAVE_W32_SYSTEM
 /*****************************************
  ******** Below is only Windows code. ****
