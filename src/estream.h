@@ -23,7 +23,7 @@
 #include "gpg-error.h"
 
 /* Local prototypes for estream.  */
-int _gpgrt_es_init (void);
+int _gpgrt_estream_init (void);
 
 
 

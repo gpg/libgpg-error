@@ -147,7 +147,7 @@ typedef struct _gpgrt_stream_internal *estream_internal_t;
 
 
 /* Local prototypes for estream.  */
-int _gpgrt_es_init (void);
+int _gpgrt_estream_init (void);
 void _gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void));
 void _gpgrt_get_syscall_clamp (void (**r_pre)(void), void (**r_post)(void));
 

@@ -503,7 +503,7 @@ do_deinit (void)
  * Initialization of the estream module.
  */
 int
-_gpgrt_es_init (void)
+_gpgrt_estream_init (void)
 {
   static int initialized;
 
@@ -1825,7 +1825,7 @@ parse_mode (const char *modestr,
  */
 
 static int
-es_fill (estream_t stream)
+fill_stream (estream_t stream)
 {
   size_t bytes_read = 0;
   int err;
@@ -1880,7 +1880,7 @@ es_fill (estream_t stream)
 }
 
 static int
-es_flush (estream_t stream)
+flush_stream (estream_t stream)
 {
   gpgrt_cookie_write_function_t func_write = stream->intern->func_write;
   int err;
@@ -2022,10 +2022,11 @@ init_stream_obj (estream_t stream,
 
 
 /*
- * Deinitialize STREAM.
+ * Deinitialize the STREAM object.  This does _not_ free the memory,
+ * destroys the lock, or closes the underlying descriptor.
  */
 static int
-es_deinitialize (estream_t stream)
+deinit_stream_obj (estream_t stream)
 {
   gpgrt_cookie_close_function_t func_close;
   int err, tmp_err;
@@ -2035,7 +2036,7 @@ es_deinitialize (estream_t stream)
   err = 0;
   if (stream->flags.writing)
     {
-      tmp_err = es_flush (stream);
+      tmp_err = flush_stream (stream);
       if (!err)
         err = tmp_err;
     }
@@ -2061,13 +2062,15 @@ es_deinitialize (estream_t stream)
 
 
 /*
- * Create a new stream object and initialize it.
+ * Create a new stream and initialize it.  On success the new stream
+ * handle is tsored at R_STREAM.  On failure NULL is stored at
+ * R_STREAM.
  */
 static int
-es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
-           gpgrt_stream_backend_kind_t kind,
-	   struct cookie_io_functions_s functions, unsigned int modeflags,
-           unsigned int xmode, int with_locked_list)
+create_stream (estream_t *r_stream, void *cookie, es_syshd_t *syshd,
+               gpgrt_stream_backend_kind_t kind,
+               struct cookie_io_functions_s functions, unsigned int modeflags,
+               unsigned int xmode, int with_locked_list)
 {
   estream_internal_t stream_internal_new;
   estream_t stream_new;
@@ -2134,7 +2137,7 @@ es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
   if (err)
     goto out;
 
-  *stream = stream_new;
+  *r_stream = stream_new;
 
  out:
 
@@ -2142,7 +2145,7 @@ es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
     {
       if (stream_new)
 	{
-	  es_deinitialize (stream_new);
+	  deinit_stream_obj (stream_new);
           destroy_stream_lock (stream_new);
 	  mem_free (stream_new->intern);
 	  mem_free (stream_new);
@@ -2174,7 +2177,7 @@ do_close (estream_t stream, int with_locked_list)
           mem_free (stream->intern->onclose);
           stream->intern->onclose = tmp;
         }
-      err = es_deinitialize (stream);
+      err = deinit_stream_obj (stream);
       destroy_stream_lock (stream);
       mem_free (stream->intern);
       mem_free (stream);
@@ -2221,7 +2224,7 @@ do_onclose (estream_t stream, int mode,
  * unbuffered-mode, storing the amount of bytes read at BYTES_READ.
  */
 static int
-es_read_nbf (estream_t _GPGRT__RESTRICT stream,
+do_read_nbf (estream_t _GPGRT__RESTRICT stream,
 	     unsigned char *_GPGRT__RESTRICT buffer,
 	     size_t bytes_to_read, size_t *_GPGRT__RESTRICT bytes_read)
 {
@@ -2280,7 +2283,7 @@ check_pending_nbf (estream_t _GPGRT__RESTRICT stream)
  * BYTES_READ.
  */
 static int
-es_read_fbf (estream_t _GPGRT__RESTRICT stream,
+do_read_fbf (estream_t _GPGRT__RESTRICT stream,
 	     unsigned char *_GPGRT__RESTRICT buffer,
 	     size_t bytes_to_read, size_t *_GPGRT__RESTRICT bytes_read)
 {
@@ -2298,7 +2301,7 @@ es_read_fbf (estream_t _GPGRT__RESTRICT stream,
 	{
 	  /* Nothing more to read in current container, try to
 	     fill container with new data.  */
-	  err = es_fill (stream);
+	  err = fill_stream (stream);
 	  if (! err)
 	    if (! stream->data_len)
 	      /* Filling did not result in any data read.  */
@@ -2354,13 +2357,13 @@ check_pending_fbf (estream_t _GPGRT__RESTRICT stream)
  * line-buffered-mode, storing the amount of bytes read at BYTES_READ.
  */
 static int
-es_read_lbf (estream_t _GPGRT__RESTRICT stream,
+do_read_lbf (estream_t _GPGRT__RESTRICT stream,
 	     unsigned char *_GPGRT__RESTRICT buffer,
 	     size_t bytes_to_read, size_t *_GPGRT__RESTRICT bytes_read)
 {
   int err;
 
-  err = es_read_fbf (stream, buffer, bytes_to_read, bytes_read);
+  err = do_read_fbf (stream, buffer, bytes_to_read, bytes_read);
 
   return err;
 }
@@ -2386,7 +2389,7 @@ es_readn (estream_t _GPGRT__RESTRICT stream,
   if (stream->flags.writing)
     {
       /* Switching to reading mode -> flush output.  */
-      err = es_flush (stream);
+      err = flush_stream (stream);
       if (err)
 	goto out;
       stream->flags.writing = 0;
@@ -2404,17 +2407,17 @@ es_readn (estream_t _GPGRT__RESTRICT stream,
   switch (stream->intern->strategy)
     {
     case _IONBF:
-      err = es_read_nbf (stream,
+      err = do_read_nbf (stream,
 			 buffer + data_read_unread,
 			 bytes_to_read - data_read_unread, &data_read);
       break;
     case _IOLBF:
-      err = es_read_lbf (stream,
+      err = do_read_lbf (stream,
 			 buffer + data_read_unread,
 			 bytes_to_read - data_read_unread, &data_read);
       break;
     case _IOFBF:
-      err = es_read_fbf (stream,
+      err = do_read_fbf (stream,
 			 buffer + data_read_unread,
 			 bytes_to_read - data_read_unread, &data_read);
       break;
@@ -2441,7 +2444,7 @@ check_pending (estream_t _GPGRT__RESTRICT stream)
   if (stream->flags.writing)
     {
       /* Switching to reading mode -> flush output.  */
-      if (es_flush (stream))
+      if (flush_stream (stream))
 	return 0; /* Better return 0 on error.  */
       stream->flags.writing = 0;
     }
@@ -2515,7 +2518,7 @@ es_seek (estream_t _GPGRT__RESTRICT stream, gpgrt_off_t offset, int whence,
     {
       /* Flush data first in order to prevent flushing it to the wrong
 	 offset.  */
-      err = es_flush (stream);
+      err = flush_stream (stream);
       if (err)
 	goto out;
       stream->flags.writing = 0;
@@ -2635,7 +2638,7 @@ es_write_fbf (estream_t _GPGRT__RESTRICT stream,
     {
       if (stream->data_offset == stream->buffer_size)
 	/* Container full, flush buffer.  */
-	err = es_flush (stream);
+	err = flush_stream (stream);
 
       if (! err)
 	{
@@ -2677,7 +2680,7 @@ es_write_lbf (estream_t _GPGRT__RESTRICT stream,
     {
       /* Found a newline, directly write up to (including) this
 	 character.  */
-      err = es_flush (stream);
+      err = flush_stream (stream);
       if (!err)
 	err = es_write_nbf (stream, buffer, nlp - buffer + 1, &data_flushed);
     }
@@ -2751,16 +2754,16 @@ es_writen (estream_t _GPGRT__RESTRICT stream,
 
 
 static int
-es_peek (estream_t _GPGRT__RESTRICT stream,
-         unsigned char **_GPGRT__RESTRICT data,
-	 size_t *_GPGRT__RESTRICT data_len)
+peek_stream (estream_t _GPGRT__RESTRICT stream,
+             unsigned char **_GPGRT__RESTRICT data,
+             size_t *_GPGRT__RESTRICT data_len)
 {
   int err;
 
   if (stream->flags.writing)
     {
       /* Switching to reading mode -> flush output.  */
-      err = es_flush (stream);
+      err = flush_stream (stream);
       if (err)
 	goto out;
       stream->flags.writing = 0;
@@ -2769,7 +2772,7 @@ es_peek (estream_t _GPGRT__RESTRICT stream,
   if (stream->data_offset == stream->data_len)
     {
       /* Refill container.  */
-      err = es_fill (stream);
+      err = fill_stream (stream);
       if (err)
 	goto out;
     }
@@ -2788,7 +2791,7 @@ es_peek (estream_t _GPGRT__RESTRICT stream,
 
 /* Skip SIZE bytes of input data contained in buffer.  */
 static int
-es_skip (estream_t stream, size_t size)
+skip_stream (estream_t stream, size_t size)
 {
   int err;
 
@@ -2835,8 +2838,9 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
     goto out;
 
   memset (&syshd, 0, sizeof syshd);
-  err = es_create (&line_stream, line_stream_cookie, &syshd, BACKEND_MEM,
-		   estream_functions_mem, O_RDWR, 1, 0);
+  err = create_stream (&line_stream, line_stream_cookie,
+                       &syshd, BACKEND_MEM,
+                       estream_functions_mem, O_RDWR, 1, 0);
   if (err)
     goto out;
 
@@ -2849,7 +2853,7 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
         if (max_length && (space_left == 1))
           break;
 
-        err = es_peek (stream, &data, &data_len);
+        err = peek_stream (stream, &data, &data_len);
         if (err || (! data_len))
           break;
 
@@ -2865,7 +2869,7 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
               {
                 /* Not needed: space_left -= data_len */
                 line_size += data_len;
-                es_skip (stream, data_len);
+                skip_stream (stream, data_len);
                 break; /* endless loop */
               }
           }
@@ -2876,7 +2880,7 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
               {
                 space_left -= data_len;
                 line_size += data_len;
-                es_skip (stream, data_len);
+                skip_stream (stream, data_len);
               }
           }
         if (err)
@@ -2956,8 +2960,8 @@ print_writer (void *outfncarg, const char *buf, size_t buflen)
 
 /* The core of our printf function.  This is called in locked state. */
 static int
-es_print (estream_t _GPGRT__RESTRICT stream,
-	  const char *_GPGRT__RESTRICT format, va_list ap)
+do_print_stream (estream_t _GPGRT__RESTRICT stream,
+                 const char *_GPGRT__RESTRICT format, va_list ap)
 {
   int rc;
 
@@ -2978,7 +2982,7 @@ es_set_buffering (estream_t _GPGRT__RESTRICT stream,
   /* Flush or empty buffer depending on mode.  */
   if (stream->flags.writing)
     {
-      err = es_flush (stream);
+      err = flush_stream (stream);
       if (err)
 	goto out;
     }
@@ -3086,8 +3090,8 @@ _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
   syshd.type = ES_SYSHD_FD;
   syshd.u.fd = fd;
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd, BACKEND_FD,
-                   estream_functions_fd, modeflags, xmode, 0);
+  err = create_stream (&stream, cookie, &syshd, BACKEND_FD,
+                       estream_functions_fd, modeflags, xmode, 0);
   if (err)
     goto out;
 
@@ -3143,8 +3147,8 @@ _gpgrt_mopen (void *_GPGRT__RESTRICT data, size_t data_n, size_t data_len,
 
   memset (&syshd, 0, sizeof syshd);
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd, BACKEND_MEM,
-                   estream_functions_mem, modeflags, xmode, 0);
+  err = create_stream (&stream, cookie, &syshd, BACKEND_MEM,
+                       estream_functions_mem, modeflags, xmode, 0);
 
  out:
 
@@ -3177,8 +3181,8 @@ _gpgrt_fopenmem (size_t memlimit, const char *_GPGRT__RESTRICT mode)
     return NULL;
 
   memset (&syshd, 0, sizeof syshd);
-  if (es_create (&stream, cookie, &syshd, BACKEND_MEM,
-                 estream_functions_mem, modeflags, xmode, 0))
+  if (create_stream (&stream, cookie, &syshd, BACKEND_MEM,
+                     estream_functions_mem, modeflags, xmode, 0))
     (*estream_functions_mem.public.func_close) (cookie);
 
   return stream;
@@ -3239,8 +3243,8 @@ _gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
     goto out;
 
   memset (&syshd, 0, sizeof syshd);
-  err = es_create (&stream, cookie, &syshd, BACKEND_USER, io_functions,
-                   modeflags, xmode, 0);
+  err = create_stream (&stream, cookie, &syshd, BACKEND_USER, io_functions,
+                       modeflags, xmode, 0);
   if (err)
     goto out;
 
@@ -3253,16 +3257,12 @@ _gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
 static estream_t
 do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
 {
+  int create_called = 0;
+  estream_t stream = NULL;
+  void *cookie = NULL;
   unsigned int modeflags, xmode;
-  int create_called;
-  estream_t stream;
-  void *cookie;
   int err;
   es_syshd_t syshd;
-
-  stream = NULL;
-  cookie = NULL;
-  create_called = 0;
 
   err = parse_mode (mode, &modeflags, &xmode, NULL);
   if (err)
@@ -3282,8 +3282,9 @@ do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
   syshd.type = ES_SYSHD_FD;
   syshd.u.fd = filedes;
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd, BACKEND_FD, estream_functions_fd,
-                   modeflags, xmode, with_locked_list);
+  err = create_stream (&stream, cookie, &syshd,
+                       BACKEND_FD, estream_functions_fd,
+                       modeflags, xmode, with_locked_list);
 
   if (!err && stream)
     {
@@ -3318,15 +3319,11 @@ static estream_t
 do_fpopen (FILE *fp, const char *mode, int no_close, int with_locked_list)
 {
   unsigned int modeflags, cmode, xmode;
-  int create_called;
-  estream_t stream;
-  void *cookie;
+  int create_called = 0;
+  estream_t stream = NULL;
+  void *cookie = NULL;
   int err;
   es_syshd_t syshd;
-
-  stream = NULL;
-  cookie = NULL;
-  create_called = 0;
 
   err = parse_mode (mode, &modeflags, &xmode, &cmode);
   if (err)
@@ -3348,11 +3345,11 @@ do_fpopen (FILE *fp, const char *mode, int no_close, int with_locked_list)
   syshd.type = ES_SYSHD_FD;
   syshd.u.fd = fp? fileno (fp): -1;
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd, BACKEND_FP, estream_functions_fp,
-                   modeflags, xmode, with_locked_list);
+  err = create_stream (&stream, cookie, &syshd,
+                       BACKEND_FP, estream_functions_fp,
+                       modeflags, xmode, with_locked_list);
 
  out:
-
   if (err && create_called)
     (*estream_functions_fp.public.func_close) (cookie);
 
@@ -3412,8 +3409,9 @@ do_w32open (HANDLE hd, const char *mode,
   syshd.type = ES_SYSHD_HANDLE;
   syshd.u.handle = hd;
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd, BACKEND_W32,
-                   estream_functions_w32, modeflags, xmode, with_locked_list);
+  err = create_stream (&stream, cookie, &syshd,
+                       BACKEND_W32, estream_functions_w32,
+                       modeflags, xmode, with_locked_list);
 
  leave:
   if (err && create_called)
@@ -3554,7 +3552,9 @@ _gpgrt__get_std_stream (int fd)
 }
 
 /* Note: A "samethread" keyword given in "mode" is ignored and the
-   value used by STREAM is used instead. */
+ * value used by STREAM is used instead.  Note that this function is
+ * the reasons why some of the init and deinit code is split up into
+ * several functions.  */
 estream_t
 _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
                 const char *_GPGRT__RESTRICT mode,
@@ -3577,7 +3577,7 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
 
       lock_stream (stream);
 
-      es_deinitialize (stream);
+      deinit_stream_obj (stream);
 
       err = parse_mode (mode, &modeflags, &dummy, &cmode);
       if (err)
@@ -3615,7 +3615,7 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
     {
       /* FIXME?  We don't support re-opening at the moment.  */
       _set_errno (EINVAL);
-      es_deinitialize (stream);
+      deinit_stream_obj (stream);
       do_close (stream, 0);
       stream = NULL;
     }
@@ -3668,7 +3668,7 @@ _gpgrt_fclose_snatch (estream_t stream, void **r_buffer, size_t *r_buflen)
 
       if (stream->flags.writing)
         {
-          err = es_flush (stream);
+          err = flush_stream (stream);
           if (err)
             goto leave;
           stream->flags.writing = 0;
@@ -3909,7 +3909,7 @@ do_fflush (estream_t stream)
   int err;
 
   if (stream->flags.writing)
-    err = es_flush (stream);
+    err = flush_stream (stream);
   else
     {
       es_empty (stream);
@@ -4403,7 +4403,7 @@ _gpgrt_vfprintf_unlocked (estream_t _GPGRT__RESTRICT stream,
                           const char *_GPGRT__RESTRICT format,
                           va_list ap)
 {
-  return es_print (stream, format, ap);
+  return do_print_stream (stream, format, ap);
 }
 
 
@@ -4415,7 +4415,7 @@ _gpgrt_vfprintf (estream_t _GPGRT__RESTRICT stream,
   int ret;
 
   lock_stream (stream);
-  ret = es_print (stream, format, ap);
+  ret = do_print_stream (stream, format, ap);
   unlock_stream (stream);
 
   return ret;
@@ -4430,7 +4430,7 @@ _gpgrt_fprintf_unlocked (estream_t _GPGRT__RESTRICT stream,
 
   va_list ap;
   va_start (ap, format);
-  ret = es_print (stream, format, ap);
+  ret = do_print_stream (stream, format, ap);
   va_end (ap);
 
   return ret;
@@ -4446,7 +4446,7 @@ _gpgrt_fprintf (estream_t _GPGRT__RESTRICT stream,
   va_list ap;
   va_start (ap, format);
   lock_stream (stream);
-  ret = es_print (stream, format, ap);
+  ret = do_print_stream (stream, format, ap);
   unlock_stream (stream);
   va_end (ap);
 
@@ -4559,17 +4559,14 @@ estream_t
 _gpgrt_tmpfile (void)
 {
   unsigned int modeflags;
-  int create_called;
-  estream_t stream;
-  void *cookie;
+  int create_called = 0;
+  estream_t stream = NULL;
+  void *cookie = NULL;
   int err;
   int fd;
   es_syshd_t syshd;
 
-  create_called = 0;
-  stream = NULL;
   modeflags = O_RDWR | O_TRUNC | O_CREAT;
-  cookie = NULL;
 
   fd = tmpfd ();
   if (fd == -1)
@@ -4585,8 +4582,9 @@ _gpgrt_tmpfile (void)
   syshd.type = ES_SYSHD_FD;
   syshd.u.fd = fd;
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd, BACKEND_FD, estream_functions_fd,
-                   modeflags, 0, 0);
+  err = create_stream (&stream, cookie, &syshd,
+                       BACKEND_FD, estream_functions_fd,
+                       modeflags, 0, 0);
 
  out:
   if (err)
@@ -4790,7 +4788,8 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
     return count;  /* Early return without waiting.  */
 
   /* Now do the real select.  */
-#ifdef _WIN32
+#ifdef HAVE_W32_SYSTEM
+
   if (pre_syscall_func)
     pre_syscall_func ();
 
@@ -4798,7 +4797,9 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
 
   if (post_syscall_func)
     post_syscall_func ();
-#else
+
+#else /*!HAVE_W32_SYSTEM*/
+
   any_readfd = any_writefd = any_exceptfd = 0;
   max_fd = 0;
   for (item = fds, idx = 0; idx < nfds; item++, idx++)
@@ -4905,7 +4906,7 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
       if (any)
         count++;
     }
-#endif
+#endif /*!HAVE_W32_SYSTEM*/
 
   return count;
 }

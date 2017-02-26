@@ -80,7 +80,7 @@ real_init (void)
       drop_locale_dir (locale_dir);
     }
 #endif
-  _gpgrt_es_init ();
+  _gpgrt_estream_init ();
 }
 
 /* Initialize the library.  This function should be run early.  */
