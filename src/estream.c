@@ -1,6 +1,6 @@
 /* estream.c - Extended Stream I/O Library
  * Copyright (C) 2004, 2005, 2006, 2007, 2009, 2010, 2011,
- *               2014, 2015, 2016 g10 Code GmbH
+ *               2014, 2015, 2016, 2017 g10 Code GmbH
  *
  * This file is part of Libestream.
  *
@@ -92,11 +92,14 @@
 # include <windows.h>
 #endif
 
+/* Enable tracing.  The value is the module name to be printed.  */
+/*#define ENABLE_TRACING "estream"*/
 
 #include "gpgrt-int.h"
 #include "estream-printf.h"
 #include "thread.h"
 #include "lock.h"
+
 
 #ifndef O_BINARY
 # define O_BINARY 0
@@ -910,6 +913,8 @@ func_fd_create (void **cookie, int fd, unsigned int modeflags, int no_close)
   estream_cookie_fd_t fd_cookie;
   int err;
 
+  trace (("enter: fd=%d mf=%u nc=%d", fd, modeflags, no_close));
+
   fd_cookie = mem_alloc (sizeof (*fd_cookie));
   if (! fd_cookie)
     err = -1;
@@ -927,6 +932,7 @@ func_fd_create (void **cookie, int fd, unsigned int modeflags, int no_close)
       err = 0;
     }
 
+  trace_errno (("leave: cookie=%p err=%d", *cookie, err));
   return err;
 }
 
@@ -940,6 +946,8 @@ func_fd_read (void *cookie, void *buffer, size_t size)
 {
   estream_cookie_fd_t file_cookie = cookie;
   gpgrt_ssize_t bytes_read;
+
+  trace (("enter: cookie=%p buffer=%p size=%d", cookie, buffer, (int)size));
 
   if (!size)
     bytes_read = -1; /* We don't know whether anything is pending.  */
@@ -961,6 +969,7 @@ func_fd_read (void *cookie, void *buffer, size_t size)
         post_syscall_func ();
     }
 
+  trace_errno (("leave: bytes_read=%d", (int)bytes_read));
   return bytes_read;
 }
 
@@ -973,6 +982,8 @@ func_fd_write (void *cookie, const void *buffer, size_t size)
 {
   estream_cookie_fd_t file_cookie = cookie;
   gpgrt_ssize_t bytes_written;
+
+  trace (("enter: cookie=%p buffer=%p size=%d", cookie, buffer, (int)size));
 
   if (IS_INVALID_FD (file_cookie->fd))
     {
@@ -994,6 +1005,7 @@ func_fd_write (void *cookie, const void *buffer, size_t size)
   else
     bytes_written = size; /* Note that for a flush SIZE should be 0.  */
 
+  trace_errno (("leave: bytes_written=%d", (int)bytes_written));
   return bytes_written;
 }
 
@@ -1085,6 +1097,8 @@ func_fd_destroy (void *cookie)
   estream_cookie_fd_t fd_cookie = cookie;
   int err;
 
+  trace (("enter: cookie=%p", cookie));
+
   if (fd_cookie)
     {
       if (IS_INVALID_FD (fd_cookie->fd))
@@ -1096,6 +1110,7 @@ func_fd_destroy (void *cookie)
   else
     err = 0;
 
+  trace_errno (("leave: err=%d", err));
   return err;
 }
 
@@ -1141,6 +1156,8 @@ func_w32_create (void **cookie, HANDLE hd,
   estream_cookie_w32_t w32_cookie;
   int err;
 
+  trace (("enter: hd=%p mf=%u nc=%d nsc=%d",
+          hd, modeflags, no_close, no_syscall_clamp));
   w32_cookie = mem_alloc (sizeof (*w32_cookie));
   if (!w32_cookie)
     err = -1;
@@ -1158,6 +1175,7 @@ func_w32_create (void **cookie, HANDLE hd,
       err = 0;
     }
 
+  trace_errno (("leave: cookie=%p err=%d", *cookie, err));
   return err;
 }
 
@@ -1172,6 +1190,8 @@ func_w32_read (void *cookie, void *buffer, size_t size)
 {
   estream_cookie_w32_t w32_cookie = cookie;
   gpgrt_ssize_t bytes_read;
+
+  trace (("enter: cookie=%p buffer=%p size=%d", cookie, buffer, (int)size));
 
   if (!size)
     bytes_read = -1; /* We don't know whether anything is pending.  */
@@ -1207,6 +1227,7 @@ func_w32_read (void *cookie, void *buffer, size_t size)
         post_syscall_func ();
     }
 
+  trace_errno (("leave: bytes_read=%d", (int)bytes_read));
   return bytes_read;
 }
 
@@ -1222,6 +1243,8 @@ func_w32_write (void *cookie, const void *buffer, size_t size)
 {
   estream_cookie_w32_t w32_cookie = cookie;
   gpgrt_ssize_t bytes_written;
+
+  trace (("enter: cookie=%p buffer=%p size=%d", cookie, buffer, (int)size));
 
   if (w32_cookie->hd == INVALID_HANDLE_VALUE)
     {
@@ -1250,6 +1273,8 @@ func_w32_write (void *cookie, const void *buffer, size_t size)
     }
   else
     bytes_written = size; /* Note that for a flush SIZE should be 0.  */
+
+  trace_errno (("leave: bytes_written=%d", (int)bytes_written));
 
   return bytes_written;
 }
@@ -1321,6 +1346,8 @@ func_w32_destroy (void *cookie)
   estream_cookie_w32_t w32_cookie = cookie;
   int err;
 
+  trace (("enter: cookie=%p", cookie));
+
   if (w32_cookie)
     {
       if (w32_cookie->hd == INVALID_HANDLE_VALUE)
@@ -1342,6 +1369,7 @@ func_w32_destroy (void *cookie)
   else
     err = 0;
 
+  trace_errno (("leave: err=%d", err));
   return err;
 }
 
@@ -2164,6 +2192,8 @@ do_close (estream_t stream, int with_locked_list)
 {
   int err;
 
+  trace (("stream %p %s", stream, with_locked_list? "(with locked list)":""));
+
   if (stream)
     {
       do_list_remove (stream, with_locked_list);
@@ -2185,6 +2215,7 @@ do_close (estream_t stream, int with_locked_list)
   else
     err = 0;
 
+  trace_errno (("stream %p err=%d", stream, err));
   return err;
 }
 
@@ -4734,18 +4765,21 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
 {
   gpgrt_poll_t *item;
   int count = 0;
-#ifndef _WIN32
+  int idx;
+#ifndef HAVE_W32_SYSTEM
   fd_set readfds, writefds, exceptfds;
   int any_readfd, any_writefd, any_exceptfd;
   int max_fd;
   int fd, ret, any;
-#endif
-  int idx;
+#endif /*HAVE_W32_SYSTEM*/
+
+  trace (("enter: nfds=%u timeout=%d", nfds, timeout));
 
   if (!fds)
     {
       _set_errno (EINVAL);
-      return -1;
+      count = -1;
+      goto leave;
     }
 
   /* Clear all response fields (even for ignored items).  */
@@ -4785,7 +4819,7 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
     }
 
   if (count)
-    return count;  /* Early return without waiting.  */
+    goto leave;  /* Early return without waiting.  */
 
   /* Now do the real select.  */
 #ifdef HAVE_W32_SYSTEM
@@ -4864,10 +4898,18 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
     post_syscall_func ();
 
   if (ret == -1)
-    return -1;
+    {
+      trace_errno (("select failed: "));
+      count = -1;
+      goto leave;
+    }
   if (!ret)
-    return 0; /* Timeout.  Note that in this case we can't return
-                 got_err for an invalid stream.  */
+    {
+      /* Timeout.  Note that in this case we can't return got_err for
+       * an invalid stream.  */
+      count = 0;
+      goto leave;
+    }
 
   for (item = fds, idx = 0; idx < nfds; item++, idx++)
     {
@@ -4908,6 +4950,31 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
     }
 #endif /*!HAVE_W32_SYSTEM*/
 
+ leave:
+#ifdef ENABLE_TRACING
+  trace (("leave: count=%d", count));
+  if (count > 0)
+    {
+      for (item = fds, idx = 0; idx < nfds; item++, idx++)
+        {
+          trace (("     %3d  %c%c%c%c%c  %c%c%c%c%c%c%c",
+                  idx,
+                  fds[idx].want_read?  'r':'-',
+                  fds[idx].want_write? 'w':'-',
+                  fds[idx].want_oob?   'o':'-',
+                  fds[idx].want_rdhup? 'h':'-',
+                  fds[idx].ignore?     'i':'-',
+                  fds[idx].got_read?   'r':'-',
+                  fds[idx].got_write?  'w':'-',
+                  fds[idx].got_oob?    'o':'-',
+                  fds[idx].got_rdhup?  'h':'-',
+                  fds[idx].got_hup?    'H':'-',
+                  fds[idx].got_err?    'e':'-',
+                  fds[idx].got_nval?   'n':'-'
+                  ));
+        }
+    }
+#endif /*ENABLE_TRACING*/
   return count;
 }
 
