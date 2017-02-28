@@ -4824,13 +4824,7 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
   /* Now do the real select.  */
 #ifdef HAVE_W32_SYSTEM
 
-  if (pre_syscall_func)
-    pre_syscall_func ();
-
   count = _gpgrt_w32_poll (fds, nfds, timeout);
-
-  if (post_syscall_func)
-    post_syscall_func ();
 
 #else /*!HAVE_W32_SYSTEM*/
 
