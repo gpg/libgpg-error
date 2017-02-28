@@ -241,7 +241,57 @@ test_poll (void)
           fail ("gpgrt_poll unexpectedly timed out\n");
           continue;
         }
+
       show ("gpgrt_poll detected %d events\n", ret);
+      if (debug)
+        show ("gpgrt_poll: r=%d"
+              " 0:%c%c%c%c%c%c%c%c%c%c%c%c"
+              " 1:%c%c%c%c%c%c%c%c%c%c%c%c"
+              " 2:%c%c%c%c%c%c%c%c%c%c%c%c"
+              "\n",
+              ret,
+              fds[0].want_read?  'r':'-',
+              fds[0].want_write? 'w':'-',
+              fds[0].want_oob?   'o':'-',
+              fds[0].want_rdhup? 'h':'-',
+              fds[0].ignore?     '!':'=',
+              fds[0].got_read?   'r':'-',
+              fds[0].got_write?  'w':'-',
+              fds[0].got_oob?    'o':'-',
+              fds[0].got_rdhup?  'h':'-',
+              fds[0].got_hup?    'H':' ',
+              fds[0].got_err?    'e':' ',
+              fds[0].got_nval?   'n':' ',
+
+              fds[1].want_read?  'r':'-',
+              fds[1].want_write? 'w':'-',
+              fds[1].want_oob?   'o':'-',
+              fds[1].want_rdhup? 'h':'-',
+              fds[1].ignore?     '!':'=',
+              fds[1].got_read?   'r':'-',
+              fds[1].got_write?  'w':'-',
+              fds[1].got_oob?    'o':'-',
+              fds[1].got_rdhup?  'h':'-',
+              fds[1].got_hup?    'H':' ',
+              fds[1].got_err?    'e':' ',
+              fds[1].got_nval?   'n':' ',
+
+              fds[2].want_read?  'r':'-',
+              fds[2].want_write? 'w':'-',
+              fds[2].want_oob?   'o':'-',
+              fds[2].want_rdhup? 'h':'-',
+              fds[2].ignore?     '!':'=',
+              fds[2].got_read?   'r':'-',
+              fds[2].got_write?  'w':'-',
+              fds[2].got_oob?    'o':'-',
+              fds[2].got_rdhup?  'h':'-',
+              fds[2].got_hup?    'H':' ',
+              fds[2].got_err?    'e':' ',
+              fds[2].got_nval?   'n':' '
+              );
+      else
+        show ("gpgrt_poll detected %d events\n", ret);
+
       if (fds[0].got_read)
         {
           /* Read from the producer.  */

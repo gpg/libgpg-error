@@ -201,6 +201,8 @@ GPG_ERR_TRUSTDB                         Trust DB error
 
 GPG_ERR_BAD_CERT                Bad certificate
 
+   NTBTLS: - No subject found in the certifciate.
+
 
 GPG_ERR_INV_USER_ID             Invalid user ID
 
