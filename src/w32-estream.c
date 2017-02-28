@@ -133,7 +133,7 @@ set_synchronize (HANDLE hd)
 			GetCurrentProcess (), &new_hd,
 			EVENT_MODIFY_STATE | SYNCHRONIZE, FALSE, 0))
     {
-      trace_errno (("DuplicateHandle failed: ec=%d", (int)GetLastError ()));
+      trace_errno (1, ("DuplicateHandle failed: ec=%d", (int)GetLastError ()));
       /* FIXME: Should translate the error code.  */
       _gpg_err_set_errno (EIO);
       return INVALID_HANDLE_VALUE;
@@ -364,6 +364,10 @@ func_w32_pollable_read (void *cookie, void *buffer, size_t count)
   gpgrt_ssize_t nread;
   struct reader_context_s *ctx;
 
+  trace (("%p: enter buffer=%p count=%u", cookie, buffer, count));
+
+  /* FIXME: implement pending check if COUNT==0 */
+
   ctx = pcookie->reader;
   if (ctx == NULL)
     {
@@ -371,17 +375,20 @@ func_w32_pollable_read (void *cookie, void *buffer, size_t count)
       if (!ctx)
         {
           _gpg_err_set_errno (EBADF);
-          return -1;
+          nread = -1;
+          goto leave;
         }
+      trace (("%p: new reader %p", cookie, pcookie->reader));
     }
 
-  trace (("%p: read buffer=%p, count=%u", ctx, buffer, count));
-
   if (ctx->eof_shortcut)
-    return 0;
+    {
+      nread = 0;
+      goto leave;
+    }
 
   EnterCriticalSection (&ctx->mutex);
-  trace (("%p: readpos: %d, writepos %d", ctx, ctx->readpos, ctx->writepos));
+  trace (("%p: readpos: %d, writepos %d", cookie, ctx->readpos, ctx->writepos));
   if (ctx->readpos == ctx->writepos && !ctx->error)
     {
       /* No data available.  */
@@ -392,12 +399,13 @@ func_w32_pollable_read (void *cookie, void *buffer, size_t count)
       if (pcookie->modeflags & O_NONBLOCK && ! eof)
         {
           _gpg_err_set_errno (EAGAIN);
-          return -1;
+          nread = -1;
+          goto leave;
         }
 
-      trace (("%p: waiting for data", ctx));
+      trace (("%p: waiting for data", cookie));
       WaitForSingleObject (ctx->have_data_ev, INFINITE);
-      trace (("%p: data available", ctx));
+      trace (("%p: data available", cookie));
       EnterCriticalSection (&ctx->mutex);
     }
 
@@ -409,8 +417,9 @@ func_w32_pollable_read (void *cookie, void *buffer, size_t count)
 	return 0;
       if (!ctx->error)
 	{
-	  trace (("%p: EOF but ctx->eof flag not set", ctx));
-          return 0;
+	  trace (("%p: EOF but ctx->eof flag not set", cookie));
+          nread = 0;
+          goto leave;
 	}
       _gpg_err_set_errno (ctx->error_code);
       return -1;
@@ -427,24 +436,29 @@ func_w32_pollable_read (void *cookie, void *buffer, size_t count)
     {
       if (!ResetEvent (ctx->have_data_ev))
 	{
-	  trace (("%p: ResetEvent failed: ec=%d", ctx, (int)GetLastError ()));
+	  trace (("%p: ResetEvent failed: ec=%d",
+                  cookie, (int)GetLastError ()));
           LeaveCriticalSection (&ctx->mutex);
 	  /* FIXME: Should translate the error code.  */
 	  _gpg_err_set_errno (EIO);
-	  return -1;
+	  nread = -1;
+          goto leave;
 	}
     }
   if (!SetEvent (ctx->have_space_ev))
     {
       trace (("%p: SetEvent (%p) failed: ec=%d",
-              ctx, ctx->have_space_ev, (int)GetLastError ()));
+              cookie, ctx->have_space_ev, (int)GetLastError ()));
       LeaveCriticalSection (&ctx->mutex);
       /* FIXME: Should translate the error code.  */
       _gpg_err_set_errno (EIO);
-      return -1;
+      nread = -1;
+      goto leave;
     }
   LeaveCriticalSection (&ctx->mutex);
 
+ leave:
+  trace_errno (nread==-1,("%p: leave nread=%d", cookie, (int)nread));
   return nread;
 }
 
@@ -653,21 +667,29 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
 {
   estream_cookie_w32_pollable_t pcookie = cookie;
   struct writer_context_s *ctx = pcookie->writer;
+  int nwritten;
 
-  trace (("%p: buffer: %p count: %d", ctx, buffer, count));
+  trace (("%p: enter buffer: %p count: %d", cookie, buffer, count));
   if (count == 0)
-    return 0;
+    {
+      nwritten = 0;
+      goto leave;
+    }
 
   if (ctx == NULL)
     {
       pcookie->writer = ctx = create_writer (pcookie);
       if (!ctx)
-        return -1;
+        {
+          nwritten = -1;
+          goto leave;
+        }
+      trace (("%p: new writer %p", cookie, pcookie->writer));
     }
 
   EnterCriticalSection (&ctx->mutex);
   trace (("%p: buffer: %p, count: %d, nbytes: %d",
-          ctx, buffer, count, ctx->nbytes));
+          cookie, buffer, count, ctx->nbytes));
   if (!ctx->error && ctx->nbytes)
     {
       /* Bytes are pending for send.  */
@@ -675,24 +697,27 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
       /* Reset the is_empty event.  Better safe than sorry.  */
       if (!ResetEvent (ctx->is_empty))
 	{
-          trace (("%p: ResetEvent failed: ec=%d", ctx, (int)GetLastError ()));
+          trace (("%p: ResetEvent failed: ec=%d",
+                  cookie, (int)GetLastError ()));
           LeaveCriticalSection (&ctx->mutex);
 	  /* FIXME: Should translate the error code.  */
 	  _gpg_err_set_errno (EIO);
-	  return -1;
+	  nwritten = -1;
+          goto leave;
 	}
       LeaveCriticalSection (&ctx->mutex);
 
       if (pcookie->modeflags & O_NONBLOCK)
         {
-          trace (("%p: would block", ctx));
+          trace (("%p: would block", cookie));
           _gpg_err_set_errno (EAGAIN);
-          return -1;
+          nwritten = -1;
+          goto leave;
         }
 
-      trace (("%p: waiting for empty buffer", ctx));
+      trace (("%p: waiting for empty buffer", cookie));
       WaitForSingleObject (ctx->is_empty, INFINITE);
-      trace (("%p: buffer is empty", ctx));
+      trace (("%p: buffer is empty", cookie));
       EnterCriticalSection (&ctx->mutex);
     }
 
@@ -703,7 +728,8 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
         _gpg_err_set_errno (EPIPE);
       else
         _gpg_err_set_errno (EIO);
-      return -1;
+      nwritten = -1;
+      goto leave;
     }
 
   /* If no error occurred, the number of bytes in the buffer must be
@@ -719,25 +745,29 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
      used by the select() implementation to probe the channel.  */
   if (!ResetEvent (ctx->is_empty))
     {
-      trace (("%p: ResetEvent failed: ec=%d", ctx, (int)GetLastError ()));
+      trace (("%p: ResetEvent failed: ec=%d", cookie, (int)GetLastError ()));
       LeaveCriticalSection (&ctx->mutex);
       /* FIXME: Should translate the error code.  */
       _gpg_err_set_errno (EIO);
-      return -1;
+      nwritten = -1;
+      goto leave;
     }
   if (!SetEvent (ctx->have_data))
     {
-      trace (("%p: SetEvent failed: ec=%d", ctx, (int)GetLastError ()));
+      trace (("%p: SetEvent failed: ec=%d", cookie, (int)GetLastError ()));
       LeaveCriticalSection (&ctx->mutex);
       /* FIXME: Should translate the error code.  */
       _gpg_err_set_errno (EIO);
-      return -1;
+      nwritten = -1;
+      goto leave;
     }
-  trace (("%p: nwritten=%d", ctx, count));
   LeaveCriticalSection (&ctx->mutex);
-  trace (("%p: pollable write buffer - leave", ctx));
 
-  return (int) count;
+  nwritten = count;
+
+ leave:
+  trace_errno (nwritten==-1,("%p: leave nwritten=%d", cookie, nwritten));
+  return nwritten;
 }
 
 
@@ -746,6 +776,7 @@ _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
 {
   HANDLE waitbuf[MAXIMUM_WAIT_OBJECTS];
   int waitidx[MAXIMUM_WAIT_OBJECTS];
+  char waitinfo[MAXIMUM_WAIT_OBJECTS];
   unsigned int code;
   int nwait;
   int i;
@@ -756,7 +787,6 @@ _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
  restart:
 #endif
 
-  trace_start (("poll on [ "));
   any = 0;
   nwait = 0;
   count = 0;
@@ -782,7 +812,6 @@ _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
 	  if (fds[i].want_read)
 	    {
 	      struct reader_context_s *ctx = pcookie->reader;
-              trace_append (("%d/read ", i));
               if (ctx == NULL)
                 {
                   pcookie->reader = ctx = create_reader (pcookie);
@@ -792,48 +821,56 @@ _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
                       _gpg_err_set_errno (EBADF);
                       return -1;
                     }
+                  trace (("%p: new reader %p", pcookie, pcookie->reader));
                 }
+              trace (("%p: using reader %p", pcookie, pcookie->reader));
 
               if (nwait >= DIM (waitbuf))
                 {
-                  trace_finish (("oops ]: Too many objects for WFMO!"));
+                  trace (("oops: too many objects for WFMO"));
                   /* FIXME: Should translate the error code.  */
                   _gpg_err_set_errno (EIO);
                   return -1;
                 }
               waitidx[nwait] = i;
+              waitinfo[nwait] = 'r';
               waitbuf[nwait++] = ctx->have_data_ev;
 	      any = 1;
             }
 	  else if (fds[i].want_write)
 	    {
 	      struct writer_context_s *ctx = pcookie->writer;
-              trace_append (("%d/write ", i));
               if (ctx == NULL)
                 {
                   pcookie->writer = ctx = create_writer (pcookie);
                   if (!ctx)
                     {
-                      trace_finish (("oops ]: create writer failed"));
+                      trace (("oops: create writer failed"));
                       /* FIXME:  Is the error code appropriate?  */
                       _gpg_err_set_errno (EBADF);
                       return -1;
                     }
+                  trace (("%p: new writer %p", pcookie, pcookie->writer));
                 }
+              trace (("%p: using writer %p", pcookie, pcookie->writer));
 
               if (nwait >= DIM (waitbuf))
                 {
-                  trace_finish (("oops ]: Too many objects for WFMO"));
+                  trace (("oops: Too many objects for WFMO"));
                   /* FIXME: Should translate the error code.  */
                   _gpg_err_set_errno (EIO);
                   return -1;
                 }
               waitidx[nwait] = i;
+              waitinfo[nwait] = 'w';
               waitbuf[nwait++] = ctx->is_empty;
 	      any = 1;
             }
         }
     }
+  trace_start (("poll on [ "));
+  for (i = 0; i < nwait; i++)
+    trace_append (("%d/%c ", waitidx[i], waitinfo[i]));
   trace_finish (("]"));
   if (!any)
     return 0;
@@ -956,6 +993,7 @@ _gpgrt_w32_pollable_create (void *_GPGRT__RESTRICT *_GPGRT__RESTRICT cookie,
       err = 0;
     }
 
+  trace_errno (err,("cookie=%p", *cookie));
   return err;
 }
 

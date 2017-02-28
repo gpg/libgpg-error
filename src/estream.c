@@ -913,7 +913,7 @@ func_fd_create (void **cookie, int fd, unsigned int modeflags, int no_close)
   estream_cookie_fd_t fd_cookie;
   int err;
 
-  trace (("enter: fd=%d mf=%u nc=%d", fd, modeflags, no_close));
+  trace (("enter: fd=%d mf=%x nc=%d", fd, modeflags, no_close));
 
   fd_cookie = mem_alloc (sizeof (*fd_cookie));
   if (! fd_cookie)
@@ -932,7 +932,7 @@ func_fd_create (void **cookie, int fd, unsigned int modeflags, int no_close)
       err = 0;
     }
 
-  trace_errno (("leave: cookie=%p err=%d", *cookie, err));
+  trace_errno (err, ("leave: cookie=%p err=%d", *cookie, err));
   return err;
 }
 
@@ -969,7 +969,7 @@ func_fd_read (void *cookie, void *buffer, size_t size)
         post_syscall_func ();
     }
 
-  trace_errno (("leave: bytes_read=%d", (int)bytes_read));
+  trace_errno (bytes_read == -1, ("leave: bytes_read=%d", (int)bytes_read));
   return bytes_read;
 }
 
@@ -1005,7 +1005,8 @@ func_fd_write (void *cookie, const void *buffer, size_t size)
   else
     bytes_written = size; /* Note that for a flush SIZE should be 0.  */
 
-  trace_errno (("leave: bytes_written=%d", (int)bytes_written));
+  trace_errno (bytes_written == -1,
+               ("leave: bytes_written=%d", (int)bytes_written));
   return bytes_written;
 }
 
@@ -1110,7 +1111,7 @@ func_fd_destroy (void *cookie)
   else
     err = 0;
 
-  trace_errno (("leave: err=%d", err));
+  trace_errno (err,("leave: err=%d", err));
   return err;
 }
 
@@ -1156,7 +1157,7 @@ func_w32_create (void **cookie, HANDLE hd,
   estream_cookie_w32_t w32_cookie;
   int err;
 
-  trace (("enter: hd=%p mf=%u nc=%d nsc=%d",
+  trace (("enter: hd=%p mf=%x nc=%d nsc=%d",
           hd, modeflags, no_close, no_syscall_clamp));
   w32_cookie = mem_alloc (sizeof (*w32_cookie));
   if (!w32_cookie)
@@ -1175,7 +1176,7 @@ func_w32_create (void **cookie, HANDLE hd,
       err = 0;
     }
 
-  trace_errno (("leave: cookie=%p err=%d", *cookie, err));
+  trace_errno (err, ("leave: cookie=%p err=%d", *cookie, err));
   return err;
 }
 
@@ -1208,9 +1209,11 @@ func_w32_read (void *cookie, void *buffer, size_t size)
         {
           DWORD nread, ec;
 
+          trace (("cookie=%p calling ReadFile", cookie));
           if (!ReadFile (w32_cookie->hd, buffer, size, &nread, NULL))
             {
               ec = GetLastError ();
+              trace (("cookie=%p ReadFile failed: ec=%ld", cookie,ec));
               if (ec == ERROR_BROKEN_PIPE)
                 bytes_read = 0; /* Like our pth_read we handle this as EOF.  */
               else
@@ -1227,7 +1230,7 @@ func_w32_read (void *cookie, void *buffer, size_t size)
         post_syscall_func ();
     }
 
-  trace_errno (("leave: bytes_read=%d", (int)bytes_read));
+  trace_errno (bytes_read==-1,("leave: bytes_read=%d", (int)bytes_read));
   return bytes_read;
 }
 
@@ -1259,9 +1262,12 @@ func_w32_write (void *cookie, const void *buffer, size_t size)
         {
           DWORD nwritten;
 
+          trace (("cookie=%p calling WriteFile", cookie));
 	  if (!WriteFile (w32_cookie->hd, buffer, size, &nwritten, NULL))
 	    {
-	      _set_errno (map_w32_to_errno (GetLastError ()));
+              DWORD ec = GetLastError ();
+              trace (("cookie=%p WriteFile failed: ec=%ld", cookie, ec));
+	      _set_errno (map_w32_to_errno (ec));
 	      bytes_written = -1;
 	    }
 	  else
@@ -1274,8 +1280,8 @@ func_w32_write (void *cookie, const void *buffer, size_t size)
   else
     bytes_written = size; /* Note that for a flush SIZE should be 0.  */
 
-  trace_errno (("leave: bytes_written=%d", (int)bytes_written));
-
+  trace_errno (bytes_written==-1,
+               ("leave: bytes_written=%d", (int)bytes_written));
   return bytes_written;
 }
 
@@ -1356,9 +1362,12 @@ func_w32_destroy (void *cookie)
         err = 0;
       else
         {
+          trace (("cookie=%p closing handle %p", cookie, w32_cookie->hd));
           if (!CloseHandle (w32_cookie->hd))
             {
-	      _set_errno (map_w32_to_errno (GetLastError ()));
+              DWORD ec = GetLastError ();
+              trace (("cookie=%p CloseHandle failed: ec=%ld", cookie,ec));
+	      _set_errno (map_w32_to_errno (ec));
               err = -1;
             }
           else
@@ -1369,7 +1378,7 @@ func_w32_destroy (void *cookie)
   else
     err = 0;
 
-  trace_errno (("leave: err=%d", err));
+  trace_errno (err, ("leave: err=%d", err));
   return err;
 }
 
@@ -2059,6 +2068,7 @@ deinit_stream_obj (estream_t stream)
   gpgrt_cookie_close_function_t func_close;
   int err, tmp_err;
 
+  trace (("enter: stream %p", stream));
   func_close = stream->intern->func_close;
 
   err = 0;
@@ -2070,6 +2080,7 @@ deinit_stream_obj (estream_t stream)
     }
   if (func_close)
     {
+      trace (("stream %p calling func_close", stream));
       tmp_err = func_close (stream->intern->cookie);
       if (!err)
         err = tmp_err;
@@ -2085,6 +2096,7 @@ deinit_stream_obj (estream_t stream)
       stream->intern->onclose = tmp;
     }
 
+  trace_errno (err, ("leave: stream %p err=%d", stream, err));
   return err;
 }
 
@@ -2103,6 +2115,9 @@ create_stream (estream_t *r_stream, void *cookie, es_syshd_t *syshd,
   estream_internal_t stream_internal_new;
   estream_t stream_new;
   int err;
+#if HAVE_W32_SYSTEM
+  void *old_cookie = NULL;
+#endif
 
   stream_new = NULL;
   stream_internal_new = NULL;
@@ -2151,6 +2166,7 @@ create_stream (estream_t *r_stream, void *cookie, es_syshd_t *syshd,
         goto out;
 
       modeflags &= ~O_NONBLOCK;
+      old_cookie = cookie;
       cookie = new_cookie;
       kind = BACKEND_W32_POLLABLE;
       functions = _gpgrt_functions_w32_pollable;
@@ -2171,6 +2187,7 @@ create_stream (estream_t *r_stream, void *cookie, es_syshd_t *syshd,
 
   if (err)
     {
+      trace_errno (err, ("leave: err=%d", err));
       if (stream_new)
 	{
 	  deinit_stream_obj (stream_new);
@@ -2179,6 +2196,13 @@ create_stream (estream_t *r_stream, void *cookie, es_syshd_t *syshd,
 	  mem_free (stream_new);
 	}
     }
+#if HAVE_W32_SYSTEM
+  else if (old_cookie)
+    trace (("leave: success stream=%p cookie=%p,%p",
+            *r_stream, old_cookie, cookie));
+#endif
+  else
+    trace (("leave: success stream=%p cookie=%p", *r_stream, cookie));
 
   return err;
 }
@@ -2215,7 +2239,7 @@ do_close (estream_t stream, int with_locked_list)
   else
     err = 0;
 
-  trace_errno (("stream %p err=%d", stream, err));
+  trace_errno (err, ("stream %p err=%d", stream, err));
   return err;
 }
 
@@ -4893,7 +4917,7 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
 
   if (ret == -1)
     {
-      trace_errno (("select failed: "));
+      trace_errno (1, ("select failed: "));
       count = -1;
       goto leave;
     }

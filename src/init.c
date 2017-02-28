@@ -214,36 +214,66 @@ _gpg_err_set_errno (int err)
 
 
 
-/* Internal tracing functions.  We use flockfile and funlockfile to
- * protect their use. */
+/* Internal tracing functions.  Except for TARCE_FP we use flockfile
+ * and funlockfile to protect their use. */
+static FILE *trace_fp;
 static int trace_save_errno;
+static int trace_with_errno;
 static const char *trace_arg_module;
 static const char *trace_arg_file;
 static int trace_arg_line;
+static int trace_missing_lf;
+static int trace_prefix_done;
 
 void
-_gpgrt_internal_trace_begin (const char *module, const char *file, int line)
+_gpgrt_internal_trace_begin (const char *module, const char *file, int line,
+                             int with_errno)
 {
   int save_errno = errno;
+
+  if (!trace_fp)
+    {
+      FILE *fp;
+      const char *s = getenv ("GPGRT_TRACE_FILE");
+
+      if (!s || !(fp = fopen (s, "wb")))
+        fp = stderr;
+      trace_fp = fp;
+    }
+
 #ifdef HAVE_FLOCKFILE
-  flockfile (stderr);
+  flockfile (trace_fp);
 #endif
   trace_save_errno = save_errno;
+  trace_with_errno = with_errno;
   trace_arg_module = module;
   trace_arg_file = file;
   trace_arg_line = line;
+  trace_missing_lf = 0;
+  trace_prefix_done = 0;
 }
 
+static void
+print_internal_trace_prefix (void)
+{
+  if (!trace_prefix_done)
+    {
+      trace_prefix_done = 1;
+      fprintf (trace_fp, "%s:%s:%d: ",
+               trace_arg_module,/* npth_is_protected ()?"":"^",*/
+               trace_arg_file, trace_arg_line);
+    }
+}
 
 static void
-do_internal_trace (const char *format, va_list arg_ptr, int with_errno)
+do_internal_trace (const char *format, va_list arg_ptr)
 {
-  fprintf (stderr, "%s:%s:%d: ",
-           trace_arg_module, trace_arg_file, trace_arg_line);
-  vfprintf (stderr, format, arg_ptr);
-  if (with_errno)
-    fprintf (stderr, " errno=%s", strerror (trace_save_errno));
-  fputc ('\n', stderr);
+  print_internal_trace_prefix ();
+  vfprintf (trace_fp, format, arg_ptr);
+  if (trace_with_errno)
+    fprintf (trace_fp, " errno=%s", strerror (trace_save_errno));
+  if (*format && format[strlen(format)-1] != '\n')
+    fputc ('\n', trace_fp);
 }
 
 void
@@ -251,9 +281,11 @@ _gpgrt_internal_trace_printf (const char *format, ...)
 {
   va_list arg_ptr;
 
+  print_internal_trace_prefix ();
   va_start (arg_ptr, format) ;
-  vfprintf (stderr, format, arg_ptr);
+  vfprintf (trace_fp, format, arg_ptr);
   va_end (arg_ptr);
+  trace_missing_lf = (*format && format[strlen(format)-1] != '\n');
 }
 
 
@@ -263,18 +295,7 @@ _gpgrt_internal_trace (const char *format, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, format) ;
-  do_internal_trace (format, arg_ptr, 0);
-  va_end (arg_ptr);
-}
-
-
-void
-_gpgrt_internal_trace_errno (const char *format, ...)
-{
-  va_list arg_ptr;
-
-  va_start (arg_ptr, format) ;
-  do_internal_trace (format, arg_ptr, 1);
+  do_internal_trace (format, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -283,8 +304,11 @@ void
 _gpgrt_internal_trace_end (void)
 {
   int save_errno = trace_save_errno;
+
+  if (trace_missing_lf)
+    fputc ('\n', trace_fp);
 #ifdef HAVE_FLOCKFILE
-  funlockfile (stderr);
+  funlockfile (trace_fp);
 #endif
   errno = save_errno;
 }

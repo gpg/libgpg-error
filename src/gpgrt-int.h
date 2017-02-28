@@ -51,31 +51,33 @@ gpg_err_code_t _gpgrt_yield (void);
 
 /* Trace support.  */
 
-void _gpgrt_internal_trace_begin (const char *mod, const char *file, int line);
-void _gpgrt_internal_trace (const char *format,
-                            ...) GPGRT_ATTR_PRINTF(1,2);
-void _gpgrt_internal_trace_errno (const char *format,
-                                  ...) GPGRT_ATTR_PRINTF(1,2);
-void _gpgrt_internal_trace_printf (const char *format,
-                                   ...) GPGRT_ATTR_PRINTF(1,2);
-void _gpgrt_internal_trace_end (void);
-
+/* The trace macro is used this way:
+ *   trace (("enter - foo=%d bar=%s", foo, bar));
+ * Note the double parenthesis, they are important.
+ * To append the current errno to the output, use
+ *   trace_errno (EXTPR,("leave - baz=%d", faz));
+ * If EXPR evaluates to true the output of strerror (errno)
+ * is appended to the output.  Note that the trace function does
+ * not modify ERRNO.  To enable tracing you need to have this
+ *  #define ENABLE_TRACING "modulename"
+ * before you include gpgrt-int.h.
+ */
 #ifdef ENABLE_TRACING
 # define trace(X) do { \
                        _gpgrt_internal_trace_begin \
-                           (ENABLE_TRACING, __func__, __LINE__); \
+                         (ENABLE_TRACING, __func__, __LINE__, 0); \
                        _gpgrt_internal_trace X; \
                        _gpgrt_internal_trace_end (); \
                      } while (0)
-# define trace_errno(X) do { \
+# define trace_errno(C,X) do {                     \
                        _gpgrt_internal_trace_begin \
-                           (ENABLE_TRACING, __func__, __LINE__); \
-                       _gpgrt_internal_trace_errno X; \
+                         (ENABLE_TRACING, __func__, __LINE__, (C)); \
+                       _gpgrt_internal_trace X;      \
                        _gpgrt_internal_trace_end (); \
                      } while (0)
 # define trace_start(X) do { \
                        _gpgrt_internal_trace_begin \
-                           (ENABLE_TRACING, __func__, __LINE__); \
+                         (ENABLE_TRACING, __func__, __LINE__, 0); \
                        _gpgrt_internal_trace_printf X; \
                      } while (0)
 # define trace_append(X) do { \
@@ -87,11 +89,20 @@ void _gpgrt_internal_trace_end (void);
                      } while (0)
 #else
 # define trace(X) do { } while (0)
-# define trace_errno(X) do { } while (0)
+# define trace_errno(C,X) do { } while (0)
 # define trace_start(X) do { } while (0)
 # define trace_append(X) do { } while (0)
 # define trace_finish(X) do { } while (0)
 #endif /*!ENABLE_TRACING*/
+
+void _gpgrt_internal_trace_begin (const char *mod, const char *file, int line,
+                                  int with_errno);
+void _gpgrt_internal_trace (const char *format,
+                            ...) GPGRT_ATTR_PRINTF(1,2);
+void _gpgrt_internal_trace_printf (const char *format,
+                                   ...) GPGRT_ATTR_PRINTF(1,2);
+void _gpgrt_internal_trace_end (void);
+
 
 
 /* Local definitions for estream.  */
