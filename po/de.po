@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.19\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2016-11-14 17:12+0100\n"
+"PO-Revision-Date: 2017-02-28 12:47+0100\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -301,7 +301,7 @@ msgid "Invalid cipher mode"
 msgstr "Ungültiger Verschlüsselungsmodus"
 
 msgid "Invalid flag"
-msgstr "Ungültiges Flag"
+msgstr "Ungültige Flagge"
 
 msgid "Invalid handle"
 msgstr "Ungültiger Handle"
@@ -951,6 +951,51 @@ msgstr "Objekt zu jung"
 msgid "Object is too old"
 msgstr "Objekt zu alt"
 
+msgid "Unknown flag"
+msgstr "Unbekannte Flagge"
+
+msgid "Invalid execution order"
+msgstr "Ungültige Verarbeitungsreihenfolge"
+
+msgid "Already fetched"
+msgstr "Bereits geholt"
+
+msgid "Try again later"
+msgstr "Später erneut versuchen"
+
+msgid "Wrong name"
+msgstr "Falscher Name"
+
+msgid "System bug detected"
+msgstr "Fehler im System entdeckt"
+
+msgid "Unknown DNS error"
+msgstr "Unbekannter DNS Fehler"
+
+msgid "Invalid DNS section"
+msgstr "Ungültige DNS \"Section\""
+
+msgid "Invalid textual address form"
+msgstr "Ungültige Textadressenformat"
+
+# "in der Kette" ist part of the message because many users know about
+# certificate chains and thus that keyword might give them a good hint
+# what might be wrong.
+msgid "Missing DNS query packet"
+msgstr "Fehlendes DNS Anfragepaket"
+
+msgid "Missing DNS answer packet"
+msgstr "Fehlendes DNS Antwortpaket"
+
+msgid "Connection closed in DNS"
+msgstr "Verbindung im DNS geschlossen"
+
+msgid "Verification failed in DNS"
+msgstr "Prüfung im DNS fehlgeschlagen"
+
+msgid "DNS Timeout"
+msgstr "DNS Zeitüberschreitung"
+
 msgid "General LDAP error"
 msgstr "Allgemeiner LDAP Fehler"
 
@@ -1267,9 +1312,6 @@ msgstr "%s: Warnung: %s konnte nicht erkannt werden\n"
 
 #~ msgid "LCUP Invalid data"
 #~ msgstr "LCUP Ungültige Daten"
-
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "\"Assertion\" in LDAP fehlgeschlagen"
 
 #~ msgid "LDAP Other general error"
 #~ msgstr "Sonstiger allgemeiner LDAP Fehler"
