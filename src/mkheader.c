@@ -81,8 +81,15 @@ canon_host_triplet (const char *triplet)
     {"i586-pc-gnu"},
     {"i486-pc-kfreebsd-gnu", "i686-pc-kfreebsd-gnu"},
     {"i586-pc-kfreebsd-gnu"},
+
     {"x86_64-pc-linux-gnuhardened1", "x86_64-pc-linux-gnu" },
+
     {"powerpc-unknown-linux-gnuspe", "powerpc-unknown-linux-gnu" },
+
+    {"arm-unknown-linux-gnueabihf",  "arm-unknown-linux-gnueabi" },
+    {"armv7-unknown-linux-gnueabihf"  },
+    {"armv5-unknown-linux-musleabi"   },
+    {"armv6-unknown-linux-musleabihf" },
 
     { NULL }
   };
