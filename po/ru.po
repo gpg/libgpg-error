@@ -963,6 +963,66 @@ msgstr "Сертификат слишком новый"
 msgid "Object is too old"
 msgstr "Введенный объект слишком мал"
 
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Неизвестное имя"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Недопустимый код операции"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "Неизвестное имя"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Неизвестная системная ошибка"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Недопустимая строка OID"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Недопустимое S-выражение"
+
+#, fuzzy
+#| msgid "Missing issuer certificate"
+msgid "Missing DNS query packet"
+msgstr "Не хватает сертификата издателя"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Сбой расшифровки"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Лимит времени"
+
 msgid "General LDAP error"
 msgstr "Общая ошибка LDAP"
 

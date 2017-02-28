@@ -1013,6 +1013,63 @@ msgid "Object is too old"
 msgstr "提供对象太短"
 
 #, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "未知名称"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "无效的操作码"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "未知名称"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "未知的系统错误"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "无效的OID 字符串"
+
+msgid "Invalid textual address form"
+msgstr ""
+
+#, fuzzy
+msgid "Missing DNS query packet"
+msgstr "缺失证书"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "解密失败"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "超时"
+
+#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
 msgstr "一般IPC 错误"
@@ -1442,11 +1499,6 @@ msgstr "%s：警告：无法识别 %s\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "无效的数据"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "解密失败"
 
 #, fuzzy
 #~| msgid "General error"

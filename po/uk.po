@@ -974,6 +974,66 @@ msgstr "Сертифікат є надто новим"
 msgid "Object is too old"
 msgstr "Наданий об’єкт є надто коротким"
 
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Невідома назва"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Некоректний код дії"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "Невідома назва"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Невідома системна помилка"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Некоректний рядок OID"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Некоректний S-вираз"
+
+#, fuzzy
+#| msgid "Missing issuer certificate"
+msgid "Missing DNS query packet"
+msgstr "Не вистачає сертифіката видавця"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Спроба розшифрування зазнала невдачі"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Час очікування"
+
 msgid "General LDAP error"
 msgstr "Загальна помилка LDAP"
 
@@ -1294,11 +1354,6 @@ msgstr "%s: попередження: не вдалося розпізнати %
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Некоректні дані"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Спроба розшифрування зазнала невдачі"
 
 #, fuzzy
 #~| msgid "General error"

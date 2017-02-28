@@ -1016,6 +1016,65 @@ msgid "Object is too old"
 msgstr "Đã cung cấp một đối tượng quá ngắn"
 
 #, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Tên không rõ"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Mã thao tác không hợp lệ"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "Tên không rõ"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Gặp lỗi hệ thống không rõ"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Chuỗi OID không hợp lệ"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Biểu thức S không hợp lệ"
+
+#, fuzzy
+msgid "Missing DNS query packet"
+msgstr "Chứng nhận còn thiếu"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Lỗi giải mật mã"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Quá giờ"
+
+#, fuzzy
 #| msgid "General IPC error"
 msgid "General LDAP error"
 msgstr "Lỗi IPC chung"
@@ -1445,11 +1504,6 @@ msgstr "%s: cảnh báo : không thể nhận ra %s\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Dữ liệu không hợp lệ"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Lỗi giải mật mã"
 
 #, fuzzy
 #~| msgid "General error"

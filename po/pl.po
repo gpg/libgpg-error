@@ -957,6 +957,66 @@ msgstr "Certyfikat zbyt młody"
 msgid "Object is too old"
 msgstr "Dostarczony obiekt jest zbyt mały"
 
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Nieznana nazwa"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Niepoprawny kod operacji"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "No name"
+msgid "Wrong name"
+msgstr "Brak nazwy"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Nieznany błąd systemu"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Niepoprawny łańcuch OID"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Niepoprawne S-wyrażenie"
+
+#, fuzzy
+#| msgid "Missing issuer certificate"
+msgid "Missing DNS query packet"
+msgstr "Brak certyfikatu wystawcy"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Odszyfrowywanie nie powiodło się"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Upłynął limit czasu"
+
 msgid "General LDAP error"
 msgstr "Błąd ogólny LDAP"
 
