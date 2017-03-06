@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the libgpg-error package.
 # Yasuaki Taniguchi <yasuakit@gmail.com>, 2010.
 # Takeshi Hamasaki <hmatrjp@users.sourceforge.jp>, 2012.
-# NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016.
+# NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.26\n"
+"Project-Id-Version: libgpg-error 1.27\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2016-12-22 08:12+0900\n"
+"PO-Revision-Date: 2017-03-06 20:25+0900\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -126,7 +126,7 @@ msgid "Invalid cipher algorithm"
 msgstr "無効な暗号アルゴリズムです"
 
 msgid "Cannot open keyring"
-msgstr ""
+msgstr "鍵リングが開けません"
 
 msgid "Invalid packet"
 msgstr "無効なパケットです"
@@ -729,7 +729,7 @@ msgid "Bad octal character in S-expression"
 msgstr "S式に間違った8進キャラクタがあります"
 
 msgid "All subkeys are expired or revoked"
-msgstr ""
+msgstr "すべての副鍵が期限切れか失効しています"
 
 msgid "Database is corrupted"
 msgstr "データベースがおかしくなってます"
@@ -920,104 +920,74 @@ msgstr "IPCパラメータエラーです"
 msgid "Unknown IPC inquire"
 msgstr "不明なIPC問い合わせです"
 
-#, fuzzy
-#| msgid "No crypto engine"
 msgid "Crypto engine too old"
-msgstr "暗号エンジンがありません"
+msgstr "暗号エンジンが古すぎます"
 
 msgid "Screen or window too small"
-msgstr ""
+msgstr "スクリーンまたはウィンドウが小さすぎます"
 
 msgid "Screen or window too large"
-msgstr ""
+msgstr "スクリーンまたはウィンドウが大きすぎます"
 
 msgid "Required environment variable not set"
-msgstr ""
+msgstr "必要な環境変数が設定されていません"
 
-#, fuzzy
-#| msgid "Already exists (LDAP)"
 msgid "User ID already exists"
-msgstr "既に存在します (LDAP)"
+msgstr "User IDが既に存在します"
 
-#, fuzzy
-#| msgid "Already exists (LDAP)"
 msgid "Name already exists"
-msgstr "既に存在します (LDAP)"
+msgstr "名前が既に存在します"
 
-#, fuzzy
-#| msgid "Duplicated value"
 msgid "Duplicated name"
-msgstr "重複した値です"
+msgstr "重複した名前です"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Object is too young"
-msgstr "証明書が若すぎます"
+msgstr "オブジェクトが若すぎます"
 
-#, fuzzy
-#| msgid "Provided object is too short"
 msgid "Object is too old"
-msgstr "与えられたオブジェクトが小さすぎます"
+msgstr "オブジェクトが古すぎます"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "Unknown flag"
-msgstr "不明な名前です"
+msgstr "不明なフラグです"
 
-#, fuzzy
-#| msgid "Invalid operation code"
 msgid "Invalid execution order"
-msgstr "無効な操作コードです"
+msgstr "無効な実効順です"
 
 msgid "Already fetched"
-msgstr ""
+msgstr "すでにフェッチされてます"
 
 msgid "Try again later"
-msgstr ""
+msgstr "後で再度試してください"
 
-#, fuzzy
-#| msgid "No name"
 msgid "Wrong name"
-msgstr "名前がありません"
+msgstr "間違った名前です"
 
 msgid "System bug detected"
-msgstr ""
+msgstr "システムのバグが検出されました"
 
-#, fuzzy
-#| msgid "Unknown system error"
 msgid "Unknown DNS error"
-msgstr "不明なシステムエラー"
+msgstr "不明なDNSエラー"
 
-#, fuzzy
-#| msgid "Invalid OID string"
 msgid "Invalid DNS section"
-msgstr "無効な OID 文字列です"
+msgstr "無効な DNS セクションです"
 
-#, fuzzy
-#| msgid "Invalid S-expression"
 msgid "Invalid textual address form"
-msgstr "無効な S-式です"
+msgstr "無効なテクストのアドレス形式です"
 
-#, fuzzy
-#| msgid "Missing issuer certificate"
 msgid "Missing DNS query packet"
-msgstr "発行元証明書がありません"
+msgstr "DNSクエリのパケットがありません"
 
 msgid "Missing DNS answer packet"
-msgstr ""
+msgstr "DNSの返答パケットが欠如しています"
 
 msgid "Connection closed in DNS"
-msgstr ""
+msgstr "DNSの接続が閉じられました"
 
-#, fuzzy
-#| msgid "Decryption failed"
 msgid "Verification failed in DNS"
-msgstr "復号に失敗しました"
+msgstr "DNSで検証に失敗しました"
 
-#, fuzzy
-#| msgid "Timeout"
 msgid "DNS Timeout"
-msgstr "タイムアウトです"
+msgstr "DNSタイムアウトです"
 
 msgid "General LDAP error"
 msgstr "一般LDAPエラーです"
