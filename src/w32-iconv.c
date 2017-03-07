@@ -1475,6 +1475,7 @@ utf32_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 #define ISO2022_SI  0
 #define ISO2022_SO  1
 
+#if USE_MLANG_DLL
 /* shift in */
 static const char iso2022_SI_seq[] = "\x0F";
 /* shift out */
@@ -1487,6 +1488,7 @@ struct iso2022_esc_t {
     int len;
     int cs;
 };
+#endif
 
 #define ISO2022JP_CS_ASCII            0
 #define ISO2022JP_CS_JISX0201_ROMAN   1
