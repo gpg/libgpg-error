@@ -52,14 +52,15 @@ static char *
 xstrdup (const char *string)
 {
   char *p;
+  size_t len = strlen (string) + 1;
 
-  p = malloc (strlen (string)+1);
+  p = malloc (len);
   if (!p)
     {
       fputs (PGM ": out of core\n", stderr);
       exit (1);
     }
-  strcpy (p, string);
+  memcpy (p, string, len);
   return p;
 }
 

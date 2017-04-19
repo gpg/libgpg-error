@@ -140,6 +140,7 @@ _gpgrt_b64dec_proc (gpgrt_b64state_t state, void *buffer, size_t length,
           break;
         case s_init:
           ds = s_lfseen;
+          /* Fall through */
         case s_lfseen:
           if (*s != "-----BEGIN "[pos])
             {

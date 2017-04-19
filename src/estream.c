@@ -4179,7 +4179,7 @@ _gpgrt_fread (void *_GPGRT__RESTRICT ptr, size_t size, size_t nitems,
 {
   size_t ret, bytes;
 
-  if (size * nitems)
+  if (size && nitems)
     {
       lock_stream (stream);
       es_readn (stream, ptr, size * nitems, &bytes);
@@ -4200,7 +4200,7 @@ _gpgrt_fwrite (const void *_GPGRT__RESTRICT ptr, size_t size, size_t nitems,
 {
   size_t ret, bytes;
 
-  if (size * nitems)
+  if (size && nitems)
     {
       lock_stream (stream);
       es_writen (stream, ptr, size * nitems, &bytes);
