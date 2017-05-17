@@ -4857,9 +4857,6 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
       /* FIXME */
     }
 
-  if (count)
-    goto leave;  /* Early return without waiting.  */
-
   /* Now do the real select.  */
 #ifdef HAVE_W32_SYSTEM
 
