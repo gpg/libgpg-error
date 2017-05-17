@@ -240,8 +240,8 @@ if test "$GCC" = yes; then
     # warning options and the user should have a chance of overriding
     # them.
     if test "$USE_MAINTAINER_MODE" = "yes"; then
-        CFLAGS="$CFLAGS -O3 -Wall -Wcast-align -Wshadow -Wstrict-prototypes"
-        CFLAGS="$CFLAGS -Wformat -Wno-format-y2k -Wformat-security"
+        M_CFLAGS="-O3 -Wall -Wcast-align -Wshadow -Wstrict-prototypes"
+        M_CFLAGS="$M_CFLAGS -Wformat -Wno-format-y2k -Wformat-security"
         if test x"$_gcc_silent_wno" = xyes ; then
           _gcc_wopt=yes
         else
@@ -254,7 +254,7 @@ if test "$GCC" = yes; then
           CFLAGS=$_gcc_cflags_save;
         fi
         if test x"$_gcc_wopt" = xyes ; then
-          CFLAGS="$CFLAGS -W -Wno-sign-compare -Wno-missing-field-initializers"
+          M_CFLAGS="$M_CFLAGS -W -Wno-sign-compare -Wno-missing-field-initializers"
         fi
 
         AC_MSG_CHECKING([if gcc supports -Wdeclaration-after-statement])
@@ -264,8 +264,12 @@ if test "$GCC" = yes; then
         AC_MSG_RESULT($_gcc_wopt)
         CFLAGS=$_gcc_cflags_save;
         if test x"$_gcc_wopt" = xyes ; then
-          CFLAGS="$CFLAGS -Wdeclaration-after-statement"
+          M_CFLAGS="$M_CFLAGS -Wdeclaration-after-statement"
         fi
+
+	# Prepend the maintainer-cflags so that the user can override
+	# them, e.g. to override the optimization flags for debugging.
+	CFLAGS="$M_CFLAGS $CFLAGS"
     else
         CFLAGS="$CFLAGS -Wall"
     fi
