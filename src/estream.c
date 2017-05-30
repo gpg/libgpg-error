@@ -459,17 +459,30 @@ do_list_add (estream_t stream, int with_locked_list)
 static void
 do_list_remove (estream_t stream, int with_locked_list)
 {
-  estream_list_t item;
+  estream_list_t item, item_prev = NULL;
 
   if (!with_locked_list)
     lock_list ();
 
   for (item = estream_list; item; item = item->next)
     if (item->stream == stream)
-      {
-        item->stream = NULL;
-        break;
-      }
+      break;
+    else
+      item_prev = item;
+
+  if (item_prev)
+    {
+      item_prev->next = item->next;
+      mem_free (item);
+    }
+  else
+    {
+      if (item)
+        {
+          estream_list = item->next;
+          mem_free (item);
+        }
+    }
 
   if (!with_locked_list)
     unlock_list ();
@@ -2233,6 +2246,8 @@ do_close (estream_t stream, int with_locked_list)
         }
       err = deinit_stream_obj (stream);
       destroy_stream_lock (stream);
+      if (stream->intern->deallocate_buffer)
+        mem_free (stream->buffer);
       mem_free (stream->intern);
       mem_free (stream);
     }
