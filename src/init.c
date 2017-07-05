@@ -214,7 +214,7 @@ _gpg_err_set_errno (int err)
 
 
 
-/* Internal tracing functions.  Except for TARCE_FP we use flockfile
+/* Internal tracing functions.  Except for TRACE_FP we use flockfile
  * and funlockfile to protect their use. */
 static FILE *trace_fp;
 static int trace_save_errno;
