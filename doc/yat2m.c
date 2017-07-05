@@ -1,5 +1,5 @@
 /* yat2m.c - Yet Another Texi 2 Man converter
- *	Copyright (C) 2005, 2013, 2015, 2016 g10 Code GmbH
+ *	Copyright (C) 2005, 2013, 2015, 2016, 2017 g10 Code GmbH
  *      Copyright (C) 2006, 2008, 2011 Free Software Foundation, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -1478,6 +1478,7 @@ int
 main (int argc, char **argv)
 {
   int last_argc = -1;
+  const char *s;
 
   opt_source = "GNU";
   opt_release = "";
@@ -1610,6 +1611,11 @@ main (int argc, char **argv)
 
   if (argc > 1)
     die ("usage: " PGM " [OPTION] [FILE] (try --help for more information)\n");
+
+  /* Take care of supplied timestamp for reproducible builds.  See
+   * https://reproducible-builds.org/specs/source-date-epoch/  */
+  if (!opt_date && (s = getenv ("SOURCE_DATE_EPOCH")) && *s)
+    opt_date = s;
 
   /* Start processing. */
   if (argc && strcmp (*argv, "-"))
