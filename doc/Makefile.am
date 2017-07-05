@@ -35,7 +35,8 @@ myman_pages   = gpg-error-config.1
 man_MANS = $(myman_pages)
 
 yat2m: yat2m.c
-	$(CC_FOR_BUILD) -o $@ $(srcdir)/yat2m.c
+	$(CC_FOR_BUILD) -DPACKAGE_VERSION="\"$(PACKAGE_VERSION)\"" \
+                -o $@ $(srcdir)/yat2m.c
 
 
 yat2m-stamp: $(myman_sources)

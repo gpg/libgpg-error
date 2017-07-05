@@ -128,7 +128,11 @@
 
 
 #define PGM "yat2m"
-#define VERSION "1.0"
+#ifdef PACKAGE_VERSION
+# define VERSION PACKAGE_VERSION
+#else
+# define VERSION "1.0"
+#endif
 
 /* The maximum length of a line including the linefeed and one extra
    character. */
