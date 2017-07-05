@@ -1,6 +1,9 @@
 Noteworthy changes in version 1.28 (unreleased) [C22/A22/R_]
 -----------------------------------------------
 
+ * The formerly internal yat2m tool is now installed during a native
+   build.
+
  * Interface changes relative to the 1.27 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
