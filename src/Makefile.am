@@ -73,6 +73,7 @@ lock_obj_pub = \
         syscfg/lock-obj-pub.x86_64-pc-linux-gnux32.h        \
         syscfg/lock-obj-pub.x86_64-pc-linux-musl.h          \
 	syscfg/lock-obj-pub.tilegx-unknown-linux-gnu.h      \
+	syscfg/lock-obj-pub.ia64-unknown-linux-gnu.h        \
 	syscfg/lock-obj-pub.mingw32.h
 
 
