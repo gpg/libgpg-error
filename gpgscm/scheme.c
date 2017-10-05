@@ -10,6 +10,8 @@
  * (MINISCM) This is a revised and modified version by Akira KIDA.
  * (MINISCM)    current version is 0.85k4 (15 May 1994)
  *
+ *           This is a revised and modified version by g10 Code GmbH
+ *           written by Justus Winter for use in GnuPG.
  */
 
 #ifdef HAVE_CONFIG_H
