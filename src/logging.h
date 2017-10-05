@@ -1,36 +1,28 @@
-/* logging.h
- * Copyright (C) 1999, 2000, 2001, 2004, 2006,
- *               2010 Free Software Foundation, Inc.
+/* logging.h - Definitions for logging.c
+ * Copyright (C) 1998-2001, 2003-2006, 2009-2010,
+ *               2017  Free Software Foundation, Inc.
+ * Copyright (C) 1998-1999, 2001-2006, 2008-2017  Werner Koch
  *
- * This file is part of GnuPG.
+ * This file is part of Libgpg-error.
  *
- * GnuPG is free software; you can redistribute and/or modify this
- * part of GnuPG under the terms of either
+ * Libgpg-error is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- *   - the GNU Lesser General Public License as published by the Free
- *     Software Foundation; either version 3 of the License, or (at
- *     your option) any later version.
- *
- * or
- *
- *   - the GNU General Public License as published by the Free
- *     Software Foundation; either version 2 of the License, or (at
- *     your option) any later version.
- *
- * or both in parallel, as here.
- *
- * GnuPG is distributed in the hope that it will be useful, but
+ * Libgpg-error is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * General Public License for more details.
+ * Lesser General Public License for more details.
  *
- * You should have received a copies of the GNU General Public License
- * and the GNU Lesser General Public License along with this program;
- * if not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program; if not, see <https://www.gnu.org/licenses/>.
+ *
+ * This file was originally a part of GnuPG.
  */
 
-#ifndef GNUPG_COMMON_LOGGING_H
-#define GNUPG_COMMON_LOGGING_H
+#ifndef _GPGRT_LOGGING_H
+#define _GPGRT_LOGGING_H
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -112,4 +104,4 @@ void log_printhex (const char *text, const void *buffer, size_t length);
 void log_clock (const char *string);
 
 
-#endif /*GNUPG_COMMON_LOGGING_H*/
+#endif /*_GPGRT_LOGGING_H*/

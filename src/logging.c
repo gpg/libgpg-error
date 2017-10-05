@@ -1,32 +1,24 @@
 /* logging.c - Useful logging functions
- * Copyright (C) 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2006,
- *               2009, 2010 Free Software Foundation, Inc.
+ * Copyright (C) 1998-2001, 2003-2006, 2009-2010,
+ *               2017  Free Software Foundation, Inc.
+ * Copyright (C) 1998-1999, 2001-2006, 2008-2017  Werner Koch
  *
- * This file is part of GnuPG.
+ * This file is part of Libgpg-error.
  *
- * GnuPG is free software; you can redistribute and/or modify this
- * part of GnuPG under the terms of either
+ * Libgpg-error is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- *   - the GNU Lesser General Public License as published by the Free
- *     Software Foundation; either version 3 of the License, or (at
- *     your option) any later version.
- *
- * or
- *
- *   - the GNU General Public License as published by the Free
- *     Software Foundation; either version 2 of the License, or (at
- *     your option) any later version.
- *
- * or both in parallel, as here.
- *
- * GnuPG is distributed in the hope that it will be useful, but
+ * Libgpg-error is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * General Public License for more details.
+ * Lesser General Public License for more details.
  *
- * You should have received a copies of the GNU General Public License
- * and the GNU Lesser General Public License along with this program;
- * if not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program; if not, see <https://www.gnu.org/licenses/>.
+ *
+ * This file was originally a part of GnuPG.
  */
 
 
