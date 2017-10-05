@@ -175,7 +175,7 @@ AC_MSG_WARN([[Without strerror_r, gpg_strerror_r might not be thread-safe]]))
      ;;
 esac
 
-AC_CHECK_FUNCS([flockfile vasprintf])
+AC_CHECK_FUNCS([flockfile vasprintf mmap rand strlwr])
 
 
 #
@@ -440,7 +440,7 @@ fi
 config_libs="-lgpg-error"
 
 #
-# Check for other libraries (now only for -lrt).
+# Check for other libraries
 #
 LIB_SCHED_YIELD=
 AC_SUBST([LIB_SCHED_YIELD])
@@ -449,6 +449,10 @@ AC_SEARCH_LIBS([sched_yield], [rt posix4],
                   LIB_SCHED_YIELD=$ac_cv_search_sched_yield
                   config_libs="$config_libs $LIB_SCHED_YIELD"
                 fi])
+
+# Check for optional readline support
+GNUPG_CHECK_READLINE
+
 
 #
 # Prepare building of estream
