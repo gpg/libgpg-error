@@ -118,6 +118,13 @@ void _gpgrt_free (void *a);
 /* The next is only to be used by visibility.c.  */
 char *_gpgrt_strconcat_core (const char *s1, va_list arg_ptr);
 
+#define xfree(a)         _gpgrt_free ((a))
+#define xtrymalloc(a)    _gpgrt_malloc ((a))
+#define xtrycalloc(a,b)  _gpgrt_calloc ((a),(b))
+#define xtryrealloc(a,b) _gpgrt_realloc ((a),(b))
+
+
+
 const char *_gpg_error_check_version (const char *req_version);
 
 gpg_err_code_t _gpgrt_lock_init (gpgrt_lock_t *lockhd);
@@ -551,6 +558,36 @@ int _gpgrt_logv_internal (int level, int ignore_arg_ptr,
 
 /* Return true if FD is valid.  */
 int _gpgrt_fd_valid_p (int fd);
+
+
+
+/*
+ * Platform specific functions (Windows)
+ */
+#ifdef HAVE_W32_SYSTEM
+
+char *_gpgrt_w32_reg_query_string (const char *root,
+                                   const char *dir,
+                                   const char *name);
+
+
+#endif /*HAVE_W32_SYSTEM*/
+
+/*
+ * Missing functions implemented inline.
+ */
+
+#ifndef HAVE_STPCPY
+static GPG_ERR_INLINE char *
+_gpgrt_stpcpy (char *a, const char *b)
+{
+  while (*b)
+    *a++ = *b++;
+  *a = 0;
+  return a;
+}
+#define stpcpy(a,b) _gpgrt_stpcpy ((a), (b))
+#endif /*!HAVE_STPCPY*/
 
 
 #endif /*_GPGRT_GPGRT_INT_H*/

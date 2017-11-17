@@ -113,7 +113,7 @@ CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 #
 if HAVE_W32_SYSTEM
 arch_sources = w32-gettext.c w32-lock.c w32-lock-obj.h w32-thread.c \
-	       w32-iconv.c w32-estream.c
+	       w32-iconv.c w32-estream.c w32-reg.c
 RCCOMPILE = $(RC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
             -DLOCALEDIR=\"$(localedir)\" $(AM_CPPFLAGS) $(CPPFLAGS)
 LTRCCOMPILE = $(LIBTOOL) --mode=compile --tag=RC $(RCCOMPILE)
@@ -143,6 +143,7 @@ uninstall-def-file:
 
 libgpg_error_la_DEPENDENCIES = $(gpg_error_res) gpg-error.def
 intllibs =
+socklibs = -lws2_32
 
 #
 # }}} End Windows part
@@ -161,6 +162,7 @@ install-def-file:
 uninstall-def-file:
 
 intllibs = @LTLIBINTL@
+socklibs =
 
 endif
 #
@@ -197,7 +199,7 @@ nodist_libgpg_error_la_SOURCES = gpg-error.h
 # without the extra_cppflags because they may include am -idirafter
 # which is not supported by the RC compiler.
 libgpg_error_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" $(extra_cppflags)
-libgpg_error_la_LIBADD = $(gpg_error_res) $(intllibs) $(LIBTHREAD)
+libgpg_error_la_LIBADD = $(gpg_error_res) $(intllibs) $(socklibs) $(LIBTHREAD)
 
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c
 gpg_error_CPPFLAGS = -DPKGDATADIR=\"$(pkgdatadir)\" \

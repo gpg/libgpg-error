@@ -326,6 +326,11 @@ MARK_VISIBLE (_gpgrt_log_assert)
 #define gpgrt_log_flush             _gpgrt_USE_UNDERSCORED_FUNCTION
 #define _gpgrt_log_assert           _gpgrt_USE_UNDERSCORED_FUNCTION
 
+
+/* Windows specific functions.  */
+#define gpgrt_w32_reg_query_string  _gpgrt_USE_UNDERSCORED_FUNCTION
+
+
 #endif /*!_GPGRT_INCL_BY_VISIBILITY_C*/
 
 #endif /*_GPGRT_VISIBILITY_H*/

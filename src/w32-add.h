@@ -56,3 +56,8 @@ size_t  gpgrt_w32_iconv (gpgrt_w32_iconv_t cd,
 # define iconv_close(a)   gpgrt_w32_iconv_close ((a))
 # define iconv(a,b,c,d,e) gpgrt_w32_iconv ((a),(b),(c),(d),(e))
 #endif /*GPGRT_ENABLE_W32_ICONV_MACROS*/
+
+/* Query a string in the registry.  */
+char *gpgrt_w32_reg_query_string (const char *root,
+                                  const char *dir,
+                                  const char *name);

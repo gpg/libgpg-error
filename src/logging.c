@@ -787,9 +787,9 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
 
       tmp = (no_registry
              ? NULL
-             : read_w32_registry_string (NULL, GNUPG_REGISTRY_DIR,
-                                         "DefaultLogFile"));
-      log_set_file (tmp && *tmp? tmp : NULL);
+             : _gpgrt_w32_reg_query_string (NULL, "Software\\\\GNU\\\\GnuPG",
+                                            "DefaultLogFile"));
+      _gpgrt_log_set_sink (tmp && *tmp? tmp : NULL, NULL, -1);
       _gpgrt_free (tmp);
 #else
       /* Make sure a log stream has been set.  */
@@ -1119,7 +1119,7 @@ _gpgrt_logv_printhex (const void *buffer, size_t length,
               cnt = 0;
               /* (we indicate continuations with a backslash) */
               _gpgrt_log_printf (" \\\n");
-              _gpgrt_log_debug ("");
+              _gpgrt_log_debug ("%s", "");
               if (fmt && *fmt)
                 _gpgrt_log_printf (" ");
             }
