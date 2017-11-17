@@ -186,5 +186,7 @@ EXPORTS
  gpgrt_realloc                @141
  gpgrt_malloc                 @142
  gpgrt_calloc                 @143
+ gpgrt_strdup                 @144
+ gpgrt_strconcat              @145
 
 ;; end of file with public symbols for Windows.

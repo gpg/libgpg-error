@@ -215,6 +215,70 @@ _gpgrt_calloc (size_t n, size_t m)
 }
 
 
+char *
+_gpgrt_strdup (const char *string)
+{
+  size_t len = strlen (string);
+  char *p;
+
+  p = _gpgrt_realloc (NULL, len + 1);
+  if (p)
+    strcpy (p, string);
+  return p;
+}
+
+
+/* Helper for _gpgrt_stdconcat and gpgrt_strconcat.  */
+char *
+_gpgrt_strconcat_core (const char *s1, va_list arg_ptr)
+{
+  const char *argv[48];
+  size_t argc;
+  size_t needed;
+  char *buffer, *p;
+
+  argc = 0;
+  argv[argc++] = s1;
+  needed = strlen (s1);
+  while (((argv[argc] = va_arg (arg_ptr, const char *))))
+    {
+      needed += strlen (argv[argc]);
+      if (argc >= DIM (argv)-1)
+        {
+          _gpg_err_set_errno (EINVAL);
+          return NULL;
+        }
+      argc++;
+    }
+  needed++;
+  buffer = _gpgrt_malloc (needed);
+  if (buffer)
+    {
+      for (p = buffer, argc=0; argv[argc]; argc++)
+        p = stpcpy (p, argv[argc]);
+    }
+  return buffer;
+}
+
+
+char *
+_gpgrt_strconcat (const char *s1, ...)
+{
+  va_list arg_ptr;
+  char *result;
+
+  if (!s1)
+    result = _gpgrt_strdup ("");
+  else
+    {
+      va_start (arg_ptr, s1);
+      result = _gpgrt_strconcat_core (s1, arg_ptr);
+      va_end (arg_ptr);
+    }
+  return result;
+}
+
+
 /* The free to be used for data returned by the public API.  */
 void
 _gpgrt_free (void *a)

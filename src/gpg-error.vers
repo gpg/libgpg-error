@@ -160,6 +160,8 @@ GPG_ERROR_1.0 {
     gpgrt_realloc;
     gpgrt_malloc;
     gpgrt_calloc;
+    gpgrt_strdup;
+    gpgrt_strconcat;
 
   local:
     *;

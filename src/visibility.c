@@ -522,6 +522,29 @@ gpgrt_calloc (size_t n, size_t m)
   return _gpgrt_calloc (n, m);
 }
 
+char *
+gpgrt_strdup (const char *string)
+{
+  return _gpgrt_strdup (string);
+}
+
+char *
+gpgrt_strconcat (const char *s1, ...)
+{
+  va_list arg_ptr;
+  char *result;
+
+  if (!s1)
+    result = _gpgrt_strdup ("");
+  else
+    {
+      va_start (arg_ptr, s1);
+      result = _gpgrt_strconcat_core (s1, arg_ptr);
+      va_end (arg_ptr);
+    }
+  return result;
+}
+
 void
 gpgrt_free (void *a)
 {
