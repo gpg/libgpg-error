@@ -1,5 +1,5 @@
 /* gpgrt-int.h - Internal definitions
- * Copyright (C) 2014 g10 Code GmbH
+ * Copyright (C) 2014, 2017 g10 Code GmbH
  *
  * This file is part of libgpg-error.
  *
@@ -15,6 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program; if not, see <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: LGPL-2.1+
  */
 
 #ifndef _GPGRT_GPGRT_INT_H
@@ -23,7 +24,71 @@
 #include "gpg-error.h"
 #include "visibility.h"
 
-/* Local error function prototypes.  */
+/*
+ * Internal i18n macros.
+ */
+#ifdef ENABLE_NLS
+# ifdef HAVE_W32_SYSTEM
+#  include "gettext.h"
+# else
+#  include <libintl.h>
+# endif
+# define _(a) gettext (a)
+# ifdef gettext_noop
+#  define N_(a) gettext_noop (a)
+# else
+#  define N_(a) (a)
+# endif
+#else  /*!ENABLE_NLS*/
+# define _(a) (a)
+# define N_(a) (a)
+#endif /*!ENABLE_NLS */
+
+
+/*
+ * Hacks mainly required for Slowaris.
+ */
+#ifdef _GPGRT_NEED_AFLOCAL
+# ifndef HAVE_W32_SYSTEM
+#  include <sys/socket.h>
+#  include <sys/un.h>
+# else
+#  ifdef HAVE_WINSOCK2_H
+#   include <winsock2.h>
+#  endif
+# include <windows.h>
+# endif
+
+# ifndef PF_LOCAL
+#  ifdef PF_UNIX
+#   define PF_LOCAL PF_UNIX
+#  else
+#   define PF_LOCAL AF_UNIX
+#  endif
+# endif /*PF_LOCAL*/
+# ifndef AF_LOCAL
+#  define AF_LOCAL AF_UNIX
+# endif /*AF_UNIX*/
+
+/* We used to avoid this macro in GnuPG and inlined the AF_LOCAL name
+ * length computation directly with the little twist of adding 1 extra
+ * byte.  It seems that this was needed once on an old HP/UX box and
+ * there are also rumours that 4.3 Reno and DEC systems need it.  This
+ * one-off buglet did not harm any current system until it came to Mac
+ * OS X where the kernel (as of May 2009) exhibited a strange bug: The
+ * systems basically froze in the connect call if the passed name
+ * contained an invalid directory part.  Ignore the old Unices.  */
+# ifndef SUN_LEN
+#  define SUN_LEN(ptr) ((size_t) (((struct sockaddr_un *) 0)->sun_path) \
+                        + strlen ((ptr)->sun_path))
+# endif /*SUN_LEN*/
+#endif /*_GPGRT_NEED_AFLOCAL*/
+
+
+
+/*
+ * Local error function prototypes.
+ */
 const char *_gpg_strerror (gpg_error_t err);
 int _gpg_strerror_r (gpg_error_t err, char *buf, size_t buflen);
 const char *_gpg_strsource (gpg_error_t err);
@@ -49,7 +114,11 @@ gpg_err_code_t _gpgrt_lock_unlock (gpgrt_lock_t *lockhd);
 gpg_err_code_t _gpgrt_lock_destroy (gpgrt_lock_t *lockhd);
 gpg_err_code_t _gpgrt_yield (void);
 
-/* Trace support.  */
+
+
+/*
+ * Tracing
+ */
 
 /* The trace macro is used this way:
  *   trace (("enter - foo=%d bar=%s", foo, bar));
@@ -104,8 +173,10 @@ void _gpgrt_internal_trace_printf (const char *format,
 void _gpgrt_internal_trace_end (void);
 
 
-
-/* Local definitions for estream.  */
+
+/*
+ * Local definitions for estream.
+ */
 
 #if HAVE_W32_SYSTEM
 # ifndef  O_NONBLOCK
@@ -123,7 +194,7 @@ typedef int (*cookie_ioctl_function_t) (void *cookie, int cmd,
 #define COOKIE_IOCTL_NONBLOCK      2
 
 /* An internal variant of gpgrt_cookie_close_function_t with a slot
-   for the ioctl function.  */
+ * for the ioctl function.  */
 struct cookie_io_functions_s
 {
   struct _gpgrt_cookie_io_functions public;
@@ -201,7 +272,9 @@ struct _gpgrt_stream_internal
 typedef struct _gpgrt_stream_internal *estream_internal_t;
 
 
-/* Local prototypes for estream.  */
+/*
+ * Local prototypes for estream.
+ */
 int _gpgrt_estream_init (void);
 void _gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void));
 void _gpgrt_get_syscall_clamp (void (**r_pre)(void), void (**r_post)(void));
@@ -243,6 +316,14 @@ int _gpgrt_syshd_unlocked (gpgrt_stream_t stream, gpgrt_syshd_t *syshd);
 
 void _gpgrt__set_std_fd (int no, int fd);
 gpgrt_stream_t _gpgrt__get_std_stream (int fd);
+/* The es_stderr et al macros are pretty common so that we want to use
+ * them too.  This requires that we redefine them.  */
+#undef es_stdin
+#define es_stdin  _gpgrt__get_std_stream (0)
+#undef es_stdout
+#define es_stdout _gpgrt__get_std_stream (1)
+#undef es_stderr
+#define es_stderr _gpgrt__get_std_stream (2)
 
 void _gpgrt_flockfile (gpgrt_stream_t stream);
 int  _gpgrt_ftrylockfile (gpgrt_stream_t stream);
@@ -357,7 +438,11 @@ const char *_gpgrt_fname_get (gpgrt_stream_t stream);
 
 #include "estream-printf.h"
 
-#if _WIN32
+/* Make sure we always use our snprintf */
+#define snprintf _gpgrt_estream_snprintf
+
+
+#if HAVE_W32_SYSTEM
 /* Prototypes for w32-estream.c.  */
 struct cookie_io_functions_s _gpgrt_functions_w32_pollable;
 int _gpgrt_w32_pollable_create (void *_GPGRT__RESTRICT *_GPGRT__RESTRICT cookie,
@@ -365,12 +450,27 @@ int _gpgrt_w32_pollable_create (void *_GPGRT__RESTRICT *_GPGRT__RESTRICT cookie,
                                 struct cookie_io_functions_s next_functions,
                                 void *next_cookie);
 int _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout);
-#endif
+#endif /*HAVE_W32_SYSTEM*/
+
+
+
+/*
+ * Local prototypes for the encoders.
+ */
 
 gpgrt_b64state_t _gpgrt_b64dec_start (const char *title);
 gpg_error_t _gpgrt_b64dec_proc (gpgrt_b64state_t state, void *buffer,
                                 size_t length, size_t *r_nbytes);
 gpg_error_t _gpgrt_b64dec_finish (gpgrt_b64state_t state);
+
+
+
+/*
+ * Internal platform abstraction functions (sysutils.c)
+ */
+
+/* Return true if FD is valid.  */
+int _gpgrt_fd_valid_p (int fd);
 
 
 #endif /*_GPGRT_GPGRT_INT_H*/

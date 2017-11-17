@@ -15,6 +15,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-2.1+
 
 # (Process this file with autoconf to produce a configure script.)
 # The following lines are used by ./autogen.sh.
@@ -513,6 +514,34 @@ AM_CONDITIONAL(CROSS_COMPILING, test x$cross_compiling = xyes)
 AM_CONDITIONAL(FORCE_USE_SYSCFG, test x$force_use_syscfg = xyes)
 
 AC_DEFINE_UNQUOTED(HOST_TRIPLET_STRING, "$host", [The host triplet])
+
+
+#
+# gpgrt_log_clock may require linking with extra libaries.  As long as
+# we don't have a good test for this we require the use of this
+# configure option to enabling printing of a timestamp.
+#
+AC_MSG_CHECKING([whether to enable log_clock])
+AC_ARG_ENABLE(log_clock,
+              AC_HELP_STRING([--enable-log-clock],
+                             [enable log_clock timestamps]),
+              enable_log_clock=$enableval, enable_log_clock=no)
+AC_MSG_RESULT($enable_log_clock)
+if test "$enable_log_clock" = yes ; then
+  AC_DEFINE(ENABLE_LOG_CLOCK,1,[Defined to use log_clock timestamps])
+fi
+
+
+#
+# Add -Werror to CFLAGS.  This hack can be used to avoid problems with
+# misbehaving autoconf tests in case the user supplied -Werror.
+#
+AC_ARG_ENABLE(werror,
+   AC_HELP_STRING([--enable-werror],
+                  [append -Werror to CFLAGS]),
+                  [if test $enableval = yes ; then
+                      CFLAGS="$CFLAGS -Werror"
+                   fi])
 
 
 #

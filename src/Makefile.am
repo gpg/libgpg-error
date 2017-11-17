@@ -15,11 +15,14 @@
 #
 # You should have received a copy of the GNU Lesser General Public
 # License along with this program; if not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-2.1+
 
+
+#
 # We distribute the generated sources err-sources.h and err-codes.h,
 # because they are needed to build the po directory, and they don't
 # depend on the configuration anyway.
-
+#
 
 if HAVE_W32CE_SYSTEM
 gpg_extra_headers = gpg-extra/errno.h
@@ -179,7 +182,12 @@ libgpg_error_la_SOURCES = gettext.h $(arch_sources) \
 	gpgrt-int.h init.c init.h version.c lock.h thread.h \
 	estream.c estream-printf.c estream-printf.h \
 	strsource.c strerror.c code-to-errno.c code-from-errno.c \
-	visibility.c visibility.h b64dec.c
+	visibility.c visibility.h \
+	sysutils.c \
+	logging.c \
+	b64dec.c
+
+
 nodist_libgpg_error_la_SOURCES = gpg-error.h
 
 # libgpg_error_la_DEPENDENCIES = \
