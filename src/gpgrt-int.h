@@ -104,6 +104,7 @@ void _gpgrt_set_alloc_func (void *(*f)(void *a, size_t n));
 void *_gpgrt_realloc (void *a, size_t n);
 void *_gpgrt_malloc (size_t n);
 void _gpgrt_free (void *a);
+void *_gpgrt_calloc (size_t n, size_t m);
 
 const char *_gpg_error_check_version (const char *req_version);
 

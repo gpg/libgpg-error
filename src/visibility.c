@@ -504,6 +504,24 @@ gpgrt_read_line (estream_t stream,
                            max_length);
 }
 
+void *
+gpgrt_realloc (void *a, size_t n)
+{
+  return _gpgrt_realloc (a, n);
+}
+
+void *
+gpgrt_malloc (size_t n)
+{
+  return _gpgrt_malloc (n);
+}
+
+void *
+gpgrt_calloc (size_t n, size_t m)
+{
+  return _gpgrt_calloc (n, m);
+}
+
 void
 gpgrt_free (void *a)
 {

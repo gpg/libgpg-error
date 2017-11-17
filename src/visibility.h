@@ -118,6 +118,9 @@ MARK_VISIBLE (gpgrt_fputs)
 MARK_VISIBLE (gpgrt_fputs_unlocked)
 MARK_VISIBLE (gpgrt_getline)
 MARK_VISIBLE (gpgrt_read_line)
+MARK_VISIBLE (gpgrt_realloc)
+MARK_VISIBLE (gpgrt_malloc)
+MARK_VISIBLE (gpgrt_calloc)
 MARK_VISIBLE (gpgrt_free)
 MARK_VISIBLE (gpgrt_fprintf)
 MARK_VISIBLE (gpgrt_fprintf_unlocked)
@@ -257,6 +260,9 @@ MARK_VISIBLE (_gpgrt_log_assert)
 #define gpgrt_fputs_unlocked        _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_getline               _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_read_line             _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_realloc               _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_malloc                _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_calloc                 _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_free                  _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fprintf               _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fprintf_unlocked      _gpgrt_USE_UNDERSCORED_FUNCTION

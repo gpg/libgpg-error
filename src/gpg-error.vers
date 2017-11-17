@@ -157,6 +157,9 @@ GPG_ERROR_1.0 {
     gpgrt_log_flush;
     _gpgrt_log_assert;
 
+    gpgrt_realloc;
+    gpgrt_malloc;
+    gpgrt_calloc;
 
   local:
     *;

@@ -194,6 +194,27 @@ _gpgrt_malloc (size_t n)
 }
 
 
+void *
+_gpgrt_calloc (size_t n, size_t m)
+{
+  size_t bytes;
+  void *p;
+
+  bytes = n * m; /* size_t is unsigned so the behavior on overflow is
+                    defined. */
+  if (m && bytes / m != n)
+    {
+      _gpg_err_set_errno (ENOMEM);
+      return NULL;
+    }
+
+  p = _gpgrt_realloc (NULL, bytes);
+  if (p)
+    memset (p, 0, bytes);
+  return p;
+}
+
+
 /* The free to be used for data returned by the public API.  */
 void
 _gpgrt_free (void *a)

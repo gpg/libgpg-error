@@ -183,5 +183,8 @@ EXPORTS
  gpgrt_log_flush              @139
  _gpgrt_log_assert            @140
 
+ gpgrt_realloc                @141
+ gpgrt_malloc                 @142
+ gpgrt_calloc                 @143
 
 ;; end of file with public symbols for Windows.
