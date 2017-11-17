@@ -17,12 +17,13 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program; if not, see <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: LGPL-2.1+
  *
  * This file was originally a part of GnuPG.
  */
 
-
 #include <config.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -48,12 +49,9 @@
 #include <assert.h>
 /* #include <execinfo.h> */
 
-#define GNUPG_COMMON_NEED_AFLOCAL 1
-#include "util.h"
-#include "i18n.h"
-#include "common-defs.h"
-#include "logging.h"
-#include "sysutils.h"
+#define _GPGRT_NEED_AFLOCAL 1
+#include "gpgrt-int.h"
+
 
 #ifdef HAVE_W32_SYSTEM
 # ifndef S_IRWXG
@@ -109,23 +107,27 @@ static int missing_lf;
 static int errorcount;
 
 
+/* Get the error count as maintained by the log fucntions.  With CLEAR
+ * set reset the counter.  */
 int
-log_get_errorcount (int clear)
+_gpgrt_get_errorcount (int clear)
 {
-    int n = errorcount;
-    if( clear )
-	errorcount = 0;
-    return n;
+  int n = errorcount;
+  if (clear)
+    errorcount = 0;
+  return n;
 }
 
+
+/* Increment the error count as maintainer by the log functions.  */
 void
-log_inc_errorcount (void)
+_gpgrt_inc_errorcount (void)
 {
    errorcount++;
 }
 
 
-/* The following 3 functions are used by es_fopencookie to write logs
+/* The following 3 functions are used by _gpgrt_fopencookie to write logs
    to a socket.  */
 struct fun_cookie_s
 {
@@ -279,7 +281,7 @@ fun_writer (void *cookie_arg, const void *buffer, size_t size)
           void *addrbuf = NULL;
 #endif /*HAVE_INET_PTON*/
 
-          addrstr = xtrymalloc (strlen (name) + 1);
+          addrstr = _gpgrt_malloc (strlen (name) + 1);
           if (!addrstr)
             addrlen = 0; /* This indicates an error.  */
           else if (*name == '[')
@@ -289,7 +291,7 @@ fun_writer (void *cookie_arg, const void *buffer, size_t size)
               p = strchr (addrstr, ']');
               if (!p || p[1] != ':' || !parse_portno (p+2, &port))
                 {
-                  gpg_err_set_errno (EINVAL);
+                  _gpg_err_set_errno (EINVAL);
                   addrlen = 0;
                 }
               else
@@ -307,7 +309,7 @@ fun_writer (void *cookie_arg, const void *buffer, size_t size)
                   srvr_addr = (struct sockaddr *)&srvr_addr_in6;
                   addrlen = sizeof srvr_addr_in6;
 #else
-                  gpg_err_set_errno (EAFNOSUPPORT);
+                  _gpg_err_set_errno (EAFNOSUPPORT);
                   addrlen = 0;
 #endif
                 }
@@ -319,7 +321,7 @@ fun_writer (void *cookie_arg, const void *buffer, size_t size)
               p = strchr (addrstr, ':');
               if (!p || !parse_portno (p+1, &port))
                 {
-                  gpg_err_set_errno (EINVAL);
+                  _gpg_err_set_errno (EINVAL);
                   addrlen = 0;
                 }
               else
@@ -352,25 +354,26 @@ fun_writer (void *cookie_arg, const void *buffer, size_t size)
 #endif /*!HAVE_INET_PTON*/
             }
 
-          xfree (addrstr);
+          _gpgrt_free (addrstr);
         }
 
       cookie->fd = addrlen? socket (pf, SOCK_STREAM, 0) : -1;
       if (cookie->fd == -1)
         {
           if (!cookie->quiet && !running_detached
-              && isatty (es_fileno (es_stderr)))
-            es_fprintf (es_stderr, "failed to create socket for logging: %s\n",
-                        strerror(errno));
+              && isatty (_gpgrt_fileno (es_stderr)))
+            _gpgrt_fprintf (es_stderr,
+                            "failed to create socket for logging: %s\n",
+                            strerror (errno));
         }
       else
         {
           if (connect (cookie->fd, srvr_addr, addrlen) == -1)
             {
               if (!cookie->quiet && !running_detached
-                  && isatty (es_fileno (es_stderr)))
-                es_fprintf (es_stderr, "can't connect to '%s%s': %s\n",
-                            cookie->name, name_for_err, strerror(errno));
+                  && isatty (_gpgrt_fileno (es_stderr)))
+                _gpgrt_fprintf (es_stderr, "can't connect to '%s%s': %s\n",
+                                cookie->name, name_for_err, strerror(errno));
               sock_close (cookie->fd);
               cookie->fd = -1;
             }
@@ -416,14 +419,14 @@ fun_writer (void *cookie_arg, const void *buffer, size_t size)
     }
 
   if (!running_detached && cookie->fd != -1
-      && isatty (es_fileno (es_stderr)))
+      && isatty (_gpgrt_fileno (es_stderr)))
     {
       if (*cookie->name)
-        es_fprintf (es_stderr, "error writing to '%s': %s\n",
-                    cookie->name, strerror(errno));
+        _gpgrt_fprintf (es_stderr, "error writing to '%s': %s\n",
+                        cookie->name, strerror(errno));
       else
-        es_fprintf (es_stderr, "error writing to file descriptor %d: %s\n",
-                    cookie->fd, strerror(errno));
+        _gpgrt_fprintf (es_stderr, "error writing to file descriptor %d: %s\n",
+                        cookie->fd, strerror(errno));
     }
   if (cookie->is_socket && cookie->fd != -1)
     {
@@ -443,7 +446,7 @@ fun_closer (void *cookie_arg)
 
   if (cookie->fd != -1 && cookie->fd != 2)
     sock_close (cookie->fd);
-  xfree (cookie);
+  _gpgrt_free (cookie);
   log_socket = -1;
   return 0;
 }
@@ -465,7 +468,7 @@ set_file_fd (const char *name, int fd)
   if (logstream)
     {
       if (logstream != es_stderr)
-        es_fclose (logstream);
+        _gpgrt_fclose (logstream);
       logstream = NULL;
     }
 
@@ -473,7 +476,7 @@ set_file_fd (const char *name, int fd)
   if (name && !strcmp (name, "-"))
     {
       name = NULL;
-      fd = es_fileno (es_stderr);
+      fd = _gpgrt_fileno (es_stderr);
     }
 
   want_socket = 0;
@@ -503,10 +506,9 @@ set_file_fd (const char *name, int fd)
 
   /* Setup a new stream.  */
 
-  /* The xmalloc below is justified because we can expect that this
-     function is called only during initialization and there is no
-     easy way out of this error condition.  */
-  cookie = xmalloc (sizeof *cookie + (name? strlen (name):0));
+  cookie = _gpgrt_malloc (sizeof *cookie + (name? strlen (name):0));
+  if (!cookie)
+    return; /* oops */
   strcpy (cookie->name, name? name:"");
   cookie->quiet = 0;
   cookie->is_socket = 0;
@@ -532,14 +534,14 @@ set_file_fd (const char *name, int fd)
     io.func_write = fun_writer;
     io.func_close = fun_closer;
 
-    fp = es_fopencookie (cookie, "w", io);
+    fp = _gpgrt_fopencookie (cookie, "w", io);
   }
 
   /* On error default to a stderr based estream.  */
   if (!fp)
     fp = es_stderr;
 
-  es_setvbuf (fp, NULL, _IOLBF, 0);
+  _gpgrt_setvbuf (fp, NULL, _IOLBF, 0);
 
   logstream = fp;
 
@@ -553,46 +555,56 @@ set_file_fd (const char *name, int fd)
 
 
 /* Set the file to write log to.  The special names NULL and "-" may
-   be used to select stderr and names formatted like
-   "socket:///home/foo/mylogs" may be used to write the logging to the
-   socket "/home/foo/mylogs".  If the connection to the socket fails
-   or a write error is detected, the function writes to stderr and
-   tries the next time again to connect the socket.
-  */
+ * be used to select stderr and names formatted like
+ * "socket:///home/foo/mylogs" may be used to write the logging to the
+ * socket "/home/foo/mylogs".  If the connection to the socket fails
+ * or a write error is detected, the function writes to stderr and
+ * tries the next time again to connect the socket.
+ * Warning: This function is not thread-safe.
+ */
 void
-log_set_file (const char *name)
+_gpgrt_log_set_sink (const char *name, estream_t stream, int fd)
 {
-  set_file_fd (name? name: "-", -1);
-}
-
-void
-log_set_fd (int fd)
-{
-  if (! gnupg_fd_valid (fd))
-    log_fatal ("logger-fd is invalid: %s\n", strerror (errno));
-
-  set_file_fd (NULL, fd);
+  if (name && !stream && fd == -1)
+    set_file_fd (name, -1);
+  else if (!name && !stream)
+    {
+      if (!_gpgrt_fd_valid_p (fd))
+        _gpgrt_log_fatal ("gpgrt_log_set_sink: fd is invalid: %s\n",
+                     strerror (errno));
+      set_file_fd (NULL, fd);
+    }
+  else if (!name && stream && fd == -1)
+    {
+      _gpgrt_log_fatal ("gpgrt_log_set_sink: stream arg not yet supported\n");
+    }
+  else /* default */
+    set_file_fd ("-", -1);
 }
 
 
 /* Set a function to retrieve the directory name of a socket if
- * only "socket://" has been given to log_set_file.  */
+ * only "socket://" has been given to log_set_file.
+ * Warning: This function is not thread-safe.  */
 void
-log_set_socket_dir_cb (const char *(*fnc)(void))
+_gpgrt_log_set_socket_dir_cb (const char *(*fnc)(void))
 {
   socket_dir_cb = fnc;
 }
 
 
+/* Warning: This function is not thread-safe.  */
 void
-log_set_pid_suffix_cb (int (*cb)(unsigned long *r_value))
+_gpgrt_log_set_pid_suffix_cb (int (*cb)(unsigned long *r_value))
 {
   get_pid_suffix_cb = cb;
 }
 
 
+/* Warning: Changing TEXT is not thread-safe.  Changing only flags
+ * might be thread-safe.  */
 void
-log_set_prefix (const char *text, unsigned int flags)
+_gpgrt_log_set_prefix (const char *text, unsigned int flags)
 {
   if (text)
     {
@@ -611,7 +623,7 @@ log_set_prefix (const char *text, unsigned int flags)
 
 
 const char *
-log_get_prefix (unsigned int *flags)
+_gpgrt_log_get_prefix (unsigned int *flags)
 {
   if (flags)
     {
@@ -633,14 +645,14 @@ log_get_prefix (unsigned int *flags)
 }
 
 /* This function returns true if the file descriptor FD is in use for
-   logging.  This is preferable over a test using log_get_fd in that
-   it allows the logging code to use more then one file descriptor.  */
+ * logging.  This is preferable over a test using log_get_fd in that
+ * it allows the logging code to use more then one file descriptor.  */
 int
-log_test_fd (int fd)
+_gpgrt_log_test_fd (int fd)
 {
   if (logstream)
     {
-      int tmp = es_fileno (logstream);
+      int tmp = _gpgrt_fileno (logstream);
       if ( tmp != -1 && tmp == fd)
         return 1;
     }
@@ -650,26 +662,31 @@ log_test_fd (int fd)
 }
 
 int
-log_get_fd ()
+_gpgrt_log_get_fd ()
 {
-  return logstream? es_fileno(logstream) : -1;
+  return logstream? _gpgrt_fileno (logstream) : -1;
 }
 
 estream_t
-log_get_stream ()
+_gpgrt_log_get_stream ()
 {
   if (!logstream)
     {
-      log_set_file (NULL); /* Make sure a log stream has been set.  */
+      /* Make sure a log stream has been set.  */
+      _gpgrt_log_set_sink (NULL, NULL, -1);
       assert (logstream);
     }
   return logstream;
 }
 
 
-static void
+/* Note: LOGSTREAM is expected to be locked.  */
+static int
 print_prefix (int level, int leading_backspace)
 {
+  int rc;
+  int length = 0;
+
   if (level != GPGRT_LOG_CONT)
     { /* Note this does not work for multiple line logging as we would
        * need to print to a buffer first */
@@ -679,30 +696,46 @@ print_prefix (int level, int leading_backspace)
           time_t atime = time (NULL);
 
           tp = localtime (&atime);
-          es_fprintf_unlocked (logstream, "%04d-%02d-%02d %02d:%02d:%02d ",
+          rc = _gpgrt_fprintf_unlocked (logstream,
+                                        "%04d-%02d-%02d %02d:%02d:%02d ",
                                1900+tp->tm_year, tp->tm_mon+1, tp->tm_mday,
                                tp->tm_hour, tp->tm_min, tp->tm_sec );
+          if (rc > 0)
+            length += rc;
         }
       if (with_prefix || force_prefixes)
-        es_fputs_unlocked (prefix_buffer, logstream);
+        {
+          _gpgrt_fputs_unlocked (prefix_buffer, logstream);
+          length += strlen (prefix_buffer);
+        }
       if (with_pid || force_prefixes)
         {
           unsigned long pidsuf;
           int pidfmt;
 
           if (get_pid_suffix_cb && (pidfmt=get_pid_suffix_cb (&pidsuf)))
-            es_fprintf_unlocked (logstream, pidfmt == 1? "[%u.%lu]":"[%u.%lx]",
-                                 (unsigned int)getpid (), pidsuf);
+            rc = _gpgrt_fprintf_unlocked (logstream,
+                                          pidfmt == 1? "[%u.%lu]":"[%u.%lx]",
+                                          (unsigned int)getpid (), pidsuf);
           else
-            es_fprintf_unlocked (logstream, "[%u]", (unsigned int)getpid ());
+            rc = _gpgrt_fprintf_unlocked (logstream, "[%u]",
+                                          (unsigned int)getpid ());
+          if (rc > 0)
+            length += rc;
         }
       if ((!with_time && (with_prefix || with_pid)) || force_prefixes)
-        es_putc_unlocked (':', logstream);
+        {
+          _gpgrt_putc_unlocked (':', logstream);
+          length++;
+        }
       /* A leading backspace suppresses the extra space so that we can
          correctly output, programname, filename and linenumber. */
       if (!leading_backspace
           && (with_time || with_prefix || with_pid || force_prefixes))
-        es_putc_unlocked (' ', logstream);
+        {
+          _gpgrt_putc_unlocked (' ', logstream);
+          length++;
+        }
     }
 
   switch (level)
@@ -712,21 +745,40 @@ print_prefix (int level, int leading_backspace)
     case GPGRT_LOG_INFO: break;
     case GPGRT_LOG_WARN: break;
     case GPGRT_LOG_ERROR: break;
-    case GPGRT_LOG_FATAL: es_fputs_unlocked ("Fatal: ",logstream ); break;
-    case GPGRT_LOG_BUG:   es_fputs_unlocked ("Ohhhh jeeee: ", logstream); break;
-    case GPGRT_LOG_DEBUG: es_fputs_unlocked ("DBG: ", logstream ); break;
+    case GPGRT_LOG_FATAL:
+      _gpgrt_fputs_unlocked ("Fatal: ", logstream);
+      length += 7;
+      break;
+    case GPGRT_LOG_BUG:
+      _gpgrt_fputs_unlocked ("Ohhhh jeeee: ", logstream);
+      length += 13;
+      break;
+    case GPGRT_LOG_DEBUG:
+      _gpgrt_fputs_unlocked ("DBG: ", logstream);
+      length += 5;
+      break;
     default:
-      es_fprintf_unlocked (logstream,"[Unknown log level %d]: ", level);
+      rc = _gpgrt_fprintf_unlocked (logstream,
+                                    "[Unknown log level %d]: ", level);
+      if (rc > 0)
+        length += rc;
       break;
     }
+
+  return length;
 }
 
 
-static void
-do_logv (int level, int ignore_arg_ptr, const char *extrastring,
-         const char *prefmt, const char *fmt, va_list arg_ptr)
+/* Internal worker function.  Exported so that we can use it in
+ * visibility.c.  Returs the number of characters printed or 0 if the
+ * line ends in a LF. */
+int
+_gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
+                      const char *prefmt, const char *fmt, va_list arg_ptr)
 {
   int leading_backspace = (fmt && *fmt == '\b');
+  int length;
+  int rc;
 
   if (!logstream)
     {
@@ -738,26 +790,30 @@ do_logv (int level, int ignore_arg_ptr, const char *extrastring,
              : read_w32_registry_string (NULL, GNUPG_REGISTRY_DIR,
                                          "DefaultLogFile"));
       log_set_file (tmp && *tmp? tmp : NULL);
-      xfree (tmp);
+      _gpgrt_free (tmp);
 #else
-      log_set_file (NULL); /* Make sure a log stream has been set.  */
+      /* Make sure a log stream has been set.  */
+      _gpgrt_log_set_sink (NULL, NULL, -1);
 #endif
       assert (logstream);
     }
 
-  es_flockfile (logstream);
+  _gpgrt_flockfile (logstream);
   if (missing_lf && level != GPGRT_LOG_CONT)
-    es_putc_unlocked ('\n', logstream );
+    _gpgrt_putc_unlocked ('\n', logstream );
   missing_lf = 0;
 
-  print_prefix (level, leading_backspace);
+  length = print_prefix (level, leading_backspace);
   if (leading_backspace)
     fmt++;
 
   if (fmt)
     {
       if (prefmt)
-        es_fputs_unlocked (prefmt, logstream);
+        {
+          _gpgrt_fputs_unlocked (prefmt, logstream);
+          length += strlen (prefmt);
+        }
 
       if (ignore_arg_ptr)
         { /* This is used by log_string and comes with the extra
@@ -768,15 +824,25 @@ do_logv (int level, int ignore_arg_ptr, const char *extrastring,
           const char *p, *pend;
 
           for (p = fmt; (pend = strchr (p, '\n')); p = pend+1)
-            es_fprintf_unlocked (logstream, "%*s%.*s",
+            {
+              rc = _gpgrt_fprintf_unlocked (logstream, "%*s%.*s",
                                  (int)((p != fmt
                                         && (with_prefix || force_prefixes))
                                        ?strlen (prefix_buffer)+2:0), "",
                                  (int)(pend - p)+1, p);
-          es_fputs_unlocked (p, logstream);
+              if (rc > 0)
+                length += rc;
+            }
+          _gpgrt_fputs_unlocked (p, logstream);
+          length += strlen (p);
         }
       else
-        es_vfprintf_unlocked (logstream, fmt, arg_ptr);
+        {
+          rc = _gpgrt_vfprintf_unlocked (logstream, fmt, arg_ptr);
+          if (rc > 0)
+            length += rc;
+        }
+
       if (*fmt && fmt[strlen(fmt)-1] != '\n')
         missing_lf = 1;
     }
@@ -789,36 +855,50 @@ do_logv (int level, int ignore_arg_ptr, const char *extrastring,
 
       if (missing_lf)
         {
-          es_putc_unlocked ('\n', logstream);
+          _gpgrt_putc_unlocked ('\n', logstream);
           missing_lf = 0;
+          length = 0;
         }
-      print_prefix (level, leading_backspace);
-      es_fputs_unlocked (">> ", logstream);
+      length += print_prefix (level, leading_backspace);
+      _gpgrt_fputs_unlocked (">> ", logstream);
+      length += 3;
       missing_lf = 1;
       while ((c = *extrastring++))
         {
           missing_lf = 1;
           if (c == '\\')
-            es_fputs_unlocked ("\\\\", logstream);
+            {
+              _gpgrt_fputs_unlocked ("\\\\", logstream);
+              length += 2;
+            }
           else if (c == '\r')
-            es_fputs_unlocked ("\\r", logstream);
+            {
+              _gpgrt_fputs_unlocked ("\\r", logstream);
+              length += 2;
+            }
           else if (c == '\n')
             {
-              es_fputs_unlocked ("\\n\n", logstream);
+              _gpgrt_fputs_unlocked ("\\n\n", logstream);
+              length = 0;
               if (*extrastring)
                 {
-                  print_prefix (level, leading_backspace);
-                  es_fputs_unlocked (">> ", logstream);
+                  length += print_prefix (level, leading_backspace);
+                  _gpgrt_fputs_unlocked (">> ", logstream);
+                  length += 3;
                 }
               else
                 missing_lf = 0;
             }
           else
-            es_putc_unlocked (c, logstream);
+            {
+              _gpgrt_putc_unlocked (c, logstream);
+              length++;
+            }
         }
       if (missing_lf)
         {
-          es_putc_unlocked ('\n', logstream);
+          _gpgrt_putc_unlocked ('\n', logstream);
+          length = 0;
           missing_lf = 0;
         }
     }
@@ -826,15 +906,15 @@ do_logv (int level, int ignore_arg_ptr, const char *extrastring,
   if (level == GPGRT_LOG_FATAL)
     {
       if (missing_lf)
-        es_putc_unlocked ('\n', logstream);
-      es_funlockfile (logstream);
+        _gpgrt_putc_unlocked ('\n', logstream);
+      _gpgrt_funlockfile (logstream);
       exit (2);
     }
   else if (level == GPGRT_LOG_BUG)
     {
       if (missing_lf)
-        es_putc_unlocked ('\n', logstream );
-      es_funlockfile (logstream);
+        _gpgrt_putc_unlocked ('\n', logstream );
+      _gpgrt_funlockfile (logstream);
       /* Using backtrace requires a configure test and to pass
        * -rdynamic to gcc.  Thus we do not enable it now.  */
       /* { */
@@ -851,36 +931,46 @@ do_logv (int level, int ignore_arg_ptr, const char *extrastring,
       abort ();
     }
   else
-    es_funlockfile (logstream);
+    _gpgrt_funlockfile (logstream);
+
+  /* Bumb the error counter for log_error.  */
+  if (level == GPGRT_LOG_ERROR)
+    {
+      /* Protect against counter overflow.  */
+      if (errorcount < 30000)
+        errorcount++;
+    }
+
+  return length;
 }
 
 
 void
-log_log (int level, const char *fmt, ...)
+_gpgrt_log (int level, const char *fmt, ...)
 {
   va_list arg_ptr ;
 
   va_start (arg_ptr, fmt) ;
-  do_logv (level, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (level, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
 
 void
-log_logv (int level, const char *fmt, va_list arg_ptr)
+_gpgrt_logv (int level, const char *fmt, va_list arg_ptr)
 {
-  do_logv (level, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (level, 0, NULL, NULL, fmt, arg_ptr);
 }
 
 
 /* Same as log_logv but PREFIX is printed immediately before FMT.
  * Note that PREFIX is an additional string and independent of the
- * prefix set by log_set_prefix.  */
+ * prefix set by gpgrt_log_set_prefix.  */
 void
-log_logv_with_prefix (int level, const char *prefix,
-                      const char *fmt, va_list arg_ptr)
+_gpgrt_logv_prefix (int level, const char *prefix,
+                    const char *fmt, va_list arg_ptr)
 {
-  do_logv (level, 0, NULL, prefix, fmt, arg_ptr);
+  _gpgrt_logv_internal (level, 0, NULL, prefix, fmt, arg_ptr);
 }
 
 
@@ -889,7 +979,7 @@ do_log_ignore_arg (int level, const char *str, ...)
 {
   va_list arg_ptr;
   va_start (arg_ptr, str);
-  do_logv (level, 1, NULL, NULL, str, arg_ptr);
+  _gpgrt_logv_internal (level, 1, NULL, NULL, str, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -897,70 +987,68 @@ do_log_ignore_arg (int level, const char *str, ...)
 /* Log STRING at LEVEL but indent from the second line on by the
  * length of the prefix.  */
 void
-log_string (int level, const char *string)
+_gpgrt_log_string (int level, const char *string)
 {
   /* We need a dummy arg_ptr, but there is no portable way to create
-   * one.  So we call the do_logv function through a variadic wrapper. */
+   * one.  So we call the _gpgrt_logv_internal function through a
+   * variadic wrapper. */
   do_log_ignore_arg (level, string);
 }
 
 
 void
-log_info (const char *fmt, ...)
+_gpgrt_log_info (const char *fmt, ...)
 {
   va_list arg_ptr ;
 
   va_start (arg_ptr, fmt);
-  do_logv (GPGRT_LOG_INFO, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOG_INFO, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
 
 void
-log_error (const char *fmt, ...)
+_gpgrt_log_error (const char *fmt, ...)
 {
   va_list arg_ptr ;
 
   va_start (arg_ptr, fmt);
-  do_logv (GPGRT_LOG_ERROR, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOG_ERROR, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
-  /* Protect against counter overflow.  */
-  if (errorcount < 30000)
-    errorcount++;
 }
 
 
 void
-log_fatal (const char *fmt, ...)
+_gpgrt_log_fatal (const char *fmt, ...)
 {
   va_list arg_ptr ;
 
   va_start (arg_ptr, fmt);
-  do_logv (GPGRT_LOG_FATAL, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOG_FATAL, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
   abort (); /* Never called; just to make the compiler happy.  */
 }
 
 
 void
-log_bug (const char *fmt, ...)
+_gpgrt_log_bug (const char *fmt, ...)
 {
   va_list arg_ptr ;
 
   va_start (arg_ptr, fmt);
-  do_logv (GPGRT_LOG_BUG, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOG_BUG, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
   abort (); /* Never called; just to make the compiler happy.  */
 }
 
 
 void
-log_debug (const char *fmt, ...)
+_gpgrt_log_debug (const char *fmt, ...)
 {
-  va_list arg_ptr ;
+  va_list arg_ptr;
 
   va_start (arg_ptr, fmt);
-  do_logv (GPGRT_LOG_DEBUG, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -969,23 +1057,23 @@ log_debug (const char *fmt, ...)
  * printed with LFs expanded to include the prefix and a final --end--
  * marker.  */
 void
-log_debug_with_string (const char *string, const char *fmt, ...)
+_gpgrt_log_debug_string (const char *string, const char *fmt, ...)
 {
-  va_list arg_ptr ;
+  va_list arg_ptr;
 
   va_start (arg_ptr, fmt);
-  do_logv (GPGRT_LOG_DEBUG, 0, string, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, string, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
 
 void
-log_printf (const char *fmt, ...)
+_gpgrt_log_printf (const char *fmt, ...)
 {
   va_list arg_ptr;
 
   va_start (arg_ptr, fmt);
-  do_logv (fmt ? GPGRT_LOG_CONT : GPGRT_LOG_BEGIN, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (fmt ? GPGRT_LOG_CONT : GPGRT_LOG_BEGIN, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -993,52 +1081,86 @@ log_printf (const char *fmt, ...)
 /* Flush the log - this is useful to make sure that the trailing
    linefeed has been printed.  */
 void
-log_flush (void)
+_gpgrt_log_flush (void)
 {
   do_log_ignore_arg (GPGRT_LOG_CONT, NULL);
 }
 
 
-/* Print a hexdump of BUFFER.  With TEXT of NULL print just the raw
-   dump, with TEXT just an empty string, print a trailing linefeed,
-   otherwise print an entire debug line. */
+/* Print a hexdump of (BUFFER,LENGTH).  With FMT passed as NULL print
+ * just the raw dump, with FMT being an empty string, print a trailing
+ * linefeed, otherwise print an entire debug line with the expanded
+ * FMT followed by a possible wrapped hexdump and a final LF.  */
 void
-log_printhex (const char *text, const void *buffer, size_t length)
+_gpgrt_logv_printhex (const void *buffer, size_t length,
+                      const char *fmt, va_list arg_ptr)
 {
-  if (text && *text)
-    log_debug ("%s ", text);
+  int wrap = 0;
+  int cnt = 0;
+  const unsigned char *p;
+
+  /* FIXME: This printing is not yet protected by _gpgrt_flockfile.  */
+  if (fmt && *fmt)
+    {
+      _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, NULL, NULL, fmt, arg_ptr);
+      wrap = 1;
+    }
+
   if (length)
     {
-      const unsigned char *p = buffer;
-      log_printf ("%02X", *p);
-      for (length--, p++; length--; p++)
-        log_printf (" %02X", *p);
+      if (wrap)
+        _gpgrt_log_printf (" ");
+
+      for (p = buffer; length--; p++)
+        {
+          _gpgrt_log_printf ("%02x", *p);
+          if (wrap && ++cnt == 32 && length)
+            {
+              cnt = 0;
+              /* (we indicate continuations with a backslash) */
+              _gpgrt_log_printf (" \\\n");
+              _gpgrt_log_debug ("");
+              if (fmt && *fmt)
+                _gpgrt_log_printf (" ");
+            }
+        }
     }
-  if (text)
-    log_printf ("\n");
+
+  if (fmt)
+    _gpgrt_log_printf ("\n");
 }
 
 
-/*
+/* Print a hexdump of (BUFFER,LENGTH).  With FMT passed as NULL print
+ * just the raw dump, with FMT being an empty string, print a trailing
+ * linefeed, otherwise print an entire debug line with the expanded
+ * FMT followed by the hexdump and a final LF.  */
 void
-log_printcanon () {}
-is found in sexputils.c
-*/
+_gpgrt_log_printhex (const void *buffer, size_t length,
+                     const char *fmt, ...)
+{
+  va_list arg_ptr;
 
-/*
-void
-log_printsexp () {}
-is found in sexputils.c
-*/
+  if (fmt)
+    {
+      va_start (arg_ptr, fmt);
+      _gpgrt_logv_printhex (buffer, length, fmt, arg_ptr);
+      va_end (arg_ptr);
+    }
+  else
+    _gpgrt_logv_printhex (buffer, length, NULL, NULL);
+}
 
-/* Print a microsecond timestamp followed by STRING.  */
+
+/* Print a microsecond timestamp followed by FMT.  */
 void
-log_clock (const char *string)
+_gpgrt_logv_clock (const char *fmt, va_list arg_ptr)
 {
 #if ENABLE_LOG_CLOCK
   static unsigned long long initial;
   struct timespec tv;
   unsigned long long now;
+  char clockbuf[50];
 
   if (clock_gettime (CLOCK_REALTIME, &tv))
     {
@@ -1051,45 +1173,41 @@ log_clock (const char *string)
   if (!initial)
     initial = now;
 
-  log_debug ("[%6llu] %s", (now - initial)/1000, string);
+  snprintf (clockbuf, sizeof clockbuf, "[%6llu] ", (now - initial)/1000);
+  _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, NULL, clockbuf, fmt, arg_ptr);
+
 #else /*!ENABLE_LOG_CLOCK*/
+
   /* You may need to link with -ltr to use the above code.  */
-  log_debug ("[not enabled by configure] %s", string);
+
+  _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, NULL, "[no clock] ", fmt, arg_ptr);
+
 #endif  /*!ENABLE_LOG_CLOCK*/
 }
 
 
-#ifdef GPGRT_HAVE_MACRO_FUNCTION
+/* Print a microsecond timestamp followed by FMT.  */
 void
-bug_at( const char *file, int line, const char *func )
+_gpgrt_log_clock (const char *fmt, ...)
 {
-  log_log (GPGRT_LOG_BUG, "... this is a bug (%s:%d:%s)\n", file, line, func);
-  abort (); /* Never called; just to make the compiler happy.  */
+  va_list arg_ptr;
+
+  va_start (arg_ptr, fmt);
+  _gpgrt_logv_clock (fmt, arg_ptr);
+  va_end (arg_ptr);
 }
-#else /*!GPGRT_HAVE_MACRO_FUNCTION*/
-void
-bug_at( const char *file, int line )
-{
-  log_log (GPGRT_LOG_BUG, "you found a bug ... (%s:%d)\n", file, line);
-  abort (); /* Never called; just to make the compiler happy.  */
-}
-#endif /*!GPGRT_HAVE_MACRO_FUNCTION*/
 
 
+void
+_gpgrt__log_assert (const char *expr, const char *file,
+                   int line, const char *func)
+{
 #ifdef GPGRT_HAVE_MACRO_FUNCTION
-void
-_log_assert (const char *expr, const char *file, int line, const char *func)
-{
-  log_log (GPGRT_LOG_BUG, "Assertion \"%s\" in %s failed (%s:%d)\n",
-           expr, func, file, line);
-  abort (); /* Never called; just to make the compiler happy.  */
-}
+  _gpgrt_log (GPGRT_LOG_BUG, "Assertion \"%s\" in %s failed (%s:%d)\n",
+              expr, func, file, line);
 #else /*!GPGRT_HAVE_MACRO_FUNCTION*/
-void
-_log_assert (const char *expr, const char *file, int line)
-{
-  log_log (GPGRT_LOG_BUG, "Assertion \"%s\" failed (%s:%d)\n",
+  _gpgrt_log (GPGRT_LOG_BUG, "Assertion \"%s\" failed (%s:%d)\n",
            expr, file, line);
+#endif /*!GPGRT_HAVE_MACRO_FUNCTION*/
   abort (); /* Never called; just to make the compiler happy.  */
 }
-#endif /*!GPGRT_HAVE_MACRO_FUNCTION*/

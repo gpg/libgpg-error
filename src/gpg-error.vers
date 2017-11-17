@@ -15,6 +15,7 @@
 #
 # You should have received a copy of the GNU Lesser General Public
 # License along with this program; if not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-2.1+
 #
 # NOTE: When adding new functions, please make sure to add them to
 #       visibility.h and gpg-error.def.in as well.
@@ -129,6 +130,33 @@ GPG_ERROR_1.0 {
     gpgrt_b64dec_start;
     gpgrt_b64dec_proc;
     gpgrt_b64dec_finish;
+
+    gpgrt_get_errorcount;
+    gpgrt_inc_errorcount;
+    gpgrt_log_set_sink;
+    gpgrt_log_set_socket_dir_cb;
+    gpgrt_log_set_pid_suffix_cb;
+    gpgrt_log_set_prefix;
+    gpgrt_log_get_prefix;
+    gpgrt_log_test_fd;
+    gpgrt_log_get_fd;
+    gpgrt_log_get_stream;
+    gpgrt_log;
+    gpgrt_logv;
+    gpgrt_logv_prefix;
+    gpgrt_log_string;
+    gpgrt_log_bug;
+    gpgrt_log_fatal;
+    gpgrt_log_error;
+    gpgrt_log_info;
+    gpgrt_log_debug;
+    gpgrt_log_debug_string;
+    gpgrt_log_printf;
+    gpgrt_log_printhex;
+    gpgrt_log_clock;
+    gpgrt_log_flush;
+    _gpgrt_log_assert;
+
 
   local:
     *;

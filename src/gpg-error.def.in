@@ -15,6 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program; if not, see <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: LGPL-2.1+
  *
  * Note: This file should be updated manually and the ordinals shall
  * never be changed.  Also check gpg-error.vers and visibility.h.
@@ -155,5 +156,32 @@ EXPORTS
  gpgrt_b64dec_start           @113
  gpgrt_b64dec_proc            @114
  gpgrt_b64dec_finish          @115
+
+ gpgrt_get_errorcount         @116
+ gpgrt_inc_errorcount         @117
+ gpgrt_log_set_sink           @118
+ gpgrt_log_set_socket_dir_cb  @119
+ gpgrt_log_set_pid_suffix_cb  @120
+ gpgrt_log_set_prefix         @121
+ gpgrt_log_get_prefix         @122
+ gpgrt_log_test_fd            @123
+ gpgrt_log_get_fd             @124
+ gpgrt_log_get_stream         @125
+ gpgrt_log                    @126
+ gpgrt_logv                   @127
+ gpgrt_logv_prefix            @128
+ gpgrt_log_string             @129
+ gpgrt_log_bug                @130
+ gpgrt_log_fatal              @131
+ gpgrt_log_error              @132
+ gpgrt_log_info               @133
+ gpgrt_log_debug              @134
+ gpgrt_log_debug_string       @135
+ gpgrt_log_printf             @136
+ gpgrt_log_printhex           @137
+ gpgrt_log_clock              @138
+ gpgrt_log_flush              @139
+ _gpgrt_log_assert            @140
+
 
 ;; end of file with public symbols for Windows.

@@ -466,6 +466,73 @@ gpg_error_t _gpgrt_b64dec_finish (gpgrt_b64state_t state);
 
 
 /*
+ * Local prototypes for logging
+ */
+int  _gpgrt_get_errorcount (int clear);
+void _gpgrt_inc_errorcount (void);
+void _gpgrt_log_set_sink (const char *name, estream_t stream, int fd);
+void _gpgrt_log_set_socket_dir_cb (const char *(*fnc)(void));
+void _gpgrt_log_set_pid_suffix_cb (int (*cb)(unsigned long *r_value));
+void _gpgrt_log_set_prefix (const char *text, unsigned int flags);
+const char *_gpgrt_log_get_prefix (unsigned int *flags);
+int  _gpgrt_log_test_fd (int fd);
+int  _gpgrt_log_get_fd (void);
+estream_t _gpgrt_log_get_stream (void);
+
+void _gpgrt_log (int level, const char *fmt, ...) GPGRT_ATTR_PRINTF(2,3);
+void _gpgrt_logv (int level, const char *fmt, va_list arg_ptr);
+void _gpgrt_logv_prefix (int level, const char *prefix,
+                         const char *fmt, va_list arg_ptr);
+
+void _gpgrt_log_string (int level, const char *string);
+
+void _gpgrt_log_bug (const char *fmt, ...)    GPGRT_ATTR_NR_PRINTF(1,2);
+void _gpgrt_log_fatal (const char *fmt, ...)  GPGRT_ATTR_NR_PRINTF(1,2);
+void _gpgrt_log_error (const char *fmt, ...)  GPGRT_ATTR_PRINTF(1,2);
+void _gpgrt_log_info (const char *fmt, ...)   GPGRT_ATTR_PRINTF(1,2);
+void _gpgrt_log_debug (const char *fmt, ...)  GPGRT_ATTR_PRINTF(1,2);
+void _gpgrt_log_debug_string (const char *string, const char *fmt,
+                              ...) GPGRT_ATTR_PRINTF(2,3);
+
+void _gpgrt_log_printf (const char *fmt, ...) GPGRT_ATTR_PRINTF(1,2);
+
+void _gpgrt_log_flush (void);
+
+void _gpgrt_logv_printhex (const void *buffer, size_t length,
+                           const char *fmt, va_list arg_ptr);
+void _gpgrt_log_printhex (const void *buffer, size_t length,
+                          const char *fmt, ...) GPGRT_ATTR_PRINTF(3,4);;
+
+void _gpgrt_logv_clock (const char *fmt, va_list arg_ptr);
+void _gpgrt_log_clock (const char *fmt, ...) GPGRT_ATTR_PRINTF(1,2);
+
+void _gpgrt__log_assert (const char *expr, const char *file, int line,
+                         const char *func) GPGRT_ATTR_NORETURN;
+
+/* Redefine the assert macro to use our internal function.  */
+#undef gpgrt_assert
+#ifdef GPGRT_HAVE_MACRO_FUNCTION
+#define gpgrt_assert(expr)                                      \
+  ((expr)                                                       \
+   ? (void) 0                                                   \
+   : _gpgrt__log_assert (#expr, __FILE__, __LINE__, __FUNCTION__))
+#else /*!GPGRT_HAVE_MACRO_FUNCTION*/
+/* # define BUG() bug_at( __FILE__ , __LINE__ ) */
+#define gpgrt_assert(expr)                                      \
+  ((expr)                                                       \
+   ? (void) 0                                                   \
+   : _gpgrt__log_assert (#expr, __FILE__, __LINE__, NULL))
+#endif /*!GPGRT_HAVE_MACRO_FUNCTION*/
+
+/* Note: The next function is only to be used by visibility.c.  */
+int _gpgrt_logv_internal (int level, int ignore_arg_ptr,
+                          const char *extrastring,
+                          const char *prefmt, const char *fmt,
+                          va_list arg_ptr);
+
+
+
+/*
  * Internal platform abstraction functions (sysutils.c)
  */
 

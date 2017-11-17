@@ -15,6 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program; if not, see <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: LGPL-2.1+
  *
  * @configure_input@
  */
@@ -432,7 +433,9 @@ gpg_error_from_syserror (void)
 
 
 
-/* Lock functions.  */
+/*
+ * Lock functions.
+ */
 
 @include:lock-obj@
 
@@ -449,14 +452,18 @@ gpg_err_code_t gpgrt_lock_destroy (gpgrt_lock_t *lockhd);
 
 
 
-/* Thread functions.  */
+/*
+ * Thread functions.
+ */
 
 gpg_err_code_t gpgrt_yield (void);
 
 
 
 
-/* Estream */
+/*
+ * Estream
+ */
 
 /* The definition of this struct is entirely private.  You must not
    use it for anything.  It is only here so some functions can be
@@ -855,8 +862,12 @@ int gpgrt_vsnprintf (char *buf,size_t bufsize,
 # define es_bsprintf          gpgrt_bsprintf
 # define es_vbsprintf         gpgrt_vbsprintf
 #endif /*GPGRT_ENABLE_ES_MACROS*/
+
+
 
-/* Base64 decode functions.  */
+/*
+ * Base64 decode functions.
+ */
 
 struct _gpgrt_b64state;
 typedef struct _gpgrt_b64state *gpgrt_b64state_t;
@@ -865,6 +876,109 @@ gpgrt_b64state_t gpgrt_b64dec_start (const char *title);
 gpg_error_t gpgrt_b64dec_proc (gpgrt_b64state_t state,
                                void *buffer, size_t length, size_t *r_nbytes);
 gpg_error_t gpgrt_b64dec_finish (gpgrt_b64state_t state);
+
+
+
+/*
+ * Logging functions
+ */
+
+/* Flag values for gpgrt_log_set_prefix. */
+#define GPGRT_LOG_WITH_PREFIX  1
+#define GPGRT_LOG_WITH_TIME    2
+#define GPGRT_LOG_WITH_PID     4
+#define GPGRT_LOG_RUN_DETACHED 256
+#define GPGRT_LOG_NO_REGISTRY  512
+
+/* Log levels as used by gpgrt_log.  */
+enum gpgrt_log_levels
+  {
+    GPGRT_LOG_BEGIN,
+    GPGRT_LOG_CONT,
+    GPGRT_LOG_INFO,
+    GPGRT_LOG_WARN,
+    GPGRT_LOG_ERROR,
+    GPGRT_LOG_FATAL,
+    GPGRT_LOG_BUG,
+    GPGRT_LOG_DEBUG
+  };
+
+
+/* The next 4 fucntions are not thread-safe - call them early.  */
+void gpgrt_log_set_sink (const char *name, estream_t stream, int fd);
+void gpgrt_log_set_socket_dir_cb (const char *(*fnc)(void));
+void gpgrt_log_set_pid_suffix_cb (int (*cb)(unsigned long *r_value));
+void gpgrt_log_set_prefix (const char *text, unsigned int flags);
+
+int  gpgrt_get_errorcount (int clear);
+void gpgrt_inc_errorcount (void);
+const char *gpgrt_log_get_prefix (unsigned int *flags);
+int  gpgrt_log_test_fd (int fd);
+int  gpgrt_log_get_fd (void);
+estream_t gpgrt_log_get_stream (void);
+
+void gpgrt_log (int level, const char *fmt, ...) GPGRT_ATTR_PRINTF(2,3);
+void gpgrt_logv (int level, const char *fmt, va_list arg_ptr);
+void gpgrt_logv_prefix (int level, const char *prefix,
+                              const char *fmt, va_list arg_ptr);
+void gpgrt_log_string (int level, const char *string);
+void gpgrt_log_bug (const char *fmt, ...)    GPGRT_ATTR_NR_PRINTF(1,2);
+void gpgrt_log_fatal (const char *fmt, ...)  GPGRT_ATTR_NR_PRINTF(1,2);
+void gpgrt_log_error (const char *fmt, ...)  GPGRT_ATTR_PRINTF(1,2);
+void gpgrt_log_info (const char *fmt, ...)   GPGRT_ATTR_PRINTF(1,2);
+void gpgrt_log_debug (const char *fmt, ...)  GPGRT_ATTR_PRINTF(1,2);
+void gpgrt_log_debug_string (const char *string,
+                             const char *fmt, ...) GPGRT_ATTR_PRINTF(2,3);
+void gpgrt_log_printf (const char *fmt, ...) GPGRT_ATTR_PRINTF(1,2);
+void gpgrt_log_printhex (const void *buffer, size_t length,
+                         const char *fmt, ...) GPGRT_ATTR_PRINTF(3,4);
+void gpgrt_log_clock (const char *fmt, ...) GPGRT_ATTR_PRINTF(1,2);
+void gpgrt_log_flush (void);
+void _gpgrt_log_assert (const char *expr, const char *file, int line,
+                        const char *func) GPGRT_ATTR_NORETURN;
+
+#ifdef GPGRT_HAVE_MACRO_FUNCTION
+# define gpgrt_assert(expr)                                     \
+  ((expr)                                                       \
+   ? (void) 0                                                   \
+   : _gpgrt_log_assert (#expr, __FILE__, __LINE__, __FUNCTION__))
+#else /*!GPGRT_HAVE_MACRO_FUNCTION*/
+void _gpgrt_log_assert (const char *expr, const char *file, int line);
+#define gpgrt_assert(expr)                                      \
+  ((expr)                                                       \
+   ? (void) 0                                                   \
+   : _gpgrt_log_assert (#expr, __FILE__, __LINE__, NULL))
+#endif /*!GPGRT_HAVE_MACRO_FUNCTION*/
+
+#ifdef GPGRT_ENABLE_LOG_MACROS
+# define log_get_errorcount      gpgrt_get_errorcount
+# define log_inc_errorcount      gpgrt_inc_errorcount
+# define log_set_file(a)         gpgrt_log_set_sink ((a), NULL, -1)
+# define log_set_fd(a)           gpgrt_log_set_sink (NULL, NULL, (a))
+# define log_set_stream(a)       gpgrt_log_set_sink (NULL, (a), -1)
+# define log_set_socket_dir_cb   gpgrt_log_set_socket_dir_cb
+# define log_set_pid_suffix_cb   gpgrt_log_set_pid_suffix_cb
+# define log_set_prefix          gpgrt_log_set_prefix
+# define log_get_prefix          gpgrt_log_get_prefix
+# define log_test_fd             gpgrt_log_test_fd
+# define log_get_fd              gpgrt_log_get_fd
+# define log_get_stream          gpgrt_log_get_stream
+# define log_log                 gpgrt_log
+# define log_logv                gpgrt_logv
+# define log_logv_prefix         gpgrt_logv_prefix
+# define log_string              gpgrt_log_string
+# define log_bug                 gpgrt_log_bug
+# define log_fatal               gpgrt_log_fatal
+# define log_error               gpgrt_log_error
+# define log_info                gpgrt_log_info
+# define log_debug               gpgrt_log_debug
+# define log_debug_string        gpgrt_log_debug_string
+# define log_printf              gpgrt_log_printf
+# define log_printhex            gpgrt_log_printhex
+# define log_clock               gpgrt_log_clock
+# define log_flush               gpgrt_log_flush
+#endif /*GPGRT_ENABLE_LOG_MACROS*/
+
 
 #ifdef __cplusplus
 }

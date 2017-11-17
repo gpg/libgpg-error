@@ -15,10 +15,12 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program; if not, see <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: LGPL-2.1+
  */
 
 #include <config.h>
 #include <stdarg.h>
+#include <stdlib.h> /* For abort().  */
 
 #define _GPGRT_INCL_BY_VISIBILITY_C 1
 #include "gpgrt-int.h"
@@ -712,6 +714,8 @@ gpgrt_vsnprintf (char *buf, size_t bufsize,
   return _gpgrt_estream_vsnprintf (buf, bufsize, format, arg_ptr);
 }
 
+
+
 gpgrt_b64state_t
 gpgrt_b64dec_start (const char *title)
 {
@@ -729,4 +733,204 @@ gpg_error_t
 gpgrt_b64dec_finish (gpgrt_b64state_t state)
 {
   return _gpgrt_b64dec_finish (state);
+}
+
+
+
+int
+gpgrt_get_errorcount (int clear)
+{
+  return _gpgrt_get_errorcount (clear);
+}
+
+void
+gpgrt_inc_errorcount (void)
+{
+  _gpgrt_inc_errorcount ();
+}
+
+void
+gpgrt_log_set_sink (const char *name, estream_t stream, int fd)
+{
+  _gpgrt_log_set_sink (name, stream, fd);
+}
+
+void
+gpgrt_log_set_socket_dir_cb (const char *(*fnc)(void))
+{
+  _gpgrt_log_set_socket_dir_cb (fnc);
+}
+
+void
+gpgrt_log_set_pid_suffix_cb (int (*cb)(unsigned long *r_value))
+{
+  _gpgrt_log_set_pid_suffix_cb (cb);
+}
+
+void
+gpgrt_log_set_prefix (const char *text, unsigned int flags)
+{
+  _gpgrt_log_set_prefix (text, flags);
+}
+
+const char *
+gpgrt_log_get_prefix (unsigned int *flags)
+{
+  return _gpgrt_log_get_prefix (flags);
+}
+
+int
+gpgrt_log_test_fd (int fd)
+{
+  return _gpgrt_log_test_fd (fd);
+}
+
+int
+gpgrt_log_get_fd (void)
+{
+  return _gpgrt_log_get_fd ();
+}
+
+estream_t
+gpgrt_log_get_stream (void)
+{
+  return _gpgrt_log_get_stream ();
+}
+
+void
+gpgrt_log (int level, const char *fmt, ...)
+{
+  va_list arg_ptr ;
+
+  va_start (arg_ptr, fmt) ;
+  _gpgrt_logv (level, fmt, arg_ptr);
+  va_end (arg_ptr);
+}
+
+void
+gpgrt_logv (int level, const char *fmt, va_list arg_ptr)
+{
+  _gpgrt_logv (level, fmt, arg_ptr);
+}
+
+void
+gpgrt_logv_prefix (int level, const char *prefix,
+                    const char *fmt, va_list arg_ptr)
+{
+  _gpgrt_logv_prefix (level, prefix, fmt, arg_ptr);
+}
+
+void
+gpgrt_log_string (int level, const char *string)
+{
+  _gpgrt_log_string (level, string);
+}
+
+void
+gpgrt_log_info (const char *fmt, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, fmt);
+  _gpgrt_logv (GPGRT_LOG_INFO, fmt, arg_ptr);
+  va_end (arg_ptr);
+}
+
+void
+gpgrt_log_error (const char *fmt, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, fmt);
+  _gpgrt_logv (GPGRT_LOG_ERROR, fmt, arg_ptr);
+  va_end (arg_ptr);
+}
+
+void
+gpgrt_log_fatal (const char *fmt, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, fmt);
+  _gpgrt_logv (GPGRT_LOG_FATAL, fmt, arg_ptr);
+  va_end (arg_ptr);
+  abort (); /* Never called; just to make the compiler happy.  */
+}
+
+void
+gpgrt_log_bug (const char *fmt, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, fmt);
+  _gpgrt_logv (GPGRT_LOG_BUG, fmt, arg_ptr);
+  va_end (arg_ptr);
+  abort (); /* Never called; just to make the compiler happy.  */
+}
+
+void
+gpgrt_log_debug (const char *fmt, ...)
+{
+  va_list arg_ptr ;
+
+  va_start (arg_ptr, fmt);
+  _gpgrt_logv (GPGRT_LOG_DEBUG, fmt, arg_ptr);
+  va_end (arg_ptr);
+}
+
+void
+gpgrt_log_debug_string (const char *string, const char *fmt, ...)
+{
+  va_list arg_ptr ;
+
+  va_start (arg_ptr, fmt);
+  _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, string, NULL, fmt, arg_ptr);
+  va_end (arg_ptr);
+}
+
+void
+gpgrt_log_printf (const char *fmt, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, fmt);
+  _gpgrt_logv (fmt ? GPGRT_LOG_CONT : GPGRT_LOG_BEGIN, fmt, arg_ptr);
+  va_end (arg_ptr);
+}
+
+void
+gpgrt_log_flush (void)
+{
+  _gpgrt_log_flush ();
+}
+
+void
+gpgrt_log_printhex (const void *buffer, size_t length, const char *fmt, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, fmt);
+  _gpgrt_logv_printhex (buffer, length, fmt, arg_ptr);
+  va_end (arg_ptr);
+}
+
+void
+gpgrt_log_clock (const char *fmt, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, fmt);
+  _gpgrt_logv_clock (fmt, arg_ptr);
+  va_end (arg_ptr);
+}
+
+void
+_gpgrt_log_assert (const char *expr, const char *file,
+                   int line, const char *func)
+{
+#ifdef GPGRT_HAVE_MACRO_FUNCTION
+  _gpgrt__log_assert (expr, file, line, func);
+#else
+  _gpgrt__log_assert (expr, file, line);
+#endif
 }
