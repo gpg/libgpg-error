@@ -776,7 +776,9 @@ _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
 {
   HANDLE waitbuf[MAXIMUM_WAIT_OBJECTS];
   int waitidx[MAXIMUM_WAIT_OBJECTS];
+#ifdef ENABLE_TRACING
   char waitinfo[MAXIMUM_WAIT_OBJECTS];
+#endif
   unsigned int code;
   int nwait;
   int i;
@@ -833,7 +835,9 @@ _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
                   return -1;
                 }
               waitidx[nwait] = i;
+#ifdef ENABLE_TRACING
               waitinfo[nwait] = 'r';
+#endif /*ENABLE_TRACING*/
               waitbuf[nwait++] = ctx->have_data_ev;
 	      any = 1;
             }
@@ -862,16 +866,20 @@ _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
                   return -1;
                 }
               waitidx[nwait] = i;
+#ifdef ENABLE_TRACING
               waitinfo[nwait] = 'w';
+#endif /*ENABLE_TRACING*/
               waitbuf[nwait++] = ctx->is_empty;
 	      any = 1;
             }
         }
     }
+#ifdef ENABLE_TRACING
   trace_start (("poll on [ "));
   for (i = 0; i < nwait; i++)
     trace_append (("%d/%c ", waitidx[i], waitinfo[i]));
   trace_finish (("]"));
+#endif /*ENABLE_TRACING*/
   if (!any)
     return 0;
 
