@@ -917,7 +917,7 @@ enum gpgrt_log_levels
 
 
 /* The next 4 fucntions are not thread-safe - call them early.  */
-void gpgrt_log_set_sink (const char *name, estream_t stream, int fd);
+void gpgrt_log_set_sink (const char *name, gpgrt_stream_t stream, int fd);
 void gpgrt_log_set_socket_dir_cb (const char *(*fnc)(void));
 void gpgrt_log_set_pid_suffix_cb (int (*cb)(unsigned long *r_value));
 void gpgrt_log_set_prefix (const char *text, unsigned int flags);
@@ -927,7 +927,7 @@ void gpgrt_inc_errorcount (void);
 const char *gpgrt_log_get_prefix (unsigned int *flags);
 int  gpgrt_log_test_fd (int fd);
 int  gpgrt_log_get_fd (void);
-estream_t gpgrt_log_get_stream (void);
+gpgrt_stream_t gpgrt_log_get_stream (void);
 
 void gpgrt_log (int level, const char *fmt, ...) GPGRT_ATTR_PRINTF(2,3);
 void gpgrt_logv (int level, const char *fmt, va_list arg_ptr);
