@@ -83,26 +83,27 @@ lock_obj_pub = \
 lib_LTLIBRARIES = libgpg-error.la
 nodist_include_HEADERS = gpg-error.h gpgrt.h
 bin_SCRIPTS = gpg-error-config
+nodist_bin_SCRIPTS = gpgrt-config
 m4datadir = $(datadir)/aclocal
-m4data_DATA = gpg-error.m4
+m4data_DATA = gpg-error.m4 gpgrt.m4
 
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrnos.awk errnos.in README \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
 	mkheader.c gpg-error.h.in mkw32errmap.c w32-add.h w32ce-add.h \
-	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 \
+	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 gpgrt.m4 \
 	gpg-error.vers gpg-error.def.in \
         versioninfo.rc.in gpg-error.w32-manifest.in \
 	$(lock_obj_pub)
 
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h gpgrt.h \
-	gpg-error.def mkw32errmap.map.c
+	gpgrt-config gpg-error.def mkw32errmap.map.c
 
 tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h mkw32errmap.map.c
 
 CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
-	gpg-error.h gpgrt.h \
+	gpg-error.h gpgrt.h gpgrt-config \
         mkerrcodes mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
 	gpg-extra/errno.h mkheader $(tmp_files) lock-obj-pub.native.h
@@ -316,6 +317,9 @@ gpg-error.h: Makefile mkheader $(parts_of_gpg_error_h) \
 
 gpgrt.h: gpg-error.h
 	cp gpg-error.h gpgrt.h
+
+gpgrt-config: gpg-error-config
+	cp gpg-error-config gpgrt-config
 
 install-data-local:
 if HAVE_W32CE_SYSTEM

@@ -8,7 +8,7 @@
 # This file is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
+# SPDX-License-Identifier: FSFULLR
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -16,13 +16,19 @@ includedir=@includedir@
 libdir=@libdir@
 isubdirafter="@GPG_ERROR_CONFIG_ISUBDIRAFTER@"
 
+if echo "$0" | grep gpg-error-config 2>/dev/null >/dev/null; then
+  myname="gpg-error-config"
+else
+  myname="gpgrt-config"
+fi
+
 output=""
 mt=no
 
 usage()
 {
     cat <<EOF
-Usage: gpg-error-config [OPTIONS]
+Usage: $myname [OPTIONS]
 Options:
         [--mt]       (must be the first option)
 	[--prefix]
@@ -67,7 +73,7 @@ while test $# -gt 0; do
 		output="$output -I$includedir"
 	    fi
             # Note: -idirafter is a gcc extension.  It is only used on
-            #       systems where gcc is the only compiler we support.
+            # systems where gcc is the only compiler we support (WindowsCE).
             for i in $isubdirafter; do
                 output="$output -idirafter ${includedir}/${i}"
             done
