@@ -955,8 +955,7 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
    ? (void) 0                                                   \
    : _gpgrt_log_assert (#expr, __FILE__, __LINE__, __FUNCTION__))
 #else /*!GPGRT_HAVE_MACRO_FUNCTION*/
-void _gpgrt_log_assert (const char *expr, const char *file, int line);
-#define gpgrt_assert(expr)                                      \
+# define gpgrt_assert(expr)                                     \
   ((expr)                                                       \
    ? (void) 0                                                   \
    : _gpgrt_log_assert (#expr, __FILE__, __LINE__, NULL))
@@ -989,6 +988,18 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line);
 # define log_printhex            gpgrt_log_printhex
 # define log_clock               gpgrt_log_clock
 # define log_flush               gpgrt_log_flush
+# ifdef GPGRT_HAVE_MACRO_FUNCTION
+#  define log_assert(expr)                                      \
+  ((expr)                                                       \
+   ? (void) 0                                                   \
+   : _gpgrt_log_assert (#expr, __FILE__, __LINE__, __FUNCTION__))
+# else /*!GPGRT_HAVE_MACRO_FUNCTION*/
+#  define log_assert(expr)                                      \
+  ((expr)                                                       \
+   ? (void) 0                                                   \
+   : _gpgrt_log_assert (#expr, __FILE__, __LINE__, NULL))
+# endif /*!GPGRT_HAVE_MACRO_FUNCTION*/
+
 #endif /*GPGRT_ENABLE_LOG_MACROS*/
 
 
