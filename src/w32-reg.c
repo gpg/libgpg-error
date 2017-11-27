@@ -39,7 +39,9 @@
 
 /* Return a string from the W32 Registry or NULL in case of error.
  * Caller must release the return value.  A NULL for root is an alias
- * for HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE in turn. */
+ * for HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE in turn.  The returned
+ * string is UTF-8 encoded; ROOT, DIR, and NAME must be plain
+ * ASCII. */
 char *
 _gpgrt_w32_reg_query_string (const char *root, const char *dir,
                              const char *name)
@@ -74,6 +76,8 @@ _gpgrt_w32_reg_query_string (const char *root, const char *dir,
         return NULL; /* still no need for a RegClose, so return direct */
     }
 
+
+  /* FIXME:  Use wide functions and convert to utf-8.  */
   nbytes = 1;
   if (RegQueryValueExA (key_handle, name, 0, NULL, NULL, &nbytes))
     {
