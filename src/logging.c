@@ -559,7 +559,8 @@ set_file_fd (const char *name, int fd)
  * "socket:///home/foo/mylogs" may be used to write the logging to the
  * socket "/home/foo/mylogs".  If the connection to the socket fails
  * or a write error is detected, the function writes to stderr and
- * tries the next time again to connect the socket.
+ * tries the next time again to connect the socket.  Calling this
+ * function with (NULL, NULL, -1) sets the default sink.
  * Warning: This function is not thread-safe.
  */
 void
@@ -567,7 +568,7 @@ _gpgrt_log_set_sink (const char *name, estream_t stream, int fd)
 {
   if (name && !stream && fd == -1)
     set_file_fd (name, -1);
-  else if (!name && !stream)
+  else if (!name && !stream && fd != -1)
     {
       if (!_gpgrt_fd_valid_p (fd))
         _gpgrt_log_fatal ("gpgrt_log_set_sink: fd is invalid: %s\n",
