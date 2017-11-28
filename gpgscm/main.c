@@ -23,8 +23,6 @@
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <gcrypt.h>
-#include <gpg-error.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,17 +34,12 @@
 #include <sys/mman.h>
 #endif
 
+
 #include "private.h"
 #include "scheme.h"
 #include "scheme-private.h"
 #include "ffi.h"
-#include "../common/i18n.h"
-#include "../../common/argparse.h"
-#include "../../common/init.h"
-#include "../../common/logging.h"
-#include "../../common/strlist.h"
-#include "../../common/sysutils.h"
-#include "../../common/util.h"
+
 
 /* The TinyScheme banner.  Unfortunately, it isn't in the header
    file.  */
@@ -64,35 +57,35 @@ enum cmd_and_opt_values
   };
 
 /* The list of commands and options. */
-static ARGPARSE_OPTS opts[] =
-  {
-    ARGPARSE_s_n (oVerbose, "verbose", N_("verbose")),
-    ARGPARSE_end (),
-  };
+/* static ARGPARSE_OPTS opts[] = */
+/*   { */
+/*     ARGPARSE_s_n (oVerbose, "verbose", N_("verbose")), */
+/*     ARGPARSE_end (), */
+/*   }; */
 
 char *scmpath = "";
 size_t scmpath_len = 0;
 
 /* Command line parsing.  */
-static void
-parse_arguments (ARGPARSE_ARGS *pargs, ARGPARSE_OPTS *popts)
-{
-  int no_more_options = 0;
+/* static void */
+/* parse_arguments (ARGPARSE_ARGS *pargs, ARGPARSE_OPTS *popts) */
+/* { */
+  /* int no_more_options = 0; */
 
-  while (!no_more_options && optfile_parse (NULL, NULL, NULL, pargs, popts))
-    {
-      switch (pargs->r_opt)
-        {
-        case oVerbose:
-          verbose++;
-          break;
+  /* while (!no_more_options && optfile_parse (NULL, NULL, NULL, pargs, popts)) */
+  /*   { */
+  /*     switch (pargs->r_opt) */
+  /*       { */
+  /*       case oVerbose: */
+  /*         verbose++; */
+  /*         break; */
 
-        default:
-	  pargs->err = 2;
-	  break;
-	}
-    }
-}
+  /*       default: */
+  /*         pargs->err = 2; */
+  /*         break; */
+  /*       } */
+  /*   } */
+/* } */
 
 /* Print usage information and provide strings for help. */
 static const char *
@@ -102,19 +95,18 @@ my_strusage( int level )
 
   switch (level)
     {
-    case 11: p = "gpgscm (@GNUPG@)";
+    case 11: p = "gpgscm";
       break;
     case 13: p = VERSION; break;
-    case 17: p = PRINTABLE_OS_NAME; break;
-    case 19: p = _("Please report bugs to <@EMAIL@>.\n"); break;
+    case 19: p = "Please report bugs to <@EMAIL@>.\n"; break;
 
     case 1:
     case 40:
-      p = _("Usage: gpgscm [options] [file] (-h for help)");
+      p = "Usage: gpgscm [options] [file] (-h for help)";
       break;
     case 41:
-      p = _("Syntax: gpgscm [options] [file]\n"
-            "Execute the given Scheme program, or spawn interactive shell.\n");
+      p = "Syntax: gpgscm [options] [file]\n"
+          "Execute the given Scheme program, or spawn interactive shell.\n";
       break;
 
     default: p = NULL; break;
@@ -251,7 +243,7 @@ main (int argc, char **argv)
   int retcode;
   gpg_error_t err;
   char *argv0;
-  ARGPARSE_ARGS pargs;
+  /* ARGPARSE_ARGS pargs; */
   scheme *sc;
   char *p;
 #if _WIN32
@@ -263,6 +255,13 @@ main (int argc, char **argv)
 
   /* Save argv[0] so that we can re-exec.  */
   argv0 = argv[0];
+
+  if (!gpgrt_check_version (PACKAGE_VERSION))
+    {
+      fprintf (stderr, _("%s is too old (need %s, have %s)\n"), "libgpg-error",
+               PACKAGE_VERSION, gpgrt_check_version (NULL));
+      exit (2);
+    }
 
   /* Parse path.  */
   if (getenv ("GPGSCM_PATH"))
@@ -278,33 +277,28 @@ main (int argc, char **argv)
     if (*p == pathsep)
       *p = 0, scmpath_len++;
 
-  set_strusage (my_strusage);
-  log_set_prefix ("gpgscm", GPGRT_LOG_WITH_PREFIX);
+  /* set_strusage (my_strusage); */
+  gpgrt_log_set_prefix ("gpgscm", GPGRT_LOG_WITH_PREFIX);
 
   /* Make sure that our subsystems are ready.  */
-  i18n_init ();
-  init_common_subsystems (&argc, &argv);
-
-  if (!gcry_check_version (NEED_LIBGCRYPT_VERSION))
-    {
-      fputs ("libgcrypt version mismatch\n", stderr);
-      exit (2);
-    }
+  /* i18n_init (); */
+  /* init_common_subsystems (&argc, &argv); */
 
   /* Parse the command line. */
-  pargs.argc  = &argc;
-  pargs.argv  = &argv;
-  pargs.flags = 0;
-  parse_arguments (&pargs, opts);
+  /* pargs.argc  = &argc; */
+  /* pargs.argv  = &argv; */
+  /* pargs.flags = 0; */
+  /* parse_arguments (&pargs, opts); */
 
-  if (log_get_errorcount (0))
+  if (gpgrt_get_errorcount (0))
     exit (2);
 
-  sc = scheme_init_new_custom_alloc (gcry_malloc, gcry_free);
-  if (! sc) {
-    fprintf (stderr, "Could not initialize TinyScheme!\n");
-    return 2;
-  }
+  sc = scheme_init_new_custom_alloc (gpgrt_malloc, gpgrt_free);
+  if (!sc)
+    {
+      fprintf (stderr, "Could not initialize TinyScheme!\n");
+      return 2;
+    }
   scheme_set_input_port_file (sc, stdin);
   scheme_set_output_port_file (sc, stderr);
 
@@ -347,7 +341,7 @@ main (int argc, char **argv)
     {
       err = load (sc, script, 1, 1);
       if (err)
-        log_fatal ("%s: %s", script, gpg_strerror (err));
+        gpgrt_log_fatal ("%s: %s", script, gpg_strerror (err));
     }
 
   retcode = sc->retcode;

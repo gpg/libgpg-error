@@ -20,7 +20,7 @@
 #ifndef GPGSCM_FFI_H
 #define GPGSCM_FFI_H
 
-#include <gpg-error.h>
+#include "../src/gpgrt.h"
 #include "scheme.h"
 
 gpg_error_t ffi_init (scheme *sc, const char *argv0, const char *scriptname,

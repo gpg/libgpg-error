@@ -20,7 +20,7 @@
 #ifndef GPGSCM_FFI_PRIVATE_H
 #define GPGSCM_FFI_PRIVATE_H
 
-#include <gpg-error.h>
+#include "../src/gpgrt.h"
 #include "scheme.h"
 #include "scheme-private.h"
 

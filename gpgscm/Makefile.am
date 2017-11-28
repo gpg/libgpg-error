@@ -31,9 +31,6 @@ EXTRA_DIST = \
 	gnupg.scm \
 	time.scm
 
-AM_CPPFLAGS = -I$(top_srcdir)/common
-include $(top_srcdir)/am/cmacros.am
-
 AM_CFLAGS =
 
 CLEANFILES =
@@ -41,23 +38,17 @@ CLEANFILES =
 bin_PROGRAMS = gpgscm
 noinst_PROGRAMS = t-child
 
-common_libs = ../$(libcommon)
-commonpth_libs = ../$(libcommonpth)
-
-gpgscm_CFLAGS = -imacros scheme-config.h \
-	$(LIBGCRYPT_CFLAGS) $(LIBASSUAN_CFLAGS) $(GPG_ERROR_CFLAGS)
+gpgscm_CFLAGS = -imacros scheme-config.h
 gpgscm_SOURCES = main.c private.h ffi.c ffi.h ffi-private.h \
 	scheme-config.h scheme.c scheme.h scheme-private.h \
 	opdefines.h small-integers.h
-gpgscm_LDADD = $(LDADD) $(common_libs) \
-	$(NETLIBS) $(LIBICONV) $(LIBREADLINE) $(LIBINTL) \
-	$(LIBGCRYPT_LIBS) $(GPG_ERROR_LIBS)
+gpgscm_LDADD = $(LDADD) $(LIBREADLINE) ../src/libgpg-error.la $(LTLIBINTL)
 
 t_child_SOURCES = t-child.c
 
 # Make sure that all libs are build before we use them.  This is
-# important for things like make -j2.
-$(PROGRAMS): $(common_libs)
+# important for parallel builds (i.e. make -j2).
+$(PROGRAMS): ../src/libgpg-error.la
 
 check-local: gpgscm$(EXEEXT) t-child$(EXEEXT)
 	EXEEXT=$(EXEEXT) GPGSCM_PATH=$(srcdir) \
