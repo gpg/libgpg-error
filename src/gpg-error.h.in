@@ -453,14 +453,15 @@ void gpgrt_free (void *a);
 char *gpgrt_getenv (const char *name);
 
 /* A setenv and a unsetenv replacement.*/
-int gpgrt_setenv (const char *name, const char *value, int overwrite);
+gpg_err_code_t gpgrt_setenv (const char *name,
+                             const char *value, int overwrite);
 #define gpgrt_unsetenv(n) gpgrt_setenv ((n), NULL, 1)
 
 /* A wrapper around mkdir using a string for the mode.  */
-int gpgrt_mkdir (const char *name, const char *modestr);
+gpg_err_code_t gpgrt_mkdir (const char *name, const char *modestr);
 
 /* A simple wrapper around chdir.  */
-int gpgrt_chdir (const char *name);
+gpg_err_code_t gpgrt_chdir (const char *name);
 
 /* Return the current WD as a malloced string.  */
 char *gpgrt_getcwd (void);

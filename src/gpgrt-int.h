@@ -564,13 +564,14 @@ char *_gpgrt_getenv (const char *name);
 
 /* A setenv variant which can be used for unsetenv by setting VALUE to
  * NULL and OVERRIDE to true.  */
-int _gpgrt_setenv (const char *name, const char *value, int overwrite);
+gpg_err_code_t _gpgrt_setenv (const char *name,
+                              const char *value, int overwrite);
 
 /* A wrapper around mkdir using a string for the mode (permissions).  */
-int _gpgrt_mkdir (const char *name, const char *modestr);
+gpg_err_code_t _gpgrt_mkdir (const char *name, const char *modestr);
 
 /* A simple wrapper around chdir.  */
-int _gpgrt_chdir (const char *name);
+gpg_err_code_t _gpgrt_chdir (const char *name);
 
 /* Return the current WD as a malloced string.  */
 char *_gpgrt_getcwd (void);

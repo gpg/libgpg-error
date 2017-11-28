@@ -763,25 +763,26 @@ gpgrt_getenv (const char *name)
   return _gpgrt_getenv (name);
 }
 
-int
+gpg_err_code_t
 gpgrt_setenv (const char *name, const char *value, int overwrite)
 {
   return _gpgrt_setenv (name, value, overwrite);
 }
 
-int
+gpg_err_code_t
 gpgrt_mkdir (const char *name, const char *modestr)
 {
   return _gpgrt_mkdir (name, modestr);
 }
 
-int
+gpg_err_code_t
 gpgrt_chdir (const char *name)
 {
   return _gpgrt_chdir (name);
 }
 
-char *gpgrt_getcwd (void)
+char *
+gpgrt_getcwd (void)
 {
   return _gpgrt_getcwd ();
 }

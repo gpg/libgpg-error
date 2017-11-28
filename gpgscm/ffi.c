@@ -243,6 +243,7 @@ static pointer
 do_setenv (scheme *sc, pointer args)
 {
   FFI_PROLOG ();
+  gpg_err_code_t ec;
   char *name;
   char *value;
   int overwrite;
@@ -250,8 +251,8 @@ do_setenv (scheme *sc, pointer args)
   FFI_ARG_OR_RETURN (sc, char *, value, string, args);
   FFI_ARG_OR_RETURN (sc, int, overwrite, bool, args);
   FFI_ARGS_DONE_OR_RETURN (sc, args);
-  if (gpgrt_setenv (name, value, overwrite))
-    FFI_RETURN_ERR (sc, gpg_error_from_syserror ());
+  if ((ec = gpgrt_setenv (name, value, overwrite)))
+    FFI_RETURN_ERR (sc, ec);
   FFI_RETURN (sc);
 }
 
@@ -490,13 +491,15 @@ static pointer
 do_mkdir (scheme *sc, pointer args)
 {
   FFI_PROLOG ();
+  gpg_err_code_t ec;
   char *name;
   char *mode;
   FFI_ARG_OR_RETURN (sc, char *, name, string, args);
   FFI_ARG_OR_RETURN (sc, char *, mode, string, args);
   FFI_ARGS_DONE_OR_RETURN (sc, args);
-  if (gpgrt_mkdir (name, mode) == -1)
-    FFI_RETURN_ERR (sc, gpg_error_from_syserror ());
+  ec = gpgrt_mkdir (name, mode);
+  if (ec)
+    FFI_RETURN_ERR (sc, ec);
   FFI_RETURN (sc);
 }
 

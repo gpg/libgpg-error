@@ -118,14 +118,11 @@ _gpgrt_getenv (const char *name)
 /* Wrapper around setenv so that we can have the same function in
  * Windows and Unix.  In contrast to the standard setenv passing a
  * VALUE as NULL and setting OVERWRITE will remove the envvar.  */
-int
+gpg_err_code_t
 _gpgrt_setenv (const char *name, const char *value, int overwrite)
 {
   if (!name || !*name || strchr (name, '='))
-    {
-      _gpg_err_set_errno (EINVAL);
-      return -1;
-    }
+    return GPG_ERR_EINVAL;
 
 #ifdef HAVE_W32_SYSTEM
   /* Windows maintains (at least) two sets of environment variables.
@@ -143,34 +140,30 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
     if (!value && overwrite)
       {
         if (!SetEnvironmentVariable (name, NULL))
-          {
-            _gpg_err_set_errno (EINVAL);
-            return -1;
-          }
+          return GPG_ERR_EINVAL;
         if (getenv (name))
           {
             /* Ugly: Leaking memory.  */
             buf = _gpgrt_strdup (name);
             if (!buf)
-              return -1;
-            return putenv (buf);
+              return _gpg_err_code_from_syserror ();
+            if (putenv (buf))
+              return _gpg_err_code_from_syserror ();
           }
         return 0;
       }
 
     exists = GetEnvironmentVariable (name, tmpbuf, sizeof tmpbuf);
     if ((! exists || overwrite) && !SetEnvironmentVariable (name, value))
-      {
-        _gpg_err_set_errno (EINVAL); /* (Might also be ENOMEM.) */
-        return -1;
-      }
+      return GPG_ERR_EINVAL; /* (Might also be ENOMEM.) */
     if (overwrite || !getenv (name))
       {
         /* Ugly: Leaking memory.  */
         buf = _gpgrt_strconcat (name, "=", value, NULL);
         if (!buf)
-          return -1;
-        return putenv (buf);
+          return _gpg_err_code_from_syserror ();
+        if (putenv (buf))
+          return _gpg_err_code_from_syserror ();
       }
     return 0;
   }
@@ -181,9 +174,17 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
 
   {
     if (!value && overwrite)
-      return unsetenv (name);
+      {
+        if (unsetenv (name))
+          return _gpg_err_code_from_syserror ();
+      }
     else
-      return setenv (name, value, overwrite);
+      {
+        if (setenv (name, value, overwrite))
+          return _gpg_err_code_from_syserror ();
+      }
+
+    return 0;
   }
 
 # else /*!HAVE_SETENV*/
@@ -200,16 +201,18 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
           {
             buf = _gpgrt_strdup (name);
             if (!buf)
+              return _gpg_err_code_from_syserror ();
+            if (putenv (buf))
               return -1;
-            return putenv (buf);
           }
       }
     else if (overwrite || !getenv (name))
       {
         buf = _gpgrt_strconcat (name, "=", value, NULL);
         if (!buf)
-          return -1;
-        return putenv (buf);
+          return _gpg_err_code_from_syserror ();
+        if (putenv (buf))
+          return _gpg_err_code_from_syserror ();
       }
 
     return 0;
@@ -264,7 +267,7 @@ modestr_to_mode (const char *modestr)
  * the second for the group and the third for all others.  If the
  * string is shorter than above the missing mode characters are meant
  * to be not set.  */
-int
+gpg_err_code_t
 _gpgrt_mkdir (const char *name, const char *modestr)
 {
 #ifdef HAVE_W32CE_SYSTEM
@@ -273,11 +276,11 @@ _gpgrt_mkdir (const char *name, const char *modestr)
 
   wname = utf8_to_wchar (name);
   if (!wname)
-    return -1;
+    return _gpg_err_code_from_syserror ();
   if (!CreateDirectoryW (wname, NULL))
     {
       xfree (wname);
-      return -1;  /* ERRNO is automagically provided by gpg-error.h.  */
+      return _gpg_err_code_from_syserror ();
     }
   xfree (wname);
   return 0;
@@ -286,19 +289,25 @@ _gpgrt_mkdir (const char *name, const char *modestr)
   /* Note: In the case of W32 we better use CreateDirectory and try to
      set appropriate permissions.  However using mkdir is easier
      because this sets ERRNO.  */
-  return mkdir (name);
+  if (mkdir (name))
+    return _gpg_err_code_from_syserror ();
+  return 0;
 #else
-  return mkdir (name, modestr_to_mode (modestr));
+  if (mkdir (name, modestr_to_mode (modestr)))
+    return _gpg_err_code_from_syserror ();
+  return 0;
 #endif
 }
 
 
 /* A simple wrapper around chdir.  NAME is expected to be utf8
  * encoded.  */
-int
+gpg_err_code_t
 _gpgrt_chdir (const char *name)
 {
-  return chdir (name);
+  if (chdir (name))
+    return _gpg_err_code_from_syserror ();
+  return 0;
 }
 
 
