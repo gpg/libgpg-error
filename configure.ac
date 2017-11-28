@@ -154,6 +154,7 @@ AH_BOTTOM([
 #define GPG_ERR_ENABLE_GETTEXT_MACROS 1
 #define GPG_ERR_ENABLE_ERRNO_MACROS 1
 #define GPGRT_ENABLE_ES_MACROS 1
+#define GPGRT_ENABLE_LOG_MACROS 1
 ])
 
 
@@ -531,6 +532,19 @@ if test "$enable_log_clock" = yes ; then
   AC_DEFINE(ENABLE_LOG_CLOCK,1,[Defined to use log_clock timestamps])
 fi
 
+#
+# For now we do not build gpgscm by default.
+# Eventually we will reverse the meaning of that option.
+#
+build_gpgscm=no
+AC_MSG_CHECKING([whether to build gpgscm])
+AC_ARG_ENABLE(gpgscm,
+              AC_HELP_STRING([--enable-gpgscm],
+                             [build the gpgscm tool]),
+              build_gpgscm=$enableval, build_gpgscm=no)
+AC_MSG_RESULT($build_gpgscm)
+AM_CONDITIONAL([BUILD_GPGSCM], [test "x$build_gpgscm" != xno])
+
 
 #
 # Add -Werror to CFLAGS.  This hack can be used to avoid problems with
@@ -597,7 +611,7 @@ AM_CONDITIONAL([BUILD_TESTS], [test "x$build_tests" != xno])
 #
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([doc/Makefile po/Makefile.in m4/Makefile])
-AC_CONFIG_FILES([src/Makefile tests/Makefile])
+AC_CONFIG_FILES([src/Makefile gpgscm/Makefile tests/Makefile])
 AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc src/gpg-error.w32-manifest])
 AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])

@@ -1165,7 +1165,7 @@ _gpgrt_logv_clock (const char *fmt, va_list arg_ptr)
 
   if (clock_gettime (CLOCK_REALTIME, &tv))
     {
-      log_debug ("error getting the realtime clock value\n");
+      _gpgrt_log_debug ("error getting the realtime clock value\n");
       return;
     }
   now = tv.tv_sec * 1000000000ull;
