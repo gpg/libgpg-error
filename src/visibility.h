@@ -124,6 +124,8 @@ MARK_VISIBLE (gpgrt_calloc)
 MARK_VISIBLE (gpgrt_strdup)
 MARK_VISIBLE (gpgrt_strconcat)
 MARK_VISIBLE (gpgrt_free)
+MARK_VISIBLE (gpgrt_getenv)
+MARK_VISIBLE (gpgrt_setenv)
 MARK_VISIBLE (gpgrt_fprintf)
 MARK_VISIBLE (gpgrt_fprintf_unlocked)
 MARK_VISIBLE (gpgrt_printf)
@@ -268,6 +270,8 @@ MARK_VISIBLE (_gpgrt_log_assert)
 #define gpgrt_strdup                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_strconcat             _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_free                  _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_getenv                _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_setenv                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fprintf               _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fprintf_unlocked      _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_printf                _gpgrt_USE_UNDERSCORED_FUNCTION

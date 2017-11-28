@@ -445,6 +445,19 @@ char *gpgrt_strconcat (const char *s1, ...) GPGRT_ATTR_SENTINEL(0);
 void gpgrt_free (void *a);
 
 
+/*
+ * System specific function wrappers.
+ */
+
+/* A getenv replacement which mallocs the returned string.  */
+char *gpgrt_getenv (const char *name);
+
+/* A setenv and a unsetenv replacement.*/
+int gpgrt_setenv (const char *name, const char *value, int overwrite);
+#define gpgrt_unsetenv(n) gpgrt_setenv ((n), NULL, 1)
+
+
+
 
 /*
  * Lock functions.

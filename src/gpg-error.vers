@@ -163,6 +163,9 @@ GPG_ERROR_1.0 {
     gpgrt_strdup;
     gpgrt_strconcat;
 
+    gpgrt_getenv;
+    gpgrt_setenv;
+
   local:
     *;
 };

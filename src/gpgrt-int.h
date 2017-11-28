@@ -559,6 +559,14 @@ int _gpgrt_logv_internal (int level, int ignore_arg_ptr,
 /* Return true if FD is valid.  */
 int _gpgrt_fd_valid_p (int fd);
 
+/* A getenv variant which returns a malloced copy.  */
+char *_gpgrt_getenv (const char *name);
+
+/* A setenv variant which can be used for unsetenv by setting VALUE to
+ * NULL and OVERRIDE to true.  */
+int _gpgrt_setenv (const char *name, const char *value, int overwrite);
+
+
 
 
 /*

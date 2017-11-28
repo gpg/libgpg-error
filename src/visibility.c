@@ -552,6 +552,18 @@ gpgrt_free (void *a)
     _gpgrt_free (a);
 }
 
+char *
+gpgrt_getenv (const char *name)
+{
+  return _gpgrt_getenv (name);
+}
+
+int
+gpgrt_setenv (const char *name, const char *value, int overwrite)
+{
+  return _gpgrt_setenv (name, value, overwrite);
+}
+
 int
 gpgrt_vfprintf (estream_t _GPGRT__RESTRICT stream,
                 const char *_GPGRT__RESTRICT format,

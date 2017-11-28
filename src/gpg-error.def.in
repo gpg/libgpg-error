@@ -189,6 +189,9 @@ EXPORTS
  gpgrt_strdup                 @144
  gpgrt_strconcat              @145
 
+ gpgrt_getenv                 @146
+ gpgrt_setenv                 @147
+
 #ifdef HAVE_W32_SYSTEM
  gpgrt_w32_reg_query_string   @148
 #endif
