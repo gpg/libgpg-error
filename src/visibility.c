@@ -504,66 +504,6 @@ gpgrt_read_line (estream_t stream,
                            max_length);
 }
 
-void *
-gpgrt_realloc (void *a, size_t n)
-{
-  return _gpgrt_realloc (a, n);
-}
-
-void *
-gpgrt_malloc (size_t n)
-{
-  return _gpgrt_malloc (n);
-}
-
-void *
-gpgrt_calloc (size_t n, size_t m)
-{
-  return _gpgrt_calloc (n, m);
-}
-
-char *
-gpgrt_strdup (const char *string)
-{
-  return _gpgrt_strdup (string);
-}
-
-char *
-gpgrt_strconcat (const char *s1, ...)
-{
-  va_list arg_ptr;
-  char *result;
-
-  if (!s1)
-    result = _gpgrt_strdup ("");
-  else
-    {
-      va_start (arg_ptr, s1);
-      result = _gpgrt_strconcat_core (s1, arg_ptr);
-      va_end (arg_ptr);
-    }
-  return result;
-}
-
-void
-gpgrt_free (void *a)
-{
-  if (a)
-    _gpgrt_free (a);
-}
-
-char *
-gpgrt_getenv (const char *name)
-{
-  return _gpgrt_getenv (name);
-}
-
-int
-gpgrt_setenv (const char *name, const char *value, int overwrite)
-{
-  return _gpgrt_setenv (name, value, overwrite);
-}
-
 int
 gpgrt_vfprintf (estream_t _GPGRT__RESTRICT stream,
                 const char *_GPGRT__RESTRICT format,
@@ -765,6 +705,85 @@ gpgrt_vsnprintf (char *buf, size_t bufsize,
                  const char *format, va_list arg_ptr)
 {
   return _gpgrt_estream_vsnprintf (buf, bufsize, format, arg_ptr);
+}
+
+
+
+void *
+gpgrt_realloc (void *a, size_t n)
+{
+  return _gpgrt_realloc (a, n);
+}
+
+void *
+gpgrt_malloc (size_t n)
+{
+  return _gpgrt_malloc (n);
+}
+
+void *
+gpgrt_calloc (size_t n, size_t m)
+{
+  return _gpgrt_calloc (n, m);
+}
+
+char *
+gpgrt_strdup (const char *string)
+{
+  return _gpgrt_strdup (string);
+}
+
+char *
+gpgrt_strconcat (const char *s1, ...)
+{
+  va_list arg_ptr;
+  char *result;
+
+  if (!s1)
+    result = _gpgrt_strdup ("");
+  else
+    {
+      va_start (arg_ptr, s1);
+      result = _gpgrt_strconcat_core (s1, arg_ptr);
+      va_end (arg_ptr);
+    }
+  return result;
+}
+
+void
+gpgrt_free (void *a)
+{
+  if (a)
+    _gpgrt_free (a);
+}
+
+char *
+gpgrt_getenv (const char *name)
+{
+  return _gpgrt_getenv (name);
+}
+
+int
+gpgrt_setenv (const char *name, const char *value, int overwrite)
+{
+  return _gpgrt_setenv (name, value, overwrite);
+}
+
+int
+gpgrt_mkdir (const char *name, const char *modestr)
+{
+  return _gpgrt_mkdir (name, modestr);
+}
+
+int
+gpgrt_chdir (const char *name)
+{
+  return _gpgrt_chdir (name);
+}
+
+char *gpgrt_getcwd (void)
+{
+  return _gpgrt_getcwd ();
 }
 
 
@@ -987,6 +1006,8 @@ _gpgrt_log_assert (const char *expr, const char *file,
   _gpgrt__log_assert (expr, file, line);
 #endif
 }
+
+
 
 
 

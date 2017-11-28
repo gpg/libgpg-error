@@ -189,11 +189,13 @@ EXPORTS
  gpgrt_strdup                 @144
  gpgrt_strconcat              @145
 
- gpgrt_getenv                 @146
- gpgrt_setenv                 @147
+ gpgrt_w32_reg_query_string   @146
 
-#ifdef HAVE_W32_SYSTEM
- gpgrt_w32_reg_query_string   @148
-#endif
+ gpgrt_getenv                 @147
+ gpgrt_setenv                 @148
+ gpgrt_mkdir                  @149
+ gpgrt_chdir                  @150
+ gpgrt_getcwd                 @151
+
 
 ;; end of file with public symbols for Windows.

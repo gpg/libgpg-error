@@ -177,7 +177,7 @@ AC_MSG_WARN([[Without strerror_r, gpg_strerror_r might not be thread-safe]]))
      ;;
 esac
 
-AC_CHECK_FUNCS([flockfile vasprintf mmap rand strlwr stpcpy setenv])
+AC_CHECK_FUNCS([flockfile vasprintf mmap rand strlwr stpcpy setenv stat])
 
 
 #
@@ -203,6 +203,9 @@ AC_CHECK_SIZEOF(time_t,,[[
 #endif
 ]])
 
+GNUPG_FUNC_MKDIR_TAKES_ONE_ARG
+
+
 # Find a 64 bit integer type to be used instead of off_t.  We prefer
 # the standard integer types over int64_t and finally try long long.
 if test "$ac_cv_sizeof_int" = "8"; then
@@ -221,7 +224,6 @@ else
 fi
 AC_DEFINE_UNQUOTED(REPLACEMENT_FOR_OFF_T, "$replacement_for_off_t",
                    [Used by mkheader to insert the replacement type.])
-
 
 
 #

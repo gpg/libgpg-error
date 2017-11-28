@@ -27,6 +27,11 @@
 #ifdef HAVE_W32_SYSTEM
 # include <windows.h>
 #endif
+#ifdef HAVE_STAT
+# include <sys/stat.h>
+#endif
+#include <sys/types.h>
+#include <fcntl.h>
 
 #include "gpgrt-int.h"
 
@@ -211,4 +216,115 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
   }
 # endif /*!HAVE_SETENV*/
 #endif /*!HAVE_W32_SYSTEM*/
+}
+
+
+#ifndef HAVE_W32_SYSTEM
+static mode_t
+modestr_to_mode (const char *modestr)
+{
+  mode_t mode = 0;
+
+  if (modestr && *modestr)
+    {
+      modestr++;
+      if (*modestr && *modestr++ == 'r')
+        mode |= S_IRUSR;
+      if (*modestr && *modestr++ == 'w')
+        mode |= S_IWUSR;
+      if (*modestr && *modestr++ == 'x')
+        mode |= S_IXUSR;
+      if (*modestr && *modestr++ == 'r')
+        mode |= S_IRGRP;
+      if (*modestr && *modestr++ == 'w')
+        mode |= S_IWGRP;
+      if (*modestr && *modestr++ == 'x')
+        mode |= S_IXGRP;
+      if (*modestr && *modestr++ == 'r')
+        mode |= S_IROTH;
+      if (*modestr && *modestr++ == 'w')
+        mode |= S_IWOTH;
+      if (*modestr && *modestr++ == 'x')
+        mode |= S_IXOTH;
+    }
+
+  return mode;
+}
+#endif
+
+
+/* A wrapper around mkdir which takes a string for the mode argument.
+ * This makes it easier to handle the mode argument which is not
+ * defined on all systems.  The format of the modestring is
+ *
+ *    "-rwxrwxrwx"
+ *
+ * '-' is a don't care or not set.  'r', 'w', 'x' are read allowed,
+ * write allowed, execution allowed with the first group for the user,
+ * the second for the group and the third for all others.  If the
+ * string is shorter than above the missing mode characters are meant
+ * to be not set.  */
+int
+_gpgrt_mkdir (const char *name, const char *modestr)
+{
+#ifdef HAVE_W32CE_SYSTEM
+  wchar_t *wname;
+  (void)modestr;
+
+  wname = utf8_to_wchar (name);
+  if (!wname)
+    return -1;
+  if (!CreateDirectoryW (wname, NULL))
+    {
+      xfree (wname);
+      return -1;  /* ERRNO is automagically provided by gpg-error.h.  */
+    }
+  xfree (wname);
+  return 0;
+#elif MKDIR_TAKES_ONE_ARG
+  (void)modestr;
+  /* Note: In the case of W32 we better use CreateDirectory and try to
+     set appropriate permissions.  However using mkdir is easier
+     because this sets ERRNO.  */
+  return mkdir (name);
+#else
+  return mkdir (name, modestr_to_mode (modestr));
+#endif
+}
+
+
+/* A simple wrapper around chdir.  NAME is expected to be utf8
+ * encoded.  */
+int
+_gpgrt_chdir (const char *name)
+{
+  return chdir (name);
+}
+
+
+/* Return the current working directory as a malloced string.  Return
+ * NULL and sets ERRNO on error.  */
+char *
+_gpgrt_getcwd (void)
+{
+  char *buffer;
+  size_t size = 100;
+
+  for (;;)
+    {
+      buffer = xtrymalloc (size+1);
+      if (!buffer)
+        return NULL;
+#ifdef HAVE_W32CE_SYSTEM
+      strcpy (buffer, "/");  /* Always "/".  */
+      return buffer;
+#else
+      if (getcwd (buffer, size) == buffer)
+        return buffer;
+      xfree (buffer);
+      if (errno != ERANGE)
+        return NULL;
+      size *= 2;
+#endif
+    }
 }

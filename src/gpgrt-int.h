@@ -566,7 +566,14 @@ char *_gpgrt_getenv (const char *name);
  * NULL and OVERRIDE to true.  */
 int _gpgrt_setenv (const char *name, const char *value, int overwrite);
 
+/* A wrapper around mkdir using a string for the mode (permissions).  */
+int _gpgrt_mkdir (const char *name, const char *modestr);
 
+/* A simple wrapper around chdir.  */
+int _gpgrt_chdir (const char *name);
+
+/* Return the current WD as a malloced string.  */
+char *_gpgrt_getcwd (void);
 
 
 /*
