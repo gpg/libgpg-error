@@ -29,31 +29,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include <gpg-error.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#include "gpgrt-int.h"
 #include "lock.h"
 #include "w32-lock-obj.h"
-
-
-
-/*
- * Functions called before and after blocking syscalls.
- * gpgrt_set_syscall_clamp is used to set them.
- */
-static void (*pre_lock_func)(void);
-static void (*post_lock_func)(void);
-
-
-/* Helper to set the clamp functions.  This is called as a helper from
- * _gpgrt_set_syscall_clamp to keep the function pointers local. */
-void
-_gpgrt_lock_set_lock_clamp (void (*pre)(void), void (*post)(void))
-{
-  pre_lock_func = pre;
-  post_lock_func = post;
-}
 
 
 
@@ -112,7 +93,7 @@ _gpgrt_lock_lock (gpgrt_lock_t *lockhd)
              and thus fall into the wait loop below.  We ignore that
              STARTED may in theory overflow if this thread starves for
              too long.  */
-          gpgrt_lock_init (lockhd);
+          _gpgrt_lock_init (lockhd);
         }
       else
         {
@@ -121,11 +102,9 @@ _gpgrt_lock_lock (gpgrt_lock_t *lockhd)
         }
     }
 
-  if (pre_lock_func)
-    pre_lock_func ();
+  _gpgrt_pre_syscall ();
   EnterCriticalSection (&lock->csec);
-  if (post_lock_func)
-    post_lock_func ();
+  _gpgrt_post_syscall ();
   return 0;
 }
 
@@ -139,7 +118,7 @@ _gpgrt_lock_trylock (gpgrt_lock_t *lockhd)
     {
       if (!InterlockedIncrement (&lock->started))
         {
-          gpgrt_lock_init (lockhd);
+          _gpgrt_lock_init (lockhd);
         }
       else
         {

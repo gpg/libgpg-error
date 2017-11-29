@@ -124,7 +124,8 @@ char *_gpgrt_strconcat_core (const char *s1, va_list arg_ptr);
 #define xtryrealloc(a,b) _gpgrt_realloc ((a),(b))
 #define xtrystrdup(a)    _gpgrt_strdup ((a))
 
-
+void _gpgrt_pre_syscall (void);
+void _gpgrt_post_syscall (void);
 
 const char *_gpg_error_check_version (const char *req_version);
 

@@ -39,26 +39,9 @@
 # include <thread.h>
 #endif
 
-#include "gpg-error.h"
+#include "gpgrt-int.h"
 
 #include "thread.h"
-
-/*
- * Functions called before and after blocking syscalls.
- * gpgrt_set_syscall_clamp is used to set them.
- */
-static void (*pre_syscall_func)(void);
-static void (*post_syscall_func)(void);
-
-
-/* Helper to set the clamp functions.  This is called as a helper from
- * _gpgrt_set_syscall_clamp to keep the function pointers local. */
-void
-_gpgrt_thread_set_syscall_clamp (void (*pre)(void), void (*post)(void))
-{
-  pre_syscall_func = pre;
-  post_syscall_func = post;
-}
 
 
 
@@ -67,20 +50,16 @@ _gpgrt_yield (void)
 {
 #if USE_POSIX_THREADS
 # ifdef _POSIX_PRIORITY_SCHEDULING
-   if (pre_syscall_func)
-     pre_syscall_func ();
-   sched_yield ();
-   if (post_syscall_func)
-     post_syscall_func ();
+  _gpgrt_pre_syscall ();
+  sched_yield ();
+  _gpgrt_post_syscall ();
 # else
-   return GPG_ERR_NOT_SUPPORTED;
+  return GPG_ERR_NOT_SUPPORTED;
 # endif
 #elif USE_SOLARIS_THREADS
-  if (pre_syscall_func)
-    pre_syscall_func ();
+  _gpgrt_pre_syscall ();
   thr_yield ();
-  if (post_syscall_func)
-    post_syscall_func ();
+  _gpgrt_post_syscall ();
 #else
   return GPG_ERR_NOT_SUPPORTED;
 #endif

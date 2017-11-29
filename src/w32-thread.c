@@ -29,38 +29,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include <gpg-error.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#include "gpgrt-int.h"
 #include "thread.h"
-
-/*
- * Functions called before and after blocking syscalls.
- * gpgrt_set_syscall_clamp is used to set them.
- */
-static void (*pre_syscall_func)(void);
-static void (*post_syscall_func)(void);
-
-
-/* Helper to set the clamp functions.  This is called as a helper from
- * _gpgrt_set_syscall_clamp to keep the function pointers local. */
-void
-_gpgrt_thread_set_syscall_clamp (void (*pre)(void), void (*post)(void))
-{
-  pre_syscall_func = pre;
-  post_syscall_func = post;
-}
-
 
 
 gpg_err_code_t
 _gpgrt_yield (void)
 {
-  if (pre_syscall_func)
-    pre_syscall_func ();
+  _gpgrt_pre_syscall ();
   Sleep (0);
-  if (post_syscall_func)
-    post_syscall_func ();
+  _gpgrt_post_syscall ();
   return 0;
 }
