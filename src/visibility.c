@@ -1008,8 +1008,61 @@ _gpgrt_log_assert (const char *expr, const char *file,
 #endif
 }
 
+
+gpg_err_code_t
+gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction, int nonblock)
+{
+  return _gpgrt_make_pipe (filedes, r_fp, direction, nonblock);
+}
 
+gpg_err_code_t
+gpgrt_spawn_process (const char *pgmname, const char *argv[],
+                     int *except, void (*preexec)(void), unsigned int flags,
+                     estream_t *r_infp, estream_t *r_outfp, estream_t *r_errfp,
+                     pid_t *pid)
+{
+  return _gpgrt_spawn_process (pgmname, argv, except, preexec, flags,
+                               r_infp, r_outfp, r_errfp, pid);
+}
 
+gpg_err_code_t
+gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
+                        int infd, int outfd, int errfd, pid_t *pid)
+{
+  return _gpgrt_spawn_process_fd (pgmname, argv, infd, outfd, errfd, pid);
+}
+
+gpg_err_code_t
+gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
+                              const char *envp[])
+{
+  return _gpgrt_spawn_process_detached (pgmname, argv, envp);
+}
+
+gpg_err_code_t
+gpgrt_wait_process (const char *pgmname, pid_t pid, int hang, int *r_exitcode)
+{
+  return _gpgrt_wait_process (pgmname, pid, hang, r_exitcode);
+}
+
+gpg_err_code_t
+gpgrt_wait_processes (const char **pgmnames, pid_t *pids,
+                      size_t count, int hang, int *r_exitcodes)
+{
+  return _gpgrt_wait_processes (pgmnames, pids, count, hang, r_exitcodes);
+}
+
+void
+gpgrt_kill_process (pid_t pid)
+{
+  _gpgrt_kill_process (pid);
+}
+
+void
+gpgrt_release_process (pid_t pid)
+{
+  _gpgrt_release_process (pid);
+}
 
 
 

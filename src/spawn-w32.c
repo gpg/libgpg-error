@@ -37,63 +37,39 @@
 #endif
 #include <unistd.h>
 #include <fcntl.h>
-
-#ifdef WITHOUT_NPTH /* Give the Makefile a chance to build without Pth.  */
-#undef HAVE_NPTH
-#undef USE_NPTH
-#endif
-
-#ifdef HAVE_NPTH
-#include <npth.h>
-#endif
-
 #ifdef HAVE_STAT
 # include <sys/stat.h>
 #endif
+#define WIN32_LEAN_AND_MEAN  /* We only need the OS core stuff.  */
+#include <windows.h>
 
-
-#include "util.h"
-#include "i18n.h"
-#include "sysutils.h"
-#include "exechelp.h"
+#include "gpgrt-int.h"
 
 /* Define to 1 do enable debugging.  */
 #define DEBUG_W32_SPAWN 0
 
 
 /* It seems Vista doesn't grok X_OK and so fails access() tests.
-   Previous versions interpreted X_OK as F_OK anyway, so we'll just
-   use F_OK directly. */
+ * Previous versions interpreted X_OK as F_OK anyway, so we'll just
+ * use F_OK directly. */
 #undef X_OK
 #define X_OK F_OK
 
 /* We assume that a HANDLE can be represented by an int which should
-   be true for all i386 systems (HANDLE is defined as void *) and
-   these are the only systems for which Windows is available.  Further
-   we assume that -1 denotes an invalid handle.  */
-# define fd_to_handle(a)  ((HANDLE)(a))
-# define handle_to_fd(a)  ((int)(a))
-# define pid_to_handle(a) ((HANDLE)(a))
-# define handle_to_pid(a) ((int)(a))
-
-
-/* Helper */
-static inline gpg_error_t
-my_error_from_syserror (void)
-{
-  return gpg_err_make (default_errsource, gpg_err_code_from_syserror ());
-}
-
-static inline gpg_error_t
-my_error (int errcode)
-{
-  return gpg_err_make (default_errsource, errcode);
-}
+ * be true for all i386 systems (HANDLE is defined as void *) and
+ * these are the only systems for which Windows is available.  Further
+ * we assume that -1 denotes an invalid handle.
+ * FIXME: With Windows 64 this is no longer true.
+ */
+#define fd_to_handle(a)  ((HANDLE)(a))
+#define handle_to_fd(a)  ((int)(a))
+#define pid_to_handle(a) ((HANDLE)(a))
+#define handle_to_pid(a) ((int)(a))
 
 
 /* Return the maximum number of currently allowed open file
-   descriptors.  Only useful on POSIX systems but returns a value on
-   other systems too.  */
+ * descriptors.  Only useful on POSIX systems but returns a value on
+ * other systems too.  */
 int
 get_max_fds (void)
 {
@@ -112,12 +88,12 @@ get_max_fds (void)
 
 
 /* Under Windows this is a dummy function.  */
-void
-close_all_fds (int first, int *except)
-{
-  (void)first;
-  (void)except;
-}
+/* static void */
+/* close_all_fds (int first, int *except) */
+/* { */
+/*   (void)first; */
+/*   (void)except; */
+/* } */
 
 
 /* Returns an array with all currently open file descriptors.  The end
@@ -129,6 +105,7 @@ close_all_fds (int first, int *except)
  * invalid fds which is a bit annoying.  We actually do not need this
  * function in real code (close_all_fds is a dummy anyway) but we keep
  * it for use by t-exechelp.c.  */
+#if 0
 int *
 get_all_open_fds (void)
 {
@@ -171,6 +148,7 @@ get_all_open_fds (void)
 #endif /*HAVE_STAT*/
   return array;
 }
+#endif
 
 
 /* Helper function to build_w32_commandline. */
@@ -201,9 +179,10 @@ build_w32_commandline_copy (char *buffer, const char *string)
   return p;
 }
 
+
 /* Build a command line for use with W32's CreateProcess.  On success
-   CMDLINE gets the address of a newly allocated string.  */
-static gpg_error_t
+ * CMDLINE gets the address of a newly allocated string.  */
+static gpg_err_code_t
 build_w32_commandline (const char *pgmname, const char * const *argv,
                        char **cmdline)
 {
@@ -229,7 +208,7 @@ build_w32_commandline (const char *pgmname, const char * const *argv,
 
   buf = p = xtrymalloc (n);
   if (!buf)
-    return my_error_from_syserror ();
+    return _gpg_err_code_from_syserror ();
 
   p = build_w32_commandline_copy (p, pgmname);
   for (i=0; argv[i]; i++)
@@ -274,7 +253,8 @@ create_inheritable_pipe (HANDLE filedes[2], int flags)
   return 0;
 
  fail:
-  log_error ("SetHandleInformation failed: %s\n", w32_strerror (-1));
+  _gpgrt_log_error ("SetHandleInformation failed: ec=%d\n",
+                    (int)GetLastError ());
   CloseHandle (r);
   CloseHandle (w);
   return -1;
@@ -291,27 +271,35 @@ w32_open_null (int for_write)
                        FILE_SHARE_READ | FILE_SHARE_WRITE,
                        NULL, OPEN_EXISTING, 0, NULL);
   if (hfile == INVALID_HANDLE_VALUE)
-    log_debug ("can't open 'nul': %s\n", w32_strerror (-1));
+    _gpgrt_log_debug ("can't open 'nul': ec=%d\n", (int)GetLastError ());
   return hfile;
 }
 
 
-static gpg_error_t
-create_pipe_and_estream (int filedes[2], int flags,
-                         estream_t *r_fp, int outbound, int nonblock)
+static gpg_err_code_t
+do_create_pipe_and_estream (int filedes[2],
+                            estream_t *r_fp, int direction, int nonblock)
 {
-  gpg_error_t err = 0;
+  gpg_err_code_t err = 0;
+  int flags;
   HANDLE fds[2];
-  es_syshd_t syshd;
+  gpgrt_syshd_t syshd;
+
+  if (direction < 0)
+    flags = INHERIT_WRITE;
+  else if (direction > 0)
+    flags = INHERIT_READ;
+  else
+    flags = INHERIT_BOTH;
 
   filedes[0] = filedes[1] = -1;
-  err = my_error (GPG_ERR_GENERAL);
+  err = GPG_ERR_GENERAL;
   if (!create_inheritable_pipe (fds, flags))
     {
       filedes[0] = _open_osfhandle (handle_to_fd (fds[0]), O_RDONLY);
       if (filedes[0] == -1)
         {
-          log_error ("failed to translate osfhandle %p\n", fds[0]);
+          _gpgrt_log_error ("failed to translate osfhandle %p\n", fds[0]);
           CloseHandle (fds[1]);
         }
       else
@@ -319,7 +307,7 @@ create_pipe_and_estream (int filedes[2], int flags,
           filedes[1] = _open_osfhandle (handle_to_fd (fds[1]), O_APPEND);
           if (filedes[1] == -1)
             {
-              log_error ("failed to translate osfhandle %p\n", fds[1]);
+              _gpgrt_log_error ("failed to translate osfhandle %p\n", fds[1]);
               close (filedes[0]);
               filedes[0] = -1;
               CloseHandle (fds[1]);
@@ -332,21 +320,21 @@ create_pipe_and_estream (int filedes[2], int flags,
   if (! err && r_fp)
     {
       syshd.type = ES_SYSHD_HANDLE;
-      if (!outbound)
+      if (direction < 0)
         {
           syshd.u.handle = fds[0];
-          *r_fp = es_sysopen (&syshd, nonblock? "r,nonblock" : "r");
+          *r_fp = _gpgrt_sysopen (&syshd, nonblock? "r,nonblock" : "r");
         }
       else
         {
           syshd.u.handle = fds[1];
-          *r_fp = es_sysopen (&syshd, nonblock? "w,nonblock" : "w");
+          *r_fp = _gpgrt_sysopen (&syshd, nonblock? "w,nonblock" : "w");
         }
       if (!*r_fp)
         {
-          err = my_error_from_syserror ();
-          log_error (_("error creating a stream for a pipe: %s\n"),
-                     gpg_strerror (err));
+          err = _gpg_err_code_from_syserror ();
+          _gpgrt_log_error (_("error creating a stream for a pipe: %s\n"),
+                            _gpg_strerror (err));
           close (filedes[0]);
           close (filedes[1]);
           filedes[0] = filedes[1] = -1;
@@ -357,48 +345,30 @@ create_pipe_and_estream (int filedes[2], int flags,
   return err;
 }
 
-/* Portable function to create a pipe.  Under Windows the write end is
-   inheritable.  If R_FP is not NULL, an estream is created for the
-   read end and stored at R_FP.  */
-gpg_error_t
-gnupg_create_inbound_pipe (int filedes[2], estream_t *r_fp, int nonblock)
+
+/* Create a pipe.  The DIRECTION parameter gives the type of the created pipe:
+ *   DIRECTION < 0 := Inbound pipe: On Windows the write end is inheritable.
+ *   DIRECTION > 0 := Outbound pipe: On Windows the read end is inheritable.
+ * If R_FP is NULL a standard pipe and no stream is created, DIRECTION
+ * should then be 0.  */
+gpg_err_code_t
+_gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction, int nonblock)
 {
-  return create_pipe_and_estream (filedes, INHERIT_WRITE,
-                                  r_fp, 0, nonblock);
+  if (r_fp && direction)
+    return do_create_pipe_and_estream (filedes, r_fp, direction, nonblock);
+  else
+    return do_create_pipe_and_estream (filedes, NULL, 0, 0);
 }
 
 
-/* Portable function to create a pipe.  Under Windows the read end is
-   inheritable.  If R_FP is not NULL, an estream is created for the
-   write end and stored at R_FP.  */
-gpg_error_t
-gnupg_create_outbound_pipe (int filedes[2], estream_t *r_fp, int nonblock)
+/* Fork and exec the PGMNAME, see gpgrt-int.h for details.  */
+gpg_err_code_t
+_gpgrt_spawn_process (const char *pgmname, const char *argv[],
+                      int *except, void (*preexec)(void), unsigned int flags,
+                      estream_t *r_infp, estream_t *r_outfp, estream_t *r_errfp,
+                      pid_t *pid)
 {
-  return create_pipe_and_estream (filedes, INHERIT_READ,
-                                  r_fp, 1, nonblock);
-}
-
-
-/* Portable function to create a pipe.  Under Windows both ends are
-   inheritable.  */
-gpg_error_t
-gnupg_create_pipe (int filedes[2])
-{
-  return create_pipe_and_estream (filedes, INHERIT_BOTH,
-                                  NULL, 0, 0);
-}
-
-
-/* Fork and exec the PGMNAME, see exechelp.h for details.  */
-gpg_error_t
-gnupg_spawn_process (const char *pgmname, const char *argv[],
-                     int *except, void (*preexec)(void), unsigned int flags,
-                     estream_t *r_infp,
-                     estream_t *r_outfp,
-                     estream_t *r_errfp,
-                     pid_t *pid)
-{
-  gpg_error_t err;
+  gpg_err_code_t err;
   SECURITY_ATTRIBUTES sec_attr;
   PROCESS_INFORMATION pi =
     {
@@ -421,8 +391,7 @@ gnupg_spawn_process (const char *pgmname, const char *argv[],
                       INVALID_HANDLE_VALUE};
   int i;
   es_syshd_t syshd;
-  gpg_err_source_t errsource = default_errsource;
-  int nonblock = !!(flags & GNUPG_SPAWN_NONBLOCK);
+  int nonblock = !!(flags & GPGRT_SPAWN_NONBLOCK);
 
   (void)except; /* Not yet used.  */
 
@@ -438,19 +407,20 @@ gnupg_spawn_process (const char *pgmname, const char *argv[],
     {
       if (create_inheritable_pipe (inpipe, INHERIT_READ))
         {
-          err = gpg_err_make (errsource, GPG_ERR_GENERAL);
-          log_error (_("error creating a pipe: %s\n"), gpg_strerror (err));
+          err = GPG_ERR_GENERAL;
+          _gpgrt_log_error (_("error creating a pipe: %s\n"),
+                            _gpg_strerror (err));
           return err;
         }
 
       syshd.type = ES_SYSHD_HANDLE;
       syshd.u.handle = inpipe[1];
-      infp = es_sysopen (&syshd, nonblock? "w,nonblock" : "w");
+      infp = _gpgrt_sysopen (&syshd, nonblock? "w,nonblock" : "w");
       if (!infp)
         {
-          err = gpg_err_make (errsource, gpg_err_code_from_syserror ());
-          log_error (_("error creating a stream for a pipe: %s\n"),
-                     gpg_strerror (err));
+          err = _gpg_err_code_from_syserror ();
+          _gpgrt_log_error (_("error creating a stream for a pipe: %s\n"),
+                            _gpg_strerror (err));
           CloseHandle (inpipe[0]);
           CloseHandle (inpipe[1]);
           inpipe[0] = inpipe[1] = INVALID_HANDLE_VALUE;
@@ -462,24 +432,25 @@ gnupg_spawn_process (const char *pgmname, const char *argv[],
     {
       if (create_inheritable_pipe (outpipe, INHERIT_WRITE))
         {
-          err = gpg_err_make (errsource, GPG_ERR_GENERAL);
-          log_error (_("error creating a pipe: %s\n"), gpg_strerror (err));
+          err = GPG_ERR_GENERAL;
+          _gpgrt_log_error (_("error creating a pipe: %s\n"),
+                            _gpg_strerror (err));
           return err;
         }
 
       syshd.type = ES_SYSHD_HANDLE;
       syshd.u.handle = outpipe[0];
-      outfp = es_sysopen (&syshd, nonblock? "r,nonblock" : "r");
+      outfp = _gpgrt_sysopen (&syshd, nonblock? "r,nonblock" : "r");
       if (!outfp)
         {
-          err = gpg_err_make (errsource, gpg_err_code_from_syserror ());
-          log_error (_("error creating a stream for a pipe: %s\n"),
-                     gpg_strerror (err));
+          err = _gpg_err_code_from_syserror ();
+          _gpgrt_log_error (_("error creating a stream for a pipe: %s\n"),
+                            _gpg_strerror (err));
           CloseHandle (outpipe[0]);
           CloseHandle (outpipe[1]);
           outpipe[0] = outpipe[1] = INVALID_HANDLE_VALUE;
           if (infp)
-            es_fclose (infp);
+            _gpgrt_fclose (infp);
           else if (inpipe[1] != INVALID_HANDLE_VALUE)
             CloseHandle (inpipe[1]);
           if (inpipe[0] != INVALID_HANDLE_VALUE)
@@ -492,30 +463,31 @@ gnupg_spawn_process (const char *pgmname, const char *argv[],
     {
       if (create_inheritable_pipe (errpipe, INHERIT_WRITE))
         {
-          err = gpg_err_make (errsource, GPG_ERR_GENERAL);
-          log_error (_("error creating a pipe: %s\n"), gpg_strerror (err));
+          err = GPG_ERR_GENERAL;
+          _gpgrt_log_error (_("error creating a pipe: %s\n"),
+                            _gpg_strerror (err));
           return err;
         }
 
       syshd.type = ES_SYSHD_HANDLE;
       syshd.u.handle = errpipe[0];
-      errfp = es_sysopen (&syshd, nonblock? "r,nonblock" : "r");
+      errfp = _gpgrt_sysopen (&syshd, nonblock? "r,nonblock" : "r");
       if (!errfp)
         {
-          err = gpg_err_make (errsource, gpg_err_code_from_syserror ());
-          log_error (_("error creating a stream for a pipe: %s\n"),
-                     gpg_strerror (err));
+          err = _gpg_err_code_from_syserror ();
+          _gpgrt_log_error (_("error creating a stream for a pipe: %s\n"),
+                            _gpg_strerror (err));
           CloseHandle (errpipe[0]);
           CloseHandle (errpipe[1]);
           errpipe[0] = errpipe[1] = INVALID_HANDLE_VALUE;
           if (outfp)
-            es_fclose (outfp);
+            _gpgrt_fclose (outfp);
           else if (outpipe[0] != INVALID_HANDLE_VALUE)
             CloseHandle (outpipe[0]);
           if (outpipe[1] != INVALID_HANDLE_VALUE)
             CloseHandle (outpipe[1]);
           if (infp)
-            es_fclose (infp);
+            _gpgrt_fclose (infp);
           else if (inpipe[1] != INVALID_HANDLE_VALUE)
             CloseHandle (inpipe[1]);
           if (inpipe[0] != INVALID_HANDLE_VALUE)
@@ -554,10 +526,11 @@ gnupg_spawn_process (const char *pgmname, const char *argv[],
   si.hStdError  = errpipe[1] == INVALID_HANDLE_VALUE? nullhd[2] : errpipe[1];
 
   cr_flags = (CREATE_DEFAULT_ERROR_MODE
-              | ((flags & GNUPG_SPAWN_DETACHED)? DETACHED_PROCESS : 0)
+              | ((flags & GPGRT_SPAWN_DETACHED)? DETACHED_PROCESS : 0)
               | GetPriorityClass (GetCurrentProcess ())
               | CREATE_SUSPENDED);
-/*   log_debug ("CreateProcess, path='%s' cmdline='%s'\n", pgmname, cmdline); */
+  _gpgrt_log_debug ("CreateProcess, path='%s' cmdline='%s'\n",
+                    pgmname, cmdline);
   if (!CreateProcess (pgmname,       /* Program to start.  */
                       cmdline,       /* Command line arguments.  */
                       &sec_attr,     /* Process security attributes.  */
@@ -570,27 +543,27 @@ gnupg_spawn_process (const char *pgmname, const char *argv[],
                       &pi            /* Returns process information.  */
                       ))
     {
-      log_error ("CreateProcess failed: %s\n", w32_strerror (-1));
+      _gpgrt_log_error ("CreateProcess failed: ec=%d\n", (int)GetLastError ());
       xfree (cmdline);
       if (infp)
-        es_fclose (infp);
+        _gpgrt_fclose (infp);
       else if (inpipe[1] != INVALID_HANDLE_VALUE)
         CloseHandle (outpipe[1]);
       if (inpipe[0] != INVALID_HANDLE_VALUE)
         CloseHandle (inpipe[0]);
       if (outfp)
-        es_fclose (outfp);
+        _gpgrt_fclose (outfp);
       else if (outpipe[0] != INVALID_HANDLE_VALUE)
         CloseHandle (outpipe[0]);
       if (outpipe[1] != INVALID_HANDLE_VALUE)
         CloseHandle (outpipe[1]);
       if (errfp)
-        es_fclose (errfp);
+        _gpgrt_fclose (errfp);
       else if (errpipe[0] != INVALID_HANDLE_VALUE)
         CloseHandle (errpipe[0]);
       if (errpipe[1] != INVALID_HANDLE_VALUE)
         CloseHandle (errpipe[1]);
-      return gpg_err_make (errsource, GPG_ERR_GENERAL);
+      return GPG_ERR_GENERAL;
     }
   xfree (cmdline);
   cmdline = NULL;
@@ -608,17 +581,21 @@ gnupg_spawn_process (const char *pgmname, const char *argv[],
   if (errpipe[1] != INVALID_HANDLE_VALUE)
     CloseHandle (errpipe[1]);
 
-  /* log_debug ("CreateProcess ready: hProcess=%p hThread=%p" */
-  /*            " dwProcessID=%d dwThreadId=%d\n", */
-  /*            pi.hProcess, pi.hThread, */
-  /*            (int) pi.dwProcessId, (int) pi.dwThreadId); */
-  /* log_debug ("                     outfp=%p errfp=%p\n", outfp, errfp); */
+  _gpgrt_log_debug ("CreateProcess ready: hProcess=%p hThread=%p"
+                    " dwProcessID=%d dwThreadId=%d\n",
+                    pi.hProcess, pi.hThread,
+                    (int) pi.dwProcessId, (int) pi.dwThreadId);
+  _gpgrt_log_debug ("                     outfp=%p errfp=%p\n", outfp, errfp);
 
-  /* Fixme: For unknown reasons AllowSetForegroundWindow returns an
-     invalid argument error if we pass it the correct processID.  As a
-     workaround we use -1 (ASFW_ANY).  */
-  if ((flags & GNUPG_SPAWN_RUN_ASFW))
-    gnupg_allow_set_foregound_window ((pid_t)(-1)/*pi.dwProcessId*/);
+  if ((flags & GPGRT_SPAWN_RUN_ASFW))
+    {
+      /* Fixme: For unknown reasons AllowSetForegroundWindow returns
+       * an invalid argument error if we pass it the correct
+       * processID.  As a workaround we use -1 (ASFW_ANY).  */
+      if (!AllowSetForegroundWindow (ASFW_ANY /*pi.dwProcessId*/))
+        _gpgrt_log_info ("AllowSetForegroundWindow() failed: ec=%d\n",
+                         (int)GetLastError ());
+    }
 
   /* Process has been created suspended; resume it now. */
   ResumeThread (pi.hThread);
@@ -633,24 +610,15 @@ gnupg_spawn_process (const char *pgmname, const char *argv[],
 
   *pid = handle_to_pid (pi.hProcess);
   return 0;
-
 }
 
 
-
-/* Simplified version of gnupg_spawn_process.  This function forks and
-   then execs PGMNAME, while connecting INFD to stdin, OUTFD to stdout
-   and ERRFD to stderr (any of them may be -1 to connect them to
-   /dev/null).  The arguments for the process are expected in the NULL
-   terminated array ARGV.  The program name itself should not be
-   included there.  Calling gnupg_wait_process is required.
-
-   Returns 0 on success or an error code. */
-gpg_error_t
-gnupg_spawn_process_fd (const char *pgmname, const char *argv[],
-                        int infd, int outfd, int errfd, pid_t *pid)
+/* Fork and exec the PGMNAME using FDs, see gpgrt-int.h for details.  */
+gpg_err_code_t
+_gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
+                         int infd, int outfd, int errfd, pid_t *pid)
 {
-  gpg_error_t err;
+  gpg_err_code_t err;
   SECURITY_ATTRIBUTES sec_attr;
   PROCESS_INFORMATION pi = { NULL, 0, 0, 0 };
   STARTUPINFO si;
@@ -682,7 +650,8 @@ gnupg_spawn_process_fd (const char *pgmname, const char *argv[],
   si.hStdOutput = outfd == -1? stdhd[1] : (void*)_get_osfhandle (outfd);
   si.hStdError  = errfd == -1? stdhd[2] : (void*)_get_osfhandle (errfd);
 
-/*   log_debug ("CreateProcess, path='%s' cmdline='%s'\n", pgmname, cmdline); */
+  _gpgrt_log_debug ("CreateProcess, path='%s' cmdline='%s'\n",
+                    pgmname, cmdline);
   if (!CreateProcess (pgmname,       /* Program to start.  */
                       cmdline,       /* Command line arguments.  */
                       &sec_attr,     /* Process security attributes.  */
@@ -697,22 +666,25 @@ gnupg_spawn_process_fd (const char *pgmname, const char *argv[],
                       &pi            /* Returns process information.  */
                       ))
     {
-      log_error ("CreateProcess failed: %s\n", w32_strerror (-1));
-      err = my_error (GPG_ERR_GENERAL);
+      _gpgrt_log_error ("CreateProcess failed: ec=%d\n", (int)GetLastError ());
+      err = GPG_ERR_GENERAL;
     }
   else
     err = 0;
+
   xfree (cmdline);
+
   for (i=0; i < 3; i++)
     if (stdhd[i] != INVALID_HANDLE_VALUE)
       CloseHandle (stdhd[i]);
+
   if (err)
     return err;
 
-/*   log_debug ("CreateProcess ready: hProcess=%p hThread=%p" */
-/*              " dwProcessID=%d dwThreadId=%d\n", */
-/*              pi.hProcess, pi.hThread, */
-/*              (int) pi.dwProcessId, (int) pi.dwThreadId); */
+  _gpgrt_log_debug ("CreateProcess ready: hProcess=%p hThread=%p"
+                    " dwProcessID=%d dwThreadId=%d\n",
+                    pi.hProcess, pi.hThread,
+                    (int) pi.dwProcessId, (int) pi.dwThreadId);
 
   /* Process has been created suspended; resume it now. */
   ResumeThread (pi.hThread);
@@ -724,17 +696,18 @@ gnupg_spawn_process_fd (const char *pgmname, const char *argv[],
 }
 
 
-/* See exechelp.h for a description.  */
-gpg_error_t
-gnupg_wait_process (const char *pgmname, pid_t pid, int hang, int *r_exitcode)
+/* See gpgrt-int.h for a description.  */
+gpg_err_code_t
+_gpgrt_wait_process (const char *pgmname, pid_t pid, int hang, int *r_exitcode)
 {
-  return gnupg_wait_processes (&pgmname, &pid, 1, hang, r_exitcode);
+  return _gpgrt_wait_processes (&pgmname, &pid, 1, hang, r_exitcode);
 }
 
-/* See exechelp.h for a description.  */
-gpg_error_t
-gnupg_wait_processes (const char **pgmnames, pid_t *pids, size_t count,
-                      int hang, int *r_exitcodes)
+
+/* See gpgrt-int.h for a description.  */
+gpg_err_code_t
+_gpgrt_wait_processes (const char **pgmnames, pid_t *pids, size_t count,
+                       int hang, int *r_exitcodes)
 {
   gpg_err_code_t ec = 0;
   size_t i;
@@ -743,7 +716,7 @@ gnupg_wait_processes (const char **pgmnames, pid_t *pids, size_t count,
 
   procs = xtrycalloc (count, sizeof *procs);
   if (procs == NULL)
-    return my_error_from_syserror ();
+    return _gpg_err_code_from_syserror ();
 
   for (i = 0; i < count; i++)
     {
@@ -751,14 +724,11 @@ gnupg_wait_processes (const char **pgmnames, pid_t *pids, size_t count,
         r_exitcodes[i] = -1;
 
       if (pids[i] == (pid_t)(-1))
-        return my_error (GPG_ERR_INV_VALUE);
+        return GPG_ERR_INV_VALUE;
 
       procs[i] = fd_to_handle (pids[i]);
     }
 
-  /* FIXME: We should do a pth_waitpid here.  However this has not yet
-     been implemented.  A special W32 pth system call would even be
-     better.  */
   code = WaitForMultipleObjects (count, procs, TRUE, hang? INFINITE : 0);
   switch (code)
     {
@@ -767,8 +737,8 @@ gnupg_wait_processes (const char **pgmnames, pid_t *pids, size_t count,
       goto leave;
 
     case WAIT_FAILED:
-      log_error (_("waiting for processes to terminate failed: %s\n"),
-                 w32_strerror (-1));
+      _gpgrt_log_error (_("waiting for processes to terminate failed: ec=%d\n"),
+                        (int)GetLastError ());
       ec = GPG_ERR_GENERAL;
       goto leave;
 
@@ -779,15 +749,16 @@ gnupg_wait_processes (const char **pgmnames, pid_t *pids, size_t count,
 
           if (! GetExitCodeProcess (procs[i], &exc))
             {
-              log_error (_("error getting exit code of process %d: %s\n"),
-                         (int) pids[i], w32_strerror (-1) );
+              _gpgrt_log_error (_("error getting exit code of process %d:"
+                                  " ec=%d\n"),
+                                (int) pids[i], (int)GetLastError ());
               ec = GPG_ERR_GENERAL;
             }
           else if (exc)
             {
               if (!r_exitcodes)
-                log_error (_("error running '%s': exit status %d\n"),
-                           pgmnames[i], (int)exc);
+                _gpgrt_log_error (_("error running '%s': exit status %d\n"),
+                                  pgmnames[i], (int)exc);
               else
                 r_exitcodes[i] = (int)exc;
               ec = GPG_ERR_GENERAL;
@@ -801,42 +772,23 @@ gnupg_wait_processes (const char **pgmnames, pid_t *pids, size_t count,
       break;
 
     default:
-      log_error ("WaitForMultipleObjects returned unexpected "
-                 "code %d\n", code);
+      _gpgrt_log_debug ("WaitForMultipleObjects returned unexpected code %d\n",
+                        code);
       ec = GPG_ERR_GENERAL;
       break;
     }
 
  leave:
-  return gpg_err_make (GPG_ERR_SOURCE_DEFAULT, ec);
+  return ec;
 }
 
 
-
-void
-gnupg_release_process (pid_t pid)
+/* See gpgrt-int.h for a description.  */
+gpg_err_code_t
+_gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
+                               const char *envp[] )
 {
-  if (pid != (pid_t)INVALID_HANDLE_VALUE)
-    {
-      HANDLE process = (HANDLE)pid;
-
-      CloseHandle (process);
-    }
-}
-
-
-/* Spawn a new process and immediately detach from it.  The name of
-   the program to exec is PGMNAME and its arguments are in ARGV (the
-   programname is automatically passed as first argument).
-   Environment strings in ENVP are set.  An error is returned if
-   pgmname is not executable; to make this work it is necessary to
-   provide an absolute file name.  All standard file descriptors are
-   connected to /dev/null. */
-gpg_error_t
-gnupg_spawn_process_detached (const char *pgmname, const char *argv[],
-                              const char *envp[] )
-{
-  gpg_error_t err;
+  gpg_err_code_t err;
   SECURITY_ATTRIBUTES sec_attr;
   PROCESS_INFORMATION pi =
     {
@@ -849,12 +801,11 @@ gnupg_spawn_process_detached (const char *pgmname, const char *argv[],
   int cr_flags;
   char *cmdline;
 
-
   /* We don't use ENVP.  */
   (void)envp;
 
   if (access (pgmname, X_OK))
-    return my_error_from_syserror ();
+    return _gpg_err_code_from_syserror ();
 
   /* Prepare security attributes.  */
   memset (&sec_attr, 0, sizeof sec_attr );
@@ -876,8 +827,8 @@ gnupg_spawn_process_detached (const char *pgmname, const char *argv[],
               | GetPriorityClass (GetCurrentProcess ())
               | CREATE_NEW_PROCESS_GROUP
               | DETACHED_PROCESS);
-/*   log_debug ("CreateProcess(detached), path='%s' cmdline='%s'\n", */
-/*              pgmname, cmdline); */
+  _gpgrt_log_debug ("CreateProcess(detached), path='%s' cmdline='%s'\n",
+                    pgmname, cmdline);
   if (!CreateProcess (pgmname,       /* Program to start.  */
                       cmdline,       /* Command line arguments.  */
                       &sec_attr,     /* Process security attributes.  */
@@ -890,17 +841,18 @@ gnupg_spawn_process_detached (const char *pgmname, const char *argv[],
                       &pi            /* Returns process information.  */
                       ))
     {
-      log_error ("CreateProcess(detached) failed: %s\n", w32_strerror (-1));
+      _gpgrt_log_error ("CreateProcess(detached) failed: ec=%d\n",
+                        (int)GetLastError ());
       xfree (cmdline);
-      return my_error (GPG_ERR_GENERAL);
+      return GPG_ERR_GENERAL;
     }
   xfree (cmdline);
   cmdline = NULL;
 
-/*   log_debug ("CreateProcess(detached) ready: hProcess=%p hThread=%p" */
-/*              " dwProcessID=%d dwThreadId=%d\n", */
-/*              pi.hProcess, pi.hThread, */
-/*              (int) pi.dwProcessId, (int) pi.dwThreadId); */
+  _gpgrt_log_debug ("CreateProcess(detached) ready: hProcess=%p hThread=%p"
+                    " dwProcessID=%d dwThreadId=%d\n",
+                    pi.hProcess, pi.hThread,
+                    (int) pi.dwProcessId, (int) pi.dwThreadId);
 
   CloseHandle (pi.hThread);
   CloseHandle (pi.hProcess);
@@ -913,7 +865,7 @@ gnupg_spawn_process_detached (const char *pgmname, const char *argv[],
    gnupg_wait_process must be called to actually remove the process
    from the system.  An invalid PID is ignored.  */
 void
-gnupg_kill_process (pid_t pid)
+_gpgrt_kill_process (pid_t pid)
 {
   if (pid != (pid_t) INVALID_HANDLE_VALUE)
     {
@@ -921,5 +873,17 @@ gnupg_kill_process (pid_t pid)
 
       /* Arbitrary error code.  */
       TerminateProcess (process, 1);
+    }
+}
+
+
+void
+_gpgrt_release_process (pid_t pid)
+{
+  if (pid != (pid_t)INVALID_HANDLE_VALUE)
+    {
+      HANDLE process = (HANDLE)pid;
+
+      CloseHandle (process);
     }
 }

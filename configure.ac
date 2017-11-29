@@ -164,7 +164,9 @@ AM_GNU_GETTEXT([external])
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([stdlib.h locale.h stdint.h sys/select.h sys/time.h])
+AC_CHECK_HEADERS([stdlib.h locale.h stdint.h sys/select.h sys/time.h \
+                  signal.h])
+
 AC_FUNC_STRERROR_R
 case "${host_os}" in
      solaris*)
@@ -177,7 +179,9 @@ AC_MSG_WARN([[Without strerror_r, gpg_strerror_r might not be thread-safe]]))
      ;;
 esac
 
-AC_CHECK_FUNCS([flockfile vasprintf mmap rand strlwr stpcpy setenv stat])
+AC_FUNC_FORK
+AC_CHECK_FUNCS([flockfile vasprintf mmap rand strlwr stpcpy setenv stat \
+                getrlimit ])
 
 
 #

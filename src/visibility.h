@@ -188,6 +188,16 @@ MARK_VISIBLE (gpgrt_log_clock)
 MARK_VISIBLE (gpgrt_log_flush)
 MARK_VISIBLE (_gpgrt_log_assert)
 
+MARK_VISIBLE (gpgrt_make_pipe)
+MARK_VISIBLE (gpgrt_spawn_process)
+MARK_VISIBLE (gpgrt_spawn_process_fd)
+MARK_VISIBLE (gpgrt_spawn_process_detached)
+MARK_VISIBLE (gpgrt_wait_process)
+MARK_VISIBLE (gpgrt_wait_processes)
+MARK_VISIBLE (gpgrt_kill_process)
+MARK_VISIBLE (gpgrt_release_process)
+
+
 #undef MARK_VISIBLE
 
 #else /*!_GPGRT_INCL_BY_VISIBILITY_C*/
@@ -338,6 +348,15 @@ MARK_VISIBLE (_gpgrt_log_assert)
 #define gpgrt_log_clock             _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_log_flush             _gpgrt_USE_UNDERSCORED_FUNCTION
 #define _gpgrt_log_assert           _gpgrt_USE_UNDERSCORED_FUNCTION
+
+#define gpgrt_make_pipe              _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_process          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_process_fd       _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_process_detached _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_wait_process           _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_wait_processes         _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_kill_process           _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_release_process        _gpgrt_USE_UNDERSCORED_FUNCTION
 
 
 /* Windows specific functions.  */

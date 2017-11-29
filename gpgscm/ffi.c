@@ -788,7 +788,7 @@ do_spawn_process (scheme *sc, pointer args)
       fprintf (stderr, "\n");
     }
 
-  err = gnupg_spawn_process (argv[0], (const char **) &argv[1],
+  err = gpgrt_spawn_process (argv[0], (const char **) &argv[1],
                              NULL,
                              NULL,
                              flags,
@@ -840,7 +840,7 @@ do_spawn_process_fd (scheme *sc, pointer args)
       fprintf (stderr, "\n");
     }
 
-  err = gnupg_spawn_process_fd (argv[0], (const char **) &argv[1],
+  err = gpgrt_spawn_process_fd (argv[0], (const char **) &argv[1],
                                 infd, outfd, errfd, &pid);
   xfree (argv);
   FFI_RETURN_INT (sc, pid);
@@ -860,7 +860,7 @@ do_wait_process (scheme *sc, pointer args)
   FFI_ARG_OR_RETURN (sc, pid_t, pid, number, args);
   FFI_ARG_OR_RETURN (sc, int, hang, bool, args);
   FFI_ARGS_DONE_OR_RETURN (sc, args);
-  err = gnupg_wait_process (name, pid, hang, &retcode);
+  err = gpgrt_wait_process (name, pid, hang, &retcode);
   if (err == GPG_ERR_GENERAL)
     err = 0;	/* Let the return code speak for itself.  */
 
@@ -917,7 +917,7 @@ do_wait_processes (scheme *sc, pointer args)
       FFI_RETURN_ERR (sc, gpg_error_from_syserror ());
     }
 
-  err = gnupg_wait_processes ((const char **) names, pids, count, hang,
+  err = gpgrt_wait_processes ((const char **) names, pids, count, hang,
                               retcodes);
   if (err == GPG_ERR_GENERAL)
     err = 0;	/* Let the return codes speak.  */
@@ -944,7 +944,7 @@ do_pipe (scheme *sc, pointer args)
   FFI_PROLOG ();
   int filedes[2];
   FFI_ARGS_DONE_OR_RETURN (sc, args);
-  err = gnupg_create_pipe (filedes);
+  err = gpgrt_create_pipe (filedes);
 #define IMC(A, B)                                                       \
   _cons (sc, sc->vptr->mk_integer (sc, (unsigned long) (A)), (B), 1)
   FFI_RETURN_POINTER (sc, IMC (filedes[0],
@@ -958,7 +958,7 @@ do_inbound_pipe (scheme *sc, pointer args)
   FFI_PROLOG ();
   int filedes[2];
   FFI_ARGS_DONE_OR_RETURN (sc, args);
-  err = gnupg_create_inbound_pipe (filedes, NULL, 0);
+  err = gpgrt_create_inbound_pipe (filedes, NULL, 0);
 #define IMC(A, B)                                                       \
   _cons (sc, sc->vptr->mk_integer (sc, (unsigned long) (A)), (B), 1)
   FFI_RETURN_POINTER (sc, IMC (filedes[0],
@@ -972,7 +972,7 @@ do_outbound_pipe (scheme *sc, pointer args)
   FFI_PROLOG ();
   int filedes[2];
   FFI_ARGS_DONE_OR_RETURN (sc, args);
-  err = gnupg_create_outbound_pipe (filedes, NULL, 0);
+  err = gpgrt_create_outbound_pipe (filedes, NULL, 0);
 #define IMC(A, B)                                                       \
   _cons (sc, sc->vptr->mk_integer (sc, (unsigned long) (A)), (B), 1)
   FFI_RETURN_POINTER (sc, IMC (filedes[0],
