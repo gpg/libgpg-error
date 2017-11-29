@@ -327,11 +327,13 @@ do_create_pipe (int filedes[2])
 {
   gpg_error_t err = 0;
 
+  _gpgrt_pre_syscall ();
   if (pipe (filedes) == -1)
     {
       err = _gpg_err_code_from_syserror ();
       filedes[0] = filedes[1] = -1;
     }
+  _gpgrt_post_syscall ();
 
   return err;
 }
@@ -344,6 +346,7 @@ do_create_pipe_and_estream (int filedes[2], estream_t *r_fp,
 {
   gpg_err_code_t err;
 
+  _gpgrt_pre_syscall ();
   if (pipe (filedes) == -1)
     {
       err = _gpg_err_code_from_syserror ();
@@ -352,6 +355,7 @@ do_create_pipe_and_estream (int filedes[2], estream_t *r_fp,
       *r_fp = NULL;
       return err;
     }
+  _gpgrt_post_syscall ();
 
   if (!outbound)
     *r_fp = _gpgrt_fdopen (filedes[0], nonblock? "r,nonblock" : "r");
@@ -460,8 +464,9 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
         }
     }
 
-
+  _gpgrt_pre_syscall ();
   *pid = fork ();
+  _gpgrt_post_syscall ();
   if (*pid == (pid_t)(-1))
     {
       err = _gpg_err_code_from_syserror ();
@@ -529,7 +534,9 @@ _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
 {
   gpg_error_t err;
 
+  _gpgrt_pre_syscall ();
   *pid = fork ();
+  _gpgrt_post_syscall ();
   if (*pid == (pid_t)(-1))
     {
       err = _gpg_err_code_from_syserror ();
@@ -624,8 +631,10 @@ _gpgrt_wait_process (const char *pgmname, pid_t pid, int hang, int *r_exitcode)
   if (pid == (pid_t)(-1))
     return GPG_ERR_INV_VALUE;
 
+  _gpgrt_pre_syscall ();
   while ((i=waitpid (pid, &status, hang? 0:WNOHANG)) == (pid_t)(-1)
 	 && errno == EINTR);
+  _gpgrt_post_syscall ();
 
   if (i == (pid_t)(-1))
     {
@@ -710,8 +719,10 @@ _gpgrt_wait_processes (const char **pgmnames, pid_t *pids, size_t count,
       pid_t pid;
       int status;
 
+      _gpgrt_pre_syscall ();
       while ((pid = waitpid (-1, &status, hang ? 0 : WNOHANG)) == (pid_t)(-1)
              && errno == EINTR);
+      _gpgrt_post_syscall ();
 
       if (pid == (pid_t)(-1))
         {
@@ -802,7 +813,9 @@ _gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
   if (access (pgmname, X_OK))
     return _gpg_err_code_from_syserror ();
 
+  _gpgrt_pre_syscall ();
   pid = fork ();
+  _gpgrt_post_syscall ();
   if (pid == (pid_t)(-1))
     {
       ec = _gpg_err_code_from_syserror ();
@@ -836,13 +849,17 @@ _gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
       /*NOTREACHED*/
     }
 
+  _gpgrt_pre_syscall ();
   if (waitpid (pid, NULL, 0) == -1)
     {
+      _gpgrt_post_syscall ();
       ec = _gpg_err_code_from_syserror ();
       _gpgrt_log_error ("waitpid failed in gpgrt_spawn_process_detached: %s",
                         _gpg_strerror (ec));
       return ec;
     }
+  else
+    _gpgrt_post_syscall ();
 
   return 0;
 }
@@ -856,7 +873,9 @@ _gpgrt_kill_process (pid_t pid)
 {
   if (pid != (pid_t)(-1))
     {
+      _gpgrt_pre_syscall ();
       kill (pid, SIGTERM);
+      _gpgrt_post_syscall ();
     }
 }
 

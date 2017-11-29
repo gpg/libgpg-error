@@ -237,8 +237,13 @@ create_inheritable_pipe (HANDLE filedes[2], int flags)
   sec_attr.nLength = sizeof sec_attr;
   sec_attr.bInheritHandle = TRUE;
 
+  _gpgrt_pre_syscall ();
   if (!CreatePipe (&r, &w, &sec_attr, 0))
-    return -1;
+    {
+      _gpgrt_post_syscall ();
+      return -1;
+    }
+  _gpgrt_post_syscall ();
 
   if ((flags & INHERIT_READ) == 0)
     if (! SetHandleInformation (r, HANDLE_FLAG_INHERIT, 0))
@@ -392,6 +397,7 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
   int i;
   es_syshd_t syshd;
   int nonblock = !!(flags & GPGRT_SPAWN_NONBLOCK);
+  int ret;
 
   (void)except; /* Not yet used.  */
 
@@ -531,7 +537,7 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
               | CREATE_SUSPENDED);
   _gpgrt_log_debug ("CreateProcess, path='%s' cmdline='%s'\n",
                     pgmname, cmdline);
-  if (!CreateProcess (pgmname,       /* Program to start.  */
+  ret = CreateProcess (pgmname,     /* Program to start.  */
                       cmdline,       /* Command line arguments.  */
                       &sec_attr,     /* Process security attributes.  */
                       &sec_attr,     /* Thread security attributes.  */
@@ -541,7 +547,8 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
                       NULL,          /* Use current drive/directory.  */
                       &si,           /* Startup information. */
                       &pi            /* Returns process information.  */
-                      ))
+                        );
+  if (!ret)
     {
       _gpgrt_log_error ("CreateProcess failed: ec=%d\n", (int)GetLastError ());
       xfree (cmdline);
@@ -598,8 +605,10 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
     }
 
   /* Process has been created suspended; resume it now. */
+  _gpgrt_pre_syscall ();
   ResumeThread (pi.hThread);
   CloseHandle (pi.hThread);
+  _gpgrt_post_syscall ();
 
   if (r_infp)
     *r_infp = infp;
@@ -623,7 +632,7 @@ _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
   PROCESS_INFORMATION pi = { NULL, 0, 0, 0 };
   STARTUPINFO si;
   char *cmdline;
-  int i;
+  int ret, i;
   HANDLE stdhd[3];
 
   /* Setup return values.  */
@@ -652,7 +661,7 @@ _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
 
   _gpgrt_log_debug ("CreateProcess, path='%s' cmdline='%s'\n",
                     pgmname, cmdline);
-  if (!CreateProcess (pgmname,       /* Program to start.  */
+  ret = CreateProcess (pgmname,      /* Program to start.  */
                       cmdline,       /* Command line arguments.  */
                       &sec_attr,     /* Process security attributes.  */
                       &sec_attr,     /* Thread security attributes.  */
@@ -664,7 +673,8 @@ _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
                       NULL,          /* Use current drive/directory.  */
                       &si,           /* Startup information. */
                       &pi            /* Returns process information.  */
-                      ))
+                      );
+  if (!ret)
     {
       _gpgrt_log_error ("CreateProcess failed: ec=%d\n", (int)GetLastError ());
       err = GPG_ERR_GENERAL;
@@ -692,7 +702,6 @@ _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
 
   *pid = handle_to_pid (pi.hProcess);
   return 0;
-
 }
 
 
@@ -729,7 +738,9 @@ _gpgrt_wait_processes (const char **pgmnames, pid_t *pids, size_t count,
       procs[i] = fd_to_handle (pids[i]);
     }
 
+  _gpgrt_pre_syscall ();
   code = WaitForMultipleObjects (count, procs, TRUE, hang? INFINITE : 0);
+  _gpgrt_post_syscall ();
   switch (code)
     {
     case WAIT_TIMEOUT:
@@ -800,6 +811,7 @@ _gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
   STARTUPINFO si;
   int cr_flags;
   char *cmdline;
+  int ret;
 
   /* We don't use ENVP.  */
   (void)envp;
@@ -829,7 +841,7 @@ _gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
               | DETACHED_PROCESS);
   _gpgrt_log_debug ("CreateProcess(detached), path='%s' cmdline='%s'\n",
                     pgmname, cmdline);
-  if (!CreateProcess (pgmname,       /* Program to start.  */
+  ret = CreateProcess (pgmname,       /* Program to start.  */
                       cmdline,       /* Command line arguments.  */
                       &sec_attr,     /* Process security attributes.  */
                       &sec_attr,     /* Thread security attributes.  */
@@ -839,7 +851,8 @@ _gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
                       NULL,          /* Use current drive/directory.  */
                       &si,           /* Startup information. */
                       &pi            /* Returns process information.  */
-                      ))
+                       );
+  if (!ret)
     {
       _gpgrt_log_error ("CreateProcess(detached) failed: ec=%d\n",
                         (int)GetLastError ());
@@ -872,7 +885,9 @@ _gpgrt_kill_process (pid_t pid)
       HANDLE process = (HANDLE) pid;
 
       /* Arbitrary error code.  */
+      _gpgrt_pre_syscall ();
       TerminateProcess (process, 1);
+      _gpgrt_post_syscall ();
     }
 }
 

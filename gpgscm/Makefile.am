@@ -50,6 +50,7 @@ t_child_SOURCES = t-child.c
 # important for parallel builds (i.e. make -j2).
 $(PROGRAMS): ../src/libgpg-error.la
 
-check-local: gpgscm$(EXEEXT) t-child$(EXEEXT)
-	EXEEXT=$(EXEEXT) GPGSCM_PATH=$(srcdir) \
-		./gpgscm$(EXEEXT) $(srcdir)/t-child.scm
+# Temporary disabled (2017-11-29)
+#check-local: gpgscm$(EXEEXT) t-child$(EXEEXT)
+#	EXEEXT=$(EXEEXT) GPGSCM_PATH=$(srcdir) \
+#		./gpgscm$(EXEEXT) $(srcdir)/t-child.scm
