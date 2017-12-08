@@ -928,18 +928,18 @@ gpg_error_t gpgrt_b64dec_finish (gpgrt_b64state_t state);
 /* Log levels as used by gpgrt_log.  */
 enum gpgrt_log_levels
   {
-    GPGRT_LOG_BEGIN,
-    GPGRT_LOG_CONT,
-    GPGRT_LOG_INFO,
-    GPGRT_LOG_WARN,
-    GPGRT_LOG_ERROR,
-    GPGRT_LOG_FATAL,
-    GPGRT_LOG_BUG,
-    GPGRT_LOG_DEBUG
+    GPGRT_LOGLVL_BEGIN,
+    GPGRT_LOGLVL_CONT,
+    GPGRT_LOGLVL_INFO,
+    GPGRT_LOGLVL_WARN,
+    GPGRT_LOGLVL_ERROR,
+    GPGRT_LOGLVL_FATAL,
+    GPGRT_LOGLVL_BUG,
+    GPGRT_LOGLVL_DEBUG
   };
 
 
-/* The next 4 fucntions are not thread-safe - call them early.  */
+/* The next 4 functions are not thread-safe - call them early.  */
 void gpgrt_log_set_sink (const char *name, gpgrt_stream_t stream, int fd);
 void gpgrt_log_set_socket_dir_cb (const char *(*fnc)(void));
 void gpgrt_log_set_pid_suffix_cb (int (*cb)(unsigned long *r_value));

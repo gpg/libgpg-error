@@ -688,7 +688,7 @@ print_prefix (int level, int leading_backspace)
   int rc;
   int length = 0;
 
-  if (level != GPGRT_LOG_CONT)
+  if (level != GPGRT_LOGLVL_CONT)
     { /* Note this does not work for multiple line logging as we would
        * need to print to a buffer first */
       if (with_time && !force_prefixes)
@@ -741,20 +741,20 @@ print_prefix (int level, int leading_backspace)
 
   switch (level)
     {
-    case GPGRT_LOG_BEGIN: break;
-    case GPGRT_LOG_CONT: break;
-    case GPGRT_LOG_INFO: break;
-    case GPGRT_LOG_WARN: break;
-    case GPGRT_LOG_ERROR: break;
-    case GPGRT_LOG_FATAL:
+    case GPGRT_LOGLVL_BEGIN: break;
+    case GPGRT_LOGLVL_CONT: break;
+    case GPGRT_LOGLVL_INFO: break;
+    case GPGRT_LOGLVL_WARN: break;
+    case GPGRT_LOGLVL_ERROR: break;
+    case GPGRT_LOGLVL_FATAL:
       _gpgrt_fputs_unlocked ("Fatal: ", logstream);
       length += 7;
       break;
-    case GPGRT_LOG_BUG:
+    case GPGRT_LOGLVL_BUG:
       _gpgrt_fputs_unlocked ("Ohhhh jeeee: ", logstream);
       length += 13;
       break;
-    case GPGRT_LOG_DEBUG:
+    case GPGRT_LOGLVL_DEBUG:
       _gpgrt_fputs_unlocked ("DBG: ", logstream);
       length += 5;
       break;
@@ -800,7 +800,7 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
     }
 
   _gpgrt_flockfile (logstream);
-  if (missing_lf && level != GPGRT_LOG_CONT)
+  if (missing_lf && level != GPGRT_LOGLVL_CONT)
     _gpgrt_putc_unlocked ('\n', logstream );
   missing_lf = 0;
 
@@ -904,14 +904,14 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
         }
     }
 
-  if (level == GPGRT_LOG_FATAL)
+  if (level == GPGRT_LOGLVL_FATAL)
     {
       if (missing_lf)
         _gpgrt_putc_unlocked ('\n', logstream);
       _gpgrt_funlockfile (logstream);
       exit (2);
     }
-  else if (level == GPGRT_LOG_BUG)
+  else if (level == GPGRT_LOGLVL_BUG)
     {
       if (missing_lf)
         _gpgrt_putc_unlocked ('\n', logstream );
@@ -935,7 +935,7 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
     _gpgrt_funlockfile (logstream);
 
   /* Bumb the error counter for log_error.  */
-  if (level == GPGRT_LOG_ERROR)
+  if (level == GPGRT_LOGLVL_ERROR)
     {
       /* Protect against counter overflow.  */
       if (errorcount < 30000)
@@ -1003,7 +1003,7 @@ _gpgrt_log_info (const char *fmt, ...)
   va_list arg_ptr ;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv_internal (GPGRT_LOG_INFO, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOGLVL_INFO, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -1014,7 +1014,7 @@ _gpgrt_log_error (const char *fmt, ...)
   va_list arg_ptr ;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv_internal (GPGRT_LOG_ERROR, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOGLVL_ERROR, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -1025,7 +1025,7 @@ _gpgrt_log_fatal (const char *fmt, ...)
   va_list arg_ptr ;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv_internal (GPGRT_LOG_FATAL, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOGLVL_FATAL, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
   abort (); /* Never called; just to make the compiler happy.  */
 }
@@ -1037,7 +1037,7 @@ _gpgrt_log_bug (const char *fmt, ...)
   va_list arg_ptr ;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv_internal (GPGRT_LOG_BUG, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOGLVL_BUG, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
   abort (); /* Never called; just to make the compiler happy.  */
 }
@@ -1049,7 +1049,7 @@ _gpgrt_log_debug (const char *fmt, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOGLVL_DEBUG, 0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -1063,7 +1063,7 @@ _gpgrt_log_debug_string (const char *string, const char *fmt, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, string, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOGLVL_DEBUG, 0, string, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -1074,7 +1074,8 @@ _gpgrt_log_printf (const char *fmt, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv_internal (fmt ? GPGRT_LOG_CONT : GPGRT_LOG_BEGIN, 0, NULL, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (fmt ? GPGRT_LOGLVL_CONT : GPGRT_LOGLVL_BEGIN,
+                        0, NULL, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -1084,7 +1085,7 @@ _gpgrt_log_printf (const char *fmt, ...)
 void
 _gpgrt_log_flush (void)
 {
-  do_log_ignore_arg (GPGRT_LOG_CONT, NULL);
+  do_log_ignore_arg (GPGRT_LOGLVL_CONT, NULL);
 }
 
 
@@ -1103,7 +1104,7 @@ _gpgrt_logv_printhex (const void *buffer, size_t length,
   /* FIXME: This printing is not yet protected by _gpgrt_flockfile.  */
   if (fmt && *fmt)
     {
-      _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, NULL, NULL, fmt, arg_ptr);
+      _gpgrt_logv_internal (GPGRT_LOGLVL_DEBUG, 0, NULL, NULL, fmt, arg_ptr);
       wrap = 1;
     }
 
@@ -1175,13 +1176,14 @@ _gpgrt_logv_clock (const char *fmt, va_list arg_ptr)
     initial = now;
 
   snprintf (clockbuf, sizeof clockbuf, "[%6llu] ", (now - initial)/1000);
-  _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, NULL, clockbuf, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOGLVL_DEBUG, 0, NULL, clockbuf, fmt, arg_ptr);
 
 #else /*!ENABLE_LOG_CLOCK*/
 
   /* You may need to link with -ltr to use the above code.  */
 
-  _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, NULL, "[no clock] ", fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOGLVL_DEBUG,
+                        0, NULL, "[no clock] ", fmt, arg_ptr);
 
 #endif  /*!ENABLE_LOG_CLOCK*/
 }
@@ -1204,10 +1206,10 @@ _gpgrt__log_assert (const char *expr, const char *file,
                    int line, const char *func)
 {
 #ifdef GPGRT_HAVE_MACRO_FUNCTION
-  _gpgrt_log (GPGRT_LOG_BUG, "Assertion \"%s\" in %s failed (%s:%d)\n",
+  _gpgrt_log (GPGRT_LOGLVL_BUG, "Assertion \"%s\" in %s failed (%s:%d)\n",
               expr, func, file, line);
 #else /*!GPGRT_HAVE_MACRO_FUNCTION*/
-  _gpgrt_log (GPGRT_LOG_BUG, "Assertion \"%s\" failed (%s:%d)\n",
+  _gpgrt_log (GPGRT_LOGLVL_BUG, "Assertion \"%s\" failed (%s:%d)\n",
            expr, file, line);
 #endif /*!GPGRT_HAVE_MACRO_FUNCTION*/
   abort (); /* Never called; just to make the compiler happy.  */

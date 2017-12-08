@@ -905,7 +905,7 @@ gpgrt_log_info (const char *fmt, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv (GPGRT_LOG_INFO, fmt, arg_ptr);
+  _gpgrt_logv (GPGRT_LOGLVL_INFO, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -915,7 +915,7 @@ gpgrt_log_error (const char *fmt, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv (GPGRT_LOG_ERROR, fmt, arg_ptr);
+  _gpgrt_logv (GPGRT_LOGLVL_ERROR, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -925,7 +925,7 @@ gpgrt_log_fatal (const char *fmt, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv (GPGRT_LOG_FATAL, fmt, arg_ptr);
+  _gpgrt_logv (GPGRT_LOGLVL_FATAL, fmt, arg_ptr);
   va_end (arg_ptr);
   abort (); /* Never called; just to make the compiler happy.  */
 }
@@ -936,7 +936,7 @@ gpgrt_log_bug (const char *fmt, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv (GPGRT_LOG_BUG, fmt, arg_ptr);
+  _gpgrt_logv (GPGRT_LOGLVL_BUG, fmt, arg_ptr);
   va_end (arg_ptr);
   abort (); /* Never called; just to make the compiler happy.  */
 }
@@ -947,7 +947,7 @@ gpgrt_log_debug (const char *fmt, ...)
   va_list arg_ptr ;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv (GPGRT_LOG_DEBUG, fmt, arg_ptr);
+  _gpgrt_logv (GPGRT_LOGLVL_DEBUG, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -957,7 +957,7 @@ gpgrt_log_debug_string (const char *string, const char *fmt, ...)
   va_list arg_ptr ;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv_internal (GPGRT_LOG_DEBUG, 0, string, NULL, fmt, arg_ptr);
+  _gpgrt_logv_internal (GPGRT_LOGLVL_DEBUG, 0, string, NULL, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
@@ -967,7 +967,7 @@ gpgrt_log_printf (const char *fmt, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, fmt);
-  _gpgrt_logv (fmt ? GPGRT_LOG_CONT : GPGRT_LOG_BEGIN, fmt, arg_ptr);
+  _gpgrt_logv (fmt ? GPGRT_LOGLVL_CONT : GPGRT_LOGLVL_BEGIN, fmt, arg_ptr);
   va_end (arg_ptr);
 }
 
