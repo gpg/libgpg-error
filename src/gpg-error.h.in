@@ -1035,7 +1035,7 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 #define GPGRT_SPAWN_DETACHED  128 /* Start the process in the background.  */
 
 /* Function and convenience macros to create pipes.  */
-gpg_err_code_t gpgrt_make_pipe (int filedes[2], estream_t *r_fp,
+gpg_err_code_t gpgrt_make_pipe (int filedes[2], gpgrt_stream_t *r_fp,
                                 int direction, int nonblock);
 #define gpgrt_create_pipe(a)              gpgrt_make_pipe ((a),NULL,  0,  0);
 #define gpgrt_create_inbound_pipe(a,b,c)  gpgrt_make_pipe ((a), (b), -1,(c));
@@ -1046,9 +1046,9 @@ gpg_err_code_t gpgrt_make_pipe (int filedes[2], estream_t *r_fp,
 gpg_err_code_t gpgrt_spawn_process (const char *pgmname, const char *argv[],
                                     int *execpt, void (*preexec)(void),
                                     unsigned int flags,
-                                    estream_t *r_infp,
-                                    estream_t *r_outfp,
-                                    estream_t *r_errfp,
+                                    gpgrt_stream_t *r_infp,
+                                    gpgrt_stream_t *r_outfp,
+                                    gpgrt_stream_t *r_errfp,
                                     pid_t *pid);
 
 /* Fork and exec PGNNAME and connect the process to the given FDs.  */
@@ -1074,6 +1074,35 @@ void gpgrt_kill_process (pid_t pid);
 
 /* Release process resources identified by PID.  */
 void gpgrt_release_process (pid_t pid);
+
+/*
+ * Time functions
+ */
+
+/* Our representation of time requires 8 byte.  The value guaranteed
+ * to be a C string with no '\n' in it.  The time is always UTC.  */
+typedef unsigned char gpgrt_time_t[8];
+
+/* Check that ATIME is a valid time.  */
+gpg_err_code_t gpgrt_check_time (const gpgrt_time_t atime);
+
+/* Convert time into a Julian Date.  Returns 0 for invalid dates.  */
+unsigned int gpgrt_time2jd (const gpgrt_time_t atime, int *r_seconds);
+
+/* Convert the Julian Date (JD,SECS) into a time.  If SECS is -1 noon
+ * is assumed.  */
+void gpgrt_jd2time (gpgrt_time_t atime, unsigned int jd, int secs);
+
+/* Convert a time into a Julian Date and return it as a float with
+ * fractional seconds.  */
+static GPG_ERR_INLINE double
+gpgrt_time2jd_dbl (const gpgrt_time_t atime)
+{
+  unsigned int jd;
+  int secs;
+  jd = gpgrt_time2jd (atime, &secs);
+  return jd + (secs/86400.0);
+}
 
 
 
