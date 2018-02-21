@@ -469,6 +469,7 @@ EOF
       chmod +x  .git/hooks/commit-msg
       if [ x"${display_name}" != x ]; then
          git config format.subjectPrefix "PATCH ${display_name}"
+         git config sendemail.to "${patches_to}"
       fi
   fi
 fi

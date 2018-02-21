@@ -57,18 +57,24 @@
 
   - if you're working from the git repo, here's a suggested workflow:
 
+    - configure git send-email defaults:
+
+        git config format.subjectPrefix 'PATCH libgpg-error'
+        git config sendemail.to gnupg-devel@gnupg.org
+
+      Note that running ./autogen.sh on a fresh clone will do this for
+      you.
+
     - hack hack hack
 
     - commit your changes; group changes into easily-reviewable commit
       units, feel free to submit several patches at once
 
     - e.g. if you want to submit a single patch on top of master, do:
-      git send-email --to=gnupg-devel@gnupg.org --annotate -1
-      (please put a mention of libgpg-error into the subjects,
-      annotate lets you do that)
+      git send-email --annotate -1
 
     - e.g. if you have two commits on top of master, do:
-      git send-email --to=gnupg-devel@gnupg.org --annotate --cover-letter -2
+      git send-email --annotate --cover-letter -2
       (that prompts you for a summary mail to precede your actual
       patch mails)
 

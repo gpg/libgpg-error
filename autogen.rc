@@ -1,6 +1,7 @@
 # autogen.sh configuration for libgpg-error                   -*- sh -*-
 
 display_name="Libgpg-error"
+patches_to="gnupg-devel@gnupg.org"
 
 version_parts=2
 
