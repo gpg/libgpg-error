@@ -1,5 +1,7 @@
 # autogen.sh configuration for libgpg-error                   -*- sh -*-
 
+display_name="Libgpg-error"
+
 version_parts=2
 
 case "$myhost:$myhostsub" in
