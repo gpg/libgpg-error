@@ -228,7 +228,7 @@ _gpgrt_strdup (const char *string)
 }
 
 
-/* Helper for _gpgrt_stdconcat and gpgrt_strconcat.  */
+/* Helper for _gpgrt_strconcat and gpgrt_strconcat.  */
 char *
 _gpgrt_strconcat_core (const char *s1, va_list arg_ptr)
 {

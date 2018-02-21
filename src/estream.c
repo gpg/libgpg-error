@@ -1641,7 +1641,7 @@ func_file_create (void **cookie, int *filedes,
  *    allowed to leave out trailing dashes.  If this keyword parameter
  *    is not given the default mode for creating files is "-rw-rw-r--"
  *    (664).  Note that the system still applies the current umask to
- *    the mode when crating a file.  Example:
+ *    the mode when creating a file.  Example:
  *
  *       "wb,mode=-rw-r--"
  *
