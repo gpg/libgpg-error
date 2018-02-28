@@ -65,6 +65,7 @@ lock_obj_pub = \
         syscfg/lock-obj-pub.powerpc64-unknown-linux-gnu.h   \
 	syscfg/lock-obj-pub.powerpc64le-unknown-linux-gnu.h \
 	syscfg/lock-obj-pub.powerpc-unknown-linux-gnuspe.h  \
+	syscfg/lock-obj-pub.riscv64-unknown-linux-gnu.h     \
         syscfg/lock-obj-pub.s390x-ibm-linux-gnu.h           \
         syscfg/lock-obj-pub.sh3-unknown-linux-gnu.h         \
         syscfg/lock-obj-pub.sh4-unknown-linux-gnu.h         \
