@@ -1078,37 +1078,6 @@ void gpgrt_release_process (pid_t pid);
 
 #endif /*0*/
 
-/*
- * Time functions
- */
-
-/* Our representation of time requires 8 byte.  The value guaranteed
- * to be a C string with no '\n' in it.  The time is always UTC.  */
-typedef unsigned char gpgrt_time_t[8];
-
-/* Check that ATIME is a valid time.  */
-gpg_err_code_t gpgrt_check_time (const gpgrt_time_t atime);
-
-/* Convert time into a Julian Date.  Returns 0 for invalid dates.  */
-unsigned int gpgrt_time2jd (const gpgrt_time_t atime, int *r_seconds);
-
-/* Convert the Julian Date (JD,SECS) into a time.  If SECS is -1 noon
- * is assumed.  */
-void gpgrt_jd2time (gpgrt_time_t atime, unsigned int jd, int secs);
-
-/* Convert a time into a Julian Date and return it as a float with
- * fractional seconds.  */
-static GPG_ERR_INLINE double
-gpgrt_time2jd_dbl (const gpgrt_time_t atime)
-{
-  unsigned int jd;
-  int secs;
-  jd = gpgrt_time2jd (atime, &secs);
-  return jd + (secs/86400.0);
-}
-
-
-
 #ifdef __cplusplus
 }
 #endif
