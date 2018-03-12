@@ -1009,6 +1009,7 @@ _gpgrt_log_assert (const char *expr, const char *file,
 }
 
 
+#if 0
 gpg_err_code_t
 gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction, int nonblock)
 {
@@ -1063,7 +1064,7 @@ gpgrt_release_process (pid_t pid)
 {
   _gpgrt_release_process (pid);
 }
-
+#endif /*0*/
 
 
 /* For consistency reasons we use function wrappers also for Windows

@@ -50,7 +50,7 @@ _gpgrt_fd_valid_p (int fd)
 
 
 /* Our variant of getenv.  The returned string must be freed.  If the
- * environment variable does not exists NULL is retruned and ERRNO set
+ * environment variable does not exists NULL is returned and ERRNO set
  * to 0.  */
 char *
 _gpgrt_getenv (const char *name)

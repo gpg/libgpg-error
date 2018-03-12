@@ -1027,8 +1027,9 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 
 
 /*
- * Spawn functions
+ * Spawn functions  (Not yet available)
  */
+#if 0
 
 #define GPGRT_SPAWN_NONBLOCK   16 /* Set the streams to non-blocking.      */
 #define GPGRT_SPAWN_RUN_ASFW   64 /* Use AllowSetForegroundWindow on W32.  */
@@ -1074,6 +1075,8 @@ void gpgrt_kill_process (pid_t pid);
 
 /* Release process resources identified by PID.  */
 void gpgrt_release_process (pid_t pid);
+
+#endif /*0*/
 
 /*
  * Time functions
