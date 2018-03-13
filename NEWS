@@ -1,11 +1,15 @@
-Noteworthy changes in version 1.28 (unreleased) [C22/A22/R_]
+Noteworthy changes in version 1.28 (2018-03-13) [C23/A23/R0]
 -----------------------------------------------
 
- * The formerly internal yat2m tool is now installed during a native
+ * The formerly internal yat2m tool is now installed for a native
    build.
 
  * The new files gpgrt.m4 and gpgrt-config are now installed.  They
    can be used instead of gpg-error.m4 and gpg-error-config.
+
+ * New logging functions similar to those used by GnuPG.
+
+ * New helper functions for platform abstraction.
 
  * Interface changes relative to the 1.27 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
