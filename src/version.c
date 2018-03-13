@@ -38,8 +38,8 @@ cright_blurb (void)
 {
   static const char blurb[] =
     "\n\n"
-    "This is Libgpg-error " PACKAGE_VERSION " - An error code library\n"
-    "Copyright 2003-2004, 2010, 2013-2017 g10 Code GmbH\n"
+    "This is Libgpg-error " PACKAGE_VERSION " - A runtime library\n"
+    "Copyright 2001-2018 g10 Code GmbH\n"
     "\n"
     "(" BUILD_REVISION " " BUILD_TIMESTAMP ")\n"
     "\n\n";

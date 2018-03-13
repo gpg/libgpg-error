@@ -543,12 +543,12 @@ fi
 # Eventually we will reverse the meaning of that option.
 #
 build_gpgscm=no
-AC_MSG_CHECKING([whether to build gpgscm])
-AC_ARG_ENABLE(gpgscm,
-              AC_HELP_STRING([--enable-gpgscm],
-                             [build the gpgscm tool]),
-              build_gpgscm=$enableval, build_gpgscm=no)
-AC_MSG_RESULT($build_gpgscm)
+#AC_MSG_CHECKING([whether to build gpgscm])
+#AC_ARG_ENABLE(gpgscm,
+#              AC_HELP_STRING([--enable-gpgscm],
+#                             [build the gpgscm tool]),
+#              build_gpgscm=$enableval, build_gpgscm=no)
+#AC_MSG_RESULT($build_gpgscm)
 AM_CONDITIONAL([BUILD_GPGSCM], [test "x$build_gpgscm" != xno])
 
 
@@ -617,7 +617,7 @@ AM_CONDITIONAL([BUILD_TESTS], [test "x$build_tests" != xno])
 #
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([doc/Makefile po/Makefile.in m4/Makefile])
-AC_CONFIG_FILES([src/Makefile gpgscm/Makefile tests/Makefile])
+AC_CONFIG_FILES([src/Makefile tests/Makefile])
 AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc src/gpg-error.w32-manifest])
 AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])

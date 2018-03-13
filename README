@@ -20,6 +20,8 @@ components are
 
  - A lean gettext and iconv implementation for Windows.
 
+ - Log functions
+
 More components will be added over time.  Most functions are prefixed
 with "gpgrt" (GnuPG Run Time) instead of "gpg_err" to indicate the
 long term plan to rename this library to gpgrt.

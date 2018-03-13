@@ -34,11 +34,11 @@ else
 lang_subdirs =
 endif
 
-if BUILD_GPGSCM
-doc = gpgscm
-else
-doc =
-endif
+#if BUILD_GPGSCM
+#doc = gpgscm
+#else
+#doc =
+#endif
 
 if BUILD_DOC
 doc = doc
@@ -52,7 +52,7 @@ else
 tests =
 endif
 
-SUBDIRS = m4 src $(gpgscm) $(doc) $(tests) po $(lang_subdirs)
+SUBDIRS = m4 src $(doc) $(tests) po $(lang_subdirs)
 
 
 dist-hook: gen-ChangeLog

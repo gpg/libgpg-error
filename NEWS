@@ -4,8 +4,56 @@ Noteworthy changes in version 1.28 (unreleased) [C22/A22/R_]
  * The formerly internal yat2m tool is now installed during a native
    build.
 
+ * The new files gpgrt.m4 and gpgrt-config are now installed.  They
+   can be used instead of gpg-error.m4 and gpg-error-config.
+
  * Interface changes relative to the 1.27 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_get_errorcount            New API.
+ gpgrt_inc_errorcount            New API.
+ gpgrt_log_set_sink              New API.
+ gpgrt_log_set_socket_dir_cb     New API.
+ gpgrt_log_set_pid_suffix_cb     New API.
+ gpgrt_log_set_prefix            New API.
+ gpgrt_log_get_prefix            New API.
+ gpgrt_log_test_fd               New API.
+ gpgrt_log_get_fd                New API.
+ gpgrt_log_get_stream            New API.
+ gpgrt_log                       New API.
+ gpgrt_logv                      New API.
+ gpgrt_logv_prefix               New API.
+ gpgrt_log_string                New API.
+ gpgrt_log_info                  New API.
+ gpgrt_log_error                 New API.
+ gpgrt_log_fatal                 New API.
+ gpgrt_log_bug                   New API.
+ gpgrt_log_debug                 New API.
+ gpgrt_log_debug_string          New API.
+ gpgrt_log_printf                New API.
+ gpgrt_log_flush                 New API.
+ gpgrt_log_printhex              New API.
+ gpgrt_log_clock                 New API.
+ gpgrt_assert                    New macro.
+ _gpgrt_log_assert               New internal API.
+ GPGRT_LOGLVL_BEGIN              New const.
+ GPGRT_LOGLVL_CONT               New const.
+ GPGRT_LOGLVL_INFO               New const.
+ GPGRT_LOGLVL_WARN               New const.
+ GPGRT_LOGLVL_ERROR              New const.
+ GPGRT_LOGLVL_FATAL              New const.
+ GPGRT_LOGLVL_BUG                New const.
+ GPGRT_LOGLVL_DEBUG              New const.
+ gpgrt_realloc                   New API.
+ gpgrt_malloc                    New API.
+ gpgrt_calloc                    New API.
+ gpgrt_strdup                    New API.
+ gpgrt_strconcat                 New API.
+ gpgrt_w32_reg_query_string      New API.
+ gpgrt_getenv                    New API.
+ gpgrt_setenv                    New API.
+ gpgrt_mkdir                     New API.
+ gpgrt_chdir                     New API.
+ gpgrt_getcwd                    New API.
 
 
 Noteworthy changes in version 1.27 (2017-02-28) [C22/A22/R0]
