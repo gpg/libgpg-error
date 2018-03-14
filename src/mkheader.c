@@ -30,6 +30,7 @@ static const char *hdr_version_number;
 
 /* Values take from the supplied config.h.  */
 static int have_stdint_h;
+static int have_sys_types_h;
 static int have_w32_system;
 static int have_w64_system;
 static char *replacement_for_off_type;
@@ -37,6 +38,7 @@ static int use_posix_threads;
 
 /* Various state flags.  */
 static int stdint_h_included;
+static int sys_types_h_included;
 
 
 /* The usual free wrapper.  */
@@ -151,6 +153,8 @@ parse_config_h (const char *fname)
         continue; /* oops */
       if (!strcmp (p1, "HAVE_STDINT_H"))
         have_stdint_h = 1;
+      else if (!strcmp (p1, "HAVE_SYS_TYPES_H"))
+        have_sys_types_h = 1;
       else if (!strcmp (p1, "HAVE_W32_SYSTEM"))
         have_w32_system = 1;
       else if (!strcmp (p1, "HAVE_W64_SYSTEM"))
@@ -474,8 +478,12 @@ write_special (const char *fname, int lnr, const char *tag)
         }
       else
         {
-          fputs ("#include <sys/types.h>\n"
-                 "typedef ssize_t gpgrt_ssize_t;\n", stdout);
+          if (!sys_types_h_included)
+            {
+              fputs ("#include <sys/types.h>\n", stdout);
+              sys_types_h_included = 1;
+            }
+          fputs ("typedef ssize_t gpgrt_ssize_t;\n", stdout);
         }
     }
   else if (!strcmp (tag, "api_ssize_t"))
@@ -484,6 +492,30 @@ write_special (const char *fname, int lnr, const char *tag)
         fputs ("gpgrt_ssize_t", stdout);
       else
         fputs ("ssize_t", stdout);
+    }
+  else if (!strcmp (tag, "define:pid_t"))
+    {
+      if (have_sys_types_h)
+        {
+          if (!sys_types_h_included)
+            {
+              fputs ("#include <sys/types.h>\n", stdout);
+              sys_types_h_included = 1;
+            }
+        }
+      else if (have_w64_system)
+        {
+          if (!stdint_h_included && have_stdint_h)
+            {
+              fputs ("#include <stdint.h>\n", stdout);
+              stdint_h_included = 1;
+            }
+          fputs ("typedef int64_t pid_t\n", stdout);
+        }
+      else
+        {
+          fputs ("typedef int     pid_t\n", stdout);
+        }
     }
   else if (!strcmp (tag, "include:err-sources"))
     {

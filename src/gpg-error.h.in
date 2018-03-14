@@ -405,6 +405,7 @@ const char *gpgrt_check_version (const char *req_version);
 const char *gpg_error_check_version (const char *req_version);
 
 /* System specific type definitions.  */
+@define:pid_t@
 @define:gpgrt_ssize_t@
 @define:gpgrt_off_t@
 

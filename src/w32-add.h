@@ -3,10 +3,6 @@
 ## peculiarity of the script the first used line must not
 ## start with a hash mark.
 
-/* Fixme: This is a quick hack.  We need to check whether the compiler
- * actually in use already knows that type.  */
-typedef int pid_t;
-
 /* Decide whether to use the format_arg attribute.  */
 #if _GPG_ERR_GCC_VERSION > 20800
 # define _GPG_ERR_ATTR_FORMAT_ARG(a)  __attribute__ ((__format_arg__ (a)))
