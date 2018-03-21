@@ -200,8 +200,9 @@ MARK_VISIBLE (gpgrt_release_process)
 #endif
 
 MARK_VISIBLE (gpgrt_argparse)
-MARK_VISIBLE (gpgrt_set_strusage)
+MARK_VISIBLE (gpgrt_usage)
 MARK_VISIBLE (gpgrt_strusage)
+MARK_VISIBLE (gpgrt_set_strusage)
 MARK_VISIBLE (gpgrt_set_fixed_string_mapper);
 MARK_VISIBLE (gpgrt_set_usage_outfnc);
 
@@ -366,6 +367,7 @@ MARK_VISIBLE (gpgrt_set_usage_outfnc);
 #define gpgrt_release_process        _gpgrt_USE_UNDERSCORED_FUNCTION
 
 #define gpgrt_argparse                _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_usage                   _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_set_strusage            _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_strusage                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_set_usage_outfnc        _gpgrt_USE_UNDERSCORED_FUNCTION

@@ -1073,6 +1073,12 @@ gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
   return _gpgrt_argparse (fp, arg, opts);
 }
 
+void
+gpgrt_usage (int level)
+{
+  _gpgrt_usage (level);
+}
+
 const char *
 gpgrt_strusage (int level)
 {

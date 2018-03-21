@@ -180,6 +180,7 @@ GPG_ERROR_1.0 {
 #    gpgrt_release_process;
 
     gpgrt_argparse;
+    gpgrt_usage;
     gpgrt_strusage;
     gpgrt_set_strusage;
     gpgrt_set_usage_outfnc;

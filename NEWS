@@ -5,6 +5,7 @@ Noteworthy changes in version 1.29 (unreleased) [C23/A23/R_]
  * Interface changes relative to the 1.28 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  gpgrt_argparse                  New API.
+ gpgrt_usage                     New API.
  gpgrt_strusage                  New API.
  gpgrt_set_strusage              New API.
  gpgrt_set_usage_outfnc          New API.

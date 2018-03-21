@@ -208,10 +208,11 @@ EXPORTS
 ;; gpgrt_release_process        @159
 
  gpgrt_argparse               @160
- gpgrt_strusage               @161
- gpgrt_set_strusage           @162
- gpgrt_set_usage_outfnc       @163
- gpgrt_set_fixed_string_mapper  @164
+ gpgrt_usage                  @161
+ gpgrt_strusage               @162
+ gpgrt_set_strusage           @163
+ gpgrt_set_usage_outfnc       @164
+ gpgrt_set_fixed_string_mapper  @165
 
 
 ;; end of file with public symbols for Windows.
