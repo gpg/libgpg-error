@@ -442,26 +442,36 @@ print_desc (const char *symbol)
 
 
 
-static int
-show_usage (const char *name)
+static const char *
+my_strusage (int level)
 {
-  if (name)
-    {
-      fprintf (stderr, _("Usage: %s GPG-ERROR [...]\n"),
-               strrchr (name,'/')? (strrchr (name, '/')+1): name);
-      exit (1);
-    }
+  const char *p;
 
-  fputs ("gpg-error (" PACKAGE_NAME ") " PACKAGE_VERSION "\n", stdout);
-  fputs ("Options:\n"
-         "  --version      Print version\n"
-         "  --lib-version  Print library version\n"
-         "  --help         Print this help\n"
-         "  --list         Print all error codes\n"
-         "  --defines      Print all error codes as #define lines\n"
-         "  --desc         Print with error description\n"
-         , stdout);
-  exit (0);
+  switch (level)
+    {
+    case  9: p = "LGPL-2.1-or-later"; break;
+
+    case 11: p = "gpg-error"; break;
+    case 12: p = PACKAGE_NAME; break;
+    case 13: p = PACKAGE_VERSION; break;
+    case 14: p = "Copyright (C) 2018 g10 Code GmbH"; break;
+    case 19: p = _("Please report bugs to <https://bugs.gnupg.org>.\n"); break;
+
+    case 1:
+    case 40:
+      p = ("Usage: gpg-error [options] error-numbers");
+      break;
+    case 41:
+      p = ("Map error numbers to strings and vice versa.\n");
+      break;
+
+    case 42:
+      p = "1"; /* Flag: print 40 as part of 41. */
+      break;
+
+    default: p = NULL; break;
+    }
+  return p;
 }
 
 
@@ -469,8 +479,25 @@ show_usage (const char *name)
 int
 main (int argc, char *argv[])
 {
-  const char *pgmname = argv[0];
-  int last_argc = -1;
+  enum { CMD_DEFAULT     = 0,
+         CMD_LIB_VERSION = 501,
+         CMD_LIST,
+         CMD_DEFINES,
+         OPT_DESC
+  };
+  static gpgrt_opt_t opts[] = {
+    ARGPARSE_c (CMD_LIB_VERSION, "lib-version",
+                "Print library version"),
+    ARGPARSE_c (CMD_LIST, "list",
+                "Print all error codes"),
+    ARGPARSE_c (CMD_DEFINES, "defines",
+                "Print all error codes as #define lines"),
+    ARGPARSE_s_n (OPT_DESC, "desc",
+                  "Print with error description"),
+    ARGPARSE_end()
+  };
+  gpgrt_argparse_t pargs = { &argc, &argv };
+
   int i;
   int listmode = 0;
   int desc = 0;
@@ -480,60 +507,27 @@ main (int argc, char *argv[])
 
   gpgrt_init ();
   i18n_init ();
+  gpgrt_set_strusage (my_strusage);
+  gpgrt_log_set_prefix (gpgrt_strusage (11), GPGRT_LOG_WITH_PREFIX);
 
 
-  if (argc)
+  while (gpgrt_argparse (NULL, &pargs, opts))
     {
-      argc--; argv++;
+      switch (pargs.r_opt)
+        {
+        case CMD_LIB_VERSION: break;
+        case CMD_LIST:       listmode = 1; break;
+        case CMD_DEFINES:    listmode = 2; break;
+        case OPT_DESC:       desc = 1; break;
+
+        default: pargs.err = ARGPARSE_PRINT_WARNING; break;
+        }
     }
-  while (argc && last_argc != argc )
-    {
-      last_argc = argc;
-      if (!strcmp (*argv, "--"))
-        {
-          argc--; argv++;
-          break;
-        }
-      else if (!strcmp (*argv, "--version"))
-        {
-          fputs ("gpg-error (" PACKAGE_NAME ") " PACKAGE_VERSION "\n", stdout);
-          exit (0);
-        }
-      else if (!strcmp (*argv, "--help"))
-        {
-          show_usage (NULL);
-        }
-      else if (!strcmp (*argv, "--lib-version"))
-        {
-          argc--; argv++;
-          printf ("Version from header: %s (0x%06x)\n",
-                  GPG_ERROR_VERSION, GPG_ERROR_VERSION_NUMBER);
-          printf ("Version from binary: %s\n", gpg_error_check_version (NULL));
-          printf ("Copyright blurb ...:%s\n",
-                  gpg_error_check_version ("\x01\x01"));
-          exit (0);
-        }
-      else if (!strcmp (*argv, "--list"))
-        {
-          listmode = 1;
-          argc--; argv++;
-        }
-      else if (!strcmp (*argv, "--defines"))
-        {
-          listmode = 2;
-          argc--; argv++;
-        }
-      else if (!strcmp (*argv, "--desc"))
-        {
-          desc = 1;
-          argc--; argv++;
-        }
-      else if (!strncmp (*argv, "--", 2))
-        show_usage (pgmname);
-    }
+  gpgrt_argparse (NULL, &pargs, NULL);  /* Free internal memory.  */
+  log_debug ("argc=%d listmode=%d\n", argc, listmode);
 
   if ((argc && listmode) || (!argc && !listmode))
-    show_usage (pgmname);
+    gpgrt_usage (1);
 
 
   if (listmode == 1)
@@ -630,8 +624,7 @@ main (int argc, char *argv[])
                 print_desc (error_sym);
             }
           else
-            fprintf (stderr, _("%s: warning: could not recognize %s\n"),
-                     argv[0], argv[i]);
+            log_error (_("warning: could not recognize %s\n"), argv[i]);
         }
     }
 
