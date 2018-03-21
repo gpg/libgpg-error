@@ -1509,6 +1509,75 @@ msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: averto: ne eblis rekoni %s\n"
 
 #, fuzzy
+msgid "argument not expected"
+msgstr "skribas sekretan ŝlosilon al '%s'\n"
+
+#, fuzzy
+msgid "read error"
+msgstr "legeraro ĉe dosiero"
+
+#, fuzzy
+msgid "keyword too long"
+msgstr "pasfrazo estas tro longa\n"
+
+#, fuzzy
+msgid "missing argument"
+msgstr "nevalida argumento"
+
+#, fuzzy
+#| msgid "invalid armor"
+msgid "invalid argument"
+msgstr "nevalida kiraso"
+
+#, fuzzy
+msgid "invalid command"
+msgstr "malkongruaj komandoj\n"
+
+#, fuzzy
+msgid "invalid alias definition"
+msgstr "nevalida kiraso"
+
+#, fuzzy
+msgid "out of core"
+msgstr "ne traktita"
+
+#, fuzzy
+msgid "invalid option"
+msgstr "nevalida kiraso"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "nevalida kiraso"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "Nevalida komando (provu per \"helpo\")\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, fuzzy
+msgid "out of core\n"
+msgstr "ne traktita"
+
+#, fuzzy, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "nevalida kiraso"
+
+#, fuzzy
 #~| msgid "Resources exhausted"
 #~ msgid "LCUP Resources exhausted"
 #~ msgstr "Rimedoj estas plenuzitaj"

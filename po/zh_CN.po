@@ -1491,6 +1491,75 @@ msgid "%s: warning: could not recognize %s\n"
 msgstr "%s：警告：无法识别 %s\n"
 
 #, fuzzy
+msgid "argument not expected"
+msgstr "不允许使用管理员命令\n"
+
+#, fuzzy
+msgid "read error"
+msgstr "文件读取错误"
+
+#, fuzzy
+msgid "keyword too long"
+msgstr "列太长"
+
+#, fuzzy
+msgid "missing argument"
+msgstr "无效的参数"
+
+#, fuzzy
+#| msgid "invalid armor"
+msgid "invalid argument"
+msgstr "无效的 ASCII 封装格式"
+
+#, fuzzy
+msgid "invalid command"
+msgstr "仅供管理员使用的命令\n"
+
+#, fuzzy
+msgid "invalid alias definition"
+msgstr "无效的列表选项\n"
+
+#, fuzzy
+msgid "out of core"
+msgstr "可选"
+
+#, fuzzy
+msgid "invalid option"
+msgstr "无效的列表选项\n"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "无效的列表选项\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "无效的指令(尝试“help”)\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, fuzzy
+msgid "out of core\n"
+msgstr "可选"
+
+#, fuzzy, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "无效的列表选项\n"
+
+#, fuzzy
 #~| msgid "Resources exhausted"
 #~ msgid "LCUP Resources exhausted"
 #~ msgstr "内存耗尽"

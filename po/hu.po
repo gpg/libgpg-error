@@ -1507,6 +1507,75 @@ msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: figyelmeztetés: nem sikerült felismerni: %s\n"
 
 #, fuzzy
+msgid "argument not expected"
+msgstr "Írom a titkos kulcsot a %s állományba.\n"
+
+#, fuzzy
+msgid "read error"
+msgstr "állományolvasási hiba"
+
+#, fuzzy
+msgid "keyword too long"
+msgstr "A sor túl hosszú!\n"
+
+#, fuzzy
+msgid "missing argument"
+msgstr "érvénytelen argumentum"
+
+#, fuzzy
+#| msgid "invalid armor"
+msgid "invalid argument"
+msgstr "érvénytelen páncél"
+
+#, fuzzy
+msgid "invalid command"
+msgstr "Egymásnak ellentmondó parancsok!\n"
+
+#, fuzzy
+msgid "invalid alias definition"
+msgstr "Érvénytelen import opciók!\n"
+
+#, fuzzy
+msgid "out of core"
+msgstr "nem feldolgozott"
+
+#, fuzzy
+msgid "invalid option"
+msgstr "Érvénytelen import opciók!\n"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "Érvénytelen import opciók!\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "Érvénytelen parancs! (Próbálja a súgót: \"help\".)\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, fuzzy
+msgid "out of core\n"
+msgstr "nem feldolgozott"
+
+#, fuzzy, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "Érvénytelen import opciók!\n"
+
+#, fuzzy
 #~| msgid "Resources exhausted"
 #~ msgid "LCUP Resources exhausted"
 #~ msgstr "Az erőforrások kimerültek"

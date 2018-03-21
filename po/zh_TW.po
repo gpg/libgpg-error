@@ -1452,6 +1452,64 @@ msgstr "用法: %s GPG-ERROR [...]\n"
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: 警告: 無法辨識 %s\n"
 
+msgid "argument not expected"
+msgstr "沒料到有引數"
+
+msgid "read error"
+msgstr "讀取錯誤"
+
+msgid "keyword too long"
+msgstr "關鍵字太長"
+
+msgid "missing argument"
+msgstr "無效的引數"
+
+msgid "invalid argument"
+msgstr "無效的引數"
+
+msgid "invalid command"
+msgstr "無效的指令"
+
+msgid "invalid alias definition"
+msgstr "無效的別名定義"
+
+msgid "out of core"
+msgstr "超出核心"
+
+msgid "invalid option"
+msgstr "無效的選項"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "\"%.50s\" 選項遺失了引數\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "選項 \"%.50s\" 的引數無效\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "\"%.50s\" 選項沒料到會有引數\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "無效的指令 \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "\"%.50s\" 選項不明確\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "\"%.50s\" 指令不明確\n"
+
+msgid "out of core\n"
+msgstr "超出核心\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "無效的選項 \"%.50s\"\n"
+
 #, fuzzy
 #~| msgid "Resources exhausted"
 #~ msgid "LCUP Resources exhausted"

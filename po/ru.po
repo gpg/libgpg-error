@@ -1333,3 +1333,61 @@ msgstr "Вызов: %s GPG-ERROR [...]\n"
 #, c-format
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: внимание: не распознано %s\n"
+
+msgid "argument not expected"
+msgstr "неожиданный параметр"
+
+msgid "read error"
+msgstr "ошибка чтения"
+
+msgid "keyword too long"
+msgstr "слишком длинное ключевое слово"
+
+msgid "missing argument"
+msgstr "пропущен аргумент"
+
+msgid "invalid argument"
+msgstr "недопустимый аргумент"
+
+msgid "invalid command"
+msgstr "недопустимая команда"
+
+msgid "invalid alias definition"
+msgstr "недопустимое определение синонима"
+
+msgid "out of core"
+msgstr "нехватка выделенной памяти"
+
+msgid "invalid option"
+msgstr "недопустимый параметр"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "не хватает аргумента для параметра \"%.50s\"\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "недопустимый аргумент для параметра \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "у параметра \"%.50s\" не должно быть аргумента\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "недопустимая команда \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "параметр \"%.50s\" неоднозначен\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "команда \"%.50s\" неоднозначна\n"
+
+msgid "out of core\n"
+msgstr "нехватка выделенной памяти\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "недопустимый параметр \"%.50s\"\n"

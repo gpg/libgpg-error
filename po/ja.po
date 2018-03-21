@@ -1300,5 +1300,63 @@ msgstr "使用法: %s GPG-ERROR [...]\n"
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: 警告: %s を認識できませんでした\n"
 
+msgid "argument not expected"
+msgstr "引数は期待されていません"
+
+msgid "read error"
+msgstr "読み込みエラー"
+
+msgid "keyword too long"
+msgstr "キーワードが長すぎます"
+
+msgid "missing argument"
+msgstr "引数がありません"
+
+msgid "invalid argument"
+msgstr "無効な引数"
+
+msgid "invalid command"
+msgstr "無効なコマンド"
+
+msgid "invalid alias definition"
+msgstr "無効なエイリアス定義です"
+
+msgid "out of core"
+msgstr "メモリがありません"
+
+msgid "invalid option"
+msgstr "無効なオプション"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "オプション\"%.50s\"に引数がありません\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "オプション\"%.50s\"には無効な引数です\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "オプション\"%.50s\"は引数をとりません\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "無効なコマンド \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "オプション\"%.50s\"はあいまいです\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "コマンド\"%.50s\"はあいまいです\n"
+
+msgid "out of core\n"
+msgstr "メモリがありません\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "無効なオプション \"%.50s\"\n"
+
 #~ msgid "Keyring open"
 #~ msgstr "鍵リングオープン"

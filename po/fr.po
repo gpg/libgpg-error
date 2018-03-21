@@ -1451,6 +1451,64 @@ msgstr "Utilisation : %s GPG-ERROR [...]\n"
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s : attention : impossible de reconnaître %s\n"
 
+msgid "argument not expected"
+msgstr "argument inattendu"
+
+msgid "read error"
+msgstr "erreur de lecture"
+
+msgid "keyword too long"
+msgstr "mot-clef trop long"
+
+msgid "missing argument"
+msgstr "argument manquant"
+
+msgid "invalid argument"
+msgstr "argument incorrect"
+
+msgid "invalid command"
+msgstr "commande incorrecte"
+
+msgid "invalid alias definition"
+msgstr "définition d'alias incorrecte"
+
+msgid "out of core"
+msgstr "hors limite"
+
+msgid "invalid option"
+msgstr "option incorrecte"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "argument manquant pour l'option « %.50s »\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "argument incorrect pour l'option « %.50s »\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "l'option « %.50s » n'attend pas d'argument\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "commande « %.50s » incorrecte\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "l'option « %.50s » est ambiguë\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "la commande « %.50s » est ambiguë\n"
+
+msgid "out of core\n"
+msgstr "hors limite\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "option « %.50s » incorrecte\n"
+
 #, fuzzy
 #~| msgid "Resources exhausted"
 #~ msgid "LCUP Resources exhausted"

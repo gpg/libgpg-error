@@ -1451,6 +1451,75 @@ msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: aviso: não consegui reconhecer %s\n"
 
 #, fuzzy
+msgid "argument not expected"
+msgstr "a escrever chave privada para `%s'\n"
+
+#, fuzzy
+msgid "read error"
+msgstr "erro de leitura"
+
+#, fuzzy
+msgid "keyword too long"
+msgstr "frase secreta demasiado longa\n"
+
+#, fuzzy
+msgid "missing argument"
+msgstr "argumento inválido"
+
+#, fuzzy
+#| msgid "invalid armor"
+msgid "invalid argument"
+msgstr "armadura inválida"
+
+#, fuzzy
+msgid "invalid command"
+msgstr "comandos em conflito\n"
+
+#, fuzzy
+msgid "invalid alias definition"
+msgstr "opções de importação inválidas\n"
+
+#, fuzzy
+msgid "out of core"
+msgstr "não processado"
+
+#, fuzzy
+msgid "invalid option"
+msgstr "opções de importação inválidas\n"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "opções de importação inválidas\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "Comando inválido (tente \"help\")\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, fuzzy
+msgid "out of core\n"
+msgstr "não processado"
+
+#, fuzzy, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "opções de importação inválidas\n"
+
+#, fuzzy
 #~| msgid "Resources exhausted"
 #~ msgid "LCUP Resources exhausted"
 #~ msgstr "Recursos esgotados"

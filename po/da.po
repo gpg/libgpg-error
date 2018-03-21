@@ -1454,6 +1454,67 @@ msgstr "Brug: %s GPG-ERROR [...]\n"
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: advarsel: kunne ikke genkende %s\n"
 
+msgid "argument not expected"
+msgstr "parameter var ikke forventet"
+
+msgid "read error"
+msgstr "læsefejl"
+
+msgid "keyword too long"
+msgstr "nøgleord er for langt"
+
+msgid "missing argument"
+msgstr "manglende parameter"
+
+#, fuzzy
+#| msgid "invalid value\n"
+msgid "invalid argument"
+msgstr "ugyldig værdi\n"
+
+msgid "invalid command"
+msgstr "ugyldig kommando"
+
+msgid "invalid alias definition"
+msgstr "ugyldig aliasdefinition"
+
+msgid "out of core"
+msgstr "ikke nok kerne"
+
+msgid "invalid option"
+msgstr "ugyldig indstilling"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "manglende parameter for indstilling »%.50s«\n"
+
+#, fuzzy, c-format
+#| msgid "missing argument for option \"%.50s\"\n"
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "manglende parameter for indstilling »%.50s«\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "tilvalg »%.50s« forventer ikke et argument\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "ugyldig kommando »%.50s«\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "tilvalg »%.50s« er tvetydigt\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "kommando »%.50s« er tvetydig\n"
+
+msgid "out of core\n"
+msgstr "uden for kerne\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "ugyldigt tilvalg »%.50s«\n"
+
 #, fuzzy
 #~| msgid "Resources exhausted"
 #~ msgid "LCUP Resources exhausted"

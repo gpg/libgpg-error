@@ -1307,6 +1307,64 @@ msgstr "Aufruf: %s GPG-FEHLER [...]\n"
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: Warnung: %s konnte nicht erkannt werden\n"
 
+msgid "argument not expected"
+msgstr "Argument nicht erwartet"
+
+msgid "read error"
+msgstr "Lesefehler"
+
+msgid "keyword too long"
+msgstr "Schlüsselwort ist zu lang"
+
+msgid "missing argument"
+msgstr "Fehlendes Argument"
+
+msgid "invalid argument"
+msgstr "Ungültiges Argument"
+
+msgid "invalid command"
+msgstr "Ungültiger Befehl"
+
+msgid "invalid alias definition"
+msgstr "Ungültige Alias-Definition"
+
+msgid "out of core"
+msgstr "Nicht genügend Speicher"
+
+msgid "invalid option"
+msgstr "Ungültige Option"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "Fehlendes Argument für Option \"%.50s\"\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "Ungültiges Argument für Option \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "Option \"%.50s\" erwartet kein Argument\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "Ungültiger Befehl \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "Option \"%.50s\" ist mehrdeutig\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "Befehl \"%.50s\" ist mehrdeutig\n"
+
+msgid "out of core\n"
+msgstr "Nicht genügend Speicher\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "Ungültige Option \"%.50s\"\n"
+
 #~ msgid "LCUP Resources exhausted"
 #~ msgstr "LCUP Ressourcen erschöpft"
 

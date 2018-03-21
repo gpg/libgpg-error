@@ -1345,6 +1345,64 @@ msgstr "Користування: %s ПОМИЛКА-GPG [...]\n"
 msgid "%s: warning: could not recognize %s\n"
 msgstr "%s: попередження: не вдалося розпізнати %s\n"
 
+msgid "argument not expected"
+msgstr "неочікуваний аргумент"
+
+msgid "read error"
+msgstr "помилка читання"
+
+msgid "keyword too long"
+msgstr "занадто довге ключове слово"
+
+msgid "missing argument"
+msgstr "не вистачає аргументу"
+
+msgid "invalid argument"
+msgstr "некоректний аргумент"
+
+msgid "invalid command"
+msgstr "некоректна команда"
+
+msgid "invalid alias definition"
+msgstr "некоректне визначення замінника"
+
+msgid "out of core"
+msgstr "вихід за межі області пам’яті"
+
+msgid "invalid option"
+msgstr "некоректний параметр"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "не вказано аргументу до параметра «%.50s»\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "некоректний аргумент параметра «%.50s»\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "для параметра «%.50s» аргументи не потрібно вказувати\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "некоректна команда «%.50s»\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "параметр «%.50s» є неоднозначним\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "команда «%.50s» є неоднозначною\n"
+
+msgid "out of core\n"
+msgstr "вихід за межі області пам’яті\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "некоректний параметр «%.50s»\n"
+
 #, fuzzy
 #~| msgid "Resources exhausted"
 #~ msgid "LCUP Resources exhausted"
