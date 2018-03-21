@@ -199,6 +199,12 @@ MARK_VISIBLE (gpgrt_kill_process)
 MARK_VISIBLE (gpgrt_release_process)
 #endif
 
+MARK_VISIBLE (gpgrt_argparse)
+MARK_VISIBLE (gpgrt_set_strusage)
+MARK_VISIBLE (gpgrt_strusage)
+MARK_VISIBLE (gpgrt_set_fixed_string_mapper);
+MARK_VISIBLE (gpgrt_set_usage_outfnc);
+
 #undef MARK_VISIBLE
 
 #else /*!_GPGRT_INCL_BY_VISIBILITY_C*/
@@ -359,6 +365,11 @@ MARK_VISIBLE (gpgrt_release_process)
 #define gpgrt_kill_process           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_release_process        _gpgrt_USE_UNDERSCORED_FUNCTION
 
+#define gpgrt_argparse                _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_set_strusage            _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_strusage                _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_set_usage_outfnc        _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_set_fixed_string_mapper _gpgrt_USE_UNDERSCORED_FUNCTION
 
 /* Windows specific functions.  */
 #define gpgrt_w32_reg_query_string  _gpgrt_USE_UNDERSCORED_FUNCTION

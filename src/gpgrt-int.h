@@ -711,6 +711,15 @@ void _gpgrt_kill_process (pid_t pid);
 void _gpgrt_release_process (pid_t pid);
 
 
+/*
+ * Local prototypes for argparse.
+ */
+int _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts);
+const char *_gpgrt_strusage (int level);
+void _gpgrt_set_strusage (const char *(*f)(int));
+void _gpgrt_set_usage_outfnc (int (*fnc)(int, const char *));
+void _gpgrt_set_fixed_string_mapper (const char *(*f)(const char*));
+
 
 
 /*

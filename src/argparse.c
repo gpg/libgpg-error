@@ -1,9 +1,9 @@
 /* argparse.c - Argument Parser for option handling
  * Copyright (C) 1997-2001, 2006-2008, 2013-2017 Werner Koch
  * Copyright (C) 1998-2001, 2006-2008, 2012 Free Software Foundation, Inc.
- * Copyright (C) 2015-2017 g10 Code GmbH
+ * Copyright (C) 2015-2018 g10 Code GmbH
  *
- * This file is part of GnuPG.
+ * This file is part of Libgpg-error.
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,12 +17,9 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, see <https://www.gnu.org/licenses/>.
- * SPDX-License-Identifier: LGPL-2.1+
- */
-
-/* This file may be used as part of GnuPG or standalone.  A GnuPG
-   build is detected by the presence of the macro GNUPG_MAJOR_VERSION.
-   Some feature are only availalbe in the GnuPG build mode.
+ * SPDX-License-Identifier: LGPL-2.1-or-later
+ *
+ * This file was originally a part of GnuPG.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -37,92 +34,86 @@
 #include <limits.h>
 #include <errno.h>
 
-#ifdef GNUPG_MAJOR_VERSION
-# include "util.h"
-# include "common-defs.h"
-# include "i18n.h"
-# include "mischelp.h"
-# include "stringhelp.h"
-# include "logging.h"
-# include "utf8conv.h"
-#endif /*GNUPG_MAJOR_VERSION*/
+#include "gpgrt-int.h"
 
-#include "argparse.h"
+/* Special short options which are auto-inserterd.  */
+#define ARGPARSE_SHORTOPT_HELP 32768
+#define ARGPARSE_SHORTOPT_VERSION 32769
+#define ARGPARSE_SHORTOPT_WARRANTY 32770
+#define ARGPARSE_SHORTOPT_DUMP_OPTIONS 32771
 
-/* GnuPG uses GPLv3+ but a standalone version of this defaults to
-   GPLv2+ because that is the license of this file.  Change this if
-   you include it in a program which uses GPLv3.  If you don't want to
-   set a copyright string for your usage() you may also hardcode it
-   here.  */
-#ifndef GNUPG_MAJOR_VERSION
+/* A mask for the types.  */
+#define ARGPARSE_TYPE_MASK  7  /* Mask for the type values.  */
 
-# define ARGPARSE_GPL_VERSION      2
-# define ARGPARSE_CRIGHT_STR "Copyright (C) YEAR NAME"
-
-#else /* Used by GnuPG  */
-
-# define ARGPARSE_GPL_VERSION      3
-# define ARGPARSE_CRIGHT_STR "Copyright (C) 2018 Free Software Foundation, Inc."
-
-#endif /*GNUPG_MAJOR_VERSION*/
-
-/* Replacements for standalone builds.  */
-#ifndef GNUPG_MAJOR_VERSION
-# ifndef _
-#  define _(a)  (a)
-# endif
-# ifndef DIM
-#  define DIM(v)           (sizeof(v)/sizeof((v)[0]))
-# endif
-# define xtrymalloc(a)    malloc ((a))
-# define xtryrealloc(a,b) realloc ((a), (b))
-# define xtrystrdup(a)    strdup ((a))
-# define xfree(a)         free ((a))
-# define log_error        my_log_error
-# define log_bug	  my_log_bug
-# define trim_spaces(a)   my_trim_spaces ((a))
-# define map_static_macro_string(a)  (a)
-#endif /*!GNUPG_MAJOR_VERSION*/
-
-
-#define ARGPARSE_STR(v) #v
-#define ARGPARSE_STR2(v) ARGPARSE_STR(v)
-
-
-/* Replacements for standalone builds.  */
-#ifndef GNUPG_MAJOR_VERSION
-static void
-my_log_error (const char *fmt, ...)
+/* Internal object of the public gpgrt_argparse_t object.  */
+struct _gpgrt_argparse_internal_s
 {
-  va_list arg_ptr ;
+  int idx;
+  int inarg;
+  int stopped;
+  const char *last;
+  void *aliases;
+  const void *cur_alias;
+  void *iio_list;
+};
 
-  va_start (arg_ptr, fmt);
-  fprintf (stderr, "%s: ", strusage (11));
-  vfprintf (stderr, fmt, arg_ptr);
-  va_end (arg_ptr);
-}
 
-static void
-my_log_bug (const char *fmt, ...)
+typedef struct alias_def_s *ALIAS_DEF;
+struct alias_def_s {
+    ALIAS_DEF next;
+    char *name;   /* malloced buffer with name, \0, value */
+    const char *value; /* ptr into name */
+};
+
+
+/* Object to store the names for the --ignore-invalid-option option.
+   This is a simple linked list.  */
+typedef struct iio_item_def_s *IIO_ITEM_DEF;
+struct iio_item_def_s
 {
-  va_list arg_ptr ;
+  IIO_ITEM_DEF next;
+  char name[1];      /* String with the long option name.  */
+};
 
-  va_start (arg_ptr, fmt);
-  fprintf (stderr, "%s: Ohhhh jeeee: ", strusage (11));
-  vfprintf (stderr, fmt, arg_ptr);
-  va_end (arg_ptr);
-  abort ();
-}
+
+/* The almost always needed user handler for strusage.  */
+static const char *(*strusage_handler)( int ) = NULL;
+/* Optional handler to write strings.  See _gpgrt_set_usage_outfnc.  */
+static int (*custom_outfnc) (int, const char *);
+/* Optional handler to map strings.  See _gpgrt_set_fixed_string_mapper.  */
+static const char *(*fixed_string_mapper)(const char*);
+
+static int  set_opt_arg(gpgrt_argparse_t *arg, unsigned flags, char *s);
+static void show_help(gpgrt_opt_t *opts, unsigned flags);
+static void show_version(void);
+static int writestrings (int is_error, const char *string,
+                         ...) GPGRT_ATTR_SENTINEL(0);
+static int arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts);
+
+
+
+
 
 /* Return true if the native charset is utf-8.  */
 static int
 is_native_utf8 (void)
 {
-  return 1;
+  static char result;
+
+  if (!result)
+    {
+      const char *p = _gpgrt_strusage (8);
+      if (!p || !*p || !strcmp (p, "utf-8"))
+        result = 1;
+      result |= 128;
+    }
+
+  return (result & 1);
 }
 
+
 static char *
-my_trim_spaces (char *str)
+trim_spaces (char *str)
 {
   char *string, *p, *mark;
 
@@ -145,7 +136,12 @@ my_trim_spaces (char *str)
   return str ;
 }
 
-#endif /*!GNUPG_MAJOR_VERSION*/
+
+static const char *
+map_fixed_string (const char *string)
+{
+  return fixed_string_mapper? fixed_string_mapper (string) : string;
+}
 
 
 
@@ -153,66 +149,6 @@ my_trim_spaces (char *str)
  * @Summary arg_parse
  *  #include "argparse.h"
  *
- *  typedef struct {
- *	char *argc;		  pointer to argc (value subject to change)
- *	char ***argv;		  pointer to argv (value subject to change)
- *	unsigned flags; 	  Global flags (DO NOT CHANGE)
- *	int err;		  print error about last option
- *				  1 = warning, 2 = abort
- *	int r_opt;		  return option
- *	int r_type;		  type of return value (0 = no argument found)
- *	union {
- *	    int   ret_int;
- *	    long  ret_long
- *	    ulong ret_ulong;
- *	    char *ret_str;
- *	} r;			  Return values
- *	struct {
- *	    int idx;
- *	    const char *last;
- *	    void *aliases;
- *	} internal;		  DO NOT CHANGE
- *  } ARGPARSE_ARGS;
- *
- *  typedef struct {
- *	int	    short_opt;
- *	const char *long_opt;
- *	unsigned flags;
- *  } ARGPARSE_OPTS;
- *
- *  int arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts );
- *
- * @Description
- *  This is my replacement for getopt(). See the example for a typical usage.
- *  Global flags are:
- *     Bit 0 : Do not remove options form argv
- *     Bit 1 : Do not stop at last option but return other args
- *	       with r_opt set to -1.
- *     Bit 2 : Assume options and real args are mixed.
- *     Bit 3 : Do not use -- to stop option processing.
- *     Bit 4 : Do not skip the first arg.
- *     Bit 5 : allow usage of long option with only one dash
- *     Bit 6 : ignore --version
- *     all other bits must be set to zero, this value is modified by the
- *     function, so assume this is write only.
- *  Local flags (for each option):
- *     Bit 2-0 : 0 = does not take an argument
- *		 1 = takes int argument
- *		 2 = takes string argument
- *		 3 = takes long argument
- *		 4 = takes ulong argument
- *     Bit 3 : argument is optional (r_type will the be set to 0)
- *     Bit 4 : allow 0x etc. prefixed values.
- *     Bit 6 : Ignore this option
- *     Bit 7 : This is a command and not an option
- *  You stop the option processing by setting opts to NULL, the function will
- *  then return 0.
- * @Return Value
- *   Returns the args.r_opt or 0 if ready
- *   r_opt may be -2/-7 to indicate an unknown option/command.
- * @See Also
- *   ArgExpand
- * @Notes
  *  You do not need to process the options 'h', '--help' or '--version'
  *  because this function includes standard help processing; but if you
  *  specify '-h', '--help' or '--version' you have to do it yourself.
@@ -222,7 +158,7 @@ my_trim_spaces (char *str)
  *  the conversion yourself.
  * @Example
  *
- *     ARGPARSE_OPTS opts[] = {
+ *     gpgrt_opt_t opts[] = {
  *     { 'v', "verbose",   0 },
  *     { 'd', "debug",     0 },
  *     { 'o', "output",    2 },
@@ -231,7 +167,7 @@ my_trim_spaces (char *str)
  *     { 300, "ignored-long-option, ARGPARSE_OP_IGNORE},
  *     { 500, "have-no-short-option-for-this-long-option", 0 },
  *     {0} };
- *     ARGPARSE_ARGS pargs = { &argc, &argv, 0 }
+ *     gpgrt_argparse_t pargs = { &argc, &argv, 0 }
  *
  *     while( ArgParse( &pargs, &opts) ) {
  *	   switch( pargs.r_opt ) {
@@ -248,42 +184,6 @@ my_trim_spaces (char *str)
  *	   log_fatal( "Too many args");
  *
  */
-
-typedef struct alias_def_s *ALIAS_DEF;
-struct alias_def_s {
-    ALIAS_DEF next;
-    char *name;   /* malloced buffer with name, \0, value */
-    const char *value; /* ptr into name */
-};
-
-
-/* Object to store the names for the --ignore-invalid-option option.
-   This is a simple linked list.  */
-typedef struct iio_item_def_s *IIO_ITEM_DEF;
-struct iio_item_def_s
-{
-  IIO_ITEM_DEF next;
-  char name[1];      /* String with the long option name.  */
-};
-
-static const char *(*strusage_handler)( int ) = NULL;
-static int (*custom_outfnc) (int, const char *);
-
-static int  set_opt_arg(ARGPARSE_ARGS *arg, unsigned flags, char *s);
-static void show_help(ARGPARSE_OPTS *opts, unsigned flags);
-static void show_version(void);
-static int writestrings (int is_error, const char *string, ...)
-#if __GNUC__ >= 4
-  __attribute__ ((sentinel(0)))
-#endif
-  ;
-
-
-void
-argparse_register_outfnc (int (*fnc)(int, const char *))
-{
-  custom_outfnc = fnc;
-}
 
 
 /* Write STRING and all following const char * arguments either to
@@ -321,27 +221,68 @@ flushstrings (int is_error)
   if (custom_outfnc)
     custom_outfnc (is_error? 2:1, NULL);
   else
-    fflush (is_error? stderr : stdout);
+    _gpgrt_fflush (is_error? es_stderr : es_stdout);
 }
 
 
 static void
-initialize( ARGPARSE_ARGS *arg, const char *filename, unsigned *lineno )
+deinitialize (gpgrt_argparse_t *arg)
 {
-  if( !(arg->flags & (1<<15)) )
+  xfree (arg->internal);
+  arg->internal = NULL;
+
+  arg->lineno = 0;
+  arg->err = 0;
+}
+
+/* Our own exit handler to clean up used memory.  */
+static void
+my_exit (gpgrt_argparse_t *arg, int code)
+{
+  deinitialize (arg);
+  exit (code);
+}
+
+
+static gpg_err_code_t
+initialize (gpgrt_argparse_t *arg, estream_t fp)
+{
+  if (!arg->internal || (arg->flags & ARGPARSE_FLAG_RESET))
     {
+      /* Allocate internal data.  */
+      if (!arg->internal)
+        {
+          arg->internal = xtrymalloc (sizeof *arg->internal);
+          if (!arg->internal)
+            return _gpg_err_code_from_syserror ();
+        }
+
       /* Initialize this instance. */
-      arg->internal.idx = 0;
-      arg->internal.last = NULL;
-      arg->internal.inarg = 0;
-      arg->internal.stopped = 0;
-      arg->internal.aliases = NULL;
-      arg->internal.cur_alias = NULL;
-      arg->internal.iio_list = NULL;
+      arg->internal->idx = 0;
+      arg->internal->last = NULL;
+      arg->internal->inarg = 0;
+      arg->internal->stopped = 0;
+      arg->internal->aliases = NULL;
+      arg->internal->cur_alias = NULL;
+      arg->internal->iio_list = NULL;
+
+      /* Clear the error indicator.  */
       arg->err = 0;
-      arg->flags |= 1<<15; /* Mark as initialized.  */
+
+      /* Usually an option file will be parsed from the start.
+       * However, we do not open the stream and thus we have no way to
+       * know the current lineno.  Using this flag we can allow the
+       * user to provide a lineno which we don't reset.  */
+      if (fp || !(arg->flags & ARGPARSE_FLAG_NOLINENO))
+        arg->lineno = 0;
+
+      /* Need to clear the reset request.  */
+      arg->flags &= ~ARGPARSE_FLAG_RESET;
+
+      /* Check initial args.  */
       if ( *arg->argc < 0 )
-        log_bug ("invalid argument for arg_parse\n");
+        _gpgrt_log_bug ("invalid argument passed to gpgrt_argparse\n");
+
     }
 
 
@@ -350,7 +291,7 @@ initialize( ARGPARSE_ARGS *arg, const char *filename, unsigned *lineno )
       /* Last option was erroneous.  */
       const char *s;
 
-      if (filename)
+      if (fp)
         {
           if ( arg->r_opt == ARGPARSE_UNEXPECTED_ARG )
             s = _("argument not expected");
@@ -370,42 +311,46 @@ initialize( ARGPARSE_ARGS *arg, const char *filename, unsigned *lineno )
             s = _("out of core");
           else
             s = _("invalid option");
-          log_error ("%s:%u: %s\n", filename, *lineno, s);
+          _gpgrt_log_error ("%s:%u: %s\n",
+                            _gpgrt_fname_get (fp), arg->lineno, s);
 	}
       else
         {
-          s = arg->internal.last? arg->internal.last:"[??]";
+          s = arg->internal->last? arg->internal->last:"[??]";
 
           if ( arg->r_opt == ARGPARSE_MISSING_ARG )
-            log_error (_("missing argument for option \"%.50s\"\n"), s);
+            _gpgrt_log_error (_("missing argument for option \"%.50s\"\n"), s);
           else if ( arg->r_opt == ARGPARSE_INVALID_ARG )
-            log_error (_("invalid argument for option \"%.50s\"\n"), s);
+            _gpgrt_log_error (_("invalid argument for option \"%.50s\"\n"), s);
           else if ( arg->r_opt == ARGPARSE_UNEXPECTED_ARG )
-            log_error (_("option \"%.50s\" does not expect an argument\n"), s);
+            _gpgrt_log_error (_("option \"%.50s\" does not expect "
+                                "an argument\n"), s);
           else if ( arg->r_opt == ARGPARSE_INVALID_COMMAND )
-            log_error (_("invalid command \"%.50s\"\n"), s);
+            _gpgrt_log_error (_("invalid command \"%.50s\"\n"), s);
           else if ( arg->r_opt == ARGPARSE_AMBIGUOUS_OPTION )
-            log_error (_("option \"%.50s\" is ambiguous\n"), s);
+            _gpgrt_log_error (_("option \"%.50s\" is ambiguous\n"), s);
           else if ( arg->r_opt == ARGPARSE_AMBIGUOUS_COMMAND )
-            log_error (_("command \"%.50s\" is ambiguous\n"),s );
+            _gpgrt_log_error (_("command \"%.50s\" is ambiguous\n"),s );
           else if ( arg->r_opt == ARGPARSE_OUT_OF_CORE )
-            log_error ("%s\n", _("out of core\n"));
+            _gpgrt_log_error ("%s\n", _("out of core\n"));
           else
-            log_error (_("invalid option \"%.50s\"\n"), s);
+            _gpgrt_log_error (_("invalid option \"%.50s\"\n"), s);
 	}
       if (arg->err != ARGPARSE_PRINT_WARNING)
-        exit (2);
+        my_exit (arg, 2);
       arg->err = 0;
     }
 
   /* Zero out the return value union.  */
   arg->r.ret_str = NULL;
   arg->r.ret_long = 0;
+
+  return 0;
 }
 
 
 static void
-store_alias( ARGPARSE_ARGS *arg, char *name, char *value )
+store_alias( gpgrt_argparse_t *arg, char *name, char *value )
 {
     /* TODO: replace this dummy function with a rea one
      * and fix the probelms IRIX has with (ALIAS_DEV)arg..
@@ -418,17 +363,17 @@ store_alias( ARGPARSE_ARGS *arg, char *name, char *value )
     ALIAS_DEF a = xmalloc( sizeof *a );
     a->name = name;
     a->value = value;
-    a->next = (ALIAS_DEF)arg->internal.aliases;
-    (ALIAS_DEF)arg->internal.aliases = a;
+    a->next = (ALIAS_DEF)arg->internal->aliases;
+    (ALIAS_DEF)arg->internal->aliases = a;
 #endif
 }
 
 
 /* Return true if KEYWORD is in the ignore-invalid-option list.  */
 static int
-ignore_invalid_option_p (ARGPARSE_ARGS *arg, const char *keyword)
+ignore_invalid_option_p (gpgrt_argparse_t *arg, const char *keyword)
 {
-  IIO_ITEM_DEF item = arg->internal.iio_list;
+  IIO_ITEM_DEF item = arg->internal->iio_list;
 
   for (; item; item = item->next)
     if (!strcmp (item->name, keyword))
@@ -442,7 +387,7 @@ ignore_invalid_option_p (ARGPARSE_ARGS *arg, const char *keyword)
    character read wll be the first of a new line.  The function
    returns 0 on success or true on malloc failure.  */
 static int
-ignore_invalid_option_add (ARGPARSE_ARGS *arg, FILE *fp)
+ignore_invalid_option_add (gpgrt_argparse_t *arg, estream_t fp)
 {
   IIO_ITEM_DEF item;
   int c;
@@ -453,7 +398,7 @@ ignore_invalid_option_add (ARGPARSE_ARGS *arg, FILE *fp)
 
   while (!ready)
     {
-      c = getc (fp);
+      c = _gpgrt_fgetc (fp);
       if (c == '\n')
         ready = 1;
       else if (c == EOF)
@@ -501,8 +446,8 @@ ignore_invalid_option_add (ARGPARSE_ARGS *arg, FILE *fp)
               if (!item)
                 return 1;
               strcpy (item->name, name);
-              item->next = (IIO_ITEM_DEF)arg->internal.iio_list;
-              arg->internal.iio_list = item;
+              item->next = (IIO_ITEM_DEF)arg->internal->iio_list;
+              arg->internal->iio_list = item;
             }
           state = skipWS;
           goto again;
@@ -514,16 +459,16 @@ ignore_invalid_option_add (ARGPARSE_ARGS *arg, FILE *fp)
 
 /* Clear the entire ignore-invalid-option list.  */
 static void
-ignore_invalid_option_clear (ARGPARSE_ARGS *arg)
+ignore_invalid_option_clear (gpgrt_argparse_t *arg)
 {
   IIO_ITEM_DEF item, tmpitem;
 
-  for (item = arg->internal.iio_list; item; item = tmpitem)
+  for (item = arg->internal->iio_list; item; item = tmpitem)
     {
       tmpitem = item->next;
       xfree (item);
     }
-  arg->internal.iio_list = NULL;
+  arg->internal->iio_list = NULL;
 }
 
 
@@ -550,8 +495,7 @@ ignore_invalid_option_clear (ARGPARSE_ARGS *arg)
  * Note: Abbreviation of options is here not allowed.
  */
 int
-optfile_parse (FILE *fp, const char *filename, unsigned *lineno,
-	       ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
+_gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
 {
   int state, i, c;
   int idx=0;
@@ -562,18 +506,26 @@ optfile_parse (FILE *fp, const char *filename, unsigned *lineno,
   int unread_buf[3];  /* We use an int so that we can store EOF.  */
   int unread_buf_count = 0;
 
+  if (arg && !opts)
+    {
+      deinitialize (arg);
+      return 0;
+    }
+
   if (!fp) /* Divert to arg_parse() in this case.  */
     return arg_parse (arg, opts);
 
-  initialize (arg, filename, lineno);
+  if (initialize (arg, fp))
+    return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
+
 
   /* If the LINENO is zero we assume that we are at the start of a
    * file and we skip over a possible Byte Order Mark.  */
-  if (!*lineno)
+  if (!arg->lineno)
     {
-      unread_buf[0] = getc (fp);
-      unread_buf[1] = getc (fp);
-      unread_buf[2] = getc (fp);
+      unread_buf[0] = _gpgrt_fgetc (fp);
+      unread_buf[1] = _gpgrt_fgetc (fp);
+      unread_buf[2] = _gpgrt_fgetc (fp);
       if (unread_buf[0] != 0xef
           || unread_buf[1] != 0xbb
           || unread_buf[2] != 0xbf)
@@ -587,11 +539,11 @@ optfile_parse (FILE *fp, const char *filename, unsigned *lineno,
       if (unread_buf_count)
         c = unread_buf[3 - unread_buf_count--];
       else
-        c = getc (fp);
+        c = _gpgrt_fgetc (fp);
       if (c == '\n' || c== EOF )
         {
           if ( c != EOF )
-            ++*lineno;
+            arg->lineno++;
           if (state == -1)
             break;
           else if (state == 2)
@@ -717,7 +669,7 @@ optfile_parse (FILE *fp, const char *filename, unsigned *lineno,
           else if (c == EOF)
             {
               ignore_invalid_option_clear (arg);
-              if (ferror (fp))
+              if (_gpgrt_ferror (fp))
                 arg->r_opt = ARGPARSE_READ_ERROR;
               else
                 arg->r_opt = 0; /* EOF. */
@@ -762,7 +714,7 @@ optfile_parse (FILE *fp, const char *filename, unsigned *lineno,
                       break;
                     }
                   state = i = 0;
-                  ++*lineno;
+                  arg->lineno++;
                 }
               else if (ignore_invalid_option_p (arg, keyword))
                 state = 1; /* Process like a comment.  */
@@ -851,8 +803,7 @@ optfile_parse (FILE *fp, const char *filename, unsigned *lineno,
 
 
 static int
-find_long_option( ARGPARSE_ARGS *arg,
-		  ARGPARSE_OPTS *opts, const char *keyword )
+find_long_option (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, const char *keyword)
 {
     int i;
     size_t n;
@@ -872,10 +823,10 @@ find_long_option( ARGPARSE_ARGS *arg,
     {
 	ALIAS_DEF a;
 	/* see whether it is an alias */
-	for( a = args->internal.aliases; a; a = a->next ) {
+	for( a = args->internal->aliases; a; a = a->next ) {
 	    if( !strcmp( a->name, keyword) ) {
 		/* todo: must parse the alias here */
-		args->internal.cur_alias = a;
+		args->internal->cur_alias = a;
 		return -3; /* alias available */
 	    }
 	}
@@ -900,8 +851,9 @@ find_long_option( ARGPARSE_ARGS *arg,
     return -1;  /* Not found.  */
 }
 
-int
-arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
+
+static int
+arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
 {
   int idx;
   int argc;
@@ -911,13 +863,13 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
 
   /* Fill in missing standard options: help, version, warranty and
    * dump-options.  */
-  ARGPARSE_OPTS help_opt
+  gpgrt_opt_t help_opt
     = ARGPARSE_s_n (ARGPARSE_SHORTOPT_HELP, "help", "@");
-  ARGPARSE_OPTS version_opt
+  gpgrt_opt_t version_opt
     = ARGPARSE_s_n (ARGPARSE_SHORTOPT_VERSION, "version", "@");
-  ARGPARSE_OPTS warranty_opt
+  gpgrt_opt_t warranty_opt
     = ARGPARSE_s_n (ARGPARSE_SHORTOPT_WARRANTY, "warranty", "@");
-  ARGPARSE_OPTS dump_options_opt
+  gpgrt_opt_t dump_options_opt
     = ARGPARSE_s_n(ARGPARSE_SHORTOPT_DUMP_OPTIONS, "dump-options", "@");
   int seen_help = 0;
   int seen_version = 0;
@@ -949,10 +901,12 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
   if (! seen_dump_options)
     opts[i++] = dump_options_opt;
 
-  initialize( arg, NULL, NULL );
+  if (initialize( arg, NULL))
+    return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
+
   argc = *arg->argc;
   argv = *arg->argv;
-  idx = arg->internal.idx;
+  idx = arg->internal->idx;
 
   if (!idx && argc && !(arg->flags & ARGPARSE_FLAG_ARG0))
     {
@@ -969,16 +923,16 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
     }
 
   s = *argv;
-  arg->internal.last = s;
+  arg->internal->last = s;
 
-  if (arg->internal.stopped && (arg->flags & ARGPARSE_FLAG_ALL))
+  if (arg->internal->stopped && (arg->flags & ARGPARSE_FLAG_ALL))
     {
       arg->r_opt = ARGPARSE_IS_ARG;  /* Not an option but an argument.  */
       arg->r_type = 2;
       arg->r.ret_str = s;
       argc--; argv++; idx++; /* set to next one */
     }
-  else if( arg->internal.stopped )
+  else if( arg->internal->stopped )
     {
       arg->r_opt = 0;
       goto leave; /* Ready.  */
@@ -988,11 +942,11 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
       /* Long option.  */
       char *argpos;
 
-      arg->internal.inarg = 0;
+      arg->internal->inarg = 0;
       if (!s[2] && !(arg->flags & ARGPARSE_FLAG_NOSTOP))
         {
           /* Stop option processing.  */
-          arg->internal.stopped = 1;
+          arg->internal->stopped = 1;
           arg->flags |= ARGPARSE_FLAG_STOP_SEEN;
           argc--; argv++; idx++;
           goto next_one;
@@ -1012,13 +966,13 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
           if (!(arg->flags & ARGPARSE_FLAG_NOVERSION))
             {
               show_version ();
-              exit(0);
+              my_exit (arg, 0);
             }
 	}
       else if (i > 0 && opts[i].short_opt == ARGPARSE_SHORTOPT_WARRANTY)
         {
-          writestrings (0, strusage (16), "\n", NULL);
-          exit (0);
+          writestrings (0, _gpgrt_strusage (16), "\n", NULL);
+          my_exit (arg, 0);
 	}
       else if (i > 0 && opts[i].short_opt == ARGPARSE_SHORTOPT_DUMP_OPTIONS)
         {
@@ -1027,7 +981,7 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
               if (opts[i].long_opt && !(opts[i].flags & ARGPARSE_OPT_IGNORE))
                 writestrings (0, "--", opts[i].long_opt, "\n", NULL);
 	    }
-          exit (0);
+          my_exit (arg, 0);
 	}
 
       if ( i == -2 )
@@ -1086,15 +1040,15 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
 	}
       argc--; argv++; idx++; /* Set to next one.  */
     }
-    else if ( (*s == '-' && s[1]) || arg->internal.inarg )
+    else if ( (*s == '-' && s[1]) || arg->internal->inarg )
       {
         /* Short option.  */
 	int dash_kludge = 0;
 
 	i = 0;
-	if ( !arg->internal.inarg )
+	if ( !arg->internal->inarg )
           {
-	    arg->internal.inarg++;
+	    arg->internal->inarg++;
 	    if ( (arg->flags & ARGPARSE_FLAG_ONEDASH) )
               {
                 for (i=0; opts[i].short_opt; i++ )
@@ -1105,7 +1059,7 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
 		    }
               }
           }
-	s += arg->internal.inarg;
+	s += arg->internal->inarg;
 
 	if (!dash_kludge )
           {
@@ -1122,7 +1076,7 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
           {
 	    arg->r_opt = (opts[i].flags & ARGPARSE_OPT_COMMAND)?
               ARGPARSE_INVALID_COMMAND:ARGPARSE_INVALID_OPTION;
-	    arg->internal.inarg++; /* Point to the next arg.  */
+	    arg->internal->inarg++; /* Point to the next arg.  */
 	    arg->r.ret_str = s;
           }
 	else if ( (opts[i].flags & ARGPARSE_TYPE_MASK) )
@@ -1163,12 +1117,12 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
           {
             /* Does not take an argument.  */
 	    arg->r_type = ARGPARSE_TYPE_NONE;
-	    arg->internal.inarg++; /* Point to the next arg.  */
+	    arg->internal->inarg++; /* Point to the next arg.  */
           }
 	if ( !s[1] || dash_kludge )
           {
             /* No more concatenated short options.  */
-	    arg->internal.inarg = 0;
+	    arg->internal->inarg = 0;
 	    argc--; argv++; idx++;
           }
       }
@@ -1181,14 +1135,14 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
     }
   else
     {
-      arg->internal.stopped = 1; /* Stop option processing.  */
+      arg->internal->stopped = 1; /* Stop option processing.  */
       goto next_one;
     }
 
  leave:
   *arg->argc = argc;
   *arg->argv = argv;
-  arg->internal.idx = idx;
+  arg->internal->idx = idx;
   return arg->r_opt;
 }
 
@@ -1196,7 +1150,7 @@ arg_parse( ARGPARSE_ARGS *arg, ARGPARSE_OPTS *opts)
 /* Returns: -1 on error, 0 for an integer type and 1 for a non integer
    type argument.  */
 static int
-set_opt_arg (ARGPARSE_ARGS *arg, unsigned flags, char *s)
+set_opt_arg (gpgrt_argparse_t *arg, unsigned flags, char *s)
 {
   int base = (flags & ARGPARSE_OPT_PREFIX)? 0 : 10;
   long l;
@@ -1250,7 +1204,7 @@ set_opt_arg (ARGPARSE_ARGS *arg, unsigned flags, char *s)
 
 
 static size_t
-long_opt_strlen( ARGPARSE_OPTS *o )
+long_opt_strlen( gpgrt_opt_t *o )
 {
   size_t n = strlen (o->long_opt);
 
@@ -1285,22 +1239,22 @@ long_opt_strlen( ARGPARSE_OPTS *o )
  *    bar and the next one as arguments of the long option.
  */
 static void
-show_help (ARGPARSE_OPTS *opts, unsigned int flags)
+show_help (gpgrt_opt_t *opts, unsigned int flags)
 {
   const char *s;
   char tmp[2];
 
   show_version ();
   writestrings (0, "\n", NULL);
-  s = strusage (42);
+  s = _gpgrt_strusage (42);
   if (s && *s == '1')
     {
-      s = strusage (40);
+      s = _gpgrt_strusage (40);
       writestrings (1, s, NULL);
       if (*s && s[strlen(s)] != '\n')
         writestrings (1, "\n", NULL);
     }
-  s = strusage(41);
+  s = _gpgrt_strusage(41);
   writestrings (0, s, "\n", NULL);
   if ( opts[0].description )
     {
@@ -1322,7 +1276,7 @@ show_help (ARGPARSE_OPTS *opts, unsigned int flags)
         writestrings (0, "Options:", "\n", NULL);
       for (i=0; opts[i].short_opt; i++ )
         {
-          s = map_static_macro_string (_( opts[i].description ));
+          s = map_fixed_string (_( opts[i].description ));
           if ( s && *s== '@' && !s[1] ) /* Hide this line.  */
             continue;
           if ( s && *s == '@' )  /* Unindented comment only line.  */
@@ -1428,14 +1382,15 @@ show_help (ARGPARSE_OPTS *opts, unsigned int flags)
           writestrings (0, "\n(A single dash may be used "
                         "instead of the double ones)\n", NULL);
     }
-  if ( (s=strusage(19)) )
+  if ( (s=_gpgrt_strusage(19)) )
     {
       writestrings (0, "\n", NULL);
       writestrings (0, s, NULL);
     }
   flushstrings (0);
-  exit(0);
+  exit (0);
 }
+
 
 static void
 show_version ()
@@ -1444,48 +1399,48 @@ show_version ()
   int i;
 
   /* Version line.  */
-  writestrings (0, strusage (11), NULL);
-  if ((s=strusage (12)))
+  writestrings (0, _gpgrt_strusage (11), NULL);
+  if ((s=_gpgrt_strusage (12)))
     writestrings (0, " (", s, ")", NULL);
-  writestrings (0, " ", strusage (13), "\n", NULL);
+  writestrings (0, " ", _gpgrt_strusage (13), "\n", NULL);
   /* Additional version lines. */
   for (i=20; i < 30; i++)
-    if ((s=strusage (i)))
+    if ((s=_gpgrt_strusage (i)))
       writestrings (0, s, "\n", NULL);
   /* Copyright string.  */
-  if ((s=strusage (14)))
+  if ((s=_gpgrt_strusage (14)))
     writestrings (0, s, "\n", NULL);
   /* Licence string.  */
-  if( (s=strusage (10)) )
+  if( (s=_gpgrt_strusage (10)) )
     writestrings (0, s, "\n", NULL);
   /* Copying conditions. */
-  if ( (s=strusage(15)) )
+  if ( (s=_gpgrt_strusage(15)) )
     writestrings (0, s, NULL);
   /* Thanks. */
-  if ((s=strusage(18)))
+  if ((s=_gpgrt_strusage(18)))
     writestrings (0, s, NULL);
   /* Additional program info. */
   for (i=30; i < 40; i++ )
-    if ( (s=strusage (i)) )
+    if ( (s=_gpgrt_strusage (i)) )
       writestrings (0, s, NULL);
   flushstrings (0);
 }
 
 
 void
-usage (int level)
+_gpgrt_usage (int level)
 {
   const char *p;
 
   if (!level)
     {
-      writestrings (1, strusage(11), " ", strusage(13), "; ",
-                    strusage (14), "\n", NULL);
+      writestrings (1, _gpgrt_strusage(11), " ", _gpgrt_strusage(13), "; ",
+                    _gpgrt_strusage (14), "\n", NULL);
       flushstrings (1);
     }
   else if (level == 1)
     {
-      p = strusage (40);
+      p = _gpgrt_strusage (40);
       writestrings (1, p, NULL);
       if (*p && p[strlen(p)] != '\n')
         writestrings (1, "\n", NULL);
@@ -1493,15 +1448,15 @@ usage (int level)
     }
   else if (level == 2)
     {
-      p = strusage (42);
+      p = _gpgrt_strusage (42);
       if (p && *p == '1')
         {
-          p = strusage (40);
+          p = _gpgrt_strusage (40);
           writestrings (1, p, NULL);
           if (*p && p[strlen(p)] != '\n')
             writestrings (1, "\n", NULL);
         }
-      writestrings (0, strusage(41), "\n", NULL);
+      writestrings (0, _gpgrt_strusage(41), "\n", NULL);
       exit (0);
     }
 }
@@ -1510,6 +1465,8 @@ usage (int level)
  *     0: Print copyright string to stderr
  *     1: Print a short usage hint to stderr and terminate
  *     2: Print a long usage hint to stdout and terminate
+ *     8: Return NULL for UTF-8 or string with the native charset.
+ *     9: Return the SPDX License tag.
  *    10: Return license info string
  *    11: Return the name of the program
  *    12: Return optional name of package which includes this program.
@@ -1530,38 +1487,69 @@ usage (int level)
  *             before the long usage note.
  */
 const char *
-strusage( int level )
+_gpgrt_strusage (int level)
 {
   const char *p = strusage_handler? strusage_handler(level) : NULL;
+  const char *tmp;
 
   if ( p )
-    return map_static_macro_string (p);
+    return map_fixed_string (p);
 
   switch ( level )
     {
 
+    case 8: break; /* Default to utf-8.  */
+    case 9:
+      p = "GPL-3.0-or-later"; /* Suggested license.  */
+      break;
+
     case 10:
-#if ARGPARSE_GPL_VERSION == 3
-      p = ("License GPLv3+: GNU GPL version 3 or later "
-           "<https://gnu.org/licenses/gpl.html>");
-#else
-      p = ("License GPLv2+: GNU GPL version 2 or later "
-           "<https://gnu.org/licenses/>");
-#endif
+      tmp = _gpgrt_strusage (9);
+      if (tmp && !strcmp (tmp, "GPL-2.0-or-later"))
+        p = ("License GPL-2.0-or-later <https://gnu.org/licenses/>");
+      else if (tmp && !strcmp (tmp, "LGPL-2.1-or-later"))
+        p = ("License LGPL-2.1-or-later <https://gnu.org/licenses/>");
+      else /* Default to GPLv3+.  */
+        p = ("License GPL-3.0-or-later <https://gnu.org/licenses/gpl.html>");
       break;
     case 11: p = "foo"; break;
     case 13: p = "0.0"; break;
-    case 14: p = ARGPARSE_CRIGHT_STR; break;
+    case 14: p = "Copyright (C) YEAR NAME"; break;
     case 15: p =
 "This is free software: you are free to change and redistribute it.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n";
       break;
-    case 16: p =
+    case 16:
+      tmp = _gpgrt_strusage (9);
+      if (tmp && !strcmp (tmp, "GPL-2.0-or-later"))
+        p =
 "This is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version "
-ARGPARSE_STR2(ARGPARSE_GPL_VERSION)
-" of the License, or\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n\n"
+"It is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this software.  If not, see <https://gnu.org/licenses/>.\n";
+      else if (tmp && !strcmp (tmp, "LGPL-2.1-or-later"))
+        p =
+"This is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU Lesser General Public License as\n"
+"published by the Free Software Foundation; either version 2.1 of\n"
+"the License, or (at your option) any later version.\n\n"
+"It is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU Lesser General Public License for more details.\n\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this software.  If not, see <https://gnu.org/licenses/>.\n";
+      else /* Default */
+        p =
+"This is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 3 of the License, or\n"
 "(at your option) any later version.\n\n"
 "It is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -1580,81 +1568,30 @@ ARGPARSE_STR2(ARGPARSE_GPL_VERSION)
 
 /* Set the usage handler.  This function is basically a constructor.  */
 void
-set_strusage ( const char *(*f)( int ) )
+_gpgrt_set_strusage (const char *(*f)(int) )
 {
   strusage_handler = f;
 }
 
 
-#ifdef TEST
-static struct {
-    int verbose;
-    int debug;
-    char *outfile;
-    char *crf;
-    int myopt;
-    int echo;
-    int a_long_one;
-} opt;
-
-int
-main(int argc, char **argv)
+/* Set a function to write strings which is the used instead of
+ * estream.  The first arg of that function is MODE and the second the
+ * STRING to write.  A mode of 1 is used for writing to stdout and a
+ * mode of 2 to write to stderr.  Other modes are reserved and should
+ * not output anything.  A NULL for STRING requests a flush.  */
+void
+_gpgrt_set_usage_outfnc (int (*f)(int, const char *))
 {
-  ARGPARSE_OPTS opts[] = {
-    ARGPARSE_x('v', "verbose", NONE, 0, "Laut sein"),
-    ARGPARSE_s_n('e', "echo"   , ("Zeile ausgeben, damit wir sehen, "
-                                  "was wir eingegeben haben")),
-    ARGPARSE_s_n('d', "debug", "Debug\nfalls mal etwas\nschief geht"),
-    ARGPARSE_s_s('o', "output", 0 ),
-    ARGPARSE_o_s('c', "cross-ref", "cross-reference erzeugen\n" ),
-    /* Note that on a non-utf8 terminal the ß might garble the output. */
-    ARGPARSE_s_n('s', "street","|Straße|set the name of the street to Straße"),
-    ARGPARSE_o_i('m', "my-option", 0),
-    ARGPARSE_s_n(500, "a-long-option", 0 ),
-    ARGPARSE_end()
-  };
-  ARGPARSE_ARGS pargs = { &argc, &argv, (ARGPARSE_FLAG_ALL
-                                         | ARGPARSE_FLAG_MIXED
-                                         | ARGPARSE_FLAG_ONEDASH) };
-  int i;
-
-  while (arg_parse  (&pargs, opts))
-    {
-      switch (pargs.r_opt)
-        {
-        case ARGPARSE_IS_ARG :
-          printf ("arg='%s'\n", pargs.r.ret_str);
-          break;
-        case 'v': opt.verbose++; break;
-        case 'e': opt.echo++; break;
-        case 'd': opt.debug++; break;
-        case 'o': opt.outfile = pargs.r.ret_str; break;
-        case 'c': opt.crf = pargs.r_type? pargs.r.ret_str:"a.crf"; break;
-        case 'm': opt.myopt = pargs.r_type? pargs.r.ret_int : 1; break;
-        case 500: opt.a_long_one++;  break;
-        default : pargs.err = ARGPARSE_PRINT_WARNING; break;
-	}
-    }
-  for (i=0; i < argc; i++ )
-    printf ("%3d -> (%s)\n", i, argv[i] );
-  puts ("Options:");
-  if (opt.verbose)
-    printf ("  verbose=%d\n", opt.verbose );
-  if (opt.debug)
-    printf ("  debug=%d\n", opt.debug );
-  if (opt.outfile)
-    printf ("  outfile='%s'\n", opt.outfile );
-  if (opt.crf)
-    printf ("  crffile='%s'\n", opt.crf );
-  if (opt.myopt)
-    printf ("  myopt=%d\n", opt.myopt );
-  if (opt.a_long_one)
-    printf ("  a-long-one=%d\n", opt.a_long_one );
-  if (opt.echo)
-    printf ("  echo=%d\n", opt.echo );
-
-  return 0;
+  custom_outfnc = f;
 }
-#endif /*TEST*/
 
-/**** bottom of file ****/
+
+/* Register function F as a string mapper which takes a string as
+ * argument, replaces known "@FOO@" style macros and returns a new
+ * fixed string.  Warning: The input STRING must have been allocated
+ * statically.  */
+void
+_gpgrt_set_fixed_string_mapper (const char *(*f)(const char*))
+{
+  fixed_string_mapper = f;
+}

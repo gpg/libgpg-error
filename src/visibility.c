@@ -1066,6 +1066,38 @@ gpgrt_release_process (pid_t pid)
 }
 #endif /*0*/
 
+
+int
+gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
+{
+  return _gpgrt_argparse (fp, arg, opts);
+}
+
+const char *
+gpgrt_strusage (int level)
+{
+  return _gpgrt_strusage (level);
+}
+
+void
+gpgrt_set_strusage (const char *(*f)(int))
+{
+  _gpgrt_set_strusage (f);
+}
+
+void
+gpgrt_set_usage_outfnc (int (*f)(int, const char *))
+{
+  _gpgrt_set_usage_outfnc (f);
+}
+
+void
+gpgrt_set_fixed_string_mapper (const char *(*f)(const char*))
+{
+  _gpgrt_set_fixed_string_mapper (f);
+}
+
+
 
 /* For consistency reasons we use function wrappers also for Windows
  * specific function despite that they are technically not needed.  */
