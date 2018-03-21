@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:22+0100\n"
+"PO-Revision-Date: 2018-03-21 19:01+0100\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -1500,14 +1500,6 @@ msgstr "Fino de dosiero"
 msgid "Unknown error code"
 msgstr "Nekonata erar-kodo"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Uzmaniero: %s GPG-ERARO [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: averto: ne eblis rekoni %s\n"
-
 #, fuzzy
 msgid "argument not expected"
 msgstr "skribas sekretan ŝlosilon al '%s'\n"
@@ -1576,6 +1568,16 @@ msgstr "ne traktita"
 #, fuzzy, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "nevalida kiraso"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "averto: ne eblis rekoni %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Uzmaniero: %s GPG-ERARO [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"

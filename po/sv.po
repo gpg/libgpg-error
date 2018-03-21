@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:10+0100\n"
+"PO-Revision-Date: 2018-03-21 19:03+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1485,14 +1485,6 @@ msgstr "Slut på fil"
 msgid "Unknown error code"
 msgstr "Okänd felkod"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Användning: %s GPG-ERROR [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: varning: kände inte igen %s\n"
-
 msgid "argument not expected"
 msgstr "argument förväntades inte"
 
@@ -1553,6 +1545,16 @@ msgstr "slut på minne\n"
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "ogiltig flagga \"%.50s\"\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "varning: kände inte igen %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Användning: %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"

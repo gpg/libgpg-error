@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.1\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:10+0100\n"
+"PO-Revision-Date: 2018-03-21 19:03+0100\n"
 "Last-Translator: Laurentiu Buzdugan <lbuz@rolix.org>\n"
 "Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -1494,14 +1494,6 @@ msgstr "Sfârşit de fişier"
 msgid "Unknown error code"
 msgstr "Cod de eroare necunoscut"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Folosire: %s EROARE-GPG [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: avertisment: nu am putut recunoaşte %s\n"
-
 #, fuzzy
 msgid "argument not expected"
 msgstr "Nu sunt permise comenzi administrare\n"
@@ -1570,6 +1562,16 @@ msgstr "neforţat(ă)"
 #, fuzzy, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "opţiuni enumerare invalide\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "avertisment: nu am putut recunoaşte %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Folosire: %s EROARE-GPG [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"

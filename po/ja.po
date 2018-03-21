@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.27\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2017-03-06 20:25+0900\n"
+"PO-Revision-Date: 2018-03-21 19:02+0100\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -1292,14 +1292,6 @@ msgstr "ファイル終端"
 msgid "Unknown error code"
 msgstr "不明なエラーコード"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "使用法: %s GPG-ERROR [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: 警告: %s を認識できませんでした\n"
-
 msgid "argument not expected"
 msgstr "引数は期待されていません"
 
@@ -1357,6 +1349,16 @@ msgstr "メモリがありません\n"
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "無効なオプション \"%.50s\"\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "警告: %s を認識できませんでした\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "使用法: %s GPG-ERROR [...]\n"
 
 #~ msgid "Keyring open"
 #~ msgstr "鍵リングオープン"

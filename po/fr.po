@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.17\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-01 22:07-0400\n"
+"PO-Revision-Date: 2018-03-21 18:58+0100\n"
 "Last-Translator: David Prévot <david@tilapin.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -1443,14 +1443,6 @@ msgstr "Fin de fichier"
 msgid "Unknown error code"
 msgstr "Code d'erreur inconnu"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Utilisation : %s GPG-ERROR [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s : attention : impossible de reconnaître %s\n"
-
 msgid "argument not expected"
 msgstr "argument inattendu"
 
@@ -1508,6 +1500,16 @@ msgstr "hors limite\n"
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "option « %.50s » incorrecte\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "attention : impossible de reconnaître %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Utilisation : %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:10+0100\n"
+"PO-Revision-Date: 2018-03-21 19:04+0100\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "Language: vi\n"
@@ -1487,13 +1487,90 @@ msgstr "Kết thúc tập tin"
 msgid "Unknown error code"
 msgstr "Mã lỗi không rõ"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Sử dụng: %s GPG-ERROR [...]\n"
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "argument not expected"
+msgstr "Chưa mật mã dữ liệu"
+
+#, fuzzy
+#| msgid "IPC read error"
+msgid "read error"
+msgstr "Lỗi đọc IPC"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "keyword too long"
+msgstr "Dòng quá dài"
+
+#, fuzzy
+#| msgid "Missing value"
+msgid "missing argument"
+msgstr "Thiếu giá trị"
+
+#, fuzzy
+#| msgid "Invalid argument"
+msgid "invalid argument"
+msgstr "Đối số không hợp lệ"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "invalid command"
+msgstr "Thẻ không hợp lệ"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "invalid alias definition"
+msgstr "Chuỗi OID không hợp lệ"
+
+msgid "out of core"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "invalid option"
+msgstr "Mã thao tác không hợp lệ"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: cảnh báo : không thể nhận ra %s\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr ""
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr ""
+
+msgid "out of core\n"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Invalid operation code"
+msgid "invalid option \"%.50s\"\n"
+msgstr "Mã thao tác không hợp lệ"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "cảnh báo : không thể nhận ra %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Sử dụng: %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"

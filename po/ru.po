@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2015-09-27 12:04+0000\n"
+"PO-Revision-Date: 2018-03-21 19:03+0100\n"
 "Last-Translator: Ineiev <ineiev@gnu.org>\n"
 "Language-Team: Russian <gnupg-ru@gnupg.org>\n"
 "Language: ru\n"
@@ -1326,14 +1326,6 @@ msgstr "Конец файла"
 msgid "Unknown error code"
 msgstr "Неизвестный код ошибки"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Вызов: %s GPG-ERROR [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: внимание: не распознано %s\n"
-
 msgid "argument not expected"
 msgstr "неожиданный параметр"
 
@@ -1391,3 +1383,13 @@ msgstr "нехватка выделенной памяти\n"
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "недопустимый параметр \"%.50s\"\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "внимание: не распознано %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Вызов: %s GPG-ERROR [...]\n"

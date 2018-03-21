@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2015-07-12 16:21+0300\n"
+"PO-Revision-Date: 2018-03-21 19:03+0100\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
 "Language: uk\n"
@@ -1337,14 +1337,6 @@ msgstr "Кінець файла"
 msgid "Unknown error code"
 msgstr "Помилка з невідомим кодом"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Користування: %s ПОМИЛКА-GPG [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: попередження: не вдалося розпізнати %s\n"
-
 msgid "argument not expected"
 msgstr "неочікуваний аргумент"
 
@@ -1402,6 +1394,16 @@ msgstr "вихід за межі області пам’яті\n"
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "некоректний параметр «%.50s»\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "попередження: не вдалося розпізнати %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Користування: %s ПОМИЛКА-GPG [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"

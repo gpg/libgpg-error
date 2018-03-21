@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.19\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2017-02-28 12:47+0100\n"
+"PO-Revision-Date: 2018-03-21 18:56+0100\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -1299,14 +1299,6 @@ msgstr "Dateiende"
 msgid "Unknown error code"
 msgstr "Unbekannter Fehlercode"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Aufruf: %s GPG-FEHLER [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: Warnung: %s konnte nicht erkannt werden\n"
-
 msgid "argument not expected"
 msgstr "Argument nicht erwartet"
 
@@ -1364,6 +1356,17 @@ msgstr "Nicht genügend Speicher\n"
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "Ungültige Option \"%.50s\"\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+"Berichte über Programmfehler bitte in englisch an <https://bugs.gnupg.org>.\n"
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "Warnung: %s konnte nicht erkannt werden\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Aufruf: %s GPG-FEHLER [...]\n"
 
 #~ msgid "LCUP Resources exhausted"
 #~ msgstr "LCUP Ressourcen erschöpft"

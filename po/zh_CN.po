@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:11+0100\n"
+"PO-Revision-Date: 2018-03-21 19:04+0100\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <translation-team-zh-cn@lists."
 "sourceforge.net>\n"
@@ -1482,14 +1482,6 @@ msgstr "文件结尾"
 msgid "Unknown error code"
 msgstr "未知的错误代码"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr ""
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s：警告：无法识别 %s\n"
-
 #, fuzzy
 msgid "argument not expected"
 msgstr "不允许使用管理员命令\n"
@@ -1558,6 +1550,13 @@ msgstr "可选"
 #, fuzzy, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "无效的列表选项\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "警告：无法识别 %s\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"

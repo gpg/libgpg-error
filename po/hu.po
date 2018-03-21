@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2015-01-09 10:00+0100\n"
+"PO-Revision-Date: 2018-03-21 19:01+0100\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "Language: hu\n"
@@ -1498,14 +1498,6 @@ msgstr "Fájl vége"
 msgid "Unknown error code"
 msgstr "Ismeretlen hibakód"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Használat: %s GPG-ERROR […]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: figyelmeztetés: nem sikerült felismerni: %s\n"
-
 #, fuzzy
 msgid "argument not expected"
 msgstr "Írom a titkos kulcsot a %s állományba.\n"
@@ -1574,6 +1566,16 @@ msgstr "nem feldolgozott"
 #, fuzzy, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "Érvénytelen import opciók!\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "figyelmeztetés: nem sikerült felismerni: %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Használat: %s GPG-ERROR […]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"

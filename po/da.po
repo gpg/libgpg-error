@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.10\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-17 20:08+0100\n"
+"PO-Revision-Date: 2018-03-21 19:01+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
 "Language: da\n"
@@ -1446,14 +1446,6 @@ msgstr "Slutning på fil"
 msgid "Unknown error code"
 msgstr "Ukendt fejlkode"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Brug: %s GPG-ERROR [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: advarsel: kunne ikke genkende %s\n"
-
 msgid "argument not expected"
 msgstr "parameter var ikke forventet"
 
@@ -1514,6 +1506,16 @@ msgstr "uden for kerne\n"
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "ugyldigt tilvalg »%.50s«\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "advarsel: kunne ikke genkende %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Brug: %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"

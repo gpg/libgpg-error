@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.18\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-27 19:31+0100\n"
+"PO-Revision-Date: 2018-03-21 18:59+0100\n"
 "Last-Translator: Petr Pisar <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "Language: cs\n"
@@ -1451,14 +1451,6 @@ msgstr "Konec souboru"
 msgid "Unknown error code"
 msgstr "Neznámý kód chyby"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Použití: %s CHYBA_GPG […]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: pozor: %s nebylo možné rozpoznat\n"
-
 msgid "argument not expected"
 msgstr "argument nebyl očekáván"
 
@@ -1517,6 +1509,16 @@ msgstr "nedostatek paměti\n"
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "neplatný parametr „%.50s“\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "pozor: %s nebylo možné rozpoznat\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Použití: %s CHYBA_GPG […]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"

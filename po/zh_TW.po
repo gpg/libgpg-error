@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.17\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-17 21:25+0800\n"
+"PO-Revision-Date: 2018-03-21 19:04+0100\n"
 "Last-Translator: Jedi Lin <Jedi@Jedi.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
@@ -1444,14 +1444,6 @@ msgstr "檔案結尾"
 msgid "Unknown error code"
 msgstr "未知的錯誤代碼"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "用法: %s GPG-ERROR [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: 警告: 無法辨識 %s\n"
-
 msgid "argument not expected"
 msgstr "沒料到有引數"
 
@@ -1509,6 +1501,16 @@ msgstr "超出核心\n"
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "無效的選項 \"%.50s\"\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "警告: 無法辨識 %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "用法: %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"

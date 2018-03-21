@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.22\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2016-05-11 18:02+0200\n"
+"PO-Revision-Date: 2018-03-21 19:02+0100\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "Language: pl\n"
@@ -1320,14 +1320,6 @@ msgstr "Koniec pliku"
 msgid "Unknown error code"
 msgstr "Nieznany kod błędu"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Składnia: %s BŁĄD-GPG [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: uwaga: nie rozpoznano %s\n"
-
 msgid "argument not expected"
 msgstr "nieoczekiwany argument"
 
@@ -1388,3 +1380,13 @@ msgstr "brak pamięci\n"
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "błędna opcja ,,%.50s''\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "uwaga: nie rozpoznano %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Składnia: %s BŁĄD-GPG [...]\n"

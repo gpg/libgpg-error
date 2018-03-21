@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.17\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-24 02:32+0000\n"
+"PO-Revision-Date: 2018-03-21 19:03+0100\n"
 "Last-Translator: Paulo Tomé <paulo.jorge.tome@gmail.com>\n"
 "Language-Team: Portuguese <traduz@debian.pt.org>\n"
 "Language: pt\n"
@@ -1442,14 +1442,6 @@ msgstr "Fim do ficheiro"
 msgid "Unknown error code"
 msgstr "Código de erro desconhecido"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Utilização: %s GPG-ERROR [...]\n"
-
-#, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: aviso: não consegui reconhecer %s\n"
-
 #, fuzzy
 msgid "argument not expected"
 msgstr "a escrever chave privada para `%s'\n"
@@ -1518,6 +1510,16 @@ msgstr "não processado"
 #, fuzzy, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "opções de importação inválidas\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "aviso: não consegui reconhecer %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Utilização: %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"
