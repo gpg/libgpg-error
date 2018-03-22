@@ -144,48 +144,6 @@ map_fixed_string (const char *string)
 }
 
 
-
-/*********************************
- * @Summary arg_parse
- *  #include "argparse.h"
- *
- *  You do not need to process the options 'h', '--help' or '--version'
- *  because this function includes standard help processing; but if you
- *  specify '-h', '--help' or '--version' you have to do it yourself.
- *  The option '--' stops argument processing; if bit 1 is set the function
- *  continues to return normal arguments.
- *  To process float args or unsigned args you must use a string args and do
- *  the conversion yourself.
- * @Example
- *
- *     gpgrt_opt_t opts[] = {
- *     { 'v', "verbose",   0 },
- *     { 'd', "debug",     0 },
- *     { 'o', "output",    2 },
- *     { 'c', "cross-ref", 2|8 },
- *     { 'm', "my-option", 1|8 },
- *     { 300, "ignored-long-option, ARGPARSE_OP_IGNORE},
- *     { 500, "have-no-short-option-for-this-long-option", 0 },
- *     {0} };
- *     gpgrt_argparse_t pargs = { &argc, &argv, 0 }
- *
- *     while( ArgParse( &pargs, &opts) ) {
- *	   switch( pargs.r_opt ) {
- *	     case 'v': opt.verbose++; break;
- *	     case 'd': opt.debug++; break;
- *	     case 'o': opt.outfile = pargs.r.ret_str; break;
- *	     case 'c': opt.crf = pargs.r_type? pargs.r.ret_str:"a.crf"; break;
- *	     case 'm': opt.myopt = pargs.r_type? pargs.r.ret_int : 1; break;
- *	     case 500: opt.a_long_one++;  break
- *	     default : pargs.err = 1; break; -- force warning output --
- *	   }
- *     }
- *     if( argc > 1 )
- *	   log_fatal( "Too many args");
- *
- */
-
-
 /* Write STRING and all following const char * arguments either to
    stdout or, if IS_ERROR is set, to stderr.  The list of strings must
    be terminated by a NULL.  */

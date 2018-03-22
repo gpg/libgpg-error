@@ -103,7 +103,8 @@ main (int argc, char **argv)
     }
   for (i=0; i < argc; i++ )
     printf ("%3d -> (%s)\n", i, argv[i] );
-  puts ("Options:");
+  if (opt.verbose)
+    puts ("Options:");
   if (opt.verbose)
     printf ("  verbose=%d\n", opt.verbose );
   if (opt.debug)
