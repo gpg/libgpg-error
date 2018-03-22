@@ -1,6 +1,15 @@
 Noteworthy changes in version 1.29 (unreleased) [C23/A23/R_]
 -----------------------------------------------
 
+ * The yat2m tool is during cross-compile now also installed on the
+   host platform.
+
+ * New option parser and associated functions similar to the one used
+   by GnuPG.
+
+ * New Base-64 encoder.
+
+ * Fixes regression in 1.28 for arm64 and w64 builds.
 
  * Interface changes relative to the 1.28 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
