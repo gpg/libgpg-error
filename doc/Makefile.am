@@ -17,11 +17,14 @@
 # License along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 
-EXTRA_DIST = HACKING errorref.txt \
-	     yat2m.c
+EXTRA_DIST = HACKING errorref.txt
+
+bin_PROGRAMS = yat2m
+yat2m_SOURCES = yat2m.c
+yat2m_CFLAGS= -DPACKAGE_VERSION="\"$(PACKAGE_VERSION)\""
 
 DISTCLEANFILES = gpgrt.cps yat2m-stamp.tmp yat2m-stamp $(myman_pages)
-CLEANFILES = yat2m errorref.txt.x
+CLEANFILES = errorref.txt.x
 
 info_TEXINFOS = gpgrt.texi
 gpgrt_TEXINFOS = lgpl.texi gpl.texi
@@ -34,20 +37,15 @@ myman_pages   = gpg-error-config.1
 
 man_MANS = $(myman_pages)
 
-yat2m: yat2m.c
-	$(CC_FOR_BUILD) -DPACKAGE_VERSION="\"$(PACKAGE_VERSION)\"" \
-                -o $@ $(srcdir)/yat2m.c
-
-
 yat2m-stamp: $(myman_sources)
 	@rm -f yat2m-stamp.tmp
 	@touch yat2m-stamp.tmp
 	for file in $(myman_sources) ; do \
-              ./yat2m $(YAT2M_OPTIONS) --store \
+              $(YAT2M) $(YAT2M_OPTIONS) --store \
 	          `test -f '$$file' || echo '$(srcdir)/'`$$file ; done
 	@mv -f yat2m-stamp.tmp $@
 
-yat2m-stamp: yat2m
+yat2m-stamp: $(YAT2M)
 
 $(myman_pages) : yat2m-stamp
 	@if test -f $@; then :; else \
@@ -72,22 +70,9 @@ errorref.txt.x : errorref.txt
 	sed '/^##/ d' $< >$@
 	echo "# Installed by $(PACKAGE_NAME) $(PACKAGE_VERSION)" >>$@
 
-install-exec-hook:
-if CROSS_COMPILING
-	@echo "not install yat2m while cross-compiling"
-else
-	@echo "installing yat2m on the build system"; \
-         $(MKDIR_P) "$(DESTDIR)$(bindir)"; \
-	 $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) \
-	         yat2m "$(DESTDIR)$(bindir)/yat2m"
-endif
-
 install-data-local: errorref.txt.x
 	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)
 	$(INSTALL_DATA) errorref.txt.x $(DESTDIR)$(pkgdatadir)/errorref.txt
 
 uninstall-local:
 	-@rm $(DESTDIR)$(pkgdatadir)/errorref.txt
-if !CROSS_COMPILING
-	-@rm $(DESTDIR)$(bindir)/yat2m
-endif
