@@ -2,9 +2,9 @@
  * Copyright (C) 2001, 2003, 2004, 2008, 2010,
  *               2011 Free Software Foundation, Inc.
  * Copyright (C) 2001, 2003, 2004, 2008, 2010,
- *               2011 g10 Code GmbH
+ *               2011, 2018 g10 Code GmbH
  *
- * This file is part of GnuPG.
+ * This file is part of Libgpg-error.
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -18,17 +18,20 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, see <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: LGPL-2.1-or-later
+ *
+ * This file was originally a part of GnuPG.
  */
 
 #include <config.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <assert.h>
 
-#include "i18n.h"
-#include "util.h"
+#include "gpgrt-int.h"
+
 
 #define B64ENC_DID_HEADER   1
 #define B64ENC_DID_TRAILER  2
@@ -36,9 +39,9 @@
 #define B64ENC_USE_PGPCRC   32
 
 /* The base-64 character list */
-static unsigned char bintoasc[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                    "abcdefghijklmnopqrstuvwxyz"
-                                    "0123456789+/";
+static unsigned char const bintoasc[64] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                           "abcdefghijklmnopqrstuvwxyz"
+                                           "0123456789+/");
 
 /* Stuff required to create the OpenPGP CRC.  This crc_table has been
    created using this code:
@@ -92,7 +95,7 @@ static unsigned char bintoasc[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
    }
 */
 #define CRCINIT 0xB704CE
-static const u32 crc_table[256] = {
+static const uint32_t crc_table[256] = {
   0x00000000, 0x00864cfb, 0x018ad50d, 0x010c99f6, 0x0393e6e1, 0x0315aa1a,
   0x021933ec, 0x029f7f17, 0x07a18139, 0x0727cdc2, 0x062b5434, 0x06ad18cf,
   0x043267d8, 0x04b42b23, 0x05b8b2d5, 0x053efe2e, 0x0fc54e89, 0x0f430272,
@@ -139,14 +142,28 @@ static const u32 crc_table[256] = {
 };
 
 
-static gpg_error_t
-enc_start (struct b64state *state, FILE *fp, estream_t stream,
-           const char *title)
+/* Prepare for Base-64 writing to STREAM.  If TITLE is not NULL and
+ * not an empty string, that string will be used as the title for the
+ * armor lines, with TITLE being an empty string, we don't write the
+ * header lines and furthermore even don't write any linefeeds.  If
+ * TITLE starts with "PGP " the OpenPGP CRC checksum will be written
+ * as well.  With TITLE being NULL, we merely don't write header but
+ * make sure that lines are not too long.  Note, that we don't write
+ * anything unless at least one byte is written using b64enc_write.
+ * On success an enoder object is returned which needs to be released
+ * using _gpgrt_b64dec_finish.  On error NULL is returned an ERRNO is
+ * set.
+ */
+gpgrt_b64state_t
+_gpgrt_b64enc_start (estream_t stream, const char *title)
 {
-  memset (state, 0, sizeof *state);
-  state->fp = fp;
+  gpgrt_b64state_t state;
+
+  state = xtrycalloc (1, sizeof *state);
+  if (!state)
+    return NULL;
+
   state->stream = stream;
-  state->lasterr = 0;
   if (title && !*title)
     state->flags |= B64ENC_NO_LINEFEEDS;
   else if (title)
@@ -158,50 +175,21 @@ enc_start (struct b64state *state, FILE *fp, estream_t stream,
         }
       state->title = xtrystrdup (title);
       if (!state->title)
-        state->lasterr = gpg_error_from_syserror ();
+        {
+          xfree (state);
+          return NULL;
+        }
     }
-  return state->lasterr;
+
+  return state;
 }
 
 
-/* Prepare for base-64 writing to the stream FP.  If TITLE is not NULL
-   and not an empty string, this string will be used as the title for
-   the armor lines, with TITLE being an empty string, we don't write
-   the header lines and furthermore even don't write any linefeeds.
-   If TITLE starts with "PGP " the OpenPGP CRC checksum will be
-   written as well.  With TITLE being NULL, we merely don't write
-   header but make sure that lines are not too long. Note, that we
-   don't write any output unless at least one byte get written using
-   b64enc_write. */
-gpg_error_t
-b64enc_start (struct b64state *state, FILE *fp, const char *title)
-{
-  return enc_start (state, fp, NULL, title);
-}
-
-/* Same as b64enc_start but takes an estream.  */
-gpg_error_t
-b64enc_start_es (struct b64state *state, estream_t fp, const char *title)
-{
-  return enc_start (state, NULL, fp, title);
-}
-
-
-static int
-my_fputs (const char *string, struct b64state *state)
-{
-  if (state->stream)
-    return es_fputs (string, state->stream);
-  else
-    return fputs (string, state->fp);
-}
-
-
-/* Write NBYTES from BUFFER to the Base 64 stream identified by
-   STATE. With BUFFER and NBYTES being 0, merely do a fflush on the
-   stream. */
-gpg_error_t
-b64enc_write (struct b64state *state, const void *buffer, size_t nbytes)
+/* Write NBYTES from BUFFER to the Base 64 stream identified by STATE.
+ * With BUFFER and NBYTES being 0, merely do a fflush on the stream.
+ */
+gpg_err_code_t
+_gpgrt_b64enc_write (gpgrt_b64state_t state, const void *buffer, size_t nbytes)
 {
   unsigned char radbuf[4];
   int idx, quad_count;
@@ -213,7 +201,7 @@ b64enc_write (struct b64state *state, const void *buffer, size_t nbytes)
   if (!nbytes)
     {
       if (buffer)
-        if (state->stream? es_fflush (state->stream) : fflush (state->fp))
+        if (_gpgrt_fflush (state->stream))
           goto write_error;
       return 0;
     }
@@ -222,12 +210,12 @@ b64enc_write (struct b64state *state, const void *buffer, size_t nbytes)
     {
       if (state->title)
         {
-          if ( my_fputs ("-----BEGIN ", state) == EOF
-               || my_fputs (state->title, state) == EOF
-               || my_fputs ("-----\n", state) == EOF)
+          if ( _gpgrt_fputs ("-----BEGIN ", state->stream) == EOF
+               || _gpgrt_fputs (state->title, state->stream) == EOF
+               || _gpgrt_fputs ("-----\n", state->stream) == EOF)
             goto write_error;
           if ( (state->flags & B64ENC_USE_PGPCRC)
-               && my_fputs ("\n", state) == EOF)
+               && _gpgrt_fputs ("\n", state->stream) == EOF)
             goto write_error;
         }
 
@@ -236,16 +224,16 @@ b64enc_write (struct b64state *state, const void *buffer, size_t nbytes)
 
   idx = state->idx;
   quad_count = state->quad_count;
-  assert (idx < 4);
+  gpgrt_assert (idx < 4);
   memcpy (radbuf, state->radbuf, idx);
 
   if ( (state->flags & B64ENC_USE_PGPCRC) )
     {
       size_t n;
-      u32 crc = state->crc;
+      uint32_t crc = state->crc;
 
       for (p=buffer, n=nbytes; n; p++, n-- )
-        crc = ((u32)crc << 8) ^ crc_table[((crc >> 16)&0xff) ^ *p];
+        crc = ((uint32_t)crc << 8) ^ crc_table[((crc >> 16)&0xff) ^ *p];
       state->crc = (crc & 0x00ffffff);
     }
 
@@ -260,27 +248,17 @@ b64enc_write (struct b64state *state, const void *buffer, size_t nbytes)
           tmp[1] = bintoasc[(((*radbuf<<4)&060)|((radbuf[1] >> 4)&017))&077];
           tmp[2] = bintoasc[(((radbuf[1]<<2)&074)|((radbuf[2]>>6)&03))&077];
           tmp[3] = bintoasc[radbuf[2]&077];
-          if (state->stream)
-            {
-              for (idx=0; idx < 4; idx++)
-                es_putc (tmp[idx], state->stream);
-              idx = 0;
-              if (es_ferror (state->stream))
-                goto write_error;
-            }
-          else
-            {
-              for (idx=0; idx < 4; idx++)
-                putc (tmp[idx], state->fp);
-              idx = 0;
-              if (ferror (state->fp))
-                goto write_error;
-            }
+          for (idx=0; idx < 4; idx++)
+            _gpgrt_fputc (tmp[idx], state->stream);
+          idx = 0;
+          if (_gpgrt_ferror (state->stream))
+            goto write_error;
+
           if (++quad_count >= (64/4))
             {
               quad_count = 0;
               if (!(state->flags & B64ENC_NO_LINEFEEDS)
-                  && my_fputs ("\n", state) == EOF)
+                  && _gpgrt_fputs ("\n", state->stream) == EOF)
                 goto write_error;
             }
         }
@@ -291,7 +269,7 @@ b64enc_write (struct b64state *state, const void *buffer, size_t nbytes)
   return 0;
 
  write_error:
-  state->lasterr = gpg_error_from_syserror ();
+  state->lasterr = _gpg_err_code_from_syserror ();
   if (state->title)
     {
       xfree (state->title);
@@ -301,16 +279,28 @@ b64enc_write (struct b64state *state, const void *buffer, size_t nbytes)
 }
 
 
-gpg_error_t
-b64enc_finish (struct b64state *state)
+gpg_err_code_t
+_gpgrt_b64enc_finish (gpgrt_b64state_t state)
 {
-  gpg_error_t err = 0;
+  gpg_err_code_t err = 0;
   unsigned char radbuf[4];
   int idx, quad_count;
   char tmp[4];
 
+  if (!state)
+    return 0;  /* Already released.  */
+
+  if (state->using_decoder)
+    {
+      err = GPG_ERR_CONFLICT;  /* State was created for the decoder.  */
+      goto cleanup;
+    }
+
   if (state->lasterr)
-    return state->lasterr;
+    {
+      err = state->lasterr;
+      goto cleanup;
+    }
 
   if (!(state->flags & B64ENC_DID_HEADER))
     goto cleanup;
@@ -318,7 +308,7 @@ b64enc_finish (struct b64state *state)
   /* Flush the base64 encoding */
   idx = state->idx;
   quad_count = state->quad_count;
-  assert (idx < 4);
+  gpgrt_assert (idx < 4);
   memcpy (radbuf, state->radbuf, idx);
 
   if (idx)
@@ -336,26 +326,16 @@ b64enc_finish (struct b64state *state)
           tmp[2] = bintoasc[((radbuf[1] << 2) & 074) & 077];
           tmp[3] = '=';
         }
-      if (state->stream)
-        {
-          for (idx=0; idx < 4; idx++)
-            es_putc (tmp[idx], state->stream);
-          if (es_ferror (state->stream))
-            goto write_error;
-        }
-      else
-        {
-          for (idx=0; idx < 4; idx++)
-            putc (tmp[idx], state->fp);
-          if (ferror (state->fp))
-            goto write_error;
-        }
+      for (idx=0; idx < 4; idx++)
+        _gpgrt_fputc (tmp[idx], state->stream);
+      if (_gpgrt_ferror (state->stream))
+        goto write_error;
 
       if (++quad_count >= (64/4))
         {
           quad_count = 0;
           if (!(state->flags & B64ENC_NO_LINEFEEDS)
-              && my_fputs ("\n", state) == EOF)
+              && _gpgrt_fputs ("\n", state->stream) == EOF)
             goto write_error;
         }
     }
@@ -363,13 +343,13 @@ b64enc_finish (struct b64state *state)
   /* Finish the last line and write the trailer. */
   if (quad_count
       && !(state->flags & B64ENC_NO_LINEFEEDS)
-      && my_fputs ("\n", state) == EOF)
+      && _gpgrt_fputs ("\n", state->stream) == EOF)
     goto write_error;
 
   if ( (state->flags & B64ENC_USE_PGPCRC) )
     {
       /* Write the CRC.  */
-      my_fputs ("=", state);
+      _gpgrt_fputs ("=", state->stream);
       radbuf[0] = state->crc >>16;
       radbuf[1] = state->crc >> 8;
       radbuf[2] = state->crc;
@@ -377,46 +357,30 @@ b64enc_finish (struct b64state *state)
       tmp[1] = bintoasc[(((*radbuf<<4)&060)|((radbuf[1]>>4)&017))&077];
       tmp[2] = bintoasc[(((radbuf[1]<<2)&074)|((radbuf[2]>>6)&03))&077];
       tmp[3] = bintoasc[radbuf[2]&077];
-      if (state->stream)
-        {
-          for (idx=0; idx < 4; idx++)
-            es_putc (tmp[idx], state->stream);
-          if (es_ferror (state->stream))
-            goto write_error;
-        }
-      else
-        {
-          for (idx=0; idx < 4; idx++)
-            putc (tmp[idx], state->fp);
-          if (ferror (state->fp))
-            goto write_error;
-        }
+      for (idx=0; idx < 4; idx++)
+        _gpgrt_fputc (tmp[idx], state->stream);
+      if (_gpgrt_ferror (state->stream))
+        goto write_error;
+
       if (!(state->flags & B64ENC_NO_LINEFEEDS)
-          && my_fputs ("\n", state) == EOF)
+          && _gpgrt_fputs ("\n", state->stream) == EOF)
         goto write_error;
     }
 
   if (state->title)
     {
-      if ( my_fputs ("-----END ", state) == EOF
-           || my_fputs (state->title, state) == EOF
-           || my_fputs ("-----\n", state) == EOF)
+      if ( _gpgrt_fputs ("-----END ", state->stream) == EOF
+           || _gpgrt_fputs (state->title, state->stream) == EOF
+           || _gpgrt_fputs ("-----\n", state->stream) == EOF)
         goto write_error;
     }
 
-  goto cleanup;
+ cleanup:
+  xfree (state->title);
+  xfree (state);
+  return err;
 
  write_error:
   err = gpg_error_from_syserror ();
-
- cleanup:
-  if (state->title)
-    {
-      xfree (state->title);
-      state->title = NULL;
-    }
-  state->fp = NULL;
-  state->stream = NULL;
-  state->lasterr = err;
-  return err;
+  goto cleanup;
 }

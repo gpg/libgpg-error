@@ -2,7 +2,7 @@
  * Copyright (C) 2008, 2011 Free Software Foundation, Inc.
  * Copyright (C) 2008, 2011, 2016 g10 Code GmbH
  *
- * This file is part of GnuPG.
+ * This file is part of Libgpg-error.
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,26 +16,18 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, see <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: LGPL-2.1-or-later
+ *
+ * This file was originally a part of GnuPG.
  */
 
 #include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 
 #include "gpgrt-int.h"
 
-struct _gpgrt_b64state
-{
-  int idx;
-  int quad_count;
-  char *title;
-  unsigned char radbuf[4];
-  int stop_seen:1;
-  int invalid_encoding:1;
-  gpg_error_t lasterr;
-};
 
 /* The reverse base-64 list used for base-64 decoding. */
 static unsigned char const asctobin[128] =
@@ -79,15 +71,15 @@ _gpgrt_b64dec_start (const char *title)
 
   if (title)
     {
-      t = strdup (title);
+      t = xtrystrdup (title);
       if (!t)
         return NULL;
     }
 
-  state = calloc (1, sizeof (struct _gpgrt_b64state));
+  state = xtrycalloc (1, sizeof (struct _gpgrt_b64state));
   if (!state)
     {
-      free (t);
+      xfree (t);
       return NULL;
     }
 
@@ -99,13 +91,15 @@ _gpgrt_b64dec_start (const char *title)
   else
     state->idx = s_b64_0;
 
+  state->using_decoder = 1;
+
   return state;
 }
 
 
 /* Do in-place decoding of base-64 data of LENGTH in BUFFER.  Stores the
    new length of the buffer at R_NBYTES. */
-gpg_error_t
+gpg_err_code_t
 _gpgrt_b64dec_proc (gpgrt_b64state_t state, void *buffer, size_t length,
                     size_t *r_nbytes)
 {
@@ -120,8 +114,8 @@ _gpgrt_b64dec_proc (gpgrt_b64state_t state, void *buffer, size_t length,
   if (state->stop_seen)
     {
       *r_nbytes = 0;
-      state->lasterr = gpg_error (GPG_ERR_EOF);
-      free (state->title);
+      state->lasterr = GPG_ERR_EOF;
+      xfree (state->title);
       state->title = NULL;
       return state->lasterr;
     }
@@ -247,7 +241,7 @@ _gpgrt_b64dec_proc (gpgrt_b64state_t state, void *buffer, size_t length,
             state->stop_seen = 1;
           break;
         default:
-          assert (!"invalid state");
+          gpgrt_assert (!"invalid state");
         }
     }
 
@@ -262,17 +256,22 @@ _gpgrt_b64dec_proc (gpgrt_b64state_t state, void *buffer, size_t length,
 
 /* Return an error code in case an encoding error has been found
    during decoding. */
-gpg_error_t
+gpg_err_code_t
 _gpgrt_b64dec_finish (gpgrt_b64state_t state)
 {
   gpg_error_t err;
 
-  if (state->lasterr)
+  if (!state)
+    return 0;  /* Already released.  */
+
+  if (!state->using_decoder)
+    err = GPG_ERR_CONFLICT;  /* State was allocated for the encoder.  */
+  else if (state->lasterr)
     err = state->lasterr;
   else
     {
       free (state->title);
-      err = state->invalid_encoding? gpg_error(GPG_ERR_BAD_DATA): 0;
+      err = state->invalid_encoding? GPG_ERR_BAD_DATA : 0;
     }
   free (state);
 

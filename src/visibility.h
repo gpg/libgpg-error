@@ -161,6 +161,9 @@ MARK_VISIBLE (gpgrt_getcwd)
 MARK_VISIBLE (gpgrt_b64dec_start)
 MARK_VISIBLE (gpgrt_b64dec_proc)
 MARK_VISIBLE (gpgrt_b64dec_finish)
+MARK_VISIBLE (gpgrt_b64enc_start)
+MARK_VISIBLE (gpgrt_b64enc_write)
+MARK_VISIBLE (gpgrt_b64enc_finish)
 
 MARK_VISIBLE (gpgrt_get_errorcount)
 MARK_VISIBLE (gpgrt_inc_errorcount)
@@ -327,6 +330,9 @@ MARK_VISIBLE (gpgrt_set_usage_outfnc);
 #define gpgrt_get_syscall_clamp     _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_set_alloc_func        _gpgrt_USE_UNDERSCORED_FUNCTION
 
+#define gpgrt_b64enc_start          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_b64enc_write          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_b64enc_finish         _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_b64dec_start          _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_b64dec_proc           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_b64dec_finish         _gpgrt_USE_UNDERSCORED_FUNCTION

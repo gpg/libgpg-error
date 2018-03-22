@@ -190,7 +190,7 @@ libgpg_error_la_SOURCES = gettext.h $(arch_sources) \
 	sysutils.c \
 	syscall-clamp.c \
 	logging.c \
-	b64dec.c \
+	b64dec.c b64enc.c \
 	argparse.c
 
 

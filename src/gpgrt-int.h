@@ -480,10 +480,30 @@ int _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout);
  * Local prototypes for the encoders.
  */
 
+struct _gpgrt_b64state
+{
+  int idx;
+  int quad_count;
+  estream_t stream;
+  char *title;
+  unsigned char radbuf[4];
+  unsigned int crc;
+  gpg_err_code_t lasterr;
+  unsigned int flags;
+  int stop_seen:1;
+  int invalid_encoding:1;
+  int using_decoder:1;
+};
+
+gpgrt_b64state_t _gpgrt_b64enc_start (estream_t stream, const char *title);
+gpg_err_code_t   _gpgrt_b64enc_write (gpgrt_b64state_t state,
+                                      const void *buffer, size_t nbytes);
+gpg_err_code_t   _gpgrt_b64enc_finish (gpgrt_b64state_t state);
+
 gpgrt_b64state_t _gpgrt_b64dec_start (const char *title);
-gpg_error_t _gpgrt_b64dec_proc (gpgrt_b64state_t state, void *buffer,
-                                size_t length, size_t *r_nbytes);
-gpg_error_t _gpgrt_b64dec_finish (gpgrt_b64state_t state);
+gpg_err_code_t _gpgrt_b64dec_proc (gpgrt_b64state_t state, void *buffer,
+                                   size_t length, size_t *r_nbytes);
+gpg_err_code_t _gpgrt_b64dec_finish (gpgrt_b64state_t state);
 
 
 

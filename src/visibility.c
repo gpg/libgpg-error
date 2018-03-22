@@ -790,6 +790,24 @@ gpgrt_getcwd (void)
 
 
 gpgrt_b64state_t
+gpgrt_b64enc_start (estream_t stream, const char *title)
+{
+  return _gpgrt_b64enc_start (stream, title);
+}
+
+gpg_err_code_t
+gpgrt_b64enc_write (gpgrt_b64state_t state, const void *buffer, size_t nbytes)
+{
+  return _gpgrt_b64enc_write (state, buffer, nbytes);
+}
+
+gpg_err_code_t
+gpgrt_b64enc_finish (gpgrt_b64state_t state)
+{
+  return _gpgrt_b64enc_finish (state);
+}
+
+gpgrt_b64state_t
 gpgrt_b64dec_start (const char *title)
 {
   return _gpgrt_b64dec_start (title);

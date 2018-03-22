@@ -214,5 +214,9 @@ EXPORTS
  gpgrt_set_usage_outfnc       @164
  gpgrt_set_fixed_string_mapper  @165
 
+ gpgrt_b64enc_start           @166
+ gpgrt_b64enc_write           @167
+ gpgrt_b64enc_finish          @168
+
 
 ;; end of file with public symbols for Windows.

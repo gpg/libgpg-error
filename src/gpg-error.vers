@@ -186,6 +186,11 @@ GPG_ERROR_1.0 {
     gpgrt_set_usage_outfnc;
     gpgrt_set_fixed_string_mapper;
 
+    gpgrt_b64enc_start;
+    gpgrt_b64enc_write;
+    gpgrt_b64enc_finish;
+
+
   local:
     *;
 };
