@@ -85,9 +85,10 @@ if test x"$1" = x"--help"; then
   echo "    --silent       Silent operation"
   echo "    --force        Pass --force to autoconf"
   echo "    --find-version Helper for configure.ac"
-  echo "    --build-TYPE   Configure to cross build for TYPE"
+  echo "    --git-build    Run all commands to  build from a Git"
   echo "    --print-host   Print only the host triplet"
   echo "    --print-build  Print only the build platform triplet"
+  echo "    --build-TYPE   Configure to cross build for TYPE"
   echo ""
   echo "  ARGS are passed to configure in --build-TYPE mode."
   echo "  Configuration for this script is expected in autogen.rc"
@@ -159,6 +160,10 @@ case "$1" in
         SILENT=" --silent"
         shift
         ;;
+    --git-build)
+        myhost="git-build"
+        shift
+        ;;
     --build-w32)
         myhost="w32"
         shift
@@ -185,6 +190,25 @@ case "$1" in
         ;;
 esac
 die_p
+
+
+# **** GIT BUILD ****
+# This is a helper to build from git.
+if [ "$myhost" = "git-build" ]; then
+    tmp="$(pwd)"
+    cd "$tsdir" || fatal "error cd-ing to $tsdir"
+    ./autogen.sh || fatal "error running ./autogen.sh"
+    cd "$tmp"   || fatal "error cd-ing back to $tmp"
+    die_p
+    "$tsdir"/configure || fatal "error running $tsdir/configure"
+    die_p
+    make || fatal "error running make"
+    die_p
+    make check || fatal "error running male check"
+    die_p
+    exit 0
+fi
+# **** end GIT BUILD ****
 
 
 # Source our configuration
