@@ -486,6 +486,9 @@ evaluate_conditions (const char *fname, int lnr)
 {
   int i;
 
+  (void)fname;
+  (void)lnr;
+
   /* for (i=0; i < condition_stack_idx; i++) */
   /*   inf ("%s:%d:   stack[%d] %s %s %c", */
   /*        fname, lnr, i, condition_stack[i]->isset? "set":"clr", */
@@ -857,18 +860,20 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
                 }
               else
                 {
-                  size_t len = s - (rest + 1);
+                  size_t rlen = s - (rest + 1);
                   macro_t m;
 
                   for (m = variablelist; m; m = m->next)
-                    if (strlen (m->name) == len
-                        &&!strncmp (m->name, rest+1, len))
-                      break;
+                    {
+                      if (strlen (m->name) == rlen
+                          && !strncmp (m->name, rest+1, rlen))
+                        break;
+                    }
                   if (m)
                     fputs (m->value, fp);
                   else
                     inf ("texinfo variable '%.*s' is not set",
-                         (int)len, rest+1);
+                         (int)rlen, rest+1);
                 }
             }
           break;
