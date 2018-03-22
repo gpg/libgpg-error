@@ -2,8 +2,9 @@ language: c
 
 os:
   - linux
-    dist: trusty
-    sudo: required
+
+#    dist: trusty
+#    sudo: required
 
 compiler:
   - gcc
