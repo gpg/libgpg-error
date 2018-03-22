@@ -1,6 +1,7 @@
 {
   "language": "c",
   "compiler": "gcc",
+  "script": "./autogen.sh --git-build",
   "os": "linux",
   "group": "stable",
   "dist": "trusty"
