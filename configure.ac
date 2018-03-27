@@ -80,7 +80,6 @@ AM_PROG_CC_C_O
 AC_PROG_CPP
 AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
-AC_ARG_VAR(YAT2M, [tool to convert texi to man pages])
 AC_GNU_SOURCE
 
 # Set some variables depending on the platform for later use.
@@ -139,13 +138,9 @@ fi
 AC_MSG_RESULT($CC_FOR_BUILD)
 AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
 
-AC_PATH_PROG(YAT2M, yat2m, ./yat2m)
-if test "$cross_compiling" = "yes" -a ac_cv_path_YAT2M = "./yat2m"; then
-   AC_MSG_ERROR([[
-***
-*** yat2m is not installed on this build system.  Please install.
-***]])
-fi
+AC_PATH_PROG(YAT2M, yat2m)
+AC_ARG_VAR(YAT2M, [tool to convert texi to man pages])
+AM_CONDITIONAL(HAVE_YAT2M, test -n "$ac_cv_path_YAT2M")
 
 AH_BOTTOM([
 /* Force using of NLS for W32 even if no libintl has been found.  This is

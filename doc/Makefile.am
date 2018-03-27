@@ -37,15 +37,32 @@ myman_pages   = gpg-error-config.1
 
 man_MANS = $(myman_pages)
 
+if HAVE_YAT2M
+YAT2M_CMD = $(YAT2M)
+YAT2M_DEP = $(YAT2M)$(EXEEXT)
+else
+if CROSS_COMPILING
+YAT2M_CMD = ./yat2m-for-build
+YAT2M_DEP = yat2m-for-build$(EXEEXT)
+CLEANFILES += yat2m-for-build$(EXEEXT)
+
+yat2m-for-build$(EXEEXT): yat2m.c
+	$(CC_FOR_BUILD) -o $@ $(srcdir)/yat2m.c
+else
+YAT2M_CMD = ./yat2m
+YAT2M_DEP = yat2m$(EXEEXT)
+endif
+endif
+
 yat2m-stamp: $(myman_sources)
 	@rm -f yat2m-stamp.tmp
 	@touch yat2m-stamp.tmp
 	for file in $(myman_sources) ; do \
-              $(YAT2M) $(YAT2M_OPTIONS) --store \
+              $(YAT2M_CMD) $(YAT2M_OPTIONS) --store \
 	          `test -f '$$file' || echo '$(srcdir)/'`$$file ; done
 	@mv -f yat2m-stamp.tmp $@
 
-yat2m-stamp: $(YAT2M)
+yat2m-stamp: $(YAT2M_DEP)
 
 $(myman_pages) : yat2m-stamp
 	@if test -f $@; then :; else \
