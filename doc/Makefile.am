@@ -39,18 +39,18 @@ man_MANS = $(myman_pages)
 
 if HAVE_YAT2M
 YAT2M_CMD = $(YAT2M)
-YAT2M_DEP = $(YAT2M)$(EXEEXT)
+YAT2M_DEP = $(YAT2M)
 else
 if CROSS_COMPILING
 YAT2M_CMD = ./yat2m-for-build
-YAT2M_DEP = yat2m-for-build$(EXEEXT)
-CLEANFILES += yat2m-for-build$(EXEEXT)
+YAT2M_DEP = yat2m-for-build
+CLEANFILES += yat2m-for-build
 
 yat2m-for-build$(EXEEXT): yat2m.c
 	$(CC_FOR_BUILD) -o $@ $(srcdir)/yat2m.c
 else
 YAT2M_CMD = ./yat2m
-YAT2M_DEP = yat2m$(EXEEXT)
+YAT2M_DEP = yat2m
 endif
 endif
 
