@@ -22,6 +22,10 @@ components are
 
  - Log functions
 
+ - Option parser
+
+ - BAse-64 encoder and decoder.
+
 More components will be added over time.  Most functions are prefixed
 with "gpgrt" (GnuPG Run Time) instead of "gpg_err" to indicate the
 long term plan to rename this library to gpgrt.
@@ -106,13 +110,8 @@ To build for Windows you you may use the convenience command:
 
    ./autogen.sh --build-w32
 
-which runs configure with suitable options.  For WindowsCE the command
-is:
-
-   ./autogen.sh --build-w32ce
-
-There is also _experimental_ support for building a 64 bit Windows
-version:
+which runs configure with suitable options.  There is also basic
+support for building a 64 bit Windows version:
 
    ./autogen.sh --build-w64
 
