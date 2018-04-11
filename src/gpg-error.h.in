@@ -1246,14 +1246,10 @@ typedef struct
 #define ARGPARSE_group(s,d) \
      { (s), NULL, 0, (d) }
 
-/* Placeholder options for help, version, warranty and dump-options.
- * See arg_parse().   FIXME: We need to hide this from the API.  */
+/* Mark the end of the list (mandatory).  */
 #define ARGPARSE_end() \
-     { 0, NULL, 0, NULL }, \
-     { 0, NULL, 0, NULL }, \
-     { 0, NULL, 0, NULL }, \
-     { 0, NULL, 0, NULL }, \
      { 0, NULL, 0, NULL }
+
 #endif /* GPGRT_ENABLE_ARGPARSE_MACROS */
 
 

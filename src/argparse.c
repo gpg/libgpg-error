@@ -55,6 +55,7 @@ struct _gpgrt_argparse_internal_s
   void *aliases;
   const void *cur_alias;
   void *iio_list;
+  gpgrt_opt_t **opts;  /* Malloced array of pointer to user provided opts.  */
 };
 
 
@@ -83,9 +84,9 @@ static int (*custom_outfnc) (int, const char *);
 /* Optional handler to map strings.  See _gpgrt_set_fixed_string_mapper.  */
 static const char *(*fixed_string_mapper)(const char*);
 
-static int  set_opt_arg(gpgrt_argparse_t *arg, unsigned flags, char *s);
-static void show_help(gpgrt_opt_t *opts, unsigned flags);
-static void show_version(void);
+static int  set_opt_arg (gpgrt_argparse_t *arg, unsigned int flags, char *s);
+static void show_help (gpgrt_opt_t **opts, unsigned int flags);
+static void show_version (void);
 static int writestrings (int is_error, const char *string,
                          ...) GPGRT_ATTR_SENTINEL(0);
 static int arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts);
@@ -186,8 +187,12 @@ flushstrings (int is_error)
 static void
 deinitialize (gpgrt_argparse_t *arg)
 {
-  xfree (arg->internal);
-  arg->internal = NULL;
+  if (arg->internal)
+    {
+      xfree (arg->internal->opts);
+      xfree (arg->internal);
+      arg->internal = NULL;
+    }
 
   arg->lineno = 0;
   arg->err = 0;
@@ -203,7 +208,7 @@ my_exit (gpgrt_argparse_t *arg, int code)
 
 
 static gpg_err_code_t
-initialize (gpgrt_argparse_t *arg, estream_t fp)
+initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
 {
   if (!arg->internal || (arg->flags & ARGPARSE_FLAG_RESET))
     {
@@ -214,6 +219,9 @@ initialize (gpgrt_argparse_t *arg, estream_t fp)
           if (!arg->internal)
             return _gpg_err_code_from_syserror ();
         }
+      else if (arg->internal->opts)
+        xfree (arg->internal->opts);
+      arg->internal->opts = NULL;
 
       /* Initialize this instance. */
       arg->internal->idx = 0;
@@ -224,6 +232,7 @@ initialize (gpgrt_argparse_t *arg, estream_t fp)
       arg->internal->cur_alias = NULL;
       arg->internal->iio_list = NULL;
 
+      /* Clear the copy of the option list.  */
       /* Clear the error indicator.  */
       arg->err = 0;
 
@@ -243,6 +252,60 @@ initialize (gpgrt_argparse_t *arg, estream_t fp)
 
     }
 
+  /* Create an array with pointers to the provided list of options.
+   * Keeping a copy is useful to sort that array and thus do a binary
+   * search and to allow for extra space at the end to insert the
+   * hidden options.  An ARGPARSE_FLAG_RESET can be used to reinit
+   * this array.  */
+  if (!arg->internal->opts)
+    {
+      static gpgrt_opt_t help_opt
+        = ARGPARSE_s_n (ARGPARSE_SHORTOPT_HELP, "help", "@");
+      static gpgrt_opt_t version_opt
+        = ARGPARSE_s_n (ARGPARSE_SHORTOPT_VERSION, "version", "@");
+      static gpgrt_opt_t warranty_opt
+        = ARGPARSE_s_n (ARGPARSE_SHORTOPT_WARRANTY, "warranty", "@");
+      static gpgrt_opt_t dump_options_opt
+        = ARGPARSE_s_n(ARGPARSE_SHORTOPT_DUMP_OPTIONS, "dump-options", "@");
+      static gpgrt_opt_t end_marker
+        = ARGPARSE_end ();
+      int seen_help = 0;
+      int seen_version = 0;
+      int seen_warranty = 0;
+      int seen_dump_options = 0;
+      int i;
+
+      for (i=0; opts[i].short_opt; i++)
+        {
+          if (opts[i].long_opt)
+            {
+              if (!strcmp(opts[i].long_opt, help_opt.long_opt))
+                seen_help = 1;
+              else if (!strcmp(opts[i].long_opt, version_opt.long_opt))
+                seen_version = 1;
+              else if (!strcmp(opts[i].long_opt, warranty_opt.long_opt))
+                seen_warranty = 1;
+              else if (!strcmp(opts[i].long_opt, dump_options_opt.long_opt))
+                seen_dump_options = 1;
+            }
+        }
+      i += 4; /* The number of the above internal options.  */
+      i++;    /* End of list marker.  */
+      arg->internal->opts = xtrycalloc (i, sizeof *arg->internal->opts);
+      if (!arg->internal->opts)
+        return _gpg_err_code_from_syserror ();
+      for(i=0; opts[i].short_opt; i++)
+        arg->internal->opts[i] = opts + i;
+      if (!seen_help)
+        arg->internal->opts[i++] = &help_opt;
+      if (!seen_version)
+        arg->internal->opts[i++] = &version_opt;
+      if (!seen_warranty)
+        arg->internal->opts[i++] = &warranty_opt;
+      if (!seen_dump_options)
+        arg->internal->opts[i++] = &dump_options_opt;
+      arg->internal->opts[i] = &end_marker;
+    }
 
   if (arg->err)
     {
@@ -453,10 +516,11 @@ ignore_invalid_option_clear (gpgrt_argparse_t *arg)
  * Note: Abbreviation of options is here not allowed.
  */
 int
-_gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
+_gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
 {
+  gpgrt_opt_t **opts;
   int state, i, c;
-  int idx=0;
+  int idx = 0;
   char keyword[100];
   char *buffer = NULL;
   size_t buflen = 0;
@@ -464,18 +528,19 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
   int unread_buf[3];  /* We use an int so that we can store EOF.  */
   int unread_buf_count = 0;
 
-  if (arg && !opts)
+  if (arg && !opts_orig)
     {
       deinitialize (arg);
       return 0;
     }
 
   if (!fp) /* Divert to arg_parse() in this case.  */
-    return arg_parse (arg, opts);
+    return arg_parse (arg, opts_orig);
 
-  if (initialize (arg, fp))
+  if (initialize (arg, opts_orig, fp))
     return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
 
+  opts = arg->internal->opts;
 
   /* If the LINENO is zero we assume that we are at the start of a
    * file and we skip over a possible Byte Order Mark.  */
@@ -507,19 +572,19 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
           else if (state == 2)
             {
               keyword[i] = 0;
-              for (i=0; opts[i].short_opt; i++ )
+              for (i=0; opts[i]->short_opt; i++ )
                 {
-                  if (opts[i].long_opt && !strcmp (opts[i].long_opt, keyword))
+                  if (opts[i]->long_opt && !strcmp (opts[i]->long_opt, keyword))
                     break;
                 }
               idx = i;
-              arg->r_opt = opts[idx].short_opt;
-              if ((opts[idx].flags & ARGPARSE_OPT_IGNORE))
+              arg->r_opt = opts[idx]->short_opt;
+              if ((opts[idx]->flags & ARGPARSE_OPT_IGNORE))
                 {
                   state = i = 0;
                   continue;
                 }
-              else if (!opts[idx].short_opt )
+              else if (!opts[idx]->short_opt )
                 {
                   if (!strcmp (keyword, "ignore-invalid-option"))
                     {
@@ -533,13 +598,13 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
                       state = i = 0;
                       continue;
                     }
-                  arg->r_opt = ((opts[idx].flags & ARGPARSE_OPT_COMMAND)
+                  arg->r_opt = ((opts[idx]->flags & ARGPARSE_OPT_COMMAND)
                                 ? ARGPARSE_INVALID_COMMAND
                                 : ARGPARSE_INVALID_OPTION);
                 }
-              else if (!(opts[idx].flags & ARGPARSE_TYPE_MASK))
+              else if (!(opts[idx]->flags & ARGPARSE_TYPE_MASK))
                 arg->r_type = 0; /* Does not take an arg. */
-              else if ((opts[idx].flags & ARGPARSE_OPT_OPTIONAL) )
+              else if ((opts[idx]->flags & ARGPARSE_OPT_OPTIONAL) )
                 arg->r_type = 0; /* Arg is optional.  */
               else
                 arg->r_opt = ARGPARSE_MISSING_ARG;
@@ -551,9 +616,9 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
               /* No argument found.  */
               if (in_alias)
                 arg->r_opt = ARGPARSE_MISSING_ARG;
-              else if (!(opts[idx].flags & ARGPARSE_TYPE_MASK))
+              else if (!(opts[idx]->flags & ARGPARSE_TYPE_MASK))
                 arg->r_type = 0; /* Does not take an arg. */
-              else if ((opts[idx].flags & ARGPARSE_OPT_OPTIONAL))
+              else if ((opts[idx]->flags & ARGPARSE_OPT_OPTIONAL))
                 arg->r_type = 0; /* No optional argument. */
               else
                 arg->r_opt = ARGPARSE_MISSING_ARG;
@@ -589,7 +654,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
                         }
 		    }
 		}
-              else if (!(opts[idx].flags & ARGPARSE_TYPE_MASK))
+              else if (!(opts[idx]->flags & ARGPARSE_TYPE_MASK))
                 arg->r_opt = ARGPARSE_UNEXPECTED_ARG;
               else
                 {
@@ -616,7 +681,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
                           if (*p && p[strlen(p)-1] == '\"' )
                             p[strlen(p)-1] = 0;
                         }
-                      if (!set_opt_arg (arg, opts[idx].flags, p))
+                      if (!set_opt_arg (arg, opts[idx]->flags, p))
                         xfree (buffer);
                       else
                         gpgrt_annotate_leaked_object (buffer);
@@ -648,16 +713,16 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
         {
           /* Check keyword.  */
           keyword[i] = 0;
-          for (i=0; opts[i].short_opt; i++ )
-            if (opts[i].long_opt && !strcmp (opts[i].long_opt, keyword))
+          for (i=0; opts[i]->short_opt; i++ )
+            if (opts[i]->long_opt && !strcmp (opts[i]->long_opt, keyword))
               break;
           idx = i;
-          arg->r_opt = opts[idx].short_opt;
-          if ((opts[idx].flags & ARGPARSE_OPT_IGNORE))
+          arg->r_opt = opts[idx]->short_opt;
+          if ((opts[idx]->flags & ARGPARSE_OPT_IGNORE))
             {
               state = 1; /* Process like a comment.  */
             }
-          else if (!opts[idx].short_opt)
+          else if (!opts[idx]->short_opt)
             {
               if (!strcmp (keyword, "alias"))
                 {
@@ -678,7 +743,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
                 state = 1; /* Process like a comment.  */
               else
                 {
-                  arg->r_opt = ((opts[idx].flags & ARGPARSE_OPT_COMMAND)
+                  arg->r_opt = ((opts[idx]->flags & ARGPARSE_OPT_COMMAND)
                                 ? ARGPARSE_INVALID_COMMAND
                                 : ARGPARSE_INVALID_OPTION);
                   state = -1; /* Skip rest of line and leave.  */
@@ -759,109 +824,80 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
 }
 
 
-
+/* Given the list of options OPTS and a keyword, return the index of
+ * the long option macthing KEYWORD.  On error -1 is retruned for not
+ * found or -2 for ambigious keyword.  */
 static int
-find_long_option (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, const char *keyword)
+find_long_option (gpgrt_argparse_t *arg, gpgrt_opt_t **opts,
+                  const char *keyword)
 {
-    int i;
-    size_t n;
+  int i;
+  size_t n;
 
-    (void)arg;
+  (void)arg;  /* Not yet required.  */
 
-    /* Would be better if we can do a binary search, but it is not
-       possible to reorder our option table because we would mess
-       up our help strings - What we can do is: Build a nice option
-       lookup table when this function is first invoked */
-    if( !*keyword )
-	return -1;
-    for(i=0; opts[i].short_opt; i++ )
-	if( opts[i].long_opt && !strcmp( opts[i].long_opt, keyword) )
-	    return i;
+  /* Would be better if we can do a binary search, but it is not
+   * possible to reorder our option table because we would mess up our
+   * help strings.  What we can do is: Build an option lookup table
+   * when this function is first invoked.  */
+  if (!*keyword)
+    return -1;
+  for (i=0; opts[i]->short_opt; i++ )
+    if (opts[i]->long_opt && !strcmp (opts[i]->long_opt, keyword))
+      return i;
 #if 0
-    {
-	ALIAS_DEF a;
-	/* see whether it is an alias */
-	for( a = args->internal->aliases; a; a = a->next ) {
-	    if( !strcmp( a->name, keyword) ) {
-		/* todo: must parse the alias here */
-		args->internal->cur_alias = a;
-		return -3; /* alias available */
-	    }
-	}
-    }
+  {
+    ALIAS_DEF a;
+    /* see whether it is an alias */
+    for (a = args->internal->aliases; a; a = a->next)
+      {
+        if (!strcmp( a->name, keyword))
+          {
+            /* todo: must parse the alias here */
+            args->internal->cur_alias = a;
+            return -3; /* alias available */
+          }
+      }
+  }
 #endif
-    /* not found, see whether it is an abbreviation */
-    /* aliases may not be abbreviated */
-    n = strlen( keyword );
-    for(i=0; opts[i].short_opt; i++ ) {
-	if( opts[i].long_opt && !strncmp( opts[i].long_opt, keyword, n ) ) {
-	    int j;
-	    for(j=i+1; opts[j].short_opt; j++ ) {
-		if( opts[j].long_opt
-		    && !strncmp( opts[j].long_opt, keyword, n )
-                    && !(opts[j].short_opt == opts[i].short_opt
-                         && opts[j].flags == opts[i].flags ) )
-		    return -2;	/* abbreviation is ambiguous */
+  /* Not found.  See whether it is an abbreviation.  Aliases may not
+   * be abbreviated, though. */
+  n = strlen (keyword);
+  for (i=0; opts[i]->short_opt; i++)
+    {
+      if (opts[i]->long_opt && !strncmp (opts[i]->long_opt, keyword, n))
+        {
+          int j;
+          for (j=i+1; opts[j]->short_opt; j++)
+            {
+              if (opts[j]->long_opt
+                  && !strncmp (opts[j]->long_opt, keyword, n)
+                  && !(opts[j]->short_opt == opts[i]->short_opt
+                       && opts[j]->flags == opts[i]->flags ) )
+                return -2;  /* Abbreviation is ambiguous.  */
 	    }
-	    return i;
+          return i;
 	}
     }
-    return -1;  /* Not found.  */
+  return -1;  /* Not found.  */
 }
 
 
+/* The option parser for command line options.  */
 static int
-arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
+arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
 {
   int idx;
+  gpgrt_opt_t **opts;
   int argc;
   char **argv;
   char *s, *s2;
   int i;
 
-  /* Fill in missing standard options: help, version, warranty and
-   * dump-options.  */
-  gpgrt_opt_t help_opt
-    = ARGPARSE_s_n (ARGPARSE_SHORTOPT_HELP, "help", "@");
-  gpgrt_opt_t version_opt
-    = ARGPARSE_s_n (ARGPARSE_SHORTOPT_VERSION, "version", "@");
-  gpgrt_opt_t warranty_opt
-    = ARGPARSE_s_n (ARGPARSE_SHORTOPT_WARRANTY, "warranty", "@");
-  gpgrt_opt_t dump_options_opt
-    = ARGPARSE_s_n(ARGPARSE_SHORTOPT_DUMP_OPTIONS, "dump-options", "@");
-  int seen_help = 0;
-  int seen_version = 0;
-  int seen_warranty = 0;
-  int seen_dump_options = 0;
-
-  i = 0;
-  while (opts[i].short_opt)
-    {
-      if (opts[i].long_opt)
-	{
-	  if (!strcmp(opts[i].long_opt, help_opt.long_opt))
-	    seen_help = 1;
-	  else if (!strcmp(opts[i].long_opt, version_opt.long_opt))
-	    seen_version = 1;
-	  else if (!strcmp(opts[i].long_opt, warranty_opt.long_opt))
-	    seen_warranty = 1;
-	  else if (!strcmp(opts[i].long_opt, dump_options_opt.long_opt))
-	    seen_dump_options = 1;
-	}
-      i++;
-    }
-  if (! seen_help)
-    opts[i++] = help_opt;
-  if (! seen_version)
-    opts[i++] = version_opt;
-  if (! seen_warranty)
-    opts[i++] = warranty_opt;
-  if (! seen_dump_options)
-    opts[i++] = dump_options_opt;
-
-  if (initialize( arg, NULL))
+  if (initialize (arg, opts_orig, NULL))
     return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
 
+  opts = arg->internal->opts;
   argc = *arg->argc;
   argv = *arg->argv;
   idx = arg->internal->idx;
@@ -917,9 +953,9 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
       if ( argpos )
         *argpos = '=';
 
-      if (i > 0 && opts[i].short_opt == ARGPARSE_SHORTOPT_HELP)
+      if (i > 0 && opts[i]->short_opt == ARGPARSE_SHORTOPT_HELP)
         show_help (opts, arg->flags);
-      else if (i > 0 && opts[i].short_opt == ARGPARSE_SHORTOPT_VERSION)
+      else if (i > 0 && opts[i]->short_opt == ARGPARSE_SHORTOPT_VERSION)
         {
           if (!(arg->flags & ARGPARSE_FLAG_NOVERSION))
             {
@@ -927,17 +963,17 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
               my_exit (arg, 0);
             }
 	}
-      else if (i > 0 && opts[i].short_opt == ARGPARSE_SHORTOPT_WARRANTY)
+      else if (i > 0 && opts[i]->short_opt == ARGPARSE_SHORTOPT_WARRANTY)
         {
           writestrings (0, _gpgrt_strusage (16), "\n", NULL);
           my_exit (arg, 0);
 	}
-      else if (i > 0 && opts[i].short_opt == ARGPARSE_SHORTOPT_DUMP_OPTIONS)
+      else if (i > 0 && opts[i]->short_opt == ARGPARSE_SHORTOPT_DUMP_OPTIONS)
         {
-          for (i=0; opts[i].short_opt; i++ )
+          for (i=0; opts[i]->short_opt; i++ )
             {
-              if (opts[i].long_opt && !(opts[i].flags & ARGPARSE_OPT_IGNORE))
-                writestrings (0, "--", opts[i].long_opt, "\n", NULL);
+              if (opts[i]->long_opt && !(opts[i]->flags & ARGPARSE_OPT_IGNORE))
+                writestrings (0, "--", opts[i]->long_opt, "\n", NULL);
 	    }
           my_exit (arg, 0);
 	}
@@ -950,10 +986,10 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
           arg->r.ret_str = s+2;
 	}
       else
-        arg->r_opt = opts[i].short_opt;
+        arg->r_opt = opts[i]->short_opt;
       if ( i < 0 )
         ;
-      else if ( (opts[i].flags & ARGPARSE_TYPE_MASK) )
+      else if ( (opts[i]->flags & ARGPARSE_TYPE_MASK) )
         {
           if ( argpos )
             {
@@ -963,7 +999,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
 	    }
           else
             s2 = argv[1];
-          if ( !s2 && (opts[i].flags & ARGPARSE_OPT_OPTIONAL) )
+          if ( !s2 && (opts[i]->flags & ARGPARSE_OPT_OPTIONAL) )
             {
               arg->r_type = ARGPARSE_TYPE_NONE; /* Argument is optional.  */
 	    }
@@ -972,7 +1008,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
               arg->r_opt = ARGPARSE_MISSING_ARG;
 	    }
           else if ( !argpos && *s2 == '-'
-                    && (opts[i].flags & ARGPARSE_OPT_OPTIONAL) )
+                    && (opts[i]->flags & ARGPARSE_OPT_OPTIONAL) )
             {
               /* The argument is optional and the next seems to be an
                  option.  We do not check this possible option but
@@ -981,7 +1017,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
 	    }
           else
             {
-              set_opt_arg (arg, opts[i].flags, s2);
+              set_opt_arg (arg, opts[i]->flags, s2);
               if ( !argpos )
                 {
                   argc--; argv++; idx++; /* Skip one.  */
@@ -1009,8 +1045,8 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
 	    arg->internal->inarg++;
 	    if ( (arg->flags & ARGPARSE_FLAG_ONEDASH) )
               {
-                for (i=0; opts[i].short_opt; i++ )
-                  if ( opts[i].long_opt && !strcmp (opts[i].long_opt, s+1))
+                for (i=0; opts[i]->short_opt; i++ )
+                  if ( opts[i]->long_opt && !strcmp (opts[i]->long_opt, s+1))
                     {
                       dash_kludge = 1;
                       break;
@@ -1021,33 +1057,33 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
 
 	if (!dash_kludge )
           {
-	    for (i=0; opts[i].short_opt; i++ )
-              if ( opts[i].short_opt == *s )
+	    for (i=0; opts[i]->short_opt; i++ )
+              if ( opts[i]->short_opt == *s )
                 break;
           }
 
-	if ( !opts[i].short_opt && ( *s == 'h' || *s == '?' ) )
+	if ( !opts[i]->short_opt && ( *s == 'h' || *s == '?' ) )
           show_help (opts, arg->flags);
 
-	arg->r_opt = opts[i].short_opt;
-	if (!opts[i].short_opt )
+	arg->r_opt = opts[i]->short_opt;
+	if (!opts[i]->short_opt )
           {
-	    arg->r_opt = (opts[i].flags & ARGPARSE_OPT_COMMAND)?
+	    arg->r_opt = (opts[i]->flags & ARGPARSE_OPT_COMMAND)?
               ARGPARSE_INVALID_COMMAND:ARGPARSE_INVALID_OPTION;
 	    arg->internal->inarg++; /* Point to the next arg.  */
 	    arg->r.ret_str = s;
           }
-	else if ( (opts[i].flags & ARGPARSE_TYPE_MASK) )
+	else if ( (opts[i]->flags & ARGPARSE_TYPE_MASK) )
           {
 	    if ( s[1] && !dash_kludge )
               {
 		s2 = s+1;
-		set_opt_arg (arg, opts[i].flags, s2);
+		set_opt_arg (arg, opts[i]->flags, s2);
               }
 	    else
               {
 		s2 = argv[1];
-		if ( !s2 && (opts[i].flags & ARGPARSE_OPT_OPTIONAL) )
+		if ( !s2 && (opts[i]->flags & ARGPARSE_OPT_OPTIONAL) )
                   {
 		    arg->r_type = ARGPARSE_TYPE_NONE;
                   }
@@ -1056,7 +1092,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
 		    arg->r_opt = ARGPARSE_MISSING_ARG;
                   }
 		else if ( *s2 == '-' && s2[1]
-                          && (opts[i].flags & ARGPARSE_OPT_OPTIONAL) )
+                          && (opts[i]->flags & ARGPARSE_OPT_OPTIONAL) )
                   {
 		    /* The argument is optional and the next seems to
 	               be an option.  We do not check this possible
@@ -1065,7 +1101,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
                   }
 		else
                   {
-		    set_opt_arg (arg, opts[i].flags, s2);
+		    set_opt_arg (arg, opts[i]->flags, s2);
 		    argc--; argv++; idx++; /* Skip one.  */
                   }
               }
@@ -1161,8 +1197,10 @@ set_opt_arg (gpgrt_argparse_t *arg, unsigned flags, char *s)
 }
 
 
+/* Return the length of the option O.  This needs to consider the
+ * description as weel as the option name.  */
 static size_t
-long_opt_strlen( gpgrt_opt_t *o )
+long_opt_strlen (gpgrt_opt_t *o)
 {
   size_t n = strlen (o->long_opt);
 
@@ -1175,8 +1213,8 @@ long_opt_strlen( gpgrt_opt_t *o )
       if ( *s != '=' )
         n++;
       /* For a (mostly) correct length calculation we exclude
-         continuation bytes (10xxxxxx) if we are on a native utf8
-         terminal. */
+       * continuation bytes (10xxxxxx) if we are on a native utf8
+       * terminal. */
       for (; *s && *s != '|'; s++ )
         if ( is_utf8 && (*s&0xc0) != 0x80 )
           n++;
@@ -1197,7 +1235,7 @@ long_opt_strlen( gpgrt_opt_t *o )
  *    bar and the next one as arguments of the long option.
  */
 static void
-show_help (gpgrt_opt_t *opts, unsigned int flags)
+show_help (gpgrt_opt_t **opts, unsigned int flags)
 {
   const char *s;
   char tmp[2];
@@ -1214,27 +1252,27 @@ show_help (gpgrt_opt_t *opts, unsigned int flags)
     }
   s = _gpgrt_strusage(41);
   writestrings (0, s, "\n", NULL);
-  if ( opts[0].description )
+  if ( opts[0]->description )
     {
       /* Auto format the option description.  */
       int i,j, indent;
 
       /* Get max. length of long options.  */
-      for (i=indent=0; opts[i].short_opt; i++ )
+      for (i=indent=0; opts[i]->short_opt; i++ )
         {
-          if ( opts[i].long_opt )
-            if ( !opts[i].description || *opts[i].description != '@' )
-              if ( (j=long_opt_strlen(opts+i)) > indent && j < 35 )
+          if ( opts[i]->long_opt )
+            if ( !opts[i]->description || *opts[i]->description != '@' )
+              if ( (j=long_opt_strlen(opts[i])) > indent && j < 35 )
                 indent = j;
 	}
 
       /* Example: " -v, --verbose   Viele Sachen ausgeben" */
       indent += 10;
-      if ( *opts[0].description != '@' )
+      if ( *opts[0]->description != '@' )
         writestrings (0, "Options:", "\n", NULL);
-      for (i=0; opts[i].short_opt; i++ )
+      for (i=0; opts[i]->short_opt; i++ )
         {
-          s = map_fixed_string (_( opts[i].description ));
+          s = map_fixed_string (_( opts[i]->description ));
           if ( s && *s== '@' && !s[1] ) /* Hide this line.  */
             continue;
           if ( s && *s == '@' )  /* Unindented comment only line.  */
@@ -1258,12 +1296,12 @@ show_help (gpgrt_opt_t *opts, unsigned int flags)
 	    }
 
           j = 3;
-          if ( opts[i].short_opt < 256 )
+          if ( opts[i]->short_opt < 256 )
             {
-              tmp[0] = opts[i].short_opt;
+              tmp[0] = opts[i]->short_opt;
               tmp[1] = 0;
               writestrings (0, " -", tmp, NULL );
-              if ( !opts[i].long_opt )
+              if ( !opts[i]->long_opt )
                 {
                   if (s && *s == '|' )
                     {
@@ -1281,11 +1319,11 @@ show_help (gpgrt_opt_t *opts, unsigned int flags)
 	    }
           else
             writestrings (0, "   ", NULL);
-          if ( opts[i].long_opt )
+          if ( opts[i]->long_opt )
             {
-              tmp[0] = opts[i].short_opt < 256?',':' ';
+              tmp[0] = opts[i]->short_opt < 256?',':' ';
               tmp[1] = 0;
-              j += writestrings (0, tmp, " --", opts[i].long_opt, NULL);
+              j += writestrings (0, tmp, " --", opts[i]->long_opt, NULL);
               if (s && *s == '|' )
                 {
                   if ( *++s != '=' )
