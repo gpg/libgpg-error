@@ -54,7 +54,7 @@ YAT2M_DEP = yat2m
 endif
 endif
 
-yat2m-stamp: $(myman_sources)
+yat2m-stamp: $(myman_sources) $(srcdir)/version.texi
 	@rm -f yat2m-stamp.tmp
 	@touch yat2m-stamp.tmp
 	for file in $(myman_sources) ; do \
