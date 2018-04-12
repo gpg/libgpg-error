@@ -462,6 +462,20 @@ AC_SEARCH_LIBS([sched_yield], [rt posix4],
                   config_libs="$config_libs $LIB_SCHED_YIELD"
                 fi])
 
+LIB_NETWORK=
+AC_SUBST([LIB_NETWORK])
+AC_SEARCH_LIBS([inet_addr], [nsl],
+               [if test "$ac_cv_search_inet_addr" != "none required"; then
+                  LIB_NETWORK=$ac_cv_search_inet_addr
+                fi])
+AC_SEARCH_LIBS([socket], [socket],
+               [if test "$ac_cv_search_socket" != "none required"; then
+                  LIB_NETWORK="$ac_cv_search_socket $LIB_NETWORK"
+                fi], [], [$LIB_NETWORK])
+if test "x$LIB_NETWORK" != x; then
+  config_libs="$config_libs $LIB_NETWORK"
+fi
+
 # Check for optional readline support
 GNUPG_CHECK_READLINE
 
