@@ -46,7 +46,7 @@ YAT2M_CMD = ./yat2m-for-build
 YAT2M_DEP = yat2m-for-build
 CLEANFILES += yat2m-for-build
 
-yat2m-for-build$(EXEEXT): yat2m.c
+yat2m-for-build: yat2m.c
 	$(CC_FOR_BUILD) -o $@ $(srcdir)/yat2m.c
 else
 YAT2M_CMD = ./yat2m
