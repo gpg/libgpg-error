@@ -2,12 +2,12 @@
 # Copyright (C) 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2014, 2015.
+# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2014, 2015, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2018-03-21 19:03+0100\n"
+"PO-Revision-Date: 2018-04-14 21:07+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
 "Language: uk\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 2.0\n"
 
 msgid "Unspecified source"
 msgstr "Невказане джерело"
@@ -729,25 +729,19 @@ msgid "Bad octal character in S-expression"
 msgstr "Помилковий вісімковий символ у S-виразі"
 
 msgid "All subkeys are expired or revoked"
-msgstr ""
+msgstr "Строк дії усіх підключів вичерпано або їх відкликано"
 
-#, fuzzy
-#| msgid "Data not encrypted"
 msgid "Database is corrupted"
-msgstr "Дані не зашифровано"
+msgstr "Базу даних пошкоджено"
 
 msgid "Server indicated a failure"
-msgstr ""
+msgstr "Сервер сигналізує про помилку"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "No name"
-msgstr "Невідома назва"
+msgstr "Немає назви"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "No key"
-msgstr "Немає відкритого ключа"
+msgstr "Немає ключа"
 
 msgid "Legacy key"
 msgstr "Застарілий ключ"
@@ -858,10 +852,10 @@ msgid "Invalid lock object"
 msgstr "Некоректний об’єкт блокування"
 
 msgid "True"
-msgstr ""
+msgstr "Так"
 
 msgid "False"
-msgstr ""
+msgstr "Ні"
 
 msgid "General IPC error"
 msgstr "Загальна помилка IPC"
@@ -935,104 +929,76 @@ msgstr "Помилка у параметрі IPC"
 msgid "Unknown IPC inquire"
 msgstr "Невідомий запит IPC"
 
-#, fuzzy
-#| msgid "No crypto engine"
 msgid "Crypto engine too old"
-msgstr "Немає рушія шифрування"
+msgstr "Рушій шифрування є надто старим"
 
 msgid "Screen or window too small"
-msgstr ""
+msgstr "Екран або вікно є надто малим"
 
 msgid "Screen or window too large"
-msgstr ""
+msgstr "Екран або вікно є надто великим"
 
 msgid "Required environment variable not set"
-msgstr ""
+msgstr "Не встановлено обов'язкової змінної середовища"
 
-#, fuzzy
 #| msgid "Already exists (LDAP)"
 msgid "User ID already exists"
-msgstr "Вже існує (LDAP)"
+msgstr "Ідентифікатор користувача вже існує"
 
-#, fuzzy
 #| msgid "Already exists (LDAP)"
 msgid "Name already exists"
-msgstr "Вже існує (LDAP)"
+msgstr "Назва вже існує"
 
-#, fuzzy
-#| msgid "Duplicated value"
 msgid "Duplicated name"
-msgstr "Дублювання значення"
+msgstr "Дублювання назви"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Object is too young"
-msgstr "Сертифікат є надто новим"
+msgstr "Об'єкт є надто новим"
 
-#, fuzzy
-#| msgid "Provided object is too short"
 msgid "Object is too old"
-msgstr "Наданий об’єкт є надто коротким"
+msgstr "Об'єкт є надто старим"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "Unknown flag"
-msgstr "Невідома назва"
+msgstr "Невідомий прапорець"
 
-#, fuzzy
-#| msgid "Invalid operation code"
 msgid "Invalid execution order"
-msgstr "Некоректний код дії"
+msgstr "Некоректна послідовність виконання"
 
 msgid "Already fetched"
-msgstr ""
+msgstr "Вже отримано"
 
 msgid "Try again later"
-msgstr ""
+msgstr "Повторіть спробу пізніше"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "Wrong name"
-msgstr "Невідома назва"
+msgstr "Помилкова назва"
 
 msgid "System bug detected"
-msgstr ""
+msgstr "Виявлено ваду у системі"
 
-#, fuzzy
-#| msgid "Unknown system error"
 msgid "Unknown DNS error"
-msgstr "Невідома системна помилка"
+msgstr "Невідома помилка DNS"
 
-#, fuzzy
-#| msgid "Invalid OID string"
 msgid "Invalid DNS section"
-msgstr "Некоректний рядок OID"
+msgstr "Некоректний розділ DNS"
 
-#, fuzzy
-#| msgid "Invalid S-expression"
 msgid "Invalid textual address form"
-msgstr "Некоректний S-вираз"
+msgstr "Некоректний текстовий формат адреси"
 
-#, fuzzy
-#| msgid "Missing issuer certificate"
 msgid "Missing DNS query packet"
-msgstr "Не вистачає сертифіката видавця"
+msgstr "Не вистачає пакета запиту до DNS"
 
 msgid "Missing DNS answer packet"
-msgstr ""
+msgstr "Не вистачає пакета із відповіддю DNS"
 
 msgid "Connection closed in DNS"
-msgstr ""
+msgstr "З'єднання закрито у DNS"
 
-#, fuzzy
-#| msgid "Decryption failed"
 msgid "Verification failed in DNS"
-msgstr "Спроба розшифрування зазнала невдачі"
+msgstr "Не пройдено перевірку на DNS"
 
-#, fuzzy
-#| msgid "Timeout"
 msgid "DNS Timeout"
-msgstr "Час очікування"
+msgstr "Перевищено час очікування на DNS"
 
 msgid "General LDAP error"
 msgstr "Загальна помилка LDAP"
@@ -1396,31 +1362,8 @@ msgid "invalid option \"%.50s\"\n"
 msgstr "некоректний параметр «%.50s»\n"
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
-msgstr ""
+msgstr "Будь ласка, повідомляйте про помилки тут: <https://bugs.gnupg.org>.\n"
 
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "попередження: не вдалося розпізнати %s\n"
-
-#~ msgid "Usage: %s GPG-ERROR [...]\n"
-#~ msgstr "Користування: %s ПОМИЛКА-GPG [...]\n"
-
-#, fuzzy
-#~| msgid "Resources exhausted"
-#~ msgid "LCUP Resources exhausted"
-#~ msgstr "Вичерпано ресурси"
-
-#, fuzzy
-#~| msgid "Invalid data"
-#~ msgid "LCUP Invalid data"
-#~ msgstr "Некоректні дані"
-
-#, fuzzy
-#~| msgid "General error"
-#~ msgid "LDAP Other general error"
-#~ msgstr "Загальна помилка"
-
-#, fuzzy
-#~| msgid "dirmngr error"
-#~ msgid "Encoding error"
-#~ msgstr "Помилка dirmngr"
