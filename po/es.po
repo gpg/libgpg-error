@@ -1,0 +1,1360 @@
+#
+# Copyright (C) 2018 g10 Code GmbH
+# This file is distributed under the same license as the libgpg-error package.
+# emma peel <emma.peel@riseup.net>, 2018
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libgpg-error 1.30-beta4\n"
+"Report-Msgid-Bugs-To: translations@gnupg.org\n"
+"PO-Revision-Date: 2018-04-15 08:52+0000\n"
+"Language-Team: es <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Tails translators <amnesia@boum.org>\n"
+"X-Generator: Poedit 1.8.11\n"
+
+msgid "Unspecified source"
+msgstr "Fuente no especificada"
+
+msgid "gcrypt"
+msgstr "gcrypt"
+
+msgid "GnuPG"
+msgstr "GnuPG"
+
+msgid "GpgSM"
+msgstr "GpgSM"
+
+msgid "GPG Agent"
+msgstr "GPG Agent"
+
+msgid "Pinentry"
+msgstr "Pinentry"
+
+msgid "SCD"
+msgstr "SCD"
+
+msgid "GPGME"
+msgstr "GPGME"
+
+msgid "Keybox"
+msgstr "Keybox"
+
+msgid "KSBA"
+msgstr "KSBA"
+
+msgid "Dirmngr"
+msgstr "Dirmngr"
+
+msgid "GSTI"
+msgstr "GSTI"
+
+msgid "GPA"
+msgstr "GPA"
+
+msgid "Kleopatra"
+msgstr "Kleopatra"
+
+msgid "G13"
+msgstr "G13"
+
+msgid "Assuan"
+msgstr "Assuan"
+
+msgid "TLS"
+msgstr "TLS"
+
+msgid "Any source"
+msgstr "Cualquier origen"
+
+msgid "User defined source 1"
+msgstr "Origen determinado por el usuario 1"
+
+msgid "User defined source 2"
+msgstr "Origen determinado por el usuario 2"
+
+msgid "User defined source 3"
+msgstr "Origen determinado por el usuario 3"
+
+msgid "User defined source 4"
+msgstr "Origen determinado por el usuario 4"
+
+msgid "Unknown source"
+msgstr "Origen desconocido"
+
+msgid "Success"
+msgstr "Éxito"
+
+msgid "General error"
+msgstr "Error general"
+
+msgid "Unknown packet"
+msgstr "Paquete desconocido"
+
+msgid "Unknown version in packet"
+msgstr "Versión desconocida en el paquete"
+
+msgid "Invalid public key algorithm"
+msgstr "Algoritmo de clave pública no válido"
+
+msgid "Invalid digest algorithm"
+msgstr "Algoritmo de resumen seleccionado no válido"
+
+msgid "Bad public key"
+msgstr "Clave pública incorrecta"
+
+msgid "Bad secret key"
+msgstr "Clave secreta incorrecta"
+
+msgid "Bad signature"
+msgstr "Firma incorrecta"
+
+msgid "No public key"
+msgstr "No hay clave pública"
+
+msgid "Checksum error"
+msgstr "Error de checksum"
+
+msgid "Bad passphrase"
+msgstr "Frase contraseña errónea"
+
+msgid "Invalid cipher algorithm"
+msgstr "El algoritmo de cifrado seleccionado no es correcto"
+
+msgid "Cannot open keyring"
+msgstr "No se puede abrir el anillo de claves"
+
+msgid "Invalid packet"
+msgstr "Paquete incorrecto"
+
+msgid "Invalid armor"
+msgstr "Armadura incorrecta"
+
+msgid "No user ID"
+msgstr "No hay identificador de usuario"
+
+msgid "No secret key"
+msgstr "No tenemos la clave secreta"
+
+msgid "Wrong secret key used"
+msgstr "Clave secreta"
+
+msgid "Bad session key"
+msgstr "Clave incorrecta de sesión"
+
+msgid "Unknown compression algorithm"
+msgstr "Algoritmo de compresión desconocido"
+
+msgid "Number is not prime"
+msgstr "El número no es primo"
+
+msgid "Invalid encoding method"
+msgstr "Método de codificación incorrecto"
+
+msgid "Invalid encryption scheme"
+msgstr "Esquema de cifrado incorrecto"
+
+msgid "Invalid signature scheme"
+msgstr "Esquema de firmado incorrecto"
+
+msgid "Invalid attribute"
+msgstr "Atributo incorrecto"
+
+msgid "No value"
+msgstr "No hay valor"
+
+msgid "Not found"
+msgstr "No hallado"
+
+msgid "Value not found"
+msgstr "Valor no encontrado"
+
+msgid "Syntax error"
+msgstr "Error de sintaxis"
+
+msgid "Bad MPI value"
+msgstr "Valor MPI incorrecto"
+
+msgid "Invalid passphrase"
+msgstr "Frase contraseña errónea"
+
+msgid "Invalid signature class"
+msgstr "Clase de firma incorrecta"
+
+msgid "Resources exhausted"
+msgstr "Recursos agotados"
+
+msgid "Invalid keyring"
+msgstr "Anillo de claves incorrecto"
+
+msgid "Trust DB error"
+msgstr "Error de la base de datos de confianza"
+
+msgid "Bad certificate"
+msgstr "Certficado incorrecto"
+
+msgid "Invalid user ID"
+msgstr "Identificador de usuario no válido"
+
+msgid "Unexpected error"
+msgstr "Error inesperado"
+
+msgid "Time conflict"
+msgstr "Conflicto de tiempo"
+
+msgid "Keyserver error"
+msgstr "Error del servidor de claves"
+
+msgid "Wrong public key algorithm"
+msgstr "Algoritmo de clave pública equivocado"
+
+msgid "Tribute to D. A."
+msgstr "Tributo a D. A."
+
+msgid "Weak encryption key"
+msgstr "Clave de cifrado débil"
+
+msgid "Invalid key length"
+msgstr "Longitud incorrecta de clave"
+
+msgid "Invalid argument"
+msgstr "Argumento incorrecto"
+
+msgid "Syntax error in URI"
+msgstr "Error de sintaxis en la URI"
+
+msgid "Invalid URI"
+msgstr "URI incorrecta"
+
+msgid "Network error"
+msgstr "Error de red"
+
+msgid "Unknown host"
+msgstr "Host desconocido"
+
+msgid "Selftest failed"
+msgstr "Ha fallado el auto-test"
+
+msgid "Data not encrypted"
+msgstr "Los datos no están cifrados"
+
+msgid "Data not processed"
+msgstr "Los datos no han sido procesados"
+
+msgid "Unusable public key"
+msgstr "Clave pública no se puede usar"
+
+msgid "Unusable secret key"
+msgstr "Clave secreta no se puede usar"
+
+msgid "Invalid value"
+msgstr "Valor incorrecto"
+
+msgid "Bad certificate chain"
+msgstr "Cadena de certificados incorrecta"
+
+msgid "Missing certificate"
+msgstr "Certificado faltante"
+
+msgid "No data"
+msgstr "No hay datos"
+
+msgid "Bug"
+msgstr "Bug"
+
+msgid "Not supported"
+msgstr "No disponible"
+
+msgid "Invalid operation code"
+msgstr "Código de operación desconocido"
+
+msgid "Timeout"
+msgstr "Vida máxima"
+
+msgid "Internal error"
+msgstr "Error interno"
+
+msgid "EOF (gcrypt)"
+msgstr "Fin de fichero (gcrypt)"
+
+msgid "Invalid object"
+msgstr "Objecto incorrecto"
+
+msgid "Provided object is too short"
+msgstr "El objeto es demasiado corto"
+
+msgid "Provided object is too large"
+msgstr "El objeto es demasiado grande"
+
+msgid "Missing item in object"
+msgstr "Falta un item en el objeto"
+
+msgid "Not implemented"
+msgstr "No está implementado"
+
+msgid "Conflicting use"
+msgstr "Uso incompatible"
+
+msgid "Invalid cipher mode"
+msgstr "Modo de cifrado incorrecto"
+
+msgid "Invalid flag"
+msgstr "Etiqueta incorrecta"
+
+msgid "Invalid handle"
+msgstr ""
+
+msgid "Result truncated"
+msgstr "Resultado truncado"
+
+msgid "Incomplete line"
+msgstr "Línea incompleta"
+
+msgid "Invalid response"
+msgstr "Respuesta no válida"
+
+msgid "No agent running"
+msgstr "No hay ningún agente en ejecución"
+
+msgid "Agent error"
+msgstr "Error del agente"
+
+msgid "Invalid data"
+msgstr "Datos no válidos"
+
+msgid "Unspecific Assuan server fault"
+msgstr "Error no especificado del servidor Assuan"
+
+msgid "General Assuan error"
+msgstr "Error general de Assuan"
+
+msgid "Invalid session key"
+msgstr "Clave de sesión no válida"
+
+msgid "Invalid S-expression"
+msgstr "S-expression no válida"
+
+msgid "Unsupported algorithm"
+msgstr "Algoritmo no soportado"
+
+msgid "No pinentry"
+msgstr "No hay Pinentry"
+
+msgid "pinentry error"
+msgstr "error de pinentry"
+
+msgid "Bad PIN"
+msgstr "PIN incorrecto"
+
+msgid "Invalid name"
+msgstr "Nombre no válido"
+
+msgid "Bad data"
+msgstr "Datos corruptos"
+
+msgid "Invalid parameter"
+msgstr "Parámetro incorrecto"
+
+msgid "Wrong card"
+msgstr "Tarjeta incorrecta"
+
+msgid "No dirmngr"
+msgstr "No existe dirmngr"
+
+msgid "dirmngr error"
+msgstr "Error de dirmngr"
+
+msgid "Certificate revoked"
+msgstr "Certificado revocado"
+
+msgid "No CRL known"
+msgstr "No hay ningún CRL conocido."
+
+msgid "CRL too old"
+msgstr "CRL es demasiado antiguo"
+
+msgid "Line too long"
+msgstr "Línea demasiado larga"
+
+msgid "Not trusted"
+msgstr "No confiable"
+
+msgid "Operation cancelled"
+msgstr "Operación cancelada"
+
+msgid "Bad CA certificate"
+msgstr "Certificado CA incorrecto"
+
+msgid "Certificate expired"
+msgstr "Certificado caducado"
+
+msgid "Certificate too young"
+msgstr "Cadena de certificados demasiado joven"
+
+msgid "Unsupported certificate"
+msgstr "Certificado no soportado"
+
+msgid "Unknown S-expression"
+msgstr "S-expression desconocida"
+
+msgid "Unsupported protection"
+msgstr "Protección no soportada"
+
+msgid "Corrupted protection"
+msgstr "Protección corrompida"
+
+msgid "Ambiguous name"
+msgstr "Nombre ambiguo"
+
+msgid "Card error"
+msgstr "Error de tarjeta"
+
+msgid "Card reset required"
+msgstr "Hay que resetear la tarjeta"
+
+msgid "Card removed"
+msgstr "Tarjeta removida"
+
+msgid "Invalid card"
+msgstr "Tarjeta no válida"
+
+msgid "Card not present"
+msgstr "La tarjeta no está"
+
+msgid "No PKCS15 application"
+msgstr "No hay aplicación PKCS15"
+
+msgid "Not confirmed"
+msgstr "Sin confirmar"
+
+msgid "Configuration error"
+msgstr "Error de configuración"
+
+msgid "No policy match"
+msgstr "No coincide ninguna política"
+
+msgid "Invalid index"
+msgstr "Índice incorrecto"
+
+msgid "Invalid ID"
+msgstr "Identificador no válido"
+
+msgid "No SmartCard daemon"
+msgstr "No hay agente de SmartCard"
+
+msgid "SmartCard daemon error"
+msgstr "Error del agente SmartCard"
+
+msgid "Unsupported protocol"
+msgstr "Protocolo no soportado"
+
+msgid "Bad PIN method"
+msgstr "Método de PIN incorrecto"
+
+msgid "Card not initialized"
+msgstr "Tarjeta no arrancada"
+
+msgid "Unsupported operation"
+msgstr "Operación no soportada"
+
+msgid "Wrong key usage"
+msgstr "Uso de clave incorrecto"
+
+msgid "Nothing found"
+msgstr "No se ha encontrado nada"
+
+msgid "Wrong blob type"
+msgstr "Tipo de blob incorrecto"
+
+msgid "Missing value"
+msgstr "Falta un valor"
+
+msgid "Hardware problem"
+msgstr "Problema de hardware"
+
+msgid "PIN blocked"
+msgstr "PIN bloqueado"
+
+msgid "Conditions of use not satisfied"
+msgstr "Condiciones de uso no satisfechas"
+
+msgid "PINs are not synced"
+msgstr "Los PINs no están sincronizados"
+
+msgid "Invalid CRL"
+msgstr "CRL no válido"
+
+msgid "BER error"
+msgstr "Error BER"
+
+msgid "Invalid BER"
+msgstr "BER no válido"
+
+msgid "Element not found"
+msgstr "No se ha encontrado el elemento"
+
+msgid "Identifier not found"
+msgstr "No se ha encontrado el identificador"
+
+msgid "Invalid tag"
+msgstr "Etiqueta no válida"
+
+msgid "Invalid length"
+msgstr "Longitud incorrecta"
+
+msgid "Invalid key info"
+msgstr "Información de clave incorrecta"
+
+msgid "Unexpected tag"
+msgstr "Etiqueta inesperada"
+
+msgid "Not DER encoded"
+msgstr "No está encodeado en DER"
+
+msgid "No CMS object"
+msgstr "No hay objeto CMS"
+
+msgid "Invalid CMS object"
+msgstr "Objeto CMS no válido"
+
+msgid "Unknown CMS object"
+msgstr "Objeto CMS desconocido"
+
+msgid "Unsupported CMS object"
+msgstr "Objeto CMS no soportado"
+
+msgid "Unsupported encoding"
+msgstr "Encoding no soportado"
+
+msgid "Unsupported CMS version"
+msgstr "Versión CMS no soportada"
+
+msgid "Unknown algorithm"
+msgstr "Algoritmo desconocido"
+
+msgid "Invalid crypto engine"
+msgstr "Motor de cifrado no válido"
+
+msgid "Public key not trusted"
+msgstr "Clave pública no confiable"
+
+msgid "Decryption failed"
+msgstr "Descifrado fallido"
+
+msgid "Key expired"
+msgstr "Clave caducada"
+
+msgid "Signature expired"
+msgstr "Firma caducada"
+
+msgid "Encoding problem"
+msgstr "Problema de codificación"
+
+msgid "Invalid state"
+msgstr "Estado no válido"
+
+msgid "Duplicated value"
+msgstr "Valor duplicado"
+
+msgid "Missing action"
+msgstr "Acción faltante"
+
+msgid "ASN.1 module not found"
+msgstr "No se ha encontrado el Módulo ASN.1"
+
+msgid "Invalid OID string"
+msgstr "Cadena OID no válida"
+
+msgid "Invalid time"
+msgstr "Hora equivocada"
+
+msgid "Invalid CRL object"
+msgstr "Objecto CRL incorrecto"
+
+msgid "Unsupported CRL version"
+msgstr "Versión CRL no soportada"
+
+msgid "Invalid certificate object"
+msgstr "Certificado de objeto incorrecto"
+
+msgid "Unknown name"
+msgstr "Nombre desconocido"
+
+msgid "A locale function failed"
+msgstr "Una función locale ha fallado"
+
+# What is not locked? the translation depends on the gender of the thing locked (bloqueado/bloqueada)
+msgid "Not locked"
+msgstr "No está bloqueada"
+
+msgid "Protocol violation"
+msgstr "Violación de protocolo"
+
+msgid "Invalid MAC"
+msgstr "Mac incorrecta"
+
+msgid "Invalid request"
+msgstr "Consulta no válida"
+
+msgid "Unknown extension"
+msgstr "Extensión desconocida"
+
+msgid "Unknown critical extension"
+msgstr "Extensión crítica desconocida"
+
+# needs information about the subject, because it has gender in Spanish and probably other languages too
+msgid "Locked"
+msgstr "Bloqueada"
+
+msgid "Unknown option"
+msgstr "Opción desconocida"
+
+msgid "Unknown command"
+msgstr "Orden desconocida"
+
+msgid "Not operational"
+msgstr "No operativo"
+
+msgid "No passphrase given"
+msgstr "No se ha dado ninguna frase contraseña"
+
+msgid "No PIN given"
+msgstr "No se ha dado ningún PIN"
+
+# gender information missing
+msgid "Not enabled"
+msgstr "No habilitado"
+
+msgid "No crypto engine"
+msgstr "No hay ningún motor de cifrado"
+
+msgid "Missing key"
+msgstr "Falta la clave"
+
+msgid "Too many objects"
+msgstr "Demasiados objetos"
+
+msgid "Limit reached"
+msgstr "Se ha alcanzado el límite"
+
+msgid "Not initialized"
+msgstr "Sin inicializar"
+
+msgid "Missing issuer certificate"
+msgstr "Falta el certificado del emisor"
+
+msgid "No keyserver available"
+msgstr "No hay ningún servidor de claves disponible"
+
+msgid "Invalid elliptic curve"
+msgstr "Curva elíptica incorrecta"
+
+msgid "Unknown elliptic curve"
+msgstr "Curva elíptica desconocida"
+
+msgid "Duplicated key"
+msgstr "Clave duplicada"
+
+msgid "Ambiguous result"
+msgstr "Resultado ambiguo"
+
+msgid "No crypto context"
+msgstr "No hay contexto de cifrado"
+
+msgid "Wrong crypto context"
+msgstr "Contexto de cifrado incorrecto"
+
+msgid "Bad crypto context"
+msgstr "Contexto de cifrado equivocado"
+
+msgid "Conflict in the crypto context"
+msgstr "Conflicto en el contexto de cifrado"
+
+msgid "Broken public key"
+msgstr "Clave pública rota"
+
+msgid "Broken secret key"
+msgstr "Clave secreta rota"
+
+msgid "Invalid MAC algorithm"
+msgstr "Algoritmo MAC no válido"
+
+msgid "Operation fully cancelled"
+msgstr "Operación cancelada definitivamente"
+
+msgid "Operation not yet finished"
+msgstr "Operación aún no terminada"
+
+msgid "Buffer too short"
+msgstr "Buffer demasiado corto"
+
+msgid "Invalid length specifier in S-expression"
+msgstr "Especificador de largo no válido en S-expression"
+
+msgid "String too long in S-expression"
+msgstr "Cadena demasiado larga en S-expression"
+
+msgid "Unmatched parentheses in S-expression"
+msgstr "Paréntesis incompleto en S-expression"
+
+msgid "S-expression not canonical"
+msgstr "S-expression no canónica"
+
+msgid "Bad character in S-expression"
+msgstr "Caracter erróneo en la S-expression"
+
+msgid "Bad quotation in S-expression"
+msgstr ""
+
+msgid "Zero prefix in S-expression"
+msgstr "Prefijo cero en S-expression"
+
+msgid "Nested display hints in S-expression"
+msgstr ""
+
+msgid "Unmatched display hints"
+msgstr ""
+
+msgid "Unexpected reserved punctuation in S-expression"
+msgstr ""
+
+msgid "Bad hexadecimal character in S-expression"
+msgstr ""
+
+msgid "Odd hexadecimal numbers in S-expression"
+msgstr ""
+
+msgid "Bad octal character in S-expression"
+msgstr ""
+
+msgid "All subkeys are expired or revoked"
+msgstr "Todas las subclaves están caducadas o revocadas"
+
+msgid "Database is corrupted"
+msgstr "La base de datos está corrompida"
+
+msgid "Server indicated a failure"
+msgstr "El servidor ha indicado un fallo"
+
+msgid "No name"
+msgstr ""
+
+msgid "No key"
+msgstr ""
+
+msgid "Legacy key"
+msgstr "Clave heredada"
+
+msgid "Request too short"
+msgstr "Consulta demasiado corta"
+
+msgid "Request too long"
+msgstr "Consulta demasiado larga"
+
+msgid "Object is in termination state"
+msgstr ""
+
+msgid "No certificate chain"
+msgstr "No hay cadena de certificados"
+
+msgid "Certificate is too large"
+msgstr ""
+
+msgid "Invalid record"
+msgstr ""
+
+msgid "The MAC does not verify"
+msgstr ""
+
+msgid "Unexpected message"
+msgstr "Mensaje inesperado"
+
+msgid "Compression or decompression failed"
+msgstr "Han fallado la compresión o la descompresión"
+
+msgid "A counter would wrap"
+msgstr ""
+
+msgid "Fatal alert message received"
+msgstr ""
+
+msgid "No cipher algorithm"
+msgstr "No hay algoritmo de cifrado"
+
+msgid "Missing client certificate"
+msgstr "Falta el certificado de cliente"
+
+msgid "Close notification received"
+msgstr "Recibida notificación de cierre"
+
+msgid "Ticket expired"
+msgstr "Ticket caducado"
+
+msgid "Bad ticket"
+msgstr "Ticket erróneo"
+
+msgid "Unknown identity"
+msgstr "Identidad desconocida"
+
+msgid "Bad certificate message in handshake"
+msgstr "Mensaje erróneo de certificado en el handshake"
+
+msgid "Bad certificate request message in handshake"
+msgstr "Mensaje erróneo de pedido de certificado en el handshake"
+
+msgid "Bad certificate verify message in handshake"
+msgstr "Mensaje erróneo de verificación de certificado en el handshake"
+
+msgid "Bad change cipher message in handshake"
+msgstr "Mensaje erróneo de cambio de cifrado en el handshake"
+
+msgid "Bad client hello message in handshake"
+msgstr "Mensaje erróneo de hola del cliente en el handshake"
+
+msgid "Bad server hello message in handshake"
+msgstr "Mensaje erróneo de hola del servidor en el handshake"
+
+msgid "Bad server hello done message in handshake"
+msgstr ""
+
+msgid "Bad finished message in handshake"
+msgstr "Mensaje mal terminado en el handshake"
+
+msgid "Bad server key exchange message in handshake"
+msgstr ""
+
+msgid "Bad client key exchange message in handshake"
+msgstr ""
+
+msgid "Bogus string"
+msgstr ""
+
+msgid "Forbidden"
+msgstr "Prohibido"
+
+msgid "Key disabled"
+msgstr ""
+
+msgid "Not possible with a card based key"
+msgstr "La operación no es posible con una clave basada en tarjeta"
+
+msgid "Invalid lock object"
+msgstr ""
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
+
+msgid "General IPC error"
+msgstr ""
+
+msgid "IPC accept call failed"
+msgstr ""
+
+msgid "IPC connect call failed"
+msgstr ""
+
+msgid "Invalid IPC response"
+msgstr ""
+
+msgid "Invalid value passed to IPC"
+msgstr ""
+
+msgid "Incomplete line passed to IPC"
+msgstr ""
+
+msgid "Line passed to IPC too long"
+msgstr "La línea pasada a IPC es demasiado larga"
+
+msgid "Nested IPC commands"
+msgstr "Órdenes IPC anidadas"
+
+msgid "No data callback in IPC"
+msgstr ""
+
+msgid "No inquire callback in IPC"
+msgstr ""
+
+msgid "Not an IPC server"
+msgstr ""
+
+msgid "Not an IPC client"
+msgstr ""
+
+msgid "Problem starting IPC server"
+msgstr ""
+
+msgid "IPC read error"
+msgstr ""
+
+msgid "IPC write error"
+msgstr ""
+
+msgid "Too much data for IPC layer"
+msgstr ""
+
+msgid "Unexpected IPC command"
+msgstr "Orden IPC inesperada"
+
+msgid "Unknown IPC command"
+msgstr "Orden IPC desconocida"
+
+msgid "IPC syntax error"
+msgstr "Error de sintaxis IPC"
+
+msgid "IPC call has been cancelled"
+msgstr ""
+
+msgid "No input source for IPC"
+msgstr ""
+
+msgid "No output source for IPC"
+msgstr ""
+
+msgid "IPC parameter error"
+msgstr ""
+
+msgid "Unknown IPC inquire"
+msgstr ""
+
+msgid "Crypto engine too old"
+msgstr ""
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr "El nombre ya existe"
+
+msgid "Duplicated name"
+msgstr ""
+
+msgid "Object is too young"
+msgstr ""
+
+msgid "Object is too old"
+msgstr "El objeto es demasiado antiguo"
+
+msgid "Unknown flag"
+msgstr ""
+
+msgid "Invalid execution order"
+msgstr ""
+
+msgid "Already fetched"
+msgstr "Ya se ha descargado"
+
+msgid "Try again later"
+msgstr ""
+
+msgid "Wrong name"
+msgstr "Nombre incorrecto"
+
+msgid "System bug detected"
+msgstr "Detectado error del sistema"
+
+msgid "Unknown DNS error"
+msgstr "Error DNS desconocido"
+
+msgid "Invalid DNS section"
+msgstr "Sección DNS incorrecta"
+
+msgid "Invalid textual address form"
+msgstr ""
+
+msgid "Missing DNS query packet"
+msgstr ""
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+msgid "Verification failed in DNS"
+msgstr ""
+
+msgid "DNS Timeout"
+msgstr ""
+
+msgid "General LDAP error"
+msgstr ""
+
+msgid "General LDAP attribute error"
+msgstr ""
+
+msgid "General LDAP name error"
+msgstr ""
+
+msgid "General LDAP security error"
+msgstr ""
+
+msgid "General LDAP service error"
+msgstr ""
+
+msgid "General LDAP update error"
+msgstr ""
+
+msgid "Experimental LDAP error code"
+msgstr "Código de error experimental de LDAP"
+
+msgid "Private LDAP error code"
+msgstr "Código de error privado de LDAP"
+
+msgid "Other general LDAP error"
+msgstr ""
+
+msgid "LDAP connecting failed (X)"
+msgstr ""
+
+msgid "LDAP referral limit exceeded"
+msgstr ""
+
+msgid "LDAP client loop"
+msgstr ""
+
+msgid "No LDAP results returned"
+msgstr ""
+
+msgid "LDAP control not found"
+msgstr ""
+
+msgid "Not supported by LDAP"
+msgstr ""
+
+msgid "LDAP connect error"
+msgstr ""
+
+msgid "Out of memory in LDAP"
+msgstr ""
+
+msgid "Bad parameter to an LDAP routine"
+msgstr ""
+
+msgid "User cancelled LDAP operation"
+msgstr "Operación LDAP cancelada por el usuario"
+
+msgid "Bad LDAP search filter"
+msgstr ""
+
+msgid "Unknown LDAP authentication method"
+msgstr ""
+
+msgid "Timeout in LDAP"
+msgstr ""
+
+msgid "LDAP decoding error"
+msgstr "Error de decoding de LDAP"
+
+msgid "LDAP encoding error"
+msgstr ""
+
+msgid "LDAP local error"
+msgstr "Error local de LDAP"
+
+msgid "Cannot contact LDAP server"
+msgstr "No se puede conectar al servidor LDAP"
+
+msgid "LDAP success"
+msgstr "Éxito LDAP"
+
+msgid "LDAP operations error"
+msgstr "Error de operación de LDAP"
+
+msgid "LDAP protocol error"
+msgstr ""
+
+msgid "Time limit exceeded in LDAP"
+msgstr ""
+
+msgid "Size limit exceeded in LDAP"
+msgstr ""
+
+msgid "LDAP compare false"
+msgstr ""
+
+msgid "LDAP compare true"
+msgstr ""
+
+msgid "LDAP authentication method not supported"
+msgstr ""
+
+msgid "Strong(er) LDAP authentication required"
+msgstr ""
+
+msgid "Partial LDAP results+referral received"
+msgstr ""
+
+msgid "LDAP referral"
+msgstr ""
+
+msgid "Administrative LDAP limit exceeded"
+msgstr ""
+
+msgid "Critical LDAP extension is unavailable"
+msgstr "Extensión crítica LDAP no disponible"
+
+msgid "Confidentiality required by LDAP"
+msgstr "Confidencialidad requerida por LDAP"
+
+msgid "LDAP SASL bind in progress"
+msgstr ""
+
+msgid "No such LDAP attribute"
+msgstr "Ese atributo LDAP no existe"
+
+msgid "Undefined LDAP attribute type"
+msgstr ""
+
+msgid "Inappropriate matching in LDAP"
+msgstr ""
+
+msgid "Constraint violation in LDAP"
+msgstr ""
+
+msgid "LDAP type or value exists"
+msgstr ""
+
+msgid "Invalid syntax in LDAP"
+msgstr ""
+
+msgid "No such LDAP object"
+msgstr "No existe ese objeto LDAP"
+
+msgid "LDAP alias problem"
+msgstr ""
+
+msgid "Invalid DN syntax in LDAP"
+msgstr ""
+
+msgid "LDAP entry is a leaf"
+msgstr "La entrada de LDAP es una hoja"
+
+msgid "LDAP alias dereferencing problem"
+msgstr ""
+
+msgid "LDAP proxy authorization failure (X)"
+msgstr ""
+
+msgid "Inappropriate LDAP authentication"
+msgstr ""
+
+msgid "Invalid LDAP credentials"
+msgstr ""
+
+msgid "Insufficient access for LDAP"
+msgstr ""
+
+msgid "LDAP server is busy"
+msgstr ""
+
+msgid "LDAP server is unavailable"
+msgstr ""
+
+msgid "LDAP server is unwilling to perform"
+msgstr ""
+
+msgid "Loop detected by LDAP"
+msgstr "Bucle detectado por LDAP"
+
+msgid "LDAP naming violation"
+msgstr ""
+
+msgid "LDAP object class violation"
+msgstr ""
+
+msgid "LDAP operation not allowed on non-leaf"
+msgstr ""
+
+msgid "LDAP operation not allowed on RDN"
+msgstr ""
+
+msgid "Already exists (LDAP)"
+msgstr "Ya existe (LDAP)"
+
+msgid "Cannot modify LDAP object class"
+msgstr ""
+
+msgid "LDAP results too large"
+msgstr ""
+
+msgid "LDAP operation affects multiple DSAs"
+msgstr ""
+
+msgid "Virtual LDAP list view error"
+msgstr ""
+
+msgid "Other LDAP error"
+msgstr "Error diferente de LDAP"
+
+msgid "Resources exhausted in LCUP"
+msgstr ""
+
+msgid "Security violation in LCUP"
+msgstr ""
+
+msgid "Invalid data in LCUP"
+msgstr ""
+
+msgid "Unsupported scheme in LCUP"
+msgstr ""
+
+msgid "Reload required in LCUP"
+msgstr ""
+
+msgid "LDAP cancelled"
+msgstr "LDAP cancelado"
+
+msgid "No LDAP operation to cancel"
+msgstr ""
+
+msgid "Too late to cancel LDAP"
+msgstr ""
+
+msgid "Cannot cancel LDAP"
+msgstr "No se puede cancelar LDAP"
+
+msgid "LDAP assertion failed"
+msgstr ""
+
+msgid "Proxied authorization denied by LDAP"
+msgstr ""
+
+msgid "User defined error code 1"
+msgstr "Origen determinado por el usuario 1"
+
+msgid "User defined error code 2"
+msgstr "Origen determinado por el usuario 2"
+
+msgid "User defined error code 3"
+msgstr "Origen determinado por el usuario 3"
+
+msgid "User defined error code 4"
+msgstr "Origen determinado por el usuario 4"
+
+msgid "User defined error code 5"
+msgstr ""
+
+msgid "User defined error code 6"
+msgstr ""
+
+msgid "User defined error code 7"
+msgstr ""
+
+msgid "User defined error code 8"
+msgstr ""
+
+msgid "User defined error code 9"
+msgstr ""
+
+msgid "User defined error code 10"
+msgstr ""
+
+msgid "User defined error code 11"
+msgstr ""
+
+msgid "User defined error code 12"
+msgstr ""
+
+msgid "User defined error code 13"
+msgstr ""
+
+msgid "User defined error code 14"
+msgstr ""
+
+msgid "User defined error code 15"
+msgstr ""
+
+msgid "User defined error code 16"
+msgstr ""
+
+msgid "System error w/o errno"
+msgstr ""
+
+msgid "Unknown system error"
+msgstr "Error desconocido del sistema"
+
+msgid "End of file"
+msgstr "Fin del fichero"
+
+msgid "Unknown error code"
+msgstr "Código de error desconocido"
+
+msgid "argument not expected"
+msgstr "parámetro inesperado"
+
+msgid "read error"
+msgstr "error de lectura"
+
+msgid "keyword too long"
+msgstr "palabra clave demasiado larga"
+
+msgid "missing argument"
+msgstr "falta el parámetro"
+
+msgid "invalid argument"
+msgstr "parámetro incorrecto"
+
+msgid "invalid command"
+msgstr "orden inválida"
+
+msgid "invalid alias definition"
+msgstr "definición de alias inválida"
+
+msgid "out of core"
+msgstr "memoria desbordada"
+
+msgid "invalid option"
+msgstr "opción inválida"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "falta parámetro para la opción \"%.50s\"\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "parámetro incorrecto para la opción \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "la opción \"%.50s\" no necesita parámetros\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "orden inválida \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "la opción \"%.50s\" es ambigua\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "la orden \"%.50s\" es ambigua\n"
+
+msgid "out of core\n"
+msgstr "memoria desbordada\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "opción inválida \"%.50s\"\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr "Reporta los problemas encontrados en <https://bugs.gnupg.org>.\n"
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "advertencia: no se pudo entender %s\n"
