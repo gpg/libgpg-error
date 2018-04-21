@@ -1,7 +1,7 @@
 # Russian translation for libgpg-error.
-# Copyright (C) 2015 Free Software Foundation, Inc.
+# Copyright (C) 2018 Free Software Foundation, Inc.
 # This file is distributed under the same license as the original package.
-# Ineiev <ineiev@gnu.org>, 2014, 2015
+# Ineiev <ineiev@gnu.org>, 2014, 2015, 2018
 #
 msgid ""
 msgstr ""
@@ -727,25 +727,19 @@ msgid "Bad octal character in S-expression"
 msgstr "Плохой восьмеричный символ в S-выражении"
 
 msgid "All subkeys are expired or revoked"
-msgstr ""
+msgstr "Все подключи просрочены или отозваны"
 
-#, fuzzy
-#| msgid "Data not encrypted"
 msgid "Database is corrupted"
-msgstr "Данные не зашифрованы"
+msgstr "База данных повреждена"
 
 msgid "Server indicated a failure"
-msgstr ""
+msgstr "Сервер указал на сбой"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "No name"
-msgstr "Неизвестное имя"
+msgstr "Нет имени"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "No key"
-msgstr "Нет открытого ключа"
+msgstr "Нет ключа"
 
 msgid "Legacy key"
 msgstr "Старый ключ"
@@ -847,10 +841,10 @@ msgid "Invalid lock object"
 msgstr "Недопустимый объект блокировки"
 
 msgid "True"
-msgstr ""
+msgstr "Истина"
 
 msgid "False"
-msgstr ""
+msgstr "Ложь"
 
 msgid "General IPC error"
 msgstr "Общая ошибка IPC"
@@ -924,104 +918,74 @@ msgstr "Ошибка в параметре IPC"
 msgid "Unknown IPC inquire"
 msgstr "Неизвестный запрос IPC"
 
-#, fuzzy
-#| msgid "No crypto engine"
 msgid "Crypto engine too old"
-msgstr "Нет криптомеханизма"
+msgstr "Криптомеханизм слишком стар"
 
 msgid "Screen or window too small"
-msgstr ""
+msgstr "Экран или окно слишком мало"
 
 msgid "Screen or window too large"
-msgstr ""
+msgstr "Экран или окно слишком велико"
 
 msgid "Required environment variable not set"
-msgstr ""
+msgstr "Требуемая переменная среды не установлена"
 
-#, fuzzy
-#| msgid "Already exists (LDAP)"
 msgid "User ID already exists"
-msgstr "Уже есть (LDAP)"
+msgstr "Идентификатор пользователя уже существует"
 
-#, fuzzy
-#| msgid "Already exists (LDAP)"
 msgid "Name already exists"
-msgstr "Уже есть (LDAP)"
+msgstr "Имя уже существует"
 
-#, fuzzy
-#| msgid "Duplicated value"
 msgid "Duplicated name"
-msgstr "Величина продублирована"
+msgstr "Имя продублировано"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Object is too young"
-msgstr "Сертификат слишком новый"
+msgstr "Объект слишком нов"
 
-#, fuzzy
-#| msgid "Provided object is too short"
 msgid "Object is too old"
-msgstr "Введенный объект слишком мал"
+msgstr "Объект слишком стар"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "Unknown flag"
-msgstr "Неизвестное имя"
+msgstr "Неизвестный признак"
 
-#, fuzzy
-#| msgid "Invalid operation code"
 msgid "Invalid execution order"
-msgstr "Недопустимый код операции"
+msgstr "Недопустимый порядок выполнения"
 
 msgid "Already fetched"
-msgstr ""
+msgstr "Уже доставлено"
 
 msgid "Try again later"
-msgstr ""
+msgstr "Повторите попытку позднее"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "Wrong name"
-msgstr "Неизвестное имя"
+msgstr "Неверное имя"
 
 msgid "System bug detected"
-msgstr ""
+msgstr "Обнаружена ошибка в системе"
 
-#, fuzzy
-#| msgid "Unknown system error"
 msgid "Unknown DNS error"
-msgstr "Неизвестная системная ошибка"
+msgstr "Неизвестная ошибка DNS"
 
-#, fuzzy
-#| msgid "Invalid OID string"
 msgid "Invalid DNS section"
-msgstr "Недопустимая строка OID"
+msgstr "Недопустимый раздел DNS"
 
-#, fuzzy
-#| msgid "Invalid S-expression"
 msgid "Invalid textual address form"
-msgstr "Недопустимое S-выражение"
+msgstr "Недопустимая текстуальная форма адреса"
 
-#, fuzzy
-#| msgid "Missing issuer certificate"
 msgid "Missing DNS query packet"
-msgstr "Не хватает сертификата издателя"
+msgstr "Не хватает пакета запроса DNS"
 
 msgid "Missing DNS answer packet"
-msgstr ""
+msgstr "Не хватает ответного пакета DNS"
 
 msgid "Connection closed in DNS"
-msgstr ""
+msgstr "В DNS прервано соединение"
 
-#, fuzzy
-#| msgid "Decryption failed"
 msgid "Verification failed in DNS"
-msgstr "Сбой расшифровки"
+msgstr "Сбой проверки в DNS"
 
-#, fuzzy
-#| msgid "Timeout"
 msgid "DNS Timeout"
-msgstr "Лимит времени"
+msgstr "Лимит времени DNS"
 
 msgid "General LDAP error"
 msgstr "Общая ошибка LDAP"
@@ -1385,7 +1349,7 @@ msgid "invalid option \"%.50s\"\n"
 msgstr "недопустимый параметр \"%.50s\"\n"
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
-msgstr ""
+msgstr "Об ошибках сообщайте по адресу <https://bugs.gnupg.org>.\n"
 
 #, c-format
 msgid "warning: could not recognize %s\n"
