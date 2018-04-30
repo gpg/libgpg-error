@@ -771,6 +771,8 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
 }
 
 
+/* This is the core of _gpgrt_poll.  The caller needs to make sure that
+ * the syscall clamp has been engaged.  */
 int
 _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
 {
