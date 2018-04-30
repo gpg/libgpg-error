@@ -16,6 +16,16 @@
 # You should have received a copy of the GNU Lesser General Public
 # License along with this program; if not, see <https://www.gnu.org/licenses/>.
 
+# Location of the released tarball archives.  Note that this is an
+# internal archive and before uploading this to the public server,
+# manual tests should be run and the git release tat set and pushed.
+# Adjust as needed.
+RELEASE_ARCHIVE_DIR  = wk@vigenere:tarballs/libgpg-error/
+
+# The key used to sign the released sources.  Adjust as needed.
+RELEASE_SIGNING_KEY  = D8692123C4065DEA5E0F3AB5249B39D24F25E3B6
+
+# Autoconf flags
 ACLOCAL_AMFLAGS = -I m4
 DISTCHECK_CONFIGURE_FLAGS = --enable-doc
 
@@ -75,7 +85,7 @@ distcheck-hook:
 
 
 gen_start_date = 2011-12-01T00:00:00
-.PHONY: gen-ChangeLog
+.PHONY: gen-ChangeLog release sign-release
 gen-ChangeLog:
 	set -e;                         				\
 	if test -d $(top_srcdir)/.git; then				\
@@ -103,3 +113,51 @@ endif
 
 stowinstall:
 	$(MAKE) $(AM_MAKEFLAGS) install prefix=/usr/local/stow/libgpg-error
+
+
+# Macro to help the release target.
+RELEASE_NAME = $(PACKAGE_TARNAME)-$(PACKAGE_VERSION)
+
+release:
+	+(set -e;\
+	 if [ "$(abs_top_builddir)" = "$(abs_top_srcdir)" ]; then \
+           echo "error: build directory must not be the source directory" >&2;\
+	   exit 2;\
+         fi ;\
+	 echo "/* Build started at $$(date -uIseconds) */" ;\
+	 cd $(top_srcdir); \
+	 ./autogen.sh --force; \
+	 cd $(abs_top_builddir); \
+	 rm -rf dist; mkdir dist ; cd dist ; \
+	 $(abs_top_srcdir)/configure --enable-maintainer-mode; \
+	 $(MAKE) distcheck; \
+	 echo "/* Build finished at $$(date -uIseconds) */" ;\
+         echo "/*" ;\
+	 echo " * Please run the final step interactivly:" ;\
+	 echo " *   make sign-release" ;\
+	 echo " */" ;\
+	) 2>&1 | tee "$(RELEASE_NAME).buildlog"
+
+sign-release:
+	 +(set -e; \
+	  cd dist; \
+	  files1="$(RELEASE_NAME).tar.bz2 \
+	          $(RELEASE_NAME).tar.gz" ; \
+	  files2="$(RELEASE_NAME).tar.bz2.sig \
+	          $(RELEASE_NAME).tar.gz.sig  \
+		  $(RELEASE_NAME).swdb \
+		  $(RELEASE_NAME).buildlog" ;\
+	  echo "/* Signing the source tarball ..." ;\
+	  gpg -sbu $(RELEASE_SIGNING_KEY) $(RELEASE_NAME).tar.bz2 ;\
+	  gpg -sbu $(RELEASE_SIGNING_KEY) $(RELEASE_NAME).tar.gz  ;\
+	  cat $(RELEASE_NAME).swdb >swdb.snippet;\
+	  echo >>swdb.snippet ;\
+	  sha1sum $${files1} >>swdb.snippet ;\
+          cat "../$(RELEASE_NAME).buildlog" swdb.snippet \
+               | gzip >$(RELEASE_NAME).buildlog ;\
+          echo "Copying to local archive ..." ;\
+	  scp -p $${files1} $${files2} $(RELEASE_ARCHIVE_DIR)/ || true;\
+	  echo '/*' ;\
+	  echo ' * All done; for checksums see dist/swdb.snippet' ;\
+	  echo ' */' ;\
+         )
