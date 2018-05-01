@@ -300,7 +300,11 @@ _gpg_err_set_errno (int err)
 
 
 /* Internal tracing functions.  Except for TRACE_FP we use flockfile
- * and funlockfile to protect their use. */
+ * and funlockfile to protect their use.
+ *
+ * Warning: Take care with the trace functions - they may not use any
+ * of our services, in particular not the syscall clamp mechanism for
+ * reasons explained in w32-stream.c:create_reader.  */
 static FILE *trace_fp;
 static int trace_save_errno;
 static int trace_with_errno;

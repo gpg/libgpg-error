@@ -239,7 +239,7 @@ reader (void *arg)
   CloseHandle (ctx->have_space_ev);
   CloseHandle (ctx->thread_hd);
   DeleteCriticalSection (&ctx->mutex);
-  _gpgrt_free (ctx);
+  free (ctx);  /* Standard free!  See comment in create_reader. */
 
   return 0;
 }
@@ -256,6 +256,13 @@ create_reader (estream_cookie_w32_pollable_t pcookie)
   sec_attr.nLength = sizeof sec_attr;
   sec_attr.bInheritHandle = FALSE;
 
+  /* The CTX must be allocated in standard system memory so that we
+   * won't use any custom allocation handler which may use our lock
+   * primitives for its implementation.  The problem here is that the
+   * syscall clamp mechanism (e.g. nPth) would be called recursively:
+   * 1. For example by the caller of _gpgrt_w32_poll and 2. by
+   * gpgrt_lock_lock on behalf of the the custom allocation and free
+   * functions.  */
   ctx = calloc (1, sizeof *ctx);
   if (!ctx)
     {
@@ -542,7 +549,7 @@ writer (void *arg)
   CloseHandle (ctx->thread_hd);
   DeleteCriticalSection (&ctx->mutex);
   trace (("%p: writer is destroyed", ctx));
-  _gpgrt_free (ctx);
+  free (ctx); /* Standard free!  See comment in create_writer. */
 
   return 0;
 }
@@ -559,6 +566,7 @@ create_writer (estream_cookie_w32_pollable_t pcookie)
   sec_attr.nLength = sizeof sec_attr;
   sec_attr.bInheritHandle = FALSE;
 
+  /* See comment at create_reader.  */
   ctx = calloc (1, sizeof *ctx);
   if (!ctx)
     {
