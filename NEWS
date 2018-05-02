@@ -1,11 +1,15 @@
-Noteworthy changes in version 1.31 (unreleased) [C24/A24/R_]
+Noteworthy changes in version 1.31 (2018-05-02) [C24/A24/R2]
 -----------------------------------------------
+
+ * Fixes another problem with gpgrt_poll under Windows.  [#3937]
+
+ * New translation for Spanish.
 
 
 Noteworthy changes in version 1.30 (2018-04-30) [C24/A24/R1]
 -----------------------------------------------
 
- * Fix for a hang on Windows when using gpgrt_poll under nPth.
+ * Fixes a hang on Windows when using gpgrt_poll under nPth.
 
  * Build fix for Solaris.  [#3869]
 
