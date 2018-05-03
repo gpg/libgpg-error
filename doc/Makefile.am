@@ -49,8 +49,13 @@ CLEANFILES += yat2m-for-build
 yat2m-for-build: yat2m.c
 	$(CC_FOR_BUILD) -o $@ $(srcdir)/yat2m.c
 else
+if HAVE_W32_SYSTEM
+YAT2M_CMD = ./yat2m.exe
+YAT2M_DEP = yat2m.exe
+else
 YAT2M_CMD = ./yat2m
 YAT2M_DEP = yat2m
+endif
 endif
 endif
 
