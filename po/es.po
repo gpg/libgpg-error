@@ -707,28 +707,28 @@ msgid "Bad character in S-expression"
 msgstr "Caracter erróneo en la S-expression"
 
 msgid "Bad quotation in S-expression"
-msgstr ""
+msgstr "Comillas mal puestas en la S-expression"
 
 msgid "Zero prefix in S-expression"
 msgstr "Prefijo cero en S-expression"
 
 msgid "Nested display hints in S-expression"
-msgstr ""
+msgstr "Sugerencias de exhibición anidadas en S-expression"
 
 msgid "Unmatched display hints"
-msgstr ""
+msgstr "Sugerencias de exhibición no concordadas"
 
 msgid "Unexpected reserved punctuation in S-expression"
 msgstr ""
 
 msgid "Bad hexadecimal character in S-expression"
-msgstr ""
+msgstr "Caracter hexadecimal equivocado en la S-expression"
 
 msgid "Odd hexadecimal numbers in S-expression"
-msgstr ""
+msgstr "Caracteres hexadecimales pares en la S-expression"
 
 msgid "Bad octal character in S-expression"
-msgstr ""
+msgstr "Caracter octal equivocado en la S-expression"
 
 msgid "All subkeys are expired or revoked"
 msgstr "Todas las subclaves están caducadas o revocadas"
@@ -740,10 +740,10 @@ msgid "Server indicated a failure"
 msgstr "El servidor ha indicado un fallo"
 
 msgid "No name"
-msgstr ""
+msgstr "Sin nombre"
 
 msgid "No key"
-msgstr ""
+msgstr "Sin clave"
 
 msgid "Legacy key"
 msgstr "Clave heredada"
@@ -761,7 +761,7 @@ msgid "No certificate chain"
 msgstr "No hay cadena de certificados"
 
 msgid "Certificate is too large"
-msgstr ""
+msgstr "Certificado demasiado grande"
 
 msgid "Invalid record"
 msgstr ""
@@ -830,43 +830,43 @@ msgid "Bad client key exchange message in handshake"
 msgstr ""
 
 msgid "Bogus string"
-msgstr ""
+msgstr "Cadena errónea"
 
 msgid "Forbidden"
 msgstr "Prohibido"
 
 msgid "Key disabled"
-msgstr ""
+msgstr "Clave deshabilitada"
 
 msgid "Not possible with a card based key"
 msgstr "La operación no es posible con una clave basada en tarjeta"
 
 msgid "Invalid lock object"
-msgstr ""
+msgstr "Objecto de bloqueo incorrecto"
 
 msgid "True"
-msgstr ""
+msgstr "Verdadero"
 
 msgid "False"
-msgstr ""
+msgstr "Falso"
 
 msgid "General IPC error"
-msgstr ""
+msgstr "Error general de IPC"
 
 msgid "IPC accept call failed"
-msgstr ""
+msgstr "Fallo al aceptar la llamada IPC"
 
 msgid "IPC connect call failed"
-msgstr ""
+msgstr "Falló la llamada de conexión IPC"
 
 msgid "Invalid IPC response"
-msgstr ""
+msgstr "Respuesta IPC no válida"
 
 msgid "Invalid value passed to IPC"
-msgstr ""
+msgstr "Valor no válido pasado a IPC"
 
 msgid "Incomplete line passed to IPC"
-msgstr ""
+msgstr "Línea incompleta pasada a IPC"
 
 msgid "Line passed to IPC too long"
 msgstr "La línea pasada a IPC es demasiado larga"
@@ -881,22 +881,22 @@ msgid "No inquire callback in IPC"
 msgstr ""
 
 msgid "Not an IPC server"
-msgstr ""
+msgstr "No es un servidor IPC"
 
 msgid "Not an IPC client"
-msgstr ""
+msgstr "No es un cliente IPC"
 
 msgid "Problem starting IPC server"
-msgstr ""
+msgstr "Problema al iniciar el servidor IPC"
 
 msgid "IPC read error"
-msgstr ""
+msgstr "error de lectura IPC"
 
 msgid "IPC write error"
-msgstr ""
+msgstr "error de escritura IPC"
 
 msgid "Too much data for IPC layer"
-msgstr ""
+msgstr "Demasiados datos para la capa IPC"
 
 msgid "Unexpected IPC command"
 msgstr "Orden IPC inesperada"
@@ -908,43 +908,43 @@ msgid "IPC syntax error"
 msgstr "Error de sintaxis IPC"
 
 msgid "IPC call has been cancelled"
-msgstr ""
+msgstr "Se ha cancelado IPC"
 
 msgid "No input source for IPC"
-msgstr ""
+msgstr "No hay fuente de entrada para IPC"
 
 msgid "No output source for IPC"
-msgstr ""
+msgstr "No hay fuente de salida para IPC"
 
 msgid "IPC parameter error"
-msgstr ""
+msgstr "Error de parámetro IPC"
 
 msgid "Unknown IPC inquire"
 msgstr ""
 
 msgid "Crypto engine too old"
-msgstr ""
+msgstr "Motor de cifrado demasiado antiguo"
 
 msgid "Screen or window too small"
-msgstr ""
+msgstr "La ventana o la pantalla son demasiado pequeñas."
 
 msgid "Screen or window too large"
-msgstr ""
+msgstr "La ventana o pantalla son demasiado grandes"
 
 msgid "Required environment variable not set"
-msgstr ""
+msgstr "No se ha configurado la variable de entorno requerida"
 
 msgid "User ID already exists"
-msgstr ""
+msgstr "Esa ID de usuario ya existe"
 
 msgid "Name already exists"
 msgstr "El nombre ya existe"
 
 msgid "Duplicated name"
-msgstr ""
+msgstr "Nombre duplicado"
 
 msgid "Object is too young"
-msgstr ""
+msgstr "El objeto es demasiado joven"
 
 msgid "Object is too old"
 msgstr "El objeto es demasiado antiguo"
@@ -953,7 +953,7 @@ msgid "Unknown flag"
 msgstr ""
 
 msgid "Invalid execution order"
-msgstr ""
+msgstr "Orden de ejecución no válido"
 
 msgid "Already fetched"
 msgstr "Ya se ha descargado"
@@ -983,31 +983,31 @@ msgid "Missing DNS answer packet"
 msgstr ""
 
 msgid "Connection closed in DNS"
-msgstr ""
+msgstr "Conexión cerrada en DNS"
 
 msgid "Verification failed in DNS"
-msgstr ""
+msgstr "Fallo de verificación en DNS"
 
 msgid "DNS Timeout"
-msgstr ""
+msgstr "Tiempo excedido para DNS"
 
 msgid "General LDAP error"
-msgstr ""
+msgstr "Error general de LDAP"
 
 msgid "General LDAP attribute error"
-msgstr ""
+msgstr "Error general de atributo de LDAP"
 
 msgid "General LDAP name error"
-msgstr ""
+msgstr "Error general de nombre de LDAP"
 
 msgid "General LDAP security error"
-msgstr ""
+msgstr "Error general de seguridad de LDAP"
 
 msgid "General LDAP service error"
-msgstr ""
+msgstr "Error general de servicio de LDAP"
 
 msgid "General LDAP update error"
-msgstr ""
+msgstr "Error general de actualización de LDAP"
 
 msgid "Experimental LDAP error code"
 msgstr "Código de error experimental de LDAP"
@@ -1016,52 +1016,52 @@ msgid "Private LDAP error code"
 msgstr "Código de error privado de LDAP"
 
 msgid "Other general LDAP error"
-msgstr ""
+msgstr "Otro error general de LDAP"
 
 msgid "LDAP connecting failed (X)"
-msgstr ""
+msgstr "Ha fallado la conexión LDAP (X)"
 
 msgid "LDAP referral limit exceeded"
-msgstr ""
+msgstr "Límite de referrals de LDAP excedido"
 
 msgid "LDAP client loop"
-msgstr ""
+msgstr "Bucle del cliente LDAP"
 
 msgid "No LDAP results returned"
-msgstr ""
+msgstr "No se devolvió ningún resultado LDAP"
 
 msgid "LDAP control not found"
-msgstr ""
+msgstr "Control de LDAP no encontrado"
 
 msgid "Not supported by LDAP"
-msgstr ""
+msgstr "No soportado por LDAP"
 
 msgid "LDAP connect error"
-msgstr ""
+msgstr "Error de conexión de LDAP"
 
 msgid "Out of memory in LDAP"
-msgstr ""
+msgstr "Sin memoria suficiente para LDAP"
 
 msgid "Bad parameter to an LDAP routine"
-msgstr ""
+msgstr "Parámetro incorrecto para una rutina de LDAP"
 
 msgid "User cancelled LDAP operation"
 msgstr "Operación LDAP cancelada por el usuario"
 
 msgid "Bad LDAP search filter"
-msgstr ""
+msgstr "Filtro de búsqueda de LDAP incorrecto"
 
 msgid "Unknown LDAP authentication method"
-msgstr ""
+msgstr "Método de autentificación de LDAP desconocido"
 
 msgid "Timeout in LDAP"
-msgstr ""
+msgstr "Tiempo excedido para LDAP"
 
 msgid "LDAP decoding error"
 msgstr "Error de decoding de LDAP"
 
 msgid "LDAP encoding error"
-msgstr ""
+msgstr "Error de encoding de LDAP"
 
 msgid "LDAP local error"
 msgstr "Error local de LDAP"
@@ -1076,13 +1076,13 @@ msgid "LDAP operations error"
 msgstr "Error de operación de LDAP"
 
 msgid "LDAP protocol error"
-msgstr ""
+msgstr "Error de protocolo de LDAP"
 
 msgid "Time limit exceeded in LDAP"
-msgstr ""
+msgstr "Límite de tiempo excedido en LDAP"
 
 msgid "Size limit exceeded in LDAP"
-msgstr ""
+msgstr "Límite de tamaño excedido en LDAP"
 
 msgid "LDAP compare false"
 msgstr ""
@@ -1091,10 +1091,10 @@ msgid "LDAP compare true"
 msgstr ""
 
 msgid "LDAP authentication method not supported"
-msgstr ""
+msgstr "Método de autentificación LDAP no soportado"
 
 msgid "Strong(er) LDAP authentication required"
-msgstr ""
+msgstr "Se requiere una autentificación LDAP (más) fuerte"
 
 msgid "Partial LDAP results+referral received"
 msgstr ""
@@ -1103,7 +1103,7 @@ msgid "LDAP referral"
 msgstr ""
 
 msgid "Administrative LDAP limit exceeded"
-msgstr ""
+msgstr "Excedido el límite administrativo de LDAP"
 
 msgid "Critical LDAP extension is unavailable"
 msgstr "Extensión crítica LDAP no disponible"
@@ -1151,31 +1151,31 @@ msgid "LDAP proxy authorization failure (X)"
 msgstr ""
 
 msgid "Inappropriate LDAP authentication"
-msgstr ""
+msgstr "Autentificación LDAP inapropiada"
 
 msgid "Invalid LDAP credentials"
-msgstr ""
+msgstr "Credenciales LDAP no válidas"
 
 msgid "Insufficient access for LDAP"
-msgstr ""
+msgstr "Acceso insuficiente para LDAP"
 
 msgid "LDAP server is busy"
-msgstr ""
+msgstr "El servidor LDAP está ocupado"
 
 msgid "LDAP server is unavailable"
-msgstr ""
+msgstr "El servidor LDAP no está disponible"
 
 msgid "LDAP server is unwilling to perform"
-msgstr ""
+msgstr "El servidor LDAP no quiere funcionar"
 
 msgid "Loop detected by LDAP"
 msgstr "Bucle detectado por LDAP"
 
 msgid "LDAP naming violation"
-msgstr ""
+msgstr "Violación de nombre de LDAP"
 
 msgid "LDAP object class violation"
-msgstr ""
+msgstr "Violación de clase de objeto de LDAP"
 
 msgid "LDAP operation not allowed on non-leaf"
 msgstr ""
@@ -1202,34 +1202,34 @@ msgid "Other LDAP error"
 msgstr "Error diferente de LDAP"
 
 msgid "Resources exhausted in LCUP"
-msgstr ""
+msgstr "Recursos agotados en LCUP"
 
 msgid "Security violation in LCUP"
-msgstr ""
+msgstr "Violación de seguridad en LCUP"
 
 msgid "Invalid data in LCUP"
-msgstr ""
+msgstr "Datos no válidos en LCUP"
 
 msgid "Unsupported scheme in LCUP"
-msgstr ""
+msgstr "Esquema no soportado en LCUP"
 
 msgid "Reload required in LCUP"
-msgstr ""
+msgstr "Se requiere un reload en LCUP"
 
 msgid "LDAP cancelled"
 msgstr "LDAP cancelado"
 
 msgid "No LDAP operation to cancel"
-msgstr ""
+msgstr "Lo hay ninguna operación de LDAP que cancelar"
 
 msgid "Too late to cancel LDAP"
-msgstr ""
+msgstr "Demasiado tarde para cancelar LDAP"
 
 msgid "Cannot cancel LDAP"
 msgstr "No se puede cancelar LDAP"
 
 msgid "LDAP assertion failed"
-msgstr ""
+msgstr "Falló de declaración de LDAP"
 
 msgid "Proxied authorization denied by LDAP"
 msgstr ""
