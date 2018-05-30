@@ -178,7 +178,7 @@ typedef unsigned int gpg_error_t;
 
 /* The noreturn attribute.  */
 #if _GPG_ERR_GCC_VERSION >= 20500
-# define GPGRT_ATTR_NORETURN   __attribute__ ((noreturn))
+# define GPGRT_ATTR_NORETURN   __attribute__ ((__noreturn__))
 #else
 # define GPGRT_ATTR_NORETURN
 #endif
@@ -188,12 +188,12 @@ typedef unsigned int gpg_error_t;
 # define GPGRT_ATTR_PRINTF(f, a) \
                     __attribute__ ((format(__gnu_printf__,f,a)))
 # define GPGRT_ATTR_NR_PRINTF(f, a) \
-                    __attribute__ ((noreturn, format(__gnu_printf__,f,a)))
+                    __attribute__ ((__noreturn__, format(__gnu_printf__,f,a)))
 #elif _GPG_ERR_GCC_VERSION >= 20500
 # define GPGRT_ATTR_PRINTF(f, a) \
                     __attribute__ ((format(printf,f,a)))
 # define GPGRT_ATTR_NR_PRINTF(f, a) \
-                    __attribute__ ((noreturn, format(printf,f,a)))
+                    __attribute__ ((__noreturn__, format(printf,f,a)))
 #else
 # define GPGRT_ATTR_PRINTF(f, a)
 # define GPGRT_ATTR_NR_PRINTF(f, a)
