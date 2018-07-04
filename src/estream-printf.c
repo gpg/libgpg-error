@@ -1565,7 +1565,11 @@ _gpgrt_estream_format (estream_printf_out_t outfnc,
   else
     {
       for (validx=0; validx < DIM(valuetable_buffer); validx++)
-        valuetable[validx].vt = VALTYPE_UNSUPPORTED;
+        {
+          valuetable[validx].vt = VALTYPE_UNSUPPORTED;
+          memset (&valuetable[validx].value, 0,
+                  sizeof valuetable[validx].value);
+        }
     }
   for (argidx=0; argidx < argspecs_len; argidx++)
     {
