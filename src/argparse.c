@@ -1570,7 +1570,7 @@ _gpgrt_set_strusage (const char *(*f)(int) )
 }
 
 
-/* Set a function to write strings which is the used instead of
+/* Set a function to write strings which is then used instead of
  * estream.  The first arg of that function is MODE and the second the
  * STRING to write.  A mode of 1 is used for writing to stdout and a
  * mode of 2 to write to stderr.  Other modes are reserved and should

@@ -524,7 +524,6 @@ main (int argc, char *argv[])
         }
     }
   gpgrt_argparse (NULL, &pargs, NULL);  /* Free internal memory.  */
-  log_debug ("argc=%d listmode=%d\n", argc, listmode);
 
   if ((argc && listmode) || (!argc && !listmode))
     gpgrt_usage (1);

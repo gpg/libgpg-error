@@ -758,8 +758,8 @@ int gpgrt_write_hexstring (gpgrt_stream_t _GPGRT__RESTRICT stream,
 
 size_t gpgrt_fread (void *_GPGRT__RESTRICT ptr, size_t size, size_t nitems,
                     gpgrt_stream_t _GPGRT__RESTRICT stream);
-size_t gpgrt_fwrite (const void *_GPGRT__RESTRICT ptr, size_t size, size_t memb,
-                     gpgrt_stream_t _GPGRT__RESTRICT stream);
+size_t gpgrt_fwrite (const void *_GPGRT__RESTRICT ptr, size_t size,
+                     size_t nitems, gpgrt_stream_t _GPGRT__RESTRICT stream);
 
 char *gpgrt_fgets (char *_GPGRT__RESTRICT s, int n,
                    gpgrt_stream_t _GPGRT__RESTRICT stream);
