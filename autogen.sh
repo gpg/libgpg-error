@@ -15,7 +15,7 @@
 # configure it for the respective package.  It is maintained as part of
 # GnuPG and source copied by other packages.
 #
-# Version: 2018-02-21
+# Version: 2018-07-10
 
 configure_ac="configure.ac"
 
@@ -74,7 +74,6 @@ PRINT_HOST=no
 PRINT_BUILD=no
 tmp=$(dirname "$0")
 tsdir=$(cd "${tmp}"; pwd)
-version_parts=3
 
 if [ -n "${AUTOGEN_SH_SILENT}" ]; then
   SILENT=" --silent"
@@ -239,18 +238,15 @@ if [ "$myhost" = "find-version" ]; then
       exit 1
     fi
 
-    case "$version_parts" in
-      2)
-        matchstr1="$package-$major.[0-9]*"
-        matchstr2="$package-$major-base"
-        vers="$major.$minor"
-        ;;
-      *)
-        matchstr1="$package-$major.$minor.[0-9]*"
-        matchstr2="$package-$major.$minor-base"
-        vers="$major.$minor.$micro"
-        ;;
-    esac
+    if [ -z "$micro" ]; then
+      matchstr1="$package-$major.[0-9]*"
+      matchstr2="$package-$major-base"
+      vers="$major.$minor"
+    else
+      matchstr1="$package-$major.$minor.[0-9]*"
+      matchstr2="$package-$major.$minor-base"
+      vers="$major.$minor.$micro"
+    fi
 
     beta=no
     if [ -e .git ]; then
