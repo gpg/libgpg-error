@@ -126,17 +126,7 @@ LT_LANG([Windows Resource])
 
 
 # We need to compile and run a program on the build machine.
-dnl The AC_PROG_CC_FOR_BUILD macro in the AC archive is broken for
-dnl autoconf 2.57.
-dnl AC_PROG_CC_FOR_BUILD
-AC_MSG_CHECKING(for cc for build)
-if test "$cross_compiling" = "yes"; then
-  CC_FOR_BUILD="${CC_FOR_BUILD-cc}"
-else
-  CC_FOR_BUILD="${CC_FOR_BUILD-$CC}"
-fi
-AC_MSG_RESULT($CC_FOR_BUILD)
-AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
+AX_CC_FOR_BUILD
 
 AH_BOTTOM([
 /* Force using of NLS for W32 even if no libintl has been found.  This is
