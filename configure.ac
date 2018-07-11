@@ -138,10 +138,6 @@ fi
 AC_MSG_RESULT($CC_FOR_BUILD)
 AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
 
-AC_PATH_PROG(YAT2M, yat2m)
-AC_ARG_VAR(YAT2M, [tool to convert texi to man pages])
-AM_CONDITIONAL(HAVE_YAT2M, test -n "$ac_cv_path_YAT2M")
-
 AH_BOTTOM([
 /* Force using of NLS for W32 even if no libintl has been found.  This is
    okay because we have our own gettext implementation for W32.  */

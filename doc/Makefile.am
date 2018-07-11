@@ -37,10 +37,6 @@ myman_pages   = gpg-error-config.1
 
 man_MANS = $(myman_pages)
 
-if HAVE_YAT2M
-YAT2M_CMD = $(YAT2M)
-YAT2M_DEP = $(YAT2M)
-else
 if CROSS_COMPILING
 YAT2M_CMD = ./yat2m-for-build
 YAT2M_DEP = yat2m-for-build
@@ -55,7 +51,6 @@ YAT2M_DEP = yat2m.exe
 else
 YAT2M_CMD = ./yat2m
 YAT2M_DEP = yat2m
-endif
 endif
 endif
 
