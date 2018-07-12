@@ -941,11 +941,9 @@ msgstr "Екран або вікно є надто великим"
 msgid "Required environment variable not set"
 msgstr "Не встановлено обов'язкової змінної середовища"
 
-#| msgid "Already exists (LDAP)"
 msgid "User ID already exists"
 msgstr "Ідентифікатор користувача вже існує"
 
-#| msgid "Already exists (LDAP)"
 msgid "Name already exists"
 msgstr "Назва вже існує"
 
