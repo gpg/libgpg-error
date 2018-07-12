@@ -105,9 +105,9 @@ tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h mkw32errmap.map.c
 
 CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	gpg-error.h gpgrt.h gpgrt-config \
-        mkerrcodes mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
+        mkerrcodes$(EXEEXT_FOR_BUILD) mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
-	gpg-extra/errno.h mkheader $(tmp_files) lock-obj-pub.native.h
+	gpg-extra/errno.h mkheader$(EXEEXT_FOR_BUILD) $(tmp_files) lock-obj-pub.native.h
 
 
 #
@@ -246,11 +246,11 @@ if HAVE_W32CE_SYSTEM
 mkw32errmap.tab.h: Makefile mkw32errmap.c
 	$(CPP) -DRESOLVE_MACROS $(srcdir)/mkw32errmap.c | \
 	      grep '{&mkw32errmap_marker' >$@
-mkw32errmap.map.c: mkw32errmap
-	./mkw32errmap --map > $@
-gpg-extra/errno.h: mkw32errmap
+mkw32errmap.map.c: mkw32errmap$(EXEEXT_FOR_BUILD)
+	./mkw32errmap$(EXEEXT_FOR_BUILD) --map > $@
+gpg-extra/errno.h: mkw32errmap$(EXEEXT_FOR_BUILD)
 	-$(MKDIR_P) gpg-extra
-	./mkw32errmap > $@
+	./mkw32errmap$(EXEEXT_FOR_BUILD) > $@
 else
 mkw32errmap.map.c:
 	echo "/*dummy*/" > $@
@@ -266,18 +266,18 @@ gpg-error.def: Makefile gpg-error.def.in
 
 # It is correct to use $(CC_FOR_BUILD) here.  We want to run the
 # program at build time.
-mkerrcodes: mkerrcodes.c mkerrcodes.h Makefile
+mkerrcodes$(EXEEXT_FOR_BUILD): mkerrcodes.c mkerrcodes.h Makefile
 	$(CC_FOR_BUILD) -I. -I$(srcdir) -o $@ $(srcdir)/mkerrcodes.c
 
 if HAVE_W32CE_SYSTEM
 # It is correct to use $(CC_FOR_BUILD) here.  We want to run the
 # program at build time.
-mkw32errmap: mkw32errmap.c mkw32errmap.tab.h Makefile
+mkw32errmap$(EXEEXT_FOR_BUILD): mkw32errmap.c mkw32errmap.tab.h Makefile
 	$(CC_FOR_BUILD) -I. -I$(srcdir) -o $@ $(srcdir)/mkw32errmap.c
 endif
 
-code-from-errno.h: mkerrcodes Makefile
-	./mkerrcodes | $(AWK) -f $(srcdir)/mkerrcodes2.awk >$@
+code-from-errno.h: mkerrcodes$(EXEEXT_FOR_BUILD) Makefile
+	./mkerrcodes$(EXEEXT_FOR_BUILD) | $(AWK) -f $(srcdir)/mkerrcodes2.awk >$@
 
 errnos-sym.h: Makefile mkstrtable.awk errnos.in
 	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=2 -v nogettext=1 \
@@ -285,7 +285,7 @@ errnos-sym.h: Makefile mkstrtable.awk errnos.in
 		$(srcdir)/errnos.in >$@
 
 
-mkheader: mkheader.c Makefile
+mkheader$(EXEEXT_FOR_BUILD): mkheader.c Makefile
 	$(CC_FOR_BUILD) -g -O0 -I. -I$(srcdir) -o $@ $(srcdir)/mkheader.c
 
 parts_of_gpg_error_h = 	 	\
@@ -312,10 +312,10 @@ endif
 
 # We also depend on versioninfo.rc because that is build by
 # config.status and thus has up-to-date version numbers.
-gpg-error.h: Makefile mkheader $(parts_of_gpg_error_h) \
+gpg-error.h: Makefile mkheader$(EXEEXT_FOR_BUILD) $(parts_of_gpg_error_h) \
              versioninfo.rc ../config.h
 	$(pre_mkheader_cmds)
-	./mkheader $(host_os) $(host_triplet)  $(srcdir)/gpg-error.h.in \
+	./mkheader$(EXEEXT_FOR_BUILD) $(host_os) $(host_triplet)  $(srcdir)/gpg-error.h.in \
                    ../config.h $(PACKAGE_VERSION) $(VERSION_NUMBER) >$@
 
 gpgrt.h: gpg-error.h
