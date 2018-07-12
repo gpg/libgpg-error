@@ -24,7 +24,7 @@ components are
 
  - Option parser
 
- - BAse-64 encoder and decoder.
+ - Base-64 encoder and decoder.
 
 More components will be added over time.  Most functions are prefixed
 with "gpgrt" (GnuPG Run Time) instead of "gpg_err" to indicate the

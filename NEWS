@@ -1,5 +1,13 @@
-Noteworthy changes in version 1.32 (unreleased) [C24/A24/R_]
+Noteworthy changes in version 1.32 (2018-07-12) [C24/A24/R3]
 -----------------------------------------------
+
+ * Fixes a problem with gpgrt_fflush and gpgrt_fopencookie.  [#4069]
+
+ * Fixes a problem with the C11 header stdnoreturn.h.  [#4002]
+
+ * The yat2m tool can now also be build on Windows.
+
+ * Updates translations for Spanish, Russian and Ukrainian.
 
 
 Noteworthy changes in version 1.31 (2018-05-02) [C24/A24/R2]
