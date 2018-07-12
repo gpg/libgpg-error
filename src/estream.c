@@ -1930,13 +1930,14 @@ flush_stream (estream_t stream)
 	  stream->intern->offset += stream->data_offset;
 	  stream->data_offset = 0;
 	  stream->data_flushed = 0;
-
-	  /* Propagate flush event.  */
-	  (*func_write) (stream->intern->cookie, NULL, 0);
 	}
     }
   else
     err = 0;
+
+  /* Always propagate flush event in case gpgrt_fflush was called
+   * explictly to do flush buffers in caller's cookie functions.  */
+  (*func_write) (stream->intern->cookie, NULL, 0);
 
  out:
 
