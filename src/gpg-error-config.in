@@ -11,10 +11,11 @@
 # SPDX-License-Identifier: FSFULLR
 
 prefix=@prefix@
-exec_prefix=@exec_prefix@
-includedir=@includedir@
-libdir=@libdir@
-isubdirafter="@GPG_ERROR_CONFIG_ISUBDIRAFTER@"
+datarootdir=@datarootdir@
+datadir=@datadir@
+PKG_CONFIG_PATH="${datadir}/pkgconfig"
+
+@PKGCONF_FUNCS_SH_CONTENT@
 
 if echo "$0" | grep gpg-error-config 2>/dev/null >/dev/null; then
   myname="gpg-error-config"
@@ -22,8 +23,14 @@ else
   myname="gpgrt-config"
 fi
 
+if find_file_in_path ${myname%-config}.pc $PKG_CONFIG_PATH; then
+    CONFIG_FILE=$RESULT
+else
+    echo "Can't find ${myname%-config}.pc" 1>&2
+    exit 1
+fi
+
 output=""
-mt=no
 
 usage()
 {
@@ -44,6 +51,15 @@ if test $# -eq 0; then
     usage 1 1>&2
 fi
 
+if [ "$1" != "--mt" ]; then
+    mt=no
+else
+    mt=yes
+    shift
+fi
+
+read_config_file < "$CONFIG_FILE"
+
 while test $# -gt 0; do
     case "$1" in
 	-*=*)
@@ -55,54 +71,48 @@ while test $# -gt 0; do
     esac
 
     case $1 in
-        --mt)
-            mt=yes
-            ;;
-        --prefix)
-	    output="$output $prefix"
+	--prefix)
+	    output="$output $(get_var prefix)"
 	    ;;
-        --exec-prefix)
-	    output="$output $exec_prefix"
+	--exec-prefix)
+	    output="$output $(get_var exec_prefix)"
 	    ;;
-        --version)
-            echo "@PACKAGE_VERSION@"
+	--version)
+	    echo "$(get_attr Version)"
 	    exit 0
 	    ;;
-        --cflags)
-	    if test "x$includedir" != "x/usr/include" -a "x$includedir" != "x/include"; then
-		output="$output -I$includedir"
-	    fi
-            # Note: -idirafter is a gcc extension.  It is only used on
-            # systems where gcc is the only compiler we support (WindowsCE).
-            for i in $isubdirafter; do
-                output="$output -idirafter ${includedir}/${i}"
-            done
-	    output="$output @GPG_ERROR_CONFIG_CFLAGS@"
+	--cflags)
+	    output="$output $(get_attr Cflags)"
             if test $mt = yes ; then
-                output="$output @GPG_ERROR_CONFIG_MT_CFLAGS@"
+                output="$output $(get_var mtcflags)"
             fi
 	    ;;
 	--libs)
-	    case "$libdir" in
-		/usr/lib|/usr/lib64|/lib|/lib64) ;;
-		*)
-		    output="$output -L$libdir"
-		    ;;
-	    esac
-	    output="$output @GPG_ERROR_CONFIG_LIBS@"
+	    output="$output $(get_attr Libs)"
             if test $mt = yes ; then
-                output="$output @GPG_ERROR_CONFIG_MT_LIBS@"
+                output="$output $(get_var mtlibs)"
             fi
 	    ;;
-        --host)
-            echo "@GPG_ERROR_CONFIG_HOST@"
-            exit 0
-            ;;
+	--variable=*)
+	    echo "$(get_var ${1#*=})"
+	    exit 0
+	    ;;
+	--host)
+	    echo "$(get_var host)"
+	    exit 0
+	    ;;
 	*)
-            usage 1 1>&2
+	    usage 1 1>&2
 	    ;;
     esac
     shift
 done
+
+#
+# Clean up
+#
+# eval unset $VAR_list VAR_list
+# eval unset $ATTR_list ATTR_list
+#
 
 echo $output

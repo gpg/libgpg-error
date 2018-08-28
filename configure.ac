@@ -491,13 +491,26 @@ else
 fi
 GPG_ERROR_CONFIG_ISUBDIRAFTER=""
 GPG_ERROR_CONFIG_HOST="$host"
+case "$includedir" in
+  '${prefix}/include'|/usr/include|/include) GPG_ERROR_CONFIG_INCLUDEDIR="" ;;
+  *) GPG_ERROR_CONFIG_INCLUDEDIR="-I$includedir" ;;
+esac
+case "$libdir" in
+  '${exec_prefix}/lib'|/usr/lib|/usr/lib64|/lib|/lib64) GPG_ERROR_CONFIG_LIBDIR="" ;;
+  *) GPG_ERROR_CONFIG_LIBDIR="-L$libdir" ;;
+esac
+
+PKGCONF_FUNCS_SH_CONTENT=$(cat $srcdir/src/pkgconf-funcs.sh)
+
 AC_SUBST(GPG_ERROR_CONFIG_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_CFLAGS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_CFLAGS)
 AC_SUBST(GPG_ERROR_CONFIG_ISUBDIRAFTER)
 AC_SUBST(GPG_ERROR_CONFIG_HOST)
-
+AC_SUBST(GPG_ERROR_CONFIG_INCLUDEDIR)
+AC_SUBST(GPG_ERROR_CONFIG_LIBDIR)
+AC_SUBST(PKGCONF_FUNCS_SH_CONTENT)
 
 #
 # Special defines for certain platforms
@@ -625,6 +638,7 @@ AC_CONFIG_FILES([src/Makefile tests/Makefile])
 AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc src/gpg-error.w32-manifest])
 AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
+AC_CONFIG_FILES([src/gpg-error.pc])
 
 AC_OUTPUT
 
