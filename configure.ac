@@ -483,13 +483,16 @@ if test "x$LIBMULTITHREAD" != x; then
 else
   GPG_ERROR_CONFIG_MT_LIBS=""
 fi
-GPG_ERROR_CONFIG_CFLAGS=""
+if test "$have_w32ce_system" = yes; then
+  GPG_ERROR_CONFIG_CFLAGS="-idirafter \${includedir}/gpg-extra"
+else
+  GPG_ERROR_CONFIG_CFLAGS=""
+fi
 if test "x$THREADLIB_CPPFLAGS" != x; then
   GPG_ERROR_CONFIG_MT_CFLAGS="${THREADLIB_CPPFLAGS}"
 else
   GPG_ERROR_CONFIG_MT_CFLAGS=""
 fi
-GPG_ERROR_CONFIG_ISUBDIRAFTER=""
 GPG_ERROR_CONFIG_HOST="$host"
 case "$includedir" in
   '${prefix}/include'|/usr/include|/include) GPG_ERROR_CONFIG_INCLUDEDIR="" ;;
@@ -500,17 +503,13 @@ case "$libdir" in
   *) GPG_ERROR_CONFIG_LIBDIR="-L$libdir" ;;
 esac
 
-PKGCONF_FUNCS_SH_CONTENT=$(cat $srcdir/src/pkgconf-funcs.sh)
-
 AC_SUBST(GPG_ERROR_CONFIG_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_CFLAGS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_CFLAGS)
-AC_SUBST(GPG_ERROR_CONFIG_ISUBDIRAFTER)
 AC_SUBST(GPG_ERROR_CONFIG_HOST)
 AC_SUBST(GPG_ERROR_CONFIG_INCLUDEDIR)
 AC_SUBST(GPG_ERROR_CONFIG_LIBDIR)
-AC_SUBST(PKGCONF_FUNCS_SH_CONTENT)
 
 #
 # Special defines for certain platforms
@@ -523,7 +522,6 @@ if test "$have_w32_system" = yes; then
     fi
     if test "$have_w32ce_system" = yes; then
       AC_DEFINE(HAVE_W32CE_SYSTEM,1,[Defined if we run on WindowsCE])
-      GPG_ERROR_CONFIG_ISUBDIRAFTER="gpg-extra"
     fi
     force_use_syscfg=yes
 fi
@@ -637,8 +635,14 @@ AC_CONFIG_FILES([doc/Makefile po/Makefile.in m4/Makefile])
 AC_CONFIG_FILES([src/Makefile tests/Makefile])
 AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc src/gpg-error.w32-manifest])
-AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
 AC_CONFIG_FILES([src/gpg-error.pc])
+AC_CONFIG_FILES([src/gpg-error-config-head])
+AC_CONFIG_COMMANDS([gen-gpg-error-config], [
+cat src/gpg-error-config-head \
+    $srcdir/src/pkgconf-funcs.sh \
+    $srcdir/src/gpg-error-config-main.sh > src/gpg-error-config
+chmod +x src/gpg-error-config
+])
 
 AC_OUTPUT
 

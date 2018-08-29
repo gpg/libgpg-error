@@ -1,4 +1,4 @@
-#################### start of pkgconf-funcs
+#### start of pkgconf-funcs
 
 #
 # Bourne shell functions for config file in pkg-config style, so that
@@ -116,4 +116,4 @@ find_file_in_path () {
     RESULT=""
     return 1
 }
-#################### end of pkgconf-funcs
+#### end of pkgconf-funcs

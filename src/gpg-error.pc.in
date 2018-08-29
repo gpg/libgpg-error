@@ -2,7 +2,6 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 includedir=@includedir@
 libdir=@libdir@
-isubdirafter=@GPG_ERROR_CONFIG_ISUBDIRAFTER@
 host=@GPG_ERROR_CONFIG_HOST@
 mtcflags=@GPG_ERROR_CONFIG_MT_CFLAGS@
 mtlibs=@GPG_ERROR_CONFIG_MT_LIBS@

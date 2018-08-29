@@ -1,21 +1,3 @@
-#!/bin/sh
-# Copyright (C) 1999, 2002, 2003 Free Software Foundation, Inc.
-#
-# This file is free software; as a special exception the author gives
-# unlimited permission to copy and/or distribute it, with or without
-# modifications, as long as this notice is preserved.
-#
-# This file is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
-# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# SPDX-License-Identifier: FSFULLR
-
-prefix=@prefix@
-datarootdir=@datarootdir@
-datadir=@datadir@
-PKG_CONFIG_PATH="${datadir}/pkgconfig"
-
-@PKGCONF_FUNCS_SH_CONTENT@
 
 if echo "$0" | grep gpg-error-config 2>/dev/null >/dev/null; then
   myname="gpg-error-config"
