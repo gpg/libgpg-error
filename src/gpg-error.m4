@@ -88,11 +88,11 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
   if test $ok = yes; then
     GPG_ERROR_CFLAGS=`$GPG_ERROR_CONFIG $gpg_error_config_args --cflags`
     GPG_ERROR_LIBS=`$GPG_ERROR_CONFIG $gpg_error_config_args --libs`
-    GPG_ERROR_MT_CFLAGS=`$GPG_ERROR_CONFIG $gpg_error_config_args --mt --cflags 2>/dev/null`
-    GPG_ERROR_MT_LIBS=`$GPG_ERROR_CONFIG $gpg_error_config_args --mt --libs 2>/dev/null`
+    GPG_ERROR_MT_CFLAGS=`$GPG_ERROR_CONFIG $gpg_error_config_args --variable=mtcflags 2>/dev/null`
+    GPG_ERROR_MT_LIBS=`$GPG_ERROR_CONFIG $gpg_error_config_args --variable=mtlibs 2>/dev/null`
     AC_MSG_RESULT([yes ($gpg_error_config_version)])
     ifelse([$2], , :, [$2])
-    gpg_error_config_host=`$GPG_ERROR_CONFIG $gpg_error_config_args --host 2>/dev/null || echo none`
+    gpg_error_config_host=`$GPG_ERROR_CONFIG $gpg_error_config_args --variable=host 2>/dev/null || echo none`
     if test x"$gpg_error_config_host" != xnone ; then
       if test x"$gpg_error_config_host" != x"$host" ; then
   AC_MSG_WARN([[
