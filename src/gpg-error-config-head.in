@@ -13,5 +13,5 @@
 prefix=@prefix@
 datarootdir=@datarootdir@
 datadir=@datadir@
-PKG_CONFIG_PATH="${datadir}/pkgconfig"
+PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}${datadir}/pkgconfig"
 #
