@@ -135,4 +135,57 @@ cleanup_vars_attrs () {
     eval unset $ATTR_list ATTR_list
 }
 
+not_listed_yet () {
+    local m=$1
+    shift
+
+    for arg; do
+	if [ $m = $arg ]; then
+	    return 1
+	fi
+    done
+
+    return 0
+}
+
+list_only_once () {
+    local result=""
+    local arg
+
+    for arg; do
+	if not_listed_yet $arg "$result"; then
+	    result="$result $arg"
+	fi
+    done
+
+    echo $result
+}
+
+#
+# Recursively solve package dependencies
+#
+# XXX: version requirement (version comparison) is not yet supported
+#
+all_required_config_files () {
+    local list="$1"
+    local all_list
+    local new_list
+    local p
+
+    all_list="$list"
+
+    while [ -n "$list" ]; do
+	new_list=""
+	for p in $list; do
+	    read_config_file $p $PKG_CONFIG_PATH
+	    new_list="$new_list $(get_attr Requires)"
+	    cleanup_vars_attrs
+	done
+	all_list="$all_list $new_list"
+	list="$new_list"
+    done
+
+    echo $(list_only_once $all_list)
+}
+
 #### end of pkgconf-funcs

@@ -88,21 +88,36 @@ while test $# -gt 0; do
     shift
 done
 
-if [ opt_cflags = yes ]; then
-    output="$output $(get_attr Cflags)"
-    # Backward compatibility to old gpg-error-config
-    if [ $mt = yes ]; then
-	output="$output $(get_var mtcflags)"
-    fi
-fi
-if [ opt_libs = yes ]; then
-    output="$output $(get_attr Libs)"
-    # Backward compatibility to old gpg-error-config
-    if [ $mt = yes ]; then
-	output="$output $(get_var mtlibs)"
-    fi
-fi
+cflags="$(get_attr Cflags)"
+libs="$(get_attr Libs)"
 
-# cleanup_vars_attrs
+mtcflags="$(get_var mtcflags)"
+mtlibs="$(get_var mtlibs)"
+
+requires="$(get_attr Requires)"
+cleanup_vars_attrs
+pkg_list=$(all_required_config_files $requires)
+
+for p in $pkg_list; do
+    read_config_file $p $PKG_CONFIG_PATH
+    cflags="$cflags $(get_attr Cflags)"
+    libs="$libs $(get_attr Libs)"
+    cleanup_vars_attrs
+done
+
+if [ $opt_cflags = yes ]; then
+    output="$output $cflags"
+    # Backward compatibility to old gpg-error-config
+    if [ $mt = yes ]; then
+	output="$output $mtcflags"
+    fi
+fi
+if [ $opt_libs = yes ]; then
+    output="$output $libs"
+    # Backward compatibility to old gpg-error-config
+    if [ $mt = yes ]; then
+	output="$output $mtlibs"
+    fi
+fi
 
 echo $output
