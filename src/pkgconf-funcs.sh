@@ -65,7 +65,7 @@ substitute_vars () {
 }
 
 #
-# Read a config file
+# Read a config from stdin
 #
 # Variables:
 # For VAR=VALUE, value is stored in the shell variable VAR_*.
@@ -73,7 +73,7 @@ substitute_vars () {
 # Attributes:
 # For KEY: VALUE, value is stored in the shell variable ATTR_*.
 #
-read_config_file () {
+read_config_from_stdin () {
     local line
     local varname
     local value
@@ -116,4 +116,23 @@ find_file_in_path () {
     RESULT=""
     return 1
 }
+
+read_config_file () {
+    local config_file
+    local RESULT
+
+    if find_file_in_path $1.pc $2; then
+	config_file=$RESULT
+    else
+	echo "Can't find $1.pc" 1>&2
+	exit 1
+    fi
+    read_config_from_stdin < $config_file
+}
+
+cleanup_vars_attrs () {
+    eval unset $VAR_list VAR_list
+    eval unset $ATTR_list ATTR_list
+}
+
 #### end of pkgconf-funcs

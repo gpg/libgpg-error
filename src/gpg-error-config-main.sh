@@ -5,13 +5,6 @@ else
   myname="gpgrt-config"
 fi
 
-if find_file_in_path ${myname%-config}.pc $PKG_CONFIG_PATH; then
-    CONFIG_FILE=$RESULT
-else
-    echo "Can't find ${myname%-config}.pc" 1>&2
-    exit 1
-fi
-
 usage()
 {
     cat <<EOF
@@ -39,7 +32,7 @@ else
     shift
 fi
 
-read_config_file < "$CONFIG_FILE"
+read_config_file ${myname%-config} $PKG_CONFIG_PATH
 
 opt_cflags=no
 opt_libs=no
@@ -110,11 +103,6 @@ if [ opt_libs = yes ]; then
     fi
 fi
 
-#
-# Clean up
-#
-# eval unset $VAR_list VAR_list
-# eval unset $ATTR_list ATTR_list
-#
+# cleanup_vars_attrs
 
 echo $output
