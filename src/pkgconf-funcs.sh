@@ -137,6 +137,7 @@ cleanup_vars_attrs () {
 
 not_listed_yet () {
     local m=$1
+    local arg
     shift
 
     for arg; do
@@ -153,7 +154,7 @@ list_only_once () {
     local arg
 
     for arg; do
-	if not_listed_yet $arg "$result"; then
+	if not_listed_yet $arg $result; then
 	    result="$result $arg"
 	fi
     done
@@ -163,7 +164,7 @@ list_only_once () {
 
 list_only_once_for_libs () {
     local result=""
-    loca rev_list=""
+    local rev_list=""
     local arg
 
     # Scan the list and eliminate duplicates for non-"-lxxx"
@@ -175,7 +176,7 @@ list_only_once_for_libs () {
 		rev_list="$arg $rev_list"
 		;;
 	    *)
-		if not_listed_yet $arg "$rev_list"; then
+		if not_listed_yet $arg $rev_list; then
 		    rev_list="$arg $rev_list"
 		fi
 		;;
@@ -186,7 +187,7 @@ list_only_once_for_libs () {
     for arg in $rev_list; do
 	case "$arg" in
 	    -l*)
-		if not_listed_yet $arg "$result"; then
+		if not_listed_yet $arg $result; then
 		    result="$arg $result"
 		fi
 		;;
@@ -206,11 +207,12 @@ list_only_once_for_libs () {
 # XXX: version requirement (version comparison) is not yet supported
 #
 all_required_config_files () {
-    local list="$1"
+    local list
     local all_list
     local new_list
     local p
 
+    list="$@"
     all_list="$list"
 
     while [ -n "$list" ]; do
