@@ -1,8 +1,7 @@
 
-if echo "$0" | grep gpg-error-config 2>/dev/null >/dev/null; then
+myname=${0##*/}
+if [ $myname = gpgrt-config ]; then
   myname="gpg-error-config"
-else
-  myname="gpgrt-config"
 fi
 
 usage()
@@ -32,39 +31,33 @@ else
     shift
 fi
 
-read_config_file ${myname%-config} $PKG_CONFIG_PATH
-
+modules=""
+output_var=""
+output_attr=""
 opt_cflags=no
 opt_libs=no
 output=""
 
 while test $# -gt 0; do
-    case "$1" in
-	-*=*)
-	    optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'`
-	    ;;
-	*)
-	    optarg=
-	    ;;
-    esac
-
     case $1 in
 	--prefix)
 	    # In future, use --variable=prefix instead.
-	    output="$output $(get_var prefix)"
+	    output_var=prefix
+	    break
 	    ;;
 	--exec-prefix)
 	    # In future, use --variable=exec_prefix instead.
-	    output="$output $(get_var exec_prefix)"
+	    output_var=exec_prefix
+	    break
 	    ;;
 	--version)
 	    # In future, use --modversion instead.
-	    echo "$(get_attr Version)"
-	    exit 0
+	    output_attr=Version
+	    break
 	    ;;
 	--modversion)
-	    echo "$(get_attr Version)"
-	    exit 0
+	    output_attr=Version
+	    break
 	    ;;
 	--cflags)
 	    opt_cflags=yes
@@ -73,30 +66,44 @@ while test $# -gt 0; do
 	    opt_libs=yes
 	    ;;
 	--variable=*)
-	    echo "$(get_var ${1#*=})"
-	    exit 0
+	    output_var=${1#*=}
+	    break
 	    ;;
 	--host)
 	    # In future, use --variable=host instead.
-	    echo "$(get_var host)"
-	    exit 0
+	    output_var=host
+	    break
+	    ;;
+	--help)
+	    usage 0
 	    ;;
 	*)
-	    usage 1 1>&2
+	    modules="$modules $1"
 	    ;;
     esac
     shift
 done
 
-cflags="$(get_attr Cflags)"
-libs="$(get_attr Libs)"
+if [ -z "$modules" ]; then
+    modules=${myname%-config}
+fi
 
-mtcflags="$(get_var mtcflags)"
-mtlibs="$(get_var mtlibs)"
+if [ myname = "gpg-error-config" -a -z "$modules" ]; then
+    read_config_file ${myname%-config} $PKG_CONFIG_PATH
+    cflags="$(get_attr Cflags)"
+    libs="$(get_attr Libs)"
 
-requires="$(get_attr Requires)"
-cleanup_vars_attrs
-pkg_list=$(all_required_config_files $requires)
+    mtcflags="$(get_var mtcflags)"
+    mtlibs="$(get_var mtlibs)"
+
+    requires="$(get_attr Requires)"
+    cleanup_vars_attrs
+    pkg_list=$(all_required_config_files $requires)
+else
+    cflags=""
+    libs=""
+    pkg_list=$(all_required_config_files $modules)
+fi
 
 for p in $pkg_list; do
     read_config_file $p $PKG_CONFIG_PATH
