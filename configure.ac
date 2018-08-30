@@ -495,12 +495,12 @@ else
 fi
 GPG_ERROR_CONFIG_HOST="$host"
 case "$includedir" in
-  '${prefix}/include'|/usr/include|/include) GPG_ERROR_CONFIG_INCLUDEDIR="" ;;
-  *) GPG_ERROR_CONFIG_INCLUDEDIR="-I$includedir" ;;
+  '${prefix}/include'|/usr/include|/include) ;;
+  *) GPG_ERROR_CONFIG_CFLAGS="-I$includedir $GPG_ERROR_CONFIG_CFLAGS" ;;
 esac
 case "$libdir" in
-  '${exec_prefix}/lib'|/usr/lib|/usr/lib64|/lib|/lib64) GPG_ERROR_CONFIG_LIBDIR="" ;;
-  *) GPG_ERROR_CONFIG_LIBDIR="-L$libdir" ;;
+  '${exec_prefix}/lib'|/usr/lib|/usr/lib64|/lib|/lib64) ;;
+  *) GPG_ERROR_CONFIG_LIBS="-L$libdir $GPG_ERROR_CONFIG_LIBS" ;;
 esac
 
 AC_SUBST(GPG_ERROR_CONFIG_LIBS)
@@ -508,8 +508,6 @@ AC_SUBST(GPG_ERROR_CONFIG_CFLAGS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_CFLAGS)
 AC_SUBST(GPG_ERROR_CONFIG_HOST)
-AC_SUBST(GPG_ERROR_CONFIG_INCLUDEDIR)
-AC_SUBST(GPG_ERROR_CONFIG_LIBDIR)
 
 #
 # Special defines for certain platforms
