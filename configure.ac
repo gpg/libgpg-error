@@ -634,13 +634,7 @@ AC_CONFIG_FILES([src/Makefile tests/Makefile])
 AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc src/gpg-error.w32-manifest])
 AC_CONFIG_FILES([src/gpg-error.pc])
-AC_CONFIG_FILES([src/gpg-error-config-head])
-AC_CONFIG_COMMANDS([gen-gpg-error-config], [
-cat src/gpg-error-config-head \
-    $srcdir/src/pkgconf-funcs.sh \
-    $srcdir/src/gpg-error-config-main.sh > src/gpg-error-config
-chmod +x src/gpg-error-config
-])
+AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
 
 AC_OUTPUT
 
