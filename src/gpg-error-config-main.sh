@@ -106,14 +106,14 @@ for p in $pkg_list; do
 done
 
 if [ $opt_cflags = yes ]; then
-    output="$output $cflags"
+    output="$output $(list_only_once $cflags)"
     # Backward compatibility to old gpg-error-config
     if [ $mt = yes ]; then
 	output="$output $mtcflags"
     fi
 fi
 if [ $opt_libs = yes ]; then
-    output="$output $libs"
+    output="$output $(list_only_once_for_libs $libs)"
     # Backward compatibility to old gpg-error-config
     if [ $mt = yes ]; then
 	output="$output $mtlibs"

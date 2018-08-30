@@ -161,6 +161,45 @@ list_only_once () {
     echo $result
 }
 
+list_only_once_for_libs () {
+    local result=""
+    loca rev_list=""
+    local arg
+
+    # Scan the list and eliminate duplicates for non-"-lxxx"
+    # the resulted list is in reverse order
+    for arg; do
+	case "$arg" in
+	    -l*)
+		# As-is
+		rev_list="$arg $rev_list"
+		;;
+	    *)
+		if not_listed_yet $arg "$rev_list"; then
+		    rev_list="$arg $rev_list"
+		fi
+		;;
+	esac
+    done
+
+    # Scan again
+    for arg in $rev_list; do
+	case "$arg" in
+	    -l*)
+		if not_listed_yet $arg "$result"; then
+		    result="$arg $result"
+		fi
+		;;
+	    *)
+		# As-is
+		result="$arg $result"
+		;;
+	esac
+    done
+
+    echo $result
+}
+
 #
 # Recursively solve package dependencies
 #
