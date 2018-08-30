@@ -108,7 +108,7 @@ find_file_in_path () {
     local IFS=":"		# On Windows it should be ";"???
 
     for d in $p; do
-	if [ -e $d/$f ]; then
+	if [ -r $d/$f ]; then
 	    RESULT="$d/$f"
 	    return 0
 	fi
