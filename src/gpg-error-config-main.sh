@@ -12,8 +12,6 @@ else
     exit 1
 fi
 
-output=""
-
 usage()
 {
     cat <<EOF
@@ -36,11 +34,16 @@ fi
 if [ "$1" != "--mt" ]; then
     mt=no
 else
+    # In future, use --variable=mtcflags or --variable=mtlibs
     mt=yes
     shift
 fi
 
 read_config_file < "$CONFIG_FILE"
+
+opt_cflags=no
+opt_libs=no
+output=""
 
 while test $# -gt 0; do
     case "$1" in
@@ -54,32 +57,34 @@ while test $# -gt 0; do
 
     case $1 in
 	--prefix)
+	    # In future, use --variable=prefix instead.
 	    output="$output $(get_var prefix)"
 	    ;;
 	--exec-prefix)
+	    # In future, use --variable=exec_prefix instead.
 	    output="$output $(get_var exec_prefix)"
 	    ;;
 	--version)
+	    # In future, use --modversion instead.
+	    echo "$(get_attr Version)"
+	    exit 0
+	    ;;
+	--modversion)
 	    echo "$(get_attr Version)"
 	    exit 0
 	    ;;
 	--cflags)
-	    output="$output $(get_attr Cflags)"
-            if test $mt = yes ; then
-                output="$output $(get_var mtcflags)"
-            fi
+	    opt_cflags=yes
 	    ;;
 	--libs)
-	    output="$output $(get_attr Libs)"
-            if test $mt = yes ; then
-                output="$output $(get_var mtlibs)"
-            fi
+	    opt_libs=yes
 	    ;;
 	--variable=*)
 	    echo "$(get_var ${1#*=})"
 	    exit 0
 	    ;;
 	--host)
+	    # In future, use --variable=host instead.
 	    echo "$(get_var host)"
 	    exit 0
 	    ;;
@@ -89,6 +94,21 @@ while test $# -gt 0; do
     esac
     shift
 done
+
+if [ opt_cflags = yes ]; then
+    output="$output $(get_attr Cflags)"
+    # Backward compatibility to old gpg-error-config
+    if [ $mt = yes ]; then
+	output="$output $(get_var mtcflags)"
+    fi
+fi
+if [ opt_libs = yes ]; then
+    output="$output $(get_attr Libs)"
+    # Backward compatibility to old gpg-error-config
+    if [ $mt = yes ]; then
+	output="$output $(get_var mtlibs)"
+    fi
+fi
 
 #
 # Clean up
