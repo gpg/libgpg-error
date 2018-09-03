@@ -16,7 +16,7 @@ datadir=@datadir@
 PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}${datadir}/pkgconfig"
 #
 
-#### start of pkgconf-funcs
+#### start of functions for this script
 
 #
 # Bourne shell functions for config file in pkg-config style, so that
@@ -394,9 +394,12 @@ all_required_config_files () {
     pkg_list=$(list_only_once $all_list)
 }
 
-#### end of pkgconf-funcs
+#### end of functions for this script
 
 myname=${0##*/}
+# Just for a while for testing
+myname=${myname%-new}
+##############################
 if [ $myname = gpgrt-config ]; then
   myname="gpg-error-config"
 fi
@@ -522,15 +525,15 @@ if [ -z "$want_var" -a -z "$want_attr" ]; then
     if [ -n "$want_cflags" ]; then
 	output="$output${output:+ }$(list_only_once $cflags)"
 	# Backward compatibility to old gpg-error-config
-	if [ $mt = yes ]; then
-	    output="$output $mtcflags"
+	if [ $mt = yes -a -n "$mtcflags" ]; then
+	    output="$output${output:+ }$mtcflags"
 	fi
     fi
     if [ -n "$want_libs" ]; then
 	output="$output${output:+ }$(list_only_once_for_libs $libs)"
 	# Backward compatibility to old gpg-error-config
-	if [ $mt = yes ]; then
-	    output="$output $mtlibs"
+	if [ $mt = yes -a -n "$mtlibs" ]; then
+	    output="$output${output:+ }$mtlibs"
 	fi
     fi
 fi

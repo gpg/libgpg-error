@@ -115,6 +115,7 @@ CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
 	gpg-extra/errno.h mkheader$(EXEEXT_FOR_BUILD) $(tmp_files) lock-obj-pub.native.h
 
+TESTS=gpg-error-config-test.sh
 
 #
 # {{{ Begin Windows part
