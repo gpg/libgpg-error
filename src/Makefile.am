@@ -96,7 +96,8 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
 	mkheader.c gpg-error.h.in mkw32errmap.c w32-add.h w32ce-add.h \
 	err-sources.h err-codes.h \
-	gpg-error-config.in \
+	gpg-error-config-old.in gpg-error-config-test.sh \
+	gpg-error-config-new.in \
 	gpg-error.pc.in \
 	gpg-error.m4 gpgrt.m4 \
 	gpg-error.vers gpg-error.def.in \
@@ -114,8 +115,6 @@ CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
         mkerrcodes$(EXEEXT_FOR_BUILD) mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
 	gpg-extra/errno.h mkheader$(EXEEXT_FOR_BUILD) $(tmp_files) lock-obj-pub.native.h
-
-TESTS=gpg-error-config-test.sh
 
 #
 # {{{ Begin Windows part
@@ -330,6 +329,14 @@ gpgrt.h: gpg-error.h
 
 gpgrt-config: gpg-error-config
 	cp gpg-error-config gpgrt-config
+
+gpg-error-config: gpg-error-config-new gpg-error-config-old
+	if $(srcdir)/gpg-error-config-test.sh; then \
+	  cp gpg-error-config-new $@;               \
+	else                                        \
+	  echo "New gpg-error-config doesn't work on this machine, please report to <https://bugs.gnupg.org>" \
+	  cp gpg-error-config-old $@;               \
+	fi
 
 install-data-local:
 if HAVE_W32CE_SYSTEM
