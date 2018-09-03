@@ -635,6 +635,7 @@ AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc src/gpg-error.w32-manifest])
 AC_CONFIG_FILES([src/gpg-error.pc])
 AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
+AC_CONFIG_FILES([src/gpg-error-config-new], [chmod +x src/gpg-error-config-new])
 
 AC_OUTPUT
 
