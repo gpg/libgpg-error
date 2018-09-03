@@ -359,7 +359,7 @@ all_required_config_files () {
 		    *)
 			read_config_file $pkg $PKG_CONFIG_PATH
 			all_list="$all_list $pkg"
-			new_list="$new_list $(get_attr Requires)"
+			new_list="$new_list${new_list:+ }$(get_attr Requires)"
 			cleanup_vars_attrs
 			pkg=$p
 			;;
@@ -371,7 +371,7 @@ all_required_config_files () {
 		    exit 1
 		fi
 		all_list="$all_list $pkg"
-		new_list="$new_list $(get_attr Requires)"
+		new_list="$new_list${new_list:+ }$(get_attr Requires)"
 		cleanup_vars_attrs
 		pkg=
 		cmp=
@@ -383,7 +383,7 @@ all_required_config_files () {
 	elif [ -n "$pkg" ]; then
 	    read_config_file $pkg $PKG_CONFIG_PATH
 	    all_list="$all_list $pkg"
-	    new_list="$new_list $(get_attr Requires)"
+	    new_list="$new_list${new_list:+ }$(get_attr Requires)"
 	    cleanup_vars_attrs
 	fi
 
@@ -429,105 +429,104 @@ else
 fi
 
 modules=""
-output_var=""
-output_attr=""
-opt_cflags=no
-opt_libs=no
-output=""
+want_var=""
+want_attr=""
+want_cflags=""
+want_libs=""
+
+cflags=""
+libs=""
+mtcflags=""
+mtlibs=""
+
 delimiter=" "
+output=""
 
 while test $# -gt 0; do
     case $1 in
 	--prefix)
 	    # In future, use --variable=prefix instead.
-	    output_var=prefix
+	    want_var=prefix
 	    ;;
 	--exec-prefix)
 	    # In future, use --variable=exec_prefix instead.
-	    output_var=exec_prefix
+	    want_var=exec_prefix
 	    ;;
 	--version)
 	    # In future, use --modversion instead.
-	    output_attr=Version
+	    want_attr=Version
 	    delimiter="
 "
 	    ;;
 	--modversion)
-	    output_attr=Version
+	    want_attr=Version
 	    delimiter="
 "
 	    ;;
 	--cflags)
-	    opt_cflags=yes
+	    want_cflags=yes
 	    ;;
 	--libs)
-	    opt_libs=yes
+	    want_libs=yes
 	    ;;
 	--variable=*)
-	    output_var=${1#*=}
+	    want_var=${1#*=}
 	    ;;
 	--host)
 	    # In future, use --variable=host instead.
-	    output_var=host
+	    want_var=host
 	    ;;
 	--help)
 	    usage 0
 	    ;;
+	--*)
+	    usage 1 1>&2
+	    ;;
 	*)
-	    modules="$modules $1"
+	    # Modules
+	    modules="$modules${modules:+ }$1"
 	    ;;
     esac
+
     shift
 done
 
-if [ $myname = "gpg-error-config" -a -z "$modules" ]; then
-    read_config_file ${myname%-config} $PKG_CONFIG_PATH
-    if [ -n "$output_var" ]; then
-	output="$output${output:+ }$(get_var $output_var)"
-    elif [ -n "$output_attr" ]; then
-	output="$output${output:+ }$(get_attr $output_attr)"
-    else
-	cflags="$(get_attr Cflags)"
-	libs="$(get_attr Libs)"
 
-	mtcflags="$(get_var mtcflags)"
-	mtlibs="$(get_var mtlibs)"
-    fi
-
-    requires="$(get_attr Requires)"
-    cleanup_vars_attrs
-    all_required_config_files $requires
-else
-    if [ -z "$modules" ]; then
-	modules=${myname%-config}
-    fi
-    cflags=""
-    libs=""
-    all_required_config_files $modules
+if [ -z "$modules" ]; then
+    modules=${myname%-config}
+elif expr match "$modules" "=\|!=\|<\|>\|<=\|>=" >/dev/null; then
+    modules="${myname%-config} $modules"
 fi
+
+all_required_config_files $modules
 
 for p in $pkg_list; do
     read_config_file $p $PKG_CONFIG_PATH
-    if [ -n "$output_var" ]; then
-	output="$output${output:+$delimiter}$(get_var $output_var)"
-    elif [ -n "$output_attr" ]; then
-	output="$output${output:+$delimiter}$(get_attr $output_attr)"
+    if [ -n "$want_var" ]; then
+	output="$output${output:+$delimiter}$(get_var $want_var)"
+    elif [ -n "$want_attr" ]; then
+	output="$output${output:+$delimiter}$(get_attr $want_attr)"
     else
 	cflags="$cflags${cflags:+ }$(get_attr Cflags)"
 	libs="$libs${libs:+ }$(get_attr Libs)"
+
+	if [ $p = "gpg-error" ]; then
+	    mtcflags="$(get_var mtcflags)"
+	    mtlibs="$(get_var mtlibs)"
+	fi
     fi
     cleanup_vars_attrs
 done
 
-if [ -z "$output_var" -a -z "$output_attr" ]; then
-    if [ $opt_cflags = yes ]; then
+if [ -z "$want_var" -a -z "$want_attr" ]; then
+    if [ -n "$want_cflags" ]; then
 	output="$output${output:+ }$(list_only_once $cflags)"
 	# Backward compatibility to old gpg-error-config
 	if [ $mt = yes ]; then
 	    output="$output $mtcflags"
 	fi
     fi
-    if [ $opt_libs = yes ]; then
+    if [ -n "$want_libs" ]; then
 	output="$output${output:+ }$(list_only_once_for_libs $libs)"
 	# Backward compatibility to old gpg-error-config
 	if [ $mt = yes ]; then
