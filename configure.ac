@@ -495,11 +495,11 @@ else
 fi
 GPG_ERROR_CONFIG_HOST="$host"
 case "$includedir" in
-  '${prefix}/include'|/usr/include|/include) ;;
+  /usr/include|/include) ;;
   *) GPG_ERROR_CONFIG_CFLAGS="-I$includedir $GPG_ERROR_CONFIG_CFLAGS" ;;
 esac
 case "$libdir" in
-  '${exec_prefix}/lib'|/usr/lib|/usr/lib64|/lib|/lib64) ;;
+  /usr/lib|/usr/lib64|/lib|/lib64) ;;
   *) GPG_ERROR_CONFIG_LIBS="-L$libdir $GPG_ERROR_CONFIG_LIBS" ;;
 esac
 

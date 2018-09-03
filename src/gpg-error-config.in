@@ -68,21 +68,12 @@ while test $# -gt 0; do
 	    exit 0
 	    ;;
         --cflags)
-	    if test "x$includedir" != "x/usr/include" -a "x$includedir" != "x/include"; then
-		output="$output -I$includedir"
-	    fi
 	    output="$output @GPG_ERROR_CONFIG_CFLAGS@"
             if test $mt = yes ; then
                 output="$output @GPG_ERROR_CONFIG_MT_CFLAGS@"
             fi
 	    ;;
 	--libs)
-	    case "$libdir" in
-		/usr/lib|/usr/lib64|/lib|/lib64) ;;
-		*)
-		    output="$output -L$libdir"
-		    ;;
-	    esac
 	    output="$output @GPG_ERROR_CONFIG_LIBS@"
             if test $mt = yes ; then
                 output="$output @GPG_ERROR_CONFIG_MT_LIBS@"
