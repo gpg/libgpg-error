@@ -116,7 +116,7 @@ CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
         mkerrcodes$(EXEEXT_FOR_BUILD) mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
 	gpg-extra/errno.h mkheader$(EXEEXT_FOR_BUILD) \
-	gpg-error-config-test.log \
+	gpg-error-config gpg-error-config-test.log \
 	$(tmp_files) lock-obj-pub.native.h
 
 TESTS = gpg-error-config-test.sh
