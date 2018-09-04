@@ -494,12 +494,37 @@ else
   GPG_ERROR_CONFIG_MT_CFLAGS=""
 fi
 GPG_ERROR_CONFIG_HOST="$host"
+
 case "$includedir" in
   /usr/include|/include) ;;
-  *) GPG_ERROR_CONFIG_CFLAGS="-I$includedir $GPG_ERROR_CONFIG_CFLAGS" ;;
+  '${prefix}/include')
+    if test "$prefix" != / -a "$prefix" != /usr; then
+      if test -z "$GPG_ERROR_CONFIG_CFLAGS"; then
+        GPG_ERROR_CONFIG_CFLAGS="-I$includedir"
+      else
+        GPG_ERROR_CONFIG_CFLAGS="-I$includedir $GPG_ERROR_CONFIG_CFLAGS"
+      fi
+    fi
+    ;;
+  *)
+    if test -z "$GPG_ERROR_CONFIG_CFLAGS"; then
+      GPG_ERROR_CONFIG_CFLAGS="-I$includedir"
+    else
+      GPG_ERROR_CONFIG_CFLAGS="-I$includedir $GPG_ERROR_CONFIG_CFLAGS"
+    fi
+    ;;
 esac
 case "$libdir" in
   /usr/lib|/usr/lib64|/lib|/lib64) ;;
+  '${exec_prefix}/lib')
+    if test "$exec_prefix" = "NONE"; then
+      if test "$prefix" != / -a "$prefix" != /usr; then
+        GPG_ERROR_CONFIG_LIBS="-L$libdir $GPG_ERROR_CONFIG_LIBS"
+      fi
+    elif test "$exec_prefix" != / -a "$exec_prefix" != /usr; then
+      GPG_ERROR_CONFIG_LIBS="-L$libdir $GPG_ERROR_CONFIG_LIBS"
+    fi
+    ;;
   *) GPG_ERROR_CONFIG_LIBS="-L$libdir $GPG_ERROR_CONFIG_LIBS" ;;
 esac
 
@@ -508,6 +533,7 @@ AC_SUBST(GPG_ERROR_CONFIG_CFLAGS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_CFLAGS)
 AC_SUBST(GPG_ERROR_CONFIG_HOST)
+
 
 #
 # Special defines for certain platforms

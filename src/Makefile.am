@@ -336,12 +336,14 @@ gpgrt-config: gpg-error-config
 	cp gpg-error-config gpgrt-config
 
 gpg-error-config: gpg-error-config-new gpg-error-config-old
-	@echo "Confirm gpg-error-config works"
+	@echo "Confirm gpg-error-config works... "
 	@if $(srcdir)/gpg-error-config-test.sh --old-new; then \
-	  cp gpg-error-config-new $@;               \
-	else                                        \
-	  echo "***  New gpg-error-config doesn't work on this machine, please report to <https://bugs.gnupg.org>"; \
-	  cp gpg-error-config-old $@;               \
+	  echo "good";                                         \
+	  cp gpg-error-config-new $@;                          \
+	else                                                   \
+	  echo "no";                                           \
+	  echo "***  Please report to <https://bugs.gnupg.org> with gpg-error-config-test.log"; \
+	  cp gpg-error-config-old $@;                          \
 	fi
 
 install-data-local:
