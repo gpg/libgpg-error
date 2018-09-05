@@ -336,7 +336,7 @@ gpgrt-config: gpg-error-config
 	cp gpg-error-config gpgrt-config
 
 gpg-error-config: gpg-error-config-new gpg-error-config-old
-	@echo "Confirm gpg-error-config works... "
+	@echo -n "Confirm gpg-error-config works... "
 	@if $(srcdir)/gpg-error-config-test.sh --old-new; then \
 	  echo "good";                                         \
 	  cp gpg-error-config-new $@;                          \
