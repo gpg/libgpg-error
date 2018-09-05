@@ -467,7 +467,7 @@ init_pool (pooldesc_t *pool, size_t n)
 /* Enable overflow pool allocation in all cases.  CHUNKSIZE is a hint
  * on how large to allocate overflow pools.  */
 void
-_gcry_secmem_set_auto_expand (unsigned int chunksize)
+_gpgrt_secmem_set_auto_expand (unsigned int chunksize)
 {
   /* Round up to a multiple of the STANDARD_POOL_SIZE.  */
   chunksize = ((chunksize + (2*STANDARD_POOL_SIZE) - 1)
@@ -482,17 +482,17 @@ _gcry_secmem_set_auto_expand (unsigned int chunksize)
 
 
 void
-_gcry_secmem_set_flags (unsigned flags)
+_gpgrt_secmem_set_flags (unsigned flags)
 {
   int was_susp;
 
   SECMEM_LOCK;
 
   was_susp = suspend_warning;
-  no_warning = flags & GCRY_SECMEM_FLAG_NO_WARNING;
-  suspend_warning = flags & GCRY_SECMEM_FLAG_SUSPEND_WARNING;
-  no_mlock      = flags & GCRY_SECMEM_FLAG_NO_MLOCK;
-  no_priv_drop = flags & GCRY_SECMEM_FLAG_NO_PRIV_DROP;
+  no_warning = flags & GPGRT_SECMEM_FLAG_NO_WARNING;
+  suspend_warning = flags & GPGRT_SECMEM_FLAG_SUSPEND_WARNING;
+  no_mlock      = flags & GPGRT_SECMEM_FLAG_NO_MLOCK;
+  no_priv_drop = flags & GPGRT_SECMEM_FLAG_NO_PRIV_DROP;
 
   /* and now issue the warning if it is not longer suspended */
   if (was_susp && !suspend_warning && show_warning)
@@ -505,17 +505,17 @@ _gcry_secmem_set_flags (unsigned flags)
 }
 
 unsigned int
-_gcry_secmem_get_flags (void)
+_gpgrt_secmem_get_flags (void)
 {
   unsigned flags;
 
   SECMEM_LOCK;
 
-  flags = no_warning ? GCRY_SECMEM_FLAG_NO_WARNING : 0;
-  flags |= suspend_warning ? GCRY_SECMEM_FLAG_SUSPEND_WARNING : 0;
-  flags |= not_locked ? GCRY_SECMEM_FLAG_NOT_LOCKED : 0;
-  flags |= no_mlock ? GCRY_SECMEM_FLAG_NO_MLOCK : 0;
-  flags |= no_priv_drop ? GCRY_SECMEM_FLAG_NO_PRIV_DROP : 0;
+  flags = no_warning ? GPGRT_SECMEM_FLAG_NO_WARNING : 0;
+  flags |= suspend_warning ? GPGRT_SECMEM_FLAG_SUSPEND_WARNING : 0;
+  flags |= not_locked ? GPGRT_SECMEM_FLAG_NOT_LOCKED : 0;
+  flags |= no_mlock ? GPGRT_SECMEM_FLAG_NO_MLOCK : 0;
+  flags |= no_priv_drop ? GPGRT_SECMEM_FLAG_NO_PRIV_DROP : 0;
 
   SECMEM_UNLOCK;
 
@@ -526,7 +526,7 @@ _gcry_secmem_get_flags (void)
 /* This function initializes the main memory pool MAINPOOL.  Itis
  * expected to be called with the secmem lock held.  */
 static void
-_gcry_secmem_init_internal (size_t n)
+_gpgrt_secmem_init_internal (size_t n)
 {
   pooldesc_t *pool;
 
@@ -577,18 +577,18 @@ _gcry_secmem_init_internal (size_t n)
    order to prevent page-outs of the data.  Furthermore allocated
    secure memory will be wiped out when released.  */
 void
-_gcry_secmem_init (size_t n)
+_gpgrt_secmem_init (size_t n)
 {
   SECMEM_LOCK;
 
-  _gcry_secmem_init_internal (n);
+  _gpgrt_secmem_init_internal (n);
 
   SECMEM_UNLOCK;
 }
 
 
-gcry_err_code_t
-_gcry_secmem_module_init ()
+gpgrt_err_code_t
+_gpgrt_secmem_module_init ()
 {
   /* Not anymore needed.  */
   return 0;
@@ -596,7 +596,7 @@ _gcry_secmem_module_init ()
 
 
 static void *
-_gcry_secmem_malloc_internal (size_t size, int xhint)
+_gpgrt_secmem_malloc_internal (size_t size, int xhint)
 {
   pooldesc_t *pool;
   memblock_t *mb;
@@ -606,7 +606,7 @@ _gcry_secmem_malloc_internal (size_t size, int xhint)
   if (!pool->okay)
     {
       /* Try to initialize the pool if the user forgot about it.  */
-      _gcry_secmem_init_internal (STANDARD_POOL_SIZE);
+      _gpgrt_secmem_init_internal (STANDARD_POOL_SIZE);
       if (!pool->okay)
         {
           log_info (_("operation is not possible without "
@@ -669,7 +669,7 @@ _gcry_secmem_malloc_internal (size_t size, int xhint)
 
       pool->okay = 1;
 
-      /* Take care: in _gcry_private_is_secure we do not lock and thus
+      /* Take care: in _gpgrt_private_is_secure we do not lock and thus
        * we assume that the second assignment below is atomic.  */
       pool->next = mainpool.next;
       mainpool.next = pool;
@@ -695,19 +695,19 @@ _gcry_secmem_malloc_internal (size_t size, int xhint)
 /* Allocate a block from the secmem of SIZE.  With XHINT set assume
  * that the caller is a xmalloc style function.  */
 void *
-_gcry_secmem_malloc (size_t size, int xhint)
+_gpgrt_secmem_malloc (size_t size, int xhint)
 {
   void *p;
 
   SECMEM_LOCK;
-  p = _gcry_secmem_malloc_internal (size, xhint);
+  p = _gpgrt_secmem_malloc_internal (size, xhint);
   SECMEM_UNLOCK;
 
   return p;
 }
 
 static int
-_gcry_secmem_free_internal (void *a)
+_gpgrt_secmem_free_internal (void *a)
 {
   pooldesc_t *pool;
   memblock_t *mb;
@@ -746,7 +746,7 @@ _gcry_secmem_free_internal (void *a)
 /* Wipe out and release memory.  Returns true if this function
  * actually released A.  */
 int
-_gcry_secmem_free (void *a)
+_gpgrt_secmem_free (void *a)
 {
   int mine;
 
@@ -754,14 +754,14 @@ _gcry_secmem_free (void *a)
     return 1; /* Tell caller that we handled it.  */
 
   SECMEM_LOCK;
-  mine = _gcry_secmem_free_internal (a);
+  mine = _gpgrt_secmem_free_internal (a);
   SECMEM_UNLOCK;
   return mine;
 }
 
 
 static void *
-_gcry_secmem_realloc_internal (void *p, size_t newsize, int xhint)
+_gpgrt_secmem_realloc_internal (void *p, size_t newsize, int xhint)
 {
   memblock_t *mb;
   size_t size;
@@ -777,12 +777,12 @@ _gcry_secmem_realloc_internal (void *p, size_t newsize, int xhint)
     }
   else
     {
-      a = _gcry_secmem_malloc_internal (newsize, xhint);
+      a = _gpgrt_secmem_malloc_internal (newsize, xhint);
       if (a)
 	{
 	  memcpy (a, p, size);
 	  memset ((char *) a + size, 0, newsize - size);
-	  _gcry_secmem_free_internal (p);
+	  _gpgrt_secmem_free_internal (p);
 	}
     }
 
@@ -793,12 +793,12 @@ _gcry_secmem_realloc_internal (void *p, size_t newsize, int xhint)
 /* Realloc memory.  With XHINT set assume that the caller is a xmalloc
  * style function.  */
 void *
-_gcry_secmem_realloc (void *p, size_t newsize, int xhint)
+_gpgrt_secmem_realloc (void *p, size_t newsize, int xhint)
 {
   void *a;
 
   SECMEM_LOCK;
-  a = _gcry_secmem_realloc_internal (p, newsize, xhint);
+  a = _gpgrt_secmem_realloc_internal (p, newsize, xhint);
   SECMEM_UNLOCK;
 
   return a;
@@ -807,12 +807,12 @@ _gcry_secmem_realloc (void *p, size_t newsize, int xhint)
 
 /* Return true if P points into the secure memory areas.  */
 int
-_gcry_private_is_secure (const void *p)
+_gpgrt_private_is_secure (const void *p)
 {
   pooldesc_t *pool;
 
   /* We do no lock here because once a pool is allocatred it will not
-   * be removed anymore (except for gcry_secmem_term).  Further,
+   * be removed anymore (except for gpgrt_secmem_term).  Further,
    * adding a new pool to the list should be atomic.  */
   for (pool = &mainpool; pool; pool = pool->next)
     if (pool->okay && ptr_into_pool_p (pool, p))
@@ -831,7 +831,7 @@ _gcry_private_is_secure (const void *p)
  *	     there is no chance to get the secure memory cleaned.
  */
 void
-_gcry_secmem_term ()
+_gpgrt_secmem_term ()
 {
   pooldesc_t *pool, *next;
 
@@ -867,7 +867,7 @@ _gcry_secmem_term ()
 /* Print stats of the secmem allocator.  With EXTENDED passwed as true
  * a detiled listing is returned (used for testing).  */
 void
-_gcry_secmem_dump_stats (int extended)
+_gpgrt_secmem_dump_stats (int extended)
 {
   pooldesc_t *pool;
   memblock_t *mb;
