@@ -587,14 +587,6 @@ _gpgrt_secmem_init (size_t n)
 }
 
 
-gpgrt_err_code_t
-_gpgrt_secmem_module_init ()
-{
-  /* Not anymore needed.  */
-  return 0;
-}
-
-
 static void *
 _gpgrt_secmem_malloc_internal (size_t size, int xhint)
 {
