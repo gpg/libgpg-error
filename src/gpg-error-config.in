@@ -67,6 +67,16 @@ while test $# -gt 0; do
             echo "@PACKAGE_VERSION@"
 	    exit 0
 	    ;;
+	--variable=*)
+	    case "${1#*=}" in
+		prefix) echo "$prefix" ;;
+		exec_prefix) echo "$exec_prefix" ;;
+		host) echo "@GPG_ERROR_CONFIG_HOST@" ;;
+		mtcflags) echo "@GPG_ERROR_CONFIG_MT_CFLAGS@" ;;
+		mtlibs) echo "@GPG_ERROR_CONFIG_MT_LIBS@";;
+	    esac
+	    exit 0
+	    ;;
         --cflags)
 	    output="$output @GPG_ERROR_CONFIG_CFLAGS@"
             if test $mt = yes ; then
