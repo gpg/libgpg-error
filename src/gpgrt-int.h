@@ -742,6 +742,19 @@ void _gpgrt_set_usage_outfnc (int (*fnc)(int, const char *));
 void _gpgrt_set_fixed_string_mapper (const char *(*f)(const char*));
 
 
+/*
+ * Local prototypes for secmem.
+ */
+void _gpgrt_secmem_init (size_t npool);
+void _gpgrt_secmem_term (void);
+void *_gpgrt_secmem_malloc (size_t size, int xhint) GPGRT_ATTR_MALLOC;
+void *_gpgrt_secmem_realloc (void *a, size_t newsize, int xhint);
+int  _gpgrt_secmem_free (void *a);
+void _gpgrt_secmem_dump_stats (int extended);
+void _gpgrt_secmem_set_auto_expand (unsigned int chunksize);
+void _gpgrt_secmem_set_flags (unsigned flags);
+unsigned _gpgrt_secmem_get_flags (void);
+int _gpgrt_private_is_secure (const void *p);
 
 /*
  * Internal platform abstraction functions (sysutils.c)

@@ -187,6 +187,7 @@ libgpg_error_la_SOURCES = gettext.h $(arch_sources) \
 	estream.c estream-printf.c estream-printf.h \
 	strsource.c strerror.c code-to-errno.c code-from-errno.c \
 	visibility.c visibility.h \
+	secmem.c secmem.h \
 	sysutils.c \
 	syscall-clamp.c \
 	logging.c \

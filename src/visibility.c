@@ -1122,6 +1122,65 @@ gpgrt_set_fixed_string_mapper (const char *(*f)(const char*))
 }
 
 
+void
+gpgrt_secmem_init (size_t n)
+{
+  _gpgrt_secmem_init (n);
+}
+
+void
+gpgrt_secmem_term (void)
+{
+  _gpgrt_secmem_term ();
+}
+
+void *
+gpgrt_secmem_malloc (size_t size, int xhint)
+{
+  return _gpgrt_secmem_malloc (size, xhint);
+}
+
+void *
+gpgrt_secmem_realloc (void *a, size_t newsize, int xhint)
+{
+  return _gpgrt_secmem_realloc (a, newsize, xhint);
+}
+
+int
+gpgrt_secmem_free (void *a)
+{
+  return _gpgrt_secmem_free (a);
+}
+
+void
+gpgrt_secmem_dump_stats (int extended)
+{
+  _gpgrt_secmem_dump_stats (extended);
+}
+
+void
+gpgrt_secmem_set_auto_expand (unsigned int chunksize)
+{
+  _gpgrt_secmem_set_auto_expand (chunksize);
+}
+
+void
+gpgrt_secmem_set_flags (unsigned flags)
+{
+  _gpgrt_secmem_set_flags (flags);
+}
+
+unsigned
+gpgrt_secmem_get_flags (void)
+{
+  return _gpgrt_secmem_get_flags ();
+}
+
+int
+gpgrt_private_is_secure (const void *p)
+{
+  return _gpgrt_private_is_secure (p);
+}
 
 /* For consistency reasons we use function wrappers also for Windows
  * specific function despite that they are technically not needed.  */

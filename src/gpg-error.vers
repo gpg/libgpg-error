@@ -190,6 +190,16 @@ GPG_ERROR_1.0 {
     gpgrt_b64enc_write;
     gpgrt_b64enc_finish;
 
+    gpgrt_secmem_init;
+    gpgrt_secmem_term;
+    gpgrt_secmem_malloc;
+    gpgrt_secmem_realloc;
+    gpgrt_secmem_free;
+    gpgrt_secmem_dump_stats;
+    gpgrt_secmem_set_auto_expand;
+    gpgrt_secmem_set_flags;
+    gpgrt_secmem_get_flags;
+    gpgrt_private_is_secure;
 
   local:
     *;

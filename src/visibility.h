@@ -209,6 +209,17 @@ MARK_VISIBLE (gpgrt_set_strusage)
 MARK_VISIBLE (gpgrt_set_fixed_string_mapper);
 MARK_VISIBLE (gpgrt_set_usage_outfnc);
 
+MARK_VISIBLE (gpgrt_secmem_init);
+MARK_VISIBLE (gpgrt_secmem_term);
+MARK_VISIBLE (gpgrt_secmem_malloc);
+MARK_VISIBLE (gpgrt_secmem_realloc);
+MARK_VISIBLE (gpgrt_secmem_free);
+MARK_VISIBLE (gpgrt_secmem_dump_stats);
+MARK_VISIBLE (gpgrt_secmem_set_auto_expand);
+MARK_VISIBLE (gpgrt_secmem_set_flags);
+MARK_VISIBLE (gpgrt_secmem_get_flags);
+MARK_VISIBLE (gpgrt_private_is_secure);
+
 #undef MARK_VISIBLE
 
 #else /*!_GPGRT_INCL_BY_VISIBILITY_C*/
@@ -378,6 +389,17 @@ MARK_VISIBLE (gpgrt_set_usage_outfnc);
 #define gpgrt_strusage                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_set_usage_outfnc        _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_set_fixed_string_mapper _gpgrt_USE_UNDERSCORED_FUNCTION
+
+#define gpgrt_secmem_init             _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_secmem_term             _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_secmem_malloc           _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_secmem_realloc          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_secmem_free             _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_secmem_dump_stats       _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_secmem_set_auto_expand  _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_secmem_set_flags        _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_secmem_get_flags        _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_private_is_secure       _gpgrt_USE_UNDERSCORED_FUNCTION
 
 /* Windows specific functions.  */
 #define gpgrt_w32_reg_query_string  _gpgrt_USE_UNDERSCORED_FUNCTION
