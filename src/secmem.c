@@ -30,6 +30,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #if defined(HAVE_MLOCK) || defined(HAVE_MMAP)
 #include <sys/mman.h>
@@ -40,8 +41,19 @@
 #endif
 #endif
 
-#include "g10lib.h"
+#include "gpgrt-int.h"
 #include "secmem.h"
+
+typedef union
+{
+  int a;
+  short b;
+  char c[1];
+  long d;
+  uint64_t e;
+  float f;
+  double g;
+} PROPERLY_ALIGNED_TYPE;
 
 #if defined (MAP_ANON) && ! defined (MAP_ANONYMOUS)
 #define MAP_ANONYMOUS MAP_ANON
@@ -109,8 +121,8 @@ static unsigned int auto_expand;
 GPGRT_LOCK_DEFINE (secmem_lock);
 
 /* Convenient macros.  */
-#define SECMEM_LOCK   gpgrt_lock_lock   (&secmem_lock)
-#define SECMEM_UNLOCK gpgrt_lock_unlock (&secmem_lock)
+#define SECMEM_LOCK   _gpgrt_lock_lock   (&secmem_lock)
+#define SECMEM_UNLOCK _gpgrt_lock_unlock (&secmem_lock)
 
 /* The size of the memblock structure; this does not include the
    memory that is available to the user.  */
@@ -241,7 +253,7 @@ mb_get_new (pooldesc_t *pool, memblock_t *block, size_t size)
 
   if (! ptr_into_pool_p (pool, mb))
     {
-      gpg_err_set_errno (ENOMEM);
+      _gpg_err_set_errno (ENOMEM);
       mb = NULL;
     }
 
@@ -253,7 +265,7 @@ static void
 print_warn (void)
 {
   if (!no_warning)
-    log_info (_("Warning: using insecure memory!\n"));
+    _gpgrt_log_info (_("Warning: using insecure memory!\n"));
 }
 
 
@@ -298,7 +310,7 @@ lock_pool_pages (void *p, size_t n)
             && err != ENOMEM
 #endif
 	  )
-	log_error ("can't lock memory: %s\n", strerror (err));
+	_gpgrt_log_error ("can't lock memory: %s\n", strerror (err));
       show_warning = 1;
       not_locked = 1;
     }
@@ -340,7 +352,7 @@ lock_pool_pages (void *p, size_t n)
           /* Check that we really dropped the privs.
            * Note: setuid(0) should always fail */
           if (setuid (uid) || getuid () != geteuid () || !setuid (0))
-            log_fatal ("failed to reset uid: %s\n", strerror (errno));
+            _gpgrt_log_fatal ("failed to reset uid: %s\n", strerror (errno));
         }
     }
 
@@ -357,7 +369,7 @@ lock_pool_pages (void *p, size_t n)
             && err != ENOMEM
 #endif
 	  )
-	log_error ("can't lock memory: %s\n", strerror (err));
+	_gpgrt_log_error ("can't lock memory: %s\n", strerror (err));
       show_warning = 1;
       not_locked = 1;
     }
@@ -384,7 +396,7 @@ lock_pool_pages (void *p, size_t n)
   (void)p;
   (void)n;
   if (!no_mlock)
-    log_info ("Please note that you don't have secure memory on this system\n");
+    _gpgrt_log_info ("Please note that you don't have secure memory on this system\n");
 #endif
 }
 
@@ -397,7 +409,7 @@ init_pool (pooldesc_t *pool, size_t n)
   pool->size = n;
 
   if (disable_secmem)
-    log_bug ("secure memory is disabled");
+    _gpgrt_log_bug ("secure memory is disabled");
 
 
 #if HAVE_MMAP
@@ -425,7 +437,7 @@ init_pool (pooldesc_t *pool, size_t n)
       fd = open ("/dev/zero", O_RDWR);
       if (fd == -1)
         {
-          log_error ("can't open /dev/zero: %s\n", strerror (errno));
+          _gpgrt_log_error ("can't open /dev/zero: %s\n", strerror (errno));
           pool->mem = (void *) -1;
         }
       else
@@ -437,8 +449,8 @@ init_pool (pooldesc_t *pool, size_t n)
     }
 # endif
     if (pool->mem == (void *) -1)
-      log_info ("can't mmap pool of %u bytes: %s - using malloc\n",
-                (unsigned) pool->size, strerror (errno));
+      _gpgrt_log_info ("can't mmap pool of %u bytes: %s - using malloc\n",
+                       (unsigned) pool->size, strerror (errno));
     else
       {
         pool->is_mmapped = 1;
@@ -451,8 +463,8 @@ init_pool (pooldesc_t *pool, size_t n)
     {
       pool->mem = malloc (pool->size);
       if (!pool->mem)
-	log_fatal ("can't allocate memory pool of %u bytes\n",
-		   (unsigned) pool->size);
+	_gpgrt_log_fatal ("can't allocate memory pool of %u bytes\n",
+                          (unsigned) pool->size);
       else
 	pool->okay = 1;
     }
@@ -552,7 +564,7 @@ _gpgrt_secmem_init_internal (size_t n)
       if (uid != geteuid ())
 	{
 	  if (setuid (uid) || getuid () != geteuid () || !setuid (0))
-	    log_fatal ("failed to drop setuid\n");
+	    _gpgrt_log_fatal ("failed to drop setuid\n");
 	}
 #endif
     }
@@ -566,7 +578,7 @@ _gpgrt_secmem_init_internal (size_t n)
 	  lock_pool_pages (pool->mem, n);
 	}
       else
-	log_error ("Oops, secure memory pool already initialized\n");
+	_gpgrt_log_error ("Oops, secure memory pool already initialized\n");
     }
 }
 
@@ -601,16 +613,16 @@ _gpgrt_secmem_malloc_internal (size_t size, int xhint)
       _gpgrt_secmem_init_internal (STANDARD_POOL_SIZE);
       if (!pool->okay)
         {
-          log_info (_("operation is not possible without "
-                      "initialized secure memory\n"));
-          gpg_err_set_errno (ENOMEM);
+          _gpgrt_log_info (_("operation is not possible without "
+                             "initialized secure memory\n"));
+          _gpg_err_set_errno (ENOMEM);
           return NULL;
         }
     }
   if (not_locked && fips_mode ())
     {
-      log_info (_("secure memory pool is not locked while in FIPS mode\n"));
-      gpg_err_set_errno (ENOMEM);
+      _gpgrt_log_info (_("secure memory pool is not locked while in FIPS mode\n"));
+      _gpg_err_set_errno (ENOMEM);
       return NULL;
     }
   if (show_warning && !suspend_warning)
@@ -872,21 +884,21 @@ _gpgrt_secmem_dump_stats (int extended)
       if (!extended)
         {
           if (pool->okay)
-            log_info ("%-13s %u/%lu bytes in %u blocks\n",
-                      pool == &mainpool? "secmem usage:":"",
-                      pool->cur_alloced, (unsigned long)pool->size,
-                      pool->cur_blocks);
+            _gpgrt_log_info ("%-13s %u/%lu bytes in %u blocks\n",
+                             pool == &mainpool? "secmem usage:":"",
+                             pool->cur_alloced, (unsigned long)pool->size,
+                             pool->cur_blocks);
         }
       else
         {
           for (i = 0, mb = (memblock_t *) pool->mem;
                ptr_into_pool_p (pool, mb);
                mb = mb_get_next (pool, mb), i++)
-            log_info ("SECMEM: pool %d %s block %i size %i\n",
-                      poolno,
-                      (mb->flags & MB_FLAG_ACTIVE) ? "used" : "free",
-                      i,
-                      mb->size);
+            _gpgrt_log_info ("SECMEM: pool %d %s block %i size %i\n",
+                             poolno,
+                             (mb->flags & MB_FLAG_ACTIVE) ? "used" : "free",
+                             i,
+                             mb->size);
         }
     }
   SECMEM_UNLOCK;
