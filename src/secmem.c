@@ -44,17 +44,6 @@
 #include "gpgrt-int.h"
 #include "secmem.h"
 
-typedef union
-{
-  int a;
-  short b;
-  char c[1];
-  long d;
-  uint64_t e;
-  float f;
-  double g;
-} PROPERLY_ALIGNED_TYPE;
-
 #if defined (MAP_ANON) && ! defined (MAP_ANONYMOUS)
 #define MAP_ANONYMOUS MAP_ANON
 #endif
