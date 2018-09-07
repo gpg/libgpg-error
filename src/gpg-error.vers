@@ -199,7 +199,7 @@ GPG_ERROR_1.0 {
     gpgrt_secmem_set_auto_expand;
     gpgrt_secmem_set_flags;
     gpgrt_secmem_get_flags;
-    gpgrt_private_is_secure;
+    gpgrt_secmem_is_secure;
 
   local:
     *;

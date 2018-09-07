@@ -793,7 +793,7 @@ _gpgrt_secmem_realloc (void *p, size_t newsize, int xhint)
 
 /* Return true if P points into the secure memory areas.  */
 int
-_gpgrt_private_is_secure (const void *p)
+_gpgrt_secmem_is_secure (const void *p)
 {
   pooldesc_t *pool;
 

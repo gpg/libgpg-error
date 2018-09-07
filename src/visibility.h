@@ -218,7 +218,7 @@ MARK_VISIBLE (gpgrt_secmem_dump_stats);
 MARK_VISIBLE (gpgrt_secmem_set_auto_expand);
 MARK_VISIBLE (gpgrt_secmem_set_flags);
 MARK_VISIBLE (gpgrt_secmem_get_flags);
-MARK_VISIBLE (gpgrt_private_is_secure);
+MARK_VISIBLE (gpgrt_secmem_is_secure);
 
 #undef MARK_VISIBLE
 
@@ -399,7 +399,7 @@ MARK_VISIBLE (gpgrt_private_is_secure);
 #define gpgrt_secmem_set_auto_expand  _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_secmem_set_flags        _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_secmem_get_flags        _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_private_is_secure       _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_secmem_is_secure        _gpgrt_USE_UNDERSCORED_FUNCTION
 
 /* Windows specific functions.  */
 #define gpgrt_w32_reg_query_string  _gpgrt_USE_UNDERSCORED_FUNCTION

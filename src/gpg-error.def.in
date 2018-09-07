@@ -227,6 +227,6 @@ EXPORTS
  gpgrt_secmem_set_auto_expand @175
  gpgrt_secmem_set_flags       @176
  gpgrt_secmem_get_flags       @177
- gpgrt_private_is_secure      @178
+ gpgrt_secmem_is_secure       @178
 
 ;; end of file with public symbols for Windows.

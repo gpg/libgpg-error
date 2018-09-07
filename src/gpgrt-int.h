@@ -754,7 +754,7 @@ void _gpgrt_secmem_dump_stats (int extended);
 void _gpgrt_secmem_set_auto_expand (unsigned int chunksize);
 void _gpgrt_secmem_set_flags (unsigned flags);
 unsigned _gpgrt_secmem_get_flags (void);
-int _gpgrt_private_is_secure (const void *p);
+int _gpgrt_secmem_is_secure (const void *p);
 
 /*
  * Internal platform abstraction functions (sysutils.c)

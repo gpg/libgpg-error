@@ -1177,9 +1177,9 @@ gpgrt_secmem_get_flags (void)
 }
 
 int
-gpgrt_private_is_secure (const void *p)
+gpgrt_secmem_is_secure (const void *p)
 {
-  return _gpgrt_private_is_secure (p);
+  return _gpgrt_secmem_is_secure (p);
 }
 
 /* For consistency reasons we use function wrappers also for Windows
