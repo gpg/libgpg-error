@@ -1,0 +1,541 @@
+#!/bin/sh
+# Copyright (C) 1999, 2002, 2003 Free Software Foundation, Inc.
+#
+# This file is free software; as a special exception the author gives
+# unlimited permission to copy and/or distribute it, with or without
+# modifications, as long as this notice is preserved.
+#
+# This file is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# SPDX-License-Identifier: FSFULLR
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+datadir=@datadir@
+PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}${datadir}/pkgconfig"
+#
+
+#### start of functions for this script
+
+#
+# Bourne shell functions for config file in pkg-config style, so that
+# we can share such a config file between pkg-config and script
+#
+
+#
+# get_var: Get the variable value of NAME
+#
+# Variables are recorded in the shell variables named "VAR_<NAME>"
+#
+get_var () {
+    local name=$1
+
+    eval echo \$VAR_$name
+}
+
+#
+# get_attr: Get the attribute value of KEY
+#
+# Attributes are recorded in the shell variables named "ATTR_<KEY>"
+#
+get_attr () {
+    local name=$1
+
+    eval echo \$ATTR_$name
+}
+
+# Remove ${varname} part in the beginning of a string.
+remove_var_expr () {
+    local varname=$1
+    shift
+
+    eval echo \"\${@#\\\$\\\{$varname\\\}}\"
+}
+
+# Given a string, substitute variables.
+substitute_vars () {
+    local string="$1"
+    local line
+    local varname
+    local result
+
+    while [ -n "$string" ]; do
+	case "$string" in
+	    \$\$*)
+		result="$result\$"
+		string="${string#\$\$}"
+		;;
+	    \${*}*)
+		varname="${string#\$\{}"
+		varname="${varname%%\}*}"
+		result="$result$(get_var ${varname})"
+		string=$(remove_var_expr ${varname} ${string})
+		;;
+	    *)
+		result="${result}$(printf %c "$string")"
+		string="${string#$(printf %c "$string")}"
+		;;
+	esac
+    done
+
+    echo "$result"
+}
+
+#
+# Read a config from stdin
+#
+# Variables:
+# For VAR=VALUE, value is stored in the shell variable VAR_*.
+#
+# Attributes:
+# For KEY: VALUE, value is stored in the shell variable ATTR_*.
+#
+read_config_from_stdin () {
+    local filename=$1
+    local line
+    local varname
+    local value
+    local key
+    local reading_attrs
+
+    while read line; do
+	if [ -z "$line" ]; then
+	    reading_attrs=yes
+	    continue
+	elif [ -z "$reading_attrs" ]; then
+	    case "$line" in
+		*=*)
+		    varname="${line%%=*}"
+		    value="${line#*=}"
+		    VAR_list="$VAR_list VAR_$varname"
+		    read VAR_$varname <<EOF1
+$(substitute_vars "$value")
+EOF1
+		    continue
+		    ;;
+		*) reading_attrs=yes ;;
+	    esac
+	fi
+	if [ -n "$reading_attrs" ]; then
+	    case "$line" in
+		*:\ *)
+		    key="${line%%:\ *}"
+		    value="${line#*:\ }"
+		    ATTR_list="$ATTR_list ATTR_$key"
+		    read ATTR_$key <<EOF2
+$(substitute_vars "$value")
+EOF2
+		    ;;
+		*:|*:\ ) ;;
+		*)
+		    echo "Error reading $filename: $line" 1>&2
+		    exit 1
+		    ;;
+	    esac
+	fi
+    done
+}
+
+
+find_file_in_path () {
+    local f=$1
+    local p=$2
+    local IFS=":"		# On Windows it should be ";"???
+
+    for d in $p; do
+	if [ -r $d/$f ]; then
+	    RESULT="$d/$f"
+	    return 0
+	fi
+    done
+    RESULT=""
+    return 1
+}
+
+read_config_file () {
+    local config_file
+    local RESULT
+
+    if find_file_in_path $1.pc $2; then
+	config_file=$RESULT
+    else
+	echo "Can't find $1.pc" 1>&2
+	exit 1
+    fi
+    read_config_from_stdin $config_file < $config_file
+}
+
+cleanup_vars_attrs () {
+    eval unset $VAR_list VAR_list
+    eval unset $ATTR_list ATTR_list
+}
+
+not_listed_yet () {
+    local m=$1
+    local arg
+    shift
+
+    for arg; do
+	if [ $m = $arg ]; then
+	    return 1
+	fi
+    done
+
+    return 0
+}
+
+list_only_once () {
+    local result=""
+    local arg
+
+    for arg; do
+	if not_listed_yet $arg $result; then
+	    result="$result $arg"
+	fi
+    done
+
+    echo $result
+}
+
+list_only_once_for_libs () {
+    local result=""
+    local rev_list=""
+    local arg
+
+    # Scan the list and eliminate duplicates for non-"-lxxx"
+    # the resulted list is in reverse order
+    for arg; do
+	case "$arg" in
+	    -l*)
+		# As-is
+		rev_list="$arg $rev_list"
+		;;
+	    *)
+		if not_listed_yet $arg $rev_list; then
+		    rev_list="$arg $rev_list"
+		fi
+		;;
+	esac
+    done
+
+    # Scan again
+    for arg in $rev_list; do
+	case "$arg" in
+	    -l*)
+		if not_listed_yet $arg $result; then
+		    result="$arg $result"
+		fi
+		;;
+	    *)
+		# As-is
+		result="$arg $result"
+		;;
+	esac
+    done
+
+    echo $result
+}
+
+arg1_is_same () {
+    [ "$1" = "=" -o "$1" = ">=" -o "$1" = "<=" ]
+}
+
+arg1_is_less () {
+    [ "$1" = "!=" -o "$1" = "<" -o "$1" = "<=" ]
+}
+
+arg1_is_great () {
+    [ "$1" = "!=" -o "$1" = ">" -o "$1" = ">=" ]
+}
+
+#
+# Evaluate comparison between versions in RPM way
+#
+eval_compare_version () {
+    local str1="$1"
+    local cmp="$2"
+    local str2="$3"
+    local char1 char2
+    local chunk1 chunk2
+
+    while [ -n "$str1" -a -n "$str2" ]; do
+	# Trim anything that's not alnum or tilde from the front
+	str1="$(expr "$str1" : '[^0-9A-Za-z~]*\(.*\)')"
+	str2="$(expr "$str2" : '[^0-9A-Za-z~]*\(.*\)')"
+
+	# Get the first character
+	char1=${str1%${str1#?}}
+	char2=${str2%${str2#?}}
+
+	if [ "$char1" = ~ -o "$char2" = ~ ]; then
+	    if [ "$char1" != ~ ]; then
+		arg1_is_great $cmp
+		return
+	    fi
+	    if [ "$char2" != ~ ]; then
+		arg1_is_less $cmp
+		return
+	    fi
+	    str1=${str1#~}
+	    str2=${str2#~}
+	    continue
+	fi
+
+	if [ -z "$char1" -o -z "$char2" ]; then
+	    break
+	fi
+
+	case "$char1$char2" in
+	    [0-9][A-Za-z])
+		arg1_is_great $cmp
+		return
+		;;
+	    [A-Za-z][0-9])
+		arg1_is_less $cmp
+		return
+		;;
+	    [0-9][0-9])
+		chunk1="$(expr "$str1" : '\([0-9]*\)')"
+		chunk2="$(expr "$str2" : '\([0-9]*\)')"
+		;;
+	    [A-Za-z][A-Za-z])
+		chunk1="$(expr "$str1" : '\([A-Za-z]*\)')"
+		chunk2="$(expr "$str2" : '\([A-Za-z]*\)')"
+		;;
+	esac
+
+	# Compare chunks numerically if digits, or lexicographically
+	if expr "$chunk1" "!=" "$chunk2" >/dev/null; then
+	    if expr "$chunk1" ">" "$chunk2" >/dev/null; then
+		arg1_is_great $cmp
+		return
+	    else
+		arg1_is_less $cmp
+		return
+	    fi
+	fi
+
+	# Remove the chunk
+	str1="${str1#$chunk1}"
+	str2="${str2#$chunk2}"
+    done
+
+    # Either STR1, STR2 or both is empty here
+    if [ -n "$str1" ]; then
+	case "$str1" in
+	    ~*) arg1_is_less $cmp ;;
+	    *)  arg1_is_great $cmp ;;
+	esac
+    elif [ -n "$str2" ]; then
+	case "$str2" in
+	    ~*) arg1_is_great $cmp ;;
+	    *)  arg1_is_less $cmp ;;
+	esac
+    else
+	arg1_is_same $cmp
+    fi
+}
+
+#
+# Recursively solve package dependencies
+#
+# Result is in the pkg_list variable
+#
+all_required_config_files () {
+    local list
+    local all_list
+    local new_list
+    local p pkg cmp ver
+
+    list=$*
+    while [ -n "$list" ]; do
+	for p in $list; do
+	    if [ -z "$pkg" ]; then
+		pkg=$p
+	    elif [ -z "$cmp" ]; then
+		case "$p" in
+		    "="|"!="|"<"|">"|"<="|">=") cmp=$p ;;
+		    *)
+			read_config_file $pkg $PKG_CONFIG_PATH
+			all_list="$all_list $pkg"
+			new_list="$new_list${new_list:+ }$(get_attr Requires)"
+			cleanup_vars_attrs
+			pkg=$p
+			;;
+		esac
+	    else
+		read_config_file $pkg $PKG_CONFIG_PATH
+		if ! eval_compare_version "$(get_attr Version)" $cmp $p; then
+		    echo "Version mismatch for $pkg $cmp $p: $(get_attr Version)" 1>&2
+		    exit 1
+		fi
+		all_list="$all_list $pkg"
+		new_list="$new_list${new_list:+ }$(get_attr Requires)"
+		cleanup_vars_attrs
+		pkg=
+		cmp=
+	    fi
+	done
+	if [ -n "$cmp" ]; then
+	    echo "No version after comparison operator ($cmp): $pkg" 1>&2
+	    exit 1
+	elif [ -n "$pkg" ]; then
+	    read_config_file $pkg $PKG_CONFIG_PATH
+	    all_list="$all_list $pkg"
+	    new_list="$new_list${new_list:+ }$(get_attr Requires)"
+	    cleanup_vars_attrs
+	fi
+
+	list="$new_list"
+	new_list=""
+    done
+
+    pkg_list=$(list_only_once $all_list)
+}
+
+#### end of functions for this script
+
+myname=${0##*/}
+# Just for a while for testing
+myname=${myname%-new}
+##############################
+if [ $myname = gpgrt-config ]; then
+  myname="gpg-error-config"
+fi
+
+usage()
+{
+    cat <<EOF
+Usage: $myname [OPTIONS]
+Options:
+        [--mt]       (must be the first option)
+	[--prefix]
+	[--exec-prefix]
+	[--version]
+	[--libs]
+	[--cflags]
+EOF
+    exit $1
+}
+
+if test $# -eq 0; then
+    usage 1 1>&2
+fi
+
+if [ "$1" != "--mt" ]; then
+    mt=no
+else
+    # In future, use --variable=mtcflags or --variable=mtlibs
+    mt=yes
+    shift
+fi
+
+modules=""
+want_var=""
+want_attr=""
+want_cflags=""
+want_libs=""
+
+cflags=""
+libs=""
+mtcflags=""
+mtlibs=""
+
+delimiter=" "
+output=""
+
+while test $# -gt 0; do
+    case $1 in
+	--prefix)
+	    # In future, use --variable=prefix instead.
+	    want_var=prefix
+	    ;;
+	--exec-prefix)
+	    # In future, use --variable=exec_prefix instead.
+	    want_var=exec_prefix
+	    ;;
+	--version)
+	    # In future, use --modversion instead.
+	    want_attr=Version
+	    delimiter="
+"
+	    ;;
+	--modversion)
+	    want_attr=Version
+	    delimiter="
+"
+	    ;;
+	--cflags)
+	    want_cflags=yes
+	    ;;
+	--libs)
+	    want_libs=yes
+	    ;;
+	--variable=*)
+	    want_var=${1#*=}
+	    ;;
+	--host)
+	    # In future, use --variable=host instead.
+	    want_var=host
+	    ;;
+	--help)
+	    usage 0
+	    ;;
+	--*)
+	    usage 1 1>&2
+	    ;;
+	*)
+	    # Modules
+	    modules="$modules${modules:+ }$1"
+	    ;;
+    esac
+
+    shift
+done
+
+
+if [ -z "$modules" ]; then
+    modules=${myname%-config}
+elif expr match "$modules" "=\|!=\|<\|>\|<=\|>=" >/dev/null; then
+    modules="${myname%-config} $modules"
+fi
+
+all_required_config_files $modules
+
+for p in $pkg_list; do
+    read_config_file $p $PKG_CONFIG_PATH
+    if [ -n "$want_var" ]; then
+	output="$output${output:+$delimiter}$(get_var $want_var)"
+    elif [ -n "$want_attr" ]; then
+	output="$output${output:+$delimiter}$(get_attr $want_attr)"
+    else
+	cflags="$cflags${cflags:+ }$(get_attr Cflags)"
+	libs="$libs${libs:+ }$(get_attr Libs)"
+
+	if [ $p = "gpg-error" ]; then
+	    mtcflags="$(get_var mtcflags)"
+	    mtlibs="$(get_var mtlibs)"
+	fi
+    fi
+    cleanup_vars_attrs
+done
+
+if [ -z "$want_var" -a -z "$want_attr" ]; then
+    if [ -n "$want_cflags" ]; then
+	output="$output${output:+ }$(list_only_once $cflags)"
+	# Backward compatibility to old gpg-error-config
+	if [ $mt = yes -a -n "$mtcflags" ]; then
+	    output="$output${output:+ }$mtcflags"
+	fi
+    fi
+    if [ -n "$want_libs" ]; then
+	output="$output${output:+ }$(list_only_once_for_libs $libs)"
+	# Backward compatibility to old gpg-error-config
+	if [ $mt = yes -a -n "$mtlibs" ]; then
+	    output="$output${output:+ }$mtlibs"
+	fi
+    fi
+fi
+
+echo "$output"

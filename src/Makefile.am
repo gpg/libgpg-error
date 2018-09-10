@@ -88,6 +88,9 @@ nodist_bin_SCRIPTS = gpgrt-config
 m4datadir = $(datadir)/aclocal
 m4data_DATA = gpg-error.m4 gpgrt.m4
 
+pkgconfigdir = $(datadir)/pkgconfig
+pkgconfig_DATA = gpg-error.pc
+
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrnos.awk errnos.in README \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
@@ -95,6 +98,7 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 gpgrt.m4 \
 	gpg-error.vers gpg-error.def.in \
         versioninfo.rc.in gpg-error.w32-manifest.in \
+	gpg-error-config-new.in gpg-error-config-test.sh gpg-error.pc.in \
 	$(lock_obj_pub)
 
 BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
@@ -107,8 +111,11 @@ CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
 	gpg-error.h gpgrt.h gpgrt-config \
         mkerrcodes$(EXEEXT_FOR_BUILD) mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
-	gpg-extra/errno.h mkheader$(EXEEXT_FOR_BUILD) $(tmp_files) lock-obj-pub.native.h
+	gpg-extra/errno.h mkheader$(EXEEXT_FOR_BUILD) \
+	gpg-error-config gpg-error-config-test.log \
+	$(tmp_files) lock-obj-pub.native.h
 
+TESTS = gpg-error-config-test.sh
 
 #
 # {{{ Begin Windows part
@@ -323,6 +330,17 @@ gpgrt.h: gpg-error.h
 
 gpgrt-config: gpg-error-config
 	cp gpg-error-config gpgrt-config
+
+gpg-error-config: gpg-error-config-new gpg-error-config-old
+	@echo -n "Confirm gpg-error-config works... "
+	@if $(srcdir)/gpg-error-config-test.sh --old-new; then \
+	  echo "good";                                         \
+	  cp gpg-error-config-new $@;                          \
+	else                                                   \
+	  echo "no";                                           \
+	  echo "***  Please report to <https://bugs.gnupg.org> with gpg-error-config-test.log"; \
+	  cp gpg-error-config-old $@;                          \
+	fi
 
 install-data-local:
 if HAVE_W32CE_SYSTEM
