@@ -51,17 +51,27 @@ xfree (void *a)
 
 
 static char *
-xstrdup (const char *string)
+xmalloc (size_t n)
 {
   char *p;
-  size_t len = strlen (string) + 1;
 
-  p = malloc (len);
+  p = malloc (n);
   if (!p)
     {
       fputs (PGM ": out of core\n", stderr);
       exit (1);
     }
+  return p;
+}
+
+
+static char *
+xstrdup (const char *string)
+{
+  char *p;
+  size_t len = strlen (string) + 1;
+
+  p = xmalloc (len);
   memcpy (p, string, len);
   return p;
 }
@@ -69,23 +79,31 @@ xstrdup (const char *string)
 
 /* Return a malloced string with TRIPLET.  If TRIPLET has an alias
    return that instead.  In general build-aux/config.sub should do the
-   aliasing but some returned triplets are anyway identical and thus we
-   use this function to map it to the canonical form.  */
+   aliasing but some returned triplets are anyway identical and thus
+   we use this function to map it to the canonical form.
+   NO_VENDOR_HACK is for internal use; caller must call with 0. */
 static char *
-canon_host_triplet (const char *triplet)
+canon_host_triplet (const char *triplet, int no_vendor_hack)
 {
   struct {
     const char *name;
     const char *alias;
   } tbl[] = {
-    {"i486-pc-linux-gnu", "i686-pc-linux-gnu" },
+    {"i486-pc-linux-gnu", "i686-unknown-linux-gnu" },
     {"i586-pc-linux-gnu" },
-    {"i486-pc-gnu", "i686-pc-gnu"},
-    {"i586-pc-gnu"},
-    {"i486-pc-kfreebsd-gnu", "i686-pc-kfreebsd-gnu"},
-    {"i586-pc-kfreebsd-gnu"},
+    {"i686-pc-linux-gnu" },
+    {"arc-oe-linux-uclibc" }, /* Other CPU but same struct.  */
 
-    {"x86_64-pc-linux-gnuhardened1", "x86_64-pc-linux-gnu" },
+    {"i486-pc-gnu", "i686-unknown-gnu"},
+    {"i586-pc-gnu"},
+    {"i686-pc-gnu"},
+
+    {"i486-pc-kfreebsd-gnu", "i686-unknown-kfreebsd-gnu"},
+    {"i586-pc-kfreebsd-gnu"},
+    {"i686-pc-kfreebsd-gnu"},
+
+    {"x86_64-pc-linux-gnuhardened1", "x86_64-unknown-linux-gnu" },
+    {"x86_64-pc-linux-gnu" },
 
     {"powerpc-unknown-linux-gnuspe", "powerpc-unknown-linux-gnu" },
 
@@ -98,6 +116,7 @@ canon_host_triplet (const char *triplet)
   };
   int i;
   const char *lastalias = NULL;
+  const char *s;
 
   for (i=0; tbl[i].name; i++)
     {
@@ -110,6 +129,36 @@ canon_host_triplet (const char *triplet)
           return xstrdup (lastalias);
         }
     }
+  for (i=0, s=triplet; *s; s++)
+    if (*s == '-')
+      i++;
+  if (i > 2 && !no_vendor_hack)
+    {
+      /* We have a 4 part "triplet": CPU-VENDOR-KERNEL-SYSTEM where
+       * the last two parts replace the OS part of a real triplet.
+       * The VENDOR part is then in general useless because
+       * KERNEL-SYSTEM is specific enough.  We now do a second pass by
+       * replacing VENDOR with "unknown".  */
+      char *p;
+      char *buf = xmalloc (strlen (triplet) + 7 + 1);
+
+      for (p=buf,s=triplet,i=0; *s; s++)
+        {
+          *p++ = *s;
+          if (*s == '-' && ++i == 1)
+            {
+              memcpy (p, "unknown-",8);
+              p += 8;
+              for (s++; *s != '-'; s++)
+                ;
+            }
+        }
+      *p = 0;
+      p = canon_host_triplet (buf, 1);
+      xfree (buf);
+      return p;
+    }
+
   return xstrdup (triplet);
 }
 
@@ -558,7 +607,7 @@ write_special (const char *fname, int lnr, const char *tag)
 int
 main (int argc, char **argv)
 {
-  FILE *fp;
+  FILE *fp = NULL;
   char line[LINESIZE];
   int lnr = 0;
   const char *fname, *s;
@@ -571,11 +620,22 @@ main (int argc, char **argv)
       argc--; argv++;
     }
 
-  if (argc != 6)
+  if (argc == 1)
+    {
+      /* Print just the canonicalized host triplet.  */
+      host_triplet = canon_host_triplet (argv[0], 0);
+      printf ("%s\n", host_triplet);
+      goto leave;
+    }
+  else if (argc == 6)
+    ; /* Standard operation.  */
+  else
     {
       fputs ("usage: " PGM
              " host_os host_triplet template.h config.h"
-             " version version_number\n",
+             " version version_number\n"
+             "       " PGM
+             " host_triplet\n",
              stderr);
       return 1;
     }
@@ -586,7 +646,7 @@ main (int argc, char **argv)
   hdr_version = argv[4];
   hdr_version_number = argv[5];
 
-  host_triplet = canon_host_triplet (host_triplet_raw);
+  host_triplet = canon_host_triplet (host_triplet_raw, 0);
 
   srcdir = malloc (strlen (fname) + 2 + 1);
   if (!srcdir)
@@ -677,13 +737,15 @@ main (int argc, char **argv)
          "End:\n"
          "*/\n", stdout);
 
+ leave:
   if (ferror (stdout))
     {
       fprintf (stderr, PGM ": error writing to stdout: %s\n", strerror (errno));
       return 1;
     }
 
-  fclose (fp);
+  if (fp)
+    fclose (fp);
 
   xfree (host_triplet);
   return 0;

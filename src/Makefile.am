@@ -52,9 +52,9 @@ lock_obj_pub = \
 	syscfg/lock-obj-pub.arm-apple-darwin.h              \
         syscfg/lock-obj-pub.hppa-unknown-linux-gnu.h        \
 	syscfg/lock-obj-pub.i386-apple-darwin.h             \
-        syscfg/lock-obj-pub.i686-pc-gnu.h                   \
-        syscfg/lock-obj-pub.i686-pc-kfreebsd-gnu.h          \
-        syscfg/lock-obj-pub.i686-pc-linux-gnu.h             \
+        syscfg/lock-obj-pub.i686-unknown-gnu.h              \
+        syscfg/lock-obj-pub.i686-unknown-kfreebsd-gnu.h     \
+        syscfg/lock-obj-pub.i686-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.m68k-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.mips-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.mips64el-unknown-linux-gnuabi64.h \
@@ -66,16 +66,16 @@ lock_obj_pub = \
 	syscfg/lock-obj-pub.powerpc64le-unknown-linux-gnu.h \
 	syscfg/lock-obj-pub.powerpc-unknown-linux-gnuspe.h  \
 	syscfg/lock-obj-pub.riscv64-unknown-linux-gnu.h     \
-        syscfg/lock-obj-pub.s390x-ibm-linux-gnu.h           \
+        syscfg/lock-obj-pub.s390x-unknown-linux-gnu.h       \
         syscfg/lock-obj-pub.sh3-unknown-linux-gnu.h         \
         syscfg/lock-obj-pub.sh4-unknown-linux-gnu.h         \
         syscfg/lock-obj-pub.sparc-unknown-linux-gnu.h       \
         syscfg/lock-obj-pub.sparc64-unknown-linux-gnu.h     \
 	syscfg/lock-obj-pub.x86_64-apple-darwin.h           \
-        syscfg/lock-obj-pub.x86_64-pc-kfreebsd-gnu.h        \
-        syscfg/lock-obj-pub.x86_64-pc-linux-gnu.h           \
-        syscfg/lock-obj-pub.x86_64-pc-linux-gnux32.h        \
-        syscfg/lock-obj-pub.x86_64-pc-linux-musl.h          \
+        syscfg/lock-obj-pub.x86_64-unknown-kfreebsd-gnu.h   \
+        syscfg/lock-obj-pub.x86_64-unknown-linux-gnu.h      \
+        syscfg/lock-obj-pub.x86_64-unknown-linux-gnux32.h   \
+        syscfg/lock-obj-pub.x86_64-unknown-linux-musl.h     \
 	syscfg/lock-obj-pub.tilegx-unknown-linux-gnu.h      \
 	syscfg/lock-obj-pub.ia64-unknown-linux-gnu.h        \
 	syscfg/lock-obj-pub.mingw32.h
