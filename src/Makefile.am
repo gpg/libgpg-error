@@ -101,19 +101,22 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	gpg-error-config-new.in gpg-error-config-test.sh gpg-error.pc.in \
 	$(lock_obj_pub)
 
-BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
+BUILT_SOURCES = $(srcdir)/err-sources.h $(srcdir)/err-codes.h \
+	code-to-errno.h code-from-errno.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h gpgrt.h \
 	gpgrt-config gpg-error.def mkw32errmap.map.c
 
 tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h mkw32errmap.map.c
 
-CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
+CLEANFILES = code-to-errno.h code-from-errno.h \
 	gpg-error.h gpgrt.h gpgrt-config \
         mkerrcodes$(EXEEXT_FOR_BUILD) mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
 	gpg-extra/errno.h mkheader$(EXEEXT_FOR_BUILD) \
 	gpg-error-config gpg-error-config-test.log \
 	$(tmp_files) lock-obj-pub.native.h
+
+MAINTAINERCLEANFILES = $(srcdir)/err-sources.h $(srcdir)/err-codes.h
 
 TESTS = gpg-error-config-test.sh
 
@@ -215,7 +218,7 @@ libgpg_error_la_LIBADD = $(gpg_error_res) $(intllibs) $(socklibs) $(LIBTHREAD)
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c
 gpg_error_CPPFLAGS = -DPKGDATADIR=\"$(pkgdatadir)\" \
                      -DLOCALEDIR=\"$(localedir)\" $(extra_cppflags)
-gpg_error_LDADD = ./libgpg-error.la $(LTLIBINTL)
+gpg_error_LDADD = libgpg-error.la $(LTLIBINTL)
 
 # We build err-sources.h and err-codes.h in the source directory.
 # This is needed because gettext does only look into the source
