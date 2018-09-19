@@ -29,15 +29,15 @@ failure () {
 
 rm -f gpg-error-config-test.log
 
-OUTPUT_OLD=$($PKG_CONFIG_CMD --libs)
+OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --libs))
 OUTPUT_NEW=$(./gpg-error-config-new --libs)
 [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --libs
 
-OUTPUT_OLD=$($PKG_CONFIG_CMD --cflags)
+OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --cflags))
 OUTPUT_NEW=$(./gpg-error-config-new --cflags)
 [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --cflags
 
-OUTPUT_OLD=$($PKG_CONFIG_CMD --cflags --libs)
+OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --cflags --libs))
 OUTPUT_NEW=$(./gpg-error-config-new --cflags --libs)
 [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --cflags --libs
 
