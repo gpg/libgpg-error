@@ -29,9 +29,9 @@ PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}${datadir}/pkgconfig"
 # Variables are recorded in the shell variables named "VAR_<NAME>"
 #
 get_var () {
-    local name=$1
+    ___name=$1
 
-    eval echo \$VAR_$name
+    eval echo \$VAR_$___name
 }
 
 #
@@ -40,46 +40,45 @@ get_var () {
 # Attributes are recorded in the shell variables named "ATTR_<KEY>"
 #
 get_attr () {
-    local name=$1
+    ___name=$1
 
-    eval echo \$ATTR_$name
+    eval echo \$ATTR_$___name
 }
 
 # Remove ${varname} part in the beginning of a string.
 remove_var_expr () {
-    local varname=$1
+    ___varname=$1
     shift
 
-    eval echo \"\${@#\\\$\\\{$varname\\\}}\"
+    eval echo \"\${@#\\\$\\\{$___varname\\\}}\"
 }
 
 # Given a string, substitute variables.
 substitute_vars () {
-    local string="$1"
-    local line
-    local varname
-    local result
+    __string="$1"
+    __varname=""
+    __result=""
 
-    while [ -n "$string" ]; do
-	case "$string" in
+    while [ -n "$__string" ]; do
+	case "$__string" in
 	    \$\$*)
-		result="$result\$"
-		string="${string#\$\$}"
+		__result="$__result\$"
+		__string="${__string#\$\$}"
 		;;
 	    \${*}*)
-		varname="${string#\$\{}"
-		varname="${varname%%\}*}"
-		result="$result$(get_var ${varname})"
-		string=$(remove_var_expr ${varname} ${string})
+		__varname="${__string#\$\{}"
+		__varname="${__varname%%\}*}"
+		__result="$__result$(get_var $__varname)"
+		__string=$(remove_var_expr $__varname $__string)
 		;;
 	    *)
-		result="${result}$(printf %c "$string")"
-		string="${string#$(printf %c "$string")}"
+		__result="$__result$(printf %c "$__string")"
+		__string="${__string#$(printf %c "$__string")}"
 		;;
 	esac
     done
 
-    echo "$result"
+    echo "$__result"
 }
 
 #
@@ -92,44 +91,44 @@ substitute_vars () {
 # For KEY: VALUE, value is stored in the shell variable ATTR_*.
 #
 read_config_from_stdin () {
-    local filename=$1
-    local line
-    local varname
-    local value
-    local key
-    local reading_attrs
+    _filename=$1
+    _line=""
+    _varname=""
+    _value=""
+    _key=""
+    _reading_attrs=""
 
-    while read line; do
-	if [ -z "$line" ]; then
-	    reading_attrs=yes
+    while read _line; do
+	if [ -z "$_line" ]; then
+	    _reading_attrs=yes
 	    continue
-	elif [ -z "$reading_attrs" ]; then
-	    case "$line" in
+	elif [ -z "$_reading_attrs" ]; then
+	    case "$_line" in
 		*=*)
-		    varname="${line%%=*}"
-		    value="${line#*=}"
-		    VAR_list="$VAR_list${VAR_list:+ }VAR_$varname"
-		    read VAR_$varname <<EOF1
-$(substitute_vars "$value")
+		    _varname="${_line%%=*}"
+		    _value="${_line#*=}"
+		    VAR_list="$VAR_list${VAR_list:+ }VAR_$_varname"
+		    read VAR_$_varname <<EOF1
+$(substitute_vars "$_value")
 EOF1
 		    continue
 		    ;;
-		*) reading_attrs=yes ;;
+		*) _reading_attrs=yes ;;
 	    esac
 	fi
-	if [ -n "$reading_attrs" ]; then
-	    case "$line" in
+	if [ -n "$_reading_attrs" ]; then
+	    case "$_line" in
 		*:\ *)
-		    key="${line%%:\ *}"
-		    value="${line#*:\ }"
-		    ATTR_list="$ATTR_list${ATTR_list:+ }ATTR_$key"
-		    read ATTR_$key <<EOF2
-$(substitute_vars "$value")
+		    _key="${_line%%:\ *}"
+		    _value="${_line#*:\ }"
+		    ATTR_list="$ATTR_list${ATTR_list:+ }ATTR_$_key"
+		    read ATTR_$_key <<EOF2
+$(substitute_vars "$_value")
 EOF2
 		    ;;
 		*:|*:\ ) ;;
 		*)
-		    echo "Error reading $filename: $line" 1>&2
+		    echo "Error reading $_filename: $_line" 1>&2
 		    exit 1
 		    ;;
 	    esac
@@ -139,31 +138,30 @@ EOF2
 
 
 find_file_in_path () {
-    local f=$1
-    local p=$2
-    local IFS=":"		# On Windows it should be ";"???
+    _f=$1
+    _p=$2
+    _saved_IFS="$IFS"
+    _arg=""
+    IFS=":"		# On Windows it should be ";"???
 
-    for d in $p; do
-	if [ -r $d/$f ]; then
-	    RESULT="$d/$f"
+    for _arg in $_p; do
+	if [ -r $_arg/$_f ]; then
+	    RESULT="$_arg/$_f"
+	    IFS="$_saved_IFS"
 	    return 0
 	fi
     done
+    IFS="$_saved_IFS"
     RESULT=""
     return 1
 }
 
 read_config_file () {
-    local config_file
-    local RESULT
-
-    if find_file_in_path $1.pc $2; then
-	config_file=$RESULT
-    else
+    if ! find_file_in_path $1.pc $2; then
 	echo "Can't find $1.pc" 1>&2
 	exit 1
     fi
-    read_config_from_stdin $config_file < $config_file
+    read_config_from_stdin $RESULT < $RESULT
 }
 
 cleanup_vars_attrs () {
@@ -172,12 +170,12 @@ cleanup_vars_attrs () {
 }
 
 not_listed_yet () {
-    local m=$1
-    local arg
+    ___m=$1
+    ___arg=""
     shift
 
-    for arg; do
-	if [ $m = $arg ]; then
+    for ___arg; do
+	if [ $___m = $___arg ]; then
 	    return 1
 	fi
     done
@@ -186,55 +184,55 @@ not_listed_yet () {
 }
 
 list_only_once () {
-    local result=""
-    local arg
+    __result=""
+    __arg=""
 
-    for arg; do
-	if not_listed_yet $arg $result; then
-	    result="$result${result:+ }$arg"
+    for __arg; do
+	if not_listed_yet $__arg $__result; then
+	    __result="$__result${__result:+ }$__arg"
 	fi
     done
 
-    echo $result
+    echo $__result
 }
 
 list_only_once_for_libs () {
-    local result=""
-    local rev_list=""
-    local arg
+    __result=""
+    __rev_list=""
+    __arg=""
 
     # Scan the list and eliminate duplicates for non-"-lxxx"
     # the resulted list is in reverse order
-    for arg; do
-	case "$arg" in
+    for __arg; do
+	case "$__arg" in
 	    -l*)
 		# As-is
-		rev_list="$arg $rev_list"
+		__rev_list="$__arg${__rev_list:+ }$__rev_list"
 		;;
 	    *)
-		if not_listed_yet $arg $rev_list; then
-		    rev_list="$arg $rev_list"
+		if not_listed_yet $__arg $__rev_list; then
+		    __rev_list="$__arg${__rev_list:+ }$__rev_list"
 		fi
 		;;
 	esac
     done
 
     # Scan again
-    for arg in $rev_list; do
-	case "$arg" in
+    for __arg in $__rev_list; do
+	case "$__arg" in
 	    -l*)
-		if not_listed_yet $arg $result; then
-		    result="$arg $result"
+		if not_listed_yet $__arg $__result; then
+		    __result="$__arg${__result:+ }$__result"
 		fi
 		;;
 	    *)
 		# As-is
-		result="$arg $result"
+		__result="$__arg${__result:+ }$__result"
 		;;
 	esac
     done
 
-    echo $result
+    echo $__result
 }
 
 arg1_is_same () {
@@ -253,100 +251,103 @@ arg1_is_great () {
 # Evaluate comparison between versions in RPM way
 #
 eval_compare_version () {
-    local str1="$1"
-    local cmp="$2"
-    local str2="$3"
-    local char1 char2
-    local chunk1 chunk2
+    ___str1="$1"
+    ___cmp="$2"
+    ___str2="$3"
+    ___char1=""
+    ___char2=""
+    ___chunk1=""
+    ___chunk2=""
 
-    while [ -n "$str1" -a -n "$str2" ]; do
+    while [ -n "$___str1" -a -n "$___str2" ]; do
 	# Trim anything that's not alnum or tilde from the front
-	str1="$(expr "$str1" : '[^0-9A-Za-z~]*\(.*\)')"
-	str2="$(expr "$str2" : '[^0-9A-Za-z~]*\(.*\)')"
+	___str1="$(expr "$___str1" : '[^0-9A-Za-z~]*\(.*\)')"
+	___str2="$(expr "$___str2" : '[^0-9A-Za-z~]*\(.*\)')"
 
 	# Get the first character
-	char1=${str1%${str1#?}}
-	char2=${str2%${str2#?}}
+	___char1=${___str1%${___str1#?}}
+	___char2=${___str2%${___str2#?}}
 
-	if [ "$char1" = ~ -o "$char2" = ~ ]; then
-	    if [ "$char1" != ~ ]; then
-		arg1_is_great $cmp
+	if [ "$___char1" = ~ -o "$___char2" = ~ ]; then
+	    if [ "$___char1" != ~ ]; then
+		arg1_is_great $___cmp
 		return
 	    fi
-	    if [ "$char2" != ~ ]; then
-		arg1_is_less $cmp
+	    if [ "$___char2" != ~ ]; then
+		arg1_is_less $___cmp
 		return
 	    fi
-	    str1=${str1#~}
-	    str2=${str2#~}
+	    ___str1=${___str1#~}
+	    ___str2=${___str2#~}
 	    continue
 	fi
 
-	if [ -z "$char1" -o -z "$char2" ]; then
+	if [ -z "$___char1" -o -z "$___char2" ]; then
 	    break
 	fi
 
-	case "$char1$char2" in
+	case "$___char1$___char2" in
 	    [0-9][A-Za-z])
-		arg1_is_great $cmp
+		arg1_is_great $___cmp
 		return
 		;;
 	    [A-Za-z][0-9])
-		arg1_is_less $cmp
+		arg1_is_less $___cmp
 		return
 		;;
 	    [0-9][0-9])
-		chunk1="$(expr "$str1" : '\([0-9]*\)')"
-		chunk2="$(expr "$str2" : '\([0-9]*\)')"
+		___chunk1="$(expr "$___str1" : '\([0-9]*\)')"
+		___chunk2="$(expr "$___str2" : '\([0-9]*\)')"
 		;;
 	    [A-Za-z][A-Za-z])
-		chunk1="$(expr "$str1" : '\([A-Za-z]*\)')"
-		chunk2="$(expr "$str2" : '\([A-Za-z]*\)')"
+		___chunk1="$(expr "$___str1" : '\([A-Za-z]*\)')"
+		___chunk2="$(expr "$___str2" : '\([A-Za-z]*\)')"
 		;;
 	esac
 
 	# Compare chunks numerically if digits, or lexicographically
-	if expr "$chunk1" "!=" "$chunk2" >/dev/null; then
-	    if expr "$chunk1" ">" "$chunk2" >/dev/null; then
-		arg1_is_great $cmp
+	if expr "$___chunk1" "!=" "$___chunk2" >/dev/null; then
+	    if expr "$___chunk1" ">" "$___chunk2" >/dev/null; then
+		arg1_is_great $___cmp
 		return
 	    else
-		arg1_is_less $cmp
+		arg1_is_less $___cmp
 		return
 	    fi
 	fi
 
 	# Remove the chunk
-	str1="${str1#$chunk1}"
-	str2="${str2#$chunk2}"
+	___str1="${___str1#$___chunk1}"
+	___str2="${___str2#$___chunk2}"
     done
 
     # Either STR1, STR2 or both is empty here
-    if [ -n "$str1" ]; then
-	case "$str1" in
-	    ~*) arg1_is_less $cmp ;;
-	    *)  arg1_is_great $cmp ;;
+    if [ -n "$___str1" ]; then
+	case "$___str1" in
+	    ~*) arg1_is_less $___cmp ;;
+	    *)  arg1_is_great $___cmp ;;
 	esac
-    elif [ -n "$str2" ]; then
-	case "$str2" in
-	    ~*) arg1_is_great $cmp ;;
-	    *)  arg1_is_less $cmp ;;
+    elif [ -n "$___str2" ]; then
+	case "$___str2" in
+	    ~*) arg1_is_great $___cmp ;;
+	    *)  arg1_is_less $___cmp ;;
 	esac
     else
-	arg1_is_same $cmp
+	arg1_is_same $___cmp
     fi
 }
 
 #
 # Recursively solve package dependencies
 #
-# Result is in the pkg_list variable
+# Result is in the PKG_LIST variable
 #
 all_required_config_files () {
-    local list
-    local all_list
-    local new_list
-    local p pkg cmp ver
+    all_list=""
+    new_list=""
+    p=""
+    pkg=""
+    cmp=""
 
     list=$*
     while [ -n "$list" ]; do
@@ -373,8 +374,8 @@ all_required_config_files () {
 		all_list="$all_list${all_list:+ }$pkg"
 		new_list="$new_list${new_list:+ }$(get_attr Requires)"
 		cleanup_vars_attrs
-		pkg=
-		cmp=
+		pkg=""
+		cmp=""
 	    fi
 	done
 	if [ -n "$cmp" ]; then
@@ -382,7 +383,7 @@ all_required_config_files () {
 	    exit 1
 	elif [ -n "$pkg" ]; then
 	    read_config_file $pkg $PKG_CONFIG_PATH
-	    all_list="$all_list $pkg"
+	    all_list="$all_list${all_list:+ }$pkg"
 	    new_list="$new_list${new_list:+ }$(get_attr Requires)"
 	    cleanup_vars_attrs
 	fi
@@ -391,7 +392,7 @@ all_required_config_files () {
 	new_list=""
     done
 
-    pkg_list=$(list_only_once $all_list)
+    PKG_LIST=$(list_only_once $all_list)
 }
 
 #### end of functions for this script
@@ -503,7 +504,7 @@ fi
 
 all_required_config_files $modules
 
-for p in $pkg_list; do
+for p in $PKG_LIST; do
     read_config_file $p $PKG_CONFIG_PATH
     if [ -n "$want_var" ]; then
 	output="$output${output:+$delimiter}$(get_var $want_var)"
