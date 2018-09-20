@@ -432,7 +432,7 @@ else
     shift
 fi
 
-modules=""
+module_list=""
 want_var=""
 want_attr=""
 want_cflags=""
@@ -488,7 +488,7 @@ while test $# -gt 0; do
 	    ;;
 	*)
 	    # Modules
-	    modules="$modules${modules:+ }$1"
+	    module_list="$module_list${module_list:+ }$1"
 	    ;;
     esac
 
@@ -496,13 +496,13 @@ while test $# -gt 0; do
 done
 
 
-if [ -z "$modules" ]; then
-    modules=${myname%-config}
-elif expr match "$modules" "=\|!=\|<\|>\|<=\|>=" >/dev/null; then
-    modules="${myname%-config} $modules"
+if [ -z "$module_list" ]; then
+    module_list=${myname%-config}
+elif expr match "$module_list" "=\|!=\|<\|>\|<=\|>=" >/dev/null; then
+    module_list="${myname%-config} $module_list"
 fi
 
-all_required_config_files $modules
+all_required_config_files $module_list
 
 for p in $PKG_LIST; do
     read_config_file $p $PKG_CONFIG_PATH
