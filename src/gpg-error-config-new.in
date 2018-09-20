@@ -108,7 +108,7 @@ read_config_from_stdin () {
 		*=*)
 		    varname="${line%%=*}"
 		    value="${line#*=}"
-		    VAR_list="$VAR_list VAR_$varname"
+		    VAR_list="$VAR_list${VAR_list:+ }VAR_$varname"
 		    read VAR_$varname <<EOF1
 $(substitute_vars "$value")
 EOF1
@@ -122,7 +122,7 @@ EOF1
 		*:\ *)
 		    key="${line%%:\ *}"
 		    value="${line#*:\ }"
-		    ATTR_list="$ATTR_list ATTR_$key"
+		    ATTR_list="$ATTR_list${ATTR_list:+ }ATTR_$key"
 		    read ATTR_$key <<EOF2
 $(substitute_vars "$value")
 EOF2
@@ -191,7 +191,7 @@ list_only_once () {
 
     for arg; do
 	if not_listed_yet $arg $result; then
-	    result="$result $arg"
+	    result="$result${result:+ }$arg"
 	fi
     done
 
@@ -358,7 +358,7 @@ all_required_config_files () {
 		    "="|"!="|"<"|">"|"<="|">=") cmp=$p ;;
 		    *)
 			read_config_file $pkg $PKG_CONFIG_PATH
-			all_list="$all_list $pkg"
+			all_list="$all_list${all_list:+ }$pkg"
 			new_list="$new_list${new_list:+ }$(get_attr Requires)"
 			cleanup_vars_attrs
 			pkg=$p
@@ -370,7 +370,7 @@ all_required_config_files () {
 		    echo "Version mismatch for $pkg $cmp $p: $(get_attr Version)" 1>&2
 		    exit 1
 		fi
-		all_list="$all_list $pkg"
+		all_list="$all_list${all_list:+ }$pkg"
 		new_list="$new_list${new_list:+ }$(get_attr Requires)"
 		cleanup_vars_attrs
 		pkg=
