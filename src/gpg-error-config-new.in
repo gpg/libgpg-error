@@ -50,7 +50,7 @@ remove_var_expr () {
     ___varname=$1
     shift
 
-    eval echo \"\${@#\\\$\\\{$___varname\\\}}\"
+    expr "$*" : "\${$___varname}\\(.*\\)"
 }
 
 # Given a string, substitute variables.
