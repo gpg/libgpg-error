@@ -94,7 +94,8 @@ canon_host_triplet (const char *triplet, int no_vendor_hack, char **r_os)
     {"i486-pc-linux-gnu", "i686-unknown-linux-gnu" },
     {"i586-pc-linux-gnu" },
     {"i686-pc-linux-gnu" },
-    {"arc-oe-linux-uclibc" }, /* Other CPU but same struct.  */
+    {"arc-oe-linux-gnu"    }, /* Other CPU but same struct.  */
+    {"arc-oe-linux-uclibc" }, /* and uclibc is also the same.  */
 
     {"i486-pc-gnu", "i686-unknown-gnu"},
     {"i586-pc-gnu"},
