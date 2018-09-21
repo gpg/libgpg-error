@@ -312,8 +312,10 @@ parts_of_gpg_error_h = 	 	\
 if FORCE_USE_SYSCFG
 pre_mkheader_cmds = if test -f lock-obj-pub.native.h; \
                     then rm lock-obj-pub.native.h; fi
+mkheader_opts = --cross
 else
 pre_mkheader_cmds = :
+mkheader_opts =
 parts_of_gpg_error_h += ./lock-obj-pub.native.h
 
 ./lock-obj-pub.native.h: Makefile gen-posix-lock-obj$(EXEEXT) posix-lock-obj.h
@@ -325,7 +327,8 @@ endif
 gpg-error.h: Makefile mkheader$(EXEEXT_FOR_BUILD) $(parts_of_gpg_error_h) \
              versioninfo.rc ../config.h
 	$(pre_mkheader_cmds)
-	./mkheader$(EXEEXT_FOR_BUILD) $(host_triplet)  $(srcdir)/gpg-error.h.in \
+	./mkheader$(EXEEXT_FOR_BUILD) $(mkheader_opts)       \
+                   $(host_triplet)  $(srcdir)/gpg-error.h.in \
                    ../config.h $(PACKAGE_VERSION) $(VERSION_NUMBER) >$@
 
 gpgrt.h: gpg-error.h

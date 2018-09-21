@@ -27,6 +27,7 @@ static char *host_os;      /* points into host_triplet.  */
 static char *srcdir;
 static const char *hdr_version;
 static const char *hdr_version_number;
+static int cross_building; /* Command line flag.  */
 
 /* Values take from the supplied config.h.  */
 static int have_stdint_h;
@@ -611,7 +612,11 @@ write_special (const char *fname, int lnr, const char *tag)
     }
   else if (!strcmp (tag, "include:lock-obj"))
     {
-      if (try_include_file (fname, lnr, "./lock-obj-pub.native.h", write_line))
+      /* If we are not cross compiling and the native file exists we
+       * prefer that over one from syscfg.  */
+      if (cross_building
+          || try_include_file (fname, lnr,
+                               "./lock-obj-pub.native.h", write_line))
         include_file (fname, lnr, "syscfg/lock-obj-pub.&.h", write_line);
     }
   else
@@ -634,6 +639,11 @@ main (int argc, char **argv)
 
   if (argc)
     {
+      argc--; argv++;
+    }
+  if (argc && !strcmp (argv[0], "--cross"))
+    {
+      cross_building = 1;
       argc--; argv++;
     }
 
