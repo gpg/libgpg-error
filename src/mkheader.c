@@ -22,8 +22,8 @@
 
 #define LINESIZE 1024
 
-static const char *host_os;
-static char *host_triplet;
+static char *host_triplet; /* malloced.  */
+static char *host_os;      /* points into host_triplet.  */
 static char *srcdir;
 static const char *hdr_version;
 static const char *hdr_version_number;
@@ -78,12 +78,13 @@ xstrdup (const char *string)
 
 
 /* Return a malloced string with TRIPLET.  If TRIPLET has an alias
-   return that instead.  In general build-aux/config.sub should do the
-   aliasing but some returned triplets are anyway identical and thus
-   we use this function to map it to the canonical form.
-   NO_VENDOR_HACK is for internal use; caller must call with 0. */
+ * return that instead.  In general build-aux/config.sub should do the
+ * aliasing but some returned triplets are anyway identical and thus
+ * we use this function to map it to the canonical form.  A pointer to
+ * the OS part of the returned value is stored at R_OS.
+ * NO_VENDOR_HACK is for internal use; caller must call with 0. */
 static char *
-canon_host_triplet (const char *triplet, int no_vendor_hack)
+canon_host_triplet (const char *triplet, int no_vendor_hack, char **r_os)
 {
   struct {
     const char *name;
@@ -117,6 +118,8 @@ canon_host_triplet (const char *triplet, int no_vendor_hack)
   int i;
   const char *lastalias = NULL;
   const char *s;
+  char *p;
+  char *result;
 
   for (i=0; tbl[i].name; i++)
     {
@@ -126,7 +129,8 @@ canon_host_triplet (const char *triplet, int no_vendor_hack)
         {
           if (!lastalias)
             break; /* Ooops: first entry has no alias.  */
-          return xstrdup (lastalias);
+          result = xstrdup (lastalias);
+          goto leave;
         }
     }
   for (i=0, s=triplet; *s; s++)
@@ -139,7 +143,6 @@ canon_host_triplet (const char *triplet, int no_vendor_hack)
        * The VENDOR part is then in general useless because
        * KERNEL-SYSTEM is specific enough.  We now do a second pass by
        * replacing VENDOR with "unknown".  */
-      char *p;
       char *buf = xmalloc (strlen (triplet) + 7 + 1);
 
       for (p=buf,s=triplet,i=0; *s; s++)
@@ -154,12 +157,26 @@ canon_host_triplet (const char *triplet, int no_vendor_hack)
             }
         }
       *p = 0;
-      p = canon_host_triplet (buf, 1);
+      result = canon_host_triplet (buf, 1, NULL);
       xfree (buf);
-      return p;
+      goto leave;
     }
 
-  return xstrdup (triplet);
+  result = xstrdup (triplet);
+ leave:
+  /* Find the OS part.  */
+  if (r_os)
+    {
+      *r_os = result + strlen (result); /* Default to the empty string.  */
+      for (i=0, p=result; *p; p++)
+        if (*p == '-' && ++i == 2)
+          {
+            *r_os = p+1;
+            break;
+          }
+    }
+
+  return result;
 }
 
 
@@ -176,7 +193,7 @@ parse_config_h (const char *fname)
   fp = fopen (fname, "r");
   if (!fp)
     {
-      fprintf (stderr, "%s:%d: can't open file: %s",
+      fprintf (stderr, "%s:%d: can't open file: %s\n",
                fname, lnr, strerror (errno));
       return 1;
     }
@@ -623,30 +640,28 @@ main (int argc, char **argv)
   if (argc == 1)
     {
       /* Print just the canonicalized host triplet.  */
-      host_triplet = canon_host_triplet (argv[0], 0);
+      host_triplet = canon_host_triplet (argv[0], 0, &host_os);
       printf ("%s\n", host_triplet);
       goto leave;
     }
-  else if (argc == 6)
+  else if (argc == 5)
     ; /* Standard operation.  */
   else
     {
       fputs ("usage: " PGM
-             " host_os host_triplet template.h config.h"
-             " version version_number\n"
+             " host_triplet template.h config.h version version_number\n"
              "       " PGM
              " host_triplet\n",
              stderr);
       return 1;
     }
-  host_os = argv[0];
-  host_triplet_raw = argv[1];
-  fname = argv[2];
-  config_h = argv[3];
-  hdr_version = argv[4];
-  hdr_version_number = argv[5];
+  host_triplet_raw = argv[0];
+  fname = argv[1];
+  config_h = argv[2];
+  hdr_version = argv[3];
+  hdr_version_number = argv[4];
 
-  host_triplet = canon_host_triplet (host_triplet_raw, 0);
+  host_triplet = canon_host_triplet (host_triplet_raw, 0, &host_os);
 
   srcdir = malloc (strlen (fname) + 2 + 1);
   if (!srcdir)
@@ -667,7 +682,7 @@ main (int argc, char **argv)
   fp = fopen (fname, "r");
   if (!fp)
     {
-      fprintf (stderr, "%s:%d: can't open file: %s",
+      fprintf (stderr, "%s:%d: can't open file: %s\n",
                fname, lnr, strerror (errno));
       return 1;
     }

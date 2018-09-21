@@ -325,7 +325,7 @@ endif
 gpg-error.h: Makefile mkheader$(EXEEXT_FOR_BUILD) $(parts_of_gpg_error_h) \
              versioninfo.rc ../config.h
 	$(pre_mkheader_cmds)
-	./mkheader$(EXEEXT_FOR_BUILD) $(host_os) $(host_triplet)  $(srcdir)/gpg-error.h.in \
+	./mkheader$(EXEEXT_FOR_BUILD) $(host_triplet)  $(srcdir)/gpg-error.h.in \
                    ../config.h $(PACKAGE_VERSION) $(VERSION_NUMBER) >$@
 
 gpgrt.h: gpg-error.h
