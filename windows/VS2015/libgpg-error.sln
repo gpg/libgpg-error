@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 12.0.30501.0
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgpglib-error", "libgpglib-error.vcxproj", "{A04A762D-A8D7-4F68-9B79-FBE63C6BE105}"
+	ProjectSection(ProjectDependencies) = postProject
+		{90BC19D8-3074-4BB6-BE35-58D46113CBE8} = {90BC19D8-3074-4BB6-BE35-58D46113CBE8}
+		{1B4E62F7-3437-48D5-AAB2-CBBE3DE513ED} = {1B4E62F7-3437-48D5-AAB2-CBBE3DE513ED}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pre-build utilities", "pre-build utilities", "{6E006064-02E2-4184-B9EE-D2F277A357D0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mkerrcodes", "mkerrcodes.vcxproj", "{90BC19D8-3074-4BB6-BE35-58D46113CBE8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mkheader", "mkheader.vcxproj", "{1B4E62F7-3437-48D5-AAB2-CBBE3DE513ED}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgpgdll-error", "libgpgdll-error.vcxproj", "{19E2A69B-5D76-48F4-8900-A1E3C68F0DBF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A04A762D-A8D7-4F68-9B79-FBE63C6BE105} = {A04A762D-A8D7-4F68-9B79-FBE63C6BE105}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A04A762D-A8D7-4F68-9B79-FBE63C6BE105}.Debug|x64.ActiveCfg = Debug|x64
+		{A04A762D-A8D7-4F68-9B79-FBE63C6BE105}.Debug|x64.Build.0 = Debug|x64
+		{A04A762D-A8D7-4F68-9B79-FBE63C6BE105}.Debug|x86.ActiveCfg = Debug|Win32
+		{A04A762D-A8D7-4F68-9B79-FBE63C6BE105}.Debug|x86.Build.0 = Debug|Win32
+		{A04A762D-A8D7-4F68-9B79-FBE63C6BE105}.Release|x64.ActiveCfg = Release|x64
+		{A04A762D-A8D7-4F68-9B79-FBE63C6BE105}.Release|x64.Build.0 = Release|x64
+		{A04A762D-A8D7-4F68-9B79-FBE63C6BE105}.Release|x86.ActiveCfg = Release|Win32
+		{A04A762D-A8D7-4F68-9B79-FBE63C6BE105}.Release|x86.Build.0 = Release|Win32
+		{90BC19D8-3074-4BB6-BE35-58D46113CBE8}.Debug|x64.ActiveCfg = Debug|x64
+		{90BC19D8-3074-4BB6-BE35-58D46113CBE8}.Debug|x86.ActiveCfg = Debug|Win32
+		{90BC19D8-3074-4BB6-BE35-58D46113CBE8}.Release|x64.ActiveCfg = Release|x64
+		{90BC19D8-3074-4BB6-BE35-58D46113CBE8}.Release|x86.ActiveCfg = Release|Win32
+		{1B4E62F7-3437-48D5-AAB2-CBBE3DE513ED}.Debug|x64.ActiveCfg = Debug|x64
+		{1B4E62F7-3437-48D5-AAB2-CBBE3DE513ED}.Debug|x86.ActiveCfg = Debug|Win32
+		{1B4E62F7-3437-48D5-AAB2-CBBE3DE513ED}.Release|x64.ActiveCfg = Release|x64
+		{1B4E62F7-3437-48D5-AAB2-CBBE3DE513ED}.Release|x86.ActiveCfg = Release|Win32
+		{19E2A69B-5D76-48F4-8900-A1E3C68F0DBF}.Debug|x64.ActiveCfg = Debug|x64
+		{19E2A69B-5D76-48F4-8900-A1E3C68F0DBF}.Debug|x64.Build.0 = Debug|x64
+		{19E2A69B-5D76-48F4-8900-A1E3C68F0DBF}.Debug|x86.ActiveCfg = Debug|Win32
+		{19E2A69B-5D76-48F4-8900-A1E3C68F0DBF}.Debug|x86.Build.0 = Debug|Win32
+		{19E2A69B-5D76-48F4-8900-A1E3C68F0DBF}.Release|x64.ActiveCfg = Release|x64
+		{19E2A69B-5D76-48F4-8900-A1E3C68F0DBF}.Release|x64.Build.0 = Release|x64
+		{19E2A69B-5D76-48F4-8900-A1E3C68F0DBF}.Release|x86.ActiveCfg = Release|Win32
+		{19E2A69B-5D76-48F4-8900-A1E3C68F0DBF}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{90BC19D8-3074-4BB6-BE35-58D46113CBE8} = {6E006064-02E2-4184-B9EE-D2F277A357D0}
+		{1B4E62F7-3437-48D5-AAB2-CBBE3DE513ED} = {6E006064-02E2-4184-B9EE-D2F277A357D0}
+	EndGlobalSection
+EndGlobal
