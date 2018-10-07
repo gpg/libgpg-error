@@ -40,6 +40,12 @@
 #include <io.h>
 #include <windows.h>
 
+#ifdef _WIN64
+typedef __int64 ssize_t;
+#else
+typedef int     ssize_t;
+#endif
+
 /* Enable tracing.  The value is the module name to be printed.  */
 /*#define ENABLE_TRACING "estream" */
 

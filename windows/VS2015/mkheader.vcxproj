@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\mkheader.c" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1B4E62F7-3437-48D5-AAB2-CBBE3DE513ED}</ProjectGuid>
+    <RootNamespace>mkheader</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectRoot>$(WINBUILDS_ROOT)</ProjectRoot>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)\..\..\src\</OutDir>
+    <IntDir>$(WINBUILDS_ROOT)build_msvc14_$(Platform)/$(Configuration)/obj/$(ProjectName)/</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(WINBUILDS_ROOT)build_msvc14_$(Platform)/$(Configuration)/obj/$(ProjectName)/</IntDir>
+    <OutDir>$(SolutionDir)\..\..\src\</OutDir>
+    <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)\..\..\src\</OutDir>
+    <IntDir>$(WINBUILDS_ROOT)build_msvc14_$(Platform)/$(Configuration)/obj/$(ProjectName)/</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(WINBUILDS_ROOT)build_msvc14_$(Platform)/$(Configuration)/obj/$(ProjectName)/</IntDir>
+    <OutDir>$(SolutionDir)\..\..\src\</OutDir>
+    <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Command>mkdir "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg"
+awk -f ../../src/mkstrtable.awk -v textidx=3 ../../src/err-sources.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-sources.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 ../../src/err-sources.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-sources-sym.h"
+awk -f ../../src/mkstrtable.awk -v textidx=3 ../../src/err-codes.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-codes.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 ../../src/err-codes.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-codes-sym.h"
+awk -f ../../src/mkerrnos.awk ../../src/errnos.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\code-to-errno.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 -v prefix=GPG_ERR_ -v namespace=errnos_ ../../src/errnos.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\errnos-sym.h"
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4244;4819;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName).exe</OutputFile>
+      <ProgramDatabaseFile>$(OutDir)mkheader.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir inc\syscfg
+copy ..\..\src\gpg-error.h.in inc\gpg-error.h.in
+copy ..\..\src\err-sources.h.in inc\err-sources.h.in
+copy ..\..\src\err-codes.h.in inc\err-codes.h.in
+copy ..\..\src\errnos.in inc\errnos.in
+copy ..\..\src\w32-add.h inc\w32-add.h
+copy ..\..\src\syscfg\lock-obj-pub.mingw32.h inc\syscfg\lock-obj-pub.mingw32.h
+cd inc
+..\..\..\src\mkheader.exe "mingw32" "win32-msvc" "gpg-error.h.in" ../../config.h "1.32" "0x012000" &gt; gpg-error.h
+del *.in
+del w32-add.h
+rm -r syscfg
+copy /Y * "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg"
+cd ..
+rm -r inc
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PreBuildEvent>
+      <Command>mkdir "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg"
+awk -f ../../src/mkstrtable.awk -v textidx=3 ../../src/err-sources.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-sources.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 ../../src/err-sources.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-sources-sym.h"
+awk -f ../../src/mkstrtable.awk -v textidx=3 ../../src/err-codes.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-codes.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 ../../src/err-codes.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-codes-sym.h"
+awk -f ../../src/mkerrnos.awk ../../src/errnos.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\code-to-errno.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 -v prefix=GPG_ERR_ -v namespace=errnos_ ../../src/errnos.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\errnos-sym.h"
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4244;4819;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName).exe</OutputFile>
+      <ProgramDatabaseFile>$(OutDir)mkheader.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir inc\syscfg
+copy ..\..\src\gpg-error.h.in inc\gpg-error.h.in
+copy ..\..\src\err-sources.h.in inc\err-sources.h.in
+copy ..\..\src\err-codes.h.in inc\err-codes.h.in
+copy ..\..\src\errnos.in inc\errnos.in
+copy ..\..\src\w32-add.h inc\w32-add.h
+copy ..\..\src\syscfg\lock-obj-pub.mingw32.h inc\syscfg\lock-obj-pub.mingw32.h
+cd inc
+..\..\..\src\mkheader.exe "mingw32" "win32-msvc" "gpg-error.h.in" ../../config.h "1.32" "0x012000" &gt; gpg-error.h
+del *.in
+del w32-add.h
+rm -r syscfg
+copy /Y * "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg"
+cd ..
+rm -r inc
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Command>mkdir "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg"
+awk -f ../../src/mkstrtable.awk -v textidx=3 ../../src/err-sources.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-sources.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 ../../src/err-sources.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-sources-sym.h"
+awk -f ../../src/mkstrtable.awk -v textidx=3 ../../src/err-codes.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-codes.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 ../../src/err-codes.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-codes-sym.h"
+awk -f ../../src/mkerrnos.awk ../../src/errnos.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\code-to-errno.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 -v prefix=GPG_ERR_ -v namespace=errnos_ ../../src/errnos.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\errnos-sym.h"
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4244;4819;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName).exe</OutputFile>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir inc\syscfg
+copy ..\..\src\gpg-error.h.in inc\gpg-error.h.in
+copy ..\..\src\err-sources.h.in inc\err-sources.h.in
+copy ..\..\src\err-codes.h.in inc\err-codes.h.in
+copy ..\..\src\errnos.in inc\errnos.in
+copy ..\..\src\w32-add.h inc\w32-add.h
+copy ..\..\src\syscfg\lock-obj-pub.mingw32.h inc\syscfg\lock-obj-pub.mingw32.h
+cd inc
+..\..\..\src\mkheader.exe "mingw32" "win32-msvc" "gpg-error.h.in" ../../config.h "1.32" "0x012000" &gt; gpg-error.h
+del *.in
+del w32-add.h
+rm -r syscfg
+copy /Y * "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg"
+cd ..
+rm -r inc
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PreBuildEvent>
+      <Command>mkdir "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg"
+awk -f ../../src/mkstrtable.awk -v textidx=3 ../../src/err-sources.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-sources.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 ../../src/err-sources.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-sources-sym.h"
+awk -f ../../src/mkstrtable.awk -v textidx=3 ../../src/err-codes.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-codes.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 ../../src/err-codes.h.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\err-codes-sym.h"
+awk -f ../../src/mkerrnos.awk ../../src/errnos.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\code-to-errno.h"
+awk -f ../../src/mkstrtable.awk -v textidx=2 -v nogettext=1 -v prefix=GPG_ERR_ -v namespace=errnos_ ../../src/errnos.in &gt; "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg\errnos-sym.h"
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4244;4819;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName).exe</OutputFile>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir inc\syscfg
+copy ..\..\src\gpg-error.h.in inc\gpg-error.h.in
+copy ..\..\src\err-sources.h.in inc\err-sources.h.in
+copy ..\..\src\err-codes.h.in inc\err-codes.h.in
+copy ..\..\src\errnos.in inc\errnos.in
+copy ..\..\src\w32-add.h inc\w32-add.h
+copy ..\..\src\syscfg\lock-obj-pub.mingw32.h inc\syscfg\lock-obj-pub.mingw32.h
+cd inc
+..\..\..\src\mkheader.exe "mingw32" "win32-msvc" "gpg-error.h.in" ../../config.h "1.32" "0x012000" &gt; gpg-error.h
+del *.in
+del w32-add.h
+rm -r syscfg
+copy /Y * "$(WINBUILDS_ROOT)build_msvc14_$(Platform)\$(Configuration)\include\libgpg"
+cd ..
+rm -r inc
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

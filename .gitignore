@@ -41,6 +41,9 @@ src/err-sources.h
 /src/mkerrcodes.h
 /src/mkw32errmap.map.c
 /src/versioninfo.rc
+/src/*.exe
+/src/*.ilk
+/src/*.pdb
 /stamp-h1
 /tests/Makefile
 /tests/t-strerror
@@ -49,3 +52,5 @@ src/err-sources.h
 /doc/stamp-vti
 /doc/version.texi
 /VERSION
+*.lnk
+*.url

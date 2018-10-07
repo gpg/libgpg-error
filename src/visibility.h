@@ -21,6 +21,10 @@
 #ifndef _GPGRT_VISIBILITY_H
 #define _GPGRT_VISIBILITY_H
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 /* Include the main header here so that public symbols are mapped to
    the internal underscored ones.  */
 #ifdef _GPGRT_INCL_BY_VISIBILITY_C
