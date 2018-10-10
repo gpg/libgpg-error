@@ -395,6 +395,29 @@ all_required_config_files () {
     PKG_LIST=$(list_only_once $all_list)
 }
 
+#
+# Modify -I or -L by PKG_CONFIG_SYSROOT_DIR variable
+#
+sysroot () {
+    _opt="$1"
+    _result=""
+    shift
+
+    while [ $# -gt 0 ]; do
+	if [ $1 = $_opt ]; then
+	    _result="$_result${_result:+ }$_opt"
+	    shift
+	    _result="$_result $PKG_CONFIG_SYSROOT_DIR$1"
+	elif expr "$1" : "^$_opt" >/dev/null; then
+	    _result="$_result${_result:+ }$_opt$PKG_CONFIG_SYSROOT_DIR$(expr "$1" : "^$_opt\(.*\)")"
+	else
+	    _result="$_result${_result:+ }$1"
+	fi
+	shift
+    done
+    echo "$_result"
+}
+
 #### end of functions for this script
 
 myname=${0##*/}
@@ -445,6 +468,13 @@ mtlibs=""
 
 delimiter=" "
 output=""
+
+VAR_list=VAR_pc_sysrootdir
+if [ -z "$PKG_CONFIG_SYSROOT_DIR" ]; then
+    VAR_pc_sysrootdir="/"
+else
+    VAR_pc_sysrootdir="$PKG_CONFIG_SYSROOT_DIR"
+fi
 
 while test $# -gt 0; do
     case $1 in
@@ -524,14 +554,14 @@ done
 
 if [ -z "$want_var" -a -z "$want_attr" ]; then
     if [ -n "$want_cflags" ]; then
-	output="$output${output:+ }$(list_only_once $cflags)"
+	output="$output${output:+ }$(sysroot -I $(list_only_once $cflags))"
 	# Backward compatibility to old gpg-error-config
 	if [ $mt = yes -a -n "$mtcflags" ]; then
 	    output="$output${output:+ }$mtcflags"
 	fi
     fi
     if [ -n "$want_libs" ]; then
-	output="$output${output:+ }$(list_only_once_for_libs $libs)"
+	output="$output${output:+ }$(sysroot -L $(list_only_once_for_libs $libs))"
 	# Backward compatibility to old gpg-error-config
 	if [ $mt = yes -a -n "$mtlibs" ]; then
 	    output="$output${output:+ }$mtlibs"

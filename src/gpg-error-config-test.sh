@@ -7,6 +7,8 @@ export PKG_CONFIG_PATH
 if [ "$1" = --old-new ]; then
     PKG_CONFIG_CMD=./gpg-error-config-old
 else
+    PKG_CONFIG_SYSROOT_DIR="/var/example-target"
+    export PKG_CONFIG_SYSROOT_DIR
     PKG_CONFIG_CMD="pkg-config gpg-error"
     if ! $PKG_CONFIG_CMD --exists >/dev/null; then
 	exit 77			# Skip tests
