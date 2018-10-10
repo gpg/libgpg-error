@@ -88,7 +88,7 @@ nodist_bin_SCRIPTS = gpgrt-config
 m4datadir = $(datadir)/aclocal
 m4data_DATA = gpg-error.m4 gpgrt.m4
 
-pkgconfigdir = $(datadir)/pkgconfig
+pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gpg-error.pc
 
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \

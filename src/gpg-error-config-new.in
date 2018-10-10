@@ -11,9 +11,9 @@
 # SPDX-License-Identifier: FSFULLR
 
 prefix=@prefix@
-datarootdir=@datarootdir@
-datadir=@datadir@
-PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}${datadir}/pkgconfig"
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}${libdir}/pkgconfig"
 #
 
 #### start of functions for this script
