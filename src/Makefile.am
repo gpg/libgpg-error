@@ -45,6 +45,7 @@ endif
 # Distributed lock object definitions for cross compilation.
 lock_obj_pub = \
         syscfg/lock-obj-pub.aarch64-unknown-linux-gnu.h     \
+        syscfg/lock-obj-pub.aarch64-unknown-linux-gnu_ilp32.h \
 	syscfg/lock-obj-pub.aarch64-apple-darwin.h          \
         syscfg/lock-obj-pub.alpha-unknown-linux-gnu.h       \
         syscfg/lock-obj-pub.arm-unknown-linux-androideabi.h \
