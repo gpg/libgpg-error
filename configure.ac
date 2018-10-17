@@ -651,6 +651,8 @@ AC_ARG_ENABLE([tests], AC_HELP_STRING([--disable-tests],
                      build_tests=$enableval, build_tests=yes)
 AM_CONDITIONAL([BUILD_TESTS], [test "x$build_tests" != xno])
 
+pkg_config_libdir=$libdir/pkgconfig
+AC_SUBST(pkg_config_libdir)
 #
 # Substitution
 #

@@ -12,8 +12,8 @@
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
-libdir=${PKG_CONFIG_LIBDIR:-@libdir@}
-PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}${libdir}/pkgconfig"
+pkg_config_libdir=${PKG_CONFIG_LIBDIR:-@pkg_config_libdir@}
+PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}$pkg_config_libdir"
 #
 
 #### start of functions for this script
