@@ -13,6 +13,19 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 pkg_config_libdir=${PKG_CONFIG_LIBDIR:-@pkg_config_libdir@}
+if [ "$pkg_config_libdir" = auto ]; then
+    # "auto" supports multiarch environment
+    triplet=""
+    case "$CC" in
+	*-*-*) triplet=${CC%-*} ;;
+	*) ;;
+    esac
+    if [ -z "$triplet" ]; then
+	triplet=$(gcc -dumpmachine)
+    fi
+    pkg_config_libdir=@exec_prefix@/lib/$triplet/pkgconfig
+    unset triplet
+fi
 PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}$pkg_config_libdir"
 #
 

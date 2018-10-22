@@ -651,7 +651,13 @@ AC_ARG_ENABLE([tests], AC_HELP_STRING([--disable-tests],
                      build_tests=$enableval, build_tests=yes)
 AM_CONDITIONAL([BUILD_TESTS], [test "x$build_tests" != xno])
 
-pkg_config_libdir=$libdir/pkgconfig
+if expr $libdir : "/$host\$" >/dev/null; then
+  # Looks like it's multiarch, then,
+  # let the script detect host architecture at runtime
+  pkg_config_libdir=auto
+else
+  pkg_config_libdir=$libdir/pkgconfig
+fi
 AC_SUBST(pkg_config_libdir)
 #
 # Substitution
