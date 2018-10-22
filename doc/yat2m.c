@@ -357,7 +357,7 @@ ascii_strupr (char *string)
 const char *
 isodatestring (void)
 {
-  static char buffer[11+5];
+  static char buffer[36];
   struct tm *tp;
   time_t atime;
 
