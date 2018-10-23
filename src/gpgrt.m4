@@ -73,7 +73,7 @@ AC_DEFUN([AM_PATH_GPGRT],
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)/\1/'`
     req_minor=`echo $min_gpgrt_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)/\2/'`
-    gpgrt_config_version=`$GPGRT_CONFIG $gpgrt_config_args --version`
+    gpgrt_config_version=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --version`
     major=`echo $gpgrt_config_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\).*/\1/'`
     minor=`echo $gpgrt_config_version | \
@@ -89,13 +89,15 @@ AC_DEFUN([AM_PATH_GPGRT],
     fi
   fi
   if test $ok = yes; then
-    GPGRT_CFLAGS=`$GPGRT_CONFIG $gpgrt_config_args --cflags`
-    GPGRT_LIBS=`$GPGRT_CONFIG $gpgrt_config_args --libs`
-    GPGRT_MT_CFLAGS=`$GPGRT_CONFIG $gpgrt_config_args --mt --cflags 2>/dev/null`
-    GPGRT_MT_LIBS=`$GPGRT_CONFIG $gpgrt_config_args --mt --libs 2>/dev/null`
+    GPGRT_CFLAGS=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --cflags`
+    GPGRT_LIBS=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --libs`
+    GPGRT_MT_CFLAGS=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --mtcflags 2>/dev/null`
+    GPGRT_MT_CFLAGS="$GPGRT_CFLAGS${GPGRT_CFLAGS:+ }$GPGRT_MT_CFLAGS"
+    GPGRT_MT_LIBS=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --mtlibs 2>/dev/null`
+    GPGRT_MT_LIBS="$GPGRT_LIBS${GPGRT_LIBS:+ }$GPGRT_MT_LIBS"
     AC_MSG_RESULT([yes ($gpgrt_config_version)])
     ifelse([$2], , :, [$2])
-    gpgrt_config_host=`$GPGRT_CONFIG $gpgrt_config_args --host 2>/dev/null || echo none`
+    gpgrt_config_host=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --variable=host 2>/dev/null || echo none`
     if test x"$gpgrt_config_host" != xnone ; then
       if test x"$gpgrt_config_host" != x"$host" ; then
   AC_MSG_WARN([[
