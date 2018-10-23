@@ -12,21 +12,48 @@
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
-pkg_config_libdir=${PKG_CONFIG_LIBDIR:-@pkg_config_libdir@}
-if [ "$pkg_config_libdir" = auto ]; then
-    # "auto" supports multiarch environment
+pkg_config_libdir=@pkg_config_libdir@
+if [ x"${PKG_CONFIG_LIBDIR+set}" = x ]; then
+    # If PKG_CONFIG_LIBDIR is not specified, detect the directory.
+
+    # We supports standard cross build with $CC
     triplet=""
     case "$CC" in
 	*-*-*) triplet=${CC%-*} ;;
 	*) ;;
     esac
-    if [ -z "$triplet" ]; then
-	triplet=$(gcc -dumpmachine)
+    if [ "$pkg_config_libdir" = auto ]; then
+	# It's multiarch environment.
+	# It may be standard cross build, native multiarch build, or
+	# multiarch-cross build
+	multiarch=""
+	if [ -n "$triplet" ]; then
+	    triplet1=$triplet
+	else
+	    triplet1=$(gcc -dumpmachine)
+	fi
+	# Follow existing practice for multiarch name
+	if expr $triplet1 : "^i[4567]86-" >/dev/null; then
+	    multiarch="i386-${triplet1#*-}"
+	else
+	    multiarch=$triplet1
+	fi
+	if [ -n "$triplet" ]; then
+	    PKG_CONFIG_LIBDIR="@exec_prefix@/$triplet/lib/pkgconfig:@exec_prefix@/lib/$multiarch/pkgconfig"
+	else
+	    PKG_CONFIG_LIBDIR="@exec_prefix@/lib/$multiarch/pkgconfig"
+	fi
+	unset multiarch triplet1
+    elif [ -n "$triplet" ]; then
+	# It's cross build
+	PKG_CONFIG_LIBDIR="@exec_prefix@/$triplet/lib/pkgconfig"
+    else
+	# Native build in standard (non-multiarch) environment
+	PKG_CONFIG_LIBDIR="$pkg_config_libdir"
     fi
-    pkg_config_libdir=@exec_prefix@/lib/$triplet/pkgconfig
     unset triplet
 fi
-PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}$pkg_config_libdir"
+PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}$PKG_CONFIG_LIBDIR"
 #
 
 #### start of functions for this script

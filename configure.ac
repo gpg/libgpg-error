@@ -651,7 +651,7 @@ AC_ARG_ENABLE([tests], AC_HELP_STRING([--disable-tests],
                      build_tests=$enableval, build_tests=yes)
 AM_CONDITIONAL([BUILD_TESTS], [test "x$build_tests" != xno])
 
-if expr $libdir : "/$host\$" >/dev/null; then
+if expr $libdir : ".*/$host_alias\$" >/dev/null; then
   # Looks like it's multiarch, then,
   # let the script detect host architecture at runtime
   pkg_config_libdir=auto
