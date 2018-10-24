@@ -63,6 +63,7 @@ while test $# -gt 0; do
         --exec-prefix)
 	    output="$output $exec_prefix"
 	    ;;
+        --modversion)
         --version)
             echo "@PACKAGE_VERSION@"
 	    exit 0
