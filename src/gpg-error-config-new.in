@@ -576,10 +576,13 @@ all_required_config_files $module_list
 
 for p in $PKG_LIST; do
     read_config_file $p $PKG_CONFIG_PATH
+    # For want_var or want_attr, get it from the first package
     if [ -n "$want_var" ]; then
-	output="$output${output:+$delimiter}$(get_var $want_var)"
+	output="$(get_var $want_var)"
+	break
     elif [ -n "$want_attr" ]; then
-	output="$output${output:+$delimiter}$(get_attr $want_attr)"
+	output="$(get_attr $want_attr)"
+	break
     else
 	cflags="$cflags${cflags:+ }$(get_attr Cflags)"
 	libs="$libs${libs:+ }$(get_attr Libs)"
