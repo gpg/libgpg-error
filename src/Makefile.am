@@ -84,8 +84,7 @@ lock_obj_pub = \
 
 lib_LTLIBRARIES = libgpg-error.la
 nodist_include_HEADERS = gpg-error.h gpgrt.h
-bin_SCRIPTS = gpg-error-config
-nodist_bin_SCRIPTS = gpgrt-config
+bin_SCRIPTS = gpgrt-config gpg-error-config
 m4datadir = $(datadir)/aclocal
 m4data_DATA = gpg-error.m4 gpgrt.m4
 
@@ -99,18 +98,18 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 gpgrt.m4 \
 	gpg-error.vers gpg-error.def.in \
         versioninfo.rc.in gpg-error.w32-manifest.in \
-	gpg-error-config-new.in gpg-error-config-test.sh gpg-error.pc.in \
+	gpgrt-config.in gpg-error-config-test.sh gpg-error.pc.in \
 	$(lock_obj_pub)
 
 BUILT_SOURCES = $(srcdir)/err-sources.h $(srcdir)/err-codes.h \
 	code-to-errno.h code-from-errno.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h gpgrt.h \
-	gpgrt-config gpg-error.def mkw32errmap.map.c
+	gpg-error.def mkw32errmap.map.c
 
 tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h mkw32errmap.map.c
 
 CLEANFILES = code-to-errno.h code-from-errno.h \
-	gpg-error.h gpgrt.h gpgrt-config \
+	gpg-error.h gpgrt.h \
         mkerrcodes$(EXEEXT_FOR_BUILD) mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
 	gpg-extra/errno.h mkheader$(EXEEXT_FOR_BUILD) \
@@ -335,19 +334,15 @@ gpg-error.h: Makefile mkheader$(EXEEXT_FOR_BUILD) $(parts_of_gpg_error_h) \
 gpgrt.h: gpg-error.h
 	cp gpg-error.h gpgrt.h
 
-gpgrt-config: gpg-error-config
-	cp gpg-error-config gpgrt-config
-
-gpg-error-config: gpg-error-config-new gpg-error-config-old
+gpg-error-config: gpgrt-config gpg-error-config-old
 	@echo $(ECHO_N) "Confirm gpg-error-config works... $(ECHO_C)"
 	@if $(srcdir)/gpg-error-config-test.sh --old-new; then \
 	  echo "good";                                         \
-	  cp gpg-error-config-new $@;                          \
 	else                                                   \
 	  echo "no";                                           \
 	  echo "***  Please report to <https://bugs.gnupg.org> with gpg-error-config-test.log"; \
-	  cp gpg-error-config-old $@;                          \
 	fi
+	cp gpg-error-config-old $@
 
 install-data-local:
 if HAVE_W32CE_SYSTEM
