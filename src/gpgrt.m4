@@ -1,5 +1,5 @@
 # gpgrt.m4 - autoconf macro to detect libgpgrt
-# Copyright (C) 2002, 2003, 2004, 2011, 2014, 2017 g10 Code GmbH
+# Copyright (C) 2002, 2003, 2004, 2011, 2014, 2017, 2018 g10 Code GmbH
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -10,16 +10,16 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # SPDX-License-Identifier: FSFULLR
 #
-# Last-changed: 2014-10-02
-# Note: This is a duplicate of gpg-error.m4 with uses the future name
-# of libgpg-error to prepare for a smooth migration in some distant
-# time.
+# Last-changed: 2018-10-25
+# Note: This is a kind of duplicate of gpg-error.m4 with uses the
+# future name of libgpg-error to prepare for a smooth migration in
+# some distant time.
 
 dnl AM_PATH_GPGRT([MINIMUM-VERSION,
 dnl               [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND ]]])
 dnl
 dnl Test for libgpgrt and define GPGRT_CFLAGS, GPGRT_LIBS,
-dnl GPG_ERROR_MT_CFLAGS, and GPG_ERROR_MT_LIBS.  The _MT_ variants are
+dnl GPGRT_MT_CFLAGS, and GPGRT_MT_LIBS.  The _MT_ variants are
 dnl used for programs requiring real multi thread support.
 dnl
 dnl If a prefix option is not used, the config script is first
@@ -44,14 +44,20 @@ AC_DEFUN([AM_PATH_GPGRT],
   AC_ARG_WITH(gpg-error-prefix,,
               [gpgrt_config_prefix="$withval"])
 
+  dnl Also accept libgpgrt-prefix
+  AC_ARG_WITH(libgpgrt-prefix,
+              AC_HELP_STRING([--with-libgpgrt-prefix=PFX],
+                             [prefix where GPG Runtime is installed (optional)]),
+              [gpgrt_config_prefix="$withval"])
+
   if test x"${GPGRT_CONFIG}" = x ; then
      if test x"${gpgrt_config_prefix}" != x ; then
-        GPGRT_CONFIG="${gpgrt_config_prefix}/bin/gpg-error-config"
+        GPGRT_CONFIG="${gpgrt_config_prefix}/bin/gpgrt-config"
      else
        case "${SYSROOT}" in
          /*)
-           if test -x "${SYSROOT}/bin/gpg-error-config" ; then
-             GPGRT_CONFIG="${SYSROOT}/bin/gpg-error-config"
+           if test -x "${SYSROOT}/bin/gpgrt-config" ; then
+             GPGRT_CONFIG="${SYSROOT}/bin/gpgrt-config"
            fi
            ;;
          '')
@@ -63,9 +69,9 @@ AC_DEFUN([AM_PATH_GPGRT],
      fi
   fi
 
-  AC_PATH_PROG(GPGRT_CONFIG, gpg-error-config, no)
-  min_gpgrt_version=ifelse([$1], ,0.0,$1)
-  AC_MSG_CHECKING(for GPG Error - version >= $min_gpgrt_version)
+  AC_PATH_PROG(GPGRT_CONFIG, gpgrt-config, no)
+  min_gpgrt_version=ifelse([$1], ,1.33,$1)
+  AC_MSG_CHECKING(for GPG Runtime - version >= $min_gpgrt_version)
   ok=no
   if test "$GPGRT_CONFIG" != "no" \
      && test -f "$GPGRT_CONFIG" ; then
@@ -73,7 +79,7 @@ AC_DEFUN([AM_PATH_GPGRT],
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)/\1/'`
     req_minor=`echo $min_gpgrt_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)/\2/'`
-    gpgrt_config_version=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --version`
+    gpgrt_config_version=`CC=$CC $GPGRT_CONFIG --version`
     major=`echo $gpgrt_config_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\).*/\1/'`
     minor=`echo $gpgrt_config_version | \
@@ -89,15 +95,15 @@ AC_DEFUN([AM_PATH_GPGRT],
     fi
   fi
   if test $ok = yes; then
-    GPGRT_CFLAGS=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --cflags`
-    GPGRT_LIBS=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --libs`
-    GPGRT_MT_CFLAGS=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --mtcflags 2>/dev/null`
+    GPGRT_CFLAGS=`CC=$CC $GPGRT_CONFIG --cflags`
+    GPGRT_LIBS=`CC=$CC $GPGRT_CONFIG --libs`
+    GPGRT_MT_CFLAGS=`CC=$CC $GPGRT_CONFIG --variable=mtcflags 2>/dev/null`
     GPGRT_MT_CFLAGS="$GPGRT_CFLAGS${GPGRT_CFLAGS:+ }$GPGRT_MT_CFLAGS"
-    GPGRT_MT_LIBS=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --mtlibs 2>/dev/null`
+    GPGRT_MT_LIBS=`CC=$CC $GPGRT_CONFIG --variable=mtlibs 2>/dev/null`
     GPGRT_MT_LIBS="$GPGRT_LIBS${GPGRT_LIBS:+ }$GPGRT_MT_LIBS"
     AC_MSG_RESULT([yes ($gpgrt_config_version)])
     ifelse([$2], , :, [$2])
-    gpgrt_config_host=`CC=$CC $GPGRT_CONFIG $gpgrt_config_args --variable=host 2>/dev/null || echo none`
+    gpgrt_config_host=`CC=$CC $GPGRT_CONFIG --variable=host 2>/dev/null || echo none`
     if test x"$gpgrt_config_host" != xnone ; then
       if test x"$gpgrt_config_host" != x"$host" ; then
   AC_MSG_WARN([[
@@ -105,10 +111,10 @@ AC_DEFUN([AM_PATH_GPGRT],
 *** The config script $GPGRT_CONFIG was
 *** built for $gpgrt_config_host and thus may not match the
 *** used host $host.
-*** You may want to use the configure option --with-libgpg-error-prefix
+*** You may want to use the configure option --with-libgpgrt-prefix
 *** to specify a matching config script or use \$SYSROOT.
 ***]])
-        gpg_config_script_warn="$gpg_config_script_warn libgpg-error"
+        gpg_config_script_warn="$gpg_config_script_warn libgpgrt"
       fi
     fi
   else
