@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright (C) 1999, 2002, 2003 Free Software Foundation, Inc.
+# Copyright (C) 2018 g10 Code GmbH
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -198,7 +198,9 @@ find_file_in_path () {
 
 read_config_file () {
     if ! find_file_in_path $1.pc $2; then
-	echo "Can't find $1.pc" 1>&2
+	if [ -z "$want_exists" ]; then
+	    echo "Can't find $1.pc" 1>&2
+	fi
 	exit 1
     fi
     read_config_from_stdin $RESULT < $RESULT
@@ -461,24 +463,22 @@ sysroot () {
 #### end of functions for this script
 
 myname=${0##*/}
-# Just for a while for testing
-myname=${myname%-new}
-##############################
 if [ $myname = gpgrt-config ]; then
-  myname="gpg-error-config"
+  default_module="gpg-error"
+else
+  default_module=${myname%-config}
 fi
 
 usage()
 {
     cat <<EOF
-Usage: $myname [OPTIONS]
+Usage: gpgrt-config [OPTIONS] MODULES
 Options:
-        [--mt]       (must be the first option)
-	[--prefix]
-	[--exec-prefix]
-	[--version]
+	[--exists]
+	[--modversion]
 	[--libs]
 	[--cflags]
+	[--variable=VARNAME]
 EOF
     exit $1
 }
@@ -487,19 +487,13 @@ if test $# -eq 0; then
     usage 1 1>&2
 fi
 
-if [ "$1" != "--mt" ]; then
-    mt=no
-else
-    # In future, use --variable=mtcflags or --variable=mtlibs
-    mt=yes
-    shift
-fi
 
 module_list=""
 want_var=""
 want_attr=""
 want_cflags=""
 want_libs=""
+want_exists=""
 
 cflags=""
 libs=""
@@ -508,6 +502,8 @@ mtlibs=""
 
 delimiter=" "
 output=""
+
+mt="no"
 
 VAR_list=VAR_pc_sysrootdir
 if [ -z "$PKG_CONFIG_SYSROOT_DIR" ]; then
@@ -518,6 +514,7 @@ fi
 
 while test $# -gt 0; do
     case $1 in
+	#### pkg-config incompatible options: begin
 	--prefix)
 	    # In future, use --variable=prefix instead.
 	    want_var=prefix
@@ -532,10 +529,26 @@ while test $# -gt 0; do
 	    delimiter="
 "
 	    ;;
+	--api-version)
+	    # In future, use --variable=api_version instead.
+	    want_var=api_version
+	    ;;
+	--host)
+	    # In future, use --variable=host instead.
+	    want_var=host
+	    ;;
+	--mt)
+	    # In future, use --variable=mtcflags or --variable=mtlibs.
+	    mt=yes
+	    ;;
+	#### pkg-config incompatible options: end
 	--modversion)
 	    want_attr=Version
 	    delimiter="
 "
+	    ;;
+	--exists)
+	    want_exists=yes
 	    ;;
 	--cflags)
 	    want_cflags=yes
@@ -545,10 +558,6 @@ while test $# -gt 0; do
 	    ;;
 	--variable=*)
 	    want_var=${1#*=}
-	    ;;
-	--host)
-	    # In future, use --variable=host instead.
-	    want_var=host
 	    ;;
 	--help)
 	    usage 0
@@ -567,9 +576,9 @@ done
 
 
 if [ -z "$module_list" ]; then
-    module_list=${myname%-config}
+    module_list=$default_module
 elif expr match "$module_list" "=\|!=\|<\|>\|<=\|>=" >/dev/null; then
-    module_list="${myname%-config} $module_list"
+    module_list="$default_module $module_list"
 fi
 
 all_required_config_files $module_list
@@ -612,4 +621,8 @@ if [ -z "$want_var" -a -z "$want_attr" ]; then
     fi
 fi
 
-echo "$output"
+if [ -z "$want_exists" ]; then
+  echo "$output"
+fi
+
+exit 0
