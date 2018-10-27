@@ -270,10 +270,10 @@ _gpgrt_b64dec_finish (gpgrt_b64state_t state)
     err = state->lasterr;
   else
     {
-      free (state->title);
+      xfree (state->title);
       err = state->invalid_encoding? GPG_ERR_BAD_DATA : 0;
     }
-  free (state);
+  xfree (state);
 
   return err;
 }
