@@ -98,7 +98,7 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 gpgrt.m4 \
 	gpg-error.vers gpg-error.def.in \
         versioninfo.rc.in gpg-error.w32-manifest.in \
-	gpgrt-config.in gpg-error-config-test.sh gpg-error.pc.in \
+	gpg-error-config-test.sh gpg-error.pc.in \
 	$(lock_obj_pub)
 
 BUILT_SOURCES = $(srcdir)/err-sources.h $(srcdir)/err-codes.h \

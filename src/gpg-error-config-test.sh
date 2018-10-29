@@ -1,5 +1,7 @@
 #!/bin/sh
 
+srcdir=${0%/*}
+
 PKG_CONFIG_PATH="."
 
 export PKG_CONFIG_PATH
@@ -32,54 +34,54 @@ failure () {
 rm -f gpg-error-config-test.log
 
 OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --libs))
-OUTPUT_NEW=$(./gpgrt-config --libs)
+OUTPUT_NEW=$($srcdir/gpgrt-config --libs)
 [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --libs
 
 OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --cflags))
-OUTPUT_NEW=$(./gpgrt-config --cflags)
+OUTPUT_NEW=$($srcdir/gpgrt-config --cflags)
 [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --cflags
 
 OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --cflags --libs))
-OUTPUT_NEW=$(./gpgrt-config --cflags --libs)
+OUTPUT_NEW=$($srcdir/gpgrt-config --cflags --libs)
 [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --cflags --libs
 
 if [ "$PKG_CONFIG_CMD" = ./gpg-error-config-old ]; then
     OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --version))
-    OUTPUT_NEW=$(./gpgrt-config --version)
+    OUTPUT_NEW=$($srcdir/gpgrt-config --version)
     [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --version
 
     OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --mt --libs))
-    OUTPUT_NEW=$(./gpgrt-config --mt --libs)
+    OUTPUT_NEW=$($srcdir/gpgrt-config --mt --libs)
     [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --mt --libs
 
     OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --mt --cflags))
-    OUTPUT_NEW=$(./gpgrt-config --mt --cflags)
+    OUTPUT_NEW=$($srcdir/gpgrt-config --mt --cflags)
     [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --mt --cflags
 
     OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --cflags --libs))
-    OUTPUT_NEW=$(./gpgrt-config --cflags --libs)
+    OUTPUT_NEW=$($srcdir/gpgrt-config --cflags --libs)
     [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --cflags --libs
 
     OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --mt --cflags --libs))
-    OUTPUT_NEW=$(./gpgrt-config --mt --cflags --libs)
+    OUTPUT_NEW=$($srcdir/gpgrt-config --mt --cflags --libs)
     [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --mt --cflags --libs
 
     OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --variable=mtcflags))
-    OUTPUT_NEW=$(./gpgrt-config --variable=mtcflags)
+    OUTPUT_NEW=$($srcdir/gpgrt-config --variable=mtcflags)
     [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --variable=mtcflags
 
     OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --variable=mtlibs))
-    OUTPUT_NEW=$(./gpgrt-config --variable=mtlibs)
+    OUTPUT_NEW=$($srcdir/gpgrt-config --variable=mtlibs)
     [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --variable=mtlibs
 
     OUTPUT_OLD=$(echo $($PKG_CONFIG_CMD --variable=host))
-    OUTPUT_NEW=$(./gpgrt-config --variable=host)
+    OUTPUT_NEW=$($srcdir/gpgrt-config --variable=host)
     [ "$OUTPUT_OLD" = "$OUTPUT_NEW" ] || failure --variable=host
 fi
 
 if [ -n "$test_failed" ]; then
     OUTPUT_OLD=$($PKG_CONFIG_CMD --version)
-    OUTPUT_NEW=$(./gpgrt-config --version)
+    OUTPUT_NEW=$($srcdir/gpgrt-config --version)
     failure --version
 
     exit 99

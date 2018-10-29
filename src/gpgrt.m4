@@ -10,7 +10,7 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # SPDX-License-Identifier: FSFULLR
 #
-# Last-changed: 2018-10-25
+# Last-changed: 2018-10-29
 # Note: This is a kind of duplicate of gpg-error.m4 with uses the
 # future name of libgpg-error to prepare for a smooth migration in
 # some distant time.
@@ -70,6 +70,9 @@ AC_DEFUN([AM_PATH_GPGRT],
   fi
 
   AC_PATH_PROG(GPGRT_CONFIG, gpgrt-config, no)
+  if test "$GPGRT_CONFIG" != "no"; then
+    GPGRT_CONFIG="$GPGRT_CONFIG --prefix=$prefix --exec-prefix=$exec_prefix --libdir=$libdir"
+  fi
   min_gpgrt_version=ifelse([$1], ,1.33,$1)
   AC_MSG_CHECKING(for GPG Runtime - version >= $min_gpgrt_version)
   ok=no
@@ -79,7 +82,7 @@ AC_DEFUN([AM_PATH_GPGRT],
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)/\1/'`
     req_minor=`echo $min_gpgrt_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)/\2/'`
-    gpgrt_config_version=`CC=$CC $GPGRT_CONFIG --version`
+    gpgrt_config_version=`$GPGRT_CONFIG --version`
     major=`echo $gpgrt_config_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\).*/\1/'`
     minor=`echo $gpgrt_config_version | \
@@ -95,15 +98,15 @@ AC_DEFUN([AM_PATH_GPGRT],
     fi
   fi
   if test $ok = yes; then
-    GPGRT_CFLAGS=`CC=$CC $GPGRT_CONFIG --cflags`
-    GPGRT_LIBS=`CC=$CC $GPGRT_CONFIG --libs`
-    GPGRT_MT_CFLAGS=`CC=$CC $GPGRT_CONFIG --variable=mtcflags 2>/dev/null`
+    GPGRT_CFLAGS=`$GPGRT_CONFIG --cflags`
+    GPGRT_LIBS=`$GPGRT_CONFIG --libs`
+    GPGRT_MT_CFLAGS=`$GPGRT_CONFIG --variable=mtcflags 2>/dev/null`
     GPGRT_MT_CFLAGS="$GPGRT_CFLAGS${GPGRT_CFLAGS:+ }$GPGRT_MT_CFLAGS"
-    GPGRT_MT_LIBS=`CC=$CC $GPGRT_CONFIG --variable=mtlibs 2>/dev/null`
+    GPGRT_MT_LIBS=`$GPGRT_CONFIG --variable=mtlibs 2>/dev/null`
     GPGRT_MT_LIBS="$GPGRT_LIBS${GPGRT_LIBS:+ }$GPGRT_MT_LIBS"
     AC_MSG_RESULT([yes ($gpgrt_config_version)])
     ifelse([$2], , :, [$2])
-    gpgrt_config_host=`CC=$CC $GPGRT_CONFIG --variable=host 2>/dev/null || echo none`
+    gpgrt_config_host=`$GPGRT_CONFIG --variable=host 2>/dev/null || echo none`
     if test x"$gpgrt_config_host" != xnone ; then
       if test x"$gpgrt_config_host" != x"$host" ; then
   AC_MSG_WARN([[

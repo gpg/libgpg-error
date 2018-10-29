@@ -651,17 +651,6 @@ AC_ARG_ENABLE([tests], AC_HELP_STRING([--disable-tests],
                      build_tests=$enableval, build_tests=yes)
 AM_CONDITIONAL([BUILD_TESTS], [test "x$build_tests" != xno])
 
-case "$libdir" in
-  */*-*-*)
-    # Looks like it's multiarch, then,
-    # let the script detect host architecture at runtime
-    pkg_config_libdir=auto
-    ;;
-  *)
-    pkg_config_libdir=$libdir/pkgconfig
-    ;;
-esac
-AC_SUBST(pkg_config_libdir)
 #
 # Substitution
 #
@@ -672,7 +661,6 @@ AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc src/gpg-error.w32-manifest])
 AC_CONFIG_FILES([src/gpg-error.pc])
 AC_CONFIG_FILES([src/gpg-error-config-old:src/gpg-error-config.in], [chmod +x src/gpg-error-config-old])
-AC_CONFIG_FILES([src/gpgrt-config], [chmod +x src/gpgrt-config])
 
 AC_OUTPUT
 
