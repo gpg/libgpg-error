@@ -119,32 +119,6 @@ struct estream_cookie_w32_pollable
 };
 
 
-static HANDLE
-set_synchronize (HANDLE hd)
-{
-#ifdef HAVE_W32CE_SYSTEM
-  return hd;
-#else
-  HANDLE new_hd;
-
-  /* For NT we have to set the sync flag.  It seems that the only way
-     to do it is by duplicating the handle.  Tsss...  */
-  if (!DuplicateHandle (GetCurrentProcess (), hd,
-			GetCurrentProcess (), &new_hd,
-			EVENT_MODIFY_STATE | SYNCHRONIZE, FALSE, 0))
-    {
-      trace_errno (1, ("DuplicateHandle failed: ec=%d", (int)GetLastError ()));
-      /* FIXME: Should translate the error code.  */
-      _gpg_err_set_errno (EIO);
-      return INVALID_HANDLE_VALUE;
-    }
-
-  CloseHandle (hd);
-  return new_hd;
-#endif
-}
-
-
 static DWORD CALLBACK
 reader (void *arg)
 {
@@ -289,7 +263,6 @@ create_reader (estream_cookie_w32_pollable_t pcookie)
       return NULL;
     }
 
-  ctx->have_data_ev = set_synchronize (ctx->have_data_ev);
   InitializeCriticalSection (&ctx->mutex);
 
 #ifdef HAVE_W32CE_SYSTEM
@@ -593,7 +566,6 @@ create_writer (estream_cookie_w32_pollable_t pcookie)
       return NULL;
     }
 
-  ctx->is_empty = set_synchronize (ctx->is_empty);
   InitializeCriticalSection (&ctx->mutex);
 
 #ifdef HAVE_W32CE_SYSTEM
