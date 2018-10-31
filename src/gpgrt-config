@@ -480,7 +480,7 @@ EOF
 fi
 
 # --libdir option has precedence over the env var.
-if [ -n "libdir_option" ]; then
+if [ -n "$libdir_option" ]; then
     libdir=$(substitute_vars $libdir_option)
     PKG_CONFIG_LIBDIR=$libdir/pkgconfig
 fi
