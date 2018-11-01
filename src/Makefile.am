@@ -84,7 +84,8 @@ lock_obj_pub = \
 
 lib_LTLIBRARIES = libgpg-error.la
 nodist_include_HEADERS = gpg-error.h gpgrt.h
-bin_SCRIPTS = gpgrt-config gpg-error-config
+dist_bin_SCRIPTS = gpgrt-config
+bin_SCRIPTS = gpg-error-config
 m4datadir = $(datadir)/aclocal
 m4data_DATA = gpg-error.m4 gpgrt.m4
 
