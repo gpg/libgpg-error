@@ -64,8 +64,20 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
   min_gpg_error_version=ifelse([$1], ,1.33,$1)
   ok=no
 
-  if test -f $libdir/pkgconfig/gpg-error.pc; then
-    gpgrt_libdir=$libdir
+  if test "$prefix" = NONE ; then
+    prefix_option_expanded=/usr/local
+  else
+    prefix_option_expanded="$prefix"
+  fi
+  if test "$exec_prefix" = NONE ; then
+    exec_prefix_option_expanded=$prefix_option_expanded
+  else
+    exec_prefix_option_expanded=$(prefix=$prefix_option_expanded eval echo $exec_prefix)
+  fi
+  libdir_option_expanded=$(prefix=$prefix_option_expanded exec_prefix=$exec_prefix_option_expanded eval echo $libdir)
+
+  if test -f $libdir_option_expanded/pkgconfig/gpg-error.pc; then
+    gpgrt_libdir=$libdir_option_expanded
   else
     if crt1_path=$(${CC:-cc} -print-file-name=crt1.o 2>/dev/null); then
       if possible_libdir=$(cd ${crt1_path%/*} && pwd 2>/dev/null); then
@@ -81,7 +93,7 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
     if test "$GPGRT_CONFIG" = "no"; then
       unset GPGRT_CONFIG
     else
-      GPGRT_CONFIG="$GPGRT_CONFIG --prefix=$prefix --exec-prefix=$exec_prefix --libdir=$gpgrt_libdir"
+      GPGRT_CONFIG="$GPGRT_CONFIG --libdir=$gpgrt_libdir"
       if $GPGRT_CONFIG gpg-error >/dev/null 2>&1; then
         GPG_ERROR_CONFIG="$GPGRT_CONFIG gpg-error"
         AC_MSG_NOTICE([Use gpgrt-config with $gpgrt_libdir as gpg-error-config])
@@ -117,7 +129,7 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
         if test "$GPGRT_CONFIG" = "no"; then
           unset GPGRT_CONFIG
         else
-          GPGRT_CONFIG="$GPGRT_CONFIG --prefix=$prefix --exec-prefix=$exec_prefix --libdir=$gpgrt_libdir"
+          GPGRT_CONFIG="$GPGRT_CONFIG --libdir=$gpgrt_libdir"
           if $GPGRT_CONFIG gpg-error >/dev/null 2>&1; then
             GPG_ERROR_CONFIG="$GPGRT_CONFIG gpg-error"
             AC_MSG_NOTICE([Use gpgrt-config with $gpgrt_libdir as gpg-error-config])

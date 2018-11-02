@@ -417,7 +417,7 @@ sysroot () {
 # Show usage
 usage () {
     cat <<EOF
-Usage: gpgrt-config [--prefix=PREFIX] [--libdir=LIBDIR] [OPTIONS] MODULES
+Usage: gpgrt-config [--libdir=LIBDIR] [OPTIONS] MODULES
 Options:
 	[--exists]
 	[--modversion]
@@ -436,30 +436,13 @@ else
   default_module=${myname%-config}
 fi
 
-# First stage to process --prefix, --exec_prefix and --libdir options
+# First stage to process --libdir option
 
-prefix_option=""
-exec_prefix_option=""
-libdir_option=""
-
+libdir=""
 while test $# -gt 0; do
     case $1 in
-	--prefix=*)
-	    prefix_option=${1#--prefix=}
-	    if [ "$prefix_option" = NONE ]; then
-		prefix_option=/usr/local
-	    fi
-	    shift
-	    ;;
-	--exec-prefix=*)
-	    exec_prefix_option=${1#--exec-prefix=}
-	    if [ "$exec_prefix_option" = NONE ]; then
-		exec_prefix_option='${prefix}'
-	    fi
-	    shift
-	    ;;
 	--libdir=*)
-	    libdir_option=${1#--libdir=}
+	    libdir=${1#--libdir=}
 	    shift
 	    ;;
 	*)
@@ -468,28 +451,13 @@ while test $# -gt 0; do
     esac
 done
 
-if [ -n "$prefix_option" ]; then
-    read_config_from_stdin __gpgrt-config__ <<EOF
-prefix=$prefix_option
-EOF
-fi
-if [ -n "$exec_prefix_option" ]; then
-    read_config_from_stdin __gpgrt-config__ <<EOF
-exec_prefix=$exec_prefix_option
-EOF
-fi
-
 # --libdir option has precedence over the env var.
-if [ -n "$libdir_option" ]; then
-    libdir=$(substitute_vars $libdir_option)
+if [ -n "$libdir" ]; then
     PKG_CONFIG_LIBDIR=$libdir/pkgconfig
 fi
 
 if [ x"$PKG_CONFIG_PATH" = x -a x"$PKG_CONFIG_LIBDIR" = x ]; then
     echo "Please use --libdir=LIBDIR option or set PKG_CONFIG_LIBDIR" 1>&2
-    echo "When LIBDIR has variable references for prefix and/or exec_prefix," 1>&2
-    echo "you should provide --prefix=PREFIX option and/or" 1>&2
-    echo "--exec-prefix=EXEC_PREFIX option, too" 1>&2
     exit 1
 fi
 
