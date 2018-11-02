@@ -10,7 +10,7 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # SPDX-License-Identifier: FSFULLR
 #
-# Last-changed: 2018-10-29
+# Last-changed: 2018-11-02
 # Note: This is a kind of duplicate of gpg-error.m4 with uses the
 # future name of libgpg-error to prepare for a smooth migration in
 # some distant time.
@@ -69,15 +69,28 @@ AC_DEFUN([AM_PATH_GPGRT],
      fi
   fi
 
-  AC_PATH_PROG(GPGRT_CONFIG, gpgrt-config, no)
-  if test "$GPGRT_CONFIG" != "no"; then
-    GPGRT_CONFIG="$GPGRT_CONFIG --prefix=$prefix --exec-prefix=$exec_prefix --libdir=$libdir"
+  if test -f $libdir/pkgconfig/gpg-error.pc; then
+    gpgrt_libdir=$libdir
+  else
+    if crt1_path=$(${CC:-cc} -print-file-name=crt1.o 2>/dev/null); then
+      if possible_libdir=$(cd ${crt1_path%/*} && pwd 2>/dev/null); then
+        if test -f $possible_libdir/pkgconfig/gpg-error.pc; then
+          gpgrt_libdir=$possible_libdir
+        fi
+      fi
+    fi
+  fi
+
+  if test -n "$gpgrt_libdir"; then
+    AC_PATH_PROG(GPGRT_CONFIG, gpgrt-config, no)
+    if test "$GPGRT_CONFIG" != "no"; then
+      GPGRT_CONFIG="$GPGRT_CONFIG --prefix=$prefix --exec-prefix=$exec_prefix --libdir=$gpgrt_libdir"
+    fi
   fi
   min_gpgrt_version=ifelse([$1], ,1.33,$1)
   AC_MSG_CHECKING(for GPG Runtime - version >= $min_gpgrt_version)
   ok=no
-  if test "$GPGRT_CONFIG" != "no" \
-     && test -f "$GPGRT_CONFIG" ; then
+  if test x"$GPGRT_CONFIG" != x -a "$GPGRT_CONFIG" != "no" ; then
     req_major=`echo $min_gpgrt_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)/\1/'`
     req_minor=`echo $min_gpgrt_version | \
