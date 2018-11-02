@@ -84,6 +84,7 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
       GPGRT_CONFIG="$GPGRT_CONFIG --prefix=$prefix --exec-prefix=$exec_prefix --libdir=$gpgrt_libdir"
       if $GPGRT_CONFIG gpg-error >/dev/null 2>&1; then
         GPG_ERROR_CONFIG="$GPGRT_CONFIG gpg-error"
+        AC_MSG_NOTICE([Use gpgrt-config with $gpgrt_libdir as gpg-error-config])
         gpg_error_config_version=`$GPG_ERROR_CONFIG --modversion`
       else
         unset GPGRT_CONFIG
@@ -119,6 +120,7 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
           GPGRT_CONFIG="$GPGRT_CONFIG --prefix=$prefix --exec-prefix=$exec_prefix --libdir=$gpgrt_libdir"
           if $GPGRT_CONFIG gpg-error >/dev/null 2>&1; then
             GPG_ERROR_CONFIG="$GPGRT_CONFIG gpg-error"
+            AC_MSG_NOTICE([Use gpgrt-config with $gpgrt_libdir as gpg-error-config])
           else
             unset GPGRT_CONFIG
           fi
