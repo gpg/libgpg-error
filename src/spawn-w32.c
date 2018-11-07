@@ -735,7 +735,7 @@ _gpgrt_wait_processes (const char **pgmnames, pid_t *pids, size_t count,
       if (pids[i] == (pid_t)(-1))
         return GPG_ERR_INV_VALUE;
 
-      procs[i] = fd_to_handle (pids[i]);
+      procs[i] = pid_to_handle (pids[i]);
     }
 
   _gpgrt_pre_syscall ();
