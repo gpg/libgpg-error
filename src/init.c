@@ -580,7 +580,7 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
       /* If we have not constructors (e.g. MSC) we call it here.  */
       _gpg_w32__init_gettext_module ();
 #endif
-      /* falltru.  */
+      /* fallthru.  */
     case DLL_THREAD_ATTACH:
       tls = LocalAlloc (LPTR, sizeof *tls);
       if (!tls)
