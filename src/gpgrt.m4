@@ -10,8 +10,8 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # SPDX-License-Identifier: FSFULLR
 #
-# Last-changed: 2018-11-02
-# Note: This is a kind of duplicate of gpg-error.m4 with uses the
+# Last-changed: 2018-11-13
+# Note: This is a kind of duplicate of gpg-error.m4 which uses the
 # future name of libgpg-error to prepare for a smooth migration in
 # some distant time.
 
@@ -22,53 +22,8 @@ dnl Test for libgpgrt and define GPGRT_CFLAGS, GPGRT_LIBS,
 dnl GPGRT_MT_CFLAGS, and GPGRT_MT_LIBS.  The _MT_ variants are
 dnl used for programs requiring real multi thread support.
 dnl
-dnl If a prefix option is not used, the config script is first
-dnl searched in $SYSROOT/bin and then along $PATH.  If the used
-dnl config script does not match the host specification the script
-dnl is added to the gpg_config_script_warn variable.
-dnl
 AC_DEFUN([AM_PATH_GPGRT],
 [ AC_REQUIRE([AC_CANONICAL_HOST])
-  gpgrt_config_prefix=""
-  dnl --with-libgpg-error-prefix=PFX is the preferred name for this option,
-  dnl since that is consistent with how our three siblings use the directory/
-  dnl package name in --with-$dir_name-prefix=PFX.
-  AC_ARG_WITH(libgpg-error-prefix,
-              AC_HELP_STRING([--with-libgpg-error-prefix=PFX],
-                             [prefix where GPG Error is installed (optional)]),
-              [gpgrt_config_prefix="$withval"])
-
-  dnl Accept --with-gpg-error-prefix and make it work the same as
-  dnl --with-libgpg-error-prefix above, for backwards compatibility,
-  dnl but do not document this old, inconsistently-named option.
-  AC_ARG_WITH(gpg-error-prefix,,
-              [gpgrt_config_prefix="$withval"])
-
-  dnl Also accept libgpgrt-prefix
-  AC_ARG_WITH(libgpgrt-prefix,
-              AC_HELP_STRING([--with-libgpgrt-prefix=PFX],
-                             [prefix where GPG Runtime is installed (optional)]),
-              [gpgrt_config_prefix="$withval"])
-
-  if test x"${GPGRT_CONFIG}" = x ; then
-     if test x"${gpgrt_config_prefix}" != x ; then
-        GPGRT_CONFIG="${gpgrt_config_prefix}/bin/gpgrt-config"
-     else
-       case "${SYSROOT}" in
-         /*)
-           if test -x "${SYSROOT}/bin/gpgrt-config" ; then
-             GPGRT_CONFIG="${SYSROOT}/bin/gpgrt-config"
-           fi
-           ;;
-         '')
-           ;;
-          *)
-           AC_MSG_WARN([Ignoring \$SYSROOT as it is not an absolute path.])
-           ;;
-       esac
-     fi
-  fi
-
   if test "$prefix" = NONE ; then
     prefix_option_expanded=/usr/local
   else
@@ -136,11 +91,8 @@ AC_DEFUN([AM_PATH_GPGRT],
       if test x"$gpgrt_config_host" != x"$host" ; then
   AC_MSG_WARN([[
 ***
-*** The config script $GPGRT_CONFIG was
-*** built for $gpgrt_config_host and thus may not match the
-*** used host $host.
-*** You may want to use the configure option --with-libgpgrt-prefix
-*** to specify a matching config script or use \$SYSROOT.
+*** The config script "$GPGRT_CONFIG" is for $gpgrt_config_host
+*** and thus may not match the used host $host.
 ***]])
         gpg_config_script_warn="$gpg_config_script_warn libgpgrt"
       fi
