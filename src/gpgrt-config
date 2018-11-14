@@ -451,17 +451,32 @@ while test $# -gt 0; do
     esac
 done
 
-# --libdir option has precedence over the env var.
-if [ -n "$libdir" ]; then
-    PKG_CONFIG_LIBDIR=$libdir/pkgconfig
-fi
-
-if [ x"$PKG_CONFIG_PATH" = x -a x"$PKG_CONFIG_LIBDIR" = x ]; then
-    echo "Please use --libdir=LIBDIR option or set PKG_CONFIG_LIBDIR" 1>&2
+if [ x"${PKG_CONFIG_LIBDIR:+set}" = xset -a -z "$PKG_CONFIG_LIBDIR" ]; then
+  # The variable set as empty, we use PKG_CONFIG_PATH in this case,
+  # ignoring --libdir option
+  if [ -z "$PKG_CONFIG_PATH"  ]; then
+    echo "Please have valid PKG_CONFIG_PATH if PKG_CONFIG_LIBDIR is empty" 1>&2
     exit 1
+  fi
+else
+  if [ -n "$libdir" ]; then
+    # --libdir option is available, it overrides existing PKG_CONFIG_LIBDIR
+    PKG_CONFIG_LIBDIR=$libdir/pkgconfig
+  fi
+  if [ -z "$PKG_CONFIG_LIBDIR" ]; then
+    if [ -z "$PKG_CONFIG_PATH" ]; then
+      echo "Please use --libdir=LIBDIR option or set PKG_CONFIG_LIBDIR" 1>&2
+      echo "Or set PKG_CONFIG_PATH" 1>&2
+      exit 1
+    fi
+  else
+    # PKG_CONFIG_LIBDIR is available here
+    # Modify PKG_CONFIG_PATH, prepending PKG_CONFIG_LIBDIR
+    PKG_CONFIG_PATH="$PKG_CONFIG_LIBDIR${PKG_CONFIG_PATH:+:}$PKG_CONFIG_PATH"
+  fi
 fi
+# PKG_CONFIG_PATH is ready here
 
-PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}$PKG_CONFIG_LIBDIR"
 #
 
 if test $# -eq 0; then
