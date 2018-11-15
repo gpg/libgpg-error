@@ -1271,6 +1271,15 @@ void gpgrt_set_strusage (const char *(*f)(int));
 void gpgrt_set_usage_outfnc (int (*f)(int, const char *));
 void gpgrt_set_fixed_string_mapper (const char *(*f)(const char*));
 
+
+/*
+ * Various helper functions
+ */
+
+/* Compare arbitrary version strings.  For the standard m.n.o version
+ * numbering scheme a LEVEL of 3 is suitable; see the manual.  */
+int gpgrt_cmp_version (const char *a, const char *b, int level);
+
 
 
 #ifdef __cplusplus

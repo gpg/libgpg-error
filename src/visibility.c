@@ -1123,6 +1123,15 @@ gpgrt_set_fixed_string_mapper (const char *(*f)(const char*))
 
 
 
+/* Compare program versions.  */
+int
+gpgrt_cmp_version (const char *a, const char *b, int level)
+{
+  return _gpgrt_cmp_version (a, b, level);
+}
+
+
+
 /* For consistency reasons we use function wrappers also for Windows
  * specific function despite that they are technically not needed.  */
 #ifdef HAVE_W32_SYSTEM

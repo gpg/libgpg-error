@@ -209,6 +209,8 @@ MARK_VISIBLE (gpgrt_set_strusage)
 MARK_VISIBLE (gpgrt_set_fixed_string_mapper);
 MARK_VISIBLE (gpgrt_set_usage_outfnc);
 
+MARK_VISIBLE (gpgrt_cmp_version);
+
 #undef MARK_VISIBLE
 
 #else /*!_GPGRT_INCL_BY_VISIBILITY_C*/
@@ -378,6 +380,8 @@ MARK_VISIBLE (gpgrt_set_usage_outfnc);
 #define gpgrt_strusage                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_set_usage_outfnc        _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_set_fixed_string_mapper _gpgrt_USE_UNDERSCORED_FUNCTION
+
+#define gpgrt_cmp_version           _gpgrt_USE_UNDERSCORED_FUNCTION
 
 /* Windows specific functions.  */
 #define gpgrt_w32_reg_query_string  _gpgrt_USE_UNDERSCORED_FUNCTION

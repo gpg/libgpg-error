@@ -15,6 +15,7 @@
 #
 # You should have received a copy of the GNU Lesser General Public
 # License along with this program; if not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 # Location of the released tarball archives.  Note that this is an
 # internal archive and before uploading this to the public server,

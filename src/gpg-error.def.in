@@ -218,5 +218,7 @@ EXPORTS
  gpgrt_b64enc_write           @167
  gpgrt_b64enc_finish          @168
 
+ gpgrt_cmp_version            @169
+
 
 ;; end of file with public symbols for Windows.

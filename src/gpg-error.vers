@@ -190,6 +190,7 @@ GPG_ERROR_1.0 {
     gpgrt_b64enc_write;
     gpgrt_b64enc_finish;
 
+    gpgrt_cmp_version;
 
   local:
     *;

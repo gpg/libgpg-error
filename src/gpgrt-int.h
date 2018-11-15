@@ -742,6 +742,12 @@ void _gpgrt_set_usage_outfnc (int (*fnc)(int, const char *));
 void _gpgrt_set_fixed_string_mapper (const char *(*f)(const char*));
 
 
+/*
+ * Various helper functions
+ */
+int _gpgrt_cmp_version (const char *a, const char *b, int level);
+
+
 
 /*
  * Internal platform abstraction functions (sysutils.c)
