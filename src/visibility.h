@@ -102,6 +102,7 @@ MARK_VISIBLE (gpgrt_fseeko)
 MARK_VISIBLE (gpgrt_ftell)
 MARK_VISIBLE (gpgrt_ftello)
 MARK_VISIBLE (gpgrt_rewind)
+MARK_VISIBLE (gpgrt_ftruncate)
 MARK_VISIBLE (gpgrt_fgetc)
 MARK_VISIBLE (_gpgrt_getc_underflow)
 MARK_VISIBLE (gpgrt_fputc)
@@ -276,6 +277,7 @@ MARK_VISIBLE (gpgrt_cmp_version);
 #define gpgrt_ftell                 _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_ftello                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_rewind                _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_ftruncate             _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fgetc                 _gpgrt_USE_UNDERSCORED_FUNCTION
 #define _gpgrt_getc_underflow       _gpgrt_USE_DBLUNDERSCO_FUNCTION
 #define gpgrt_fputc                 _gpgrt_USE_UNDERSCORED_FUNCTION

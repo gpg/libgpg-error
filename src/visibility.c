@@ -390,6 +390,12 @@ gpgrt_rewind (estream_t stream)
 }
 
 int
+gpgrt_ftruncate (estream_t stream, gpgrt_off_t length)
+{
+  return _gpgrt_ftruncate (stream, length);
+}
+
+int
 gpgrt_fgetc (estream_t stream)
 {
   return _gpgrt_fgetc (stream);

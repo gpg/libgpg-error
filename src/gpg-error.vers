@@ -192,6 +192,7 @@ GPG_ERROR_1.0 {
 
     gpgrt_cmp_version;
 
+    gpgrt_ftruncate;
   local:
     *;
 };

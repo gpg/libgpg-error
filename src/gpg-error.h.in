@@ -712,6 +712,7 @@ int _gpgrt_pending_unlocked (gpgrt_stream_t stream); /* (private) */
 int gpgrt_fflush (gpgrt_stream_t stream);
 int gpgrt_fseek (gpgrt_stream_t stream, long int offset, int whence);
 int gpgrt_fseeko (gpgrt_stream_t stream, gpgrt_off_t offset, int whence);
+int gpgrt_ftruncate (estream_t stream, gpgrt_off_t length);
 long int gpgrt_ftell (gpgrt_stream_t stream);
 gpgrt_off_t gpgrt_ftello (gpgrt_stream_t stream);
 void gpgrt_rewind (gpgrt_stream_t stream);
@@ -868,6 +869,7 @@ int gpgrt_vsnprintf (char *buf,size_t bufsize,
 # define es_fflush            gpgrt_fflush
 # define es_fseek             gpgrt_fseek
 # define es_fseeko            gpgrt_fseeko
+# define es_ftruncate         gpgrt_ftruncate
 # define es_ftell             gpgrt_ftell
 # define es_ftello            gpgrt_ftello
 # define es_rewind            gpgrt_rewind

@@ -164,6 +164,7 @@ main (int argc, char **argv)
       fprintf (stderr, "%s: gpg_error_check_version did not return an error"
                " for a newer version\n", logpfx);
       errorcount++;
+      show ("\n"); /* Reference this function to silence gcc. */
     }
   if (verbose || errorcount)
     {

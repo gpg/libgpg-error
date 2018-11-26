@@ -820,6 +820,14 @@ func_mem_ioctl (void *cookie, int cmd, void *ptr, size_t *len)
       mem_cookie->offset = 0;
       ret = 0;
     }
+  else if (cmd == COOKIE_IOCTL_TRUNCATE)
+    {
+      gpgrt_off_t length = *(gpgrt_off_t *)ptr;
+
+      ret = func_mem_seek (cookie, &length, SEEK_SET);
+      if (ret != -1)
+        mem_cookie->data_len = mem_cookie->offset;
+    }
   else
     {
       _set_errno (EINVAL);
@@ -4023,6 +4031,29 @@ _gpgrt_rewind (estream_t stream)
   /* Note that es_seek already cleared the EOF flag.  */
   stream->intern->indicators.err = 0;
   unlock_stream (stream);
+}
+
+
+int
+_gpgrt_ftruncate (estream_t stream, gpgrt_off_t length)
+{
+  cookie_ioctl_function_t func_ioctl;
+  int ret;
+
+  lock_stream (stream);
+  func_ioctl = stream->intern->func_ioctl;
+  if (!func_ioctl)
+    {
+      _set_errno (EOPNOTSUPP);
+      ret = -1;
+    }
+  else
+    {
+      ret = func_ioctl (stream->intern->cookie, COOKIE_IOCTL_TRUNCATE,
+                        &length, NULL);
+    }
+  unlock_stream (stream);
+  return ret;
 }
 
 

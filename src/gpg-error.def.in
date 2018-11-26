@@ -220,5 +220,6 @@ EXPORTS
 
  gpgrt_cmp_version            @169
 
+ gpgrt_ftruncate              @170
 
 ;; end of file with public symbols for Windows.
