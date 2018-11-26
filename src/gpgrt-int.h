@@ -435,11 +435,13 @@ int _gpgrt_fprintf_unlocked (gpgrt_stream_t _GPGRT__RESTRICT stream,
                              GPGRT_ATTR_PRINTF(2,3);
 
 int _gpgrt_vfprintf (gpgrt_stream_t _GPGRT__RESTRICT stream,
+                     gpgrt_string_filter_t sf, void *sfvalue,
                      const char *_GPGRT__RESTRICT format, va_list ap)
-                     GPGRT_ATTR_PRINTF(2,0);
+                     GPGRT_ATTR_PRINTF(4,0);
 int _gpgrt_vfprintf_unlocked (gpgrt_stream_t _GPGRT__RESTRICT stream,
+                              gpgrt_string_filter_t sf, void *sfvalue,
                               const char *_GPGRT__RESTRICT format, va_list ap)
-                              GPGRT_ATTR_PRINTF(2,0);
+                              GPGRT_ATTR_PRINTF(4,0);
 
 int _gpgrt_setvbuf (gpgrt_stream_t _GPGRT__RESTRICT stream,
                     char *_GPGRT__RESTRICT buf, int mode, size_t size);

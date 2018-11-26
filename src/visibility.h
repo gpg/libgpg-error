@@ -121,6 +121,8 @@ MARK_VISIBLE (gpgrt_getline)
 MARK_VISIBLE (gpgrt_read_line)
 MARK_VISIBLE (gpgrt_fprintf)
 MARK_VISIBLE (gpgrt_fprintf_unlocked)
+MARK_VISIBLE (gpgrt_fprintf_sf)
+MARK_VISIBLE (gpgrt_fprintf_sf_unlocked)
 MARK_VISIBLE (gpgrt_printf)
 MARK_VISIBLE (gpgrt_printf_unlocked)
 MARK_VISIBLE (gpgrt_vfprintf)
@@ -296,6 +298,8 @@ MARK_VISIBLE (gpgrt_cmp_version);
 #define gpgrt_read_line             _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fprintf               _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fprintf_unlocked      _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_fprintf_sf            _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_fprintf_sf_unlocked   _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_printf                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_printf_unlocked       _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_vfprintf              _gpgrt_USE_UNDERSCORED_FUNCTION

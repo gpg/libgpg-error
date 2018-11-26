@@ -221,5 +221,8 @@ EXPORTS
  gpgrt_cmp_version            @169
 
  gpgrt_ftruncate              @170
+ gpgrt_fprintf_sf             @171
+ gpgrt_fprintf_sf_unlocked    @172
+
 
 ;; end of file with public symbols for Windows.

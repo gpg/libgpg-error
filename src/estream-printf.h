@@ -124,8 +124,10 @@ typedef int (*estream_printf_out_t)
      (void *outfncarg,  const char *buf, size_t buflen);
 
 int _gpgrt_estream_format (estream_printf_out_t outfnc, void *outfncarg,
+                           char *(*string_filter)(const char *s,int n,void*st),
+                           void *string_filter_state,
                            const char *format, va_list vaargs)
-     _ESTREAM_GCC_A_PRINTF(3,0);
+     _ESTREAM_GCC_A_PRINTF(5,0);
 int _gpgrt_estream_printf (const char *format, ...)
      _ESTREAM_GCC_A_PRINTF(1,2);
 int _gpgrt_estream_fprintf (FILE *fp, const char *format, ... )

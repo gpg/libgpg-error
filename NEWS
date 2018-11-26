@@ -5,6 +5,10 @@ Noteworthy changes in version 1.33 (unreleased) [C24/A24/R_]
  * Interface changes relative to the 1.28 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  gpgrt_cmp_version               New.
+ gpgrt_ftruncate                 New but limited functionality.
+ gpgrt_string_filter_t           New.
+ gpgrt_fprintf_sf                New.
+ gpgrt_fprintf_sf_unlocked       New.
 
 
 Noteworthy changes in version 1.32 (2018-07-12) [C24/A24/R3]

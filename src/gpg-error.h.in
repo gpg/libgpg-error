@@ -644,6 +644,11 @@ typedef struct _gpgrt_poll_s gpgrt_poll_t;
 typedef struct _gpgrt_poll_s es_poll_t;
 #endif
 
+/* The type of the string filter function as used by fprintf_sf et al.  */
+typedef char *(*gpgrt_string_filter_t) (const char *s, int n, void *opaque);
+
+
+
 gpgrt_stream_t gpgrt_fopen (const char *_GPGRT__RESTRICT path,
                             const char *_GPGRT__RESTRICT mode);
 gpgrt_stream_t gpgrt_mopen (void *_GPGRT__RESTRICT data,
@@ -782,6 +787,15 @@ int gpgrt_fprintf (gpgrt_stream_t _GPGRT__RESTRICT stream,
 int gpgrt_fprintf_unlocked (gpgrt_stream_t _GPGRT__RESTRICT stream,
                             const char *_GPGRT__RESTRICT format, ...)
                             GPGRT_ATTR_PRINTF(2,3);
+
+int gpgrt_fprintf_sf (gpgrt_stream_t _GPGRT__RESTRICT stream,
+                      gpgrt_string_filter_t sf, void *sfvalue,
+                      const char *_GPGRT__RESTRICT format,
+                      ...) GPGRT_ATTR_PRINTF(4,5);
+int gpgrt_fprintf_sf_unlocked (gpgrt_stream_t _GPGRT__RESTRICT stream,
+                               gpgrt_string_filter_t sf, void *sfvalue,
+                               const char *_GPGRT__RESTRICT format,
+                               ...) GPGRT_ATTR_PRINTF(4,5);
 
 int gpgrt_printf (const char *_GPGRT__RESTRICT format, ...)
                   GPGRT_ATTR_PRINTF(1,2);

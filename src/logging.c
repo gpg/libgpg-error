@@ -839,7 +839,7 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
         }
       else
         {
-          rc = _gpgrt_vfprintf_unlocked (logstream, fmt, arg_ptr);
+          rc = _gpgrt_vfprintf_unlocked (logstream, NULL, NULL, fmt, arg_ptr);
           if (rc > 0)
             length += rc;
         }

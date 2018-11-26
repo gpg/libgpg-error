@@ -40,6 +40,49 @@
 static char *one_test_buf1;
 static int   one_test_rc1;
 
+
+
+
+/* Read all data from STREAM into a new malloced buffer and return
+ * that buffer.  The buffer is always 0 terminated.  Either returns a
+ * string or dies.  The stream will be trunctaed to zero. */
+static char *
+stream_to_string (gpgrt_stream_t stream)
+{
+#define NCHUNK 1024
+  char *buffer;
+  size_t bufsize, buflen;
+  size_t nread;
+
+  gpgrt_rewind (stream);
+
+  buffer = NULL;
+  buflen = bufsize = 0;
+  do
+    {
+      bufsize += NCHUNK;
+      buffer = realloc (buffer, bufsize+1);
+      if (!buffer)
+        die ("malloc failed at line %d\n", __LINE__);
+
+      nread = gpgrt_fread (buffer + buflen, 1, NCHUNK, stream);
+      if (nread < NCHUNK && gpgrt_ferror (stream))
+        die ("fread failed at line %d: %s\n", __LINE__, strerror (errno));
+      buflen += nread;
+    }
+  while (nread == NCHUNK);
+  buffer[nread] = 0;
+
+  if (strlen (buffer) != buflen)
+    fail ("stream_to_string detected an embedded nul");
+
+  gpgrt_ftruncate (stream, 0);
+  return buffer;
+#undef NCHUNK
+}
+
+
+
 static void
 one_test_x0 (const char *format, ...)
 {
@@ -375,6 +418,74 @@ check_snprintf (void)
 }
 
 
+struct sfstate_s
+{
+  char *last_result;
+};
+
+static char *
+string_filter (const char *string, int no, void *opaque)
+{
+  struct sfstate_s *state = opaque;
+
+  free (state->last_result);
+  if (no == -1)
+    {
+      state->last_result = NULL;
+      return NULL;
+    }
+  if (no == 3)
+    state->last_result = NULL;
+  else
+    state->last_result = strdup (string? string : "[==>Niente<==]");
+
+  return state->last_result;
+}
+
+
+static void
+check_fprintf_sf (void)
+{
+  volatile char *nullptr = NULL; /* Avoid compiler warning.  */
+  struct sfstate_s sfstate = {NULL};
+  gpgrt_stream_t stream;
+  const char *expect;
+  char *result;
+
+  stream = gpgrt_fopenmem (0, "w+b");
+  if (!stream)
+    die ("fopenmem failed at line %d\n", __LINE__);
+
+  gpgrt_fprintf_sf (stream, string_filter, &sfstate,
+                    "%s a=%d b=%s c=%d d=%.8s null=%s\n",
+                    nullptr, 1, "foo\x01 bar", 2,
+                    "a longer string", nullptr);
+  expect = "[==>Niente<==] a=1 b=foo\x01 bar c=2 d=a longer null=(null)\n";
+  result = stream_to_string (stream);
+  if (strcmp (result, expect))
+    {
+      show ("expect: '%s'\n", expect);
+      show ("result: '%s'\n", result);
+      fail ("fprintf_sf failed at %d\n", __LINE__);
+    }
+  free (result);
+
+  gpgrt_fprintf_sf (stream, string_filter, &sfstate,
+                    "a=%d b=%s c=%d d=%.8s e=%s\n",
+                    1, "foo\n bar", 2, nullptr, "");
+  expect = "a=1 b=foo\n bar c=2 d=[==>Nien e=\n";
+  result = stream_to_string (stream);
+  if (strcmp (result, expect))
+    {
+      show ("expect: '%s'\n", expect);
+      show ("result: '%s'\n", result);
+      fail ("fprintf_sf failed at %d\n", __LINE__);
+    }
+  free (result);
+
+  gpgrt_fclose (stream);
+}
+
 
 int
 main (int argc, char **argv)
@@ -420,6 +531,7 @@ main (int argc, char **argv)
 
   run_tests ();
   check_snprintf ();
+  check_fprintf_sf ();
 
 #ifdef __GLIBC__
   return !!errorcount;

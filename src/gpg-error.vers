@@ -193,6 +193,9 @@ GPG_ERROR_1.0 {
     gpgrt_cmp_version;
 
     gpgrt_ftruncate;
+    gpgrt_fprintf_sf;
+    gpgrt_fprintf_sf_unlocked;
+
   local:
     *;
 };

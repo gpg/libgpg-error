@@ -515,7 +515,7 @@ gpgrt_vfprintf (estream_t _GPGRT__RESTRICT stream,
                 const char *_GPGRT__RESTRICT format,
                 va_list ap)
 {
-  return _gpgrt_vfprintf (stream, format, ap);
+  return _gpgrt_vfprintf (stream, NULL, NULL, format, ap);
 }
 
 int
@@ -523,7 +523,7 @@ gpgrt_vfprintf_unlocked (estream_t _GPGRT__RESTRICT stream,
                           const char *_GPGRT__RESTRICT format,
                           va_list ap)
 {
-  return _gpgrt_vfprintf_unlocked (stream, format, ap);
+  return _gpgrt_vfprintf_unlocked (stream, NULL, NULL, format, ap);
 }
 
 int
@@ -533,7 +533,7 @@ gpgrt_printf (const char *_GPGRT__RESTRICT format, ...)
   int rc;
 
   va_start (ap, format);
-  rc = _gpgrt_vfprintf (es_stdout, format, ap);
+  rc = _gpgrt_vfprintf (es_stdout, NULL, NULL, format, ap);
   va_end (ap);
 
   return rc;
@@ -546,7 +546,7 @@ gpgrt_printf_unlocked (const char *_GPGRT__RESTRICT format, ...)
   int rc;
 
   va_start (ap, format);
-  rc = _gpgrt_vfprintf_unlocked (es_stdout, format, ap);
+  rc = _gpgrt_vfprintf_unlocked (es_stdout, NULL, NULL, format, ap);
   va_end (ap);
 
   return rc;
@@ -560,7 +560,7 @@ gpgrt_fprintf (estream_t _GPGRT__RESTRICT stream,
   int rc;
 
   va_start (ap, format);
-  rc = _gpgrt_vfprintf (stream, format, ap);
+  rc = _gpgrt_vfprintf (stream, NULL, NULL, format, ap);
   va_end (ap);
 
   return rc;
@@ -574,7 +574,37 @@ gpgrt_fprintf_unlocked (estream_t _GPGRT__RESTRICT stream,
   int rc;
 
   va_start (ap, format);
-  rc = _gpgrt_vfprintf_unlocked (stream, format, ap);
+  rc = _gpgrt_vfprintf_unlocked (stream, NULL, NULL, format, ap);
+  va_end (ap);
+
+  return rc;
+}
+
+int
+gpgrt_fprintf_sf (estream_t _GPGRT__RESTRICT stream,
+                  gpgrt_string_filter_t sf, void *sfvalue,
+                  const char *_GPGRT__RESTRICT format, ...)
+{
+  va_list ap;
+  int rc;
+
+  va_start (ap, format);
+  rc = _gpgrt_vfprintf (stream, sf, sfvalue, format, ap);
+  va_end (ap);
+
+  return rc;
+}
+
+int
+gpgrt_fprintf_sf_unlocked (estream_t _GPGRT__RESTRICT stream,
+                           gpgrt_string_filter_t sf, void *sfvalue,
+                           const char *_GPGRT__RESTRICT format, ...)
+{
+  va_list ap;
+  int rc;
+
+  va_start (ap, format);
+  rc = _gpgrt_vfprintf_unlocked (stream, sf, sfvalue, format, ap);
   va_end (ap);
 
   return rc;

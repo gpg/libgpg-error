@@ -1196,7 +1196,8 @@ pr_char (estream_printf_out_t outfnc, void *outfncarg,
 /* "s" formatting.  */
 static int
 pr_string (estream_printf_out_t outfnc, void *outfncarg,
-            argspec_t arg, value_t value, size_t *nbytes)
+           argspec_t arg, value_t value, size_t *nbytes,
+           gpgrt_string_filter_t sf, void *sfvalue, int string_no)
 {
   int rc;
   size_t n;
@@ -1205,6 +1206,11 @@ pr_string (estream_printf_out_t outfnc, void *outfncarg,
   if (arg->vt != VALTYPE_STRING)
     return -1;
   string = value.a_string;
+  if (sf)
+    string = sf (value.a_string, string_no, sfvalue);
+  else
+    string = value.a_string;
+
   if (!string)
     string = "(null)";
   if (arg->precision >= 0)
@@ -1222,12 +1228,12 @@ pr_string (estream_printf_out_t outfnc, void *outfncarg,
     {
       rc = pad_out (outfnc, outfncarg, ' ', arg->width - n, nbytes);
       if (rc)
-        return rc;
+        goto leave;
     }
 
   rc = outfnc (outfncarg, string, n);
   if (rc)
-    return rc;
+    goto leave;
   *nbytes += n;
 
   if ((arg->flags & FLAG_LEFT_JUST)
@@ -1235,10 +1241,16 @@ pr_string (estream_printf_out_t outfnc, void *outfncarg,
     {
       rc = pad_out (outfnc, outfncarg, ' ', arg->width - n, nbytes);
       if (rc)
-        return rc;
+        goto leave;
     }
 
-  return 0;
+  rc = 0;
+
+ leave:
+  if (sf) /* Tell the filter to release resources.  */
+    sf (value.a_string, -1, sfvalue);
+
+  return rc;
 }
 
 
@@ -1337,14 +1349,18 @@ pr_bytes_so_far (estream_printf_out_t outfnc, void *outfncarg,
 
 
 /* Run the actual formatting.  OUTFNC and OUTFNCARG are the output
-   functions.  FORMAT is format string ARGSPECS is the parsed format
-   string, ARGSPECS_LEN the number of items in ARGSPECS.  VALUETABLE
-   holds the values and may be directly addressed using the position
-   arguments given by ARGSPECS.  MYERRNO is used for the "%m"
-   conversion. NBYTES well be updated to reflect the number of bytes
-   send to the output function. */
+ * functions.  FORMAT is format string ARGSPECS is the parsed format
+ * string, ARGSPECS_LEN the number of items in ARGSPECS.
+ * STRING_FILTER is an optional function to filter string (%s) args;
+ * it is called with the original string and the count of already
+ * processed %s arguments.  Its return value will be used instead of
+ * the original string.  VALUETABLE holds the values and may be
+ * directly addressed using the position arguments given by ARGSPECS.
+ * MYERRNO is used for the "%m" conversion. NBYTES well be updated to
+ * reflect the number of bytes send to the output function. */
 static int
 do_format (estream_printf_out_t outfnc, void *outfncarg,
+           gpgrt_string_filter_t sf, void *sfvalue,
            const char *format, argspec_t argspecs, size_t argspecs_len,
            valueitem_t valuetable, int myerrno, size_t *nbytes)
 {
@@ -1354,6 +1370,7 @@ do_format (estream_printf_out_t outfnc, void *outfncarg,
   int argidx = 0; /* Only used for assertion.  */
   size_t n;
   value_t value;
+  int string_no = 0;  /* Number of processed "%s" args.  */
 
   s = format;
   while ( *s )
@@ -1443,8 +1460,12 @@ do_format (estream_printf_out_t outfnc, void *outfncarg,
           rc = pr_char (outfnc, outfncarg, arg, value, nbytes);
           break;
         case CONSPEC_STRING:
+          rc = pr_string (outfnc, outfncarg, arg, value, nbytes,
+                          sf, sfvalue, string_no++);
+          break;
         case CONSPEC_STRERROR:
-          rc = pr_string (outfnc, outfncarg, arg, value, nbytes);
+          rc = pr_string (outfnc, outfncarg, arg, value, nbytes,
+                          NULL, NULL, 0);
           break;
         case CONSPEC_POINTER:
           rc = pr_pointer (outfnc, outfncarg, arg, value, nbytes);
@@ -1478,6 +1499,7 @@ do_format (estream_printf_out_t outfnc, void *outfncarg,
 int
 _gpgrt_estream_format (estream_printf_out_t outfnc,
                        void *outfncarg,
+                       gpgrt_string_filter_t sf, void *sfvalue,
                        const char *format, va_list vaargs)
 {
   /* Buffer to hold the argspecs and a pointer to it.*/
@@ -1489,10 +1511,10 @@ _gpgrt_estream_format (estream_printf_out_t outfnc,
   struct valueitem_s valuetable_buffer[DEFAULT_MAX_VALUES];
   valueitem_t valuetable = valuetable_buffer;
 
-  int rc;     /* Return code. */
+  int rc;        /* Return code. */
   size_t argidx; /* Used to index the argspecs array.  */
   size_t validx; /* Used to index the valuetable.  */
-  int max_pos;/* Highest argument position.  */
+  int max_pos;   /* Highest argument position.  */
 
   size_t nbytes = 0; /* Keep track of the number of bytes passed to
                         the output function.  */
@@ -1606,7 +1628,7 @@ _gpgrt_estream_format (estream_printf_out_t outfnc,
 /*     fprintf (stderr, "%2d: vt=%d\n", validx, valuetable[validx].vt); */
 
   /* Everything has been collected, go ahead with the formatting.  */
-  rc = do_format (outfnc, outfncarg, format,
+  rc = do_format (outfnc, outfncarg, sf, sfvalue, format,
                   argspecs, argspecs_len, valuetable, myerrno, &nbytes);
 
   goto leave;
@@ -1646,7 +1668,8 @@ _gpgrt_estream_printf (const char *format, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, format);
-  rc = _gpgrt_estream_format (plain_stdio_out, stderr, format, arg_ptr);
+  rc = _gpgrt_estream_format (plain_stdio_out, stderr, NULL, NULL,
+                              format, arg_ptr);
   va_end (arg_ptr);
 
   return rc;
@@ -1660,7 +1683,8 @@ _gpgrt_estream_fprintf (FILE *fp, const char *format, ...)
   va_list arg_ptr;
 
   va_start (arg_ptr, format);
-  rc = _gpgrt_estream_format (plain_stdio_out, fp, format, arg_ptr);
+  rc = _gpgrt_estream_format (plain_stdio_out, fp, NULL, NULL,
+                              format, arg_ptr);
   va_end (arg_ptr);
 
   return rc;
@@ -1670,7 +1694,8 @@ _gpgrt_estream_fprintf (FILE *fp, const char *format, ...)
 int
 _gpgrt_estream_vfprintf (FILE *fp, const char *format, va_list arg_ptr)
 {
-  return _gpgrt_estream_format (plain_stdio_out, fp, format, arg_ptr);
+  return _gpgrt_estream_format (plain_stdio_out, fp, NULL, NULL,
+                                format, arg_ptr);
 }
 
 
@@ -1725,7 +1750,8 @@ _gpgrt_estream_vsnprintf (char *buf, size_t bufsize,
   parm.count = 0;
   parm.used = 0;
   parm.buffer = bufsize?buf:NULL;
-  rc = _gpgrt_estream_format (fixed_buffer_out, &parm, format, arg_ptr);
+  rc = _gpgrt_estream_format (fixed_buffer_out, &parm, NULL, NULL,
+                              format, arg_ptr);
   if (!rc)
     rc = fixed_buffer_out (&parm, "", 1); /* Print terminating Nul.  */
   if (rc == -1)
@@ -1820,7 +1846,8 @@ _gpgrt_estream_vasprintf (char **bufp, const char *format, va_list arg_ptr)
       return -1;
     }
 
-  rc = _gpgrt_estream_format (dynamic_buffer_out, &parm, format, arg_ptr);
+  rc = _gpgrt_estream_format (dynamic_buffer_out, &parm, NULL, NULL,
+                              format, arg_ptr);
   if (!rc)
     rc = dynamic_buffer_out (&parm, "", 1); /* Print terminating Nul.  */
   /* Fixme: Should we shrink the resulting buffer?  */
