@@ -19,7 +19,7 @@
 
 #include <stdarg.h>
 
-#include "../src/gpg-error.h"
+#include "../src/gpgrt.h"
 
 #ifndef PGM
 # error Macro PGM not defined.
@@ -32,6 +32,11 @@
 static int verbose;
 static int debug;
 static int errorcount;
+
+
+static void die (const char *format, ...) GPGRT_ATTR_NR_PRINTF(1,2);
+static void fail (const char *format, ...) GPGRT_ATTR_PRINTF(1,2);
+static void show (const char *format, ...) GPGRT_ATTR_PRINTF(1,2);
 
 
 static void
