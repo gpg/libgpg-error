@@ -28,7 +28,7 @@ endif
 gpg_error_lib = ../src/libgpg-error.la
 
 TESTS = t-version t-strerror t-syserror t-lock t-printf t-poll t-b64 \
-	t-argparse
+	t-argparse t-logging
 
 AM_CPPFLAGS = -I$(top_builddir)/src $(extra_includes)
 

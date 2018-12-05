@@ -455,10 +455,10 @@ fun_closer (void *cookie_arg)
 /* Common function to either set the logging to a file or a file
    descriptor. */
 static void
-set_file_fd (const char *name, int fd)
+set_file_fd (const char *name, int fd, estream_t stream)
 {
   estream_t fp;
-  int want_socket;
+  int want_socket = 0;
 #ifdef HAVE_W32CE_SYSTEM
   int use_writefile = 0;
 #endif
@@ -472,6 +472,13 @@ set_file_fd (const char *name, int fd)
       logstream = NULL;
     }
 
+  if (stream)
+    {
+      /* We don't use a cookie to log directly to a stream.  */
+      fp = stream;
+      goto leave;
+    }
+
   /* Figure out what kind of logging we want.  */
   if (name && !strcmp (name, "-"))
     {
@@ -479,7 +486,6 @@ set_file_fd (const char *name, int fd)
       fd = _gpgrt_fileno (es_stderr);
     }
 
-  want_socket = 0;
   if (name && !strncmp (name, "tcp://", 6) && name[6])
     want_socket = 1;
 #ifndef HAVE_W32_SYSTEM
@@ -541,6 +547,7 @@ set_file_fd (const char *name, int fd)
   if (!fp)
     fp = es_stderr;
 
+ leave:
   _gpgrt_setvbuf (fp, NULL, _IOLBF, 0);
 
   logstream = fp;
@@ -567,20 +574,20 @@ void
 _gpgrt_log_set_sink (const char *name, estream_t stream, int fd)
 {
   if (name && !stream && fd == -1)
-    set_file_fd (name, -1);
+    set_file_fd (name, -1, NULL);
   else if (!name && !stream && fd != -1)
     {
       if (!_gpgrt_fd_valid_p (fd))
         _gpgrt_log_fatal ("gpgrt_log_set_sink: fd is invalid: %s\n",
                      strerror (errno));
-      set_file_fd (NULL, fd);
+      set_file_fd (NULL, fd, NULL);
     }
   else if (!name && stream && fd == -1)
     {
-      _gpgrt_log_fatal ("gpgrt_log_set_sink: stream arg not yet supported\n");
+      set_file_fd (NULL, -1, stream);
     }
   else /* default */
-    set_file_fd ("-", -1);
+    set_file_fd ("-", -1, NULL);
 }
 
 
