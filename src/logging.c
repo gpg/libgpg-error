@@ -107,6 +107,14 @@ static int missing_lf;
 static int errorcount;
 
 
+/* An object to convey data to the fmt_string_filter.  */
+struct fmt_string_filter_s
+{
+  char *last_result;
+};
+
+
+
 /* Get the error count as maintained by the log fucntions.  With CLEAR
  * set reset the counter.  */
 int
@@ -688,6 +696,97 @@ _gpgrt_log_get_stream ()
 }
 
 
+/* A fiter used with the fprintf_sf function to sanitize the args for
+ * "%s" format specifiers.  */
+static char *
+fmt_string_filter (const char *string, int no, void *opaque)
+{
+  struct fmt_string_filter_s *state = opaque;
+  const unsigned char *p;
+  size_t buflen;
+  char *d;
+  int any;
+
+  if (no == -1)
+    {
+      /* The printf engine asked us to release resources.  */
+      if (state->last_result)
+        {
+          _gpgrt_free (state->last_result);
+          state->last_result = NULL;
+        }
+      return NULL;
+    }
+
+  if (!string)
+    return NULL; /* Nothing to filter - printf handles NULL nicely.  */
+
+  /* Check whether escaping is needed and count needed length. */
+  any = 0;
+  buflen = 1;
+  for (p = (const unsigned char *)string; *p; p++)
+    {
+      switch (*p)
+        {
+        case '\n':
+        case '\r':
+        case '\f':
+        case '\v':
+        case '\b':
+        case '\t':
+        case '\a':
+        case '\\':
+          buflen += 2;
+          any = 1;
+          break;
+        default:
+          if (*p < 0x20 || *p == 0x7f)
+            {
+              buflen += 5;
+              any = 1;
+            }
+          else
+            buflen++;
+        }
+    }
+  if (!any)
+    return (char*)string;  /* Nothing to escape.  */
+
+  /* Create a buffer and escape the input.  */
+  _gpgrt_free (state->last_result);
+  state->last_result = _gpgrt_malloc (buflen);
+  if (!state->last_result)
+    return "[out_of_core_in_format_string_filter]";
+
+  d = state->last_result;
+  for (p = (const unsigned char *)string; *p; p++)
+    {
+      switch (*p)
+        {
+        case '\n': *d++ = '\\'; *d++ = 'n'; break;
+        case '\r': *d++ = '\\'; *d++ = 'r'; break;
+        case '\f': *d++ = '\\'; *d++ = 'f'; break;
+        case '\v': *d++ = '\\'; *d++ = 'v'; break;
+        case '\b': *d++ = '\\'; *d++ = 'b'; break;
+        case '\t': *d++ = '\\'; *d++ = 't'; break;
+        case '\a': *d++ = '\\'; *d++ = 'a'; break;
+        case '\\': *d++ = '\\'; *d++ = '\\'; break;
+
+        default:
+          if (*p < 0x20 || *p == 0x7f)
+            {
+              snprintf (d, 5, "\\x%02x", *p);
+              d += 4;
+            }
+          else
+            *d++ = *p;
+        }
+    }
+  *d = 0;
+  return state->last_result;
+}
+
+
 /* Note: LOGSTREAM is expected to be locked.  */
 static int
 print_prefix (int level, int leading_backspace)
@@ -846,7 +945,10 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
         }
       else
         {
-          rc = _gpgrt_vfprintf_unlocked (logstream, NULL, NULL, fmt, arg_ptr);
+          struct fmt_string_filter_s sf = {NULL};
+
+          rc = _gpgrt_vfprintf_unlocked (logstream, fmt_string_filter, &sf,
+                                         fmt, arg_ptr);
           if (rc > 0)
             length += rc;
         }

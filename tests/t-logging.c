@@ -120,6 +120,38 @@ check_log_info (void)
                        "and 3\n")))
     fail ("log_info test failed at line %d\n", __LINE__);
   free (logbuf);
+
+  /* With arguments.  */
+  log_info ("file '%s' line %d: %s\n", "/foo/bar.txt", 20, "not found");
+  logbuf = log_to_string ();
+  if (strcmp (logbuf, "t-logging: file '/foo/bar.txt' line 20: not found\n"))
+    fail ("log_info test failed at line %d\n", __LINE__);
+  free (logbuf);
+
+  /* With arguments and a control char in the string arg.  */
+  log_info ("file '%s' line %d: %s\n", "/foo/bar.txt\b", 20, "not found");
+  logbuf = log_to_string ();
+  if (strcmp (logbuf,
+              "t-logging: file '/foo/bar.txt\\b' line 20: not found\n"))
+    fail ("log_info test failed at line %d\n", __LINE__);
+  free (logbuf);
+
+  /* With arguments and the prefix in a string arg.  */
+  log_info ("file '%s': %s\n", "/foo/bar.txt\nt-logging", "not \x01 found");
+  logbuf = log_to_string ();
+  if (strcmp (logbuf,
+              "t-logging: file '/foo/bar.txt\\nt-logging': not \\x01 found\n"))
+    fail ("log_info test failed at line %d\n", __LINE__);
+
+  /* With arguments and byte with bit 7 set in a string arg.  */
+  log_info ("file '%s': %s\n", "/foo/bar.txt\n", "not \x81 found");
+  logbuf = log_to_string ();
+  if (strcmp (logbuf,
+              "t-logging: file '/foo/bar.txt\\n': not \x81 found\n"))
+    fail ("log_info test failed at line %d\n", __LINE__);
+  /* show ("===>%s<===\n", logbuf); */
+
+  free (logbuf);
 }
 
 
