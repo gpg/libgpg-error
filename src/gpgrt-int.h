@@ -464,6 +464,7 @@ const char *_gpgrt_fname_get (gpgrt_stream_t stream);
 #include "estream-printf.h"
 
 /* Make sure we always use our snprintf */
+#undef snprintf
 #define snprintf _gpgrt_estream_snprintf
 
 
