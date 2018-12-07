@@ -224,5 +224,6 @@ EXPORTS
  gpgrt_fprintf_sf             @171
  gpgrt_fprintf_sf_unlocked    @172
 
+ gpgrt_w32_override_locale    @173
 
 ;; end of file with public symbols for Windows.

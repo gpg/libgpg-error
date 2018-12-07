@@ -483,6 +483,7 @@ main (int argc, char *argv[])
          CMD_LIB_VERSION = 501,
          CMD_LIST,
          CMD_DEFINES,
+         CMD_LOCALE,
          OPT_DESC
   };
   static gpgrt_opt_t opts[] = {
@@ -492,6 +493,13 @@ main (int argc, char *argv[])
                 "Print all error codes"),
     ARGPARSE_c (CMD_DEFINES, "defines",
                 "Print all error codes as #define lines"),
+    ARGPARSE_c (CMD_LOCALE, "locale",
+#if HAVE_W32_SYSTEM
+                "Return the locale used for gettext"
+#else
+                "@"
+#endif
+                ),
     ARGPARSE_s_n (OPT_DESC, "desc",
                   "Print with error description"),
     ARGPARSE_end()
@@ -500,6 +508,7 @@ main (int argc, char *argv[])
 
   int i;
   int listmode = 0;
+  int localemode = 0;
   int desc = 0;
   const char *source_sym;
   const char *error_sym;
@@ -518,18 +527,41 @@ main (int argc, char *argv[])
         case CMD_LIB_VERSION: break;
         case CMD_LIST:       listmode = 1; break;
         case CMD_DEFINES:    listmode = 2; break;
+        case CMD_LOCALE:     localemode = 1; break;
         case OPT_DESC:       desc = 1; break;
-
         default: pargs.err = ARGPARSE_PRINT_WARNING; break;
         }
     }
   gpgrt_argparse (NULL, &pargs, NULL);  /* Free internal memory.  */
 
-  if ((argc && listmode) || (!argc && !listmode))
+  if (localemode)
+    {
+      if (argc > 1)
+        gpgrt_usage (1);
+    }
+  else if ((argc && listmode) || (!argc && !listmode))
     gpgrt_usage (1);
 
+  if (localemode)
+    {
+#if HAVE_W32_SYSTEM
+      if (argc)
+        {
+          /* Warning: What we do here is not allowed because
+           * gpgrt_w32_override_locale needs to be called as early as
+           * possible.  However for this very purpose it is okay.  */
+          if (**argv >= '0' && **argv <= '9')
+            gpgrt_w32_override_locale (NULL, strtoul (*argv, NULL, 0));
+          else
+            gpgrt_w32_override_locale (*argv, 0);
+        }
 
-  if (listmode == 1)
+      printf ("%s\n", gettext_localename ());
+#else
+      log_info ("this command is only useful on Windows\n");
+#endif
+    }
+  else if (listmode == 1)
     {
       for (i=0; i <  GPG_ERR_SOURCE_DIM; i++)
         {

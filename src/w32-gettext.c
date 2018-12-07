@@ -53,6 +53,16 @@
 #include "init.h"
 #include "gpg-error.h"
 
+/* Override values initialized by gpgrt_w32_override_locale.  If NAME
+ * is not the empty string LANGID will be used.  */
+static struct
+{
+  unsigned short active;  /* If not zero this override is active. */
+  unsigned short langid;
+  char name[28];
+} override_locale;
+
+
 #ifdef HAVE_W32CE_SYSTEM
 /* Forward declaration.  */
 static wchar_t *utf8_to_wchar (const char *string, size_t length, size_t *retlen);
@@ -647,33 +657,42 @@ my_nl_locale_name (const char *categoryname)
 #ifndef HAVE_W32CE_SYSTEM
   const char *retval;
 #endif
-  LCID lcid;
   LANGID langid;
   int primary, sub;
 
-  /* Let the user override the system settings through environment
-     variables, as on POSIX systems.  */
+  if (override_locale.active)
+    {
+      if (*override_locale.name)
+        return override_locale.name;
+      langid = override_locale.langid;
+    }
+  else
+    {
+      LCID lcid;
+
+      /* Let the user override the system settings through environment
+       *  variables, as on POSIX systems.  */
 #ifndef HAVE_W32CE_SYSTEM
-  retval = getenv ("LC_ALL");
-  if (retval != NULL && retval[0] != '\0')
-    return retval;
-  retval = getenv (categoryname);
-  if (retval != NULL && retval[0] != '\0')
-    return retval;
-  retval = getenv ("LANG");
-  if (retval != NULL && retval[0] != '\0')
-    return retval;
+      retval = getenv ("LC_ALL");
+      if (retval != NULL && retval[0] != '\0')
+        return retval;
+      retval = getenv (categoryname);
+      if (retval != NULL && retval[0] != '\0')
+        return retval;
+      retval = getenv ("LANG");
+      if (retval != NULL && retval[0] != '\0')
+        return retval;
 #endif /*!HAVE_W32CE_SYSTEM*/
 
-  /* Use native Win32 API locale ID.  */
+      /* Use native Win32 API locale ID.  */
 #ifdef HAVE_W32CE_SYSTEM
-  lcid = GetSystemDefaultLCID ();
+      lcid = GetSystemDefaultLCID ();
 #else
-  lcid = GetThreadLocale ();
+      lcid = GetThreadLocale ();
 #endif
-
-  /* Strip off the sorting rules, keep only the language part.  */
-  langid = LANGIDFROMLCID (lcid);
+      /* Strip off the sorting rules, keep only the language part.  */
+      langid = LANGIDFROMLCID (lcid);
+    }
 
   /* Split into language and territory part.  */
   primary = PRIMARYLANGID (langid);
@@ -1919,6 +1938,24 @@ _gpg_w32_gettext_use_utf8 (int value)
   if (value != -1)
     tls->gt_use_utf8 = value;
   return last;
+}
+
+
+/* Force the use of the locale NAME or if NAME is NULL the locale
+ * derived from LANGID will be used.  This function is not thread-safe
+ * and must be used early - even before gpgrt_check_version. */
+void
+gpgrt_w32_override_locale (const char *name, unsigned short langid)
+{
+  if (name)
+    {
+      strncpy (override_locale.name, name, sizeof (override_locale.name) - 1);
+      override_locale.name[sizeof (override_locale.name) - 1] = 0;
+    }
+  else
+    *override_locale.name = 0;
+  override_locale.langid = langid;
+  override_locale.active = 1;
 }
 
 
