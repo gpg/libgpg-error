@@ -33,7 +33,7 @@ YAT2M_OPTIONS = -I $(srcdir) \
 	--release "Libgpg-error @PACKAGE_VERSION@" --source "GnuPG"
 
 myman_sources = gpgrt.texi
-myman_pages   = gpg-error-config.1
+myman_pages   = gpgrt-config.1
 
 man_MANS = $(myman_pages)
 

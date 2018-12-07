@@ -1,14 +1,31 @@
-Noteworthy changes in version 1.33 (unreleased) [C24/A24/R_]
+Noteworthy changes in version 1.33 (2018-12-07) [C25/A25/R0]
 -----------------------------------------------
 
+ * New unified config script gpgrt-config which can now be used by all
+   GnuPG related packages.
+
+ * Support for ARC and arm64ilp32.
+
+ * The log functions now sanitize strings printed with the "%s" format
+   specifier.  All control characters are C-escaped in the output.
+   Users of that function may want to remove their own escaping to
+   avoid doubling of backslashes.
+
+ * New fprintf style function to apply a custom filter for string
+   arguments.
+
+ * New function to compare version strings.
 
  * Interface changes relative to the 1.28 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  gpgrt_cmp_version               New.
- gpgrt_ftruncate                 New but limited functionality.
  gpgrt_string_filter_t           New.
  gpgrt_fprintf_sf                New.
  gpgrt_fprintf_sf_unlocked       New.
+ gpgrt_ftruncate                 New but limited functionality.
+ gpgrt_w32_override_locale       New.
+
+ Release-info: https://dev.gnupg.org/T4205
 
 
 Noteworthy changes in version 1.32 (2018-07-12) [C24/A24/R3]
