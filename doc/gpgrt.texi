@@ -210,25 +210,19 @@ file search path (via the @option{-I} option).
 
 However, the path to the include file is determined at the time the
 source is configured.  To solve this problem, Libgpg-error ships with
-the small helper programs @command{gpg-error-config} and
-@command{gpgrt-config} which both know the path to the include file
+the small helper program @command{gpgrt-config}
+which know the path to the include file
 and other configuration options.  The options that need to be added to
 the compiler invocation at compile time are output by the
-@option{--cflags} option to @command{gpg-error-config} (or
-@command{gpgrt-config}.  The following example shows how it can be
+@option{--cflags} option to @command{gpgrt-config}
+The following example shows how it can be
 used at the command line:
-
-@example
-gcc -c foo.c $(gpg-error-config --cflags)
-@end example
-
-or with the identical
 
 @example
 gcc -c foo.c $(gpgrt-config --cflags)
 @end example
 
-Adding the output of @samp{gpg-error-config --cflags} to the
+Adding the output of @samp{gpgrt-config --cflags} to the
 compiler’s command line will ensure that the compiler can find the
 Libgpg-error header file.
 
@@ -236,19 +230,19 @@ A similar problem occurs when linking the program with the library.
 Again, the compiler has to find the library files.  For this to work,
 the path to the library files has to be added to the library search
 path (via the @option{-L} option).  For this, the option
-@option{--libs} to @command{gpg-error-config} can be used.  The
+@option{--libs} to @command{gpgrt-config} can be used.  The
 example shows how to link @file{foo.o} with the Libgpg-error library
 to a program @command{foo}.
 
 @example
-gcc -o foo foo.o $(gpg-error-config --libs)
+gcc -o foo foo.o $(gpgrt-config --libs)
 @end example
 
 Of course you can also combine both examples to a single command by
-specifying both options to @command{gpg-error-config}:
+specifying both options to @command{gpgrt-config}:
 
 @example
-gcc -o foo foo.c $(gpg-error-config --cflags --libs)
+gcc -o foo foo.c $(gpgrt-config --cflags --libs)
 @end example
 
 @node Building sources using Automake
@@ -256,7 +250,7 @@ gcc -o foo foo.c $(gpg-error-config --cflags --libs)
 
 It is much easier if you use GNU Automake instead of writing your own
 Makefiles.  If you do that, you do not have to worry about finding and
-invoking the @command{gpg-error-config} script at all.  Libgpg-error
+invoking the @command{gpgrt-config} script at all.  Libgpg-error
 provides an extension to Automake that does all the work for you.
 
 @c A simple macro for optional variables.
@@ -277,7 +271,7 @@ the used helper script does not match the target type you are building
 for a warning is printed and the string @code{libgpg-error} is
 appended to the variable @code{gpg_config_script_warn}.
 
-This macro searches for @command{gpg-error-config} along the PATH.  If
+This macro searches for @command{gpgrt-config} along the PATH.  If
 you are cross-compiling, it is useful to set the environment variable
 @code{SYSROOT} to the top directory of your target.  The macro will
 then first look for the helper program in the @file{bin} directory
@@ -346,27 +340,27 @@ TBD.  (Description of the error function may be taken from Libgcrypt.)
 @chapter Tools
 
 @menu
-* gpg-error-config::    Print required compiler flags
+* gpgrt-config::    Print required compiler flags
 @end menu
 
 @c The original version of this man page has been written for Debian and was
 @c contributed to libgpg-error by Daniel Kahn Gillmor <dkg@fifthhorseman.net>.
-@manpage gpg-error-config.1
-@node gpg-error-config
+@manpage gpgrt-config.1
+@node gpgrt-config
 @section Print required compiler flags
 @ifset manverb
-.B gpg-error-config
+.B gpgrt-config
 \- Script to get information about the installed version of libgpg-error
 @end ifset
 
 @mansect synopsis
 @ifset manverb
-.B  gpg-error-config
+.B  gpgrt-config
 .RI [ options ]
 @end ifset
 
 @mansect description
-@command{gpg-error-config} is a tool that is used to configure to
+@command{gpgrt-config} is a tool that is used to configure to
 determine the compiler and linker flags that should be used to compile
 and link programs that use Libgpg-error. It is also used
 internally to the @code{.m4} macros for GNU autoconf that are included
@@ -374,7 +368,7 @@ with Libgpg-error.
 
 @mansect options
 @noindent
-@command{gpg-error-config} accepts the following options:
+@command{gpgrt-config} accepts the following options:
 
 @table @gnupgtabopt
 
