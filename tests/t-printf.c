@@ -201,6 +201,9 @@ run_tests (void)
   one_test_2 ("%d %% %d", 17, 768114563);
   one_test_2 ("%d %% %d", 17, -768114563);
 
+  /* Checking thousands is not easy because it depends on the locale.  */
+  /* one_test_1 ("%'d", 768114563); */
+
   one_test_1 ("%d", 17);
   one_test_1 ("%4d", 17);
   one_test_1 ("%40d", 17);

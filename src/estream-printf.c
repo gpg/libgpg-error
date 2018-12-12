@@ -60,14 +60,14 @@
     AC_CHECK_TYPES([ptrdiff_t])      defines HAVE_PTRDIFF_T
     AC_CHECK_SIZEOF([unsigned long]) defines SIZEOF_UNSIGNED_LONG
     AC_CHECK_SIZEOF([void *])        defines SIZEOF_VOID_P
-                                             HAVE_LANGINFO_THOUSANDS_SEP
+                                             HAVE_LANGINFO_THOUSEP
 
     Note that the file estream.m4 provides the autoconf macro
     ESTREAM_PRINTF_INIT which runs all required checks.
     See estream-printf.h for ways to tune this code.
 
   Missing stuff:  wchar and wint_t
-                  thousands_sep in pr_float.
+                  thousep in pr_float.
 
 */
 
@@ -95,7 +95,7 @@
 #  include <stdint.h>
 # endif
 #endif
-#ifdef HAVE_LANGINFO_THOUSANDS_SEP
+#ifdef HAVE_LANGINFO_THOUSEP
 #include <langinfo.h>
 #endif
 #ifdef HAVE_W32CE_SYSTEM
@@ -936,8 +936,8 @@ pr_integer (estream_printf_out_t outfnc, void *outfncarg,
     {
       int grouping = -1;
       const char * grouping_string =
-#ifdef HAVE_LANGINFO_THOUSANDS_SEP
-        nl_langinfo(THOUSANDS_SEP);
+#ifdef HAVE_LANGINFO_THOUSEP
+        nl_langinfo(THOUSEP);
 #else
         "'";
 #endif

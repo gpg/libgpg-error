@@ -24,16 +24,16 @@ AC_DEFUN([estream_PRINTF_INIT],
   AC_CHECK_TYPES([ptrdiff_t])
   AC_CHECK_SIZEOF([unsigned long])
   AC_CHECK_SIZEOF([void *])
-  AC_CACHE_CHECK([for nl_langinfo and THOUSANDS_SEP],
-                  estream_cv_langinfo_thousands_sep,
+  AC_CACHE_CHECK([for nl_langinfo and THOUSEP],
+                  estream_cv_langinfo_thousep,
       [AC_TRY_LINK([#include <langinfo.h>],
-        [char* cs = nl_langinfo(THOUSANDS_SEP); return !cs;],
-        estream_cv_langinfo_thousands_sep=yes,
-        estream_cv_langinfo_thousands_sep=no)
+        [char* cs = nl_langinfo(THOUSEP); return !cs;],
+        estream_cv_langinfo_thousep=yes,
+        estream_cv_langinfo_thousep=no)
       ])
-  if test $estream_cv_langinfo_thousands_sep = yes; then
-    AC_DEFINE(HAVE_LANGINFO_THOUSANDS_SEP, 1,
-      [Define if you have <langinfo.h> and nl_langinfo(THOUSANDS_SEP).])
+  if test $estream_cv_langinfo_thousep = yes; then
+    AC_DEFINE(HAVE_LANGINFO_THOUSEP, 1,
+      [Define if you have <langinfo.h> and nl_langinfo(THOUSEP).])
   fi
 ])
 
