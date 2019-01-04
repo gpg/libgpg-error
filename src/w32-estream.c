@@ -28,7 +28,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
 #ifdef HAVE_SYS_TIME_H
@@ -144,7 +143,7 @@ reader (void *arg)
 	  trace (("%p: got space", ctx));
           EnterCriticalSection (&ctx->mutex);
         }
-      assert (((ctx->writepos + 1) % READBUF_SIZE != ctx->readpos));
+      gpgrt_assert (((ctx->writepos + 1) % READBUF_SIZE != ctx->readpos));
       if (ctx->stop_me)
 	{
           LeaveCriticalSection (&ctx->mutex);
@@ -152,7 +151,7 @@ reader (void *arg)
         }
       nbytes = (ctx->readpos + READBUF_SIZE
 		- ctx->writepos - 1) % READBUF_SIZE;
-      assert (nbytes);
+      gpgrt_assert (nbytes);
       if (nbytes > READBUF_SIZE - ctx->writepos)
 	nbytes = READBUF_SIZE - ctx->writepos;
       LeaveCriticalSection (&ctx->mutex);
@@ -714,7 +713,7 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
 
   /* If no error occurred, the number of bytes in the buffer must be
      zero.  */
-  assert (!ctx->nbytes);
+  gpgrt_assert (!ctx->nbytes);
 
   if (count > WRITEBUF_SIZE)
     count = WRITEBUF_SIZE;
@@ -881,7 +880,7 @@ _gpgrt_w32_poll (gpgrt_poll_t *fds, size_t nfds, int timeout)
 	{
 	  if (WaitForSingleObject (waitbuf[i], 0) == WAIT_OBJECT_0)
 	    {
-	      assert (waitidx[i] >=0 && waitidx[i] < nfds);
+	      gpgrt_assert (waitidx[i] >=0 && waitidx[i] < nfds);
               /* XXX: What if one wants read and write, is that
                  supported?  */
               if (fds[waitidx[i]].want_read)

@@ -44,7 +44,7 @@ get_lock_object (gpgrt_lock_t *lockhd)
   _gpgrt_lock_t *lock = (_gpgrt_lock_t*)lockhd;
 
   if (lock->vers != LOCK_ABI_VERSION)
-    abort ();
+    _gpgrt_abort ();
 
   return lock;
 }
@@ -61,14 +61,14 @@ _gpgrt_lock_init (gpgrt_lock_t *lockhd)
   if (!lock->vers)
     {
       if (sizeof (gpgrt_lock_t) < sizeof (_gpgrt_lock_t))
-        abort ();
+        _gpgrt_abort ();
       lock->vers = LOCK_ABI_VERSION;
     }
   else /* Run the usual check.  */
     {
       lock = get_lock_object (lockhd);
       if (sizeof (gpgrt_lock_t) < sizeof (_gpgrt_lock_t))
-        abort ();
+        _gpgrt_abort ();
     }
 
   InitializeCriticalSection (&lock->csec);

@@ -84,7 +84,6 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stddef.h>
-#include <assert.h>
 #ifdef HAVE_W32_SYSTEM
 # ifdef HAVE_WINSOCK2_H
 #  include <winsock2.h>
@@ -653,7 +652,7 @@ func_mem_write (void *cookie, const void *buffer, size_t size)
       mem_cookie->offset = mem_cookie->data_len;
     }
 
-  assert (mem_cookie->memory_size >= mem_cookie->offset);
+  gpgrt_assert (mem_cookie->memory_size >= mem_cookie->offset);
   nleft = mem_cookie->memory_size - mem_cookie->offset;
 
   /* If we are not allowed to grow the buffer, limit the size to the
@@ -698,7 +697,7 @@ func_mem_write (void *cookie, const void *buffer, size_t size)
           return -1;
         }
 
-      assert (mem_cookie->func_realloc);
+      gpgrt_assert (mem_cookie->func_realloc);
       newbuf = mem_cookie->func_realloc (mem_cookie->memory, newsize);
       if (!newbuf)
         return -1;
@@ -706,10 +705,10 @@ func_mem_write (void *cookie, const void *buffer, size_t size)
       mem_cookie->memory = newbuf;
       mem_cookie->memory_size = newsize;
 
-      assert (mem_cookie->memory_size >= mem_cookie->offset);
+      gpgrt_assert (mem_cookie->memory_size >= mem_cookie->offset);
       nleft = mem_cookie->memory_size - mem_cookie->offset;
 
-      assert (size <= nleft);
+      gpgrt_assert (size <= nleft);
     }
 
   memcpy (mem_cookie->memory + mem_cookie->offset, buffer, size);
@@ -776,7 +775,7 @@ func_mem_seek (void *cookie, gpgrt_off_t *offset, int whence)
           return -1;
         }
 
-      assert (mem_cookie->func_realloc);
+      gpgrt_assert (mem_cookie->func_realloc);
       newbuf = mem_cookie->func_realloc (mem_cookie->memory, newsize);
       if (!newbuf)
         return -1;
@@ -1885,7 +1884,7 @@ flush_stream (estream_t stream)
   gpgrt_cookie_write_function_t func_write = stream->intern->func_write;
   int err;
 
-  assert (stream->flags.writing);
+  gpgrt_assert (stream->flags.writing);
 
   if (stream->data_offset)
     {
@@ -1966,7 +1965,7 @@ flush_stream (estream_t stream)
 static void
 es_empty (estream_t stream)
 {
-  assert (!stream->flags.writing);
+  gpgrt_assert (!stream->flags.writing);
   stream->data_len = 0;
   stream->data_offset = 0;
   stream->unread_data_len = 0;
@@ -3556,7 +3555,7 @@ _gpgrt__get_std_stream (int fd)
             {
               fprintf (stderr, "fatal: error creating a dummy estream"
                        " for %d: %s\n", fd, strerror (errno));
-              abort();
+              _gpgrt_abort();
             }
         }
 

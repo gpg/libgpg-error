@@ -33,7 +33,6 @@
 # include <math.h>
 #endif
 
-#include <assert.h>
 #include <limits.h>
 #include <stdint.h>
 #include <float.h>
@@ -881,7 +880,7 @@ gc_reservation_failure(struct scheme *sc)
 	  sc->frame_freelist == sc->NIL ? "frame" : "cell",
 	  sc->reserved_lineno);
 #endif
-  abort();
+  _gpgrt_abort();
 }
 
 /* Disable the garbage collection and reserve the given number of

@@ -89,7 +89,6 @@
 #include <stdarg.h>
 #include <errno.h>
 #include <stddef.h>
-#include <assert.h>
 #if defined(HAVE_INTMAX_T) || defined(HAVE_UINTMAX_T)
 # ifdef HAVE_STDINT_H
 #  include <stdint.h>
@@ -1405,13 +1404,13 @@ do_format (estream_printf_out_t outfnc, void *outfncarg,
       s += arg->length;
       format = s;
 
-      assert (argidx < argspecs_len);
+      gpgrt_assert (argidx < argspecs_len);
       argidx++;
 
       /* Apply indirect field width and precision values.  */
       if (arg->width == STAR_FIELD_VALUE)
         {
-          assert (valuetable[arg->width_pos-1].vt == VALTYPE_INT);
+          gpgrt_assert (valuetable[arg->width_pos-1].vt == VALTYPE_INT);
           arg->width = valuetable[arg->width_pos-1].value.a_int;
           if (arg->width < 0)
             {
@@ -1421,7 +1420,7 @@ do_format (estream_printf_out_t outfnc, void *outfncarg,
         }
       if (arg->precision == STAR_FIELD_VALUE)
         {
-          assert (valuetable[arg->precision_pos-1].vt == VALTYPE_INT);
+          gpgrt_assert (valuetable[arg->precision_pos-1].vt == VALTYPE_INT);
           arg->precision = valuetable[arg->precision_pos-1].value.a_int;
           if (arg->precision < 0)
             arg->precision = NO_FIELD_VALUE;
@@ -1431,13 +1430,13 @@ do_format (estream_printf_out_t outfnc, void *outfncarg,
         value.a_string = strerror (myerrno);
       else
         {
-          assert (arg->vt == valuetable[arg->arg_pos-1].vt);
+          gpgrt_assert (arg->vt == valuetable[arg->arg_pos-1].vt);
           value = valuetable[arg->arg_pos-1].value;
         }
 
       switch (arg->conspec)
         {
-        case CONSPEC_UNKNOWN: assert (!"bug"); break;
+        case CONSPEC_UNKNOWN: gpgrt_assert (!"bug"); break;
 
         case CONSPEC_DECIMAL:
         case CONSPEC_UNSIGNED:
@@ -1864,7 +1863,7 @@ _gpgrt_estream_vasprintf (char **bufp, const char *format, va_list arg_ptr)
       *bufp = NULL;
       return -1;
     }
-  assert (parm.used);   /* We have at least the terminating Nul.  */
+  gpgrt_assert (parm.used);   /* We have at least the terminating Nul.  */
   *bufp = parm.buffer;
   return parm.used - 1; /* Do not include that Nul. */
 }

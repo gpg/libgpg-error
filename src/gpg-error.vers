@@ -196,6 +196,9 @@ GPG_ERROR_1.0 {
     gpgrt_fprintf_sf;
     gpgrt_fprintf_sf_unlocked;
 
+    gpgrt_add_emergency_cleanup;
+    gpgrt_abort;
+
   local:
     *;
 };

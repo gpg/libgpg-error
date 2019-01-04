@@ -61,6 +61,20 @@ static void drop_locale_dir (char *locale_dir);
 #endif /*!HAVE_W32_SYSTEM*/
 
 
+/* The list of emergency cleanup functions; see _gpgrt_abort and
+ * _gpgrt_add_emergency_cleanup.  */
+struct emergency_cleanup_item_s;
+typedef struct emergency_cleanup_item_s *emergency_cleanup_item_t;
+struct emergency_cleanup_item_s
+{
+  emergency_cleanup_item_t next;
+  void (*func) (void);
+};
+static emergency_cleanup_item_t emergency_cleanup_list;
+
+
+
+
 /* The realloc function as set by gpgrt_set_alloc_func.  */
 static void *(*custom_realloc)(void *a, size_t n);
 
@@ -106,7 +120,7 @@ _gpg_err_init (void)
       if (tls_index == TLS_OUT_OF_INDEXES)
         {
           /* No way to continue - commit suicide.  */
-          abort ();
+          _gpgrt_abort ();
         }
       _gpg_w32__init_gettext_module ();
       real_init ();
@@ -150,6 +164,67 @@ _gpg_err_deinit (int mode)
 #endif
 }
 
+
+/* Add the emergency cleanup function F to the list of those function.
+ * If the a function with that address has already been registered, it
+ * is not added a second time.  These emergency functions are called
+ * whenever gpgrt_abort is called and at no other place.  Like signal
+ * handles the emergency cleanup functions shall not call any
+ * non-trivial functions and return as soon as possible.  They allow
+ * to cleanup internal states which should not go into a core dumps or
+ * similar.  This is independent of any atexit functions.  We don't
+ * use locks here because in an emergency case we can't use them
+ * anyway.  */
+void
+_gpgrt_add_emergency_cleanup (void (*f)(void))
+{
+  emergency_cleanup_item_t item;
+
+  for (item = emergency_cleanup_list; item; item = item->next)
+    if (item->func == f)
+      return; /* Function has already been registered.  */
+
+  /* We use a standard malloc here.  */
+  item = malloc (sizeof *item);
+  if (item)
+    {
+      item->func = f;
+      item->next = emergency_cleanup_list;
+      emergency_cleanup_list = item;
+    }
+  else
+    _gpgrt_log_fatal ("out of core in gpgrt_add_emergency_cleanup\n");
+}
+
+
+/* Run the emergency handlers.  No locks are used because we are anyway
+ * in an emergency state.  We also can't release any memory.  */
+static void
+run_emergency_cleanup (void)
+{
+  emergency_cleanup_item_t next;
+  void (*f)(void);
+
+  while (emergency_cleanup_list)
+    {
+      next = emergency_cleanup_list->next;
+      f = emergency_cleanup_list->func;
+      emergency_cleanup_list->func = NULL;
+      emergency_cleanup_list = next;
+      if (f)
+        f ();
+    }
+}
+
+
+/* Wrapper around abort to be able to run all emergency cleanup
+ * functions.  */
+void
+_gpgrt_abort (void)
+{
+  run_emergency_cleanup ();
+  abort ();
+}
 
 
 
@@ -503,7 +578,7 @@ get_tls (void)
       if (!tls)
         {
           /* No way to continue - commit suicide.  */
-          abort ();
+          _gpgrt_abort ();
         }
       tls->gt_use_utf8 = 0;
       TlsSetValue (tls_index, tls);

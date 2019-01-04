@@ -80,6 +80,18 @@ gpg_err_deinit (int mode)
   _gpg_err_deinit (mode);
 }
 
+void
+gpgrt_add_emergency_cleanup (void (*f)(void))
+{
+  _gpgrt_add_emergency_cleanup (f);
+}
+
+void
+gpgrt_abort (void)
+{
+  _gpgrt_abort ();
+}
+
 const char *
 gpg_error_check_version (const char *req_version)
 {
@@ -981,7 +993,7 @@ gpgrt_log_fatal (const char *fmt, ...)
   va_start (arg_ptr, fmt);
   _gpgrt_logv (GPGRT_LOGLVL_FATAL, fmt, arg_ptr);
   va_end (arg_ptr);
-  abort (); /* Never called; just to make the compiler happy.  */
+  _gpgrt_abort (); /* Never called; just to make the compiler happy.  */
 }
 
 void
@@ -992,7 +1004,7 @@ gpgrt_log_bug (const char *fmt, ...)
   va_start (arg_ptr, fmt);
   _gpgrt_logv (GPGRT_LOGLVL_BUG, fmt, arg_ptr);
   va_end (arg_ptr);
-  abort (); /* Never called; just to make the compiler happy.  */
+  _gpgrt_abort (); /* Never called; just to make the compiler happy.  */
 }
 
 void

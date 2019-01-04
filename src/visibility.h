@@ -54,6 +54,8 @@ MARK_VISIBLE (gpg_err_set_errno)
 
 MARK_VISIBLE (gpg_err_init)
 MARK_VISIBLE (gpg_err_deinit)
+MARK_VISIBLE (gpgrt_add_emergency_cleanup)
+MARK_VISIBLE (gpgrt_abort)
 MARK_VISIBLE (gpg_error_check_version)
 MARK_VISIBLE (gpgrt_check_version)
 
@@ -231,6 +233,8 @@ MARK_VISIBLE (gpgrt_cmp_version);
 
 #define gpg_err_init                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpg_err_deinit              _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_add_emergency_cleanup _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_abort                 _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpg_error_check_version     _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_check_version         _gpgrt_USE_OTHER_FUNCTION
 
