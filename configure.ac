@@ -82,6 +82,38 @@ AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
 AC_GNU_SOURCE
 
+# Taken from mpfr-4.0.1
+dnl Under Linux, make sure that the old dtags are used if LD_LIBRARY_PATH
+dnl is defined. The issue is that with the new dtags, LD_LIBRARY_PATH has
+dnl the precedence over the run path, so that if a compatible MPFR library
+dnl is installed in some directory from $LD_LIBRARY_PATH, then the tested
+dnl MPFR library will be this library instead of the MPFR library from the
+dnl build tree. Other OS with the same issue might be added later.
+dnl
+dnl References:
+dnl   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=859732
+dnl   http://lists.gnu.org/archive/html/libtool/2017-05/msg00000.html
+dnl
+dnl We need to check whether --disable-new-dtags is supported as alternate
+dnl linkers may be used (e.g., with tcc: CC=tcc LD=tcc).
+dnl
+case $host in
+  *-*-linux*)
+    if test -n "$LD_LIBRARY_PATH"; then
+      saved_LDFLAGS="$LDFLAGS"
+      LDFLAGS="$LDFLAGS -Wl,--disable-new-dtags"
+      AC_MSG_CHECKING(whether --disable-new-dtags is supported by the linker)
+      AC_LINK_IFELSE([AC_LANG_SOURCE([[
+int main (void) { return 0; }
+      ]])],
+      [AC_MSG_RESULT(yes (use it since LD_LIBRARY_PATH is set))],
+      [AC_MSG_RESULT(no)
+       LDFLAGS="$saved_LDFLAGS"
+      ])
+    fi
+    ;;
+esac
+
 # Set some variables depending on the platform for later use.
 have_w32_system=no
 have_w64_system=no
