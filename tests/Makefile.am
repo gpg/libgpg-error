@@ -33,10 +33,10 @@ TESTS = t-version t-strerror t-syserror t-lock t-printf t-poll t-b64 \
 AM_CPPFLAGS = -I$(top_builddir)/src $(extra_includes)
 
 AM_LDFLAGS = -no-install
-LDADD = $(gpg_error_lib)
+LDADD = $(gpg_error_lib) @LDADD_FOR_TESTS_KLUDGE@
 
 noinst_PROGRAMS = $(TESTS)
 noinst_HEADERS = t-common.h
 
-t_lock_LDADD = $(gpg_error_lib) $(LIBMULTITHREAD)
-t_poll_LDADD = $(gpg_error_lib) $(LIBMULTITHREAD)
+t_lock_LDADD = $(LDADD) $(LIBMULTITHREAD)
+t_poll_LDADD = $(LDADD) $(LIBMULTITHREAD)
