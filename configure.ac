@@ -82,7 +82,7 @@ AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
 AC_GNU_SOURCE
 
-# Taken from mpfr-4.0.1
+# Taken from mpfr-4.0.1, then modified for LDADD_TESTS
 dnl Under Linux, make sure that the old dtags are used if LD_LIBRARY_PATH
 dnl is defined. The issue is that with the new dtags, LD_LIBRARY_PATH has
 dnl the precedence over the run path, so that if a compatible MPFR library
@@ -101,18 +101,21 @@ case $host in
   *-*-linux*)
     if test -n "$LD_LIBRARY_PATH"; then
       saved_LDFLAGS="$LDFLAGS"
-      LDFLAGS="$LDFLAGS -Wl,--disable-new-dtags"
+      LDADD_TESTS="-Wl,--disable-new-dtags"
+      LDFLAGS="$LDFLAGS $LDADD_TESTS"
       AC_MSG_CHECKING(whether --disable-new-dtags is supported by the linker)
       AC_LINK_IFELSE([AC_LANG_SOURCE([[
 int main (void) { return 0; }
       ]])],
       [AC_MSG_RESULT(yes (use it since LD_LIBRARY_PATH is set))],
       [AC_MSG_RESULT(no)
-       LDFLAGS="$saved_LDFLAGS"
+       LDADD_TESTS=""
       ])
+      LDFLAGS="$saved_LDFLAGS"
     fi
     ;;
 esac
+AC_SUBST([LDADD_TESTS])
 
 # Set some variables depending on the platform for later use.
 have_w32_system=no
