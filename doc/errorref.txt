@@ -781,15 +781,20 @@ GPG_ERR_SEXP_ODD_HEX_NUMBERS  Odd hexadecimal numbers in S-expression
 
 GPG_ERR_SEXP_BAD_OCT_CHAR     Bad octal character in S-expression
 
-GPG_ERR_SUBKEYS_EXP_REV           All subkeys are expired or revoked
+GPG_ERR_SUBKEYS_EXP_REV       All subkeys are expired or revoked
 
-GPG_ERR_DB_CORRUPTED            Database is corrupted
+GPG_ERR_DB_CORRUPTED          Database is corrupted
 
-GPG_ERR_SERVER_FAILED           Server indicated a failure
+GPG_ERR_SERVER_FAILED         Server indicated a failure
 
-GPG_ERR_NO_NAME                         No name
+GPG_ERR_NO_NAME               No name
 
-    EAI_NONAME may be mapped to this code.
+    GNUPG: - No component given in gpgconf runs.
+           - A field name is missing in an import/export filter.
+           - "Domain not found".
+           - "Host not found".
+           - Host or service name not found (EAI_NONAME).
+           - No or erroneous SRV record.
 
 GPG_ERR_NO_KEY          No key
 
