@@ -227,6 +227,6 @@ EXPORTS
  gpgrt_w32_override_locale    @173
 
  gpgrt_add_emergency_cleanup  @174
- gogrt_abort                  @175
+ gpgrt_abort                  @175
 
 ;; end of file with public symbols for Windows.
