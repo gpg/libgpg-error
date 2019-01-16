@@ -79,7 +79,7 @@ gpgrt.texi : $(gpgrt_TEXINFOS)
 	touch $(srcdir)/gpgrt.texi
 
 errorref.txt.x : errorref.txt
-	sed '/^##/ d' errorref.txt >$@
+	sed '/^##/ d' $(srcdir)/errorref.txt >$@
 	echo "# Installed by $(PACKAGE_NAME) $(PACKAGE_VERSION)" >>$@
 
 install-data-local: errorref.txt.x
