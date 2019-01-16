@@ -1,5 +1,5 @@
 /* gpg-error.h or gpgrt.h - Common code for GnuPG and others.    -*- c -*-
- * Copyright (C) 2001-2018 g10 Code GmbH
+ * Copyright (C) 2001-2019 g10 Code GmbH
  *
  * This file is part of libgpg-error (aka libgpgrt).
  *
