@@ -473,8 +473,8 @@ const char *_gpgrt_fname_get (gpgrt_stream_t stream);
 
 
 #if HAVE_W32_SYSTEM
-/* Prototypes for w32-estream.c.  */
-struct cookie_io_functions_s _gpgrt_functions_w32_pollable;
+/* Prototypes for w32-estream.c. */
+extern struct cookie_io_functions_s _gpgrt_functions_w32_pollable;
 int _gpgrt_w32_pollable_create (void *_GPGRT__RESTRICT *_GPGRT__RESTRICT cookie,
                                 unsigned int modeflags,
                                 struct cookie_io_functions_s next_functions,
