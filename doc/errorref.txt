@@ -1058,6 +1058,15 @@ GPG_ERR_WRONG_NAME              Wrong name
 
     NTBTLS: - Hostname does not match the certificate
 
+GPG_ERR_NO_AUTH                 Not authenticated
+
+    GnuPG: - A smartcard requires authentication
+
+GPG_ERR_BAD_AUTH                Bad authentication
+
+    GnuPG: - A smartcard could not be authenticated.  For example
+             a wrong authentication key was used with a PIV card.
+
 GPG_ERR_SYSTEM_BUG              System bug detected
 
    The underlying operating system misbehaved.  For example it wrote
