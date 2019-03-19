@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.19\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2018-03-21 18:56+0100\n"
+"PO-Revision-Date: 2019-03-19 09:54+0100\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -965,6 +965,12 @@ msgstr "Später erneut versuchen"
 
 msgid "Wrong name"
 msgstr "Falscher Name"
+
+msgid "Not authenticated"
+msgstr "Nicht authentifiziert"
+
+msgid "Bad authentication"
+msgstr "Falsche Authentifizierung"
 
 msgid "System bug detected"
 msgstr "Fehler im System entdeckt"
