@@ -254,7 +254,13 @@ typedef struct notify_list_s *notify_list_t;
  * Buffer management layer.
  */
 
-#define BUFFER_BLOCK_SIZE  BUFSIZ
+/* BUFSIZ on Windows is 512 but on current Linux it is 8k.  We better
+ * use the 8k for Windows as well.  */
+#ifdef HAVE_W32_SYSTEM
+# define BUFFER_BLOCK_SIZE  8192
+#else
+# define BUFFER_BLOCK_SIZE  BUFSIZ
+#endif
 #define BUFFER_UNREAD_SIZE 16
 
 

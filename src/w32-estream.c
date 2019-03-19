@@ -56,8 +56,8 @@
 #define DIM(array) (sizeof (array) / sizeof (*array))
 #endif
 
-#define READBUF_SIZE 4096
-#define WRITEBUF_SIZE 4096
+#define READBUF_SIZE 8192
+#define WRITEBUF_SIZE 8192
 
 
 typedef struct estream_cookie_w32_pollable *estream_cookie_w32_pollable_t;

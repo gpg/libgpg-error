@@ -596,6 +596,7 @@ GPG_ERR_INV_CERT_OBJ            Invalid certificate object
     GPGME: - A bad certificate (gpgme_key_t) has been passed to a
              function.  For example it might be incomplete due to a
              missing fingerprint.
+    GNUPG: - A certificate has a length of zero.
 
 
 GPG_ERR_UNKNOWN_NAME            Unknown name

@@ -699,7 +699,7 @@ _gpgrt_log_get_stream ()
 }
 
 
-/* A fiter used with the fprintf_sf function to sanitize the args for
+/* A filter used with the fprintf_sf function to sanitize the args for
  * "%s" format specifiers.  */
 static char *
 fmt_string_filter (const char *string, int no, void *opaque)
