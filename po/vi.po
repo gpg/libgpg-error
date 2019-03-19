@@ -1036,6 +1036,15 @@ msgstr ""
 msgid "Wrong name"
 msgstr "Tên không rõ"
 
+#, fuzzy
+msgid "Not authenticated"
+msgstr "Không phải bị khoá"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Sự bảo vệ không được hỗ trợ"
+
 msgid "System bug detected"
 msgstr ""
 

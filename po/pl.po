@@ -960,6 +960,16 @@ msgstr "Proszę spróbować później"
 msgid "Wrong name"
 msgstr "Zła nazwa"
 
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "Nie włączony"
+
+#, fuzzy
+#| msgid "Inappropriate LDAP authentication"
+msgid "Bad authentication"
+msgstr "Niewłaściwe uwierzytelnienie LDAP"
+
 msgid "System bug detected"
 msgstr "Wykryto błąd systemu"
 

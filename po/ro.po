@@ -1059,6 +1059,15 @@ msgstr ""
 msgid "Wrong name"
 msgstr "Nume necunoscut"
 
+#, fuzzy
+msgid "Not authenticated"
+msgstr "Neforţat(ă)"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Protecţie nesuportată"
+
 msgid "System bug detected"
 msgstr ""
 

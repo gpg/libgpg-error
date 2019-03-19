@@ -1048,6 +1048,16 @@ msgstr ""
 msgid "Wrong name"
 msgstr "Nekonata nomo"
 
+#, fuzzy
+#| msgid "Not locked"
+msgid "Not authenticated"
+msgstr "Ne ŝlosita"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Nesubtenata protekto"
+
 msgid "System bug detected"
 msgstr ""
 

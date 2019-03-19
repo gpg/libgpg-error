@@ -971,6 +971,16 @@ msgstr "Повторіть спробу пізніше"
 msgid "Wrong name"
 msgstr "Помилкова назва"
 
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "Не увімкнено"
+
+#, fuzzy
+#| msgid "Inappropriate LDAP authentication"
+msgid "Bad authentication"
+msgstr "Неприйнятне розпізнавання LDAP"
+
 msgid "System bug detected"
 msgstr "Виявлено ваду у системі"
 

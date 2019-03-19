@@ -1033,6 +1033,15 @@ msgstr ""
 msgid "Wrong name"
 msgstr "未知名称"
 
+#, fuzzy
+msgid "Not authenticated"
+msgstr "未锁定"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "不受支持的保护"
+
 msgid "System bug detected"
 msgstr ""
 

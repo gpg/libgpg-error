@@ -1046,6 +1046,16 @@ msgstr ""
 msgid "Wrong name"
 msgstr "Ismeretlen név"
 
+#, fuzzy
+#| msgid "Not locked"
+msgid "Not authenticated"
+msgstr "Nincs zárolva"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Nem támogatott védelem"
+
 msgid "System bug detected"
 msgstr ""
 

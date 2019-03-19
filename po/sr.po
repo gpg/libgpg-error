@@ -1045,6 +1045,16 @@ msgstr ""
 msgid "Wrong name"
 msgstr "Непознат назив"
 
+#, fuzzy
+#| msgid "Not locked"
+msgid "Not authenticated"
+msgstr "Није закључано"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Неподржана заштита"
+
 msgid "System bug detected"
 msgstr ""
 

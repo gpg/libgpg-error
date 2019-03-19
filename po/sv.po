@@ -1034,6 +1034,15 @@ msgstr ""
 msgid "Wrong name"
 msgstr "Okänt namn"
 
+#, fuzzy
+msgid "Not authenticated"
+msgstr "Inte låst"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Skyddet stöds inte"
+
 msgid "System bug detected"
 msgstr ""
 

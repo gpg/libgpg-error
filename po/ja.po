@@ -962,6 +962,16 @@ msgstr "後で再度試してください"
 msgid "Wrong name"
 msgstr "間違った名前です"
 
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "有効となってません"
+
+#, fuzzy
+#| msgid "Inappropriate LDAP authentication"
+msgid "Bad authentication"
+msgstr "不適切なLDAP認証です"
+
 msgid "System bug detected"
 msgstr "システムのバグが検出されました"
 

@@ -960,6 +960,16 @@ msgstr "Повторите попытку позднее"
 msgid "Wrong name"
 msgstr "Неверное имя"
 
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "Отключено"
+
+#, fuzzy
+#| msgid "Inappropriate LDAP authentication"
+msgid "Bad authentication"
+msgstr "Неподходящая аутентификация LDAP"
+
 msgid "System bug detected"
 msgstr "Обнаружена ошибка в системе"
 

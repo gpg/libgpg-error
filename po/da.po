@@ -990,6 +990,16 @@ msgstr ""
 msgid "Wrong name"
 msgstr "Ukendt navn"
 
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "Ikke aktiveret"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Ej understøttet beskyttelse"
+
 msgid "System bug detected"
 msgstr ""
 
