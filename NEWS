@@ -1,11 +1,18 @@
-Noteworthy changes in version 1.36 (unreleased) [C26/A26/R_]
+Noteworthy changes in version 1.36 (2019-03-19) [C27/A27/R0]
 -----------------------------------------------
 
+ * Two new error codes to better support PIV cards.
+
+ * Support armv7a-unknown-linux-gnueabihf.
+
+ * Increased estream buffer sizes for Windows.
 
  * Interface changes relative to the 1.34 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_NO_AUTH                  NEW.
  GPG_ERR_BAD_AUTH                 NEW.
+
+ Release-info: https://dev.gnupg.org/T4413
 
 
 Noteworthy changes in version 1.35 (2019-01-28) [C26/A26/R1]
