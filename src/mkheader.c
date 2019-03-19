@@ -112,6 +112,7 @@ canon_host_triplet (const char *triplet, int no_vendor_hack, char **r_os)
 
     {"arm-unknown-linux-gnueabihf",  "arm-unknown-linux-gnueabi" },
     {"armv7-unknown-linux-gnueabihf"  },
+    {"armv7a-unknown-linux-gnueabihf" },
     {"armv5-unknown-linux-musleabi"   },
     {"armv6-unknown-linux-musleabihf" },
 
