@@ -293,7 +293,7 @@ code-from-errno.h: mkerrcodes$(EXEEXT_FOR_BUILD) Makefile
 
 errnos-sym.h: Makefile mkstrtable.awk errnos.in
 	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=2 -v nogettext=1 \
-		-v prefix=GPG_ERR_ -v namespace=errnos_ \
+		-v prefix=GPG_ERR_ -v pkg_namespace=errnos_ \
 		$(srcdir)/errnos.in >$@
 
 
