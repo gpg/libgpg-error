@@ -1,13 +1,13 @@
 # Polish translation for libgpg-error.
 # Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
-# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2018.
+# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.29\n"
+"Project-Id-Version: libgpg-error 1.36\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2018-04-12 19:02+0100\n"
+"PO-Revision-Date: 2019-03-24 09:01+0100\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "Language: pl\n"
@@ -960,15 +960,11 @@ msgstr "Proszę spróbować później"
 msgid "Wrong name"
 msgstr "Zła nazwa"
 
-#, fuzzy
-#| msgid "Not enabled"
 msgid "Not authenticated"
-msgstr "Nie włączony"
+msgstr "Brak uwierzytelnienia"
 
-#, fuzzy
-#| msgid "Inappropriate LDAP authentication"
 msgid "Bad authentication"
-msgstr "Niewłaściwe uwierzytelnienie LDAP"
+msgstr "Niewłaściwe uwierzytelnienie"
 
 msgid "System bug detected"
 msgstr "Wykryto błąd systemu"
