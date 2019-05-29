@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the libgpg-error package.
 # Yasuaki Taniguchi <yasuakit@gmail.com>, 2010.
 # Takeshi Hamasaki <hmatrjp@users.sourceforge.jp>, 2012.
-# NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016, 2017.
+# NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016, 2017, 2019.
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.27\n"
+"Project-Id-Version: libgpg-error 1.36\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2018-09-06 09:58+0900\n"
+"PO-Revision-Date: 2019-05-29 11:16+0900\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -666,7 +666,7 @@ msgid "Wrong crypto context"
 msgstr "誤った暗号コンテクストです"
 
 msgid "Bad crypto context"
-msgstr "間違ったな暗号コンテクストです"
+msgstr "誤った暗号コンテクストです"
 
 msgid "Conflict in the crypto context"
 msgstr "暗号コンテクストが競合しています"
@@ -962,15 +962,11 @@ msgstr "後で再度試してください"
 msgid "Wrong name"
 msgstr "間違った名前です"
 
-#, fuzzy
-#| msgid "Not enabled"
 msgid "Not authenticated"
-msgstr "有効となってません"
+msgstr "認証されてません"
 
-#, fuzzy
-#| msgid "Inappropriate LDAP authentication"
 msgid "Bad authentication"
-msgstr "不適切なLDAP認証です"
+msgstr "誤った認証です"
 
 msgid "System bug detected"
 msgstr "システムのバグが検出されました"
