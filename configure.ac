@@ -194,6 +194,9 @@ AC_CHECK_HEADERS([stdlib.h locale.h stdint.h sys/select.h sys/time.h \
 
 AC_FUNC_STRERROR_R
 case "${host_os}" in
+     mingw32*)
+     AC_CHECK_FUNC([strerror_s])
+     ;;
      solaris*)
      # All versions of Solaris from 2.4 have a thread-safe strerror().
      # Since Solaris 10, in addition strerror_r() exists.
