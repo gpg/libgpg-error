@@ -338,7 +338,7 @@ gpgrt.h: gpg-error.h
 
 gpg-error-config: gpgrt-config gpg-error-config-old
 	@echo $(ECHO_N) "Confirm gpg-error-config works... $(ECHO_C)"
-	@if $(srcdir)/gpg-error-config-test.sh --old-new; then \
+	@if ./gpg-error-config-test.sh --old-new; then \
 	  echo "good";                                         \
 	else                                                   \
 	  echo "no";                                           \
