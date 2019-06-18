@@ -9,9 +9,15 @@ export PKG_CONFIG_PATH
 if [ "$1" = --old-new ]; then
     PKG_CONFIG_CMD=./gpg-error-config-old
 else
+    pkg_config_min_version=0.29
     PKG_CONFIG_SYSROOT_DIR="/var/example-target"
     export PKG_CONFIG_SYSROOT_DIR
     PKG_CONFIG_CMD="pkg-config gpg-error"
+    check_ver=$( ($PKG_CONFIG_CMD --version; echo $pkg_config_min_version) | \
+	          sort -t '.' -n -k1,1 -k2,2 -k3,3 | sed 1q )
+    if [ $check_ver != $pkg_config_min_version ]; then
+	exit 77			# Skip tests, because it's too old
+    fi
     if ! $PKG_CONFIG_CMD --exists >/dev/null; then
 	exit 77			# Skip tests
     fi
