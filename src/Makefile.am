@@ -343,6 +343,7 @@ gpg-error-config: gpgrt-config gpg-error-config-old
 	else                                                   \
 	  echo "no";                                           \
 	  echo "***  Please report to <https://bugs.gnupg.org> with gpg-error-config-test.log"; \
+	  exit 1; \
 	fi
 	cp gpg-error-config-old $@
 
