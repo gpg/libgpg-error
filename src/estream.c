@@ -89,6 +89,10 @@
 #  include <winsock2.h>
 # endif
 # include <windows.h>
+#else
+# ifdef HAVE_POLL_H
+#  include <poll.h>
+# endif
 #endif
 
 /* Enable tracing.  The value is the module name to be printed.  */
@@ -4782,9 +4786,14 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
   int count = 0;
   int idx;
 #ifndef HAVE_W32_SYSTEM
+# ifdef HAVE_POLL_H
+  struct pollfd poll_fds[nfds];
+  nfds_t poll_nfds;
+# else
   fd_set readfds, writefds, exceptfds;
   int any_readfd, any_writefd, any_exceptfd;
   int max_fd;
+#endif
   int fd, ret, any;
 #endif /*HAVE_W32_SYSTEM*/
 
@@ -4841,7 +4850,33 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
   _gpgrt_post_syscall ();
 
 #else /*!HAVE_W32_SYSTEM*/
+# ifdef HAVE_POLL_H
+  poll_nfds = 0;
+  for (item = fds, idx = 0; idx < nfds; item++, idx++)
+    {
+      if (item->ignore)
+        continue;
+      fd = _gpgrt_fileno (item->stream);
+      if (fd == -1)
+        continue;  /* Stream does not support polling.  */
 
+      if (item->want_read || item->want_write || item->want_oob)
+        {
+          poll_fds[poll_nfds].fd = fd;
+          poll_fds[poll_nfds].events = ((item->want_read ? POLLIN : 0)
+                                        | (item->want_write ? POLLOUT : 0)
+                                        |(item->want_read ? POLLPRI : 0));
+          poll_fds[poll_nfds].revents = 0;
+          poll_nfds++;
+        }
+    }
+
+  _gpgrt_pre_syscall ();
+  do
+    ret = poll (poll_fds, poll_nfds, timeout);
+  while (ret == -1 && (errno == EINTR || errno == EAGAIN));
+  _gpgrt_post_syscall ();
+# else /* !HAVE_POLL_H */
   any_readfd = any_writefd = any_exceptfd = 0;
   max_fd = 0;
   for (item = fds, idx = 0; idx < nfds; item++, idx++)
@@ -4902,10 +4937,15 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
     }
   while (ret == -1 && errno == EINTR);
   _gpgrt_post_syscall ();
+# endif
 
   if (ret == -1)
     {
+# ifdef HAVE_POLL_H
+      trace_errno (1, ("poll failed: "));
+# else
       trace_errno (1, ("select failed: "));
+# endif
       count = -1;
       goto leave;
     }
@@ -4917,6 +4957,47 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
       goto leave;
     }
 
+# ifdef HAVE_POLL_H
+  poll_nfds = 0;
+  for (item = fds, idx = 0; idx < nfds; item++, idx++)
+    {
+      if (item->ignore)
+        continue;
+      fd = _gpgrt_fileno (item->stream);
+      if (fd == -1)
+        {
+          item->got_err = 1;  /* Stream does not support polling.  */
+          count++;
+          continue;
+        }
+
+      any = 0;
+      if (item->stream->intern->indicators.hup)
+        {
+          item->got_hup = 1;
+          any = 1;
+        }
+      if (item->want_read && (poll_fds[poll_nfds].revents & POLLIN))
+        {
+          item->got_read = 1;
+          any = 1;
+        }
+      if (item->want_write && (poll_fds[poll_nfds].revents & POLLOUT))
+        {
+          item->got_write = 1;
+          any = 1;
+        }
+      if (item->want_oob && (poll_fds[poll_nfds].revents & ~(POLLIN|POLLOUT)))
+        {
+          item->got_oob = 1;
+          any = 1;
+        }
+
+      poll_nfds++;
+      if (any)
+        count++;
+    }
+# else
   for (item = fds, idx = 0; idx < nfds; item++, idx++)
     {
       if (item->ignore)
@@ -4954,6 +5035,7 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
       if (any)
         count++;
     }
+# endif
 #endif /*!HAVE_W32_SYSTEM*/
 
  leave:
