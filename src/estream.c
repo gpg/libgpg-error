@@ -4787,7 +4787,7 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
   int idx;
 #ifndef HAVE_W32_SYSTEM
 # ifdef HAVE_POLL_H
-  struct pollfd poll_fds[nfds];
+  struct pollfd *poll_fds = NULL;
   nfds_t poll_nfds;
 # else
   fd_set readfds, writefds, exceptfds;
@@ -4851,6 +4851,7 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
 
 #else /*!HAVE_W32_SYSTEM*/
 # ifdef HAVE_POLL_H
+  poll_fds = xtrymalloc (sizeof (*poll_fds)*nfds);
   poll_nfds = 0;
   for (item = fds, idx = 0; idx < nfds; item++, idx++)
     {
@@ -5039,6 +5040,11 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
 #endif /*!HAVE_W32_SYSTEM*/
 
  leave:
+#ifndef HAVE_W32_SYSTEM
+# ifdef HAVE_POLL_H
+  xfree (poll_fds);
+# endif
+#endif
 #ifdef ENABLE_TRACING
   trace (("leave: count=%d", count));
   if (count > 0)
