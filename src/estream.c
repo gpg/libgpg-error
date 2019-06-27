@@ -4336,7 +4336,7 @@ _gpgrt_getline (char *_GPGRT__RESTRICT *_GPGRT__RESTRICT lineptr,
 
    If a line has been truncated, the file pointer is moved forward to
    the end of the line so that the next read starts with the next
-   line.  Note that MAX_LENGTH must be re-initialzied in this case.
+   line.  Note that MAX_LENGTH must be re-initialized in this case.
 
    The caller initially needs to provide the address of a variable,
    initialized to NULL, at ADDR_OF_BUFFER and don't change this value
@@ -4852,6 +4852,11 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
 #else /*!HAVE_W32_SYSTEM*/
 # ifdef HAVE_POLL_H
   poll_fds = xtrymalloc (sizeof (*poll_fds)*nfds);
+  if (!poll_fds)
+    {
+      count = -1;
+      goto leave;
+    }
   poll_nfds = 0;
   for (item = fds, idx = 0; idx < nfds; item++, idx++)
     {
