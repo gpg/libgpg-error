@@ -154,11 +154,7 @@ int _setmode (int handle, int mode);
 # define _set_errno(a)  do { errno = (a); } while (0)
 #endif
 
-#ifdef HAVE_W32_SYSTEM
-# define IS_INVALID_FD(a)    ((void*)(a) == (void*)(-1)) /* ?? FIXME.  */
-#else
-# define IS_INVALID_FD(a)    ((a) == -1)
-#endif
+#define IS_INVALID_FD(a)    ((a) == -1)
 
 /* Calculate array dimension.  */
 #ifndef DIM
