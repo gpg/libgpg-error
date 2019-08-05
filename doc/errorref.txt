@@ -568,7 +568,6 @@ GPG_ERR_INV_STATE               Invalid state
     NTBTLS: - Data received in an unexpected state.
             - A function is called while not being in the right state.
 
-
 GPG_ERR_DUP_VALUE               Duplicated value
 
 GPG_ERR_MISSING_ACTION          Missing action
@@ -1067,6 +1066,25 @@ GPG_ERR_BAD_AUTH                Bad authentication
 
     GnuPG: - A smartcard could not be authenticated.  For example
              a wrong authentication key was used with a PIV card.
+
+GPG_ERR_NO_KEYBOXD              No Keyboxd running
+
+    GnuPG: - The keyboxd component is not running
+
+GPG_ERR_KEYBOXD                 Keyboxd error
+
+    GnuPG: - Malfunction in the keyboxd
+
+GPG_ERR_NO_SERVICE              Service is not running
+
+    A component is not running.  Tnis is a generic version of
+    GPG_ERR_NO_AGENT et al.
+
+GPG_ERR_SERVICE                 Service error
+
+    An error occured in a service component.  This is a generic
+    version of GPG_ERR_AGENT et al.
+
 
 GPG_ERR_SYSTEM_BUG              System bug detected
 
