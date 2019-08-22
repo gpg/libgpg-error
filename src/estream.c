@@ -4866,8 +4866,8 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
         {
           poll_fds[poll_nfds].fd = fd;
           poll_fds[poll_nfds].events = ((item->want_read ? POLLIN : 0)
-                                        | (item->want_write ? POLLOUT : 0)
-                                        |(item->want_read ? POLLPRI : 0));
+                                        |(item->want_write ? POLLOUT : 0)
+                                        |(item->want_oob ? POLLPRI : 0));
           poll_fds[poll_nfds].revents = 0;
           poll_nfds++;
         }
@@ -4995,7 +4995,8 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
           any = 1;
         }
 
-      poll_nfds++;
+      if (item->want_read || item->want_write || item->want_oob)
+        poll_nfds++;
       if (any)
         count++;
     }
