@@ -4982,7 +4982,7 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
           item->got_hup = 1;
           any = 1;
         }
-      if (item->want_read && (poll_fds[poll_nfds].revents & POLLIN))
+      if (item->want_read && (poll_fds[poll_nfds].revents & (POLLIN|POLLHUP)))
         {
           item->got_read = 1;
           any = 1;
