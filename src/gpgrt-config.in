@@ -115,6 +115,9 @@ EOF1
 		*:\ *)
 		    _key="${_line%%:\ *}"
 		    _value="${_line#*:\ }"
+		    if expr "$_key" : ".*\..*" >/dev/null; then
+			_key="${_key%.*}_${_key#*.}"
+		    fi
 		    ATTR_list="$ATTR_list${ATTR_list:+ }ATTR_$_key"
 		    read ATTR_$_key <<EOF2
 $(substitute_vars "$_value")
@@ -357,6 +360,9 @@ all_required_config_files () {
 			read_config_file $pkg $PKG_CONFIG_PATH
 			all_list="$all_list${all_list:+ }$pkg"
 			new_list="$new_list${new_list:+ }$(get_attr Requires)"
+			if [ -n "$enable_static" ]; then
+			    new_list="$new_list${new_list:+ }$(get_attr Requires_private)"
+			fi
 			cleanup_vars_attrs
 			pkg=$p
 			;;
@@ -369,6 +375,9 @@ all_required_config_files () {
 		fi
 		all_list="$all_list${all_list:+ }$pkg"
 		new_list="$new_list${new_list:+ }$(get_attr Requires)"
+		if [ -n "$enable_static" ]; then
+		    new_list="$new_list${new_list:+ }$(get_attr Requires_private)"
+		fi
 		cleanup_vars_attrs
 		pkg=""
 		cmp=""
@@ -381,6 +390,9 @@ all_required_config_files () {
 	    read_config_file $pkg $PKG_CONFIG_PATH
 	    all_list="$all_list${all_list:+ }$pkg"
 	    new_list="$new_list${new_list:+ }$(get_attr Requires)"
+	    if [ -n "$enable_static" ]; then
+		new_list="$new_list${new_list:+ }$(get_attr Requires_private)"
+	    fi
 	    cleanup_vars_attrs
 	fi
 
@@ -423,6 +435,7 @@ Options:
 	[--modversion]
 	[--libs]
 	[--cflags]
+	[--static]
 	[--variable=VARNAME]
 EOF
     exit $1
@@ -492,6 +505,7 @@ want_attr=""
 want_cflags=""
 want_libs=""
 want_exists=""
+enable_static=""
 
 cflags=""
 libs=""
@@ -554,6 +568,9 @@ while test $# -gt 0; do
 	--libs)
 	    want_libs=yes
 	    ;;
+	--static)
+	    enable_static=yes
+	    ;;
 	--variable=*)
 	    want_var=${1#*=}
 	    ;;
@@ -593,6 +610,9 @@ for p in $PKG_LIST; do
     else
 	cflags="$cflags${cflags:+ }$(get_attr Cflags)"
 	libs="$libs${libs:+ }$(get_attr Libs)"
+	if [ -n "$enable_static" ]; then
+	    libs="$libs${libs:+ }$(get_attr Libs_private)"
+	fi
 
 	if [ $p = "gpg-error" ]; then
 	    mtcflags="$(get_var mtcflags)"
