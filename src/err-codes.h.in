@@ -336,7 +336,7 @@
 314	GPG_ERR_NO_AUTH			Not authenticated
 315	GPG_ERR_BAD_AUTH		Bad authentication
 316	GPG_ERR_NO_KEYBOXD		No Keybox daemon running
-317	GPG_ERR_KEYBOXD                 Keybox daemon error
+317	GPG_ERR_KEYBOXD			Keybox daemon error
 318	GPG_ERR_NO_SERVICE		Service is not running
 319	GPG_ERR_SERVICE			Service error
 # This range is free for use.
