@@ -461,18 +461,13 @@ do_list_remove (estream_t stream, int with_locked_list)
     else
       item_prev = item;
 
-  if (item_prev)
+  if (item)
     {
-      item_prev->next = item->next;
+      if (item_prev)
+        item_prev->next = item->next;
+      else
+        estream_list = item->next;
       mem_free (item);
-    }
-  else
-    {
-      if (item)
-        {
-          estream_list = item->next;
-          mem_free (item);
-        }
     }
 
   if (!with_locked_list)
