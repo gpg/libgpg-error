@@ -493,13 +493,13 @@ main (int argc, char *argv[])
                 "Print all error codes"),
     ARGPARSE_c (CMD_DEFINES, "defines",
                 "Print all error codes as #define lines"),
-    ARGPARSE_c (CMD_LOCALE, "locale",
 #if HAVE_W32_SYSTEM
-                "Return the locale used for gettext"
+    ARGPARSE_c (CMD_LOCALE, "locale",
+                "Return the locale used for gettext"),
 #else
-                "@"
+    ARGPARSE_c (CMD_LOCALE, "locale",
+                "@"),
 #endif
-                ),
     ARGPARSE_s_n (OPT_DESC, "desc",
                   "Print with error description"),
     ARGPARSE_end()
