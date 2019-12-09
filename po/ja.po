@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.36\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2019-05-29 11:16+0900\n"
+"PO-Revision-Date: 2019-12-09 14:37+0900\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -967,6 +967,18 @@ msgstr "認証されてません"
 
 msgid "Bad authentication"
 msgstr "誤った認証です"
+
+msgid "No Keybox daemon running"
+msgstr "Keyboxデーモンが動いていません"
+
+msgid "Keybox daemon error"
+msgstr "Keyboxデーモンエラーです"
+
+msgid "Service is not running"
+msgstr "サービスが動いていません"
+
+msgid "Service error"
+msgstr "サービスエラーです"
 
 msgid "System bug detected"
 msgstr "システムのバグが検出されました"
