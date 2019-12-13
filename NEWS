@@ -1,6 +1,8 @@
 Noteworthy changes in version 1.37 (unreleased) [C27/A27/R_]
 -----------------------------------------------
 
+ * A new set of codes to map SQLite primary error codes.
+
 
 Noteworthy changes in version 1.36 (2019-03-19) [C27/A27/R0]
 -----------------------------------------------
