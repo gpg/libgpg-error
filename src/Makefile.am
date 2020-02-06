@@ -138,7 +138,6 @@ SUFFIXES = .rc .lo
 	$(LTRCCOMPILE) -i "$<" -o "$@"
 
 gpg_error_res = versioninfo.lo
-no_undefined = -no-undefined
 export_symbols = -export-symbols gpg-error.def
 # i686-w64-mingw32.gcc version 4.9.1 takes the long long helper
 # functions from libgcc_s_sjlj-1.dll and not from a static libgcc.  As
@@ -168,7 +167,6 @@ else
 #
 arch_sources = posix-lock.c posix-lock-obj.h posix-thread.c spawn-posix.c
 gpg_error_res =
-no_undefined =
 export_symbols =
 extra_ltoptions =
 
@@ -190,7 +188,7 @@ else
 endif
 
 libgpg_error_la_LDFLAGS = \
-  $(no_undefined) $(export_symbols) $(libgpg_error_vers_opt) \
+  -no-undefined $(export_symbols) $(libgpg_error_vers_opt) \
   $(extra_ltoptions) -version-info \
   @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@
 
