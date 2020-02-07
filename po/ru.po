@@ -970,6 +970,24 @@ msgstr "Отключено"
 msgid "Bad authentication"
 msgstr "Неподходящая аутентификация LDAP"
 
+#, fuzzy
+#| msgid "No agent running"
+msgid "No Keybox daemon running"
+msgstr "Агент не работает"
+
+#, fuzzy
+#| msgid "SmartCard daemon error"
+msgid "Keybox daemon error"
+msgstr "Ошибка демона смарткарт"
+
+msgid "Service is not running"
+msgstr ""
+
+#, fuzzy
+#| msgid "Keyserver error"
+msgid "Service error"
+msgstr "Ошибка сервера ключей"
+
 msgid "System bug detected"
 msgstr "Обнаружена ошибка в системе"
 
@@ -1287,6 +1305,107 @@ msgstr "Пользовательский код ошибки 15"
 
 msgid "User defined error code 16"
 msgstr "Пользовательский код ошибки 16"
+
+#, fuzzy
+#| msgid "LDAP success"
+msgid "SQL success"
+msgstr "Успешное выполнение LDAP"
+
+#, fuzzy
+#| msgid "Syntax error"
+msgid "SQL error"
+msgstr "Синтаксическая ошибка"
+
+msgid "Internal logic error in SQL library"
+msgstr ""
+
+msgid "Access permission denied (SQL)"
+msgstr ""
+
+msgid "SQL abort was requested"
+msgstr ""
+
+msgid "SQL database file is locked"
+msgstr ""
+
+msgid "An SQL table in the database is locked"
+msgstr ""
+
+msgid "SQL library ran out of core"
+msgstr ""
+
+msgid "Attempt to write a readonly SQL database"
+msgstr ""
+
+msgid "SQL operation terminated by interrupt"
+msgstr ""
+
+msgid "I/O error during SQL operation"
+msgstr ""
+
+msgid "SQL database disk image is malformed"
+msgstr ""
+
+msgid "Unknown opcode in SQL file control"
+msgstr ""
+
+msgid "Insertion failed because SQL database is full"
+msgstr ""
+
+msgid "Unable to open the SQL database file"
+msgstr ""
+
+#, fuzzy
+#| msgid "LDAP protocol error"
+msgid "SQL database lock protocol error"
+msgstr "Ошибка протокола LDAP"
+
+msgid "(internal SQL code: empty)"
+msgstr ""
+
+msgid "SQL database schema changed"
+msgstr ""
+
+msgid "String or blob exceeds size limit (SQL)"
+msgstr ""
+
+msgid "SQL abort due to constraint violation"
+msgstr ""
+
+msgid "Data type mismatch (SQL)"
+msgstr ""
+
+msgid "SQL library used incorrectly"
+msgstr ""
+
+msgid "SQL library uses unsupported OS features"
+msgstr ""
+
+#, fuzzy
+#| msgid "Proxied authorization denied by LDAP"
+msgid "Authorization denied (SQL)"
+msgstr "LDAP отказал в опосредованной авторизации"
+
+msgid "(unused SQL code: format)"
+msgstr ""
+
+msgid "SQL bind parameter out of range"
+msgstr ""
+
+msgid "File opened that is not an SQL database file"
+msgstr ""
+
+msgid "Notifications from SQL logger"
+msgstr ""
+
+msgid "Warnings from SQL logger"
+msgstr ""
+
+msgid "SQL has another row ready"
+msgstr ""
+
+msgid "SQL has finished executing"
+msgstr ""
 
 msgid "System error w/o errno"
 msgstr "Системная ошибка без номера"

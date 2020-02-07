@@ -998,6 +998,24 @@ msgstr "未啟用"
 msgid "Bad authentication"
 msgstr "未支援的保護"
 
+#, fuzzy
+#| msgid "No agent running"
+msgid "No Keybox daemon running"
+msgstr "沒有執行中的代理程式"
+
+#, fuzzy
+#| msgid "SmartCard daemon error"
+msgid "Keybox daemon error"
+msgstr "智慧卡服務錯誤"
+
+msgid "Service is not running"
+msgstr ""
+
+#, fuzzy
+#| msgid "Keyserver error"
+msgid "Service error"
+msgstr "金鑰伺服器錯誤"
+
 msgid "System bug detected"
 msgstr ""
 
@@ -1441,6 +1459,105 @@ msgstr "使用者定義錯誤代碼 15"
 
 msgid "User defined error code 16"
 msgstr "使用者定義錯誤代碼 16"
+
+#, fuzzy
+#| msgid "Success"
+msgid "SQL success"
+msgstr "成功"
+
+#, fuzzy
+#| msgid "Syntax error"
+msgid "SQL error"
+msgstr "語法錯誤"
+
+msgid "Internal logic error in SQL library"
+msgstr ""
+
+msgid "Access permission denied (SQL)"
+msgstr ""
+
+msgid "SQL abort was requested"
+msgstr ""
+
+msgid "SQL database file is locked"
+msgstr ""
+
+msgid "An SQL table in the database is locked"
+msgstr ""
+
+msgid "SQL library ran out of core"
+msgstr ""
+
+msgid "Attempt to write a readonly SQL database"
+msgstr ""
+
+msgid "SQL operation terminated by interrupt"
+msgstr ""
+
+msgid "I/O error during SQL operation"
+msgstr ""
+
+msgid "SQL database disk image is malformed"
+msgstr ""
+
+msgid "Unknown opcode in SQL file control"
+msgstr ""
+
+msgid "Insertion failed because SQL database is full"
+msgstr ""
+
+msgid "Unable to open the SQL database file"
+msgstr ""
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "SQL database lock protocol error"
+msgstr "未依協定進行"
+
+msgid "(internal SQL code: empty)"
+msgstr ""
+
+msgid "SQL database schema changed"
+msgstr ""
+
+msgid "String or blob exceeds size limit (SQL)"
+msgstr ""
+
+msgid "SQL abort due to constraint violation"
+msgstr ""
+
+msgid "Data type mismatch (SQL)"
+msgstr ""
+
+msgid "SQL library used incorrectly"
+msgstr ""
+
+msgid "SQL library uses unsupported OS features"
+msgstr ""
+
+msgid "Authorization denied (SQL)"
+msgstr ""
+
+msgid "(unused SQL code: format)"
+msgstr ""
+
+msgid "SQL bind parameter out of range"
+msgstr ""
+
+msgid "File opened that is not an SQL database file"
+msgstr ""
+
+msgid "Notifications from SQL logger"
+msgstr ""
+
+msgid "Warnings from SQL logger"
+msgstr ""
+
+msgid "SQL has another row ready"
+msgstr ""
+
+msgid "SQL has finished executing"
+msgstr ""
 
 msgid "System error w/o errno"
 msgstr "系統錯誤但是沒有 errno"

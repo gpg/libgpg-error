@@ -995,6 +995,24 @@ msgstr "Disabilitato"
 msgid "Bad authentication"
 msgstr "Protezione non supportata"
 
+#, fuzzy
+#| msgid "No agent running"
+msgid "No Keybox daemon running"
+msgstr "Nessun agente in esecuzione"
+
+#, fuzzy
+#| msgid "SmartCard daemon error"
+msgid "Keybox daemon error"
+msgstr "Errore del demone della SmartCard"
+
+msgid "Service is not running"
+msgstr ""
+
+#, fuzzy
+#| msgid "Keyserver error"
+msgid "Service error"
+msgstr "Errore del server delle chiavi"
+
 msgid "System bug detected"
 msgstr ""
 
@@ -1438,6 +1456,105 @@ msgstr "Codice errore 15 definito dall'utente"
 
 msgid "User defined error code 16"
 msgstr "Codice errore 16 definito dall'utente"
+
+#, fuzzy
+#| msgid "Success"
+msgid "SQL success"
+msgstr "Eseguito"
+
+#, fuzzy
+#| msgid "Syntax error"
+msgid "SQL error"
+msgstr "Errore di sintassi"
+
+msgid "Internal logic error in SQL library"
+msgstr ""
+
+msgid "Access permission denied (SQL)"
+msgstr ""
+
+msgid "SQL abort was requested"
+msgstr ""
+
+msgid "SQL database file is locked"
+msgstr ""
+
+msgid "An SQL table in the database is locked"
+msgstr ""
+
+msgid "SQL library ran out of core"
+msgstr ""
+
+msgid "Attempt to write a readonly SQL database"
+msgstr ""
+
+msgid "SQL operation terminated by interrupt"
+msgstr ""
+
+msgid "I/O error during SQL operation"
+msgstr ""
+
+msgid "SQL database disk image is malformed"
+msgstr ""
+
+msgid "Unknown opcode in SQL file control"
+msgstr ""
+
+msgid "Insertion failed because SQL database is full"
+msgstr ""
+
+msgid "Unable to open the SQL database file"
+msgstr ""
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "SQL database lock protocol error"
+msgstr "Violazione del protocollo"
+
+msgid "(internal SQL code: empty)"
+msgstr ""
+
+msgid "SQL database schema changed"
+msgstr ""
+
+msgid "String or blob exceeds size limit (SQL)"
+msgstr ""
+
+msgid "SQL abort due to constraint violation"
+msgstr ""
+
+msgid "Data type mismatch (SQL)"
+msgstr ""
+
+msgid "SQL library used incorrectly"
+msgstr ""
+
+msgid "SQL library uses unsupported OS features"
+msgstr ""
+
+msgid "Authorization denied (SQL)"
+msgstr ""
+
+msgid "(unused SQL code: format)"
+msgstr ""
+
+msgid "SQL bind parameter out of range"
+msgstr ""
+
+msgid "File opened that is not an SQL database file"
+msgstr ""
+
+msgid "Notifications from SQL logger"
+msgstr ""
+
+msgid "Warnings from SQL logger"
+msgstr ""
+
+msgid "SQL has another row ready"
+msgstr ""
+
+msgid "SQL has finished executing"
+msgstr ""
 
 msgid "System error w/o errno"
 msgstr "Errore di sistema senza errno"
