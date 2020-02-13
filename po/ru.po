@@ -1,13 +1,13 @@
 # Russian translation for libgpg-error.
-# Copyright (C) 2018 Free Software Foundation, Inc.
+# Copyright (C) 2020 Free Software Foundation, Inc.
 # This file is distributed under the same license as the original package.
-# Ineiev <ineiev@gnu.org>, 2014, 2015, 2018
+# Ineiev <ineiev@gnu.org>, 2014, 2015, 2018, 2019, 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2018-03-21 19:03+0100\n"
+"PO-Revision-Date: 2020-02-13 19:03+0100\n"
 "Last-Translator: Ineiev <ineiev@gnu.org>\n"
 "Language-Team: Russian <gnupg-ru@gnupg.org>\n"
 "Language: ru\n"
@@ -31,7 +31,7 @@ msgid "GPG Agent"
 msgstr "Агент GPG"
 
 msgid "Pinentry"
-msgstr "Ввод PIN"
+msgstr "Программа ввода пароля"
 
 msgid "SCD"
 msgstr "SCD"
@@ -100,13 +100,13 @@ msgid "Invalid public key algorithm"
 msgstr "Недопустимый алгоритм шифрования с открытым ключом"
 
 msgid "Invalid digest algorithm"
-msgstr "Недопустимая хэш-функция"
+msgstr "Недопустимая хеш-функция"
 
 msgid "Bad public key"
 msgstr "Плохой открытый ключ"
 
 msgid "Bad secret key"
-msgstr "Плохой закрытый ключ"
+msgstr "Плохой секретный ключ"
 
 msgid "Bad signature"
 msgstr "Плохая подпись"
@@ -124,22 +124,22 @@ msgid "Invalid cipher algorithm"
 msgstr "Недопустимый алгоритм симметричного шифрования"
 
 msgid "Cannot open keyring"
-msgstr "Таблица ключей открыта"
+msgstr "Таблица ключей не открывается"
 
 msgid "Invalid packet"
 msgstr "Недопустимый пакет"
 
 msgid "Invalid armor"
-msgstr "Недопустимый текстовый формат"
+msgstr "Недопустимая текстовая оболочка"
 
 msgid "No user ID"
-msgstr "Нет ID пользователя"
+msgstr "Нет идентификатора пользователя"
 
 msgid "No secret key"
-msgstr "Нет закрытого ключа"
+msgstr "Нет секретного ключа"
 
 msgid "Wrong secret key used"
-msgstr "Использован неверный закрытый ключ"
+msgstr "Использован неверный секретный ключ"
 
 msgid "Bad session key"
 msgstr "Плохой сеансовый ключ"
@@ -196,7 +196,7 @@ msgid "Bad certificate"
 msgstr "Плохой сертификат"
 
 msgid "Invalid user ID"
-msgstr "Недопустимый ID пользователя"
+msgstr "Недопустимый идентификатор пользователя"
 
 msgid "Unexpected error"
 msgstr "Неожиданная ошибка"
@@ -247,13 +247,13 @@ msgid "Unusable public key"
 msgstr "Непригодный открытый ключ"
 
 msgid "Unusable secret key"
-msgstr "Непригодный закрытый ключ"
+msgstr "Непригодный секретный ключ"
 
 msgid "Invalid value"
 msgstr "Недопустимое значение"
 
 msgid "Bad certificate chain"
-msgstr "Плохая сертификатная цепь"
+msgstr "Плохая цепь сертификатов"
 
 msgid "Missing certificate"
 msgstr "Не хватает сертификата"
@@ -271,7 +271,7 @@ msgid "Invalid operation code"
 msgstr "Недопустимый код операции"
 
 msgid "Timeout"
-msgstr "Лимит времени"
+msgstr "Время исчерпано"
 
 msgid "Internal error"
 msgstr "Внутренняя ошибка"
@@ -340,13 +340,13 @@ msgid "Unsupported algorithm"
 msgstr "Алгоритм не поддерживается"
 
 msgid "No pinentry"
-msgstr "Нет модуля ввода PIN"
+msgstr "Нет программы ввода пароля"
 
 msgid "pinentry error"
-msgstr "ошибка ввода PIN"
+msgstr "ошибка при вводе пароля"
 
 msgid "Bad PIN"
-msgstr "Плохой PIN"
+msgstr "Плохой пароль"
 
 msgid "Invalid name"
 msgstr "Недопустимое имя"
@@ -370,7 +370,7 @@ msgid "Certificate revoked"
 msgstr "Сертификат отозван"
 
 msgid "No CRL known"
-msgstr "Список отозванных сертификатов неизвестен"
+msgstr "Отсутствует список отозванных сертификатов"
 
 msgid "CRL too old"
 msgstr "Список отозванных сертификатов слишком стар"
@@ -415,7 +415,7 @@ msgid "Card reset required"
 msgstr "Требуется перезапуск карты"
 
 msgid "Card removed"
-msgstr "Карта удалена"
+msgstr "Карта вынута"
 
 msgid "Invalid card"
 msgstr "Непригодная карта"
@@ -433,7 +433,7 @@ msgid "Configuration error"
 msgstr "Ошибка конфигурации"
 
 msgid "No policy match"
-msgstr "Проблема с правилами"
+msgstr "Нет соответствующего правила"
 
 msgid "Invalid index"
 msgstr "Недопустимый индекс"
@@ -442,10 +442,10 @@ msgid "Invalid ID"
 msgstr "Недопустимый идентификатор"
 
 msgid "No SmartCard daemon"
-msgstr "Нет демона смарткарт"
+msgstr "Нет демона криптографических карт"
 
 msgid "SmartCard daemon error"
-msgstr "Ошибка демона смарткарт"
+msgstr "Ошибка демона криптографических карт"
 
 msgid "Unsupported protocol"
 msgstr "Протокол не поддерживается"
@@ -466,7 +466,7 @@ msgid "Nothing found"
 msgstr "Ничего не найдено"
 
 msgid "Wrong blob type"
-msgstr "Кусок неподходящего типа"
+msgstr "Данные неподходящего типа"
 
 msgid "Missing value"
 msgstr "Не хватает значения"
@@ -541,7 +541,7 @@ msgid "Public key not trusted"
 msgstr "Открытый ключ не доверенный"
 
 msgid "Decryption failed"
-msgstr "Сбой расшифровки"
+msgstr "Сбой расшифрования"
 
 msgid "Key expired"
 msgstr "Срок действия ключа истек"
@@ -673,7 +673,7 @@ msgid "Broken public key"
 msgstr "Открытый ключ поврежден"
 
 msgid "Broken secret key"
-msgstr "Закрытый ключ поврежден"
+msgstr "Секретный ключ поврежден"
 
 msgid "Invalid MAC algorithm"
 msgstr "Недопустимый алгоритм MAC"
@@ -715,13 +715,13 @@ msgid "Unmatched display hints"
 msgstr "Непарные квадратные скобки"
 
 msgid "Unexpected reserved punctuation in S-expression"
-msgstr "Неожиданная зарезервированная пунктуации в S-выражении"
+msgstr "Неожиданная зарезервированная пунктуация в S-выражении"
 
 msgid "Bad hexadecimal character in S-expression"
 msgstr "Плохой шестнадцатеричный символ в S-выражении"
 
 msgid "Odd hexadecimal numbers in S-expression"
-msgstr "Шестнадцатеричные числа нечетной длины в S-выражении"
+msgstr "Нечетные шестнадцатеричные числа в S-выражении"
 
 msgid "Bad octal character in S-expression"
 msgstr "Плохой восьмеричный символ в S-выражении"
@@ -751,10 +751,10 @@ msgid "Request too long"
 msgstr "Слишком длинный запрос"
 
 msgid "Object is in termination state"
-msgstr "Объект прекращает работу"
+msgstr "Объект в стадии завершения"
 
 msgid "No certificate chain"
-msgstr "Нет сертификатной цепи"
+msgstr "Нет цепи сертификатов"
 
 msgid "Certificate is too large"
 msgstr "Сертификат слишком велик"
@@ -799,10 +799,10 @@ msgid "Bad certificate message in handshake"
 msgstr "Плохое сертификатное сообщение при установлении связи"
 
 msgid "Bad certificate request message in handshake"
-msgstr "Плохое сообщение-запрос сертификата при установлении связи"
+msgstr "Плохое сообщение запроса сертификата при установлении связи"
 
 msgid "Bad certificate verify message in handshake"
-msgstr "Плохое сообщение-проверка сертификата при установлении связи"
+msgstr "Плохое сообщение проверки сертификата при установлении связи"
 
 msgid "Bad change cipher message in handshake"
 msgstr "Плохое сообщение смены шифра при установлении связи"
@@ -957,37 +957,6 @@ msgstr "Уже доставлено"
 msgid "Try again later"
 msgstr "Повторите попытку позднее"
 
-msgid "Wrong name"
-msgstr "Неверное имя"
-
-#, fuzzy
-#| msgid "Not enabled"
-msgid "Not authenticated"
-msgstr "Отключено"
-
-#, fuzzy
-#| msgid "Inappropriate LDAP authentication"
-msgid "Bad authentication"
-msgstr "Неподходящая аутентификация LDAP"
-
-#, fuzzy
-#| msgid "No agent running"
-msgid "No Keybox daemon running"
-msgstr "Агент не работает"
-
-#, fuzzy
-#| msgid "SmartCard daemon error"
-msgid "Keybox daemon error"
-msgstr "Ошибка демона смарткарт"
-
-msgid "Service is not running"
-msgstr ""
-
-#, fuzzy
-#| msgid "Keyserver error"
-msgid "Service error"
-msgstr "Ошибка сервера ключей"
-
 msgid "System bug detected"
 msgstr "Обнаружена ошибка в системе"
 
@@ -1046,7 +1015,7 @@ msgid "LDAP connecting failed (X)"
 msgstr "Отказ соединения LDAP (X)"
 
 msgid "LDAP referral limit exceeded"
-msgstr "Исчерпан лимит ссылок LDAP"
+msgstr "Слишком много ссылок LDAP"
 
 msgid "LDAP client loop"
 msgstr "Цикл клиента LDAP"
@@ -1076,7 +1045,7 @@ msgid "Bad LDAP search filter"
 msgstr "Плохой фильтр поиска LDAP"
 
 msgid "Unknown LDAP authentication method"
-msgstr "Неизвестный метод аутентификации LDAP"
+msgstr "Неизвестный метод удостоверения LDAP"
 
 msgid "Timeout in LDAP"
 msgstr "Лимит времени в LDAP"
@@ -1115,10 +1084,10 @@ msgid "LDAP compare true"
 msgstr "Сравнение LDAP: истина"
 
 msgid "LDAP authentication method not supported"
-msgstr "Метод аутентификации LDAP не поддерживается"
+msgstr "Метод удостоверения LDAP не поддерживается"
 
 msgid "Strong(er) LDAP authentication required"
-msgstr "Требуется (более) сильная аутентификация LDAP"
+msgstr "Требуется (более) сильное удостоверение LDAP"
 
 msgid "Partial LDAP results+referral received"
 msgstr "Получены частичные результаты LDAP со ссылкой"
@@ -1175,10 +1144,10 @@ msgid "LDAP proxy authorization failure (X)"
 msgstr "Отказ авторизации промежуточного сервера (X)"
 
 msgid "Inappropriate LDAP authentication"
-msgstr "Неподходящая аутентификация LDAP"
+msgstr "Неподходящее удостоверение LDAP"
 
 msgid "Invalid LDAP credentials"
-msgstr "Неверная верительная грамота LDAP"
+msgstr "Неверные верительные данные LDAP"
 
 msgid "Insufficient access for LDAP"
 msgstr "Недостаточный доступ для LDAP"
@@ -1244,7 +1213,7 @@ msgid "LDAP cancelled"
 msgstr "Отбой LDAP"
 
 msgid "No LDAP operation to cancel"
-msgstr "Нет операции LDAP, которую можно было бы отменить"
+msgstr "Нет операции LDAP для отмены"
 
 msgid "Too late to cancel LDAP"
 msgstr "Отменять LDAP слишком поздно"
@@ -1253,7 +1222,7 @@ msgid "Cannot cancel LDAP"
 msgstr "Не удается отменить LDAP"
 
 msgid "LDAP assertion failed"
-msgstr "Отказ в установке LDAP"
+msgstr "Не выполнено условие в LDAP"
 
 msgid "Proxied authorization denied by LDAP"
 msgstr "LDAP отказал в опосредованной авторизации"
@@ -1305,107 +1274,6 @@ msgstr "Пользовательский код ошибки 15"
 
 msgid "User defined error code 16"
 msgstr "Пользовательский код ошибки 16"
-
-#, fuzzy
-#| msgid "LDAP success"
-msgid "SQL success"
-msgstr "Успешное выполнение LDAP"
-
-#, fuzzy
-#| msgid "Syntax error"
-msgid "SQL error"
-msgstr "Синтаксическая ошибка"
-
-msgid "Internal logic error in SQL library"
-msgstr ""
-
-msgid "Access permission denied (SQL)"
-msgstr ""
-
-msgid "SQL abort was requested"
-msgstr ""
-
-msgid "SQL database file is locked"
-msgstr ""
-
-msgid "An SQL table in the database is locked"
-msgstr ""
-
-msgid "SQL library ran out of core"
-msgstr ""
-
-msgid "Attempt to write a readonly SQL database"
-msgstr ""
-
-msgid "SQL operation terminated by interrupt"
-msgstr ""
-
-msgid "I/O error during SQL operation"
-msgstr ""
-
-msgid "SQL database disk image is malformed"
-msgstr ""
-
-msgid "Unknown opcode in SQL file control"
-msgstr ""
-
-msgid "Insertion failed because SQL database is full"
-msgstr ""
-
-msgid "Unable to open the SQL database file"
-msgstr ""
-
-#, fuzzy
-#| msgid "LDAP protocol error"
-msgid "SQL database lock protocol error"
-msgstr "Ошибка протокола LDAP"
-
-msgid "(internal SQL code: empty)"
-msgstr ""
-
-msgid "SQL database schema changed"
-msgstr ""
-
-msgid "String or blob exceeds size limit (SQL)"
-msgstr ""
-
-msgid "SQL abort due to constraint violation"
-msgstr ""
-
-msgid "Data type mismatch (SQL)"
-msgstr ""
-
-msgid "SQL library used incorrectly"
-msgstr ""
-
-msgid "SQL library uses unsupported OS features"
-msgstr ""
-
-#, fuzzy
-#| msgid "Proxied authorization denied by LDAP"
-msgid "Authorization denied (SQL)"
-msgstr "LDAP отказал в опосредованной авторизации"
-
-msgid "(unused SQL code: format)"
-msgstr ""
-
-msgid "SQL bind parameter out of range"
-msgstr ""
-
-msgid "File opened that is not an SQL database file"
-msgstr ""
-
-msgid "Notifications from SQL logger"
-msgstr ""
-
-msgid "Warnings from SQL logger"
-msgstr ""
-
-msgid "SQL has another row ready"
-msgstr ""
-
-msgid "SQL has finished executing"
-msgstr ""
 
 msgid "System error w/o errno"
 msgstr "Системная ошибка без номера"
@@ -1483,6 +1351,3 @@ msgstr "Об ошибках сообщайте по адресу <https://bugs.g
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "внимание: не распознано %s\n"
-
-#~ msgid "Usage: %s GPG-ERROR [...]\n"
-#~ msgstr "Вызов: %s GPG-ERROR [...]\n"
