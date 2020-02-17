@@ -2,12 +2,12 @@
 # Copyright (C) 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2014, 2015, 2018.
+# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2014, 2015, 2018, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2018-04-14 21:07+0200\n"
+"PO-Revision-Date: 2020-02-17 18:28+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
 "Language: uk\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 20.03.70\n"
 
 msgid "Unspecified source"
 msgstr "Невказане джерело"
@@ -971,33 +971,28 @@ msgstr "Повторіть спробу пізніше"
 msgid "Wrong name"
 msgstr "Помилкова назва"
 
-#, fuzzy
 #| msgid "Not enabled"
 msgid "Not authenticated"
-msgstr "Не увімкнено"
+msgstr "Розпізнавання не пройдено"
 
-#, fuzzy
 #| msgid "Inappropriate LDAP authentication"
 msgid "Bad authentication"
-msgstr "Неприйнятне розпізнавання LDAP"
+msgstr "Помилка розпізнавання"
 
-#, fuzzy
 #| msgid "No agent running"
 msgid "No Keybox daemon running"
-msgstr "Агент не запущено"
+msgstr "Фонову службу Keybox не запущено"
 
-#, fuzzy
 #| msgid "SmartCard daemon error"
 msgid "Keybox daemon error"
-msgstr "Помилка фонової служби SmartCard"
+msgstr "Помилка фонової служби Keybox"
 
 msgid "Service is not running"
-msgstr ""
+msgstr "Службу не запущено"
 
-#, fuzzy
 #| msgid "Keyserver error"
 msgid "Service error"
-msgstr "Помилка сервера ключів"
+msgstr "Помилка служби"
 
 msgid "System bug detected"
 msgstr "Виявлено ваду у системі"
@@ -1317,106 +1312,102 @@ msgstr "Визначений користувачем код помилки 15"
 msgid "User defined error code 16"
 msgstr "Визначений користувачем код помилки 16"
 
-#, fuzzy
 #| msgid "LDAP success"
 msgid "SQL success"
-msgstr "Успіх LDAP"
+msgstr "Успіх SQL"
 
-#, fuzzy
 #| msgid "Syntax error"
 msgid "SQL error"
-msgstr "Синтаксична помилка"
+msgstr "Помилка SQL"
 
 msgid "Internal logic error in SQL library"
-msgstr ""
+msgstr "Внутрішня помилка логіки у бібліотеці SQL"
 
 msgid "Access permission denied (SQL)"
-msgstr ""
+msgstr "Заборонено доступ за правами (SQL)"
 
 msgid "SQL abort was requested"
-msgstr ""
+msgstr "Надійшов запит на переривання роботи SQL"
 
 msgid "SQL database file is locked"
-msgstr ""
+msgstr "Файл бази даних SQL заблоковано"
 
 msgid "An SQL table in the database is locked"
-msgstr ""
+msgstr "Таблицю SQL у базі даних заблоковано"
 
 msgid "SQL library ran out of core"
-msgstr ""
+msgstr "Вихід за межі області пам'яті у бібліотеці SQL"
 
 msgid "Attempt to write a readonly SQL database"
-msgstr ""
+msgstr "Спроба запису до придатної лише до читання бази даних SQL"
 
 msgid "SQL operation terminated by interrupt"
-msgstr ""
+msgstr "SQL operation terminated by interrupt"
 
 msgid "I/O error during SQL operation"
-msgstr ""
+msgstr "Помилка введення-виведення під час виконання дії SQL"
 
 msgid "SQL database disk image is malformed"
-msgstr ""
+msgstr "Образ диска бази даних SQL має помилкове форматування"
 
 msgid "Unknown opcode in SQL file control"
-msgstr ""
+msgstr "Невідомий код дії у керування файлами SQL"
 
 msgid "Insertion failed because SQL database is full"
-msgstr ""
+msgstr "Не вдалося вставити запис, оскільки базу даних SQL переповнено"
 
 msgid "Unable to open the SQL database file"
-msgstr ""
+msgstr "Не вдалося відкрити файл бази даних SQL"
 
-#, fuzzy
 #| msgid "LDAP protocol error"
 msgid "SQL database lock protocol error"
-msgstr "Помилка протоколу LDAP"
+msgstr "Помилка протоколу блокування бази даних SQL"
 
 msgid "(internal SQL code: empty)"
-msgstr ""
+msgstr "(внутрішній код SQL: порожньо)"
 
 msgid "SQL database schema changed"
-msgstr ""
+msgstr "Змінено структуру бази даних SQL"
 
 msgid "String or blob exceeds size limit (SQL)"
-msgstr ""
+msgstr "Перевищення обмеження на розмір рядка або двійкового об'єкта (SQL)"
 
 msgid "SQL abort due to constraint violation"
-msgstr ""
+msgstr "Переривання роботи SQL через перевищення обмежень"
 
 msgid "Data type mismatch (SQL)"
-msgstr ""
+msgstr "Невідповідність типів даних (SQL)"
 
 msgid "SQL library used incorrectly"
-msgstr ""
+msgstr "Неправильне використання бібліотеки SQL"
 
 msgid "SQL library uses unsupported OS features"
-msgstr ""
+msgstr "Бібліотека SQL намагається використати непідтримувані можливості ОС"
 
-#, fuzzy
 #| msgid "Proxied authorization denied by LDAP"
 msgid "Authorization denied (SQL)"
-msgstr "Уповноваження за допомогою проксі заборонено LDAP"
+msgstr "Відмовлено в уповноваженні (SQL)"
 
 msgid "(unused SQL code: format)"
-msgstr ""
+msgstr "(невикористаний код SQL: формат)"
 
 msgid "SQL bind parameter out of range"
-msgstr ""
+msgstr "Параметр прив'язки SQL має значення поза межами припустимого діапазону"
 
 msgid "File opened that is not an SQL database file"
-msgstr ""
+msgstr "Відкрито файл, який не є файлом бази даних SQL"
 
 msgid "Notifications from SQL logger"
-msgstr ""
+msgstr "Сповіщення від засобу журналювання SQL"
 
 msgid "Warnings from SQL logger"
-msgstr ""
+msgstr "Попередження від засобу журналювання SQL"
 
 msgid "SQL has another row ready"
-msgstr ""
+msgstr "У SQL готовий ще один рядок"
 
 msgid "SQL has finished executing"
-msgstr ""
+msgstr "Виконання коду SQL завершено"
 
 msgid "System error w/o errno"
 msgstr "Системна помилка без номера"
