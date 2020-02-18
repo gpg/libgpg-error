@@ -1,7 +1,7 @@
 /* argparse.c - Argument Parser for option handling
  * Copyright (C) 1997-2001, 2006-2008, 2013-2017 Werner Koch
  * Copyright (C) 1998-2001, 2006-2008, 2012 Free Software Foundation, Inc.
- * Copyright (C) 2015-2018 g10 Code GmbH
+ * Copyright (C) 2015-2020 g10 Code GmbH
  *
  * This file is part of Libgpg-error.
  *
@@ -36,6 +36,15 @@
 
 #include "gpgrt-int.h"
 
+
+/* The malloced configuration directories or NULL.  */
+static struct
+{
+  char *user;
+  char *sys;
+} confdir;
+
+
 /* Special short options which are auto-inserterd.  */
 #define ARGPARSE_SHORTOPT_HELP 32768
 #define ARGPARSE_SHORTOPT_VERSION 32769
@@ -45,16 +54,36 @@
 /* A mask for the types.  */
 #define ARGPARSE_TYPE_MASK  7  /* Mask for the type values.  */
 
+/* The states for the gpgrt_argparser machinery.  */
+enum argparser_states
+  {
+   STATE_init = 0,
+   STATE_open_sys,
+   STATE_open_user,
+   STATE_open_cmdline,
+   STATE_read_sys,
+   STATE_read_user,
+   STATE_read_cmdline,
+   STATE_finished
+  };
+
+
 /* Internal object of the public gpgrt_argparse_t object.  */
 struct _gpgrt_argparse_internal_s
 {
-  int idx;
+  int idx;   /* Note that this is saved and restored in _gpgrt_argparser. */
   int inarg;
   int stopped;
+  int explicit_confopt;        /* A conffile option has been given. */
+  char *explicit_conffile;     /* Malloced name of an explicit conffile.  */
+  unsigned int opt_flags;      /* Current option flags.  */
+  enum argparser_states state; /* of gpgrt_argparser.  */
   const char *last;
   void *aliases;
   const void *cur_alias;
   void *iio_list;
+  estream_t conffp;
+  char *confname;
   gpgrt_opt_t **opts;  /* Malloced array of pointer to user provided opts.  */
 };
 
@@ -189,6 +218,7 @@ deinitialize (gpgrt_argparse_t *arg)
 {
   if (arg->internal)
     {
+      xfree (arg->internal->explicit_conffile);
       xfree (arg->internal->opts);
       xfree (arg->internal);
       arg->internal = NULL;
@@ -228,9 +258,15 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
       arg->internal->last = NULL;
       arg->internal->inarg = 0;
       arg->internal->stopped = 0;
+      arg->internal->explicit_confopt = 0;
+      arg->internal->explicit_conffile = NULL;
+      arg->internal->opt_flags = 0;
+      arg->internal->state = STATE_init;
       arg->internal->aliases = NULL;
       arg->internal->cur_alias = NULL;
       arg->internal->iio_list = NULL;
+      arg->internal->conffp = NULL;
+      arg->internal->confname = NULL;
 
       /* Clear the copy of the option list.  */
       /* Clear the error indicator.  */
@@ -240,7 +276,7 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
        * However, we do not open the stream and thus we have no way to
        * know the current lineno.  Using this flag we can allow the
        * user to provide a lineno which we don't reset.  */
-      if (fp || !(arg->flags & ARGPARSE_FLAG_NOLINENO))
+      if (fp || arg->internal->conffp || !(arg->flags & ARGPARSE_FLAG_NOLINENO))
         arg->lineno = 0;
 
       /* Need to clear the reset request.  */
@@ -312,6 +348,9 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
       /* Last option was erroneous.  */
       const char *s;
 
+      if (!fp && arg->internal->conffp)
+        fp = arg->internal->conffp;
+
       if (fp)
         {
           if ( arg->r_opt == ARGPARSE_UNEXPECTED_ARG )
@@ -330,10 +369,13 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
             s = _("invalid alias definition");
           else if ( arg->r_opt == ARGPARSE_OUT_OF_CORE )
             s = _("out of core");
+          else if ( arg->r_opt == ARGPARSE_NO_CONFFILE )
+            s = NULL;  /* Error has already been printed.  */
           else
             s = _("invalid option");
-          _gpgrt_log_error ("%s:%u: %s\n",
-                            _gpgrt_fname_get (fp), arg->lineno, s);
+          if (s)
+            _gpgrt_log_error ("%s:%u: %s\n",
+                              _gpgrt_fname_get (fp), arg->lineno, s);
 	}
       else
         {
@@ -353,7 +395,9 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
           else if ( arg->r_opt == ARGPARSE_AMBIGUOUS_COMMAND )
             _gpgrt_log_error (_("command \"%.50s\" is ambiguous\n"),s );
           else if ( arg->r_opt == ARGPARSE_OUT_OF_CORE )
-            _gpgrt_log_error ("%s\n", _("out of core\n"));
+            _gpgrt_log_error ("%s\n", _("out of core"));
+          else if ( arg->r_opt == ARGPARSE_NO_CONFFILE)
+            ;  /* Error has already been printed.  */
           else
             _gpgrt_log_error (_("invalid option \"%.50s\"\n"), s);
 	}
@@ -824,6 +868,281 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
 }
 
 
+/* Return true if the list of options OPTS has any option marked with
+ * ARGPARSE_OPT_CONFFILE.  */
+static int
+any_opt_conffile (gpgrt_opt_t *opts)
+{
+  int i;
+
+  for (i=0; opts[i].short_opt; i++ )
+    if ((opts[i].flags & ARGPARSE_OPT_CONFFILE))
+      return 1;
+  return 0;
+}
+
+
+/* The full arg parser which handles option files and command line
+ * arguments.  The behaviour depends on the combinations of CONFNAME
+ * and the ARGPARSE_FLAG_xxx values:
+ *
+ * | CONFNAME | SYS | USER | Action             |
+ * |----------+-----+------+--------------------|
+ * | NULL     |   - |    - | cmdline            |
+ * | string   |   0 |    1 | user, cmdline      |
+ * | string   |   1 |    0 | sys, cmdline       |
+ * | string   |   1 |    1 | sys, user, cmdline |
+ *
+ * Note that if an option has been flagged with ARGPARSE_OPT_CONFFILE
+ * and a type of ARGPARSE_TYPE_STRING that option is not returned but
+ * the specified configuration file is processed directly; if
+ * ARGPARSE_TYPE_NONE is used no user configuration files are
+ * processed and from the system configuration files only those which
+ * are immutable are processed.  The string values for CONFNAME shall
+ * not include a directory part, because that is taken from the values
+ * set by gpgrt_set_confdir.
+ */
+int
+_gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
+                  const char *confname)
+{
+  /* First check whether releasing the resources has been requested.  */
+  if (arg && !opts)
+    {
+      deinitialize (arg);
+      return 0;
+    }
+
+  /* Make sure that the internal data object is ready and also print
+   * warnings or errors from the last iteration.  */
+  if (initialize (arg, opts, NULL))
+    return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
+
+ next_state:
+  switch (arg->internal->state)
+    {
+    case STATE_init:
+      if (any_opt_conffile (opts))
+        {
+          /* The list of option allow for conf files
+           * (e.g. gpg's "--option FILE" and "--no-options")
+           * Now check whether one was really given on the
+           * command line.  */
+          int  *save_argc = arg->argc;
+          char ***save_argv = arg->argv;
+          unsigned int save_flags = arg->flags;
+          int save_idx = arg->internal->idx;
+          int any_no_conffile = 0;
+
+          arg->flags = (ARGPARSE_FLAG_KEEP | ARGPARSE_FLAG_NOVERSION);
+          while (arg_parse (arg, opts))
+            {
+              if ((arg->internal->opt_flags & ARGPARSE_OPT_CONFFILE))
+                {
+                  arg->internal->explicit_confopt = 1;
+                  if (arg->r_type == ARGPARSE_TYPE_STRING
+                      && !arg->internal->explicit_conffile)
+                    {
+                      /* Store the first conffile name.  All further
+                       * conf file options are not handled.  */
+                      arg->internal->explicit_conffile
+                        = xtrystrdup (arg->r.ret_str);
+                      if (!arg->internal->explicit_conffile)
+                        return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
+
+                    }
+                  else if (arg->r_type == ARGPARSE_TYPE_NONE)
+                    any_no_conffile = 1;
+                }
+            }
+          if (any_no_conffile)
+            {
+              /* A NoConffile option overrides any other conf file option.  */
+              xfree (arg->internal->explicit_conffile);
+              arg->internal->explicit_conffile = NULL;
+            }
+          /* Restore parser.  */
+          arg->argc = save_argc;
+          arg->argv = save_argv;
+          arg->flags = save_flags;
+          arg->internal->idx = save_idx;
+
+        }
+
+      if (confname && *confname)
+        {
+          if ((arg->flags & ARGPARSE_FLAG_SYS))
+            arg->internal->state = STATE_open_sys;
+          else if ((arg->flags & ARGPARSE_FLAG_USER))
+            arg->internal->state = STATE_open_user;
+          else
+            return (arg->r_opt = ARGPARSE_INVALID_ARG);
+        }
+      else
+        arg->internal->state = STATE_open_cmdline;
+      goto next_state;
+
+    case STATE_open_sys:
+      xfree (arg->internal->confname);
+      arg->internal->confname = _gpgrt_fnameconcat
+        (confdir.sys? confdir.sys : "/etc", confname, NULL);
+      arg->lineno = 0;
+      _gpgrt_fclose (arg->internal->conffp);
+      arg->internal->conffp = _gpgrt_fopen (arg->internal->confname, "r");
+      /* FIXME: Add a callback.  */
+      /* if (arg->internal->conffp && is_secured_file (fileno (configfp)))*/
+      /*   { */
+      /*     es_fclose (arg->internal->conffp); */
+      /*     arg->internal->conffp = NULL; */
+      /*     gpg_err_set_errno (EPERM); */
+      /*   } */
+      if (!arg->internal->conffp)
+        {
+          if ((arg->flags & ARGPARSE_FLAG_VERBOSE))
+            _gpgrt_log_info (_("Note: no default option file '%s'\n"),
+                             arg->internal->confname);
+          if ((arg->flags & ARGPARSE_FLAG_USER))
+            arg->internal->state = STATE_open_user;
+          else
+            arg->internal->state = STATE_open_cmdline;
+          goto next_state;
+        }
+
+      if ((arg->flags & ARGPARSE_FLAG_VERBOSE))
+        _gpgrt_log_info (_("reading options from '%s'\n"),
+                         arg->internal->confname);
+      arg->internal->state = STATE_read_sys;
+      arg->r.ret_str = xtrystrdup (arg->internal->confname);
+      if (!arg->r.ret_str)
+        arg->r_opt = ARGPARSE_OUT_OF_CORE;
+      else
+        {
+          gpgrt_annotate_leaked_object (arg->r.ret_str);
+          arg->r_opt = ARGPARSE_CONFFILE;
+          arg->r_type = ARGPARSE_TYPE_STRING;
+        }
+      break;
+
+    case STATE_open_user:
+      if (arg->internal->explicit_confopt
+          && arg->internal->explicit_conffile)
+        {
+          /* An explict option to use a specific configuration file
+           * has been given - use that one.  */
+          xfree (arg->internal->confname);
+          arg->internal->confname
+            = xtrystrdup (arg->internal->explicit_conffile);
+          if (!arg->internal->confname)
+            return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
+        }
+      else if (arg->internal->explicit_confopt)
+        {
+          /* An explict option not to use a configuration file has
+           * been given - leap direct to command line reading.  */
+          arg->internal->state = STATE_open_cmdline;
+          goto next_state;
+        }
+      else
+        {
+          /* Use the standard configure file.  */
+          xfree (arg->internal->confname);
+          arg->internal->confname = _gpgrt_fnameconcat
+            (confdir.user? confdir.user : "/FIXME", confname, NULL);
+        }
+      arg->lineno = 0;
+      _gpgrt_fclose (arg->internal->conffp);
+      arg->internal->conffp = _gpgrt_fopen (arg->internal->confname, "r");
+      /* FIXME: Add a callback.  */
+      /* if (arg->internal->conffp && is_secured_file (fileno (configfp)))*/
+      /*   { */
+      /*     es_fclose (arg->internal->conffp); */
+      /*     arg->internal->conffp = NULL; */
+      /*     gpg_err_set_errno (EPERM); */
+      /*   } */
+      if (!arg->internal->conffp)
+        {
+          arg->internal->state = STATE_open_cmdline;
+          if (arg->internal->explicit_confopt)
+            {
+              _gpgrt_log_error (_("option file '%s': %s\n"),
+                                arg->internal->confname, strerror (errno));
+              return (arg->r_opt = ARGPARSE_NO_CONFFILE);
+            }
+          else
+            {
+              if ((arg->flags & ARGPARSE_FLAG_VERBOSE))
+                _gpgrt_log_info (_("Note: no default option file '%s'\n"),
+                                 arg->internal->confname);
+              goto next_state;
+            }
+        }
+
+      if ((arg->flags & ARGPARSE_FLAG_VERBOSE))
+        _gpgrt_log_info (_("reading options from '%s'\n"),
+                         arg->internal->confname);
+      arg->internal->state = STATE_read_user;
+      arg->r.ret_str = xtrystrdup (arg->internal->confname);
+      if (!arg->r.ret_str)
+        arg->r_opt = ARGPARSE_OUT_OF_CORE;
+      else
+        {
+          gpgrt_annotate_leaked_object (arg->r.ret_str);
+          arg->r_opt = ARGPARSE_CONFFILE;
+          arg->r_type = ARGPARSE_TYPE_STRING;
+        }
+      break;
+
+    case STATE_open_cmdline:
+      xfree (arg->internal->confname);
+      arg->internal->confname = NULL;
+      arg->r_opt = ARGPARSE_CONFFILE;
+      arg->r_type = ARGPARSE_TYPE_NONE;
+      arg->r.ret_str = NULL;
+      arg->internal->state = STATE_read_cmdline;
+      break;
+
+    case STATE_read_sys:
+     arg->r_opt = _gpgrt_argparse (arg->internal->conffp, arg, opts);
+      if (!arg->r_opt)
+        {
+          arg->internal->state = STATE_open_user;
+          goto next_state;
+        }
+      if ((arg->internal->opt_flags & ARGPARSE_OPT_CONFFILE))
+        goto next_state;  /* Already handled - again.  */
+      break;
+
+    case STATE_read_user:
+      arg->r_opt = _gpgrt_argparse (arg->internal->conffp, arg, opts);
+      if (!arg->r_opt)
+        {
+          arg->internal->state = STATE_open_cmdline;
+          goto next_state;
+        }
+      if ((arg->internal->opt_flags & ARGPARSE_OPT_CONFFILE))
+        goto next_state;  /* Already handled - again.  */
+      break;
+
+    case STATE_read_cmdline:
+      arg->r_opt = _gpgrt_argparse (arg->internal->conffp, arg, opts);
+      if (!arg->r_opt)
+        {
+          arg->internal->state = STATE_finished;
+          goto next_state;
+        }
+      if ((arg->internal->opt_flags & ARGPARSE_OPT_CONFFILE))
+        goto next_state;  /* Already handled - again.  */
+      break;
+
+    case STATE_finished:
+      arg->r_opt = 0;
+      break;
+    }
+
+  return arg->r_opt;
+}
+
+
 /* Given the list of options OPTS and a keyword, return the index of
  * the long option macthing KEYWORD.  On error -1 is retruned for not
  * found or -2 for ambigious keyword.  */
@@ -1149,6 +1468,7 @@ set_opt_arg (gpgrt_argparse_t *arg, unsigned flags, char *s)
   int base = (flags & ARGPARSE_OPT_PREFIX)? 0 : 10;
   long l;
 
+  arg->internal->opt_flags = flags;
   switch ( (arg->r_type = (flags & ARGPARSE_TYPE_MASK)) )
     {
     case ARGPARSE_TYPE_LONG:
@@ -1590,4 +1910,56 @@ void
 _gpgrt_set_fixed_string_mapper (const char *(*f)(const char*))
 {
   fixed_string_mapper = f;
+}
+
+
+/* Register a configuration directory for use by the argparse
+ * functions.  The defined values for WHAT are:
+ *
+ *   GPGRT_CONFDIR_SYS   The systems's configuration dir.
+ *                       The default is /etc
+ *
+ *   GPGRT_CONFDIR_USER  The user's configuration directory.
+ *                       The default is $HOME.
+ *
+ * A trailing slash is ignored; to have the function lookup
+ * configuration files in the current directory, use ".".  There is no
+ * error return; more configuraion values may be added in future
+ * revisions of this library.
+ */
+void
+_gpgrt_set_confdir (int what, const char *name)
+{
+  char *buf, *p;
+
+  if (what == GPGRT_CONFDIR_SYS)
+    {
+      _gpgrt_free (confdir.sys);
+      buf = confdir.sys = _gpgrt_strdup (name);
+    }
+  else if (what == GPGRT_CONFDIR_USER)
+    {
+      _gpgrt_free (confdir.user);
+      buf = confdir.user = _gpgrt_strdup (name);
+    }
+  else
+    return;
+
+  if (!buf)
+    _gpgrt_log_fatal ("out of core in %s\n", __func__);
+#ifdef HAVE_W32_SYSTEM
+  for (p=buf; *p; p++)
+    if (*p == '\\')
+      *p = '/';
+#endif
+  /* Strip trailing slashes unless buf is "/" or any other single char
+   * string.  */
+  if (*buf)
+    {
+      for (p=buf + strlen (buf)-1; p > buf; p--)
+        if (*p == '/')
+          *p = 0;
+        else
+          break;
+    }
 }

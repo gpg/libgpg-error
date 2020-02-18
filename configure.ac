@@ -1,5 +1,5 @@
 # configure.ac for libgpg-error
-# Copyright (C) 2003, 2004, 2006, 2010, 2013-2017 g10 Code GmbH
+# Copyright (C) 2003, 2004, 2006, 2010, 2013-2020 g10 Code GmbH
 #
 # This file is part of libgpg-error.
 #

@@ -25,6 +25,8 @@ else
 extra_includes =
 endif
 
+EXTRA_DIST = t-argparse.conf etc/t-argparse.conf
+
 gpg_error_lib = ../src/libgpg-error.la
 
 TESTS = t-version t-strerror t-syserror t-lock t-printf t-poll t-b64 \

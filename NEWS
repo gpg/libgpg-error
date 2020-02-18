@@ -5,6 +5,18 @@ Noteworthy changes in version 1.38 (unreleased) [C28/A28/R_]
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  gpgrt_fnameconcat                NEW.
  gpgrt_absfnameconcat             NEW.
+ gpgrt_set_confdir                NEW.
+ gpgrt_argparser                  NEW.
+ ARGPARSE_FLAG_SYS                NEW.
+ ARGPARSE_FLAG_USER               NEW.
+ ARGPARSE_FLAG_VERBOSE            NEW.
+ ARGPARSE_NO_CONFFILE             NEW.
+ ARGPARSE_CONFFILE                NEW.
+ ARGPARSE_OPT_CONFFILE            NEW.
+ ARGPARSE_conffile                NEW.
+ ARGPARSE_noconffile              NEW.
+ GPGRT_CONFDIR_USER               NEW.
+ GPGRT_CONFDIR_SYS                NEW.
 
  Release-info: https://dev.gnupg.org/T
 

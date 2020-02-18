@@ -1,5 +1,5 @@
 /* gpg-error.h or gpgrt.h - Common code for GnuPG and others.    -*- c -*-
- * Copyright (C) 2001-2019 g10 Code GmbH
+ * Copyright (C) 2001-2020 g10 Code GmbH
  *
  * This file is part of libgpg-error (aka libgpgrt).
  *
@@ -1180,7 +1180,10 @@ typedef struct
 #define ARGPARSE_FLAG_NOVERSION  64  /* No output for "--version".           */
 #define ARGPARSE_FLAG_RESET     128  /* Request to reset the internal state. */
 #define ARGPARSE_FLAG_STOP_SEEN 256  /* Set to true if a "--" has been seen. */
-#define ARGPARSE_FLAG_NOLINENO  512  /* Do not zero the lineno field.         */
+#define ARGPARSE_FLAG_NOLINENO  512  /* Do not zero the lineno field.        */
+#define ARGPARSE_FLAG_SYS      1024  /* Use system config file.              */
+#define ARGPARSE_FLAG_USER     2048  /* Use user config file.                */
+#define ARGPARSE_FLAG_VERBOSE  4096  /* Print additional argparser info.     */
 
 /* Constants for (gpgrt_argparse_t).err.  */
 #define ARGPARSE_PRINT_WARNING  1    /* Print a diagnostic.                  */
@@ -1199,6 +1202,8 @@ typedef struct
 #define ARGPARSE_INVALID_ALIAS     (-10)
 #define ARGPARSE_OUT_OF_CORE       (-11)
 #define ARGPARSE_INVALID_ARG       (-12)
+#define ARGPARSE_NO_CONFFILE       (-14)
+#define ARGPARSE_CONFFILE          (-15)
 
 /* Flags for the option descriptor (gpgrt_opt_t)->flags.  Note that
  * a TYPE constant may be or-ed with the OPT constants.  */
@@ -1211,6 +1216,7 @@ typedef struct
 #define ARGPARSE_OPT_PREFIX   (1<<4) /* Allow 0x etc. prefixed values.    */
 #define ARGPARSE_OPT_IGNORE   (1<<6) /* Ignore command or option.         */
 #define ARGPARSE_OPT_COMMAND  (1<<7) /* The argument is a command.        */
+#define ARGPARSE_OPT_CONFFILE (1<<8) /* The value is a conffile.          */
 
 /* A set of macros to make option definitions easier to read.  */
 #define ARGPARSE_x(s,l,t,f,d) \
@@ -1277,7 +1283,13 @@ typedef struct
 #define ARGPARSE_c(s,l,d) \
      { (s), (l), (ARGPARSE_TYPE_NONE | ARGPARSE_OPT_COMMAND), (d) }
 
-#define ARGPARSE_ignore(s,l) \
+#define ARGPARSE_conffile(s,l,d) \
+  { (s), (l), (ARGPARSE_TYPE_STRING|ARGPARSE_OPT_CONFFILE), (d) }
+
+#define ARGPARSE_noconffile(s,l,d) \
+  { (s), (l), (ARGPARSE_TYPE_NONE|ARGPARSE_OPT_CONFFILE), (d) }
+
+#define ARGPARSE_ignore(s,l)                    \
      { (s), (l), (ARGPARSE_OPT_IGNORE), "@" }
 
 #define ARGPARSE_group(s,d) \
@@ -1289,16 +1301,23 @@ typedef struct
 
 #endif /* GPGRT_ENABLE_ARGPARSE_MACROS */
 
+/* Values used for gpgrt_set_confdir.  */
+#define GPGRT_CONFDIR_USER 1   /* The user's configuration dir.    */
+#define GPGRT_CONFDIR_SYS  2   /* The systems's configuration dir. */
+
 /* Take care: gpgrt_argparse keeps state in ARG and requires that
  * either ARGPARSE_FLAG_RESET is used after OPTS has been changed or
  * gpgrt_argparse (NULL, ARG, NULL) is called first.  */
 int gpgrt_argparse (gpgrt_stream_t fp,
                     gpgrt_argparse_t *arg, gpgrt_opt_t *opts);
+int gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
+                     const char *confname);
 void gpgrt_usage (int level);
 const char *gpgrt_strusage (int level);
 void gpgrt_set_strusage (const char *(*f)(int));
 void gpgrt_set_usage_outfnc (int (*f)(int, const char *));
 void gpgrt_set_fixed_string_mapper (const char *(*f)(const char*));
+void gpgrt_set_confdir (int what, const char *name);
 
 
 /*

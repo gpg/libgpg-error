@@ -1139,6 +1139,12 @@ gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts)
   return _gpgrt_argparse (fp, arg, opts);
 }
 
+int
+gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, const char *name)
+{
+  return _gpgrt_argparser (arg, opts, name);
+}
+
 void
 gpgrt_usage (int level)
 {
@@ -1167,6 +1173,12 @@ void
 gpgrt_set_fixed_string_mapper (const char *(*f)(const char*))
 {
   _gpgrt_set_fixed_string_mapper (f);
+}
+
+void
+gpgrt_set_confdir (int what, const char *name)
+{
+  _gpgrt_set_confdir (what, name);
 }
 
 
