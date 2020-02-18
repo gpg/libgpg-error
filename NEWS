@@ -1,6 +1,13 @@
 Noteworthy changes in version 1.38 (unreleased) [C28/A28/R_]
 -----------------------------------------------
 
+ * Interface changes relative to the 1.37 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_fnameconcat                NEW.
+ gpgrt_absfnameconcat             NEW.
+
+ Release-info: https://dev.gnupg.org/T
+
 
 Noteworthy changes in version 1.37 (2020-02-07) [C28/A28/R0]
 -----------------------------------------------

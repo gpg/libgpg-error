@@ -1309,6 +1309,12 @@ void gpgrt_set_fixed_string_mapper (const char *(*f)(const char*));
  * numbering scheme a LEVEL of 3 is suitable; see the manual.  */
 int gpgrt_cmp_version (const char *a, const char *b, int level);
 
+/* Construct a filename from the NULL terminated list of parts.  Tilde
+ * expansion is done for the first argument.  The caller must release
+ * the result using gpgrt_free; on error ERRNO is set and NULL
+ * returned.  The second function returns an absolute filename.  */
+char *gpgrt_fnameconcat (const char *first, ...) GPGRT_ATTR_SENTINEL(0);
+char *gpgrt_absfnameconcat (const char *first, ...) GPGRT_ATTR_SENTINEL(0);
 
 
 #ifdef __cplusplus

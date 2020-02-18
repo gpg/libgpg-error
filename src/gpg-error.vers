@@ -199,6 +199,9 @@ GPG_ERROR_1.0 {
     gpgrt_add_emergency_cleanup;
     gpgrt_abort;
 
+    gpgrt_fnameconcat;
+    gpgrt_absfnameconcat;
+
   local:
     *;
 };

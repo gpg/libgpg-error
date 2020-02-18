@@ -1180,6 +1180,33 @@ gpgrt_cmp_version (const char *a, const char *b, int level)
 
 
 
+/* String utilities.  */
+char *
+gpgrt_fnameconcat (const char *first, ... )
+{
+  va_list arg_ptr;
+  char *result;
+
+  va_start (arg_ptr, first);
+  result = _gpgrt_vfnameconcat (0, first, arg_ptr);
+  va_end (arg_ptr);
+  return result;
+}
+
+char *
+gpgrt_absfnameconcat (const char *first, ... )
+{
+  va_list arg_ptr;
+  char *result;
+
+  va_start (arg_ptr, first);
+  result = _gpgrt_vfnameconcat (1, first, arg_ptr);
+  va_end (arg_ptr);
+  return result;
+}
+
+
+
 /* For consistency reasons we use function wrappers also for Windows
  * specific function despite that they are technically not needed.  */
 #ifdef HAVE_W32_SYSTEM

@@ -216,6 +216,10 @@ MARK_VISIBLE (gpgrt_set_usage_outfnc);
 
 MARK_VISIBLE (gpgrt_cmp_version);
 
+MARK_VISIBLE (gpgrt_fnameconcat);
+MARK_VISIBLE (gpgrt_absfnameconcat);
+
+
 #undef MARK_VISIBLE
 
 #else /*!_GPGRT_INCL_BY_VISIBILITY_C*/

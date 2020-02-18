@@ -190,7 +190,7 @@ AM_GNU_GETTEXT([external])
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h locale.h stdint.h sys/select.h sys/time.h \
-                  signal.h poll.h])
+                  signal.h poll.h pwd.h])
 
 AC_FUNC_STRERROR_R
 case "${host_os}" in
@@ -213,7 +213,7 @@ AC_SUBST(INSTALLSHELLPATH)
 
 AC_FUNC_FORK
 AC_CHECK_FUNCS([flockfile vasprintf mmap rand strlwr stpcpy setenv stat \
-                getrlimit ])
+                getrlimit getpwnam getpwuid getpwnam_r getpwuid_r ])
 
 
 #

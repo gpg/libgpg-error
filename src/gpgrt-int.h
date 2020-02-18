@@ -787,6 +787,17 @@ gpg_err_code_t _gpgrt_chdir (const char *name);
 /* Return the current WD as a malloced string.  */
 char *_gpgrt_getcwd (void);
 
+/* Return the home directory of user NAME.  */
+char *_gpgrt_getpwdir (const char *name);
+
+/* Expand and concat file name parts.  */
+char *_gpgrt_vfnameconcat (int want_abs, const char *first_part,
+                           va_list arg_ptr);
+char *_gpgrt_fnameconcat (const char *first_part,
+                          ... ) GPGRT_ATTR_SENTINEL(0);
+char *_gpgrt_absfnameconcat (const char *first_part,
+                             ... ) GPGRT_ATTR_SENTINEL(0);
+
 
 /*
  * Platform specific functions (Windows)
