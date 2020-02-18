@@ -156,7 +156,6 @@ uninstall-def-file:
 
 libgpg_error_la_DEPENDENCIES = $(gpg_error_res) gpg-error.def
 intllibs =
-socklibs = -lws2_32
 
 #
 # }}} End Windows part
@@ -174,12 +173,13 @@ install-def-file:
 uninstall-def-file:
 
 intllibs = @LTLIBINTL@
-socklibs =
 
 endif
 #
 # }}} End Unix part
 #
+
+socklibs = @GPG_ERROR_CONFIG_LIBS_PRIVATE@
 
 if HAVE_LD_VERSION_SCRIPT
   libgpg_error_vers_opt = -Wl,--version-script=$(srcdir)/gpg-error.vers

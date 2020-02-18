@@ -458,6 +458,7 @@ AM_CONDITIONAL(HAVE_LD_VERSION_SCRIPT, test "$have_ld_version_script" = "yes")
 # Windows has always thread support; thus we don't bother to test for
 # it as it may lead to false results when cross building.
 if test "$have_w32_system" = yes; then
+  GPG_ERROR_CONFIG_LIBS_PRIVATE=-lws2_32
   AC_DEFINE([USE_WINDOWS_THREADS], [1])
   LIBTHREAD=
   LTLIBTHREAD=
@@ -469,6 +470,7 @@ if test "$have_w32_system" = yes; then
   AC_SUBST([LIBMULTITHREAD])
   AC_SUBST([LTLIBMULTITHREAD])
 else
+  GPG_ERROR_CONFIG_LIBS_PRIVATE=""
   gl_LOCK
   if test "$gl_threads_api" = posix; then
     AC_CHECK_SIZEOF(pthread_mutex_t,,[AC_INCLUDES_DEFAULT
@@ -574,6 +576,7 @@ AC_SUBST(GPG_ERROR_CONFIG_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_CFLAGS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_CFLAGS)
+AC_SUBST(GPG_ERROR_CONFIG_LIBS_PRIVATE)
 AC_SUBST(GPG_ERROR_CONFIG_HOST)
 
 
