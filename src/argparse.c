@@ -45,6 +45,9 @@ static struct
 } confdir;
 
 
+/* Hidden argparse flag used to mark the object as initialized.  */
+#define ARGPARSE_FLAG__INITIALIZED  (1<< ((8*SIZEOF_INT)-1))
+
 /* Special short options which are auto-inserterd.  */
 #define ARGPARSE_SHORTOPT_HELP 32768
 #define ARGPARSE_SHORTOPT_VERSION 32769
@@ -224,6 +227,7 @@ deinitialize (gpgrt_argparse_t *arg)
       arg->internal = NULL;
     }
 
+  arg->flags &= ARGPARSE_FLAG__INITIALIZED;
   arg->lineno = 0;
   arg->err = 0;
 }
@@ -240,14 +244,21 @@ my_exit (gpgrt_argparse_t *arg, int code)
 static gpg_err_code_t
 initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
 {
-  if (!arg->internal || (arg->flags & ARGPARSE_FLAG_RESET))
+  /* We use a dedicated flag to detect whether *ARG has been
+   * initialized.  This is because the old version of that struct, as
+   * used in GnuPG, had no requirement to zero out all fields of the
+   * object and existing code still sets only argc,argv and flags.  */
+  if (!(arg->flags & ARGPARSE_FLAG__INITIALIZED)
+      || (arg->flags & ARGPARSE_FLAG_RESET)
+      || !arg->internal)
     {
       /* Allocate internal data.  */
-      if (!arg->internal)
+      if (!(arg->flags & ARGPARSE_FLAG__INITIALIZED) || !arg->internal)
         {
           arg->internal = xtrymalloc (sizeof *arg->internal);
           if (!arg->internal)
             return _gpg_err_code_from_syserror ();
+          arg->flags |= ARGPARSE_FLAG__INITIALIZED; /* Mark as initialized.  */
         }
       else if (arg->internal->opts)
         xfree (arg->internal->opts);
@@ -928,8 +939,8 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
            * (e.g. gpg's "--option FILE" and "--no-options")
            * Now check whether one was really given on the
            * command line.  */
-          int  *save_argc = arg->argc;
-          char ***save_argv = arg->argv;
+          int  save_argc = *arg->argc;
+          char **save_argv = *arg->argv;
           unsigned int save_flags = arg->flags;
           int save_idx = arg->internal->idx;
           int any_no_conffile = 0;
@@ -962,11 +973,10 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
               arg->internal->explicit_conffile = NULL;
             }
           /* Restore parser.  */
-          arg->argc = save_argc;
-          arg->argv = save_argv;
+          *arg->argc = save_argc;
+          *arg->argv = save_argv;
           arg->flags = save_flags;
           arg->internal->idx = save_idx;
-
         }
 
       if (confname && *confname)
@@ -987,6 +997,9 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       arg->internal->confname = _gpgrt_fnameconcat
         (confdir.sys? confdir.sys : "/etc", confname, NULL);
       arg->lineno = 0;
+      arg->internal->idx = 0;
+      arg->internal->stopped = 0;
+      arg->internal->inarg = 0;
       _gpgrt_fclose (arg->internal->conffp);
       arg->internal->conffp = _gpgrt_fopen (arg->internal->confname, "r");
       /* FIXME: Add a callback.  */
@@ -1050,6 +1063,9 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
             (confdir.user? confdir.user : "/FIXME", confname, NULL);
         }
       arg->lineno = 0;
+      arg->internal->idx = 0;
+      arg->internal->stopped = 0;
+      arg->internal->inarg = 0;
       _gpgrt_fclose (arg->internal->conffp);
       arg->internal->conffp = _gpgrt_fopen (arg->internal->confname, "r");
       /* FIXME: Add a callback.  */
@@ -1093,8 +1109,13 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       break;
 
     case STATE_open_cmdline:
+      _gpgrt_fclose (arg->internal->conffp);
+      arg->internal->conffp = NULL;
       xfree (arg->internal->confname);
       arg->internal->confname = NULL;
+      arg->internal->idx = 0;
+      arg->internal->stopped = 0;
+      arg->internal->inarg = 0;
       arg->r_opt = ARGPARSE_CONFFILE;
       arg->r_type = ARGPARSE_TYPE_NONE;
       arg->r.ret_str = NULL;
@@ -1124,7 +1145,7 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       break;
 
     case STATE_read_cmdline:
-      arg->r_opt = _gpgrt_argparse (arg->internal->conffp, arg, opts);
+      arg->r_opt = _gpgrt_argparse (NULL, arg, opts);
       if (!arg->r_opt)
         {
           arg->internal->state = STATE_finished;
