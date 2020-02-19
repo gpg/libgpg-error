@@ -121,7 +121,7 @@ static void show_help (gpgrt_opt_t **opts, unsigned int flags);
 static void show_version (void);
 static int writestrings (int is_error, const char *string,
                          ...) GPGRT_ATTR_SENTINEL(0);
-static int arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts);
+static int arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, int no_init);
 
 
 
@@ -590,7 +590,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
     }
 
   if (!fp) /* Divert to arg_parse() in this case.  */
-    return arg_parse (arg, opts_orig);
+    return arg_parse (arg, opts_orig, 0);
 
   if (initialize (arg, opts_orig, fp))
     return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
@@ -609,6 +609,8 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
           || unread_buf[2] != 0xbf)
         unread_buf_count = 3;
     }
+
+  arg->internal->opt_flags = 0;
 
   /* Find the next keyword.  */
   state = i = 0;
@@ -946,7 +948,7 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
           int any_no_conffile = 0;
 
           arg->flags = (ARGPARSE_FLAG_KEEP | ARGPARSE_FLAG_NOVERSION);
-          while (arg_parse (arg, opts))
+          while (arg_parse (arg, opts, 1))
             {
               if ((arg->internal->opt_flags & ARGPARSE_OPT_CONFFILE))
                 {
@@ -1145,7 +1147,7 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       break;
 
     case STATE_read_cmdline:
-      arg->r_opt = _gpgrt_argparse (NULL, arg, opts);
+      arg->r_opt = arg_parse (arg, opts, 1);
       if (!arg->r_opt)
         {
           arg->internal->state = STATE_finished;
@@ -1225,7 +1227,7 @@ find_long_option (gpgrt_argparse_t *arg, gpgrt_opt_t **opts,
 
 /* The option parser for command line options.  */
 static int
-arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
+arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig, int no_init)
 {
   int idx;
   gpgrt_opt_t **opts;
@@ -1234,7 +1236,9 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
   char *s, *s2;
   int i;
 
-  if (initialize (arg, opts_orig, NULL))
+  if (no_init)
+    ;
+  else if (initialize (arg, opts_orig, NULL))
     return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
 
   opts = arg->internal->opts;
@@ -1258,6 +1262,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
 
   s = *argv;
   arg->internal->last = s;
+  arg->internal->opt_flags = 0;
 
   if (arg->internal->stopped && (arg->flags & ARGPARSE_FLAG_ALL))
     {
@@ -1370,7 +1375,10 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
           if ( argpos )
             arg->r_type = ARGPARSE_UNEXPECTED_ARG;
           else
-            arg->r_type = 0;
+            {
+              arg->internal->opt_flags = opts[i]->flags;
+              arg->r_type = 0;
+            }
 	}
       argc--; argv++; idx++; /* Set to next one.  */
     }
@@ -1426,6 +1434,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
 		if ( !s2 && (opts[i]->flags & ARGPARSE_OPT_OPTIONAL) )
                   {
 		    arg->r_type = ARGPARSE_TYPE_NONE;
+                    arg->internal->opt_flags = opts[i]->flags;
                   }
 		else if ( !s2 )
                   {
@@ -1438,6 +1447,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
 	               be an option.  We do not check this possible
 	               option but assume no argument.  */
 		    arg->r_type = ARGPARSE_TYPE_NONE;
+                    arg->internal->opt_flags = opts[i]->flags;
                   }
 		else
                   {
@@ -1451,6 +1461,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
           {
             /* Does not take an argument.  */
 	    arg->r_type = ARGPARSE_TYPE_NONE;
+            arg->internal->opt_flags = opts[i]->flags;
 	    arg->internal->inarg++; /* Point to the next arg.  */
           }
 	if ( !s[1] || dash_kludge )
