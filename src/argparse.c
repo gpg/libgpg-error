@@ -935,19 +935,22 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
   switch (arg->internal->state)
     {
     case STATE_init:
-      if (any_opt_conffile (opts))
+      if (arg->argc && arg->argv && *arg->argc
+          && any_opt_conffile (opts))
         {
           /* The list of option allow for conf files
            * (e.g. gpg's "--option FILE" and "--no-options")
-           * Now check whether one was really given on the
-           * command line.  */
+           * Now check whether one was really given on the command
+           * line.  Note that we don't need to run this code if no
+           * argument array was provided. */
           int  save_argc = *arg->argc;
           char **save_argv = *arg->argv;
           unsigned int save_flags = arg->flags;
           int save_idx = arg->internal->idx;
           int any_no_conffile = 0;
 
-          arg->flags = (ARGPARSE_FLAG_KEEP | ARGPARSE_FLAG_NOVERSION);
+          arg->flags = (ARGPARSE_FLAG_KEEP | ARGPARSE_FLAG_NOVERSION
+                        | ARGPARSE_FLAG__INITIALIZED);
           while (arg_parse (arg, opts, 1))
             {
               if ((arg->internal->opt_flags & ARGPARSE_OPT_CONFFILE))
@@ -1118,6 +1121,12 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       arg->internal->idx = 0;
       arg->internal->stopped = 0;
       arg->internal->inarg = 0;
+      if (!arg->argc || !arg->argv || !*arg->argv)
+        {
+          /* No or empty argument vector - don't bother to parse things.  */
+          arg->internal->state = STATE_finished;
+          goto next_state;
+        }
       arg->r_opt = ARGPARSE_CONFFILE;
       arg->r_type = ARGPARSE_TYPE_NONE;
       arg->r.ret_str = NULL;
