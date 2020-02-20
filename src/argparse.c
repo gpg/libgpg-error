@@ -1863,11 +1863,11 @@ _gpgrt_strusage (int level)
     case 10:
       tmp = _gpgrt_strusage (9);
       if (tmp && !strcmp (tmp, "GPL-2.0-or-later"))
-        p = ("License GPL-2.0-or-later <https://gnu.org/licenses/>");
+        p = ("License GNU GPL-2.0-or-later <https://gnu.org/licenses/>");
       else if (tmp && !strcmp (tmp, "LGPL-2.1-or-later"))
-        p = ("License LGPL-2.1-or-later <https://gnu.org/licenses/>");
+        p = ("License GNU LGPL-2.1-or-later <https://gnu.org/licenses/>");
       else /* Default to GPLv3+.  */
-        p = ("License GPL-3.0-or-later <https://gnu.org/licenses/gpl.html>");
+        p = ("License GNU GPL-3.0-or-later <https://gnu.org/licenses/gpl.html>");
       break;
     case 11: p = "foo"; break;
     case 13: p = "0.0"; break;
