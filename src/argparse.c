@@ -36,6 +36,14 @@
 
 #include "gpgrt-int.h"
 
+#ifdef HAVE_W32_SYSTEM
+# define PATHSEP_C ';'
+# define DIRSEP_C  '\\'
+#else
+# define PATHSEP_C ':'
+# define DIRSEP_C  '/'
+#endif
+
 
 /* The malloced configuration directories or NULL.  */
 static struct
@@ -895,6 +903,47 @@ any_opt_conffile (gpgrt_opt_t *opts)
 }
 
 
+/* Return true if FNAME is an absoluete filename.  */
+static int
+is_absfname (const char *fname)
+{
+  const char *s;
+
+#ifdef HAVE_W32_SYSTEM
+  s = strchr (fname, ':');
+  if (s)
+    s++;
+  else
+    s = fname;
+#else
+  s = fname;
+#endif
+
+  return (*s == '/'
+#ifdef HAVE_W32_SYSTEM
+          || *s == DIRSEP_C
+#endif
+          );
+}
+
+
+/* If FNAME specifies two files of the form
+ *   NAME1:/NAME2    (Unix)
+ * or
+ *   NAME1;[x:]/NAME2  (Windows)
+ * return a pointer to the delimiter or NULL if there is none.
+ */
+static const char *
+is_twopartfname (const char *fname)
+{
+  const char *s;
+
+  if ((s = strchr (fname, PATHSEP_C)) && is_absfname (s+1) && s != fname)
+    return s;
+  return NULL;
+}
+
+
 /* The full arg parser which handles option files and command line
  * arguments.  The behaviour depends on the combinations of CONFNAME
  * and the ARGPARSE_FLAG_xxx values:
@@ -912,8 +961,11 @@ any_opt_conffile (gpgrt_opt_t *opts)
  * ARGPARSE_TYPE_NONE is used no user configuration files are
  * processed and from the system configuration files only those which
  * are immutable are processed.  The string values for CONFNAME shall
- * not include a directory part, because that is taken from the values
- * set by gpgrt_set_confdir.
+ * not include a directory part because that is taken from the values
+ * set by gpgrt_set_confdir.  However, if CONFNAME is a twopart
+ * filename delimited by a colon (semicolon on Windows) with the
+ * second part being an absolute filename, the first part is used for
+ * the SYS file and the the entire second part for the USER file.
  */
 int
 _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
@@ -998,9 +1050,29 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       goto next_state;
 
     case STATE_open_sys:
-      xfree (arg->internal->confname);
-      arg->internal->confname = _gpgrt_fnameconcat
-        (confdir.sys? confdir.sys : "/etc", confname, NULL);
+      {
+        /* If it is a two part name take the first part.  */
+        const char *s;
+        char *tmpname = NULL;
+
+        if ((s = is_twopartfname (confname)))
+          {
+            tmpname = xtrymalloc (s - confname + 1);
+            if (!tmpname)
+              return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
+            memcpy (tmpname, confname, s-confname);
+            tmpname[s-confname] = 0;
+            s = tmpname;
+          }
+        else
+          s = confname;
+        xfree (arg->internal->confname);
+        arg->internal->confname = _gpgrt_fnameconcat
+          (confdir.sys? confdir.sys : "/etc", s, NULL);
+        _gpgrt_free (tmpname);
+        if (!arg->internal->confname)
+          return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
+      }
       arg->lineno = 0;
       arg->internal->idx = 0;
       arg->internal->stopped = 0;
@@ -1062,10 +1134,18 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
         }
       else
         {
-          /* Use the standard configure file.  */
+          /* Use the standard configure file.  If it is a two part
+           * name take the second part.  */
+          const char *s;
+
           xfree (arg->internal->confname);
-          arg->internal->confname = _gpgrt_fnameconcat
-            (confdir.user? confdir.user : "/FIXME", confname, NULL);
+          if ((s = is_twopartfname (confname)))
+            arg->internal->confname = _gpgrt_fnameconcat (s + 1, NULL);
+          else
+            arg->internal->confname = _gpgrt_fnameconcat
+              (confdir.user? confdir.user : "~/.config", confname, NULL);
+          if (!arg->internal->confname)
+            return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
         }
       arg->lineno = 0;
       arg->internal->idx = 0;
