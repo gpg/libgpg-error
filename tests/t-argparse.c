@@ -88,6 +88,7 @@ main (int argc, char **argv)
                                             ) };
   int i;
   const char *srcdir;
+  int any_warn = 0;
 
   gpgrt_set_strusage (my_strusage);
   srcdir = getenv ("srcdir");
@@ -120,7 +121,7 @@ main (int argc, char **argv)
         case 'c': opt.crf = pargs.r_type? pargs.r.ret_str:"a.crf"; break;
         case 'm': opt.myopt = pargs.r_type? pargs.r.ret_int : 1; break;
         case 500: opt.a_long_one++;  break;
-        default : pargs.err = ARGPARSE_PRINT_ERROR; break;
+        default : pargs.err = ARGPARSE_PRINT_WARNING; any_warn = 1; break;
 	}
     }
   for (i=0; i < argc; i++ )
@@ -148,5 +149,5 @@ main (int argc, char **argv)
   (void)fail;
   (void)die;
 
-  return 0;
+  return !!any_warn;
 }

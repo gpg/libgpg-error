@@ -86,6 +86,7 @@ struct _gpgrt_argparse_internal_s
   int idx;   /* Note that this is saved and restored in _gpgrt_argparser. */
   int inarg;
   int stopped;
+  int insysconfig;             /* Processing global config file.  */
   int explicit_confopt;        /* A conffile option has been given. */
   char *explicit_conffile;     /* Malloced name of an explicit conffile.  */
   unsigned int opt_flags;      /* Current option flags.  */
@@ -278,6 +279,7 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
       arg->internal->last = NULL;
       arg->internal->inarg = 0;
       arg->internal->stopped = 0;
+      arg->internal->insysconfig = 0;
       arg->internal->explicit_confopt = 0;
       arg->internal->explicit_conffile = NULL;
       arg->internal->opt_flags = 0;
@@ -393,6 +395,12 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
             s = _("out of core");
           else if ( arg->r_opt == ARGPARSE_NO_CONFFILE )
             s = NULL;  /* Error has already been printed.  */
+          else if ( arg->r_opt == ARGPARSE_INVALID_META )
+            s = _("invalid meta command");
+          else if ( arg->r_opt == ARGPARSE_UNKNOWN_META )
+            s = _("unknown meta command");
+          else if ( arg->r_opt == ARGPARSE_UNEXPECTED_META )
+            s = _("unexpected meta command");
           else
             s = _("invalid option");
           if (s)
@@ -422,6 +430,12 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
             _gpgrt_log_error ("%s\n", _("permission error"));
           else if ( arg->r_opt == ARGPARSE_NO_CONFFILE)
             ;  /* Error has already been printed.  */
+          else if ( arg->r_opt == ARGPARSE_INVALID_META )
+            _gpgrt_log_error ("%s\n", _("invalid meta command"));
+          else if ( arg->r_opt == ARGPARSE_UNKNOWN_META )
+            _gpgrt_log_error ("%s\n", _("unknown meta command"));
+          else if ( arg->r_opt == ARGPARSE_UNEXPECTED_META )
+            _gpgrt_log_error ("%s\n",_("unexpected meta command"));
           else
             _gpgrt_log_error (_("invalid option \"%.50s\"\n"), s);
 	}
@@ -593,6 +607,10 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
          Acopyarg,     /* Copy the argument.           */
          Akeyword_eol, /* Got keyword at end of line.  */
          Akeyword_spc, /* Got keyword at space.        */
+         Acopymetacmd, /* Copy a meta command.         */
+         Askipmetacmd, /* Skip spaces after metacmd.   */
+         Askipmetacmd2,/* Skip comment after metacmd.  */
+         Ametacmd,     /* Process the metacmd.         */
          Askipandleave /* Skip the rest of the line and then leave.  */
   } state;
   gpgrt_opt_t **opts;
@@ -718,6 +736,24 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
               goto leave;
             }
         } /* (end state Akeyword_eol/Akeyword_spc) */
+      else if (state == Ametacmd)
+        {
+          gpgrt_assert (*keyword == '[');
+          trim_spaces (keyword+1);
+          if (!keyword[1])
+            {
+              arg->r_opt = ARGPARSE_INVALID_META; /* Empty.  */
+              goto leave;
+            }
+          if (!arg->internal->insysconfig)
+            {
+              arg->r_opt = ARGPARSE_UNEXPECTED_META;
+              goto leave;
+            }
+          /* _gpgrt_log_debug ("Got meta command '%s'\n", keyword+1); */
+          state = Ainit;
+          i = 0;
+        }
 
       /* Get the next character from the line.  */
       if (unread_buf_count)
@@ -737,6 +773,16 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
               state = Akeyword_eol;
               goto nextstate;
 	    }
+          else if (state == Acopymetacmd)
+            {
+              arg->r_opt = ARGPARSE_INVALID_META;  /* "]" missing */
+              goto leave;
+	    }
+          else if (state == Askipmetacmd || state == Askipmetacmd2)
+            {
+              state = Ametacmd;
+              goto nextstate;
+            }
           else if (state == Awaitarg)
             {
               /* No argument found at the end of the line.  */
@@ -833,12 +879,28 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
         ; /* Skip leading white space.  */
       else if (state == Ainit && c == '#' )
         state = Acomment;	/* Start of a comment.  */
-      else if (state == Acomment)
+      else if (state == Acomment || state == Askipmetacmd2)
         ; /* Skip comments. */
+      else if (state == Askipmetacmd)
+        {
+          if (c == '#')
+            state = Askipmetacmd2;
+          else if (!(isascii (c) && isspace(c)))
+            {
+              arg->r_opt = ARGPARSE_INVALID_META;
+              state = Askipandleave;
+            }
+        }
       else if (state == Acopykeyword && isascii (c) && isspace(c))
         {
           keyword[i] = 0;
           state = Akeyword_spc;
+          goto nextstate;
+        }
+      else if (state == Acopymetacmd && c == ']')
+        {
+          keyword[i] = 0;
+          state = Askipmetacmd;
           goto nextstate;
         }
       else if (state == Awaitarg)
@@ -902,10 +964,14 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
           arg->r_opt = ARGPARSE_KEYWORD_TOO_LONG;
           state = Askipandleave; /* Skip rest of line and leave.  */
         }
+      else if (!i)
+        {
+          state = c == '[' ? Acopymetacmd : Acopykeyword;
+          keyword[i++] = c;
+        }
       else
         {
           keyword[i++] = c;
-          state = Acopykeyword;
         }
     }
 
@@ -1173,6 +1239,7 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
         _gpgrt_log_info (_("reading options from '%s'\n"),
                          arg->internal->confname);
       arg->internal->state = STATE_read_sys;
+      arg->internal->insysconfig = 1;
       arg->r.ret_str = xtrystrdup (arg->internal->confname);
       if (!arg->r.ret_str)
         arg->r_opt = ARGPARSE_OUT_OF_CORE;
@@ -1237,6 +1304,7 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       arg->internal->idx = 0;
       arg->internal->stopped = 0;
       arg->internal->inarg = 0;
+      arg->internal->insysconfig = 0;
       _gpgrt_fclose (arg->internal->conffp);
       arg->internal->conffp = _gpgrt_fopen (arg->internal->confname, "r");
       if (!arg->internal->conffp)
@@ -1280,6 +1348,7 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       arg->internal->idx = 0;
       arg->internal->stopped = 0;
       arg->internal->inarg = 0;
+      arg->internal->insysconfig = 0;
       if (!arg->argc || !arg->argv || !*arg->argv)
         {
           /* No or empty argument vector - don't bother to parse things.  */

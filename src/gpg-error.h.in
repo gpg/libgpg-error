@@ -1206,6 +1206,9 @@ typedef struct
 #define ARGPARSE_PERMISSION_ERROR  (-13)
 #define ARGPARSE_NO_CONFFILE       (-14)
 #define ARGPARSE_CONFFILE          (-15)
+#define ARGPARSE_INVALID_META      (-16)
+#define ARGPARSE_UNKNOWN_META      (-17)
+#define ARGPARSE_UNEXPECTED_META   (-18)
 
 /* Flags for the option descriptor (gpgrt_opt_t)->flags.  Note that
  * a TYPE constant may be or-ed with the OPT constants.  */
