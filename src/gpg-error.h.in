@@ -1184,6 +1184,7 @@ typedef struct
 #define ARGPARSE_FLAG_SYS      1024  /* Use system config file.              */
 #define ARGPARSE_FLAG_USER     2048  /* Use user config file.                */
 #define ARGPARSE_FLAG_VERBOSE  4096  /* Print additional argparser info.     */
+#define ARGPARSE_FLAG_USERVERS 8192  /* Try version-ed user config files.    */
 
 /* Constants for (gpgrt_argparse_t).err.  */
 #define ARGPARSE_PRINT_WARNING  1    /* Print a diagnostic.                  */

@@ -10,6 +10,7 @@ Noteworthy changes in version 1.38 (unreleased) [C28/A28/R_]
  ARGPARSE_FLAG_SYS                NEW.
  ARGPARSE_FLAG_USER               NEW.
  ARGPARSE_FLAG_VERBOSE            NEW.
+ ARGPARSE_FLAG_USERVERS           NEW.
  ARGPARSE_NO_CONFFILE             NEW.
  ARGPARSE_CONFFILE                NEW.
  ARGPARSE_OPT_CONFFILE            NEW.

@@ -33,6 +33,7 @@
 #include <stdarg.h>
 #include <limits.h>
 #include <errno.h>
+#include <unistd.h>
 
 #include "gpgrt-int.h"
 
@@ -948,6 +949,59 @@ is_twopartfname (const char *fname)
 }
 
 
+
+/* Try to use a version-ed config file name.  A version-ed config file
+ * name is one which has the packages version number appended.  For
+ * example if the standard config file name is "foo.conf" and the
+ * version of the foo program is 1.2.3-beta1 the following config
+ * files are tried in order until one is readable:
+ *
+ *   foo.conf-1.2.3-beta1
+ *   foo.conf-1.2.3
+ *   foo.conf-1.2
+ *   foo.conf-1
+ *   foo.conf
+ *
+ * The argument CONFIGNAME should already be expanded.  On success a
+ * newly allocated file name is returned.  On error NULL is returned.
+ */
+static char *
+try_versioned_conffile (const char *configname)
+{
+  const char *version = _gpgrt_strusage (13);
+  char *name;
+  char *dash, *endp;
+
+  if (!version || !*version)
+    return NULL; /* No program version known. */
+
+  name = _gpgrt_strconcat (configname, "-", version, NULL);
+  if (!name)
+    return NULL;  /* Oops: Out of core - ignore.  */
+  dash = name + strlen (configname);
+
+  endp = dash + strlen (dash) - 1;
+  while (endp > dash)
+    {
+      if (!access (name, R_OK))
+        {
+          return name;
+        }
+      for (; endp > dash; endp--)
+        {
+          if (*endp == '-' || *endp == '.')
+            {
+              *endp = 0;
+              break;
+            }
+        }
+    }
+
+  _gpgrt_free (name);
+  return NULL;
+}
+
+
 /* The full arg parser which handles option files and command line
  * arguments.  The behaviour depends on the combinations of CONFNAME
  * and the ARGPARSE_FLAG_xxx values:
@@ -1083,13 +1137,6 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       arg->internal->inarg = 0;
       _gpgrt_fclose (arg->internal->conffp);
       arg->internal->conffp = _gpgrt_fopen (arg->internal->confname, "r");
-      /* FIXME: Add a callback.  */
-      /* if (arg->internal->conffp && is_secured_file (fileno (configfp)))*/
-      /*   { */
-      /*     es_fclose (arg->internal->conffp); */
-      /*     arg->internal->conffp = NULL; */
-      /*     gpg_err_set_errno (EPERM); */
-      /*   } */
       if (!arg->internal->conffp)
         {
           if ((arg->flags & ARGPARSE_FLAG_VERBOSE))
@@ -1139,17 +1186,32 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       else
         {
           /* Use the standard configure file.  If it is a two part
-           * name take the second part.  */
+           * name take the second part.  If it is the standard name
+           * and ARGPARSE_FLAG_USERVERS is set try versioned config
+           * files. */
           const char *s;
+          char *nconf;
 
           xfree (arg->internal->confname);
           if ((s = is_twopartfname (confname)))
-            arg->internal->confname = _gpgrt_fnameconcat (s + 1, NULL);
+            {
+              arg->internal->confname = _gpgrt_fnameconcat (s + 1, NULL);
+              if (!arg->internal->confname)
+                return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
+            }
           else
-            arg->internal->confname = _gpgrt_fnameconcat
-              (confdir.user? confdir.user : "~/.config", confname, NULL);
-          if (!arg->internal->confname)
-            return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
+            {
+              arg->internal->confname = _gpgrt_fnameconcat
+                (confdir.user? confdir.user : "~/.config", confname, NULL);
+              if (!arg->internal->confname)
+                return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
+              if ((arg->flags & ARGPARSE_FLAG_USERVERS)
+                  && (nconf = try_versioned_conffile (arg->internal->confname)))
+                {
+                  xfree (arg->internal->confname);
+                  arg->internal->confname = nconf;
+                }
+            }
         }
       arg->lineno = 0;
       arg->internal->idx = 0;
@@ -1157,13 +1219,6 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       arg->internal->inarg = 0;
       _gpgrt_fclose (arg->internal->conffp);
       arg->internal->conffp = _gpgrt_fopen (arg->internal->confname, "r");
-      /* FIXME: Add a callback.  */
-      /* if (arg->internal->conffp && is_secured_file (fileno (configfp)))*/
-      /*   { */
-      /*     es_fclose (arg->internal->conffp); */
-      /*     arg->internal->conffp = NULL; */
-      /*     gpg_err_set_errno (EPERM); */
-      /*   } */
       if (!arg->internal->conffp)
         {
           arg->internal->state = STATE_open_cmdline;
