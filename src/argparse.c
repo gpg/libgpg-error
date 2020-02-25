@@ -386,6 +386,8 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
             s = _("invalid command");
           else if ( arg->r_opt == ARGPARSE_INVALID_ALIAS )
             s = _("invalid alias definition");
+          else if ( arg->r_opt == ARGPARSE_PERMISSION_ERROR )
+            s = _("permission error");
           else if ( arg->r_opt == ARGPARSE_OUT_OF_CORE )
             s = _("out of core");
           else if ( arg->r_opt == ARGPARSE_NO_CONFFILE )
@@ -415,6 +417,8 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
             _gpgrt_log_error (_("command \"%.50s\" is ambiguous\n"),s );
           else if ( arg->r_opt == ARGPARSE_OUT_OF_CORE )
             _gpgrt_log_error ("%s\n", _("out of core"));
+          else if ( arg->r_opt == ARGPARSE_PERMISSION_ERROR )
+            _gpgrt_log_error ("%s\n", _("permission error"));
           else if ( arg->r_opt == ARGPARSE_NO_CONFFILE)
             ;  /* Error has already been printed.  */
           else

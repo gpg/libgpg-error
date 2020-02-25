@@ -1202,6 +1202,7 @@ typedef struct
 #define ARGPARSE_INVALID_ALIAS     (-10)
 #define ARGPARSE_OUT_OF_CORE       (-11)
 #define ARGPARSE_INVALID_ARG       (-12)
+#define ARGPARSE_PERMISSION_ERROR  (-13)
 #define ARGPARSE_NO_CONFFILE       (-14)
 #define ARGPARSE_CONFFILE          (-15)
 
