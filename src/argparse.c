@@ -587,10 +587,12 @@ int
 _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
 {
   enum { Ainit,
-         Acomment,     /* In a comment line.     */
-         Acopykeyword, /* Collecting a keyword.  */
-         Awaitarg,     /* Wait for an argument.  */
-         Acopyarg,     /* Copy the argument.     */
+         Acomment,     /* In a comment line.           */
+         Acopykeyword, /* Collecting a keyword.        */
+         Awaitarg,     /* Wait for an argument.        */
+         Acopyarg,     /* Copy the argument.           */
+         Akeyword_eol, /* Got keyword at end of line.  */
+         Akeyword_spc, /* Got keyword at space.        */
          Askipandleave /* Skip the rest of the line and then leave.  */
   } state;
   gpgrt_opt_t **opts;
@@ -638,12 +640,93 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
   for (;;)
     {
     nextstate:
+      /* Before scanning the next char handle the keyword seen states.  */
+      if (state == Akeyword_eol || state == Akeyword_spc)
+        {
+          /* Check the keyword.  */
+          for (i=0; opts[i]->short_opt; i++ )
+            {
+              if (opts[i]->long_opt && !strcmp (opts[i]->long_opt, keyword))
+                break;
+            }
+          idx = i;
+          arg->r_opt = opts[idx]->short_opt;
+          if ((opts[idx]->flags & ARGPARSE_OPT_IGNORE))
+            {
+              /* Option is configured to be ignored.  Start from
+               * scratch (new line) or process like a comment.  */
+              state = state == Akeyword_eol? Ainit : Acomment;
+              i = 0;
+            }
+          else if (!opts[idx]->short_opt )
+            {
+              /* The option is not known - check for internal keywords.  */
+              if (state == Akeyword_spc && !strcmp (keyword, "alias"))
+                {
+                  in_alias = 1;
+                  state = Awaitarg;
+                }
+              else if (!strcmp (keyword, "ignore-invalid-option"))
+                {
+                  /* We might have keywords as argument - add them to
+                   * the list of ignored keywords.  Note that we
+                   * ignore empty argument lists and thus do not to
+                   * call the function in the Akeyword_eol stae. */
+                  if (state == Akeyword_spc)
+                    {
+                      if (ignore_invalid_option_add (arg, fp))
+                        {
+                          arg->r_opt = ARGPARSE_OUT_OF_CORE;
+                          goto leave;
+                        }
+                      arg->lineno++;
+                    }
+                  state = Ainit;
+                  i = 0;
+                }
+              else if (ignore_invalid_option_p (arg, keyword))
+                {
+                  /* This invalid option is already in the iio list.  */
+                  state = state == Akeyword_eol? Ainit : Acomment;
+                  i = 0;
+                }
+              else
+                {
+                  arg->r_opt = ((opts[idx]->flags & ARGPARSE_OPT_COMMAND)
+                                ? ARGPARSE_INVALID_COMMAND
+                                : ARGPARSE_INVALID_OPTION);
+                  if (state == Akeyword_spc)
+                    {
+                      state = Askipandleave;
+                    }
+                }
+            }
+          else if (state == Akeyword_spc)
+            {
+              /* Known option but need to scan for args.  */
+              state = Awaitarg;
+            }
+          else
+            {
+              /* Known option and at end of line - return option.  */
+              if (!(opts[idx]->flags & ARGPARSE_TYPE_MASK))
+                arg->r_type = 0; /* Does not take an arg. */
+              else if ((opts[idx]->flags & ARGPARSE_OPT_OPTIONAL) )
+                arg->r_type = 0; /* Arg is optional.  */
+              else
+                arg->r_opt = ARGPARSE_MISSING_ARG;
+              goto leave;
+            }
+        } /* (end state Akeyword_eol/Akeyword_spc) */
+
+      /* Get the next character from the line.  */
       if (unread_buf_count)
         c = unread_buf[3 - unread_buf_count--];
       else
         c = _gpgrt_fgetc (fp);
+
       if (c == '\n' || c== EOF )
-        {
+        { /* Handle end of line.  */
           if ( c != EOF )
             arg->lineno++;
           if (state == Askipandleave)
@@ -651,47 +734,8 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
           else if (state == Acopykeyword)
             {
               keyword[i] = 0;
-              for (i=0; opts[i]->short_opt; i++ )
-                {
-                  if (opts[i]->long_opt && !strcmp (opts[i]->long_opt, keyword))
-                    break;
-                }
-              idx = i;
-              arg->r_opt = opts[idx]->short_opt;
-              if ((opts[idx]->flags & ARGPARSE_OPT_IGNORE))
-                {
-                  state = Ainit;
-                  i = 0;
-                  goto nextstate;
-                }
-              else if (!opts[idx]->short_opt )
-                {
-                  if (!strcmp (keyword, "ignore-invalid-option"))
-                    {
-                      /* No argument - ignore this meta option.  */
-                      state = Ainit;
-                      i = 0;
-                      goto nextstate;
-                    }
-                  else if (ignore_invalid_option_p (arg, keyword))
-                    {
-                      /* This invalid option is in the iio list.  */
-                      state = Ainit;
-                      i = 0;
-                      goto nextstate;
-                    }
-                  arg->r_opt = ((opts[idx]->flags & ARGPARSE_OPT_COMMAND)
-                                ? ARGPARSE_INVALID_COMMAND
-                                : ARGPARSE_INVALID_OPTION);
-                }
-              else if (!(opts[idx]->flags & ARGPARSE_TYPE_MASK))
-                arg->r_type = 0; /* Does not take an arg. */
-              else if ((opts[idx]->flags & ARGPARSE_OPT_OPTIONAL) )
-                arg->r_type = 0; /* Arg is optional.  */
-              else
-                arg->r_opt = ARGPARSE_MISSING_ARG;
-
-              goto leave;
+              state = Akeyword_eol;
+              goto nextstate;
 	    }
           else if (state == Awaitarg)
             {
@@ -782,7 +826,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
             }
           state = Ainit;
           i = 0;
-        }
+        } /* (end handle end of line) */
       else if (state == Askipandleave)
         ; /* Skip. */
       else if (state == Ainit && isascii (c) && isspace(c))
@@ -793,49 +837,9 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
         ; /* Skip comments. */
       else if (state == Acopykeyword && isascii (c) && isspace(c))
         {
-          /* Check keyword.  */
           keyword[i] = 0;
-          for (i=0; opts[i]->short_opt; i++ )
-            if (opts[i]->long_opt && !strcmp (opts[i]->long_opt, keyword))
-              break;
-          idx = i;
-          arg->r_opt = opts[idx]->short_opt;
-          if ((opts[idx]->flags & ARGPARSE_OPT_IGNORE))
-            {
-              /* Option is configured to be ignored.  */
-              state = Acomment; /* Process like a comment.  */
-            }
-          else if (!opts[idx]->short_opt)
-            {
-              /* The option is not known - check for other keywords.  */
-              if (!strcmp (keyword, "alias"))
-                {
-                  in_alias = 1;
-                  state = Awaitarg;
-                }
-              else if (!strcmp (keyword, "ignore-invalid-option"))
-                {
-                  if (ignore_invalid_option_add (arg, fp))
-                    {
-                      arg->r_opt = ARGPARSE_OUT_OF_CORE;
-                      goto leave;
-                    }
-                  state = Ainit;
-                  i = 0;
-                  arg->lineno++;
-                }
-              else if (ignore_invalid_option_p (arg, keyword))
-                state = Acomment; /* Process like a comment.  */
-              else
-                {
-                  arg->r_opt = ((opts[idx]->flags & ARGPARSE_OPT_COMMAND)
-                                ? ARGPARSE_INVALID_COMMAND
-                                : ARGPARSE_INVALID_OPTION);
-                  state = Askipandleave; /* Skip rest of line and leave.  */
-                }
-            }
-          else /* Known option.  */
-            state = Awaitarg;
+          state = Akeyword_spc;
+          goto nextstate;
         }
       else if (state == Awaitarg)
         {
