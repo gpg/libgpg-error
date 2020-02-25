@@ -230,7 +230,7 @@ EXPORTS
  gpgrt_abort                  @175
 
  gpgrt_set_confdir            @176
- gpgrt_argparse               @177
+ gpgrt_argparser              @177
 
  gpgrt_fnameconcat            @178
  gpgrt_absfnameconcat         @179
