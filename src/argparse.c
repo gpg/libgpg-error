@@ -586,8 +586,15 @@ ignore_invalid_option_clear (gpgrt_argparse_t *arg)
 int
 _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
 {
+  enum { Ainit,
+         Acomment,     /* In a comment line.     */
+         Acopykeyword, /* Collecting a keyword.  */
+         Awaitarg,     /* Wait for an argument.  */
+         Acopyarg,     /* Copy the argument.     */
+         Askipandleave /* Skip the rest of the line and then leave.  */
+  } state;
   gpgrt_opt_t **opts;
-  int state, i, c;
+  int i, c;
   int idx = 0;
   char keyword[100];
   char *buffer = NULL;
@@ -626,9 +633,11 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
   arg->internal->opt_flags = 0;
 
   /* Find the next keyword.  */
-  state = i = 0;
+  state = Ainit;
+  i = 0;
   for (;;)
     {
+    nextstate:
       if (unread_buf_count)
         c = unread_buf[3 - unread_buf_count--];
       else
@@ -637,9 +646,9 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
         {
           if ( c != EOF )
             arg->lineno++;
-          if (state == -1)
-            break;
-          else if (state == 2)
+          if (state == Askipandleave)
+            goto leave;
+          else if (state == Acopykeyword)
             {
               keyword[i] = 0;
               for (i=0; opts[i]->short_opt; i++ )
@@ -651,22 +660,25 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
               arg->r_opt = opts[idx]->short_opt;
               if ((opts[idx]->flags & ARGPARSE_OPT_IGNORE))
                 {
-                  state = i = 0;
-                  continue;
+                  state = Ainit;
+                  i = 0;
+                  goto nextstate;
                 }
               else if (!opts[idx]->short_opt )
                 {
                   if (!strcmp (keyword, "ignore-invalid-option"))
                     {
                       /* No argument - ignore this meta option.  */
-                      state = i = 0;
-                      continue;
+                      state = Ainit;
+                      i = 0;
+                      goto nextstate;
                     }
                   else if (ignore_invalid_option_p (arg, keyword))
                     {
                       /* This invalid option is in the iio list.  */
-                      state = i = 0;
-                      continue;
+                      state = Ainit;
+                      i = 0;
+                      goto nextstate;
                     }
                   arg->r_opt = ((opts[idx]->flags & ARGPARSE_OPT_COMMAND)
                                 ? ARGPARSE_INVALID_COMMAND
@@ -679,11 +691,11 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
               else
                 arg->r_opt = ARGPARSE_MISSING_ARG;
 
-              break;
+              goto leave;
 	    }
-          else if (state == 3)
+          else if (state == Awaitarg)
             {
-              /* No argument found.  */
+              /* No argument found at the end of the line.  */
               if (in_alias)
                 arg->r_opt = ARGPARSE_MISSING_ARG;
               else if (!(opts[idx]->flags & ARGPARSE_TYPE_MASK))
@@ -693,11 +705,11 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
               else
                 arg->r_opt = ARGPARSE_MISSING_ARG;
 
-              break;
+              goto leave;
 	    }
-          else if (state == 4)
+          else if (state == Acopyarg)
             {
-              /* Has an argument. */
+              /* Has an argument at the end of a line. */
               if (in_alias)
                 {
                   if (!buffer)
@@ -757,7 +769,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
                         gpgrt_annotate_leaked_object (buffer);
                     }
                 }
-              break;
+              goto leave;
             }
           else if (c == EOF)
             {
@@ -766,20 +778,20 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
                 arg->r_opt = ARGPARSE_READ_ERROR;
               else
                 arg->r_opt = 0; /* EOF. */
-              break;
+              goto leave;
             }
-          state = 0;
+          state = Ainit;
           i = 0;
         }
-      else if (state == -1)
+      else if (state == Askipandleave)
         ; /* Skip. */
-      else if (state == 0 && isascii (c) && isspace(c))
+      else if (state == Ainit && isascii (c) && isspace(c))
         ; /* Skip leading white space.  */
-      else if (state == 0 && c == '#' )
-        state = 1;	/* Start of a comment.  */
-      else if (state == 1)
+      else if (state == Ainit && c == '#' )
+        state = Acomment;	/* Start of a comment.  */
+      else if (state == Acomment)
         ; /* Skip comments. */
-      else if (state == 2 && isascii (c) && isspace(c))
+      else if (state == Acopykeyword && isascii (c) && isspace(c))
         {
           /* Check keyword.  */
           keyword[i] = 0;
@@ -790,49 +802,52 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
           arg->r_opt = opts[idx]->short_opt;
           if ((opts[idx]->flags & ARGPARSE_OPT_IGNORE))
             {
-              state = 1; /* Process like a comment.  */
+              /* Option is configured to be ignored.  */
+              state = Acomment; /* Process like a comment.  */
             }
           else if (!opts[idx]->short_opt)
             {
+              /* The option is not known - check for other keywords.  */
               if (!strcmp (keyword, "alias"))
                 {
                   in_alias = 1;
-                  state = 3;
+                  state = Awaitarg;
                 }
               else if (!strcmp (keyword, "ignore-invalid-option"))
                 {
                   if (ignore_invalid_option_add (arg, fp))
                     {
                       arg->r_opt = ARGPARSE_OUT_OF_CORE;
-                      break;
+                      goto leave;
                     }
-                  state = i = 0;
+                  state = Ainit;
+                  i = 0;
                   arg->lineno++;
                 }
               else if (ignore_invalid_option_p (arg, keyword))
-                state = 1; /* Process like a comment.  */
+                state = Acomment; /* Process like a comment.  */
               else
                 {
                   arg->r_opt = ((opts[idx]->flags & ARGPARSE_OPT_COMMAND)
                                 ? ARGPARSE_INVALID_COMMAND
                                 : ARGPARSE_INVALID_OPTION);
-                  state = -1; /* Skip rest of line and leave.  */
+                  state = Askipandleave; /* Skip rest of line and leave.  */
                 }
             }
-          else
-            state = 3;
+          else /* Known option.  */
+            state = Awaitarg;
         }
-      else if (state == 3)
+      else if (state == Awaitarg)
         {
           /* Skip leading spaces of the argument.  */
           if (!isascii (c) || !isspace(c))
             {
               i = 0;
               keyword[i++] = c;
-              state = 4;
+              state = Acopyarg;
             }
         }
-      else if (state == 4)
+      else if (state == Acopyarg)
         {
           /* Collect the argument. */
           if (buffer)
@@ -855,7 +870,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
                     {
                       xfree (buffer);
                       arg->r_opt = ARGPARSE_OUT_OF_CORE;
-                      break;
+                      goto leave;
                     }
                 }
             }
@@ -874,22 +889,23 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
               else
                 {
                   arg->r_opt = ARGPARSE_OUT_OF_CORE;
-                  break;
+                  goto leave;
                 }
             }
         }
       else if (i >= DIM(keyword)-1)
         {
           arg->r_opt = ARGPARSE_KEYWORD_TOO_LONG;
-          state = -1; /* Skip rest of line and leave.  */
+          state = Askipandleave; /* Skip rest of line and leave.  */
         }
       else
         {
           keyword[i++] = c;
-          state = 2;
+          state = Acopykeyword;
         }
     }
 
+ leave:
   return arg->r_opt;
 }
 
