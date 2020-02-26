@@ -622,6 +622,115 @@ ignore_invalid_option_clear (gpgrt_argparse_t *arg)
 }
 
 
+/* Implementation of the "user" and "group" commands.  ARG is the
+ * context.  A value of 0 for ALTERNATE requests the "user" command, a
+ * value of "1" the "group" command.  ARGS is a non-empty string which
+ * this function is allowed to modify.  */
+static int
+handle_meta_user (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
+{
+  (void)args;
+
+  _gpgrt_log_info ("%s:%u: meta command %s is not yet supported\n",
+                   arg->internal->confname, arg->lineno,
+                   alternate? "group":"user");
+
+  return 0;
+}
+
+
+/* Implementation of the "force" command.  ARG is the context.  A
+ * value of 0 for ALTERNATE is "force", a value of 1 requests an
+ * unforce".  ARGS is the empty string and not used.  */
+static int
+handle_meta_force (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
+{
+  (void)arg;
+  (void)alternate;
+  (void)args;
+
+  return 0;
+}
+
+
+/* Implementation of the "ignore" command.  ARG is the context.  A
+ * value of 0 for ALTERNATE is a plain "ignore", a value of 1 request
+ * an "unignore, a value of 3 requests an "ignore-all".  ARGS is the
+ * empty string and not used.  */
+static int
+handle_meta_ignore (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
+{
+  (void)arg;
+  (void)alternate;
+  (void)args;
+
+  return 0;
+}
+
+
+/* Implementation of the "ignore" command.  ARG is the context.
+ * ALTERNATE is not used.  ARGS is the string to log.  */
+static int
+handle_meta_echo (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
+{
+  (void)alternate;
+
+  _gpgrt_log_info ("%s:%u: %s\n",
+                   arg->internal->confname, arg->lineno, args);
+  return 0;
+}
+
+/* Handle a meta command.  KEYWORD has the content inside the brackets
+ * with leading and trailing spaces removed.  The function may modify
+ * KEYWORD.  On success 0 is returned, on error an ARGPARSE_ error
+ * code is returned.  */
+static int
+handle_metacmd (gpgrt_argparse_t *arg, char *keyword)
+{
+  static struct {
+    const char *name;          /* Name of the command.  */
+    unsigned short alternate;  /* Use alternate version of the command.  */
+    unsigned short needarg;    /* Command requires an argument.  */
+    int (*func)(gpgrt_argparse_t *arg,
+                unsigned int alternate, char *args); /*handler*/
+  } cmds[] =
+      {{ "user",        0, 1, handle_meta_user },
+       { "group",       1, 1, handle_meta_user },
+       { "force",       0, 0, handle_meta_force },
+       { "+force",      0, 0, handle_meta_force },
+       { "-force",      1, 0, handle_meta_force },
+       { "ignore",      0, 0, handle_meta_ignore },
+       { "+ignore",     0, 0, handle_meta_ignore },
+       { "-ignore",     1, 0, handle_meta_ignore },
+       { "ignore-all",  2, 0, handle_meta_ignore },
+       { "+ignore-all", 2, 0, handle_meta_ignore },
+       { "echo",        0, 1, handle_meta_echo }
+      };
+  char *rest;
+  int i;
+
+  _gpgrt_log_debug ("Handle meta command '%s'\n", keyword);
+
+  for (rest = keyword; *rest && !(isascii (*rest) && isspace (*rest)); rest++)
+    ;
+  if (*rest)
+    {
+      *rest++ = 0;
+      trim_spaces (rest);
+    }
+
+  for (i=0; i < DIM (cmds); i++)
+    if (!strcmp (cmds[i].name, keyword))
+      break;
+  if (!(i < DIM (cmds)))
+    return ARGPARSE_UNKNOWN_META;
+  if (cmds[i].needarg && !*rest)
+    return ARGPARSE_MISSING_ARG;
+  if (!cmds[i].needarg && *rest)
+    return ARGPARSE_UNEXPECTED_ARG;
+  return cmds[i].func (arg, cmds[i].alternate, rest);
+}
+
 
 /****************
  * Get options from a file.
@@ -799,7 +908,12 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
               arg->r_opt = ARGPARSE_UNEXPECTED_META;
               goto leave;
             }
-          /* _gpgrt_log_debug ("Got meta command '%s'\n", keyword+1); */
+          c = handle_metacmd (arg, keyword+1);
+          if (c)
+            {
+              arg->r_opt = c;   /* Return error.  */
+              goto leave;
+            }
           state = Ainit;
           i = 0;
         }
