@@ -1784,95 +1784,95 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig, int no_init)
 	}
       argc--; argv++; idx++; /* Set to next one.  */
     }
-    else if ( (*s == '-' && s[1]) || arg->internal->inarg )
-      {
-        /* Short option.  */
-	int dash_kludge = 0;
+  else if ( (*s == '-' && s[1]) || arg->internal->inarg )
+    {
+      /* Short option.  */
+      int dash_kludge = 0;
 
-	i = 0;
-	if ( !arg->internal->inarg )
-          {
-	    arg->internal->inarg++;
-	    if ( (arg->flags & ARGPARSE_FLAG_ONEDASH) )
-              {
-                for (i=0; opts[i].short_opt; i++ )
-                  if ( opts[i].long_opt && !strcmp (opts[i].long_opt, s+1))
-                    {
-                      dash_kludge = 1;
-                      break;
-		    }
-              }
-          }
-	s += arg->internal->inarg;
+      i = 0;
+      if ( !arg->internal->inarg )
+        {
+          arg->internal->inarg++;
+          if ( (arg->flags & ARGPARSE_FLAG_ONEDASH) )
+            {
+              for (i=0; opts[i].short_opt; i++ )
+                if ( opts[i].long_opt && !strcmp (opts[i].long_opt, s+1))
+                  {
+                    dash_kludge = 1;
+                    break;
+                  }
+            }
+        }
+      s += arg->internal->inarg;
 
-	if (!dash_kludge )
-          {
-	    for (i=0; i < nopts; i++ )
-              if ( opts[i].short_opt == *s )
-                break;
-          }
+      if (!dash_kludge )
+        {
+          for (i=0; i < nopts; i++ )
+            if ( opts[i].short_opt == *s )
+              break;
+        }
 
-	if ( !opts[i].short_opt && ( *s == 'h' || *s == '?' ) )
-          show_help (opts, nopts, arg->flags);
+      if ( !opts[i].short_opt && ( *s == 'h' || *s == '?' ) )
+        show_help (opts, nopts, arg->flags);
 
-	arg->r_opt = opts[i].short_opt;
-	if (!opts[i].short_opt )
-          {
-	    arg->r_opt = (opts[i].flags & ARGPARSE_OPT_COMMAND)?
-              ARGPARSE_INVALID_COMMAND:ARGPARSE_INVALID_OPTION;
-	    arg->internal->inarg++; /* Point to the next arg.  */
-	    arg->r.ret_str = s;
-          }
-	else if ( (opts[i].flags & ARGPARSE_TYPE_MASK) )
-          {
-	    if ( s[1] && !dash_kludge )
-              {
-		s2 = s+1;
-		set_opt_arg (arg, opts[i].flags, s2);
-              }
-	    else
-              {
-		s2 = argv[1];
-		if ( !s2 && (opts[i].flags & ARGPARSE_OPT_OPTIONAL) )
-                  {
-		    arg->r_type = ARGPARSE_TYPE_NONE;
-                    arg->internal->opt_flags = opts[i].flags;
-                  }
-		else if ( !s2 )
-                  {
-		    arg->r_opt = ARGPARSE_MISSING_ARG;
-                  }
-		else if ( *s2 == '-' && s2[1]
-                          && (opts[i].flags & ARGPARSE_OPT_OPTIONAL) )
-                  {
-		    /* The argument is optional and the next seems to
-	               be an option.  We do not check this possible
-	               option but assume no argument.  */
-		    arg->r_type = ARGPARSE_TYPE_NONE;
-                    arg->internal->opt_flags = opts[i].flags;
-                  }
-		else
-                  {
-		    set_opt_arg (arg, opts[i].flags, s2);
-		    argc--; argv++; idx++; /* Skip one.  */
-                  }
-              }
-	    s = "x"; /* This is so that !s[1] yields false.  */
-          }
-	else
-          {
-            /* Does not take an argument.  */
-	    arg->r_type = ARGPARSE_TYPE_NONE;
-            arg->internal->opt_flags = opts[i].flags;
-	    arg->internal->inarg++; /* Point to the next arg.  */
-          }
-	if ( !s[1] || dash_kludge )
-          {
-            /* No more concatenated short options.  */
-	    arg->internal->inarg = 0;
-	    argc--; argv++; idx++;
-          }
-      }
+      arg->r_opt = opts[i].short_opt;
+      if (!opts[i].short_opt )
+        {
+          arg->r_opt = (opts[i].flags & ARGPARSE_OPT_COMMAND)?
+            ARGPARSE_INVALID_COMMAND:ARGPARSE_INVALID_OPTION;
+          arg->internal->inarg++; /* Point to the next arg.  */
+          arg->r.ret_str = s;
+        }
+      else if ( (opts[i].flags & ARGPARSE_TYPE_MASK) )
+        {
+          if ( s[1] && !dash_kludge )
+            {
+              s2 = s+1;
+              set_opt_arg (arg, opts[i].flags, s2);
+            }
+          else
+            {
+              s2 = argv[1];
+              if ( !s2 && (opts[i].flags & ARGPARSE_OPT_OPTIONAL) )
+                {
+                  arg->r_type = ARGPARSE_TYPE_NONE;
+                  arg->internal->opt_flags = opts[i].flags;
+                }
+              else if ( !s2 )
+                {
+                  arg->r_opt = ARGPARSE_MISSING_ARG;
+                }
+              else if ( *s2 == '-' && s2[1]
+                        && (opts[i].flags & ARGPARSE_OPT_OPTIONAL) )
+                {
+                  /* The argument is optional and the next seems to
+                     be an option.  We do not check this possible
+                     option but assume no argument.  */
+                  arg->r_type = ARGPARSE_TYPE_NONE;
+                  arg->internal->opt_flags = opts[i].flags;
+                }
+              else
+                {
+                  set_opt_arg (arg, opts[i].flags, s2);
+                  argc--; argv++; idx++; /* Skip one.  */
+                }
+            }
+          s = "x"; /* This is so that !s[1] yields false.  */
+        }
+      else
+        {
+          /* Does not take an argument.  */
+          arg->r_type = ARGPARSE_TYPE_NONE;
+          arg->internal->opt_flags = opts[i].flags;
+          arg->internal->inarg++; /* Point to the next arg.  */
+        }
+      if ( !s[1] || dash_kludge )
+        {
+          /* No more concatenated short options.  */
+          arg->internal->inarg = 0;
+          argc--; argv++; idx++;
+        }
+    }
   else if ( arg->flags & ARGPARSE_FLAG_MIXED )
     {
       arg->r_opt = ARGPARSE_IS_ARG;
