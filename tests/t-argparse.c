@@ -74,6 +74,7 @@ main (int argc, char **argv)
     /* Note that on a non-utf8 terminal the ß might garble the output. */
     ARGPARSE_s_n('s', "street","|Straße|set the name of the street to Straße"),
     ARGPARSE_o_i('m', "my-option", 0),
+    ARGPARSE_o_i('M', "not-my-option", 0),
     ARGPARSE_s_n(500, "a-long-option", 0 ),
     ARGPARSE_conffile(501, "options", "|FILE|read options from FILE"),
     ARGPARSE_noconffile(502, "no-options", "Ignore conf files"),
@@ -108,7 +109,7 @@ main (int argc, char **argv)
         {
         case ARGPARSE_CONFFILE:
           printf ("current conffile='%s'\n",
-                  pargs.r.ret_str? pargs.r.ret_str: "[cmdline]");
+                  pargs.r_type? pargs.r.ret_str: "[cmdline]");
           break;
         case ARGPARSE_IS_ARG :
           printf ("arg='%s'\n", pargs.r.ret_str);
@@ -120,6 +121,7 @@ main (int argc, char **argv)
         case 'o': opt.outfile = pargs.r.ret_str; break;
         case 'c': opt.crf = pargs.r_type? pargs.r.ret_str:"a.crf"; break;
         case 'm': opt.myopt = pargs.r_type? pargs.r.ret_int : 1; break;
+        case 'M': opt.myopt = 0; break;
         case 500: opt.a_long_one++;  break;
         default : pargs.err = ARGPARSE_PRINT_WARNING; any_warn = 1; break;
 	}
