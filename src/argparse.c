@@ -63,6 +63,7 @@ static struct
 #define ARGPARSE_SHORTOPT_VERSION 32769
 #define ARGPARSE_SHORTOPT_WARRANTY 32770
 #define ARGPARSE_SHORTOPT_DUMP_OPTIONS 32771
+#define ARGPARSE_SHORTOPT_DUMP_OPTTBL 32772
 
 
 /* The states for the gpgrt_argparser machinery.  */
@@ -152,6 +153,7 @@ static const char *(*fixed_string_mapper)(const char*);
 static int  set_opt_arg (gpgrt_argparse_t *arg, unsigned int flags, char *s);
 static void show_help (opttable_t *opts, unsigned int nopts,unsigned int flags);
 static void show_version (void);
+static void dump_option_table (gpgrt_argparse_t *arg);
 static int writestrings (int is_error, const char *string,
                          ...) GPGRT_ATTR_SENTINEL(0);
 static int arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, int no_init);
@@ -349,6 +351,7 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
       int seen_version = 0;
       int seen_warranty = 0;
       int seen_dump_options = 0;
+      int seen_dump_option_table = 0;
       int i;
 
       for (i=0; opts[i].short_opt; i++)
@@ -363,6 +366,8 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
                 seen_warranty = 1;
               else if (!strcmp(opts[i].long_opt, "dump-options"))
                 seen_dump_options = 1;
+              else if (!strcmp(opts[i].long_opt, "dump-option-table"))
+                seen_dump_option_table = 1;
             }
         }
       i += 4; /* The number of the above internal options.  */
@@ -403,6 +408,16 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
           arg->internal->opts[i].short_opt   = ARGPARSE_SHORTOPT_WARRANTY;
           arg->internal->opts[i].flags       = ARGPARSE_TYPE_NONE;
           arg->internal->opts[i].long_opt    = "warranty";
+          arg->internal->opts[i].description = "@";
+          arg->internal->opts[i].ordinal = i;
+          i++;
+        }
+
+      if (!seen_dump_option_table)
+        {
+          arg->internal->opts[i].short_opt   = ARGPARSE_SHORTOPT_DUMP_OPTTBL;
+          arg->internal->opts[i].flags       = ARGPARSE_TYPE_NONE;
+          arg->internal->opts[i].long_opt    = "dump-option-table";
           arg->internal->opts[i].description = "@";
           arg->internal->opts[i].ordinal = i;
           i++;
@@ -1830,7 +1845,10 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig, int no_init)
         *argpos = '=';
 
       if (i > 0 && opts[i].short_opt == ARGPARSE_SHORTOPT_HELP)
-        show_help (opts, nopts, arg->flags);
+        {
+          show_help (opts, nopts, arg->flags);
+          my_exit (arg, 0);
+        }
       else if (i > 0 && opts[i].short_opt == ARGPARSE_SHORTOPT_VERSION)
         {
           if (!(arg->flags & ARGPARSE_FLAG_NOVERSION))
@@ -1844,6 +1862,8 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig, int no_init)
           writestrings (0, _gpgrt_strusage (16), "\n", NULL);
           my_exit (arg, 0);
 	}
+      else if (i > 0 && opts[i].short_opt == ARGPARSE_SHORTOPT_DUMP_OPTTBL)
+        dump_option_table (arg);
       else if (i > 0 && opts[i].short_opt == ARGPARSE_SHORTOPT_DUMP_OPTIONS)
         {
           for (i=0; i < nopts; i++ )
@@ -1944,7 +1964,10 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig, int no_init)
         }
 
       if ( !opts[i].short_opt && ( *s == 'h' || *s == '?' ) )
-        show_help (opts, nopts, arg->flags);
+        {
+          show_help (opts, nopts, arg->flags);
+          my_exit (arg, 0);
+        }
 
       arg->r_opt = opts[i].short_opt;
       if (!opts[i].short_opt )
@@ -2322,7 +2345,6 @@ show_help (opttable_t *opts, unsigned int nopts, unsigned int flags)
  leave:
   flushstrings (0);
   xfree (ordtbl);
-  exit (0);
 }
 
 
@@ -2358,6 +2380,66 @@ show_version ()
     if ( (s=_gpgrt_strusage (i)) )
       writestrings (0, s, NULL);
   flushstrings (0);
+}
+
+
+/* Print the table of options with flags etc.  */
+static void
+dump_option_table (gpgrt_argparse_t *arg)
+{
+  opttable_t *opts;
+  unsigned int nopts;
+  const char *s;
+  char tmp[50];
+  unsigned int *ordtbl = NULL;
+  int i;
+
+  opts = arg->internal->opts;
+  nopts = arg->internal->nopts;
+  if (!nopts)
+    return;
+
+  ordtbl = xtrycalloc (nopts, sizeof *ordtbl);
+  if (!ordtbl)
+    {
+      writestrings (1, "\nOoops: Out of memory whilst dumping the table.\n",
+                    NULL);
+      flushstrings (1);
+      my_exit (arg, 2);
+    }
+  for (i=0; i < nopts; i++ )
+    ordtbl[i] = opts[i].ordinal;
+  qsort (ordtbl, nopts, sizeof *ordtbl, cmp_ordtbl);
+  for (i=0; i < nopts; i++ )
+    {
+      if (!opts[ordtbl[i]].long_opt)
+        continue;
+      writestrings (0, opts[ordtbl[i]].long_opt, ":", NULL);
+      snprintf (tmp, sizeof tmp, "%u:%u:",
+                opts[ordtbl[i]].short_opt,
+                opts[ordtbl[i]].flags);
+      writestrings (0, tmp, NULL);
+      s = opts[ordtbl[i]].description;
+      if (s)
+        {
+          for (; *s; s++)
+            {
+              if (*s == '%' || *s == ':' || *s == '\n')
+                snprintf (tmp, sizeof tmp, "%%%02X", *s);
+              else
+                {
+                  tmp[0] = *s;
+                  tmp[1] = 0;
+                }
+              writestrings (0, tmp, NULL);
+            }
+        }
+      writestrings (0, ":\n", NULL);
+    }
+
+  flushstrings (0);
+  xfree (ordtbl);
+  my_exit (arg, 0);
 }
 
 
