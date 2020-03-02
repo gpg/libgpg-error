@@ -229,7 +229,7 @@ writestrings (int is_error, const char *string, ...)
           if (custom_outfnc)
             custom_outfnc (is_error? 2:1, s);
           else
-            fputs (s, is_error? stderr : stdout);
+            _gpgrt_fputs (s, is_error? es_stderr : es_stdout);
           count += strlen (s);
         }
       while ((s = va_arg (arg_ptr, const char *)));
