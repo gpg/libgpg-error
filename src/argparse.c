@@ -64,8 +64,6 @@ static struct
 #define ARGPARSE_SHORTOPT_WARRANTY 32770
 #define ARGPARSE_SHORTOPT_DUMP_OPTIONS 32771
 
-/* A mask for the types.  */
-#define ARGPARSE_TYPE_MASK  7  /* Mask for the type values.  */
 
 /* The states for the gpgrt_argparser machinery.  */
 enum argparser_states
@@ -938,6 +936,8 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
             }
           else /* Known option */
             {
+              int set_ignore = 0;
+
               if (arg->internal->in_sysconf)
                 {
                   /* Set the current forced and ignored attributes.  */
@@ -960,19 +960,37 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
                                          opts[idx].long_opt,
                                          opts[idx].forced? " forced":"",
                                          opts[idx].ignore? " ignore":"");
-                      state = Ainit;
-                      i = 0;
-                      goto nextstate;  /* Ignore this one.  */
+                      if ((arg->flags & ARGPARSE_FLAG_WITHATTR))
+                        set_ignore = 1;
+                      else
+                        {
+                          state = Ainit;
+                          i = 0;
+                          goto nextstate;  /* Ignore this one.  */
+                        }
                     }
                 }
 
               arg->r_opt = opts[idx].short_opt;
               if (!(opts[idx].flags & ARGPARSE_TYPE_MASK))
-                arg->r_type = 0; /* Does not take an arg. */
+                arg->r_type = ARGPARSE_TYPE_NONE; /* Does not take an arg. */
               else if ((opts[idx].flags & ARGPARSE_OPT_OPTIONAL) )
-                arg->r_type = 0; /* Arg is optional.  */
+                arg->r_type = ARGPARSE_TYPE_NONE; /* Arg is optional.  */
               else
                 arg->r_opt = ARGPARSE_MISSING_ARG;
+
+              /* If the caller wants us to return the attributes or
+               * ignored options, or the flags in.  */
+              if ((arg->flags & ARGPARSE_FLAG_WITHATTR))
+                {
+                  if (opts[idx].ignore)
+                    arg->r_type |= ARGPARSE_ATTR_IGNORE;
+                  if (opts[idx].forced)
+                    arg->r_type |= ARGPARSE_ATTR_FORCE;
+                  if (set_ignore)
+                    arg->r_type |= ARGPARSE_OPT_IGNORE;
+                }
+
               goto leave;
             }
         } /* (end state Akeyword_eol/Akeyword_spc) */
@@ -1030,9 +1048,9 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
               if (in_alias)
                 arg->r_opt = ARGPARSE_MISSING_ARG;
               else if (!(opts[idx].flags & ARGPARSE_TYPE_MASK))
-                arg->r_type = 0; /* Does not take an arg. */
+                arg->r_type = ARGPARSE_TYPE_NONE; /* Does not take an arg. */
               else if ((opts[idx].flags & ARGPARSE_OPT_OPTIONAL))
-                arg->r_type = 0; /* No optional argument. */
+                arg->r_type = ARGPARSE_TYPE_NONE; /* No optional argument. */
               else
                 arg->r_opt = ARGPARSE_MISSING_ARG;
 
@@ -1420,7 +1438,7 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
               if ((arg->internal->opt_flags & ARGPARSE_OPT_CONFFILE))
                 {
                   arg->internal->explicit_confopt = 1;
-                  if (arg->r_type == ARGPARSE_TYPE_STRING
+                  if ((arg->r_type & ARGPARSE_TYPE_MASK) == ARGPARSE_TYPE_STRING
                       && !arg->internal->explicit_conffile)
                     {
                       /* Store the first conffile name.  All further
@@ -1431,7 +1449,8 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
                         return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
 
                     }
-                  else if (arg->r_type == ARGPARSE_TYPE_NONE)
+                  else if ((arg->r_type & ARGPARSE_TYPE_MASK)
+                            == ARGPARSE_TYPE_NONE)
                     any_no_conffile = 1;
                 }
             }
@@ -1779,7 +1798,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig, int no_init)
   if (arg->internal->stopped && (arg->flags & ARGPARSE_FLAG_ALL))
     {
       arg->r_opt = ARGPARSE_IS_ARG;  /* Not an option but an argument.  */
-      arg->r_type = 2;
+      arg->r_type = ARGPARSE_TYPE_STRING;
       arg->r.ret_str = s;
       argc--; argv++; idx++; /* set to next one */
     }
@@ -1891,7 +1910,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig, int no_init)
           else
             {
               arg->internal->opt_flags = opts[i].flags;
-              arg->r_type = 0;
+              arg->r_type = ARGPARSE_TYPE_NONE;
             }
 	}
       argc--; argv++; idx++; /* Set to next one.  */
@@ -1988,7 +2007,7 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig, int no_init)
   else if ( arg->flags & ARGPARSE_FLAG_MIXED )
     {
       arg->r_opt = ARGPARSE_IS_ARG;
-      arg->r_type = 2;
+      arg->r_type = ARGPARSE_TYPE_STRING;
       arg->r.ret_str = s;
       argc--; argv++; idx++; /* Set to next one.  */
     }
@@ -2001,10 +2020,22 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig, int no_init)
   if (arg->r_opt > 0 && i >= 0 && i < nopts
       && ((opts[i].ignore && opts[i].explicit_ignore) || opts[i].forced))
     {
-      _gpgrt_log_info (_("Note: ignoring option \"--%s\""
-                         " due to global config\n"),
-                       opts[i].long_opt);
-      goto next_one;  /* Skip ignored/forced option.  */
+
+      if ((arg->flags & ARGPARSE_FLAG_WITHATTR))
+        {
+          if (opts[i].ignore)
+            arg->r_type |= ARGPARSE_ATTR_IGNORE;
+          if (opts[i].forced)
+            arg->r_type |= ARGPARSE_ATTR_FORCE;
+          arg->r_type |= ARGPARSE_OPT_IGNORE;
+        }
+      else
+        {
+          _gpgrt_log_info (_("Note: ignoring option \"--%s\""
+                             " due to global config\n"),
+                           opts[i].long_opt);
+          goto next_one;  /* Skip ignored/forced option.  */
+        }
     }
 
  leave:

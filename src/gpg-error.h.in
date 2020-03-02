@@ -1185,6 +1185,7 @@ typedef struct
 #define ARGPARSE_FLAG_USER     2048  /* Use user config file.                */
 #define ARGPARSE_FLAG_VERBOSE  4096  /* Print additional argparser info.     */
 #define ARGPARSE_FLAG_USERVERS 8192  /* Try version-ed user config files.    */
+#define ARGPARSE_FLAG_WITHATTR 16384 /* Return attribute bits.               */
 
 /* Constants for (gpgrt_argparse_t).err.  */
 #define ARGPARSE_PRINT_WARNING  1    /* Print a diagnostic.                  */
@@ -1210,8 +1211,14 @@ typedef struct
 #define ARGPARSE_UNKNOWN_META      (-17)
 #define ARGPARSE_UNEXPECTED_META   (-18)
 
-/* Flags for the option descriptor (gpgrt_opt_t)->flags.  Note that
- * a TYPE constant may be or-ed with the OPT constants.  */
+/* Flags for the option descriptor (gpgrt_opt_t)->flags.  Note that a
+ * TYPE constant may be or-ed with the OPT constants but when used as
+ * return value in r_type these OPT constants are normally not
+ * included.  However with ARGPARSE_FLAG_WITHATTR used and an option
+ * would normally not be returned, it is returned but
+ * ARGPARSE_OPT_IGNORE is then set; further ARPARSE_ATTR_* are set.
+ */
+#define ARGPARSE_TYPE_MASK   0x0007  /* Mask for the type bits.           */
 #define ARGPARSE_TYPE_NONE        0  /* Does not take an argument.        */
 #define ARGPARSE_TYPE_INT         1  /* Takes an int argument.            */
 #define ARGPARSE_TYPE_STRING      2  /* Takes a string argument.          */
@@ -1222,6 +1229,8 @@ typedef struct
 #define ARGPARSE_OPT_IGNORE   (1<<6) /* Ignore command or option.         */
 #define ARGPARSE_OPT_COMMAND  (1<<7) /* The argument is a command.        */
 #define ARGPARSE_OPT_CONFFILE (1<<8) /* The value is a conffile.          */
+#define ARGPARSE_ATTR_FORCE   (1<<14)/* Attribute force is set.           */
+#define ARGPARSE_ATTR_IGNORE  (1<<15)/* Attribute ignore is set.          */
 
 /* A set of macros to make option definitions easier to read.  */
 #define ARGPARSE_x(s,l,t,f,d) \

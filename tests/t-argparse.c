@@ -86,6 +86,7 @@ main (int argc, char **argv)
                                             | ARGPARSE_FLAG_SYS
                                             | ARGPARSE_FLAG_USER
                                             /* | ARGPARSE_FLAG_VERBOSE */
+                                            /* | ARGPARSE_FLAG_WITHATTR */
                                             ) };
   int i;
   const char *srcdir;
@@ -104,7 +105,16 @@ main (int argc, char **argv)
 
   while (gpgrt_argparser  (&pargs, opts, PGM".conf"))
     {
-      /* printf ("got option %d\n", pargs.r_opt); */
+      /* printf ("got option %3d type %0x04x\n", pargs.r_opt, pargs.r_type); */
+      /* if (pargs.r_type & (ARGPARSE_ATTR_IGNORE|ARGPARSE_ATTR_FORCE)) */
+      /*   printf ("attributes:%s%s\n", */
+      /*           (pargs.r_type & ARGPARSE_ATTR_IGNORE)? " ignore":"", */
+      /*           (pargs.r_type & ARGPARSE_ATTR_FORCE)? " force":""); */
+      /* if (pargs.r_type & ARGPARSE_OPT_IGNORE) */
+      /*   { */
+      /*     printf ("ignored\n"); */
+      /*     continue; */
+      /*   } */
       switch (pargs.r_opt)
         {
         case ARGPARSE_CONFFILE:
