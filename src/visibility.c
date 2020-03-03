@@ -764,6 +764,12 @@ gpgrt_realloc (void *a, size_t n)
 }
 
 void *
+gpgrt_reallocarray (void *a, size_t oldnmemb, size_t nmemb, size_t size)
+{
+  return _gpgrt_reallocarray (a, oldnmemb, nmemb, size);
+}
+
+void *
 gpgrt_malloc (size_t n)
 {
   return _gpgrt_malloc (n);

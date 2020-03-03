@@ -114,6 +114,7 @@ void _gpgrt_abort (void) GPGRT_ATTR_NORETURN;
 void _gpgrt_set_alloc_func (void *(*f)(void *a, size_t n));
 
 void *_gpgrt_realloc (void *a, size_t n);
+void *_gpgrt_reallocarray (void *a, size_t oldnmemb, size_t nmemb, size_t size);
 void *_gpgrt_malloc (size_t n);
 void *_gpgrt_calloc (size_t n, size_t m);
 char *_gpgrt_strdup (const char *string);
@@ -126,6 +127,7 @@ char *_gpgrt_strconcat_core (const char *s1, va_list arg_ptr);
 #define xtrymalloc(a)    _gpgrt_malloc ((a))
 #define xtrycalloc(a,b)  _gpgrt_calloc ((a),(b))
 #define xtryrealloc(a,b) _gpgrt_realloc ((a),(b))
+#define xtryreallocarray(a,b,c,d) _gpgrt_reallocarray ((a),(b),(c),(d))
 #define xtrystrdup(a)    _gpgrt_strdup ((a))
 
 void _gpgrt_pre_syscall (void);

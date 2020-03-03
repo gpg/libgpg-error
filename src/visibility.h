@@ -152,6 +152,7 @@ MARK_VISIBLE (gpgrt_get_syscall_clamp)
 MARK_VISIBLE (gpgrt_set_alloc_func)
 
 MARK_VISIBLE (gpgrt_realloc)
+MARK_VISIBLE (gpgrt_reallocarray)
 MARK_VISIBLE (gpgrt_malloc)
 MARK_VISIBLE (gpgrt_calloc)
 MARK_VISIBLE (gpgrt_strdup)
@@ -333,6 +334,7 @@ MARK_VISIBLE (gpgrt_absfnameconcat);
 #define gpgrt_vsnprintf             _gpgrt_USE_UNDERSCORED_FUNCTION
 
 #define gpgrt_realloc               _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_reallocarray          _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_malloc                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_calloc                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_strdup                _gpgrt_USE_UNDERSCORED_FUNCTION

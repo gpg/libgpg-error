@@ -158,6 +158,7 @@ GPG_ERROR_1.0 {
     _gpgrt_log_assert;
 
     gpgrt_realloc;
+    gpgrt_reallocarray;
     gpgrt_malloc;
     gpgrt_calloc;
     gpgrt_strdup;

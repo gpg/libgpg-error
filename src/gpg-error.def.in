@@ -235,4 +235,6 @@ EXPORTS
  gpgrt_fnameconcat            @178
  gpgrt_absfnameconcat         @179
 
+ gpgrt_reallocarray           @180
+
 ;; end of file with public symbols for Windows.

@@ -5,6 +5,7 @@ Noteworthy changes in version 1.38 (unreleased) [C28/A28/R_]
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  gpgrt_fnameconcat                NEW.
  gpgrt_absfnameconcat             NEW.
+ gpgrt_reallocarray               NEW.
  gpgrt_set_confdir                NEW.
  gpgrt_argparser                  NEW.
  ARGPARSE_FLAG_SYS                NEW.
