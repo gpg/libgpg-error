@@ -370,7 +370,7 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
                 seen_dump_option_table = 1;
             }
         }
-      i += 4; /* The number of the above internal options.  */
+      i += 5; /* The number of the above internal options.  */
       i++;    /* End of list marker.  */
       arg->internal->opts = xtrycalloc (i, sizeof *arg->internal->opts);
       if (!arg->internal->opts)
@@ -432,6 +432,8 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
           arg->internal->opts[i].ordinal = i;
           i++;
         }
+      /* Take care: When adding new options remember to increase the
+       * size of the array.  */
 
       arg->internal->opts[i].short_opt = 0;
 
