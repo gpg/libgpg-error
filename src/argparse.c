@@ -2200,7 +2200,8 @@ show_help (opttable_t *opts, unsigned int nopts, unsigned int flags)
   if ( nopts )
     {
       /* Auto format the option description.  */
-      int i,j, indent;
+      int i,j,indent;
+      const char *last_header = NULL;
 
       ordtbl = xtrycalloc (nopts, sizeof *ordtbl);
       if (!ordtbl)
@@ -2238,14 +2239,23 @@ show_help (opttable_t *opts, unsigned int nopts, unsigned int flags)
           s = map_fixed_string (_( opts[ordtbl[i]].description ));
           if ( s && *s== '@' && !s[1] ) /* Hide this line.  */
             continue;
-          if ( s && (opts[ordtbl[i]].flags
-                     & (ARGPARSE_OPT_VERBATIM|ARGPARSE_OPT_HEADER)))
+          if ( s && (opts[ordtbl[i]].flags & ARGPARSE_OPT_HEADER))
             {
-              if ((opts[ordtbl[i]].flags & ARGPARSE_OPT_HEADER))
-                writestrings (0, "\n", NULL);
+              /* We delay printing until we have found one real output
+               * line.  This avoids having a header above an empty
+               * section.  */
+              last_header = s;
+              continue;
+	    }
+          if (last_header)
+            {
+              if (*last_header)
+                writestrings (0, "\n", last_header, ":\n", NULL);
+              last_header = NULL;
+            }
+          if ( s && (opts[ordtbl[i]].flags & ARGPARSE_OPT_VERBATIM))
+            {
               writestrings (0, s, NULL);
-              if ((opts[ordtbl[i]].flags & ARGPARSE_OPT_HEADER))
-                writestrings (0, ":\n", NULL);
               continue;
 	    }
           if ( s && *s == '@' )  /* Unindented legacy comment only line.  */

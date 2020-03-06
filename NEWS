@@ -25,6 +25,8 @@ Noteworthy changes in version 1.38 (unreleased) [C28/A28/R_]
  ARGPARSE_UNEXPECTED_META         NEW.
  ARGPARSE_conffile                NEW.
  ARGPARSE_noconffile              NEW.
+ ARGPARSE_verbatim                NEW.
+ ARGPARSE_header                  NEW.
  GPGRT_CONFDIR_USER               NEW.
  GPGRT_CONFDIR_SYS                NEW.
 

@@ -1321,7 +1321,8 @@ typedef struct
   { 1, NULL, (ARGPARSE_OPT_VERBATIM), (d) }
 
 /* Same as ARGPARSE_verbatim but also print a colon and a LF.  N can
- * be used give a symbolic name to the header.  */
+ * be used give a symbolic name to the header.  Nothing is printed if
+ * D is the empty string.  */
 #define ARGPARSE_header(n,d) \
   { 1, (n), (ARGPARSE_OPT_HEADER), (d) }
 
