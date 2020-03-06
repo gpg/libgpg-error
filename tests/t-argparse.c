@@ -65,6 +65,7 @@ int
 main (int argc, char **argv)
 {
   gpgrt_opt_t opts[] = {
+    ARGPARSE_verbatim("Now for the options:\n"),
     ARGPARSE_x  ('v', "verbose", NONE, 0, "Laut sein"),
     ARGPARSE_s_n('e', "echo"   , ("Zeile ausgeben, damit wir sehen, "
                                   "was wir eingegeben haben")),
@@ -72,12 +73,14 @@ main (int argc, char **argv)
     ARGPARSE_s_s('o', "output", 0 ),
     ARGPARSE_o_s('c', "cross-ref", "cross-reference erzeugen\n" ),
     /* Note that on a non-utf8 terminal the ß might garble the output. */
+    ARGPARSE_header("extra-options", "List of extra options"),
     ARGPARSE_s_n('s', "street","|Straße|set the name of the street to Straße"),
     ARGPARSE_o_i('m', "my-option", 0),
     ARGPARSE_o_i('M', "not-my-option", 0),
     ARGPARSE_s_n(500, "a-long-option", 0 ),
     ARGPARSE_conffile(501, "options", "|FILE|read options from FILE"),
     ARGPARSE_noconffile(502, "no-options", "Ignore conf files"),
+    ARGPARSE_verbatim("This epilog consists\nof only 2 lines\n"),
     ARGPARSE_end()
   };
   gpgrt_argparse_t pargs = { &argc, &argv, (ARGPARSE_FLAG_ALL

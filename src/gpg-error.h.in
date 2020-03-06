@@ -1230,6 +1230,8 @@ typedef struct
 #define ARGPARSE_OPT_IGNORE   (1<<6) /* Ignore command or option.         */
 #define ARGPARSE_OPT_COMMAND  (1<<7) /* The argument is a command.        */
 #define ARGPARSE_OPT_CONFFILE (1<<8) /* The value is a conffile.          */
+#define ARGPARSE_OPT_HEADER   (1<<9) /* The value is printed as a header. */
+#define ARGPARSE_OPT_VERBATIM (1<<10)/* The value is printed verbatim.    */
 #define ARGPARSE_ATTR_FORCE   (1<<14)/* Attribute force is set.           */
 #define ARGPARSE_ATTR_IGNORE  (1<<15)/* Attribute ignore is set.          */
 
@@ -1304,15 +1306,28 @@ typedef struct
 #define ARGPARSE_noconffile(s,l,d) \
   { (s), (l), (ARGPARSE_TYPE_NONE|ARGPARSE_OPT_CONFFILE), (d) }
 
+/* This macro is for stub or obsolete options.  */
 #define ARGPARSE_ignore(s,l)                    \
-     { (s), (l), (ARGPARSE_OPT_IGNORE), "@" }
+  { (s), (l), (ARGPARSE_OPT_IGNORE), "@" }
 
+/* This is a legacy version of ARGPARSE_verbatim which really does
+ * verbatim printing.  */
 #define ARGPARSE_group(s,d) \
-     { (s), NULL, 0, (d) }
+  { (s), NULL, 0, (d) }
+
+/* Verbatim print the string D in the help output.  It does not make
+ * use of the "@" hack as ARGPARSE_group does.  */
+#define ARGPARSE_verbatim(d) \
+  { 1, NULL, (ARGPARSE_OPT_VERBATIM), (d) }
+
+/* Same as ARGPARSE_verbatim but also print a colon and a LF.  N can
+ * be used give a symbolic name to the header.  */
+#define ARGPARSE_header(n,d) \
+  { 1, (n), (ARGPARSE_OPT_HEADER), (d) }
 
 /* Mark the end of the list (mandatory).  */
 #define ARGPARSE_end() \
-     { 0, NULL, 0, NULL }
+  { 0, NULL, 0, NULL }
 
 #endif /* GPGRT_ENABLE_ARGPARSE_MACROS */
 

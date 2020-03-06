@@ -2171,9 +2171,10 @@ cmp_ordtbl (const void *a_v, const void *b_v)
  * meanings:
  *  - A description string which is "@" suppresses help output for
  *    this option
- *  - a description,ine which starts with a '@' and is followed by
+ *  - a description which starts with a '@' and is followed by
  *    any other characters is printed as is; this may be used for examples
- *    ans such.
+ *    and such.  This is a legacy methiod, moder codes uses the flags
+ *    ARGPARSE_OPT_VERBATIM or ARGPARSE_OPT_HEADER.
  *  - A description which starts with a '|' outputs the string between this
  *    bar and the next one as arguments of the long option.
  */
@@ -2228,14 +2229,26 @@ show_help (opttable_t *opts, unsigned int nopts, unsigned int flags)
 
       /* Example: " -v, --verbose   Viele Sachen ausgeben" */
       indent += 10;
-      if ( *opts[ordtbl[0]].description != '@' )
+      if ( *opts[ordtbl[0]].description != '@'
+           && !(opts[ordtbl[0]].flags
+                & (ARGPARSE_OPT_VERBATIM|ARGPARSE_OPT_HEADER)))
         writestrings (0, "Options:", "\n", NULL);
       for (i=0; i < nopts; i++ )
         {
           s = map_fixed_string (_( opts[ordtbl[i]].description ));
           if ( s && *s== '@' && !s[1] ) /* Hide this line.  */
             continue;
-          if ( s && *s == '@' )  /* Unindented comment only line.  */
+          if ( s && (opts[ordtbl[i]].flags
+                     & (ARGPARSE_OPT_VERBATIM|ARGPARSE_OPT_HEADER)))
+            {
+              if ((opts[ordtbl[i]].flags & ARGPARSE_OPT_HEADER))
+                writestrings (0, "\n", NULL);
+              writestrings (0, s, NULL);
+              if ((opts[ordtbl[i]].flags & ARGPARSE_OPT_HEADER))
+                writestrings (0, ":\n", NULL);
+              continue;
+	    }
+          if ( s && *s == '@' )  /* Unindented legacy comment only line.  */
             {
               for (s++; *s; s++ )
                 {
