@@ -343,7 +343,7 @@ _gpgrt_getcwd (void)
 
 
 /* Get the standard home directory for user NAME. If NAME is NULL the
- * directory for the current user is retruned.  Caller must release
+ * directory for the current user is returned.  Caller must release
  * the returned string.  */
 char *
 _gpgrt_getpwdir (const char *name)
@@ -373,6 +373,26 @@ _gpgrt_getpwdir (const char *name)
 #else /*!HAVE_PWD_H*/
   /* No support at all.  */
   (void)name;
+#endif /*HAVE_PWD_H*/
+  return result;
+}
+
+
+/* Return a malloced copy of the current user's account name; this may
+ * return NULL on memory failure.  */
+char *
+_gpgrt_getusername (void)
+{
+  char *result = NULL;
+#if defined(HAVE_PWD_H) && defined(HAVE_GETPWUID)
+  struct passwd *pwd;
+
+  pwd = getpwuid (getuid());
+  if (pwd)
+    {
+      result = _gpgrt_strdup (pwd->pw_name);
+    }
+
 #endif /*HAVE_PWD_H*/
   return result;
 }

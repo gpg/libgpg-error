@@ -109,9 +109,14 @@ struct _gpgrt_argparse_internal_s
   unsigned int explicit_ignore:1;  /* Option has explicitly been set
                                     * to ignore or unignore.  */
   unsigned int ignore_all_seen:1;  /* [ignore-all] has been seen.       */
+  unsigned int user_seen:1;        /* A [user] has been seen.           */
+  unsigned int user_wildcard:1;    /* A [user *] has been seen.         */
+  unsigned int user_any_active:1;  /* Any user section was active.      */
+  unsigned int user_active:1;      /* User section active.              */
   unsigned int explicit_confopt:1; /* A conffile option has been given. */
   char *explicit_conffile;         /* Malloced name of an explicit
                                     * conffile. */
+  char *username;                  /* Malloced current user name.       */
   unsigned int opt_flags;          /* Current option flags.             */
   enum argparser_states state;     /* State of the gpgrt_argparser.     */
   const char *last;
@@ -256,6 +261,7 @@ deinitialize (gpgrt_argparse_t *arg)
 {
   if (arg->internal)
     {
+      xfree (arg->internal->username);
       xfree (arg->internal->explicit_conffile);
       xfree (arg->internal->opts);
       xfree (arg->internal);
@@ -306,6 +312,10 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
       arg->internal->inarg = 0;
       arg->internal->stopped = 0;
       arg->internal->in_sysconf = 0;
+      arg->internal->user_seen = 0;
+      arg->internal->user_wildcard = 0;
+      arg->internal->user_any_active = 0;
+      arg->internal->user_active = 0;
       arg->internal->mark_forced = 0;
       arg->internal->mark_ignore = 0;
       arg->internal->explicit_ignore = 0;
@@ -652,19 +662,49 @@ ignore_invalid_option_clear (gpgrt_argparse_t *arg)
 }
 
 
-/* Implementation of the "user" and "group" commands.  ARG is the
- * context.  A value of 0 for ALTERNATE requests the "user" command, a
- * value of "1" the "group" command.  ARGS is a non-empty string which
- * this function is allowed to modify.  */
+/* Implementation of the "user" command.  ARG is the context.  ARGS is
+ * a non-empty string which this function is allowed to modify.  */
 static int
 handle_meta_user (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 {
-  (void)args;
+  (void)alternate;
 
-  if (arg->internal->verbose)
-    _gpgrt_log_info ("%s:%u: meta command %s is not yet supported\n",
-                     arg->internal->confname, arg->lineno,
-                     alternate? "group":"user");
+  if (!arg->internal->username)
+    {
+      arg->internal->username = _gpgrt_getusername ();
+      if (!arg->internal->username)
+        {
+          _gpgrt_log_error ("%s:%u: error getting current user's name: %s\n",
+                            arg->internal->confname, arg->lineno,
+                            _gpg_strerror (gpg_error_from_syserror ()));
+          /* Not necessary the correct error code but given that we
+           * either have a malloc error or some internal system error,
+           * it is the best we can do.  */
+          return ARGPARSE_PERMISSION_ERROR;
+        }
+    }
+
+
+  arg->internal->user_seen = 1;
+  if (*args == '*' && !args[1])
+    {
+      arg->internal->user_wildcard = 1;
+      arg->internal->user_active = !arg->internal->user_any_active;
+    }
+  else if (arg->internal->user_wildcard)
+    {
+      /* All other user statements are ignored after a wildcard.  */
+      arg->internal->user_active = 0;
+    }
+  else if (!strcasecmp (args, arg->internal->username))
+    {
+      arg->internal->user_any_active = 1;
+      arg->internal->user_active = 1;
+    }
+  else
+    {
+      arg->internal->user_active = 0;
+    }
 
   return 0;
 }
@@ -751,24 +791,26 @@ handle_metacmd (gpgrt_argparse_t *arg, char *keyword)
     unsigned short alternate;  /* Use alternate version of the command.  */
     unsigned short needarg:1;  /* Command requires an argument.          */
     unsigned short always:1;   /* Command allowed in all conf files.     */
+    unsigned short noskip:1;   /* Even done in non-active [user] mode.   */
     int (*func)(gpgrt_argparse_t *arg,
                 unsigned int alternate, char *args); /*handler*/
   } cmds[] =
-      {{ "user",        0, 1, 0, handle_meta_user },
-       { "group",       1, 1, 0, handle_meta_user },
-       { "force",       0, 0, 0, handle_meta_force },
-       { "+force",      0, 0, 0, handle_meta_force },
-       { "-force",      1, 0, 0, handle_meta_force },
-       { "ignore",      0, 0, 0, handle_meta_ignore },
-       { "+ignore",     0, 0, 0, handle_meta_ignore },
-       { "-ignore",     1, 0, 0, handle_meta_ignore },
-       { "ignore-all",  2, 0, 0, handle_meta_ignore },
-       { "+ignore-all", 2, 0, 0, handle_meta_ignore },
-       { "verbose",     0, 0, 1, handle_meta_verbose },
-       { "+verbose",    0, 0, 1, handle_meta_verbose },
-       { "-verbose",    1, 0, 1, handle_meta_verbose },
-       { "echo",        0, 1, 1, handle_meta_echo },
-       { "-echo",       1, 1, 1, handle_meta_echo }
+      {{ "user",        0, 1, 0, 1, handle_meta_user },
+       { "force",       0, 0, 0, 0, handle_meta_force },
+       { "+force",      0, 0, 0, 0, handle_meta_force },
+       { "-force",      1, 0, 0, 0, handle_meta_force },
+       { "ignore",      0, 0, 0, 0, handle_meta_ignore },
+       { "+ignore",     0, 0, 0, 0, handle_meta_ignore },
+       { "-ignore",     1, 0, 0, 0, handle_meta_ignore },
+       { "ignore-all",  2, 0, 0, 0, handle_meta_ignore },
+       { "+ignore-all", 2, 0, 0, 0, handle_meta_ignore },
+       { "verbose",     0, 0, 1, 1, handle_meta_verbose },
+       { "+verbose",    0, 0, 1, 1, handle_meta_verbose },
+       { "-verbose",    1, 0, 1, 1, handle_meta_verbose },
+       { "echo",        0, 1, 1, 1, handle_meta_echo },
+       { "-echo",       1, 1, 1, 1, handle_meta_echo },
+       { "info",        0, 1, 1, 0, handle_meta_echo },
+       { "-info",       1, 1, 1, 0, handle_meta_echo }
       };
   char *rest;
   int i;
@@ -792,6 +834,12 @@ handle_metacmd (gpgrt_argparse_t *arg, char *keyword)
     return ARGPARSE_UNEXPECTED_ARG;
   if (!arg->internal->in_sysconf && !cmds[i].always)
     return ARGPARSE_UNEXPECTED_META;
+
+  if (!cmds[i].noskip
+      && arg->internal->in_sysconf
+      && arg->internal->user_seen
+      && !arg->internal->user_active)
+    return 0; /* Skip this meta command.  */
 
   return cmds[i].func (arg, cmds[i].alternate, rest);
 }
@@ -943,6 +991,15 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
             {
               /* Known option but need to scan for args.  */
               state = Awaitarg;
+            }
+          else if (arg->internal->in_sysconf
+                   && arg->internal->user_seen
+                   && !arg->internal->user_active)
+            {
+              /* We are in a [user] meta command and it is not active.
+               * Skip the command.  */
+              state = state == Akeyword_eol? Ainit : Acomment;
+              i = 0;
             }
           else if ((opts[idx].flags & ARGPARSE_OPT_IGNORE))
             {
@@ -1384,6 +1441,7 @@ finish_read_sys (gpgrt_argparse_t *arg)
 
   /* Reset all flags which pertain only to sysconf files.  */
   arg->internal->in_sysconf = 0;
+  arg->internal->user_active = 0;
   arg->internal->mark_forced = 0;
   arg->internal->mark_ignore = 0;
   arg->internal->explicit_ignore = 0;

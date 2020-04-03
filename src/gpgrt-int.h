@@ -795,6 +795,9 @@ char *_gpgrt_getcwd (void);
 /* Return the home directory of user NAME.  */
 char *_gpgrt_getpwdir (const char *name);
 
+/* Return the account name of the current user.  */
+char *_gpgrt_getusername (void);
+
 /* Expand and concat file name parts.  */
 char *_gpgrt_vfnameconcat (int want_abs, const char *first_part,
                            va_list arg_ptr);
