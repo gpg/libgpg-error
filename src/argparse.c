@@ -316,6 +316,7 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
       arg->internal->user_wildcard = 0;
       arg->internal->user_any_active = 0;
       arg->internal->user_active = 0;
+      arg->internal->username = NULL;
       arg->internal->mark_forced = 0;
       arg->internal->mark_ignore = 0;
       arg->internal->explicit_ignore = 0;

@@ -384,7 +384,22 @@ char *
 _gpgrt_getusername (void)
 {
   char *result = NULL;
-#if defined(HAVE_PWD_H) && defined(HAVE_GETPWUID)
+
+#ifdef HAVE_W32_SYSTEM
+  char tmp[1];
+  DWORD size = 1;
+
+  GetUserNameA (tmp, &size);
+  result = _gpgrt_malloc (size);
+  if (result && !GetUserNameA (result, &size))
+    {
+      xfree (result);
+      result = NULL;
+    }
+
+#else /* !HAVE_W32_SYSTEM */
+
+# if defined(HAVE_PWD_H) && defined(HAVE_GETPWUID)
   struct passwd *pwd;
 
   pwd = getpwuid (getuid());
@@ -393,6 +408,9 @@ _gpgrt_getusername (void)
       result = _gpgrt_strdup (pwd->pw_name);
     }
 
-#endif /*HAVE_PWD_H*/
+# endif /*HAVE_PWD_H*/
+
+#endif /* !HAVE_W32_SYSTEM */
+
   return result;
 }
