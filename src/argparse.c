@@ -34,6 +34,7 @@
 #include <limits.h>
 #include <errno.h>
 #include <unistd.h>
+#include <time.h>
 
 #include "gpgrt-int.h"
 
@@ -663,13 +664,10 @@ ignore_invalid_option_clear (gpgrt_argparse_t *arg)
 }
 
 
-/* Implementation of the "user" command.  ARG is the context.  ARGS is
- * a non-empty string which this function is allowed to modify.  */
+/* Make sure the username field is filled.  Return 0 on success.  */
 static int
-handle_meta_user (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
+assure_username (gpgrt_argparse_t *arg)
 {
-  (void)alternate;
-
   if (!arg->internal->username)
     {
       arg->internal->username = _gpgrt_getusername ();
@@ -684,7 +682,22 @@ handle_meta_user (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
           return ARGPARSE_PERMISSION_ERROR;
         }
     }
+  return 0;
+}
 
+
+/* Implementation of the "user" command.  ARG is the context.  ARGS is
+ * a non-empty string which this function is allowed to modify.  */
+static int
+handle_meta_user (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
+{
+  int rc;
+
+  (void)alternate;
+
+  rc = assure_username (arg);
+  if (rc)
+    return rc;
 
   arg->internal->user_seen = 1;
   if (*args == '*' && !args[1])
@@ -757,12 +770,64 @@ handle_meta_ignore (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 static int
 handle_meta_echo (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 {
+  int rc = 0;
+  char *p, *pend;
+
   if (alternate)
-    _gpgrt_log_info ("%s\n", args);
+    _gpgrt_log_info ("%s", "");
   else
-    _gpgrt_log_info ("%s:%u: %s\n",
-                     arg->internal->confname, arg->lineno, args);
-  return 0;
+    _gpgrt_log_info ("%s:%u: ", arg->internal->confname, arg->lineno);
+
+  while (*args)
+    {
+      p = strchr (args, '$');
+      if (!p)
+        {
+          _gpgrt_log_printf ("%s", args);
+          break;
+        }
+      *p = 0;
+      _gpgrt_log_printf ("%s", args);
+      if (p[1] == '$')
+        {
+          _gpgrt_log_printf ("$");
+          args = p+2;
+          continue;
+        }
+      if (p[1] != '{')
+        {
+          _gpgrt_log_printf ("$");
+          args = p+1;
+          continue;
+        }
+      pend = strchr (p+2, '}');
+      if (!pend)  /* No closing brace.  */
+        {
+          _gpgrt_log_printf ("$");
+          args = p+1;
+          continue;
+        }
+      p += 2;
+      *pend = 0;
+      args = pend+1;
+      if (!strcmp (p, "user"))
+        {
+          rc = assure_username (arg);
+          if (rc)
+            goto leave;
+          _gpgrt_log_printf ("%s", arg->internal->username);
+        }
+      else if (!strcmp (p, "file"))
+        _gpgrt_log_printf ("%s", arg->internal->confname);
+      else if (!strcmp (p, "line"))
+        _gpgrt_log_printf ("%u", arg->lineno);
+      else if (!strcmp (p, "epoch"))
+        _gpgrt_log_printf ("%lu",  (unsigned long)time (NULL));
+    }
+
+ leave:
+  _gpgrt_log_printf ("\n");
+  return rc;
 }
 
 
