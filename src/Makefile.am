@@ -318,12 +318,19 @@ pre_mkheader_cmds = if test -f lock-obj-pub.native.h; \
                     then rm lock-obj-pub.native.h; fi
 mkheader_opts = --cross
 else
+if HAVE_GENERATED_LOCK_OBJ_H
+# lock-obj-pub.native.h is generated at configure time
+pre_mkheader_cmds = :
+mkheader_opts =
+parts_of_gpg_error_h += ./lock-obj-pub.native.h
+else
 pre_mkheader_cmds = :
 mkheader_opts =
 parts_of_gpg_error_h += ./lock-obj-pub.native.h
 
 ./lock-obj-pub.native.h: Makefile gen-posix-lock-obj$(EXEEXT) posix-lock-obj.h
 	./gen-posix-lock-obj >$@
+endif
 endif
 
 # We also depend on versioninfo.rc because that is build by

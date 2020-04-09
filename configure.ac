@@ -595,7 +595,20 @@ if test "$have_w32_system" = yes; then
     force_use_syscfg=yes
 fi
 if test x$cross_compiling = xyes; then
+  case $host in
+    *-*-linux*)
+    lock_obj_h_generated=yes
+    LOCK_ABI_VERSION=1 host=$host host_alias=$host_alias \
+        CC=$CC OBJDUMP=$host_alias-objdump \
+        ac_ext=$ac_ext ac_objext=$ac_objext \
+        AWK=$AWK $srcdir/src/gen-lock-obj.sh \
+        >src/lock-obj-pub.native.h
+    AC_MSG_NOTICE([generated src/lock-obj-pub.native.h])
+    ;;
+    *)
     force_use_syscfg=yes
+    ;;
+  esac
 fi
 
 AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
@@ -603,6 +616,7 @@ AM_CONDITIONAL(HAVE_W64_SYSTEM, test "$have_w64_system" = yes)
 AM_CONDITIONAL(HAVE_W32CE_SYSTEM, test "$have_w32ce_system" = yes)
 AM_CONDITIONAL(CROSS_COMPILING, test x$cross_compiling = xyes)
 AM_CONDITIONAL(FORCE_USE_SYSCFG, test x$force_use_syscfg = xyes)
+AM_CONDITIONAL(HAVE_GENERATED_LOCK_OBJ_H, test x$lock_obj_h_generated = xyes)
 
 AC_DEFINE_UNQUOTED(HOST_TRIPLET_STRING, "$host", [The host triplet])
 
