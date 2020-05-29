@@ -1436,8 +1436,28 @@ msgstr "błędne polecenie"
 msgid "invalid alias definition"
 msgstr "błędna definicja aliasu"
 
+#, fuzzy
+#| msgid "LDAP operations error"
+msgid "permission error"
+msgstr "Błąd operacji LDAP"
+
 msgid "out of core"
 msgstr "brak pamięci"
+
+#, fuzzy
+#| msgid "invalid command"
+msgid "invalid meta command"
+msgstr "błędne polecenie"
+
+#, fuzzy
+#| msgid "Unknown command"
+msgid "unknown meta command"
+msgstr "Nieznane polecenie"
+
+#, fuzzy
+#| msgid "Unexpected IPC command"
+msgid "unexpected meta command"
+msgstr "Nieoczekiwane polecenie IPC"
 
 msgid "invalid option"
 msgstr "błędna opcja"
@@ -1466,12 +1486,25 @@ msgstr "opcja ,,%.50s'' jest niejednoznaczna\n"
 msgid "command \"%.50s\" is ambiguous\n"
 msgstr "polecenie ,,%.50s'' jest niejednoznaczne\n"
 
-msgid "out of core\n"
-msgstr "brak pamięci\n"
-
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "błędna opcja ,,%.50s''\n"
+
+#, c-format
+msgid "Note: no default option file '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "reading options from '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "option file '%s': %s\n"
+msgstr ""
+
+#, c-format
+msgid "Note: ignoring option \"--%s\" due to global config\n"
+msgstr ""
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr "Błędy prosimy zgłaszać pod <https://bugs.gnupg.org>.\n"
@@ -1479,3 +1512,6 @@ msgstr "Błędy prosimy zgłaszać pod <https://bugs.gnupg.org>.\n"
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "uwaga: nie rozpoznano %s\n"
+
+#~ msgid "out of core\n"
+#~ msgstr "brak pamięci\n"

@@ -971,26 +971,21 @@ msgstr "Повторіть спробу пізніше"
 msgid "Wrong name"
 msgstr "Помилкова назва"
 
-#| msgid "Not enabled"
 msgid "Not authenticated"
 msgstr "Розпізнавання не пройдено"
 
-#| msgid "Inappropriate LDAP authentication"
 msgid "Bad authentication"
 msgstr "Помилка розпізнавання"
 
-#| msgid "No agent running"
 msgid "No Keybox daemon running"
 msgstr "Фонову службу Keybox не запущено"
 
-#| msgid "SmartCard daemon error"
 msgid "Keybox daemon error"
 msgstr "Помилка фонової служби Keybox"
 
 msgid "Service is not running"
 msgstr "Службу не запущено"
 
-#| msgid "Keyserver error"
 msgid "Service error"
 msgstr "Помилка служби"
 
@@ -1312,11 +1307,9 @@ msgstr "Визначений користувачем код помилки 15"
 msgid "User defined error code 16"
 msgstr "Визначений користувачем код помилки 16"
 
-#| msgid "LDAP success"
 msgid "SQL success"
 msgstr "Успіх SQL"
 
-#| msgid "Syntax error"
 msgid "SQL error"
 msgstr "Помилка SQL"
 
@@ -1359,7 +1352,6 @@ msgstr "Не вдалося вставити запис, оскільки баз
 msgid "Unable to open the SQL database file"
 msgstr "Не вдалося відкрити файл бази даних SQL"
 
-#| msgid "LDAP protocol error"
 msgid "SQL database lock protocol error"
 msgstr "Помилка протоколу блокування бази даних SQL"
 
@@ -1384,7 +1376,6 @@ msgstr "Неправильне використання бібліотеки SQL
 msgid "SQL library uses unsupported OS features"
 msgstr "Бібліотека SQL намагається використати непідтримувані можливості ОС"
 
-#| msgid "Proxied authorization denied by LDAP"
 msgid "Authorization denied (SQL)"
 msgstr "Відмовлено в уповноваженні (SQL)"
 
@@ -1442,8 +1433,28 @@ msgstr "некоректна команда"
 msgid "invalid alias definition"
 msgstr "некоректне визначення замінника"
 
+#, fuzzy
+#| msgid "LDAP operations error"
+msgid "permission error"
+msgstr "Помилка дій LDAP"
+
 msgid "out of core"
 msgstr "вихід за межі області пам’яті"
+
+#, fuzzy
+#| msgid "invalid command"
+msgid "invalid meta command"
+msgstr "некоректна команда"
+
+#, fuzzy
+#| msgid "Unknown command"
+msgid "unknown meta command"
+msgstr "Невідома команда"
+
+#, fuzzy
+#| msgid "Unexpected IPC command"
+msgid "unexpected meta command"
+msgstr "Неочікувана команда IPC"
 
 msgid "invalid option"
 msgstr "некоректний параметр"
@@ -1472,12 +1483,25 @@ msgstr "параметр «%.50s» є неоднозначним\n"
 msgid "command \"%.50s\" is ambiguous\n"
 msgstr "команда «%.50s» є неоднозначною\n"
 
-msgid "out of core\n"
-msgstr "вихід за межі області пам’яті\n"
-
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "некоректний параметр «%.50s»\n"
+
+#, c-format
+msgid "Note: no default option file '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "reading options from '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "option file '%s': %s\n"
+msgstr ""
+
+#, c-format
+msgid "Note: ignoring option \"--%s\" due to global config\n"
+msgstr ""
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr "Будь ласка, повідомляйте про помилки тут: <https://bugs.gnupg.org>.\n"
@@ -1485,3 +1509,6 @@ msgstr "Будь ласка, повідомляйте про помилки ту
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "попередження: не вдалося розпізнати %s\n"
+
+#~ msgid "out of core\n"
+#~ msgstr "вихід за межі області пам’яті\n"

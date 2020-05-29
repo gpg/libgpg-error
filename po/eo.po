@@ -1657,8 +1657,27 @@ msgid "invalid alias definition"
 msgstr "nevalida kiraso"
 
 #, fuzzy
+#| msgid "Configuration error"
+msgid "permission error"
+msgstr "Agord-eraro"
+
+#, fuzzy
 msgid "out of core"
 msgstr "ne traktita"
+
+#, fuzzy
+msgid "invalid meta command"
+msgstr "malkongruaj komandoj\n"
+
+#, fuzzy
+#| msgid "Unknown command"
+msgid "unknown meta command"
+msgstr "Nekonata komando"
+
+#, fuzzy
+#| msgid "Unexpected IPC command"
+msgid "unexpected meta command"
+msgstr "Neatendita komando IPC"
 
 #, fuzzy
 msgid "invalid option"
@@ -1688,13 +1707,25 @@ msgstr ""
 msgid "command \"%.50s\" is ambiguous\n"
 msgstr ""
 
-#, fuzzy
-msgid "out of core\n"
-msgstr "ne traktita"
-
 #, fuzzy, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "nevalida kiraso"
+
+#, c-format
+msgid "Note: no default option file '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "reading options from '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "option file '%s': %s\n"
+msgstr ""
+
+#, c-format
+msgid "Note: ignoring option \"--%s\" due to global config\n"
+msgstr ""
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr ""
@@ -1702,6 +1733,10 @@ msgstr ""
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "averto: ne eblis rekoni %s\n"
+
+#, fuzzy
+#~ msgid "out of core\n"
+#~ msgstr "ne traktita"
 
 #~ msgid "Usage: %s GPG-ERROR [...]\n"
 #~ msgstr "Uzmaniero: %s GPG-ERARO [...]\n"

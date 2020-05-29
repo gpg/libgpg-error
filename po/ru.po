@@ -957,6 +957,39 @@ msgstr "Уже доставлено"
 msgid "Try again later"
 msgstr "Повторите попытку позднее"
 
+#, fuzzy
+#| msgid "No name"
+msgid "Wrong name"
+msgstr "Нет имени"
+
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "Отключено"
+
+#, fuzzy
+#| msgid "Inappropriate LDAP authentication"
+msgid "Bad authentication"
+msgstr "Неподходящее удостоверение LDAP"
+
+#, fuzzy
+#| msgid "No agent running"
+msgid "No Keybox daemon running"
+msgstr "Агент не работает"
+
+#, fuzzy
+#| msgid "SmartCard daemon error"
+msgid "Keybox daemon error"
+msgstr "Ошибка демона криптографических карт"
+
+msgid "Service is not running"
+msgstr ""
+
+#, fuzzy
+#| msgid "Keyserver error"
+msgid "Service error"
+msgstr "Ошибка сервера ключей"
+
 msgid "System bug detected"
 msgstr "Обнаружена ошибка в системе"
 
@@ -1275,6 +1308,107 @@ msgstr "Пользовательский код ошибки 15"
 msgid "User defined error code 16"
 msgstr "Пользовательский код ошибки 16"
 
+#, fuzzy
+#| msgid "LDAP success"
+msgid "SQL success"
+msgstr "Успешное выполнение LDAP"
+
+#, fuzzy
+#| msgid "Syntax error"
+msgid "SQL error"
+msgstr "Синтаксическая ошибка"
+
+msgid "Internal logic error in SQL library"
+msgstr ""
+
+msgid "Access permission denied (SQL)"
+msgstr ""
+
+msgid "SQL abort was requested"
+msgstr ""
+
+msgid "SQL database file is locked"
+msgstr ""
+
+msgid "An SQL table in the database is locked"
+msgstr ""
+
+msgid "SQL library ran out of core"
+msgstr ""
+
+msgid "Attempt to write a readonly SQL database"
+msgstr ""
+
+msgid "SQL operation terminated by interrupt"
+msgstr ""
+
+msgid "I/O error during SQL operation"
+msgstr ""
+
+msgid "SQL database disk image is malformed"
+msgstr ""
+
+msgid "Unknown opcode in SQL file control"
+msgstr ""
+
+msgid "Insertion failed because SQL database is full"
+msgstr ""
+
+msgid "Unable to open the SQL database file"
+msgstr ""
+
+#, fuzzy
+#| msgid "LDAP protocol error"
+msgid "SQL database lock protocol error"
+msgstr "Ошибка протокола LDAP"
+
+msgid "(internal SQL code: empty)"
+msgstr ""
+
+msgid "SQL database schema changed"
+msgstr ""
+
+msgid "String or blob exceeds size limit (SQL)"
+msgstr ""
+
+msgid "SQL abort due to constraint violation"
+msgstr ""
+
+msgid "Data type mismatch (SQL)"
+msgstr ""
+
+msgid "SQL library used incorrectly"
+msgstr ""
+
+msgid "SQL library uses unsupported OS features"
+msgstr ""
+
+#, fuzzy
+#| msgid "Proxied authorization denied by LDAP"
+msgid "Authorization denied (SQL)"
+msgstr "LDAP отказал в опосредованной авторизации"
+
+msgid "(unused SQL code: format)"
+msgstr ""
+
+msgid "SQL bind parameter out of range"
+msgstr ""
+
+msgid "File opened that is not an SQL database file"
+msgstr ""
+
+msgid "Notifications from SQL logger"
+msgstr ""
+
+msgid "Warnings from SQL logger"
+msgstr ""
+
+msgid "SQL has another row ready"
+msgstr ""
+
+msgid "SQL has finished executing"
+msgstr ""
+
 msgid "System error w/o errno"
 msgstr "Системная ошибка без номера"
 
@@ -1308,8 +1442,28 @@ msgstr "недопустимая команда"
 msgid "invalid alias definition"
 msgstr "недопустимое определение синонима"
 
+#, fuzzy
+#| msgid "LDAP operations error"
+msgid "permission error"
+msgstr "Ошибка операций LDAP"
+
 msgid "out of core"
 msgstr "нехватка выделенной памяти"
+
+#, fuzzy
+#| msgid "invalid command"
+msgid "invalid meta command"
+msgstr "недопустимая команда"
+
+#, fuzzy
+#| msgid "Unknown command"
+msgid "unknown meta command"
+msgstr "Неизвестная команда"
+
+#, fuzzy
+#| msgid "Unexpected IPC command"
+msgid "unexpected meta command"
+msgstr "Неожиданная команда IPC"
 
 msgid "invalid option"
 msgstr "недопустимый параметр"
@@ -1338,12 +1492,25 @@ msgstr "параметр \"%.50s\" неоднозначен\n"
 msgid "command \"%.50s\" is ambiguous\n"
 msgstr "команда \"%.50s\" неоднозначна\n"
 
-msgid "out of core\n"
-msgstr "нехватка выделенной памяти\n"
-
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "недопустимый параметр \"%.50s\"\n"
+
+#, c-format
+msgid "Note: no default option file '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "reading options from '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "option file '%s': %s\n"
+msgstr ""
+
+#, c-format
+msgid "Note: ignoring option \"--%s\" due to global config\n"
+msgstr ""
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr "Об ошибках сообщайте по адресу <https://bugs.gnupg.org>.\n"
@@ -1351,3 +1518,6 @@ msgstr "Об ошибках сообщайте по адресу <https://bugs.g
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "внимание: не распознано %s\n"
+
+#~ msgid "out of core\n"
+#~ msgstr "нехватка выделенной памяти\n"

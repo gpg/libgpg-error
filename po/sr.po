@@ -1659,8 +1659,28 @@ msgstr "Неисправна картица"
 msgid "invalid alias definition"
 msgstr "Неисправна ОИД ниска"
 
+#, fuzzy
+#| msgid "Configuration error"
+msgid "permission error"
+msgstr "Грешка подешавања"
+
 msgid "out of core"
 msgstr ""
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "invalid meta command"
+msgstr "Неисправна картица"
+
+#, fuzzy
+#| msgid "Unknown command"
+msgid "unknown meta command"
+msgstr "Непозната наредба"
+
+#, fuzzy
+#| msgid "Unexpected IPC command"
+msgid "unexpected meta command"
+msgstr "Неочекивана ИПЦ наредба"
 
 #, fuzzy
 #| msgid "Invalid operation code"
@@ -1691,13 +1711,26 @@ msgstr ""
 msgid "command \"%.50s\" is ambiguous\n"
 msgstr ""
 
-msgid "out of core\n"
-msgstr ""
-
 #, fuzzy, c-format
 #| msgid "Invalid operation code"
 msgid "invalid option \"%.50s\"\n"
 msgstr "Неисправна шифра радње"
+
+#, c-format
+msgid "Note: no default option file '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "reading options from '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "option file '%s': %s\n"
+msgstr ""
+
+#, c-format
+msgid "Note: ignoring option \"--%s\" due to global config\n"
+msgstr ""
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr ""

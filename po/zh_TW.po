@@ -1592,8 +1592,28 @@ msgstr "無效的指令"
 msgid "invalid alias definition"
 msgstr "無效的別名定義"
 
+#, fuzzy
+#| msgid "Configuration error"
+msgid "permission error"
+msgstr "組態錯誤"
+
 msgid "out of core"
 msgstr "超出核心"
+
+#, fuzzy
+#| msgid "invalid command"
+msgid "invalid meta command"
+msgstr "無效的指令"
+
+#, fuzzy
+#| msgid "Unknown command"
+msgid "unknown meta command"
+msgstr "未知的指令"
+
+#, fuzzy
+#| msgid "Unexpected IPC command"
+msgid "unexpected meta command"
+msgstr "未預期的 IPC 指令"
 
 msgid "invalid option"
 msgstr "無效的選項"
@@ -1622,12 +1642,25 @@ msgstr "\"%.50s\" 選項不明確\n"
 msgid "command \"%.50s\" is ambiguous\n"
 msgstr "\"%.50s\" 指令不明確\n"
 
-msgid "out of core\n"
-msgstr "超出核心\n"
-
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "無效的選項 \"%.50s\"\n"
+
+#, c-format
+msgid "Note: no default option file '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "reading options from '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "option file '%s': %s\n"
+msgstr ""
+
+#, c-format
+msgid "Note: ignoring option \"--%s\" due to global config\n"
+msgstr ""
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr ""
@@ -1635,6 +1668,9 @@ msgstr ""
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "警告: 無法辨識 %s\n"
+
+#~ msgid "out of core\n"
+#~ msgstr "超出核心\n"
 
 #~ msgid "Usage: %s GPG-ERROR [...]\n"
 #~ msgstr "用法: %s GPG-ERROR [...]\n"

@@ -1431,8 +1431,28 @@ msgstr "Ungültiger Befehl"
 msgid "invalid alias definition"
 msgstr "Ungültige Alias-Definition"
 
+#, fuzzy
+#| msgid "LDAP operations error"
+msgid "permission error"
+msgstr "LDAP Konfigurationsfehler"
+
 msgid "out of core"
 msgstr "Nicht genügend Speicher"
+
+#, fuzzy
+#| msgid "invalid command"
+msgid "invalid meta command"
+msgstr "Ungültiger Befehl"
+
+#, fuzzy
+#| msgid "Unknown command"
+msgid "unknown meta command"
+msgstr "Unbekanntes Kommando"
+
+#, fuzzy
+#| msgid "Unexpected IPC command"
+msgid "unexpected meta command"
+msgstr "Unerwartetes IPC Kommando"
 
 msgid "invalid option"
 msgstr "Ungültige Option"
@@ -1461,12 +1481,25 @@ msgstr "Option \"%.50s\" ist mehrdeutig\n"
 msgid "command \"%.50s\" is ambiguous\n"
 msgstr "Befehl \"%.50s\" ist mehrdeutig\n"
 
-msgid "out of core\n"
-msgstr "Nicht genügend Speicher\n"
-
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "Ungültige Option \"%.50s\"\n"
+
+#, c-format
+msgid "Note: no default option file '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "reading options from '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "option file '%s': %s\n"
+msgstr ""
+
+#, c-format
+msgid "Note: ignoring option \"--%s\" due to global config\n"
+msgstr ""
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr ""
@@ -1475,6 +1508,9 @@ msgstr ""
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "Warnung: %s konnte nicht erkannt werden\n"
+
+#~ msgid "out of core\n"
+#~ msgstr "Nicht genügend Speicher\n"
 
 #~ msgid "Usage: %s GPG-ERROR [...]\n"
 #~ msgstr "Aufruf: %s GPG-FEHLER [...]\n"

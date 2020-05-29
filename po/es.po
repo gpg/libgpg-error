@@ -1443,8 +1443,28 @@ msgstr "orden inválida"
 msgid "invalid alias definition"
 msgstr "definición de alias inválida"
 
+#, fuzzy
+#| msgid "LDAP operations error"
+msgid "permission error"
+msgstr "Error de operación de LDAP"
+
 msgid "out of core"
 msgstr "memoria desbordada"
+
+#, fuzzy
+#| msgid "invalid command"
+msgid "invalid meta command"
+msgstr "orden inválida"
+
+#, fuzzy
+#| msgid "Unknown command"
+msgid "unknown meta command"
+msgstr "Orden desconocida"
+
+#, fuzzy
+#| msgid "Unexpected IPC command"
+msgid "unexpected meta command"
+msgstr "Orden IPC inesperada"
 
 msgid "invalid option"
 msgstr "opción inválida"
@@ -1473,12 +1493,25 @@ msgstr "la opción \"%.50s\" es ambigua\n"
 msgid "command \"%.50s\" is ambiguous\n"
 msgstr "la orden \"%.50s\" es ambigua\n"
 
-msgid "out of core\n"
-msgstr "memoria desbordada\n"
-
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "opción inválida \"%.50s\"\n"
+
+#, c-format
+msgid "Note: no default option file '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "reading options from '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "option file '%s': %s\n"
+msgstr ""
+
+#, c-format
+msgid "Note: ignoring option \"--%s\" due to global config\n"
+msgstr ""
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr "Reporta los problemas encontrados en <https://bugs.gnupg.org>.\n"
@@ -1486,3 +1519,6 @@ msgstr "Reporta los problemas encontrados en <https://bugs.gnupg.org>.\n"
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "advertencia: no se pudo entender %s\n"
+
+#~ msgid "out of core\n"
+#~ msgstr "memoria desbordada\n"

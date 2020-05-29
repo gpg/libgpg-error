@@ -1596,8 +1596,28 @@ msgstr "ugyldig kommando"
 msgid "invalid alias definition"
 msgstr "ugyldig aliasdefinition"
 
+#, fuzzy
+#| msgid "Configuration error"
+msgid "permission error"
+msgstr "Konfigurationsfejl"
+
 msgid "out of core"
 msgstr "ikke nok kerne"
+
+#, fuzzy
+#| msgid "invalid command"
+msgid "invalid meta command"
+msgstr "ugyldig kommando"
+
+#, fuzzy
+#| msgid "Unknown command"
+msgid "unknown meta command"
+msgstr "Ukendt kommando"
+
+#, fuzzy
+#| msgid "Unexpected IPC command"
+msgid "unexpected meta command"
+msgstr "Uventet IPC-kommando"
 
 msgid "invalid option"
 msgstr "ugyldig indstilling"
@@ -1627,12 +1647,25 @@ msgstr "tilvalg »%.50s« er tvetydigt\n"
 msgid "command \"%.50s\" is ambiguous\n"
 msgstr "kommando »%.50s« er tvetydig\n"
 
-msgid "out of core\n"
-msgstr "uden for kerne\n"
-
 #, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "ugyldigt tilvalg »%.50s«\n"
+
+#, c-format
+msgid "Note: no default option file '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "reading options from '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "option file '%s': %s\n"
+msgstr ""
+
+#, c-format
+msgid "Note: ignoring option \"--%s\" due to global config\n"
+msgstr ""
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr ""
@@ -1640,6 +1673,9 @@ msgstr ""
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "advarsel: kunne ikke genkende %s\n"
+
+#~ msgid "out of core\n"
+#~ msgstr "uden for kerne\n"
 
 #~ msgid "Usage: %s GPG-ERROR [...]\n"
 #~ msgstr "Brug: %s GPG-ERROR [...]\n"

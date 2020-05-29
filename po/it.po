@@ -1597,10 +1597,29 @@ msgstr "comandi in conflitto\n"
 msgid "invalid alias definition"
 msgstr "opzioni di importazione non valide\n"
 
+#, fuzzy
+#| msgid "Configuration error"
+msgid "permission error"
+msgstr "Errore di configurazione"
+
 # ??? (Md)
 #, fuzzy
 msgid "out of core"
 msgstr "non esaminato"
+
+#, fuzzy
+msgid "invalid meta command"
+msgstr "comandi in conflitto\n"
+
+#, fuzzy
+#| msgid "Unknown command"
+msgid "unknown meta command"
+msgstr "Comando sconosciuto"
+
+#, fuzzy
+#| msgid "Unexpected IPC command"
+msgid "unexpected meta command"
+msgstr "Comando IPC inaspettato"
 
 #, fuzzy
 msgid "invalid option"
@@ -1630,14 +1649,25 @@ msgstr ""
 msgid "command \"%.50s\" is ambiguous\n"
 msgstr ""
 
-# ??? (Md)
-#, fuzzy
-msgid "out of core\n"
-msgstr "non esaminato"
-
 #, fuzzy, c-format
 msgid "invalid option \"%.50s\"\n"
 msgstr "opzioni di importazione non valide\n"
+
+#, c-format
+msgid "Note: no default option file '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "reading options from '%s'\n"
+msgstr ""
+
+#, c-format
+msgid "option file '%s': %s\n"
+msgstr ""
+
+#, c-format
+msgid "Note: ignoring option \"--%s\" due to global config\n"
+msgstr ""
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr ""
@@ -1645,6 +1675,11 @@ msgstr ""
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "avviso: impossibile riconoscere %s\n"
+
+# ??? (Md)
+#, fuzzy
+#~ msgid "out of core\n"
+#~ msgstr "non esaminato"
 
 #~ msgid "Usage: %s GPG-ERROR [...]\n"
 #~ msgstr "Uso: %s GPG-ERROR [...]\n"
