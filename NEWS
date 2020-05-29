@@ -1,5 +1,20 @@
-Noteworthy changes in version 1.38 (unreleased) [C28/A28/R_]
+Noteworthy changes in version 1.38 (2020-05-29) [C29/A29/R0]
 -----------------------------------------------
+
+ * New option parser features to implement system wide configuration
+   files.
+
+ * New functions to build file names.
+
+ * New function to help reallocating arrays.
+
+ * Protect gpgrt_inc_errorcount against counter overflow.
+
+ * Improve cross-building for new platforms.  [#4774]
+
+ * Support 64-bit big-endian MIPS architecture.  [#4952]
+
+ * Support static link for Windows with -lws2_32.  [#4623]
 
  * Interface changes relative to the 1.37 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
