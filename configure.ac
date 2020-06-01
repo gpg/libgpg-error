@@ -598,6 +598,7 @@ if test x$cross_compiling = xyes; then
   case $host in
     *-*-linux*)
     lock_obj_h_generated=yes
+    mkdir src
     LOCK_ABI_VERSION=1 host=$host host_alias=$host_alias \
         CC=$CC OBJDUMP=$host_alias-objdump \
         ac_ext=$ac_ext ac_objext=$ac_objext \

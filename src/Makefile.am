@@ -102,7 +102,7 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	gpg-error.vers gpg-error.def.in \
         versioninfo.rc.in gpg-error.w32-manifest.in \
 	gpg-error-config-test.sh gpg-error.pc.in \
-	$(lock_obj_pub)
+	gen-lock-obj.sh $(lock_obj_pub)
 
 BUILT_SOURCES = $(srcdir)/err-sources.h $(srcdir)/err-codes.h \
 	code-to-errno.h code-from-errno.h \
