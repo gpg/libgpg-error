@@ -597,14 +597,19 @@ fi
 if test x$cross_compiling = xyes; then
   case $host in
     *-*-linux*)
-    lock_obj_h_generated=yes
-    mkdir src
-    LOCK_ABI_VERSION=1 host=$host host_alias=$host_alias \
-        CC=$CC OBJDUMP=$host_alias-objdump \
-        ac_ext=$ac_ext ac_objext=$ac_objext \
-        AWK=$AWK $srcdir/src/gen-lock-obj.sh \
-        >src/lock-obj-pub.native.h
-    AC_MSG_NOTICE([generated src/lock-obj-pub.native.h])
+    AC_CHECK_PROG(CROSS_HOST_OBJDUMP, [$host_alias-objdump], [yes])
+    if test "$CROSS_HOST_OBJDUMP" = "yes" ; then
+      lock_obj_h_generated=yes
+      if test ! -d src; mkdir src; fi
+      LOCK_ABI_VERSION=1 host=$host host_alias=$host_alias \
+          CC=$CC OBJDUMP=$host_alias-objdump \
+          ac_ext=$ac_ext ac_objext=$ac_objext \
+          AWK=$AWK $srcdir/src/gen-lock-obj.sh \
+          >src/lock-obj-pub.native.h
+      AC_MSG_NOTICE([generated src/lock-obj-pub.native.h using $host_alias-objdump and $AWK])
+    else
+      force_use_syscfg=yes
+    fi
     ;;
     *)
     force_use_syscfg=yes
