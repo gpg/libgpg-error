@@ -600,7 +600,7 @@ if test x$cross_compiling = xyes; then
     AC_CHECK_PROG(CROSS_HOST_OBJDUMP, [$host_alias-objdump], [yes])
     if test "$CROSS_HOST_OBJDUMP" = "yes" ; then
       lock_obj_h_generated=yes
-      if test ! -d src; mkdir src; fi
+      if test ! -d src; then mkdir src; fi
       LOCK_ABI_VERSION=1 host=$host host_alias=$host_alias \
           CC=$CC OBJDUMP=$host_alias-objdump \
           ac_ext=$ac_ext ac_objext=$ac_objext \
