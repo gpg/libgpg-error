@@ -251,6 +251,12 @@ gpgrt_fclose (estream_t stream)
 }
 
 int
+gpgrt_fcancel (estream_t stream)
+{
+  return _gpgrt_fcancel (stream);
+}
+
+int
 gpgrt_fclose_snatch (estream_t stream, void **r_buffer, size_t *r_buflen)
 {
   return _gpgrt_fclose_snatch (stream, r_buffer, r_buflen);

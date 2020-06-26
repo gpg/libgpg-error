@@ -55,6 +55,7 @@ GPG_ERROR_1.0 {
     gpgrt_freopen;
     gpgrt_fopencookie;
     gpgrt_fclose;
+    gpgrt_fcancel;
     gpgrt_fclose_snatch;
     gpgrt_onclose;
     gpgrt_fileno;

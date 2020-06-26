@@ -2167,10 +2167,11 @@ create_stream (estream_t *r_stream, void *cookie, es_syshd_t *syshd,
 
 
 /*
- * Deinitialize a stream object and destroy it.
+ * Deinitialize a stream object and destroy it.  With CANCEL_MODE set
+ * try to cancel as much as possible (see _gpgrt_fcancel).
  */
 static int
-do_close (estream_t stream, int with_locked_list)
+do_close (estream_t stream, int cancel_mode, int with_locked_list)
 {
   int err;
 
@@ -2179,6 +2180,11 @@ do_close (estream_t stream, int with_locked_list)
   if (stream)
     {
       do_list_remove (stream, with_locked_list);
+      if (cancel_mode)
+        {
+          stream->flags.writing = 0;
+          es_empty (stream);
+        }
       while (stream->intern->onclose)
         {
           notify_list_t tmp = stream->intern->onclose->next;
@@ -2943,7 +2949,7 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
  out:
 
   if (line_stream)
-    do_close (line_stream, 0);
+    do_close (line_stream, 0, 0);
   else if (line_stream_cookie)
     func_mem_destroy (line_stream_cookie);
 
@@ -3617,7 +3623,7 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
 	  if (create_called)
 	    func_fd_destroy (cookie);
 
-	  do_close (stream, 0);
+	  do_close (stream, 0, 0);
 	  stream = NULL;
 	}
       else
@@ -3632,7 +3638,7 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
       /* FIXME?  We don't support re-opening at the moment.  */
       _set_errno (EINVAL);
       deinit_stream_obj (stream);
-      do_close (stream, 0);
+      do_close (stream, 0, 0);
       stream = NULL;
     }
 
@@ -3645,7 +3651,22 @@ _gpgrt_fclose (estream_t stream)
 {
   int err;
 
-  err = do_close (stream, 0);
+  err = do_close (stream, 0, 0);
+
+  return err;
+}
+
+
+/* gpgrt_fcancel does the same as gpgrt_fclose but tries to avoid
+ * flushing out any data still held in internal buffers.  It may or
+ * may not remove a new file created for that stream by the open
+ * function.  */
+int
+_gpgrt_fcancel (estream_t stream)
+{
+  int err;
+
+  err = do_close (stream, 1, 0);
 
   return err;
 }
@@ -3698,7 +3719,7 @@ _gpgrt_fclose_snatch (estream_t stream, void **r_buffer, size_t *r_buflen)
         *r_buflen = buflen;
     }
 
-  err = do_close (stream, 0);
+  err = do_close (stream, 0, 0);
 
  leave:
   if (err && r_buffer)
@@ -3726,8 +3747,10 @@ _gpgrt_fclose_snatch (estream_t stream, void **r_buffer, size_t *r_buflen)
 
    FIXME: Unregister is not thread safe.
 
-   The notification will be called right before the stream is closed.
-   It may not call any estream function for STREAM, neither direct nor
+   The notification will be called right before the stream is
+   closed. If gpgrt_fcancel is used, the cancellation of internal
+   buffers is done before the notifications.  The notification handler
+   may not call any estream function for STREAM, neither direct nor
    indirectly. */
 int
 _gpgrt_onclose (estream_t stream, int mode,

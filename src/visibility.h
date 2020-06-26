@@ -79,6 +79,7 @@ MARK_VISIBLE (gpgrt_fpopen_nc)
 MARK_VISIBLE (gpgrt_freopen)
 MARK_VISIBLE (gpgrt_fopencookie)
 MARK_VISIBLE (gpgrt_fclose)
+MARK_VISIBLE (gpgrt_fcancel)
 MARK_VISIBLE (gpgrt_fclose_snatch)
 MARK_VISIBLE (gpgrt_onclose)
 MARK_VISIBLE (gpgrt_fileno)
@@ -265,6 +266,7 @@ MARK_VISIBLE (gpgrt_absfnameconcat);
 #define gpgrt_freopen               _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fopencookie           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fclose                _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_fcancel               _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fclose_snatch         _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_onclose               _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fileno                _gpgrt_USE_UNDERSCORED_FUNCTION

@@ -339,6 +339,7 @@ gpgrt_stream_t _gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
                                    const char *_GPGRT__RESTRICT mode,
                                    gpgrt_cookie_io_functions_t functions);
 int _gpgrt_fclose (gpgrt_stream_t stream);
+int _gpgrt_fcancel (gpgrt_stream_t stream);
 int _gpgrt_fclose_snatch (gpgrt_stream_t stream,
                           void **r_buffer, size_t *r_buflen);
 int _gpgrt_onclose (gpgrt_stream_t stream, int mode,
