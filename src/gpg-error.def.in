@@ -238,4 +238,6 @@ EXPORTS
  gpgrt_reallocarray           @180
  gpgrt_fclose                 @181
 
+ gpgrt_fcancel                @182
+
 ;; end of file with public symbols for Windows.
