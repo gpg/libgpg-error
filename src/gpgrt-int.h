@@ -23,6 +23,7 @@
 
 #include "gpg-error.h"
 #include "visibility.h"
+#include "protos.h"
 
 /*
  * Internal i18n macros.

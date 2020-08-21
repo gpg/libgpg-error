@@ -194,7 +194,7 @@ libgpg_error_la_LDFLAGS = \
   @LIBGPG_ERROR_LT_CURRENT@:@LIBGPG_ERROR_LT_REVISION@:@LIBGPG_ERROR_LT_AGE@
 
 libgpg_error_la_SOURCES = gettext.h $(arch_sources) \
-	gpgrt-int.h init.c init.h version.c lock.h thread.h \
+	gpgrt-int.h protos.h init.c init.h version.c lock.h thread.h \
 	estream.c estream-printf.c estream-printf.h \
 	strsource.c strerror.c code-to-errno.c code-from-errno.c \
 	visibility.c visibility.h \

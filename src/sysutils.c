@@ -269,29 +269,34 @@ modestr_to_mode (const char *modestr)
  * write allowed, execution allowed with the first group for the user,
  * the second for the group and the third for all others.  If the
  * string is shorter than above the missing mode characters are meant
- * to be not set.  */
+ * to be not set.
+ *
+ * Note that in addition to returning an gpg-error error code ERRNO is
+ * also set by this function.
+ */
 gpg_err_code_t
 _gpgrt_mkdir (const char *name, const char *modestr)
 {
-#ifdef HAVE_W32CE_SYSTEM
+#ifdef HAVE_W32_SYSTEM
   wchar_t *wname;
+  gpg_err_code_t ec;
   (void)modestr;
 
-  wname = utf8_to_wchar (name);
+  /* Note: Fixme: We should set appropriate permissions.  */
+  wname = _gpgrt_utf8_to_wchar (name);
   if (!wname)
     return _gpg_err_code_from_syserror ();
   if (!CreateDirectoryW (wname, NULL))
     {
-      xfree (wname);
-      return _gpg_err_code_from_syserror ();
+      _gpgrt_w32_set_errno (-1);
+      ec = _gpg_err_code_from_syserror ();
     }
-  xfree (wname);
-  return 0;
+  else
+    ec = 0;
+  _gpgrt_free_wchar (wname);
+  return ec;
 #elif MKDIR_TAKES_ONE_ARG
   (void)modestr;
-  /* Note: In the case of W32 we better use CreateDirectory and try to
-     set appropriate permissions.  However using mkdir is easier
-     because this sets ERRNO.  */
   if (mkdir (name))
     return _gpg_err_code_from_syserror ();
   return 0;
@@ -304,13 +309,34 @@ _gpgrt_mkdir (const char *name, const char *modestr)
 
 
 /* A simple wrapper around chdir.  NAME is expected to be utf8
- * encoded.  */
+ * encoded.
+ * Note that in addition to returning an gpg-error error code ERRNO is
+ * also set by this function.  */
 gpg_err_code_t
 _gpgrt_chdir (const char *name)
 {
+#ifdef HAVE_W32_SYSTEM
+  wchar_t *wname;
+  gpg_err_code_t ec;
+
+  wname = _gpgrt_utf8_to_wchar (name);
+  if (!wname)
+    return _gpg_err_code_from_syserror ();
+  if (!SetCurrentDirectoryW (wname))
+    {
+      _gpgrt_w32_set_errno (-1);
+      ec = _gpg_err_code_from_syserror ();
+    }
+  else
+    ec = 0;
+  _gpgrt_free_wchar (wname);
+  return ec;
+
+#else /*!HAVE_W32_SYSTEM*/
   if (chdir (name))
     return _gpg_err_code_from_syserror ();
   return 0;
+#endif /*!HAVE_W32_SYSTEM*/
 }
 
 
@@ -322,6 +348,7 @@ _gpgrt_getcwd (void)
   char *buffer;
   size_t size = 100;
 
+  /* FIXME: We need to support utf8  */
   for (;;)
     {
       buffer = xtrymalloc (size+1);
@@ -389,6 +416,7 @@ _gpgrt_getusername (void)
   char tmp[1];
   DWORD size = 1;
 
+  /* FIXME: We need to support utf8  */
   GetUserNameA (tmp, &size);
   result = _gpgrt_malloc (size);
   if (result && !GetUserNameA (result, &size))

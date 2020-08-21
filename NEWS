@@ -1,6 +1,9 @@
 Noteworthy changes in version 1.39 (unreleased) [C29/A29/R1]
 -----------------------------------------------
 
+ * On Windows gpgrt_fopen can now handle UTF-8 names.
+
+ * On Windows gpgrt_chdir and gpgrt_mkdir can now handle UTF-8 names.
 
  * Interface changes relative to the 1.38 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -10,8 +13,8 @@ Noteworthy changes in version 1.39 (unreleased) [C29/A29/R1]
 Noteworthy changes in version 1.38 (2020-05-29) [C29/A29/R0]
 -----------------------------------------------
 
- * New option parser features to implement system wide configuration
-   files.
+ * New option parser with features to implement system wide
+   configuration files.
 
  * New functions to build file names.
 
