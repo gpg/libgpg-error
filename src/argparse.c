@@ -1925,14 +1925,13 @@ arg_parse (gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig, int no_init)
     }
 
  next_one:
-  if (!argc)
+  if (!argc || (s = *argv) == NULL)
     {
       /* No more args.  */
       arg->r_opt = 0;
       goto leave; /* Ready. */
     }
 
-  s = *argv;
   arg->internal->last = s;
   arg->internal->opt_flags = 0;
 
