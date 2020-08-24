@@ -1,13 +1,25 @@
-Noteworthy changes in version 1.39 (unreleased) [C29/A29/R1]
+Noteworthy changes in version 1.39 (2020-08-24) [C30/A30/R0]
 -----------------------------------------------
 
- * On Windows gpgrt_fopen can now handle UTF-8 names.
+ * On Windows gpgrt_fopen, gpgrt_chdir, and gpgrt_mkdir now handle
+   UTF-8 names.  [#4083]
 
- * On Windows gpgrt_chdir and gpgrt_mkdir can now handle UTF-8 names.
+ * Make timeout of gpgrt_poll work correctly on Windows if no file
+   descriptors are active.
+
+ * New function gpgrt_fcancel as alternative to gpgrt_close.  This
+   function avoid flushing out buffered data and also tries to delete
+   a newly created file.
+
+ * Changes to ease cross-building.  [#4973]
+
+ * "gpg-error --lib-version" works again.
 
  * Interface changes relative to the 1.38 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  gpgrt_fcancel                    NEW.
+
+ Release-info: https://dev.gnupg.org/T5031
 
 
 Noteworthy changes in version 1.38 (2020-05-29) [C29/A29/R0]

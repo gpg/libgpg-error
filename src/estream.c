@@ -3374,7 +3374,7 @@ _gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
   estream_t stream;
   int err;
   es_syshd_t syshd;
-  struct cookie_io_functions_s io_functions = { functions, NULL, };
+  struct cookie_io_functions_s io_functions = { functions, NULL };
 
   stream = NULL;
   modeflags = 0;
