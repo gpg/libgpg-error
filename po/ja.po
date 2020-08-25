@@ -6,9 +6,9 @@
 # NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016, 2017, 2019, 2020.
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.36\n"
+"Project-Id-Version: libgpg-error 1.39\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2020-01-23 13:06+0900\n"
+"PO-Revision-Date: 2020-08-25 14:32+0900\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -1424,28 +1424,20 @@ msgstr "無効なコマンド"
 msgid "invalid alias definition"
 msgstr "無効なエイリアス定義です"
 
-#, fuzzy
-#| msgid "LDAP operations error"
 msgid "permission error"
-msgstr "LDAP操作エラーです"
+msgstr "許可エラーです"
 
 msgid "out of core"
 msgstr "メモリがありません"
 
-#, fuzzy
-#| msgid "invalid command"
 msgid "invalid meta command"
-msgstr "無効なコマンド"
+msgstr "無効なメタコマンド"
 
-#, fuzzy
-#| msgid "Unknown command"
 msgid "unknown meta command"
-msgstr "未知のコマンドです"
+msgstr "未知のメタコマンドです"
 
-#, fuzzy
-#| msgid "Unexpected IPC command"
 msgid "unexpected meta command"
-msgstr "予期しないIPCコマンドです"
+msgstr "予期しないメタコマンドです"
 
 msgid "invalid option"
 msgstr "無効なオプション"
@@ -1480,19 +1472,19 @@ msgstr "無効なオプション \"%.50s\"\n"
 
 #, c-format
 msgid "Note: no default option file '%s'\n"
-msgstr ""
+msgstr "注: デフォルトオプションファイル '%s' がありません\n"
 
 #, c-format
 msgid "reading options from '%s'\n"
-msgstr ""
+msgstr "オプションを'%s'から読みます\n"
 
 #, c-format
 msgid "option file '%s': %s\n"
-msgstr ""
+msgstr "オプションファイル '%s': %s\n"
 
 #, c-format
 msgid "Note: ignoring option \"--%s\" due to global config\n"
-msgstr ""
+msgstr "注: グローバルコンフィグのため、オプション \"--%s\" を無視します\n"
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr "バグは<https://bugs.gnupg.org>に報告してください。\n"
