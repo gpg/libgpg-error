@@ -764,7 +764,7 @@ handle_meta_ignore (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 }
 
 
-/* Implementation of the "ignore" command.  ARG is the context.  If
+/* Implementation of the "echo" command.  ARG is the context.  If
  * ALTERNATE is true the filename is not printed.  ARGS is the string
  * to log.  */
 static int
