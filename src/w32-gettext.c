@@ -1417,27 +1417,20 @@ _gpgrt_free_wchar (wchar_t *wstring)
 }
 
 
-/* Return a malloced string encoded in the native console codepage
-   from the wide char input string STRING.
-   Caller must free this value. On failure returns NULL.
-   The result of calling this function with STRING set to NULL
-   is not defined. */
+/* Helper for wchar_to_native and wchar_to_utf8.  */
 static char *
-wchar_to_native (const wchar_t *string, size_t length, size_t *retlen)
+wchar_to_cp (const wchar_t *string, size_t length, size_t *retlen,
+             unsigned int cpno)
 {
   int n;
   char *result;
-  unsigned int cpno = GetConsoleOutputCP ();
-
-  /* GetConsoleOutputCP returns the 8-Bit codepage that should be used
-     for console output. If the codepage is not returned we fall back
-     to the codepage GUI programs should use (CP_ACP). */
-  if (!cpno)
-    cpno = GetACP ();
 
   n = WideCharToMultiByte (cpno, 0, string, length, NULL, 0, NULL, NULL);
   if (n < 0 || (n+1) <= 0)
-    return NULL;
+    {
+      _gpgrt_w32_set_errno (-1);
+      return NULL;
+    }
 
   result = jnlib_malloc (n+1);
   if (!result)
@@ -1446,11 +1439,43 @@ wchar_to_native (const wchar_t *string, size_t length, size_t *retlen)
   n = WideCharToMultiByte (cpno, 0, string, length, result, n, NULL, NULL);
   if (n < 0)
     {
+      _gpgrt_w32_set_errno (-1);
       jnlib_free (result);
       return NULL;
     }
-  *retlen = n;
+  result[n] = 0;
+  if (retlen)
+    *retlen = n;
   return result;
+}
+
+
+/* Return a malloced string encoded in the native console codepage
+   from the wide char input string STRING.
+   Caller must free this value. On failure returns NULL.
+   The result of calling this function with STRING set to NULL
+   is not defined. */
+static char *
+wchar_to_native (const wchar_t *string, size_t length, size_t *retlen)
+{
+  unsigned int cpno = GetConsoleOutputCP ();
+
+  /* GetConsoleOutputCP returns the 8-Bit codepage that should be used
+     for console output. If the codepage is not returned we fall back
+     to the codepage GUI programs should use (CP_ACP). */
+  if (!cpno)
+    cpno = GetACP ();
+
+  return wchar_to_cp (string, length, retlen, cpno);
+}
+
+
+/* Convert a WCHAR string to UTF-8.  Caller should use xfree to
+ * release the result.  Returns NULL on error and sets ERRNO. */
+char *
+_gpgrt_wchar_to_utf8 (const wchar_t *string, size_t length)
+{
+  return wchar_to_cp (string, length, NULL, CP_UTF8);
 }
 
 

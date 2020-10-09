@@ -345,27 +345,53 @@ _gpgrt_chdir (const char *name)
 char *
 _gpgrt_getcwd (void)
 {
+#ifdef HAVE_W32CE_SYSTEM
+
+  return xtrystrdup ("/");
+
+#elif defined(HAVE_W32_SYSTEM)
+  wchar_t wbuffer[MAX_PATH + sizeof(wchar_t)];
+  DWORD wlen;
+  char *buf, *p;
+
+  wlen = GetCurrentDirectoryW (MAX_PATH, wbuffer);
+  if (!wlen)
+    {
+      _gpgrt_w32_set_errno (-1);
+      return NULL;
+
+    }
+  else if (wlen > MAX_PATH)
+    {
+      _gpg_err_set_errno (ENAMETOOLONG);
+      return NULL;
+    }
+  buf = _gpgrt_wchar_to_utf8 (wbuffer, wlen);
+  if (buf)
+    {
+      for (p=buf; *p; p++)
+        if (*p == '\\')
+          *p = '/';
+    }
+  return buf;
+
+#else /*Unix*/
   char *buffer;
   size_t size = 100;
 
-  /* FIXME: We need to support utf8  */
   for (;;)
     {
       buffer = xtrymalloc (size+1);
       if (!buffer)
         return NULL;
-#ifdef HAVE_W32CE_SYSTEM
-      strcpy (buffer, "/");  /* Always "/".  */
-      return buffer;
-#else
       if (getcwd (buffer, size) == buffer)
         return buffer;
       xfree (buffer);
       if (errno != ERANGE)
         return NULL;
       size *= 2;
-#endif
     }
+#endif /*Unix*/
 }
 
 
