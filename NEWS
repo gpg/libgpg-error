@@ -2,6 +2,11 @@ Noteworthy changes in version 1.40 (unreleased) [C30/A30/R1]
 -----------------------------------------------
 
 
+ * Interface changes relative to the 1.39 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_access                     NEW.
+
+
 Noteworthy changes in version 1.39 (2020-08-24) [C30/A30/R0]
 -----------------------------------------------
 

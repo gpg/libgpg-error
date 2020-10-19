@@ -39,6 +39,19 @@
 #include "gpgrt-int.h"
 
 
+#ifdef HAVE_W32_SYSTEM
+/* Return true if STRING has any 8 bit character.  */
+static int
+any8bitchar (const char *string)
+{
+  if (string)
+    for ( ; *string; string++)
+      if ((*string & 0x80))
+        return 1;
+  return 0;
+}
+#endif /*HAVE_W32_SYSTEM*/
+
 
 /* Return true if FD is valid.  */
 int
@@ -393,6 +406,36 @@ _gpgrt_getcwd (void)
     }
 #endif /*Unix*/
 }
+
+
+/* Wrapper around access to handle file name encoding under Windows.
+ * Returns 0 if FNAME can be accessed in MODE or an error code. */
+gpg_err_code_t
+_gpgrt_access (const char *fname, int mode)
+{
+  gpg_err_code_t ec;
+
+#ifdef HAVE_W32_SYSTEM
+  if (any8bitchar (fname))
+    {
+      wchar_t *wfname;
+
+      wfname = _gpgrt_utf8_to_wchar (fname);
+      if (!wfname)
+        ec = _gpg_err_code_from_syserror ();
+      else
+        {
+          ec = _waccess (wfname, mode)? _gpg_err_code_from_syserror () : 0;
+          _gpgrt_free_wchar (wfname);
+        }
+    }
+  else
+#endif /*HAVE_W32_SYSTEM*/
+    ec = access (fname, mode)? _gpg_err_code_from_syserror () : 0;
+
+  return ec;
+}
+
 
 
 /* Get the standard home directory for user NAME. If NAME is NULL the

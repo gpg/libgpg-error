@@ -325,6 +325,21 @@ check_absfnameconcat (void)
 }
 
 
+static void
+check_access (void)
+{
+  char *cwd = mygetcwd ();
+
+  if (gpgrt_access (cwd, F_OK))
+    fail ("gpgrt_access(%s) failed: %s\n",
+          cwd, gpg_strerror (gpg_error_from_syserror ()));
+  else
+    show ("gpgrt_access(%s) succeeded\n", cwd);
+
+  xfree (cwd);
+}
+
+
 int
 main (int argc, char **argv)
 {
@@ -373,6 +388,7 @@ main (int argc, char **argv)
 
   check_fnameconcat ();
   check_absfnameconcat ();
+  check_access ();
 
   show ("testing string utilities finished\n");
   return !!errorcount;

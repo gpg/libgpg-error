@@ -1467,7 +1467,7 @@ try_versioned_conffile (const char *configname)
   endp = dash + strlen (dash) - 1;
   while (endp > dash)
     {
-      if (!access (name, R_OK))
+      if (!_gpgrt_access (name, R_OK))
         {
           return name;
         }
