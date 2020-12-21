@@ -1,13 +1,13 @@
 # Polish translation for libgpg-error.
 # Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
-# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2019.
+# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.36\n"
+"Project-Id-Version: libgpg-error 1.38\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2019-03-24 09:01+0100\n"
+"PO-Revision-Date: 2020-06-20 07:45+0200\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "Language: pl\n"
@@ -966,23 +966,17 @@ msgstr "Brak uwierzytelnienia"
 msgid "Bad authentication"
 msgstr "Niewłaściwe uwierzytelnienie"
 
-#, fuzzy
-#| msgid "No agent running"
 msgid "No Keybox daemon running"
-msgstr "Agent nie uruchomiony"
+msgstr "Demon Keybox nie uruchomiony"
 
-#, fuzzy
-#| msgid "SmartCard daemon error"
 msgid "Keybox daemon error"
-msgstr "Błąd demona SmartCard"
+msgstr "Błąd demona Keybox"
 
 msgid "Service is not running"
-msgstr ""
+msgstr "Usługa nie jest uruchomiona"
 
-#, fuzzy
-#| msgid "Keyserver error"
 msgid "Service error"
-msgstr "Błąd serwera kluczy"
+msgstr "Błąd usługi"
 
 msgid "System bug detected"
 msgstr "Wykryto błąd systemu"
@@ -1302,106 +1296,98 @@ msgstr "Zdefiniowany przez użytkownika kod błędu 15"
 msgid "User defined error code 16"
 msgstr "Zdefiniowany przez użytkownika kod błędu 16"
 
-#, fuzzy
-#| msgid "LDAP success"
 msgid "SQL success"
-msgstr "Sukces LDAP"
+msgstr "Sukces SQL"
 
-#, fuzzy
-#| msgid "Syntax error"
 msgid "SQL error"
-msgstr "Błąd składni"
+msgstr "Błąd SQL"
 
 msgid "Internal logic error in SQL library"
-msgstr ""
+msgstr "Wewnętrzny błąd logiczny w bibliotece SQL"
 
 msgid "Access permission denied (SQL)"
-msgstr ""
+msgstr "Brak uprawnień (SQL)"
 
 msgid "SQL abort was requested"
-msgstr ""
+msgstr "Zapytanie SQL przerwane na żądanie"
 
 msgid "SQL database file is locked"
-msgstr ""
+msgstr "Plik bazy danych SQL jest zablokowany"
 
 msgid "An SQL table in the database is locked"
-msgstr ""
+msgstr "Tabela SQL w bazie danych jest zablokowana"
 
 msgid "SQL library ran out of core"
-msgstr ""
+msgstr "Pamięć wyczerpana w bibliotece SQL"
 
 msgid "Attempt to write a readonly SQL database"
-msgstr ""
+msgstr "Próba zapisu do bazy danych SQL tylko do odczytu"
 
 msgid "SQL operation terminated by interrupt"
-msgstr ""
+msgstr "Operacja SQL zakończona przez przerwanie"
 
 msgid "I/O error during SQL operation"
-msgstr ""
+msgstr "Błąd we/wy podczas operacji SQL"
 
 msgid "SQL database disk image is malformed"
-msgstr ""
+msgstr "Obraz dysku bazy danych SQL jest uszkodzony"
 
 msgid "Unknown opcode in SQL file control"
-msgstr ""
+msgstr "Nieznany kod operacji w pliku sterującym SQL"
 
 msgid "Insertion failed because SQL database is full"
-msgstr ""
+msgstr "Wstawianie nie powiodło się, ponieważ baza danych SQL jest pełna"
 
 msgid "Unable to open the SQL database file"
-msgstr ""
+msgstr "Nie udało się otworzyć pliku bazy danych SQL"
 
-#, fuzzy
-#| msgid "LDAP protocol error"
 msgid "SQL database lock protocol error"
-msgstr "Błąd protokołu LDAP"
+msgstr "Błąd protokołu blokowania bazy danych SQL"
 
 msgid "(internal SQL code: empty)"
-msgstr ""
+msgstr "(wewnętrzny kod SQL: pusty)"
 
 msgid "SQL database schema changed"
-msgstr ""
+msgstr "Schemat bazy danych SQL uległ zmianie"
 
 msgid "String or blob exceeds size limit (SQL)"
-msgstr ""
+msgstr "Łańcuch lub blok danych przekracza limit rozmiaru (SQL)"
 
 msgid "SQL abort due to constraint violation"
-msgstr ""
+msgstr "Operacja SQL przerwana z powodu naruszenia ograniczeń"
 
 msgid "Data type mismatch (SQL)"
-msgstr ""
+msgstr "Niezgodność typów danych (SQL)"
 
 msgid "SQL library used incorrectly"
-msgstr ""
+msgstr "Biblioteka SQL użyta niepoprawnie"
 
 msgid "SQL library uses unsupported OS features"
-msgstr ""
+msgstr "Biblioteka SQL wykorzystuje nie obsługiwane funkcje systemu operacyjnego"
 
-#, fuzzy
-#| msgid "Proxied authorization denied by LDAP"
 msgid "Authorization denied (SQL)"
-msgstr "Autoryzacja przez proxy odrzucona przez LDAP"
+msgstr "Autoryzacja odrzucona (SQL)"
 
 msgid "(unused SQL code: format)"
-msgstr ""
+msgstr "(nie używany kod SQL: format)"
 
 msgid "SQL bind parameter out of range"
-msgstr ""
+msgstr "Parametr dowiązania SQL spoza zakresu"
 
 msgid "File opened that is not an SQL database file"
-msgstr ""
+msgstr "Otwarty plik nie jest bazą danych SQL"
 
 msgid "Notifications from SQL logger"
-msgstr ""
+msgstr "Powiadomienia z loggera SQL"
 
 msgid "Warnings from SQL logger"
-msgstr ""
+msgstr "Ostrzeżenia z loggera SQL"
 
 msgid "SQL has another row ready"
-msgstr ""
+msgstr "Baza SQL ma gotowy kolejny wiersz"
 
 msgid "SQL has finished executing"
-msgstr ""
+msgstr "Baza SQL zakończyła wykonywanie"
 
 msgid "System error w/o errno"
 msgstr "Błąd systemowy bez errno"
@@ -1436,28 +1422,20 @@ msgstr "błędne polecenie"
 msgid "invalid alias definition"
 msgstr "błędna definicja aliasu"
 
-#, fuzzy
-#| msgid "LDAP operations error"
 msgid "permission error"
-msgstr "Błąd operacji LDAP"
+msgstr "błąd uprawnień"
 
 msgid "out of core"
 msgstr "brak pamięci"
 
-#, fuzzy
-#| msgid "invalid command"
 msgid "invalid meta command"
-msgstr "błędne polecenie"
+msgstr "błędne polecenie meta"
 
-#, fuzzy
-#| msgid "Unknown command"
 msgid "unknown meta command"
-msgstr "Nieznane polecenie"
+msgstr "nieznane polecenie meta"
 
-#, fuzzy
-#| msgid "Unexpected IPC command"
 msgid "unexpected meta command"
-msgstr "Nieoczekiwane polecenie IPC"
+msgstr "nieoczekiwane polecenie meta"
 
 msgid "invalid option"
 msgstr "błędna opcja"
@@ -1492,19 +1470,19 @@ msgstr "błędna opcja ,,%.50s''\n"
 
 #, c-format
 msgid "Note: no default option file '%s'\n"
-msgstr ""
+msgstr "Uwaga: brak domyślnego pliku opcji ,,%s''\n"
 
 #, c-format
 msgid "reading options from '%s'\n"
-msgstr ""
+msgstr "odczyt opcji z ,,%s''\n"
 
 #, c-format
 msgid "option file '%s': %s\n"
-msgstr ""
+msgstr "plik opcji ,,%s'': %s\n"
 
 #, c-format
 msgid "Note: ignoring option \"--%s\" due to global config\n"
-msgstr ""
+msgstr "Uwaga: ignorowanie opcji ,,--%s'' ze względu na konfigurację globalną\n"
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr "Błędy prosimy zgłaszać pod <https://bugs.gnupg.org>.\n"
@@ -1512,6 +1490,3 @@ msgstr "Błędy prosimy zgłaszać pod <https://bugs.gnupg.org>.\n"
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "uwaga: nie rozpoznano %s\n"
-
-#~ msgid "out of core\n"
-#~ msgstr "brak pamięci\n"
