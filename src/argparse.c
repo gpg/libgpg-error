@@ -1113,6 +1113,23 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
                     opts[idx].ignore = 1;
                   if (arg->internal->explicit_ignore)
                     opts[idx].explicit_ignore = 1;
+
+                  if (opts[idx].ignore && !opts[idx].forced)
+                    {
+                      if (arg->internal->verbose)
+                        _gpgrt_log_info ("%s:%u: ignoring option \"--%s\"\n",
+                                         arg->internal->confname,
+                                         arg->lineno,
+                                         opts[idx].long_opt);
+                      if ((arg->flags & ARGPARSE_FLAG_WITHATTR))
+                        set_ignore = 1;
+                      else
+                        {
+                          state = state == Akeyword_eol? Ainit : Acomment;
+                          i = 0;
+                          goto nextstate;  /* Ignore this one.  */
+                        }
+                    }
                 }
               else /* Non-sysconf file  */
                 {  /* Act upon the forced and ignored attributes.  */
@@ -1130,7 +1147,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
                         set_ignore = 1;
                       else
                         {
-                          state = Ainit;
+                          state = state == Akeyword_eol? Ainit : Acomment;
                           i = 0;
                           goto nextstate;  /* Ignore this one.  */
                         }
