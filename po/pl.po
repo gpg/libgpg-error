@@ -1363,7 +1363,8 @@ msgid "SQL library used incorrectly"
 msgstr "Biblioteka SQL użyta niepoprawnie"
 
 msgid "SQL library uses unsupported OS features"
-msgstr "Biblioteka SQL wykorzystuje nie obsługiwane funkcje systemu operacyjnego"
+msgstr ""
+"Biblioteka SQL wykorzystuje nie obsługiwane funkcje systemu operacyjnego"
 
 msgid "Authorization denied (SQL)"
 msgstr "Autoryzacja odrzucona (SQL)"
@@ -1482,7 +1483,8 @@ msgstr "plik opcji ,,%s'': %s\n"
 
 #, c-format
 msgid "Note: ignoring option \"--%s\" due to global config\n"
-msgstr "Uwaga: ignorowanie opcji ,,--%s'' ze względu na konfigurację globalną\n"
+msgstr ""
+"Uwaga: ignorowanie opcji ,,--%s'' ze względu na konfigurację globalną\n"
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr "Błędy prosimy zgłaszać pod <https://bugs.gnupg.org>.\n"
