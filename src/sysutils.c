@@ -482,17 +482,27 @@ _gpgrt_getusername (void)
   char *result = NULL;
 
 #ifdef HAVE_W32_SYSTEM
-  char tmp[1];
-  DWORD size = 1;
+  wchar_t wtmp[1];
+  wchar_t *wbuf;
+  DWORD wsize = 1;
+  char *buf;
 
-  /* FIXME: We need to support utf8  */
-  GetUserNameA (tmp, &size);
-  result = _gpgrt_malloc (size);
-  if (result && !GetUserNameA (result, &size))
+  GetUserNameW (wtmp, &wsize);
+  wbuf = _gpgrt_malloc (wsize * sizeof *wbuf);
+  if (!wbuf)
     {
-      xfree (result);
-      result = NULL;
+      _gpgrt_w32_set_errno (-1);
+      return NULL;
     }
+  if (!GetUserNameW (wbuf, &wsize))
+    {
+      _gpgrt_w32_set_errno (-1);
+      xfree (wbuf);
+      return NULL;
+    }
+  buf = _gpgrt_wchar_to_utf8 (wbuf, wsize);
+  xfree (wbuf);
+  return buf;
 
 #else /* !HAVE_W32_SYSTEM */
 
