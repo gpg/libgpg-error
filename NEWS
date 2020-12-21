@@ -1,10 +1,20 @@
-Noteworthy changes in version 1.40 (unreleased) [C30/A30/R1]
+Noteworthy changes in version 1.40 (2020-12-21) [C31/A31/R0]
 -----------------------------------------------
 
+ * New function gpgrt_access.
+
+ * Make "ignore" meta command work correctly in the option parser.
+
+ * On Windows gpgrt_getcwd and the internal getusername now handle
+   Unicode values.  [#5098]
+
+ * Update the build system.
 
  * Interface changes relative to the 1.39 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  gpgrt_access                     NEW.
+
+ Release-info: https://dev.gnupg.org/T5191
 
 
 Noteworthy changes in version 1.39 (2020-08-24) [C30/A30/R0]

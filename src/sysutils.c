@@ -409,7 +409,8 @@ _gpgrt_getcwd (void)
 
 
 /* Wrapper around access to handle file name encoding under Windows.
- * Returns 0 if FNAME can be accessed in MODE or an error code. */
+ * Returns 0 if FNAME can be accessed in MODE or an error code.  ERRNO
+ * is also set on error. */
 gpg_err_code_t
 _gpgrt_access (const char *fname, int mode)
 {
