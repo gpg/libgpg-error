@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.19\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2020-02-07 13:09+0100\n"
+"PO-Revision-Date: 2020-12-21 10:30+0100\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -295,7 +295,7 @@ msgid "Not implemented"
 msgstr "Nich implementiert"
 
 msgid "Conflicting use"
-msgstr "Zwiespältige Benutzung"
+msgstr "Widersprüchliche Benutzung"
 
 msgid "Invalid cipher mode"
 msgstr "Ungültiger Verschlüsselungsmodus"
@@ -670,7 +670,7 @@ msgid "Bad crypto context"
 msgstr "Fehlerhafter Crypto Context"
 
 msgid "Conflict in the crypto context"
-msgstr "Zwiespältige Benutzung des Crypto Context"
+msgstr "Widersprüchliche Benutzung des Crypto Context"
 
 msgid "Broken public key"
 msgstr "Defekter öffentlicher Schlüssel"
@@ -1431,28 +1431,20 @@ msgstr "Ungültiger Befehl"
 msgid "invalid alias definition"
 msgstr "Ungültige Alias-Definition"
 
-#, fuzzy
-#| msgid "LDAP operations error"
 msgid "permission error"
-msgstr "LDAP Konfigurationsfehler"
+msgstr "Zugriffsrechte nicht ausreichend"
 
 msgid "out of core"
 msgstr "Nicht genügend Speicher"
 
-#, fuzzy
-#| msgid "invalid command"
 msgid "invalid meta command"
-msgstr "Ungültiger Befehl"
+msgstr "Ungültige Meta-Anweising"
 
-#, fuzzy
-#| msgid "Unknown command"
 msgid "unknown meta command"
-msgstr "Unbekanntes Kommando"
+msgstr "Unbekannte Meta-Anweisung"
 
-#, fuzzy
-#| msgid "Unexpected IPC command"
 msgid "unexpected meta command"
-msgstr "Unerwartetes IPC Kommando"
+msgstr "Unerwartete Meta-Anweising"
 
 msgid "invalid option"
 msgstr "Ungültige Option"
@@ -1487,19 +1479,20 @@ msgstr "Ungültige Option \"%.50s\"\n"
 
 #, c-format
 msgid "Note: no default option file '%s'\n"
-msgstr ""
+msgstr "Hinweis: Keine voreingestellte Optionendatei '%s' vorhanden\n"
 
 #, c-format
 msgid "reading options from '%s'\n"
-msgstr ""
+msgstr "Optionen werden aus '%s' gelesen\n"
 
 #, c-format
 msgid "option file '%s': %s\n"
-msgstr ""
+msgstr "Optionendatei '%s': %s\n"
 
 #, c-format
 msgid "Note: ignoring option \"--%s\" due to global config\n"
 msgstr ""
+"Hinweis: Option \"--%s\" aufgrund der globalen Konfiguration ignoriert\n"
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr ""
