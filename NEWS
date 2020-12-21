@@ -1,6 +1,9 @@
-Noteworthy changes in version 1.41 (unreleased) [C31/A31/R ]
+Noteworthy changes in version 1.41 (2020-12-21) [C31/A31/R1]
 -----------------------------------------------
 
+ * Fixes another glitch in the "ignore" meta command.
+
+ * Fixes two typos in the German translation.
 
  Release-info: https://dev.gnupg.org/T5192
 
