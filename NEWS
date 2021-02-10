@@ -165,6 +165,7 @@ Noteworthy changes in version 1.37 (2020-02-07) [C28/A28/R0]
  GPG_ERR_SQL_WARNING	          NEW.
  GPG_ERR_SQL_ROW	          NEW.
  GPG_ERR_SQL_DONE	          NEW.
+ gpg_err_code_from_sqlite         NEW.
 
  Release-info: https://dev.gnupg.org/T4772
 
