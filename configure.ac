@@ -595,9 +595,15 @@ if test "$have_w32_system" = yes; then
     fi
     force_use_syscfg=yes
 fi
-if test x$cross_compiling = xyes; then
+if test x"$gl_use_threads" = xno; then
+  lock_obj_h_generated=yes
+  if test ! -d src; then mkdir src; fi
+  host=$host $srcdir/src/gen-lock-obj.sh --disable-threads \
+    >src/lock-obj-pub.native.h
+  AC_MSG_NOTICE([generated src/lock-obj-pub.native.h for $host])
+elif test x$cross_compiling = xyes; then
   case $host in
-    *-*-linux*)
+    *-*-linux-gnu*)
     AC_CHECK_TOOL(OBJDUMP, [objdump])
     if test -n "$OBJDUMP"; then
       lock_obj_h_generated=yes
