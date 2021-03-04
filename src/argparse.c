@@ -2685,6 +2685,9 @@ _gpgrt_usage (int level)
  *          First char is '1':
  *             The short usage notes needs to be printed
  *             before the long usage note.
+ *    95: Application flag string
+ *          First character is '1':
+ *             On Windows enable argument globbing
  */
 const char *
 _gpgrt_strusage (int level)

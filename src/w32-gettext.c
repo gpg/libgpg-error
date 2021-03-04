@@ -51,7 +51,7 @@
 #endif /*!jnlib_malloc*/
 
 #include "init.h"
-#include "gpg-error.h"
+#include "gpgrt-int.h"
 #include "protos.h"
 
 /* Override values initialized by gpgrt_w32_override_locale.  If NAME
@@ -1378,7 +1378,7 @@ utf8_to_wchar (const char *string, size_t length, size_t *retlen)
   nbytes = (size_t)(n+1) * sizeof(*result);
   if (nbytes / sizeof(*result) != (n+1))
     {
-      gpg_err_set_errno (ENOMEM);
+      _gpg_err_set_errno (ENOMEM);
       return NULL;
     }
   result = jnlib_malloc (nbytes);
@@ -1922,7 +1922,7 @@ _gpg_w32_textdomain (const char *domainname)
   if (!domainname)
     {
       if (!current_domainname)
-        gpg_err_set_errno (0);
+        _gpg_err_set_errno (0);
     }
   else
     {
