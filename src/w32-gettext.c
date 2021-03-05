@@ -34,9 +34,7 @@
 #include <sys/types.h>
 #endif
 #include <stdint.h>
-#ifndef HAVE_W32CE_SYSTEM
-# include <locale.h>
-#endif /*HAVE_W32CE_SYSTEM*/
+#include <locale.h>
 #include <windows.h>
 
 #ifdef JNLIB_IN_JNLIB
@@ -64,37 +62,6 @@ static struct
 } override_locale;
 
 
-#ifdef HAVE_W32CE_SYSTEM
-/* Forward declaration.  */
-static wchar_t *utf8_to_wchar (const char *string, size_t length, size_t *retlen);
-
-static HANDLE
-MyCreateFileA (LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwSharedMode,
-	     LPSECURITY_ATTRIBUTES lpSecurityAttributes,
-	     DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes,
-	     HANDLE hTemplateFile)
-{
-  wchar_t *filename;
-  HANDLE result;
-  int err;
-  size_t size;
-
-  filename = utf8_to_wchar (lpFileName, -1, &size);
-  if (!filename)
-    return INVALID_HANDLE_VALUE;
-
-  result = CreateFileW (filename, dwDesiredAccess, dwSharedMode,
-			lpSecurityAttributes, dwCreationDisposition,
-			dwFlagsAndAttributes, hTemplateFile);
-
-  err = GetLastError ();
-  free (filename);
-  SetLastError (err);
-  return result;
-}
-#undef CreateFileA
-#define CreateFileA MyCreateFileA
-#endif
 
 
 /* localname.c from gettext BEGIN.  */
@@ -655,9 +622,7 @@ MyCreateFileA (LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwSharedMode,
 static const char *
 my_nl_locale_name (const char *categoryname)
 {
-#ifndef HAVE_W32CE_SYSTEM
   const char *retval;
-#endif
   LANGID langid;
   int primary, sub;
 
@@ -673,7 +638,6 @@ my_nl_locale_name (const char *categoryname)
 
       /* Let the user override the system settings through environment
        *  variables, as on POSIX systems.  */
-#ifndef HAVE_W32CE_SYSTEM
       retval = getenv ("LC_ALL");
       if (retval != NULL && retval[0] != '\0')
         return retval;
@@ -683,14 +647,9 @@ my_nl_locale_name (const char *categoryname)
       retval = getenv ("LANG");
       if (retval != NULL && retval[0] != '\0')
         return retval;
-#endif /*!HAVE_W32CE_SYSTEM*/
 
       /* Use native Win32 API locale ID.  */
-#ifdef HAVE_W32CE_SYSTEM
-      lcid = GetSystemDefaultLCID ();
-#else
       lcid = GetThreadLocale ();
-#endif
       /* Strip off the sorting rules, keep only the language part.  */
       langid = LANGIDFROMLCID (lcid);
     }
@@ -1251,8 +1210,16 @@ load_domain (const char *filename)
   size_t to_read;
   char *read_ptr;
 
-  fh = CreateFileA (filename, GENERIC_READ, FILE_SHARE_WRITE, NULL,
-                    OPEN_EXISTING, 0, NULL);
+  {
+    wchar_t *wfilename = _gpgrt_utf8_to_wchar (filename);
+
+    if (!wfilename)
+      fh = INVALID_HANDLE_VALUE;
+    else
+      fh = CreateFileW (wfilename, GENERIC_READ, FILE_SHARE_WRITE, NULL,
+                        OPEN_EXISTING, 0, NULL);
+    xfree (wfilename);
+  }
   if (fh == INVALID_HANDLE_VALUE)
     return NULL;
 
@@ -2042,7 +2009,7 @@ main (int argc, char **argv)
   return 0;
 }
 /*
- * Local Variables:
+ *No-Local Variables:
  *  compile-command: "i586-mingw32msvc-gcc -DTEST -Wall -g w32-gettext.c"
  * End:
  */
