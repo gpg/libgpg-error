@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2020-02-13 19:03+0100\n"
+"PO-Revision-Date: 2021-03-22 10:43+0100\n"
 "Last-Translator: Ineiev <ineiev@gnu.org>\n"
 "Language-Team: Russian <gnupg-ru@gnupg.org>\n"
 "Language: ru\n"
@@ -62,6 +62,9 @@ msgstr "G13"
 
 msgid "Assuan"
 msgstr "Assuan"
+
+msgid "TPM2d"
+msgstr "TPM2d"
 
 msgid "TLS"
 msgstr "TLS"

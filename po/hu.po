@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2018-03-21 19:01+0100\n"
+"PO-Revision-Date: 2021-03-22 10:26+0100\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "Language: hu\n"
@@ -60,13 +60,16 @@ msgid "Kleopatra"
 msgstr "Kleopatra"
 
 msgid "G13"
-msgstr ""
+msgstr "G13"
 
 msgid "Assuan"
-msgstr ""
+msgstr "Assuan"
+
+msgid "TPM2d"
+msgstr "TPM2d"
 
 msgid "TLS"
-msgstr ""
+msgstr "TLS"
 
 msgid "Any source"
 msgstr "Bármilyen forrás"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.39\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2020-08-25 14:32+0900\n"
+"PO-Revision-Date: 2021-03-22 10:26+0100\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -64,6 +64,9 @@ msgstr "G13"
 
 msgid "Assuan"
 msgstr "Assuan"
+
+msgid "TPM2d"
+msgstr "TPM2d"
 
 msgid "TLS"
 msgstr "TLS"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.18\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2018-03-21 18:59+0100\n"
+"PO-Revision-Date: 2021-03-22 10:24+0100\n"
 "Last-Translator: Petr Pisar <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "Language: cs\n"
@@ -70,6 +70,9 @@ msgstr "G13"
 
 msgid "Assuan"
 msgstr "Assuan"
+
+msgid "TPM2d"
+msgstr "TPM2d"
 
 msgid "TLS"
 msgstr "TLS"

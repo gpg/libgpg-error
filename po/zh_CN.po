@@ -3,16 +3,13 @@
 # This file is distributed under the same license as the libgpg-error package.
 # Aron Xu <happyaron.xu@gmail.com>, 2009.
 # Chinese (simplified) <translation-team-zh-cn@lists.sourceforge.net>, 2009.
-
 # bobwxc <bobwxc@yeah.net>, 2020.
-
 # 请注意secret key在此处请译为私钥，密钥泛指key
-
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.39\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2020-12-24 12:13+0800\n"
+"PO-Revision-Date: 2021-03-22 10:44+0100\n"
 "Last-Translator: bobwxc <bobwxc@yeah.net>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -69,6 +66,9 @@ msgstr "G13"
 
 msgid "Assuan"
 msgstr "Assuan"
+
+msgid "TPM2d"
+msgstr "TPM2d"
 
 msgid "TLS"
 msgstr "TLS"
@@ -1499,8 +1499,7 @@ msgid "Note: ignoring option \"--%s\" due to global config\n"
 msgstr "注意： 由于整体配置，选项 \"--%s\" 被忽视\n"
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
-msgstr ""
-"请向 <https://bugs.gnupg.org> 报告软件错误。\n"
+msgstr "请向 <https://bugs.gnupg.org> 报告软件错误。\n"
 
 #, c-format
 msgid "warning: could not recognize %s\n"

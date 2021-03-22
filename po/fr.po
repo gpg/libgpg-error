@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.17\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2018-03-21 18:58+0100\n"
+"PO-Revision-Date: 2021-03-22 10:26+0100\n"
 "Last-Translator: David Prévot <david@tilapin.org>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -65,6 +65,9 @@ msgstr "G13"
 
 msgid "Assuan"
 msgstr "Assuan"
+
+msgid "TPM2d"
+msgstr "TPM2d"
 
 msgid "TLS"
 msgstr "TLS"
