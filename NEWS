@@ -1,8 +1,15 @@
-Noteworthy changes in version 1.42 (unreleased) [C31/A31/R2]
+Noteworthy changes in version 1.42 (2021-03-22) [C32/A32/R0]
 -----------------------------------------------
 
+ * Allow Unicode file names under Windows for the gettext domain.
 
- * Interface changes relative to the 1.39 release:
+ * Improve cross-compiling support.  [#5289]
+
+ * Improve $libdir determination by gpgrt-config.  [#5293]
+
+ * Support --disable-thread by gen-lock-obj.sh.  [#5296]
+
+ * Interface changes relative to the 1.40 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_SOURCE_TPM2D             NEW.
 
