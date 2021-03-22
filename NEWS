@@ -1,6 +1,11 @@
 Noteworthy changes in version 1.42 (unreleased) [C31/A31/R2]
 -----------------------------------------------
 
+
+ * Interface changes relative to the 1.39 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_SOURCE_TPM2D             NEW.
+
  Release-info: https://dev.gnupg.org/T5194
 
 
