@@ -38,7 +38,7 @@
 #     AWK=gawk ./gen-lock-obj.sh
 #
 
-if test -n `echo -n`; then
+if test -n "`echo -n`"; then
     ECHO_C='\c'
     ECHO_N=''
 else
