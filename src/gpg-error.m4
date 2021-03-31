@@ -80,7 +80,7 @@ AC_DEFUN([AM_PATH_GPG_ERROR],
     #   Fedora/openSUSE style: /usr/lib, /usr/lib32 or /usr/lib64
     # It is assumed that CC is specified to the one of host on cross build.
     if libdir_candidates=$(${CC:-cc} -print-search-dirs | \
-          sed -n -e "/^libraries/{s/libraries: =//;s/:/\
+          sed -n -e "/^libraries/{s/libraries: =//;s/:/\\
 /g;p;}"); then
       # From the output of -print-search-dirs, select valid pkgconfig dirs.
       libdir_candidates=$(for dir in $libdir_candidates; do
