@@ -1,4 +1,5 @@
 #!@INSTALLSHELLPATH@
+#                          -*- mode: shell-script; sh-shell: "/bin/sh" -*-
 # Copyright (C) 2018, 2021 g10 Code GmbH
 #
 # This file is free software; as a special exception the author gives
@@ -41,7 +42,7 @@ get_attr () {
 
 # variant of get_attr for list (separated by ',')
 get_attr_l () {
-    (IFS=', '; for x in "$(get_attr $1)"; do echo $x; done)
+    (IFS=', '; echo "$(get_attr $1)")
 }
 
 # Remove ${varname} part in the beginning of a string.
