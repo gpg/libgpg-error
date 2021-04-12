@@ -49,6 +49,7 @@ main (int argc, char *argv[])
     }
   if (fp)
     {
+      fclose (fp);
       fprintf (stderr, "unable to run test\n");
       return 1;
     }

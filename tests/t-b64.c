@@ -108,6 +108,7 @@ test_b64enc_string (const char *string, const char *expected, const char *title)
   err = gpgrt_b64enc_write (state, string, strlen (string));
   if (err)
     {
+      free (state);
       fail ("gpgrt_b64enc_write failed: %s\n", gpg_strerror (err));
       return err;
     }
@@ -191,6 +192,7 @@ test_b64dec_string (const char *string, const char *expected, const char *title)
           gpgrt_log_debug_string (expected, "expect(len=%zu): ",
                                   strlen (expected));
         }
+      free (buffer);
       return GPG_ERR_FALSE;
     }
 
