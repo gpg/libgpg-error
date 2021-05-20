@@ -407,7 +407,19 @@ _gpgrt_strconcat (const char *s1, ...)
 void
 _gpgrt_free (void *a)
 {
+  int save_errno;
+
+  if (!a)
+    return;  /* Shortcut */
+
+  /* In case ERRNO is set we better save it so that the free machinery
+   * may not accidentally change ERRNO.  We restore it only if it was
+   * already set to comply with the usual C semantic for ERRNO.
+   * See also https://dev.gnupg.org/T5393#146261  */
+  save_errno = errno;
   _gpgrt_realloc (a, 0);
+  if (save_errno && save_errno != errno)
+    _gpg_err_set_errno (save_errno);
 }
 
 
