@@ -82,6 +82,7 @@ AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
 AC_USE_SYSTEM_EXTENSIONS
 
+AM_LANGINFO_CODESET
 
 # Taken from mpfr-4.0.1, then modified for LDADD_FOR_TESTS_KLUDGE
 dnl Under Linux, make sure that the old dtags are used if LD_LIBRARY_PATH
