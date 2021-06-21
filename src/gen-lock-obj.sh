@@ -121,10 +121,10 @@ while test "$i" -lt $ac_mtx_size; do
     fi
     i=$(( i + 1 ))
 done
+echo '}}}'
 fi
 
 cat <<'EOF'
-}}}
 ##
 ## Local Variables:
 ## mode: c
