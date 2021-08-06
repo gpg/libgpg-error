@@ -44,7 +44,10 @@
 
 
 #if USE_POSIX_THREADS
-# if USE_POSIX_THREADS_WEAK
+# if USE_POSIX_THREADS_FROM_LIBC && HAVE_SYS_SINGLE_THREADED_H
+#  include <sys/single_threaded.h>
+#  define use_pthread_p()  !__libc_single_threaded
+# elif USE_POSIX_THREADS_WEAK
    /* On ELF systems it is easy to use pthreads using weak
       references.  Take care not to test the address of a weak
       referenced function we actually use; some GCC versions have a
@@ -99,7 +102,7 @@ use_pthread_p (void)
     }
   return result;
 }
-#endif /*PTHREAD_IN_USE_DETECTION_HARD*/
+# endif /*PTHREAD_IN_USE_DETECTION_HARD*/
 #endif /*USE_POSIX_THREADS*/
 
 

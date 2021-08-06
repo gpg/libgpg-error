@@ -477,6 +477,7 @@ else
   if test "$gl_threads_api" = posix; then
     AC_CHECK_SIZEOF(pthread_mutex_t,,[AC_INCLUDES_DEFAULT
                                       #include <pthread.h>])
+    AC_CHECK_HEADERS([sys/single_threaded.h])
   fi
 fi
 
