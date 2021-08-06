@@ -63,17 +63,20 @@ AC_DEFUN([gl_ANYTHREADLIB_EARLY],
         # 2. putting a flag into CPPFLAGS that has an effect on the linker
         # causes the AC_LINK_IFELSE test below to succeed unexpectedly,
         # leading to wrong values of LIBTHREAD and LTLIBTHREAD.
-        CPPFLAGS="$CPPFLAGS -D_REENTRANT"
+        THREADLIB_CPPFLAGS="$THREADLIB_CPPFLAGS -D_REENTRANT"
         ;;
     esac
     # Some systems optimize for single-threaded programs by default, and
     # need special flags to disable these optimizations. For example, the
     # definition of 'errno' in <errno.h>.
     case "$host_os" in
-      aix* | freebsd*) CPPFLAGS="$CPPFLAGS -D_THREAD_SAFE" ;;
-      solaris*) CPPFLAGS="$CPPFLAGS -D_REENTRANT" ;;
+      aix* | freebsd*) THREADLIB_CPPFLAGS="$THREADLIB_CPPFLAGS -D_THREAD_SAFE" ;;
+      solaris*) THREADLIB_CPPFLAGS="$THREADLIB_CPPFLAGS -D_REENTRANT" ;;
     esac
     gl_anythreadlib_early_done=done
+  fi
+  if test x"$THREADLIB_CPPFLAGS" != x ; then
+    CPPFLAGS="$CPPFLAGS $THREADLIB_CPPFLAGS"
   fi
 ])
 
@@ -166,8 +169,9 @@ dnl LIBPMULTITHREAD is that on platforms supporting weak symbols, typically
 dnl LIBPTHREAD is empty whereas LIBPMULTITHREAD is not.
 dnl Sets the variable LIB_SCHED_YIELD to the linker options needed to use the
 dnl sched_yield() function.
-dnl Adds to CPPFLAGS the flag -D_REENTRANT or -D_THREAD_SAFE if needed for
-dnl multithread-safe programs.
+dnl Sets the variable THREADLIB_CPPFLAGS the flag -D_REENTRANT or
+dnl -D_THREAD_SAFE if needed for multithread-safe programs and adds
+dnl THREADLIB_CPPFLAGS to CPPFLAGS.
 dnl Defines the C macro HAVE_PTHREAD_API if (at least parts of) the POSIX
 dnl threads API is available.
 
@@ -313,8 +317,9 @@ dnl gl_STDTHREADLIB
 dnl ---------------
 dnl Tests for the libraries needs for using the ISO C threads API.
 dnl Sets the variable LIBSTDTHREAD to the linker options for use in a Makefile.
-dnl Adds to CPPFLAGS the flag -D_REENTRANT or -D_THREAD_SAFE if needed for
-dnl multithread-safe programs.
+dnl Sets the variable THREADLIB_CPPFLAGS the flag -D_REENTRANT or
+dnl -D_THREAD_SAFE if needed for multithread-safe programs and adds
+dnl THREADLIB_CPPFLAGS to CPPFLAGS.
 dnl Defines the C macro HAVE_THREADS_H if (at least parts of) the ISO C threads
 dnl API is available.
 
@@ -395,8 +400,9 @@ dnl Sets the variables LIBMULTITHREAD and LTLIBMULTITHREAD similarly, for
 dnl programs that really need multithread functionality. The difference
 dnl between LIBTHREAD and LIBMULTITHREAD is that on platforms supporting weak
 dnl symbols, typically LIBTHREAD is empty whereas LIBMULTITHREAD is not.
-dnl Adds to CPPFLAGS the flag -D_REENTRANT or -D_THREAD_SAFE if needed for
-dnl multithread-safe programs.
+dnl Sets the variable THREADLIB_CPPFLAGS the flag -D_REENTRANT or
+dnl -D_THREAD_SAFE if needed for multithread-safe programs and adds
+dnl THREADLIB_CPPFLAGS to CPPFLAGS.
 dnl Since support for GNU pth was removed, $LTLIBTHREAD and $LIBTHREAD have the
 dnl same value, and similarly $LTLIBMULTITHREAD and $LIBMULTITHREAD have the
 dnl same value. Only system libraries are needed.
@@ -420,6 +426,7 @@ AC_DEFUN([gl_THREADLIB_EARLY_BODY],
   dnl _GNU_SOURCE is needed for pthread_rwlock_t on glibc systems.
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
   dnl Check for multithreading.
+  THREADLIB_CPPFLAGS=""
   m4_ifdef([gl_THREADLIB_DEFAULT_NO],
     [m4_divert_text([DEFAULTS], [gl_use_threads_default=no])],
     [m4_divert_text([DEFAULTS], [gl_use_threads_default=])])
