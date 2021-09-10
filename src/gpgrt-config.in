@@ -470,7 +470,7 @@ while test $# -gt 0; do
     esac
 done
 
-if [ x"${PKG_CONFIG_LIBDIR:+set}" = xset -a -z "$PKG_CONFIG_LIBDIR" ]; then
+if env | grep '^PKG_CONFIG_LIBDIR=$' >/dev/null 2>&1; then
   # The variable set as empty, we use PKG_CONFIG_PATH in this case,
   # ignoring --libdir option
   if [ -z "$PKG_CONFIG_PATH"  ]; then
