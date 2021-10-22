@@ -820,6 +820,7 @@ char *_gpgrt_absfnameconcat (const char *first_part,
 char *_gpgrt_w32_reg_query_string (const char *root,
                                    const char *dir,
                                    const char *name);
+char *_gpgrt_w32_reg_get_string (const char *key);
 
 
 #endif /*HAVE_W32_SYSTEM*/

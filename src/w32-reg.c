@@ -52,17 +52,17 @@ _gpgrt_w32_reg_query_string (const char *root, const char *dir,
 
   if (!root)
     root_key = HKEY_CURRENT_USER;
-  else if (!strcmp( root, "HKEY_CLASSES_ROOT"))
+  else if (!strcmp (root, "HKEY_CLASSES_ROOT") || !strcmp (root, "HKCR"))
     root_key = HKEY_CLASSES_ROOT;
-  else if (!strcmp( root, "HKEY_CURRENT_USER"))
+  else if (!strcmp (root, "HKEY_CURRENT_USER") || !strcmp (root, "HKCU"))
     root_key = HKEY_CURRENT_USER;
-  else if (!strcmp( root, "HKEY_LOCAL_MACHINE"))
+  else if (!strcmp (root, "HKEY_LOCAL_MACHINE") || !strcmp (root, "HKLM"))
     root_key = HKEY_LOCAL_MACHINE;
-  else if (!strcmp( root, "HKEY_USERS"))
+  else if (!strcmp (root, "HKEY_USERS") || !strcmp (root, "HKU"))
     root_key = HKEY_USERS;
-  else if (!strcmp( root, "HKEY_PERFORMANCE_DATA"))
+  else if (!strcmp (root, "HKEY_PERFORMANCE_DATA"))
     root_key = HKEY_PERFORMANCE_DATA;
-  else if (!strcmp( root, "HKEY_CURRENT_CONFIG"))
+  else if (!strcmp (root, "HKEY_CURRENT_CONFIG") || !strcmp (root, "HKCC"))
     root_key = HKEY_CURRENT_CONFIG;
   else
     return NULL;
@@ -150,5 +150,54 @@ _gpgrt_w32_reg_query_string (const char *root, const char *dir,
 
  leave:
   RegCloseKey (key_handle);
+  return result;
+}
+
+
+/* Compact version of gpgrt_w32_reg_query_string.  This version
+ * expects a single string as key described here using an example:
+ *
+ *    HKCU\Software\GNU\GnuPG:HomeDir
+ *
+ * HKCU := the class, other supported classes are HKLM, HKCR, HKU, and
+ *         HKCC.  If no class is given and the string thus starts with
+ *         a backslash HKCU with a fallback to HKLM is used.
+ * Software\GNU\GnuPG := The actual key.
+ * HomeDir := the name of the item.  The name is optional to use the default
+ *            value.
+ *
+ * Note that the first backslash and the first colon act as delimiters.
+ *
+ * Returns a malloced string or NULL if not found.
+ */
+char *
+_gpgrt_w32_reg_get_string (const char *key_arg)
+{
+  char *key;
+  char *p1, *p2;
+  char *result;
+
+  if (!key_arg)
+    return NULL;
+  key = xtrystrdup (key_arg);
+  if (!key)
+    {
+      _gpgrt_log_info ("warning: malloc failed while reading registry key\n");
+      return NULL;
+    }
+
+  p1 = strchr (key, '\\');
+  if (!p1)
+    {
+      xfree (key);
+      return NULL;
+    }
+  *p1++ = 0;
+  p2 = strchr (p1, ':');
+  if (p2)
+    *p2++ = 0;
+
+  result = _gpgrt_w32_reg_query_string (*key? key : NULL, p1, p2);
+  xfree (key);
   return result;
 }
