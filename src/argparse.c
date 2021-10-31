@@ -1,7 +1,7 @@
 /* argparse.c - Argument Parser for option handling
  * Copyright (C) 1997-2001, 2006-2008, 2013-2017 Werner Koch
  * Copyright (C) 1998-2001, 2006-2008, 2012 Free Software Foundation, Inc.
- * Copyright (C) 2015-2020 g10 Code GmbH
+ * Copyright (C) 2015-2021 g10 Code GmbH
  *
  * This file is part of Libgpg-error.
  *
@@ -81,6 +81,16 @@ enum argparser_states
   };
 
 
+/* Object to store variables.  */
+struct variable_s
+{
+  struct variable_s *next;
+  char *value;  /* Malloced value - always a string.  NULL is not set.  */
+  char name[1]; /* Name of the variable.  */
+};
+typedef struct variable_s *variable_t;
+
+
 /* An internal object used to store the user provided option table and
  * some meta information.  */
 typedef struct
@@ -114,9 +124,13 @@ struct _gpgrt_argparse_internal_s
   unsigned int user_wildcard:1;    /* A [user *] has been seen.         */
   unsigned int user_any_active:1;  /* Any user section was active.      */
   unsigned int user_active:1;      /* User section active.              */
+  unsigned int expand:1;           /* Expand vars in option values.     */
   unsigned int explicit_confopt:1; /* A conffile option has been given. */
   char *explicit_conffile;         /* Malloced name of an explicit
                                     * conffile. */
+  unsigned char if_cond;           /* Current if block index.           */
+  unsigned char if_active[7];      /* If state Indexed by IF_COND - 1.  */
+  variable_t vartbl;               /* List of variables.                */
   char *username;                  /* Malloced current user name.       */
   unsigned int opt_flags;          /* Current option flags.             */
   enum argparser_states state;     /* State of the gpgrt_argparser.     */
@@ -262,6 +276,15 @@ deinitialize (gpgrt_argparse_t *arg)
 {
   if (arg->internal)
     {
+      variable_t v = arg->internal->vartbl;
+      variable_t vn;
+      while (v)
+        {
+          vn = v->next;
+          xfree (v->value);
+          xfree (v);
+          v = vn;
+        }
       xfree (arg->internal->username);
       xfree (arg->internal->explicit_conffile);
       xfree (arg->internal->opts);
@@ -317,11 +340,14 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
       arg->internal->user_wildcard = 0;
       arg->internal->user_any_active = 0;
       arg->internal->user_active = 0;
+      arg->internal->if_cond = 0;
+      arg->internal->vartbl = NULL;
       arg->internal->username = NULL;
       arg->internal->mark_forced = 0;
       arg->internal->mark_ignore = 0;
       arg->internal->explicit_ignore = 0;
       arg->internal->ignore_all_seen = 0;
+      arg->internal->expand = 0;
       arg->internal->explicit_confopt = 0;
       arg->internal->explicit_conffile = NULL;
       arg->internal->opt_flags = 0;
@@ -686,6 +712,214 @@ assure_username (gpgrt_argparse_t *arg)
 }
 
 
+/* Return the value of the variable NAME from the context ARG.  May
+ * return NULL.  NUMBUF needs to be caller provided buffer used by
+ * this function to return numeric values as string.  */
+static const char *
+get_var (gpgrt_argparse_t *arg, const char *name,
+         char *numbuf, size_t numbufsize)
+{
+  if (!name || !*name)
+    return NULL;
+  if (arg)
+    {
+      if (name[0] == '_') /* system variables.  */
+        {
+          name++;
+          if (!*name)
+            return " "; /* Just a space.  */
+          else if (!strcmp (name, "verbose"))
+            return arg->internal->verbose ? "1":"";
+          else if (!strcmp (name, "user"))
+            {
+              assure_username (arg);
+              return arg->internal->username;
+            }
+          else if (!strcmp (name, "file"))
+            return arg->internal->confname;
+          else if (!strcmp (name, "line"))
+            {
+              snprintf (numbuf, numbufsize, "%u", arg->lineno);
+              return numbuf;
+            }
+          else if (!strcmp (name, "epoch"))
+            {
+              snprintf (numbuf, numbufsize, "%lu",  (unsigned long)time (NULL));
+              return numbuf;
+            }
+          else if (!strcmp (name, "windows"))
+            return "1";
+          else if (!strcmp (name, "version"))
+            return _gpgrt_strusage (13);
+          else if (!strcmp (name, "pgm"))
+            return _gpgrt_strusage (11);
+          else
+            return NULL;  /* Unknown system variable.  */
+        }
+      else
+        {
+          variable_t v;
+          for (v = arg->internal->vartbl; v; v = v->next)
+            if (!strcmp (v->name, name))
+              return v->value;
+          return NULL; /* Unknown variable.  */
+        }
+    }
+  else
+    return getenv (name);
+}
+
+
+/* Substitute environment variables in STRING and return a new string.
+ * ARG is the context; if ARG is NULL the environment variable with
+ * the same name is looked up.  On error the function returns NULL.  */
+static char *
+substitute_vars (gpgrt_argparse_t *arg, const char *string)
+{
+  char *line, *p, *pend;
+  const char *value;
+  size_t valuelen, n;
+  char *result = NULL;
+  char numbuf[35];
+
+  result = line = xtrystrdup (string);
+  if (!result)
+    return NULL; /* Ooops */
+
+  while (*line)
+    {
+      p = strchr (line, '$');
+      if (!p)
+        goto leave; /* No or no more variables.  */
+
+      if (p[1] == '$') /* Escaped dollar sign. */
+        {
+          memmove (p, p+1, strlen (p+1)+1);
+          line = p + 1;
+          continue;
+        }
+
+      if (p[1] == '{')
+        {
+          int count = 0;
+
+          for (pend=p+2; *pend; pend++)
+            {
+              if (*pend == '{')
+                count++;
+              else if (*pend == '}')
+                {
+                  if (--count < 0)
+                    break;
+                }
+            }
+          if (!*pend)
+            goto leave; /* Unclosed - don't substitute.  */
+        }
+      else
+        {
+          for (pend = p+1; (*pend && isascii (*p)
+                            && (isalnum (*pend) || *pend == '_')); pend++)
+            ;
+        }
+
+      if (p[1] == '{' && *pend == '}')
+        {
+          int save = *pend;
+          *pend = 0;
+          value = get_var (arg, p+2, numbuf, sizeof numbuf);
+          *pend++ = save;
+        }
+      else
+        {
+          int save = *pend;
+          *pend = 0;
+          value = get_var (arg, p+1, numbuf, sizeof numbuf);
+          *pend = save;
+        }
+
+      if (!value)
+        value = "";
+      valuelen = strlen (value);
+      if (valuelen <= pend - p)
+        {
+          memcpy (p, value, valuelen);
+          p += valuelen;
+          n = pend - p;
+          if (n)
+            memmove (p, p+n, strlen (p+n)+1);
+          line = p;
+        }
+      else
+        {
+          char *src = result;
+          char *dst;
+
+          dst = xtrymalloc (strlen (src) + valuelen + 1);
+          if (!dst)
+            {
+              xfree (result);
+              return NULL;
+            }
+          n = p - src;
+          memcpy (dst, src, n);
+          memcpy (dst + n, value, valuelen);
+          n += valuelen;
+          strcpy (dst + n, pend);
+          line = dst + n;
+          xfree (result);
+          result = dst;
+        }
+    }
+
+ leave:
+  return result;
+}
+
+
+/* Set variable NAME to VALUE or clear it if VALUE is NULL. */
+static int
+set_variable (gpgrt_argparse_t *arg, const char *name, const char *value,
+              int subst)
+{
+  char *string;
+  variable_t v;
+
+  if (value)
+    {
+      if (subst)
+        string = substitute_vars (arg, value);
+      else
+        string = xtrystrdup (value);
+      if (!string)
+        return ARGPARSE_OUT_OF_CORE;
+    }
+  else
+    string = NULL;
+
+  for (v = arg->internal->vartbl; v; v = v->next)
+    if (!strcmp (v->name, name))
+      break;
+  if (!v)
+    {
+      v = xtrymalloc (sizeof *v + strlen (name));
+      if (!v)
+        {
+          xfree (string);
+          return ARGPARSE_OUT_OF_CORE;
+        }
+      strcpy (v->name, name);
+      v->next = arg->internal->vartbl;
+      arg->internal->vartbl = v;
+    }
+  else
+    xfree (v->value);
+  v->value = string;
+
+  return 0;
+}
+
+
 /* Implementation of the "user" command.  ARG is the context.  ARGS is
  * a non-empty string which this function is allowed to modify.  */
 static int
@@ -721,6 +955,320 @@ handle_meta_user (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
     }
 
   return 0;
+}
+
+
+/* Implementation of the "if" command.  ARG is the context.  ARGS is a
+ * non-empty string which this function is allowed to modify.  If
+ * ALTERNATE is set no args are expected but the last if shall be
+ * closed.  Note that an some meta commands do an implicit "fi" but
+ * print a warning.  Command syntax (two forms):
+ *   [if<ws>STRING<ws>]
+ *   [if<ws>STRING<ws>OP<ws>STRING2<ws>]
+ * The abbreviated first form is an alias for
+ *    [if<ws>STRING<ws>-n]
+ * STRING2 may contains spaces but STRING1 may not.  Both are
+ * expanded.  Examples:
+ *   [if $name ]
+ *   [if $name = Scottie ]
+ *   [if $name = $foo ]
+ * Supported operators are
+ *   =   The full string must match
+ *   <>  The full string must not match
+ *   =~  String 1 must have String2 as a substring.
+ *   !~  String 1 must not have String2 as a substring.
+ *   -le String1 must be less or equal than String2.
+ *   -lt String1 must be less than String2.
+ *   -gt String1 must be greater than String2.
+ *   -ge String1 must be greater or equal than String2.
+ *   -v3le Version string1 must be less or equal than version string2.
+ *   -v3lt Version string1 must be less than version string2.
+ *   -v3gt Version string1 must be greater than version string2.
+ *   -v3ge version string1 must be greater or equal than version string2.
+ *   ==  The numerical values must match
+ *   !=  The numerical values must not match
+ *   <=  The numerical values must be LE than the value.
+ *   <   The numerical values must be LT than the value.
+ *   >=  The numerical values must be GT than the value.
+ *   >=  The numerical values must be GE than the value.
+ *   -n  True if value is not empty (STRING2 not allowed).
+ *   -z  True if value is empty (STRING2 not allowed).
+ */
+static int
+handle_meta_if (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
+{
+  int rc;
+  char *str1 = args;
+  char *op = NULL;
+  char *str2 = NULL;
+  char *p;
+  unsigned int idx;
+  int result;
+
+  idx = arg->internal->if_cond;
+  if (alternate) /* command "fi"  */
+    {
+      if (!idx)
+        _gpgrt_log_info ("%s:%u: not in a conditional block; \"%s\" ignored\n",
+                         arg->internal->confname, arg->lineno,
+                         alternate == 1? "fi":"else");
+      else
+        {
+          if (alternate == 1) /* [fi] */
+            arg->internal->if_cond--;
+          else /* [else] */
+            arg->internal->if_active[idx-1] = !arg->internal->if_active[idx-1];
+        }
+      return 0;
+    }
+  if (idx == sizeof (arg->internal->if_active) )
+    {
+      _gpgrt_log_info ("%s:%u: too deeply nested condition\n",
+                       arg->internal->confname, arg->lineno);
+      return ARGPARSE_UNEXPECTED_META;
+    }
+
+  for (p = str1; *p && !(isascii (*p) && isspace (*p)); p++)
+    ;
+  if (*p)
+    {
+      *p++ = 0;
+      for (; *p && isascii (*p) && isspace (*p); p++)
+        ;
+      op = p;
+      for (; *p && !(isascii (*p) && isspace (*p)); p++)
+        ;
+      if (*p)
+        {
+          *p++ = 0;
+          for (; *p && isascii (*p) && isspace (*p); p++)
+            ;
+          if (*p)
+            str2 = p;
+        }
+    }
+
+  str1 = substitute_vars (arg, str1);
+  if (!str1)
+    return ARGPARSE_OUT_OF_CORE;
+  if (str2)
+    {
+      str2 = substitute_vars (arg, str2);
+      if (!str2)
+        {
+          xfree (str1);
+          return ARGPARSE_OUT_OF_CORE;
+        }
+    }
+  if (!op || !*op)
+    op = "-n";
+
+  /* Check for second expression.  */
+  if (!strcmp (op, "-n") || !strcmp (op, "-z"))
+    {
+      if (str2)
+        {
+          rc = ARGPARSE_INVALID_META;
+          goto leave;
+        }
+    }
+  else if (!str2)
+    {
+      rc = ARGPARSE_INVALID_META;
+      goto leave;
+    }
+
+  /* Evaluate */
+  result = 0;
+  if (!strcmp (op, "-n"))
+    {
+      if (*str1)
+        result = 1;
+    }
+  else if (!strcmp (op, "-z"))
+    {
+      if (!*str1)
+        result = 1;
+    }
+  else if (!strcmp (op, "="))
+    result = !strcmp (str1, str2);
+  else if (!strcmp (op, "<>"))
+    result = !!strcmp (str1, str2);
+  else if (!strcmp (op, "=~"))
+    result = !!strstr (str1, str2);
+  else if (!strcmp (op, "!~"))
+    result = !strstr (str1, str2);
+  else if (!strcmp (op, "-le"))
+    result = (strcmp (str1, str2) <= 0);
+  else if (!strcmp (op, "-lt"))
+    result = (strcmp (str1, str2) < 0);
+  else if (!strcmp (op, "-gt"))
+    result = (strcmp (str1, str2) > 0);
+  else if (!strcmp (op, "-ge"))
+    result = (strcmp (str1, str2) >= 0);
+  else if (!strncmp (op, "-v3", 3) || !strncmp (op, "-v2", 3))
+    {
+      /* This is for a major.minor[.micro] version numbering scheme with
+       * ignored patchlevel.  */
+      result = _gpgrt_cmp_version (str1, str2, op[2] == '3'? 13 : 12);
+      if (!strcmp (op+3, "le"))
+        result = (result <= 0);
+      else if (!strcmp (op+3, "lt"))
+        result = (result < 0);
+      else if (!strcmp (op+3, "gt"))
+        result = (result > 0);
+      else if (!strcmp (op+3, "ge"))
+        result = (result >= 0);
+      else
+        {
+          rc = ARGPARSE_INVALID_META;
+          goto leave;
+        }
+    }
+  else
+    {
+      long num1, num2;
+
+      num1 = strtol (str1, NULL, 0);
+      num2 = strtol (str2, NULL, 0);
+
+      if (!strcmp (op, "=="))
+        result = (num1 == num2);
+      else if (!strcmp (op, "!="))
+        result = (num1 != num2);
+      else if (!strcmp (op, "<="))
+        result = (num1 <= num2);
+      else if (!strcmp (op, "<"))
+        result = (num1 < num2);
+      else if (!strcmp (op, ">"))
+        result = (num1 > num2);
+      else if (!strcmp (op, ">="))
+        result = (num1 >= num2);
+      else
+        {
+          rc = ARGPARSE_INVALID_META;
+          goto leave;
+        }
+    }
+
+  arg->internal->if_cond++;
+  arg->internal->if_active[arg->internal->if_cond-1] = result;
+  rc = 0;
+
+ leave:
+  xfree (str1);
+  xfree (str2);
+  return rc;
+}
+
+
+/* Implementation of the "let" command.  ARG is the context.  ARGS is
+ * a non-empty string which this function is allowed to modify.  If
+ * ALTERNATE is set the named variable (with name "*" all variables)
+ * are cleared.  Command syntax:
+ *   [let<ws>NAME<ws>VALUE_STRING<ws>]
+ * For example
+ *   [let user  Montgomery Scott  ]
+ *   [let foo   The name of the user is: "$user".$_ ]
+ * sets the variable "user" to
+ *   ->The name of the user is: "Montgomery Scott". <-
+ *
+ * NAME needs to start with a letter; names starting with an
+ * underscore are reserved.  Note the use of $_ which is substituted
+ * by a space.  This is needed for leading or trailing spaces.
+ */
+static int
+handle_meta_let (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
+{
+  char *name = args;
+  char *value;
+  int rc;
+  variable_t v;
+
+  for (value = name; *value && !(isascii (*value) && isspace (*value)); value++)
+    ;
+  if (*value)
+    {
+      *value++ = 0;
+      trim_spaces (value);
+    }
+
+  if (!isascii (*name) || !isalpha (*name))
+    return 0; /* Ignore setting a system or invalid variable.  */
+
+  if (alternate)
+    value = NULL;
+
+  if (name[0] == '*' && !name[1])  /* Clear all variables.  */
+    {
+      if (!alternate)
+        rc = 0; /* Ignore setting variable name "*".  */
+      else
+        {
+          for (v = arg->internal->vartbl; v; v = v->next)
+            {
+              xfree (v->value);
+              v->value = NULL;
+            }
+          rc = 0;
+        }
+    }
+  else /* Set variable or clear if VALUE is NULL.  */
+    rc = set_variable (arg, name, value, 1);
+
+  return rc;
+}
+
+
+/* Implementation of the "getenv" and, if ALTERNATE is set, the
+ * "getreg" command.  ARG is the context.  ARGS is a non-empty string
+ * with the name of the variable and of the envvar/registry-entry.
+ * The syntax is similar to [let].  "getenv" reads from the
+ * environment; "getreg" reads from the Windows registry.  */
+static int
+handle_meta_getenv (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
+{
+  char *name = args;
+  char *varname;
+  const char *s;
+  int rc;
+#ifdef HAVE_W32_SYSTEM
+  char *helpbuf = NULL;
+#endif
+
+  for (varname = name;
+       *varname && !(isascii (*varname) && isspace (*varname));
+       varname++)
+    ;
+  if (*varname)
+    {
+      *varname++ = 0;
+      trim_spaces (varname);
+    }
+
+  if (!isascii (*name) || !isalpha (*name))
+    return 0; /* Ignore setting a system or invalid variable.  */
+
+  if (!*varname)
+    return 0; /* Ignore empty environment names.  */
+
+  if (alternate)
+    {
+#ifdef HAVE_W32_SYSTEM
+      s = helpbuf = _gpgrt_w32_reg_get_string (varname);
+#else
+      s = "";
+#endif
+    }
+  else
+    s = getenv (varname);
+
+  /* Set/clear the variable but do not substitute.  */
+  rc = set_variable (arg, name, s, 0);
+#ifdef HAVE_W32_SYSTEM
+  xfree (helpbuf);
+#endif
+  return rc;
 }
 
 
@@ -770,64 +1318,18 @@ handle_meta_ignore (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 static int
 handle_meta_echo (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 {
-  int rc = 0;
-  char *p, *pend;
+  char *string;
+
+  string = substitute_vars (arg, args);
+  if (!string)
+    return ARGPARSE_OUT_OF_CORE;
 
   if (alternate)
-    _gpgrt_log_info ("%s", "");
+    _gpgrt_log_info ("%s\n", string);
   else
-    _gpgrt_log_info ("%s:%u: ", arg->internal->confname, arg->lineno);
-
-  while (*args)
-    {
-      p = strchr (args, '$');
-      if (!p)
-        {
-          _gpgrt_log_printf ("%s", args);
-          break;
-        }
-      *p = 0;
-      _gpgrt_log_printf ("%s", args);
-      if (p[1] == '$')
-        {
-          _gpgrt_log_printf ("$");
-          args = p+2;
-          continue;
-        }
-      if (p[1] != '{')
-        {
-          _gpgrt_log_printf ("$");
-          args = p+1;
-          continue;
-        }
-      pend = strchr (p+2, '}');
-      if (!pend)  /* No closing brace.  */
-        {
-          _gpgrt_log_printf ("$");
-          args = p+1;
-          continue;
-        }
-      p += 2;
-      *pend = 0;
-      args = pend+1;
-      if (!strcmp (p, "user"))
-        {
-          rc = assure_username (arg);
-          if (rc)
-            goto leave;
-          _gpgrt_log_printf ("%s", arg->internal->username);
-        }
-      else if (!strcmp (p, "file"))
-        _gpgrt_log_printf ("%s", arg->internal->confname);
-      else if (!strcmp (p, "line"))
-        _gpgrt_log_printf ("%u", arg->lineno);
-      else if (!strcmp (p, "epoch"))
-        _gpgrt_log_printf ("%lu",  (unsigned long)time (NULL));
-    }
-
- leave:
-  _gpgrt_log_printf ("\n");
-  return rc;
+    _gpgrt_log_info ("%s:%u: %s\n",
+                     arg->internal->confname, arg->lineno, string);
+  return 0;
 }
 
 
@@ -842,6 +1344,21 @@ handle_meta_verbose (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
     arg->internal->verbose = 0;
   else
     arg->internal->verbose = 1;
+  return 0;
+}
+
+
+/* Implementation of the "expand" command.  ARG is the context.  If
+ * ALTERNATE is true expand is reset.  ARGS is not used.  */
+static int
+handle_meta_expand (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
+{
+  (void)args;
+
+  if (alternate)
+    arg->internal->expand = 0;
+  else
+    arg->internal->expand = 1;
   return 0;
 }
 
@@ -862,6 +1379,13 @@ handle_metacmd (gpgrt_argparse_t *arg, char *keyword)
                 unsigned int alternate, char *args); /*handler*/
   } cmds[] =
       {{ "user",        0, 1, 0, 1, handle_meta_user },
+       { "if",          0, 1, 1, 0, handle_meta_if },
+       { "fi",          1, 0, 1, 0, handle_meta_if },
+       { "else",        2, 0, 1, 0, handle_meta_if },
+       { "let",         0, 1, 1, 0, handle_meta_let },
+       { "-let",        1, 1, 1, 0, handle_meta_let },
+       { "getenv",      0, 1, 1, 0, handle_meta_getenv },
+       { "getreg",      1, 1, 1, 0, handle_meta_getenv },
        { "force",       0, 0, 0, 0, handle_meta_force },
        { "+force",      0, 0, 0, 0, handle_meta_force },
        { "-force",      1, 0, 0, 0, handle_meta_force },
@@ -870,6 +1394,9 @@ handle_metacmd (gpgrt_argparse_t *arg, char *keyword)
        { "-ignore",     1, 0, 0, 0, handle_meta_ignore },
        { "ignore-all",  2, 0, 0, 0, handle_meta_ignore },
        { "+ignore-all", 2, 0, 0, 0, handle_meta_ignore },
+       { "expand",      0, 0, 1, 0, handle_meta_expand },
+       { "+expand",     0, 0, 1, 0, handle_meta_expand },
+       { "-expand",     1, 0, 1, 0, handle_meta_expand },
        { "verbose",     0, 0, 1, 1, handle_meta_verbose },
        { "+verbose",    0, 0, 1, 1, handle_meta_verbose },
        { "-verbose",    1, 0, 1, 1, handle_meta_verbose },
@@ -907,6 +1434,13 @@ handle_metacmd (gpgrt_argparse_t *arg, char *keyword)
       && !arg->internal->user_active)
     return 0; /* Skip this meta command.  */
 
+  /* Skip meta commands if they are in an active if-block.  But don't
+   * skip the [if] and [fi]. */
+  if (arg->internal->if_cond
+      && !arg->internal->if_active[arg->internal->if_cond - 1]
+      && cmds[i].func != handle_meta_if)
+    return 0;
+
   return cmds[i].func (arg, cmds[i].alternate, rest);
 }
 
@@ -938,6 +1472,7 @@ prepare_arg_return (gpgrt_argparse_t *arg, opttable_t *opts,
         arg->r_type |= ARGPARSE_OPT_IGNORE;
     }
 }
+
 
 /****************
  * Get options from a file.
@@ -1018,6 +1553,9 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
 
   arg->internal->opt_flags = 0;
 
+  /* _gpgrt_log_debug ("loop: if=%d/%d\n", arg->internal->if_cond, */
+  /*                   arg->internal->if_cond? */
+  /*                   arg->internal->if_active[arg->internal->if_cond-1]:-1);*/
   /* Find the next keyword.  */
   state = Ainit;
   i = 0;
@@ -1288,6 +1826,23 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
                           if (*p && p[strlen(p)-1] == '\"' )
                             p[strlen(p)-1] = 0;
                         }
+
+                      if (arg->internal->expand && strchr (p, '$'))
+                        {
+                          p = substitute_vars (arg, p);
+                          if (!p)
+                            {
+                              xfree (buffer);
+                              buffer = NULL;
+                              arg->r_opt =  ARGPARSE_OUT_OF_CORE;
+                            }
+                          else
+                            {
+                              xfree (buffer);
+                              buffer = p;
+                            }
+                        }
+
                       if (!set_opt_arg (arg, opts[idx].flags, p))
                         xfree (buffer);
                       else
@@ -1314,6 +1869,15 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
         ; /* Skip leading white space.  */
       else if (state == Ainit && c == '#' )
         state = Acomment;	/* Start of a comment.  */
+      else if (state == Ainit && c != '['
+               && arg->internal->if_cond
+               && !arg->internal->if_active[arg->internal->if_cond - 1])
+        {
+          /* A regular line in a non-active if-block.  We treat it the
+           * same as a comment.  Note that we can't do this with meta
+           * command because we need to detect the [fi].  */
+          state = Acomment;
+        }
       else if (state == Acomment || state == Askipmetacmd2)
         ; /* Skip comments. */
       else if (state == Askipmetacmd)
@@ -1684,6 +2248,7 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       arg->lineno = 0;
       arg->internal->idx = 0;
       arg->internal->verbose = 0;
+      arg->internal->expand = 0;
       arg->internal->stopped = 0;
       arg->internal->inarg = 0;
       _gpgrt_fclose (arg->internal->conffp);
@@ -1768,6 +2333,7 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       arg->lineno = 0;
       arg->internal->idx = 0;
       arg->internal->verbose = 0;
+      arg->internal->expand = 0;
       arg->internal->stopped = 0;
       arg->internal->inarg = 0;
       arg->internal->in_sysconf = 0;
@@ -1814,6 +2380,7 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
       arg->internal->confname = NULL;
       arg->internal->idx = 0;
       arg->internal->verbose = 0;
+      arg->internal->expand = 0;
       arg->internal->stopped = 0;
       arg->internal->inarg = 0;
       arg->internal->in_sysconf = 0;

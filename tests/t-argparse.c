@@ -39,6 +39,7 @@ static struct {
     int myopt;
     int echo;
     int a_long_one;
+    char *street;
 } opt;
 
 
@@ -53,6 +54,7 @@ my_strusage (int level)
     case 9: p = "LGPL-2.1-or-later"; break;
 
     case 11: p = "t-argparse"; break;
+    case 13: p = "6.42.17-beta99"; break;
 
     default: p = NULL;
     }
@@ -74,7 +76,7 @@ main (int argc, char **argv)
     ARGPARSE_o_s('c', "cross-ref", "cross-reference erzeugen\n" ),
     /* Note that on a non-utf8 terminal the ß might garble the output. */
     ARGPARSE_header("extra-options", "List of extra options"),
-    ARGPARSE_s_n('s', "street","|Straße|set the name of the street to Straße"),
+    ARGPARSE_s_s('s', "street","|Straße|set the name of the street to Straße"),
     ARGPARSE_o_i('m', "my-option", 0),
     ARGPARSE_o_i('M', "not-my-option", 0),
     ARGPARSE_s_n(500, "a-long-option", 0 ),
@@ -135,6 +137,7 @@ main (int argc, char **argv)
         case 'c': opt.crf = pargs.r_type? pargs.r.ret_str:"a.crf"; break;
         case 'm': opt.myopt = pargs.r_type? pargs.r.ret_int : 1; break;
         case 'M': opt.myopt = 0; break;
+        case 's': opt.street = pargs.r.ret_str; break;
         case 500: opt.a_long_one++;  break;
         default : pargs.err = ARGPARSE_PRINT_WARNING; any_warn = 1; break;
 	}
@@ -151,6 +154,8 @@ main (int argc, char **argv)
     printf ("  outfile='%s'\n", opt.outfile );
   if (opt.crf)
     printf ("  crffile='%s'\n", opt.crf );
+  if (opt.street)
+    printf ("  street='%s'\n", opt.street );
   if (opt.myopt)
     printf ("  myopt=%d\n", opt.myopt );
   if (opt.a_long_one)
