@@ -1,5 +1,29 @@
-Noteworthy changes in version 1.43 (unreleased) [C32/A32/R1]
+Noteworthy changes in version 1.43 (2021-11-03) [C32/A32/R1]
 -----------------------------------------------
+
+ * Fix for building against GNU libc 2.34.  [T5547]
+
+ * Fix build problems on macOS.  [T5440,T5610]
+
+ * Fix gpgrt-config problems.  [T5381,T5595]
+
+ * Fix gpgrt_free for legacy platforms.  [448bf7b01cad]
+
+ * Fix truncation of error message in the middle of a character.
+   [T5048]
+
+ * Fix the --disable-threads configure options.  [T5495]
+
+ * Improve lock-obj generation for cross-builds [99ae862a96a5]
+
+ * Improve cross-builds. [T5365]
+
+ * Improve gpgrt_wait_processes.  [T5381]
+
+ * Allow config files to read values from the Windows Registry and
+   from envvars.  [b1790f4cc71f]
+
+ * Update the Russian and Czech translations.
 
  Release-info: https://dev.gnupg.org/T5352
 
