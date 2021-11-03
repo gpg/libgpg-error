@@ -748,11 +748,19 @@ get_var (gpgrt_argparse_t *arg, const char *name,
               return numbuf;
             }
           else if (!strcmp (name, "windows"))
+#if HAVE_W32_SYSTEM
             return "1";
+#else
+            return "";
+#endif
           else if (!strcmp (name, "version"))
             return _gpgrt_strusage (13);
           else if (!strcmp (name, "pgm"))
             return _gpgrt_strusage (11);
+          else if (!strcmp (name, "gpgrtversion"))
+            return PACKAGE_VERSION;
+          else if (!strncmp (name, "strusage", 8 ))
+            return _gpgrt_strusage (atoi (name+8));
           else
             return NULL;  /* Unknown system variable.  */
         }
@@ -1004,9 +1012,13 @@ handle_meta_if (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
   char *p;
   unsigned int idx;
   int result;
+  int active;
 
   idx = arg->internal->if_cond;
-  if (alternate) /* command "fi"  */
+
+  active = (idx && arg->internal->if_active[idx-1]);
+
+  if (alternate) /* command [fi] or [else] */
     {
       if (!idx)
         _gpgrt_log_info ("%s:%u: not in a conditional block; \"%s\" ignored\n",
@@ -1016,6 +1028,8 @@ handle_meta_if (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
         {
           if (alternate == 1) /* [fi] */
             arg->internal->if_cond--;
+          else if (!active) /* [else] in an inactive branch */
+            arg->internal->if_active[idx-1] = 0;
           else /* [else] */
             arg->internal->if_active[idx-1] = !arg->internal->if_active[idx-1];
         }
@@ -1026,6 +1040,14 @@ handle_meta_if (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
       _gpgrt_log_info ("%s:%u: too deeply nested condition\n",
                        arg->internal->confname, arg->lineno);
       return ARGPARSE_UNEXPECTED_META;
+    }
+
+  if (idx && !active)
+    {
+      /* Not an active branch and thus no need to evaluate the [if].  */
+      arg->internal->if_cond++;
+      arg->internal->if_active[arg->internal->if_cond-1] = 0;
+      return 0;
     }
 
   for (p = str1; *p && !(isascii (*p) && isspace (*p)); p++)
@@ -1432,14 +1454,18 @@ handle_metacmd (gpgrt_argparse_t *arg, char *keyword)
       && arg->internal->in_sysconf
       && arg->internal->user_seen
       && !arg->internal->user_active)
-    return 0; /* Skip this meta command.  */
+    {
+      return 0; /* Skip this meta command.  */
+    }
 
   /* Skip meta commands if they are in an active if-block.  But don't
-   * skip the [if] and [fi]. */
+   * skip the [if], [else], and [fi]. */
   if (arg->internal->if_cond
       && !arg->internal->if_active[arg->internal->if_cond - 1]
       && cmds[i].func != handle_meta_if)
-    return 0;
+    {
+      return 0;
+    }
 
   return cmds[i].func (arg, cmds[i].alternate, rest);
 }
@@ -1556,6 +1582,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
   /* _gpgrt_log_debug ("loop: if=%d/%d\n", arg->internal->if_cond, */
   /*                   arg->internal->if_cond? */
   /*                   arg->internal->if_active[arg->internal->if_cond-1]:-1);*/
+
   /* Find the next keyword.  */
   state = Ainit;
   i = 0;
