@@ -1508,6 +1508,5 @@ msgstr "pozor: %s nebylo možné rozpoznat\n"
 #~ msgid "Keyring open"
 #~ msgstr "Klíčenka otevřena"
 
-#, c-format
 #~ msgid "Usage: %s GPG-ERROR [...]\n"
 #~ msgstr "Použití: %s CHYBA_GPG […]\n"
