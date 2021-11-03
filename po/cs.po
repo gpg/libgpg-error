@@ -1,7 +1,7 @@
 # Czech translation of libgpg-error.
 # Copyright (C) 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
-# Petr Pisar <petr.pisar@atlas.cz>, 2009, 2012, 2014.
+# Petr Pisar <petr.pisar@atlas.cz>, 2009, 2012, 2014, 2021.
 #
 # certificate chain → řetězec (posloupnost) certifikátů
 # keybox → schránka (na klíče)
@@ -12,9 +12,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.18\n"
+"Project-Id-Version: libgpg-error 1.42\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2021-03-22 10:24+0100\n"
+"PO-Revision-Date: 2021-10-15 21:07+02:00\n"
 "Last-Translator: Petr Pisar <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "Language: cs\n"
@@ -135,7 +135,7 @@ msgid "Invalid cipher algorithm"
 msgstr "Neplatný šifrovací algoritmus"
 
 msgid "Cannot open keyring"
-msgstr "Klíčenka otevřena"
+msgstr "Klíčenku nelze otevřít"
 
 msgid "Invalid packet"
 msgstr "Neplatný packet"
@@ -740,41 +740,31 @@ msgid "Bad octal character in S-expression"
 msgstr "Chybný osmičkový znak v S-výrazu"
 
 msgid "All subkeys are expired or revoked"
-msgstr ""
+msgstr "Všem podklíčům skončila platnost nebo byly odvolány"
 
-#, fuzzy
-#| msgid "Data not encrypted"
 msgid "Database is corrupted"
-msgstr "Data nešifrována"
+msgstr "Databáze je poškozená"
 
 msgid "Server indicated a failure"
-msgstr ""
+msgstr "Server ohlásil selhání"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "No name"
-msgstr "Neznámé jméno"
+msgstr "Žádné jméno"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "No key"
-msgstr "Žádný veřejný klíč"
+msgstr "Žádný klíč"
 
 msgid "Legacy key"
-msgstr ""
+msgstr "Zastaralý klíč"
 
-#, fuzzy
-#| msgid "Buffer too short"
 msgid "Request too short"
-msgstr "Vyrovnávací paměť je příliš malá"
+msgstr "Požadavek je příliš krátký"
 
-#, fuzzy
-#| msgid "Line too long"
 msgid "Request too long"
-msgstr "Příliš dlouhý řádek"
+msgstr "Požadavek je příliš dlouhý"
 
 msgid "Object is in termination state"
-msgstr ""
+msgstr "Objekt je v konečném stavu"
 
 msgid "No certificate chain"
 msgstr "Chybí řetězec certifikátů"
@@ -852,7 +842,7 @@ msgid "Bogus string"
 msgstr "Chybný řetězec"
 
 msgid "Forbidden"
-msgstr ""
+msgstr "Zakázán"
 
 msgid "Key disabled"
 msgstr "Klíč zakázán"
@@ -861,13 +851,13 @@ msgid "Not possible with a card based key"
 msgstr "Nelze provést s klíčem na kartě"
 
 msgid "Invalid lock object"
-msgstr "Neplatný objekt"
+msgstr "Neplatný objekt zámku"
 
 msgid "True"
-msgstr ""
+msgstr "Pravda"
 
 msgid "False"
-msgstr ""
+msgstr "Nepravda"
 
 msgid "General IPC error"
 msgstr "Obecná chyba IPC"
@@ -941,486 +931,335 @@ msgstr "Chyba parametru IPC"
 msgid "Unknown IPC inquire"
 msgstr "Neznámý dotaz IPC"
 
-#, fuzzy
-#| msgid "No crypto engine"
 msgid "Crypto engine too old"
-msgstr "Chybí kryptografická jednotka"
+msgstr "Kryptografická jednotka je příliš stará"
 
 msgid "Screen or window too small"
-msgstr ""
+msgstr "Obrazovka nebo okno je příliš malé"
 
 msgid "Screen or window too large"
-msgstr ""
+msgstr "Obrazovka nebo okno je příliš velké"
 
 msgid "Required environment variable not set"
-msgstr ""
+msgstr "Požadovaná proměnná prostředí není nastavena"
 
 msgid "User ID already exists"
-msgstr ""
+msgstr "ID uživatele již existuje"
 
 msgid "Name already exists"
-msgstr ""
+msgstr "Název již existuje"
 
-#, fuzzy
-#| msgid "Duplicated value"
 msgid "Duplicated name"
-msgstr "Zdvojená hodnota"
+msgstr "Zdvojený název"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Object is too young"
-msgstr "Certifikát je příliš mladý"
+msgstr "Objekt je příliš mladý"
 
-#, fuzzy
-#| msgid "Provided object is too short"
 msgid "Object is too old"
-msgstr "Dodaný objekt je příliš krátký"
+msgstr "Objekt je příliš starý"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "Unknown flag"
-msgstr "Neznámé jméno"
+msgstr "Neznámý příznak"
 
-#, fuzzy
-#| msgid "Invalid operation code"
 msgid "Invalid execution order"
-msgstr "Neplatný kód operace"
+msgstr "Neplatné pořadí vykonávání"
 
 msgid "Already fetched"
-msgstr ""
+msgstr "Již staženo"
 
 msgid "Try again later"
-msgstr ""
+msgstr "Opakujte později"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "Wrong name"
-msgstr "Neznámé jméno"
+msgstr "Špatný název"
 
-#, fuzzy
-#| msgid "Not enabled"
 msgid "Not authenticated"
-msgstr "Nezapnuto"
+msgstr "Neautentizováno"
 
-#, fuzzy
-#| msgid "Unsupported protection"
 msgid "Bad authentication"
-msgstr "Nepodporovaná ochrana"
+msgstr "Chybná autentizace"
 
-#, fuzzy
-#| msgid "No agent running"
 msgid "No Keybox daemon running"
-msgstr "Agent neběží"
+msgstr "Démon pro schránku na klíče neběží"
 
-#, fuzzy
-#| msgid "SmartCard daemon error"
 msgid "Keybox daemon error"
-msgstr "Chyba démona pro čipové karty"
+msgstr "Chyba démona pro schránku na klíče"
 
 msgid "Service is not running"
-msgstr ""
+msgstr "Služba neběží"
 
-#, fuzzy
-#| msgid "Keyserver error"
 msgid "Service error"
-msgstr "Chyba serveru s klíči"
+msgstr "Chyba služby"
 
 msgid "System bug detected"
-msgstr ""
+msgstr "Objevena chyba systému"
 
-#, fuzzy
-#| msgid "Unknown system error"
 msgid "Unknown DNS error"
-msgstr "Neznámá chyba systému"
+msgstr "Neznámá chyba DNS"
 
-#, fuzzy
-#| msgid "Invalid OID string"
 msgid "Invalid DNS section"
-msgstr "Neplatný řetězec OID"
+msgstr "Neplatný oddíl DNS"
 
-#, fuzzy
-#| msgid "Invalid S-expression"
 msgid "Invalid textual address form"
-msgstr "Neplatný S-výraz"
+msgstr "Neplatná textová podoba adresy"
 
-#, fuzzy
-#| msgid "Missing issuer certificate"
 msgid "Missing DNS query packet"
-msgstr "Chybí certifikát vydavatele"
+msgstr "Chybí packet s dotazem DNS"
 
 msgid "Missing DNS answer packet"
-msgstr ""
+msgstr "Chybí packet s odpovědí DNS"
 
 msgid "Connection closed in DNS"
-msgstr ""
+msgstr "Spojení v DNS uzavřeno"
 
-#, fuzzy
-#| msgid "Decryption failed"
 msgid "Verification failed in DNS"
-msgstr "Dešifrování selhalo"
+msgstr "Ověřování v DNS selhalo"
 
-#, fuzzy
-#| msgid "Timeout"
 msgid "DNS Timeout"
-msgstr "Čas vypršel"
+msgstr "Časový limit pro DNS vypršel"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "General LDAP error"
-msgstr "Obecná chyba IPC"
+msgstr "Obecná chyba LDAP"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP attribute error"
-msgstr "Obecná chyba"
+msgstr "Obecná chyba atributu LDAP"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP name error"
-msgstr "Obecná chyba"
+msgstr "Obecná chyba názvu LDAP"
 
-#, fuzzy
-#| msgid "General Assuan error"
 msgid "General LDAP security error"
-msgstr "Obecná chyba Assuanu"
+msgstr "Obecná chyba zabezpečení LDAP"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP service error"
-msgstr "Obecná chyba"
+msgstr "Obecná chyba služby LDAP"
 
-#, fuzzy
-#| msgid "General Assuan error"
 msgid "General LDAP update error"
-msgstr "Obecná chyba Assuanu"
+msgstr "Obecná chyba aktualizace LDAP"
 
 msgid "Experimental LDAP error code"
-msgstr ""
+msgstr "Experimentální chybový kód LDAP"
 
-#, fuzzy
-#| msgid "IPC write error"
 msgid "Private LDAP error code"
-msgstr "Chyba zápisu IPC"
+msgstr "Soukromý chybový kód LDAP"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "Other general LDAP error"
-msgstr "Obecná chyba IPC"
+msgstr "Jiná obecná chyba LDAP"
 
-#, fuzzy
-#| msgid "IPC connect call failed"
 msgid "LDAP connecting failed (X)"
-msgstr "IPC volání connect (připojit) selhalo"
+msgstr "Spojení LDAP selhalo (X)"
 
-#, fuzzy
-#| msgid "General error"
 msgid "LDAP referral limit exceeded"
-msgstr "Obecná chyba"
+msgstr "Překročeno omezení na počet odkazů LDAP"
 
 msgid "LDAP client loop"
-msgstr ""
+msgstr "Smyčka klienta LDAP"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "No LDAP results returned"
-msgstr "Vyžadován reset karty"
+msgstr "Nevráceny žádné výsledky LDAP"
 
-#, fuzzy
-#| msgid "Element not found"
 msgid "LDAP control not found"
-msgstr "Prvek nenalezen"
+msgstr "Ovládání LDAP nenalezeno"
 
-#, fuzzy
-#| msgid "Not supported"
 msgid "Not supported by LDAP"
-msgstr "Nepodporováno"
+msgstr "Nepodporováno v LDAP"
 
-#, fuzzy
-#| msgid "Unexpected error"
 msgid "LDAP connect error"
-msgstr "Neočekávaná chyba"
+msgstr "Chyba připojování LDAP"
 
 msgid "Out of memory in LDAP"
-msgstr ""
+msgstr "Nedostatek paměti v LDAP"
 
 msgid "Bad parameter to an LDAP routine"
-msgstr ""
+msgstr "Chybná parametr ve volání LDAP"
 
-#, fuzzy
-#| msgid "Unsupported operation"
 msgid "User cancelled LDAP operation"
-msgstr "Nepodporovaná operace"
+msgstr "Uživatel zrušil operaci LDAP"
 
-#, fuzzy
-#| msgid "Bad certificate"
 msgid "Bad LDAP search filter"
-msgstr "Chybný certifikát"
+msgstr "Chybný vyhledávací filtr LDAP"
 
-#, fuzzy
-#| msgid "Unknown extension"
 msgid "Unknown LDAP authentication method"
-msgstr "Neznámé rozšíření"
+msgstr "Neznámá metoda autentizace LDAP"
 
-#, fuzzy
-#| msgid "Timeout"
 msgid "Timeout in LDAP"
-msgstr "Čas vypršel"
+msgstr "Čas vypršel v LDAP"
 
-#, fuzzy
-#| msgid "dirmngr error"
 msgid "LDAP decoding error"
-msgstr "chyba dirmngr"
+msgstr "Chyba dekódování LDAP"
 
-#, fuzzy
-#| msgid "dirmngr error"
 msgid "LDAP encoding error"
-msgstr "chyba dirmngr"
+msgstr "Chyba kódování do LDAP"
 
-#, fuzzy
-#| msgid "IPC read error"
 msgid "LDAP local error"
-msgstr "Chyba čtení IPC"
+msgstr "Místní chyba LDAP"
 
-#, fuzzy
-#| msgid "Not an IPC server"
 msgid "Cannot contact LDAP server"
-msgstr "Není serverem IPC"
+msgstr "LDAP server nelze kontaktovat"
 
-#, fuzzy
-#| msgid "Success"
 msgid "LDAP success"
-msgstr "Úspěch"
+msgstr "Úspěch LDAP"
 
-# Nastavení nebo nastavování?
-#, fuzzy
-#| msgid "Configuration error"
 msgid "LDAP operations error"
-msgstr "Chyba konfigurace"
+msgstr "Chyba operací v LDAP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "LDAP protocol error"
-msgstr "Narušení protokolu"
+msgstr "Chyba protokolu LDAP"
 
 msgid "Time limit exceeded in LDAP"
-msgstr ""
+msgstr "Časový limit v LDAP vypršel"
 
 msgid "Size limit exceeded in LDAP"
-msgstr ""
+msgstr "Omezení na velikost v LDAP překročeno"
 
 msgid "LDAP compare false"
-msgstr ""
+msgstr "Nepravdivé porovnání LDAP"
 
 msgid "LDAP compare true"
-msgstr ""
+msgstr "Pravdivé porovnání LDAP"
 
-#, fuzzy
-#| msgid "Unknown extension"
 msgid "LDAP authentication method not supported"
-msgstr "Neznámé rozšíření"
+msgstr "Autentizační metoda LDAP není podporována"
 
 msgid "Strong(er) LDAP authentication required"
-msgstr ""
+msgstr "Požadována silnější autentizace LDAP"
 
-#, fuzzy
-#| msgid "Fatal alert message received"
 msgid "Partial LDAP results+referral received"
-msgstr "Přijata nepřekonatelná chybová zpráva"
+msgstr "Částečný výsledek LDAP a přijatý odkaz"
 
-#, fuzzy
-#| msgid "General error"
 msgid "LDAP referral"
-msgstr "Obecná chyba"
+msgstr "Odkaz LDAP"
 
 msgid "Administrative LDAP limit exceeded"
-msgstr ""
+msgstr "Administrativní omezení LDAP překročeno"
 
 msgid "Critical LDAP extension is unavailable"
-msgstr ""
+msgstr "Kritické rozšíření LDAP není dostupné"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "Confidentiality required by LDAP"
-msgstr "Vyžadován reset karty"
+msgstr "LDAP vyžaduje důvěrnost"
 
 msgid "LDAP SASL bind in progress"
-msgstr ""
+msgstr "Navazuje se LDAP SASL"
 
 msgid "No such LDAP attribute"
-msgstr ""
+msgstr "Taková LDAP atribut neexistuje"
 
-#, fuzzy
-#| msgid "Invalid attribute"
 msgid "Undefined LDAP attribute type"
-msgstr "Neplatný atribut"
+msgstr "Nedefinovaný druh LDAP atributu"
 
-#, fuzzy
-#| msgid "Unsupported protection"
 msgid "Inappropriate matching in LDAP"
-msgstr "Nepodporovaná ochrana"
+msgstr "Nevhodné shody v LDAP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "Constraint violation in LDAP"
-msgstr "Narušení protokolu"
+msgstr "Porušení omezení v LDAP"
 
 msgid "LDAP type or value exists"
-msgstr ""
+msgstr "Typ LDAP nebo hodnota existuje"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid syntax in LDAP"
-msgstr "Neplatná stav"
+msgstr "Neplatná skladba v LDAP"
 
-#, fuzzy
-#| msgid "No CMS object"
 msgid "No such LDAP object"
-msgstr "Žádný objekt CMS"
+msgstr "Žádný takový objekt LDAP"
 
-#, fuzzy
-#| msgid "Hardware problem"
 msgid "LDAP alias problem"
-msgstr "Hardwarový problém"
+msgstr "Problém s aliasem LDAP"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid DN syntax in LDAP"
-msgstr "Neplatná stav"
+msgstr "Neplatná skladba DN v LDAP"
 
 msgid "LDAP entry is a leaf"
-msgstr ""
+msgstr "LDAP záznam je list"
 
-#, fuzzy
-#| msgid "Encoding problem"
 msgid "LDAP alias dereferencing problem"
-msgstr "Chyba kódování"
+msgstr "Problém s vyhodnocováním odkazu LDAP"
 
 msgid "LDAP proxy authorization failure (X)"
-msgstr ""
+msgstr "Selhání autorizace LDAP proxy (X)"
 
-#, fuzzy
-#| msgid "Unsupported protection"
 msgid "Inappropriate LDAP authentication"
-msgstr "Nepodporovaná ochrana"
+msgstr "Nevhodné autentizace LDAP"
 
-#, fuzzy
-#| msgid "Invalid card"
 msgid "Invalid LDAP credentials"
-msgstr "Neplatná karta"
+msgstr "Neplatné autentizační údaje LDAP"
 
 msgid "Insufficient access for LDAP"
-msgstr ""
+msgstr "Nedostatečná přístupová práva k LDAP"
 
 msgid "LDAP server is busy"
-msgstr ""
+msgstr "Server LDAP je zaneprázdněný"
 
-#, fuzzy
-#| msgid "No keyserver available"
 msgid "LDAP server is unavailable"
-msgstr "Není dostupný žádný server klíčů"
+msgstr "Server LDAP není dostupný"
 
 msgid "LDAP server is unwilling to perform"
-msgstr ""
+msgstr "Server LDAP není ochoten vyhodnotit požadavek"
 
 msgid "Loop detected by LDAP"
-msgstr ""
+msgstr "Objevena smyčka v LDAP"
 
-#, fuzzy
-#| msgid "Missing action"
 msgid "LDAP naming violation"
-msgstr "Chybí akce"
+msgstr "Narušení pojmenování v LDAP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "LDAP object class violation"
-msgstr "Narušení protokolu"
+msgstr "Narušení třídy objektu LDAP"
 
-#, fuzzy
-#| msgid "Operation not yet finished"
 msgid "LDAP operation not allowed on non-leaf"
-msgstr "Operace ještě neskončila"
+msgstr "Operace LDAP není na vnitřních uzlech dovolena"
 
-#, fuzzy
-#| msgid "Operation cancelled"
 msgid "LDAP operation not allowed on RDN"
-msgstr "Operace zrušena"
+msgstr "Operace LDAP není dovolena na RDN"
 
 msgid "Already exists (LDAP)"
-msgstr ""
+msgstr "Již existuje (LDAP)"
 
 msgid "Cannot modify LDAP object class"
-msgstr ""
+msgstr "Třídu objektu LDAP nelze upravit"
 
-#, fuzzy
-#| msgid "Line too long"
 msgid "LDAP results too large"
-msgstr "Příliš dlouhý řádek"
+msgstr "Výsledek LDAP je příliš velký"
 
-#, fuzzy
-#| msgid "Operation cancelled"
 msgid "LDAP operation affects multiple DSAs"
-msgstr "Operace zrušena"
+msgstr "LDAP operace ovlivňuje více DSA"
 
 msgid "Virtual LDAP list view error"
-msgstr ""
+msgstr "Chyba v pohledu na virtuální seznam LDAP"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "Other LDAP error"
-msgstr "Obecná chyba IPC"
+msgstr "Jiný chyba LDAP"
 
-#, fuzzy
-#| msgid "Resources exhausted"
 msgid "Resources exhausted in LCUP"
-msgstr "Zdroje vyčerpány"
+msgstr "Zdroje vyčerpány v LCUP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "Security violation in LCUP"
-msgstr "Narušení protokolu"
+msgstr "Narušení bezpečnosti v LCUP"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid data in LCUP"
-msgstr "Neplatná stav"
+msgstr "Neplatná data v LCUP"
 
-#, fuzzy
-#| msgid "Unsupported certificate"
 msgid "Unsupported scheme in LCUP"
-msgstr "Nepodporovaný certifikát"
+msgstr "Nepodporované schéma v LCUP"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "Reload required in LCUP"
-msgstr "Vyžadován reset karty"
+msgstr "LCUP vyžaduje nové načtení"
 
-#, fuzzy
-#| msgid "Success"
 msgid "LDAP cancelled"
-msgstr "Úspěch"
+msgstr "Operace LDAP zrušena"
 
-#, fuzzy
-#| msgid "Not operational"
 msgid "No LDAP operation to cancel"
-msgstr "Nefunkční"
+msgstr "Žádná operace LDAP ke zrušení"
 
-#, fuzzy
-#| msgid "Not operational"
 msgid "Too late to cancel LDAP"
-msgstr "Nefunkční"
+msgstr "Příliš pozdě na zrušení operace LDAP"
 
-#, fuzzy
-#| msgid "Not an IPC server"
 msgid "Cannot cancel LDAP"
-msgstr "Není serverem IPC"
+msgstr "Operaci LDAP nelze zrušit"
 
-#, fuzzy
-#| msgid "Decryption failed"
 msgid "LDAP assertion failed"
-msgstr "Dešifrování selhalo"
+msgstr "Tvrzení LDAP selhalo"
 
 msgid "Proxied authorization denied by LDAP"
-msgstr ""
+msgstr "Delegovaná autorizace odmítnuta protokolem LDAP"
 
 msgid "User defined error code 1"
 msgstr "Uživatelem definovaný chybový kód 1"
@@ -1470,104 +1309,98 @@ msgstr "Uživatelem definovaný chybový kód 15"
 msgid "User defined error code 16"
 msgstr "Uživatelem definovaný chybový kód 16"
 
-#, fuzzy
-#| msgid "Success"
 msgid "SQL success"
-msgstr "Úspěch"
+msgstr "Úspěch SQL"
 
-#, fuzzy
-#| msgid "Syntax error"
 msgid "SQL error"
-msgstr "Chyba syntaxe"
+msgstr "Chyba SQL"
 
 msgid "Internal logic error in SQL library"
-msgstr ""
+msgstr "Vnitřní chyba v knihovně SQL"
 
 msgid "Access permission denied (SQL)"
-msgstr ""
+msgstr "Přístupová práva zamítnuta (SQL)"
 
 msgid "SQL abort was requested"
-msgstr ""
+msgstr "Bylo vyžádání ukončení SQL"
 
 msgid "SQL database file is locked"
-msgstr ""
+msgstr "Soubor s databází SQL je zamknutý"
 
 msgid "An SQL table in the database is locked"
-msgstr ""
+msgstr "Tabulka SQL v databázi je zamknuta"
 
 msgid "SQL library ran out of core"
-msgstr ""
+msgstr "SQL knihovně došla paměť"
 
 msgid "Attempt to write a readonly SQL database"
-msgstr ""
+msgstr "Pokus zapsat do SQL databáze jen pro čtení"
 
 msgid "SQL operation terminated by interrupt"
-msgstr ""
+msgstr "Operace SQL ukončena přerušením"
 
 msgid "I/O error during SQL operation"
-msgstr ""
+msgstr "Vstupně-výstupní chyba během operace SQL"
 
 msgid "SQL database disk image is malformed"
-msgstr ""
+msgstr "Obraz disku databáze SQL je poškozený"
 
 msgid "Unknown opcode in SQL file control"
-msgstr ""
+msgstr "Neznámý kód operace v řízení SQL souboru"
 
 msgid "Insertion failed because SQL database is full"
-msgstr ""
+msgstr "Vložení do SQL databáze selhalo, protože je plná"
 
 msgid "Unable to open the SQL database file"
-msgstr ""
+msgstr "Soubor SQL databáze nelze otevřít"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "SQL database lock protocol error"
-msgstr "Narušení protokolu"
+msgstr "Chyba v zamykacím protokolu SQL databáze"
 
 msgid "(internal SQL code: empty)"
-msgstr ""
+msgstr "(vnitřní kód SQL: prázdný)"
 
 msgid "SQL database schema changed"
-msgstr ""
+msgstr "Schéma SQL databáze se změnilo"
 
 msgid "String or blob exceeds size limit (SQL)"
-msgstr ""
+msgstr "Řetězec nebo binární objekt překračuje hraniční velikost (SQL)"
 
 msgid "SQL abort due to constraint violation"
-msgstr ""
+msgstr "SQL ukončeně kvůli narušení omezení"
 
 msgid "Data type mismatch (SQL)"
-msgstr ""
+msgstr "Datový typ se neshoduje (SQL)"
 
 msgid "SQL library used incorrectly"
-msgstr ""
+msgstr "SQL knihovna byla použita nesprávně"
 
 msgid "SQL library uses unsupported OS features"
-msgstr ""
+msgstr "SQL knihovna používá nepodporované vlastnosti OS"
 
 msgid "Authorization denied (SQL)"
-msgstr ""
+msgstr "Autorizace zamítnuta (SQL)"
 
 msgid "(unused SQL code: format)"
-msgstr ""
+msgstr "(nepoužitý kód SQL: formát)"
 
 msgid "SQL bind parameter out of range"
-msgstr ""
+msgstr "Vázaný parametr SQL je mimo rozsah"
 
 msgid "File opened that is not an SQL database file"
-msgstr ""
+msgstr "Otevřený soubor není SQL databází"
 
 msgid "Notifications from SQL logger"
-msgstr ""
+msgstr "Upozornění od protokolování SQL"
 
 msgid "Warnings from SQL logger"
-msgstr ""
+msgstr "Varování od protokolování SQL"
 
 msgid "SQL has another row ready"
-msgstr ""
+msgstr "SQL již obsahuje jiný řádek"
 
 msgid "SQL has finished executing"
-msgstr ""
+msgstr "SQL dokončilo vykonávání"
 
 msgid "System error w/o errno"
 msgstr "Chyba systému bez čísla chyby (errno)"
@@ -1582,16 +1415,16 @@ msgid "Unknown error code"
 msgstr "Neznámý kód chyby"
 
 msgid "argument not expected"
-msgstr "argument nebyl očekáván"
+msgstr "argument neočekáván"
 
 msgid "read error"
-msgstr "chyba při čtení"
+msgstr "chyba čtení"
 
 msgid "keyword too long"
 msgstr "klíčové slovo je příliš dlouhé"
 
 msgid "missing argument"
-msgstr "postrádám argument"
+msgstr "chybí argument"
 
 msgid "invalid argument"
 msgstr "neplatný argument"
@@ -1600,38 +1433,30 @@ msgid "invalid command"
 msgstr "neplatný příkaz"
 
 msgid "invalid alias definition"
-msgstr "neplatný definice aliasu"
+msgstr "neplatná definice aliasu"
 
-# Nastavení nebo nastavování?
-#, fuzzy
-#| msgid "Configuration error"
 msgid "permission error"
-msgstr "Chyba konfigurace"
+msgstr "chyba oprávnění"
 
 msgid "out of core"
 msgstr "nedostatek paměti"
 
-#, fuzzy
-#| msgid "invalid command"
 msgid "invalid meta command"
-msgstr "neplatný příkaz"
+msgstr "neplatný metapříkaz"
 
-#, fuzzy
-#| msgid "Unknown command"
 msgid "unknown meta command"
-msgstr "Neznámý příkaz"
+msgstr "neznámý metapříkaz"
 
-#, fuzzy
-#| msgid "Unexpected IPC command"
 msgid "unexpected meta command"
-msgstr "Neočekávaný příkaz IPC"
+msgstr "neočekávaný metapříkaz"
 
+# Options from a konfiguration file.
 msgid "invalid option"
-msgstr "neplatný parametr"
+msgstr "neplatný volba"
 
 #, c-format
 msgid "missing argument for option \"%.50s\"\n"
-msgstr "postrádám argument u volby „%.50s“\n"
+msgstr "u volby „%.50s“ chybí argument\n"
 
 #, c-format
 msgid "invalid argument for option \"%.50s\"\n"
@@ -1639,7 +1464,7 @@ msgstr "neplatný argument u volby „%.50s“\n"
 
 #, c-format
 msgid "option \"%.50s\" does not expect an argument\n"
-msgstr "volba „%.50s“ nečeká argument\n"
+msgstr "volba „%.50s“ nepřijímá argument\n"
 
 #, c-format
 msgid "invalid command \"%.50s\"\n"
@@ -1655,54 +1480,34 @@ msgstr "příkaz „%.50s“ není jednoznačný\n"
 
 #, c-format
 msgid "invalid option \"%.50s\"\n"
-msgstr "neplatný parametr „%.50s“\n"
+msgstr "neplatná volba „%.50s“\n"
 
 #, c-format
 msgid "Note: no default option file '%s'\n"
-msgstr ""
+msgstr "Poznámka: žádný výchozí soubor s volbami „%s“\n"
 
 #, c-format
 msgid "reading options from '%s'\n"
-msgstr ""
+msgstr "volby se čtou z „%s“\n"
 
 #, c-format
 msgid "option file '%s': %s\n"
-msgstr ""
+msgstr "soubor s volbami „%s“: %s\n"
 
 #, c-format
 msgid "Note: ignoring option \"--%s\" due to global config\n"
-msgstr ""
+msgstr "Poznámka: přepínač „--%s“ se ignoruje kvůli globální konfiguraci\n"
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
-msgstr ""
+msgstr "Chyby hlaste (anglicky) na <https://bugs.gnupg.org>.\n"
 
 #, c-format
 msgid "warning: could not recognize %s\n"
 msgstr "pozor: %s nebylo možné rozpoznat\n"
 
-# Yet another expression for `not enough memory' :)
-#~ msgid "out of core\n"
-#~ msgstr "nedostatek paměti\n"
+#~ msgid "Keyring open"
+#~ msgstr "Klíčenka otevřena"
 
+#, c-format
 #~ msgid "Usage: %s GPG-ERROR [...]\n"
 #~ msgstr "Použití: %s CHYBA_GPG […]\n"
-
-#, fuzzy
-#~| msgid "Resources exhausted"
-#~ msgid "LCUP Resources exhausted"
-#~ msgstr "Zdroje vyčerpány"
-
-#, fuzzy
-#~| msgid "Invalid data"
-#~ msgid "LCUP Invalid data"
-#~ msgstr "Neplatná data"
-
-#, fuzzy
-#~| msgid "General error"
-#~ msgid "LDAP Other general error"
-#~ msgstr "Obecná chyba"
-
-#, fuzzy
-#~| msgid "dirmngr error"
-#~ msgid "Encoding error"
-#~ msgstr "chyba dirmngr"
