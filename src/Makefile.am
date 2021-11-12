@@ -86,8 +86,7 @@ lock_obj_pub = \
 
 lib_LTLIBRARIES = libgpg-error.la
 nodist_include_HEADERS = gpg-error.h gpgrt.h
-dist_bin_SCRIPTS = gpgrt-config
-bin_SCRIPTS = gpg-error-config
+bin_SCRIPTS = gpgrt-config gpg-error-config
 m4datadir = $(datadir)/aclocal
 m4data_DATA = gpg-error.m4 gpgrt.m4
 
@@ -101,7 +100,7 @@ EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 gpgrt.m4 \
 	gpg-error.vers gpg-error.def.in \
         versioninfo.rc.in gpg-error.w32-manifest.in \
-	gpg-error-config-test.sh gpg-error.pc.in \
+	gpgrt-config.in gpg-error-config-test.sh.in gpg-error.pc.in \
 	gen-lock-obj.sh $(lock_obj_pub)
 
 BUILT_SOURCES = $(srcdir)/err-sources.h $(srcdir)/err-codes.h \
@@ -116,6 +115,7 @@ CLEANFILES = code-to-errno.h code-from-errno.h \
         mkerrcodes$(EXEEXT_FOR_BUILD) mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
 	gpg-extra/errno.h mkheader$(EXEEXT_FOR_BUILD) \
+	gpgrt-config gpg-error-config-old gpg-error-config-test.sh \
 	gpg-error-config gpg-error-config-test.log \
 	$(tmp_files) lock-obj-pub.native.h
 
