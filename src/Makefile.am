@@ -346,7 +346,7 @@ gpg-error.h: Makefile mkheader$(EXEEXT_FOR_BUILD) $(parts_of_gpg_error_h) \
 gpgrt.h: gpg-error.h
 	cp gpg-error.h gpgrt.h
 
-gpg-error-config: gpgrt-config gpg-error-config-old
+gpg-error-config: gpgrt-config gpg-error-config-old gpg-error-config-test.sh
 	@echo $(ECHO_N) "Confirm gpg-error-config works... $(ECHO_C)"
 	@if ./gpg-error-config-test.sh --old-new; then \
 	  echo "good";                                         \
