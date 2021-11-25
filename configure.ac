@@ -633,6 +633,15 @@ AM_CONDITIONAL(CROSS_COMPILING, test x$cross_compiling = xyes)
 AM_CONDITIONAL(FORCE_USE_SYSCFG, test x$force_use_syscfg = xyes)
 AM_CONDITIONAL(HAVE_GENERATED_LOCK_OBJ_H, test x$lock_obj_h_generated = xyes)
 
+have_lock_optimization=no
+if test "$gl_threads_api" = posix; then
+  if test x$ac_cv_header_sys_single_threaded_h = xyes \
+       -o x$gl_cv_have_weak = xyes; then
+    have_lock_optimization=yes
+  fi
+fi
+AM_CONDITIONAL(HAVE_LOCK_OPTIMIZATION, test "$have_lock_optimization" = yes)
+
 AC_DEFINE_UNQUOTED(HOST_TRIPLET_STRING, "$host", [The host triplet])
 
 
