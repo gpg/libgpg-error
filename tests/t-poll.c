@@ -177,28 +177,45 @@ static void
 create_pipe (estream_t *r_in, estream_t *r_out)
 {
   gpg_error_t err;
+#ifdef _WIN32
+  HANDLE pipe_r;
+  HANDLE pipe_w;
+#else
   int filedes[2];
+#endif
+  es_syshd_t syshd[2];
 
 #ifdef _WIN32
-  if (_pipe (filedes, 512, 0) == -1)
+  if (CreatePipe (&pipe_r, &pipe_w, NULL, 512) == 0)
+    die ("error creating a pipe: rc=%d\n", (int)GetLastError ());
+
+  syshd[0].type = syshd[1].type = ES_SYSHD_HANDLE;
+  syshd[0].u.handle = pipe_r;
+  syshd[1].u.handle = pipe_w;
+
+  show ("created pipe [%p, %p]\n", pipe_r, pipe_w);
 #else
   if (pipe (filedes) == -1)
-#endif
     {
       err = gpg_error_from_syserror ();
       die ("error creating a pipe: %s\n", gpg_strerror (err));
     }
 
-  show ("created pipe [%d, %d]\n", filedes[0], filedes[1]);
+  syshd[0].type = syshd[1].type = ES_SYSHD_FD;
+  syshd[0].u.fd = filedes[0];
+  syshd[1].u.fd = filedes[1];
 
-  *r_in = es_fdopen (filedes[0], "r,pollable");
+  show ("created pipe [%d, %d]\n", filedes[0], filedes[1]);
+#endif
+
+  *r_in = es_sysopen (&syshd[0], "r,pollable");
   if (!*r_in)
     {
       err = gpg_error_from_syserror ();
       die ("error creating a stream for a pipe: %s\n", gpg_strerror (err));
     }
 
-  *r_out = es_fdopen (filedes[1], "w,pollable");
+  *r_out = es_sysopen (&syshd[1], "w,pollable");
   if (!*r_out)
     {
       err = gpg_error_from_syserror ();
