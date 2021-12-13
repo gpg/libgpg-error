@@ -635,9 +635,13 @@ AM_CONDITIONAL(HAVE_GENERATED_LOCK_OBJ_H, test x$lock_obj_h_generated = xyes)
 
 have_lock_optimization=no
 if test "$gl_threads_api" = posix; then
-  if test x$ac_cv_header_sys_single_threaded_h = xyes \
-       -o x$gl_cv_have_weak = xyes; then
+  if test x$ac_cv_header_sys_single_threaded_h = xyes; then
     have_lock_optimization=yes
+  else
+    case "$gl_cv_have_weak" in
+        *yes) have_lock_optimization=yes ;;
+        * ) ;;
+    esac
   fi
 fi
 AM_CONDITIONAL(HAVE_LOCK_OPTIMIZATION, test "$have_lock_optimization" = yes)
