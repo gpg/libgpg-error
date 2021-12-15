@@ -19,7 +19,7 @@
 
 # (Process this file with autoconf to produce a configure script.)
 # The following lines are used by ./autogen.sh.
-AC_PREREQ([2.59])
+AC_PREREQ([2.69])
 min_automake_version="1.14"
 
 # To build a release you need to create a tag with the version number
@@ -65,7 +65,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([serial-tests dist-bzip2])
 AM_MAINTAINER_MODE
 AC_CONFIG_SRCDIR([src/err-sources.h.in])
-AC_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AM_SILENT_RULES
 
@@ -190,7 +190,6 @@ AM_GNU_GETTEXT_VERSION([0.19.3])
 AM_GNU_GETTEXT([external])
 
 # Checks for header files.
-AC_HEADER_STDC
 AC_CHECK_HEADERS([locale.h stdint.h sys/select.h sys/time.h \
                   signal.h poll.h pwd.h])
 
