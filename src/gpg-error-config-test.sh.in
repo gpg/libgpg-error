@@ -1,5 +1,9 @@
 #!@INSTALLSHELLPATH@
 
+# For this test, we clear PKG_CONFIG_LIBDIR, so that gpgrt-config
+# command can access ./gpg-error.pc
+unset PKG_CONFIG_LIBDIR
+
 srcdir=${0%/*}
 
 PKG_CONFIG_PATH="."
