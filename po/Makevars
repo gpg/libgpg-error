@@ -1,4 +1,8 @@
 # Makefile variables for PO directory in any package using GNU gettext.
+#
+# Copyright (C) 2003-2019 Free Software Foundation, Inc.
+# This file is free software; the Free Software Foundation gives
+# unlimited permission to use, copy, distribute, and modify it.
 
 # Usually the message domain is the same as the package name.
 DOMAIN = $(PACKAGE)
@@ -42,7 +46,6 @@ PACKAGE_GNU = no
 # can write to without being subscribed, or the URL of a web page through
 # which the translators can contact you.
 MSGID_BUGS_ADDRESS = translations@gnupg.org
-
 
 # This is the list of locale categories, beyond LC_MESSAGES, for which the
 # message catalogs shall be used.  It is usually empty.
