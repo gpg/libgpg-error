@@ -34,7 +34,7 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-doc
 GITLOG_TO_CHANGELOG=gitlog-to-changelog
 
 EXTRA_DIST = autogen.sh autogen.rc libgpg-error.spec.in 		\
-             VERSION COPYING COPYING.LIB potomo doc/HACKING ChangeLog-2011 \
+             VERSION COPYING COPYING.LIB doc/HACKING ChangeLog-2011 \
 	     po/ChangeLog-2011 m4/ChangeLog-2011 contrib/ChangeLog-2011 \
              build-aux/git-log-footer  build-aux/git-log-fix
 
@@ -103,12 +103,12 @@ gen-ChangeLog:
 if HAVE_W32_SYSTEM
 install-data-hook:
 	set -e; \
-	for i in $$($(top_srcdir)/potomo --get-linguas $(top_srcdir)/po); do \
-           $(MKDIR_P) "$(DESTDIR)$(localedir)/$$i/LC_MESSAGES" || true; \
-           rm -f "$(DESTDIR)$(localedir)/$$i/LC_MESSAGES/libgpg-error.mo" \
-                                                 2>/dev/null || true; \
-           $(top_srcdir)/potomo $(top_srcdir)/po/$$i.po \
-              "$(DESTDIR)$(localedir)/$$i/LC_MESSAGES/libgpg-error.mo" ; \
+	for i in $$(sed -e '/^#/d' -e 's/#.*//' $(top_srcdir)/po/LINGUAS); do \
+           $(MKDIR_P) "$(DESTDIR)$(localedir)/$$i/LC_MESSAGES" || true;       \
+           rm -f "$(DESTDIR)$(localedir)/$$i/LC_MESSAGES/libgpg-error.mo"     \
+                                                 2>/dev/null || true;         \
+           msgfmt -o "$(DESTDIR)$(localedir)/$$i/LC_MESSAGES/libgpg-error.mo" \
+                   $(top_srcdir)/po/$$i.po ;                                  \
 	done
 endif
 
