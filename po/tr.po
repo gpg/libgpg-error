@@ -1,0 +1,1496 @@
+# Turkish translations for libgpg-error messages.
+# Emir SARI <emir_sari@icloud.com>, 2022
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libgpg-error\n"
+"Report-Msgid-Bugs-To: translations@gnupg.org\n"
+"PO-Revision-Date: 2022-01-13 20:00+0100\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.11.4\n"
+
+msgid "Unspecified source"
+msgstr "Tanımlanmamış kaynak"
+
+msgid "gcrypt"
+msgstr "gcrypt"
+
+msgid "GnuPG"
+msgstr "GnuPG"
+
+msgid "GpgSM"
+msgstr "GpgSM"
+
+msgid "GPG Agent"
+msgstr "GPG Aracısı"
+
+msgid "Pinentry"
+msgstr "Parola girişi"
+
+msgid "SCD"
+msgstr "SCD"
+
+msgid "GPGME"
+msgstr "GPGME"
+
+msgid "Keybox"
+msgstr "Keybox"
+
+msgid "KSBA"
+msgstr "KSBA"
+
+msgid "Dirmngr"
+msgstr "Dirmngr"
+
+msgid "GSTI"
+msgstr "GSTI"
+
+msgid "GPA"
+msgstr "GPA"
+
+msgid "Kleopatra"
+msgstr "Kleopatra"
+
+msgid "G13"
+msgstr "G13"
+
+msgid "Assuan"
+msgstr "Assuan"
+
+msgid "TPM2d"
+msgstr "TPM2d"
+
+msgid "TLS"
+msgstr "TLS"
+
+msgid "Any source"
+msgstr "Herhangi bir kaynak"
+
+msgid "User defined source 1"
+msgstr "Kullanıcı tanımlı kaynak 1"
+
+msgid "User defined source 2"
+msgstr "Kullanıcı tanımlı kaynak 2"
+
+msgid "User defined source 3"
+msgstr "Kullanıcı tanımlı kaynak 3"
+
+msgid "User defined source 4"
+msgstr "Kullanıcı tanımlı kaynak 4"
+
+msgid "Unknown source"
+msgstr "Bilinmeyen kaynak"
+
+msgid "Success"
+msgstr "Başarılı"
+
+msgid "General error"
+msgstr "Genel hata"
+
+msgid "Unknown packet"
+msgstr "Bilinmeyen paket"
+
+msgid "Unknown version in packet"
+msgstr "Pakette bilinmeyen sürüm"
+
+msgid "Invalid public key algorithm"
+msgstr "Bilinmeyen genel anahtar algoritması"
+
+msgid "Invalid digest algorithm"
+msgstr "Bilinmeyen özet algoritması"
+
+msgid "Bad public key"
+msgstr "Kötü genel anahtar"
+
+msgid "Bad secret key"
+msgstr "Kötü özel anahtar"
+
+msgid "Bad signature"
+msgstr "Kötü imza"
+
+msgid "No public key"
+msgstr "Genel anahtar yok"
+
+msgid "Checksum error"
+msgstr "Sağlama toplamı hatası"
+
+msgid "Bad passphrase"
+msgstr "Kötü parola"
+
+msgid "Invalid cipher algorithm"
+msgstr "Bilinmeyen şifre algoritması"
+
+msgid "Cannot open keyring"
+msgstr "Anahtar zinciri açılamıyor"
+
+msgid "Invalid packet"
+msgstr "Geçersiz paket"
+
+msgid "Invalid armor"
+msgstr "Geçersiz zırh"
+
+msgid "No user ID"
+msgstr "Kullanıcı kimliği yok"
+
+msgid "No secret key"
+msgstr "Gizli anahtar yok"
+
+msgid "Wrong secret key used"
+msgstr "Yanlış gizli anahtar kullanıldı"
+
+msgid "Bad session key"
+msgstr "Kötü oturum anahtarı"
+
+msgid "Unknown compression algorithm"
+msgstr "Bilinmeyen sıkıştırma algoritması"
+
+msgid "Number is not prime"
+msgstr "Sayı asal değil"
+
+msgid "Invalid encoding method"
+msgstr "Geçersiz kodlama yöntemi"
+
+msgid "Invalid encryption scheme"
+msgstr "Geçersiz şifreleme şeması"
+
+msgid "Invalid signature scheme"
+msgstr "Geçersiz imza şeması"
+
+msgid "Invalid attribute"
+msgstr "Geçersiz öznitelik"
+
+msgid "No value"
+msgstr "Değer yok"
+
+msgid "Not found"
+msgstr "Bulunamadı"
+
+msgid "Value not found"
+msgstr "Değer bulunamadı"
+
+msgid "Syntax error"
+msgstr "Sözdizim hatası"
+
+msgid "Bad MPI value"
+msgstr "Kötü MPI değeri"
+
+msgid "Invalid passphrase"
+msgstr "Geçersiz parola"
+
+msgid "Invalid signature class"
+msgstr "Geçersiz imza sınıfı"
+
+msgid "Resources exhausted"
+msgstr "Özkaynaklar tüketildi"
+
+msgid "Invalid keyring"
+msgstr "Geçersiz anahtar zinciri"
+
+msgid "Trust DB error"
+msgstr "Güvence veritabanı hatası"
+
+msgid "Bad certificate"
+msgstr "Kötü sertifika"
+
+msgid "Invalid user ID"
+msgstr "Geçersiz kullanıcı kimliği"
+
+msgid "Unexpected error"
+msgstr "Bilinmeyen hata"
+
+msgid "Time conflict"
+msgstr "Zaman çakışması"
+
+msgid "Keyserver error"
+msgstr "Anahtar sunucusu hatası"
+
+msgid "Wrong public key algorithm"
+msgstr "Yanlış genel anahtar algoritması"
+
+msgid "Tribute to D. A."
+msgstr "D. A.'ya teşekkürlerimizle"
+
+msgid "Weak encryption key"
+msgstr "Zayıf şifreleme anahtarı"
+
+msgid "Invalid key length"
+msgstr "Geçersiz anahtar uzunluğu"
+
+msgid "Invalid argument"
+msgstr "Geçersiz argüman"
+
+msgid "Syntax error in URI"
+msgstr "URI içinde sözdizim hatası"
+
+msgid "Invalid URI"
+msgstr "Geçersiz URI"
+
+msgid "Network error"
+msgstr "Ağ hatası"
+
+msgid "Unknown host"
+msgstr "Bilinmeyen makine"
+
+msgid "Selftest failed"
+msgstr "Öz denetim başarısız"
+
+msgid "Data not encrypted"
+msgstr "Veri şifrelenmemiş"
+
+msgid "Data not processed"
+msgstr "Veri işlenmemiş"
+
+msgid "Unusable public key"
+msgstr "Kullanılamayacak genel anahtar"
+
+msgid "Unusable secret key"
+msgstr "Kullanılamayacak özel anahtar"
+
+msgid "Invalid value"
+msgstr "Geçersiz değer"
+
+msgid "Bad certificate chain"
+msgstr "Kötü sertifika zinciri"
+
+msgid "Missing certificate"
+msgstr "Sertifika eksik"
+
+msgid "No data"
+msgstr "Veri yok"
+
+msgid "Bug"
+msgstr "Hata"
+
+msgid "Not supported"
+msgstr "Desteklenmiyor"
+
+msgid "Invalid operation code"
+msgstr "Geçersiz işlem kodu"
+
+msgid "Timeout"
+msgstr "Zaman aşımı"
+
+msgid "Internal error"
+msgstr "İçsel hata"
+
+msgid "EOF (gcrypt)"
+msgstr "Dosya sonu (gcrypt)"
+
+msgid "Invalid object"
+msgstr "Geçersiz nesne"
+
+msgid "Provided object is too short"
+msgstr "Sağlanan nesne pek kısa"
+
+msgid "Provided object is too large"
+msgstr "Sağlanan nesne pek büyük"
+
+msgid "Missing item in object"
+msgstr "Nesnede eksik öge"
+
+msgid "Not implemented"
+msgstr "Özellik mevcut değil"
+
+msgid "Conflicting use"
+msgstr "Çakışan kullanım"
+
+msgid "Invalid cipher mode"
+msgstr "Geçersiz şifre kipi"
+
+msgid "Invalid flag"
+msgstr "Geçersiz bayrak"
+
+msgid "Invalid handle"
+msgstr "Geçersiz tutaç"
+
+msgid "Result truncated"
+msgstr "Sonuç kısaltıldı"
+
+msgid "Incomplete line"
+msgstr "Tam olmayan satır"
+
+msgid "Invalid response"
+msgstr "Geçersiz yanıt"
+
+msgid "No agent running"
+msgstr "Çalışan aracı yok"
+
+msgid "Agent error"
+msgstr "Aracı hatası"
+
+msgid "Invalid data"
+msgstr "Geçersiz tarih"
+
+msgid "Unspecific Assuan server fault"
+msgstr "Belirsiz Assuan sunucu hatası"
+
+msgid "General Assuan error"
+msgstr "Genel Assuan hatası"
+
+msgid "Invalid session key"
+msgstr "Geçersiz oturum anahtarı"
+
+msgid "Invalid S-expression"
+msgstr "Geçersiz sembolik ifade"
+
+msgid "Unsupported algorithm"
+msgstr "Desteklenmeyen algoritma"
+
+msgid "No pinentry"
+msgstr "Parola girişi yok"
+
+msgid "pinentry error"
+msgstr "Parola girişi hatası"
+
+msgid "Bad PIN"
+msgstr "Kötü PIN"
+
+msgid "Invalid name"
+msgstr "Geçersiz ad"
+
+msgid "Bad data"
+msgstr "Kötü veri"
+
+msgid "Invalid parameter"
+msgstr "Geçersiz parametre"
+
+msgid "Wrong card"
+msgstr "Yanlış kart"
+
+msgid "No dirmngr"
+msgstr "dirmngr yok"
+
+msgid "dirmngr error"
+msgstr "dirmngr hatası"
+
+msgid "Certificate revoked"
+msgstr "Sertifika yürürlükten kaldırıldı"
+
+msgid "No CRL known"
+msgstr "Bilinen yürürlükten kaldırılmış sertifikalar listesi yok"
+
+msgid "CRL too old"
+msgstr "Yürürlükten kaldırılmış sertifikalar listesi pek eski"
+
+msgid "Line too long"
+msgstr "Satır pek uzun"
+
+msgid "Not trusted"
+msgstr "Güvenilmiyor"
+
+msgid "Operation cancelled"
+msgstr "İşlem iptal edildi"
+
+msgid "Bad CA certificate"
+msgstr "Hatalı CA sertifikası"
+
+msgid "Certificate expired"
+msgstr "Sertifika süresi doldu"
+
+msgid "Certificate too young"
+msgstr "Sertifika pek yeni"
+
+msgid "Unsupported certificate"
+msgstr "Desteklenmeyen sertifika"
+
+msgid "Unknown S-expression"
+msgstr "Bilinmeyen sembolik ifade"
+
+msgid "Unsupported protection"
+msgstr "Desteklenmeyen koruma"
+
+msgid "Corrupted protection"
+msgstr "Hasar görmüş koruma"
+
+msgid "Ambiguous name"
+msgstr "Belirsiz ad"
+
+msgid "Card error"
+msgstr "Kart hatası"
+
+msgid "Card reset required"
+msgstr "Kart sıfırlaması gerekiyor"
+
+msgid "Card removed"
+msgstr "Kart çıkarıldı"
+
+msgid "Invalid card"
+msgstr "Geçersiz kart"
+
+msgid "Card not present"
+msgstr "Kart mevcut değil"
+
+msgid "No PKCS15 application"
+msgstr "PKCS15 uygulaması yok"
+
+msgid "Not confirmed"
+msgstr "Onaylanmadı"
+
+msgid "Configuration error"
+msgstr "Yapılandırma hatası"
+
+msgid "No policy match"
+msgstr "Poliçe eşleşmesi yok"
+
+msgid "Invalid index"
+msgstr "Geçersiz indeks"
+
+msgid "Invalid ID"
+msgstr "Geçersiz kimlik"
+
+msgid "No SmartCard daemon"
+msgstr "SmartCard ardalan süreci yok"
+
+msgid "SmartCard daemon error"
+msgstr "SmartCard ardalan süreci hatası"
+
+msgid "Unsupported protocol"
+msgstr "Desteklenmeyen protokol"
+
+msgid "Bad PIN method"
+msgstr "Kötü PIN yöntemi"
+
+msgid "Card not initialized"
+msgstr "Kart ilklendirilmemiş"
+
+msgid "Unsupported operation"
+msgstr "Desteklenmeyen işlem"
+
+msgid "Wrong key usage"
+msgstr "Yanlış anahtar kullanımı"
+
+msgid "Nothing found"
+msgstr "Bir şey bulunmadı"
+
+msgid "Wrong blob type"
+msgstr "Yanlış geniş ikili nesne türü"
+
+msgid "Missing value"
+msgstr "Değer eksik"
+
+msgid "Hardware problem"
+msgstr "Donanım sorunu"
+
+msgid "PIN blocked"
+msgstr "PIN bloke oldu"
+
+msgid "Conditions of use not satisfied"
+msgstr "Kullanım koşulları yerine getirilmedi"
+
+msgid "PINs are not synced"
+msgstr "PIN'ler eşitlenmemiş"
+
+msgid "Invalid CRL"
+msgstr "Geçersiz yürürlükten kaldırılan sertifikalar listesi"
+
+msgid "BER error"
+msgstr "BER hatası"
+
+msgid "Invalid BER"
+msgstr "Geçersiz BER"
+
+msgid "Element not found"
+msgstr "Öge bulunamadı"
+
+msgid "Identifier not found"
+msgstr "Tanımlayıcı bulunamadı"
+
+msgid "Invalid tag"
+msgstr "Geçersiz etiket"
+
+msgid "Invalid length"
+msgstr "Geçersiz uzunluk"
+
+msgid "Invalid key info"
+msgstr "Geçersiz anahtar bilgisi"
+
+msgid "Unexpected tag"
+msgstr "Beklenmedik etiket"
+
+msgid "Not DER encoded"
+msgstr "DER'e göre kodlanmamış"
+
+msgid "No CMS object"
+msgstr "CMS nesnesi yok"
+
+msgid "Invalid CMS object"
+msgstr "Geçersiz CMS nesnesi"
+
+msgid "Unknown CMS object"
+msgstr "Bilinmeyen CMS nesnesi"
+
+msgid "Unsupported CMS object"
+msgstr "CMS nesnesi desteklenmiyor"
+
+msgid "Unsupported encoding"
+msgstr "Desteklenmeyen kodlama"
+
+msgid "Unsupported CMS version"
+msgstr "Desteklenmeyen CMS sürümü"
+
+msgid "Unknown algorithm"
+msgstr "Bilinmeyen algoritma"
+
+msgid "Invalid crypto engine"
+msgstr "Geçersiz kripto işletkesi"
+
+msgid "Public key not trusted"
+msgstr "Güvenilmeyen genel anahtar"
+
+msgid "Decryption failed"
+msgstr "Kod çözümü başarısız"
+
+msgid "Key expired"
+msgstr "Anahtar süresi doldu"
+
+msgid "Signature expired"
+msgstr "İmza süresi doldu"
+
+msgid "Encoding problem"
+msgstr "Kodlama sorunu"
+
+msgid "Invalid state"
+msgstr "Geçersiz durum"
+
+msgid "Duplicated value"
+msgstr "Yinelenmiş değer"
+
+msgid "Missing action"
+msgstr "Eylem eksik"
+
+msgid "ASN.1 module not found"
+msgstr "ASN.1 modülü bulunamadı"
+
+msgid "Invalid OID string"
+msgstr "Geçersiz OID dizisi"
+
+msgid "Invalid time"
+msgstr "Geçersiz zaman"
+
+msgid "Invalid CRL object"
+msgstr "Geçersiz yürürlükten kaldırılan sertifikalar listesi nesnesi"
+
+msgid "Unsupported CRL version"
+msgstr "Desteklenmeyen yürürlükten kaldırılan sertifikalar listesi sürümü"
+
+msgid "Invalid certificate object"
+msgstr "Geçersiz sertifika nesnesi"
+
+msgid "Unknown name"
+msgstr "Bilinmeyen ad"
+
+msgid "A locale function failed"
+msgstr "Bir yerelleştirme işlevi başarısız"
+
+msgid "Not locked"
+msgstr "Kilitli değil"
+
+msgid "Protocol violation"
+msgstr "Protokol kural ihlali"
+
+msgid "Invalid MAC"
+msgstr "Geçersiz MAC"
+
+msgid "Invalid request"
+msgstr "Geçersiz istek"
+
+msgid "Unknown extension"
+msgstr "Bilinmeyen uzantı"
+
+msgid "Unknown critical extension"
+msgstr "Bilinmeyen kritik uzantı"
+
+msgid "Locked"
+msgstr "Kilitli"
+
+msgid "Unknown option"
+msgstr "Bilinmeyen seçenek"
+
+msgid "Unknown command"
+msgstr "Bilinmeyen komut"
+
+msgid "Not operational"
+msgstr "Çalışmıyor"
+
+msgid "No passphrase given"
+msgstr "Anahtar parolası verilmedi"
+
+msgid "No PIN given"
+msgstr "PIN verilmedi"
+
+msgid "Not enabled"
+msgstr "Etkin değil"
+
+msgid "No crypto engine"
+msgstr "Kripto işletkesi yok"
+
+msgid "Missing key"
+msgstr "Anahtar eksik"
+
+msgid "Too many objects"
+msgstr "Pek fazla nesne"
+
+msgid "Limit reached"
+msgstr "Limite ulaşıldı"
+
+msgid "Not initialized"
+msgstr "İlklendirilmemiş"
+
+msgid "Missing issuer certificate"
+msgstr "Veren sertifikası eksik"
+
+msgid "No keyserver available"
+msgstr "Anahtar sunucusu yok"
+
+msgid "Invalid elliptic curve"
+msgstr "Geçersiz eliptik eğri"
+
+msgid "Unknown elliptic curve"
+msgstr "Bilinmeyen eliptik eğri"
+
+msgid "Duplicated key"
+msgstr "Yinelenmiş anahtar"
+
+msgid "Ambiguous result"
+msgstr "Belirsiz sonuç"
+
+msgid "No crypto context"
+msgstr "Kripto bağlamı yok"
+
+msgid "Wrong crypto context"
+msgstr "Yanlış kripto bağlamı"
+
+msgid "Bad crypto context"
+msgstr "Kötü kripto bağlamı"
+
+msgid "Conflict in the crypto context"
+msgstr "Kripto bağlamında çakışma"
+
+msgid "Broken public key"
+msgstr "Bozuk genel anahtar"
+
+msgid "Broken secret key"
+msgstr "Bozuk özel anahtar"
+
+msgid "Invalid MAC algorithm"
+msgstr "Geçersiz MAC algoritması"
+
+msgid "Operation fully cancelled"
+msgstr "İşlem tümüyle iptal edildi"
+
+msgid "Operation not yet finished"
+msgstr "İşlem henüz bitmedi"
+
+msgid "Buffer too short"
+msgstr "Arabellek pek kısa"
+
+msgid "Invalid length specifier in S-expression"
+msgstr "Sembolik ifadede geçersiz uzunluk belirteci"
+
+msgid "String too long in S-expression"
+msgstr "Sembolik ifadede dizi pek uzun"
+
+msgid "Unmatched parentheses in S-expression"
+msgstr "Sembolik ifadede eşleşmeyen parantezler"
+
+msgid "S-expression not canonical"
+msgstr "Sembolik ifade kurallara uygun değil"
+
+msgid "Bad character in S-expression"
+msgstr "Sembolik ifadede kötü karakter"
+
+msgid "Bad quotation in S-expression"
+msgstr "Sembolik ifadede kötü tırnak kullanımı"
+
+msgid "Zero prefix in S-expression"
+msgstr "Sembolik ifadede sıfır öneki"
+
+msgid "Nested display hints in S-expression"
+msgstr "Sembolik ifadede iç içe geçmiş görüntü ipuçları"
+
+msgid "Unmatched display hints"
+msgstr "Eşleşmeyen görüntü ipuçları"
+
+msgid "Unexpected reserved punctuation in S-expression"
+msgstr "Sembolik ifadede beklenmedik rezerve noktalama"
+
+msgid "Bad hexadecimal character in S-expression"
+msgstr "Sembolik ifadede kötü onaltılık karakter"
+
+msgid "Odd hexadecimal numbers in S-expression"
+msgstr "Sembolik ifadede tek onaltılık sayı"
+
+msgid "Bad octal character in S-expression"
+msgstr "Sembolik ifadede kötü sekizlik karakter"
+
+msgid "All subkeys are expired or revoked"
+msgstr "Tüm yardımcı anahtarlar yürürlükten kaldırılmış/süresi dolmuş"
+
+msgid "Database is corrupted"
+msgstr "Veritabanı hasar görmüş"
+
+msgid "Server indicated a failure"
+msgstr "Sunucu bir başarısızlık bildirdi"
+
+msgid "No name"
+msgstr "Ad yok"
+
+msgid "No key"
+msgstr "Anahtar yok"
+
+msgid "Legacy key"
+msgstr "Eski anahtar"
+
+msgid "Request too short"
+msgstr "İstek pek kısa"
+
+msgid "Request too long"
+msgstr "İstek pek uzun"
+
+msgid "Object is in termination state"
+msgstr "Nesne sonlandırılma durumunda"
+
+msgid "No certificate chain"
+msgstr "Sertifika zinciri yok"
+
+msgid "Certificate is too large"
+msgstr "Sertifika pek büyük"
+
+msgid "Invalid record"
+msgstr "Geçersiz kayıt"
+
+msgid "The MAC does not verify"
+msgstr "MAC doğrulamıyor"
+
+msgid "Unexpected message"
+msgstr "Beklenmedik ileti"
+
+msgid "Compression or decompression failed"
+msgstr "Sıkıştırma veya sıkıştırmayı açma başarısız"
+
+msgid "A counter would wrap"
+msgstr "Sayaç taşacak"
+
+msgid "Fatal alert message received"
+msgstr "Onulmaz uyarı iletisi alındı"
+
+msgid "No cipher algorithm"
+msgstr "Şifre algoritması yok"
+
+msgid "Missing client certificate"
+msgstr "İstemci sertifikası eksik"
+
+msgid "Close notification received"
+msgstr "Kapatma bildirimi alındı"
+
+msgid "Ticket expired"
+msgstr "Bilet süresi doldu"
+
+msgid "Bad ticket"
+msgstr "Kötü bilet"
+
+msgid "Unknown identity"
+msgstr "Bilinmeyen kimlik"
+
+msgid "Bad certificate message in handshake"
+msgstr "El sıkışmada kötü sertifika iletisi"
+
+msgid "Bad certificate request message in handshake"
+msgstr "El sıkışmada kötü sertifika istek iletisi"
+
+msgid "Bad certificate verify message in handshake"
+msgstr "El sıkışmada kötü sertifika doğrulama iletisi"
+
+msgid "Bad change cipher message in handshake"
+msgstr "El sıkışmada kötü şifre değiştirme iletisi"
+
+msgid "Bad client hello message in handshake"
+msgstr "El sıkışmada kötü istemci selamlaşma iletisi"
+
+msgid "Bad server hello message in handshake"
+msgstr "El sıkışmada kötü sunucu selamlaşma iletisi"
+
+msgid "Bad server hello done message in handshake"
+msgstr "El sıkışmada kötü sunucu selamlaşma tamamlandı iletisi"
+
+msgid "Bad finished message in handshake"
+msgstr "El sıkışmada kötü biten ileti"
+
+msgid "Bad server key exchange message in handshake"
+msgstr "El sıkışmada kötü sunucu anahtar değişimi iletisi"
+
+msgid "Bad client key exchange message in handshake"
+msgstr "El sıkışmada kötü istemci anahtar değişim iletisi"
+
+msgid "Bogus string"
+msgstr "Düzmece dizi"
+
+msgid "Forbidden"
+msgstr "Yasaklı"
+
+msgid "Key disabled"
+msgstr "Anahtar devre dışı"
+
+msgid "Not possible with a card based key"
+msgstr "Kart tabanlı bir anahtarla olanaklı değil"
+
+msgid "Invalid lock object"
+msgstr "Geçersiz kilit nesnesi"
+
+msgid "True"
+msgstr "Doğru"
+
+msgid "False"
+msgstr "Yanlış"
+
+msgid "General IPC error"
+msgstr "Genel IPC hatası"
+
+msgid "IPC accept call failed"
+msgstr "IPC çağrısı kabulü başarısız"
+
+msgid "IPC connect call failed"
+msgstr "IPC çağrısı bağlantısı başarısız"
+
+msgid "Invalid IPC response"
+msgstr "Geçersiz IPC yanıtı"
+
+msgid "Invalid value passed to IPC"
+msgstr "IPC'ye geçirilen değer geçersiz"
+
+msgid "Incomplete line passed to IPC"
+msgstr "IPC'ye geçirilen satır tam değil"
+
+msgid "Line passed to IPC too long"
+msgstr "IPC'ye geçirilen satır pek uzun"
+
+msgid "Nested IPC commands"
+msgstr "İç içe geçmiş IPC komutları"
+
+msgid "No data callback in IPC"
+msgstr "IPC içinde veri geri çağrısı yok"
+
+msgid "No inquire callback in IPC"
+msgstr "IPC içinde sorgu geri çağrısı yok"
+
+msgid "Not an IPC server"
+msgstr "Bir IPC sunucusu değil"
+
+msgid "Not an IPC client"
+msgstr "Bir IPC istemcisi değil"
+
+msgid "Problem starting IPC server"
+msgstr "IPC sunucusu başlatmada sorun"
+
+msgid "IPC read error"
+msgstr "IPC okuma hatası"
+
+msgid "IPC write error"
+msgstr "IPC yazma hatası"
+
+msgid "Too much data for IPC layer"
+msgstr "IPC katmanı için çok fazla veri"
+
+msgid "Unexpected IPC command"
+msgstr "Beklenmedik IPC komutu"
+
+msgid "Unknown IPC command"
+msgstr "Bilinmeyen IPC komutu"
+
+msgid "IPC syntax error"
+msgstr "IPC sözdizim hatası"
+
+msgid "IPC call has been cancelled"
+msgstr "IPC çağrısı iptal edildi"
+
+msgid "No input source for IPC"
+msgstr "IPC için bir girdi kaynağı yok"
+
+msgid "No output source for IPC"
+msgstr "IPC için bir çıktı kaynağı yok"
+
+msgid "IPC parameter error"
+msgstr "IPC parametre hatası"
+
+msgid "Unknown IPC inquire"
+msgstr "Bilinmeyen IPC sorgusu"
+
+msgid "Crypto engine too old"
+msgstr "Kripto işletkesi pek eski"
+
+msgid "Screen or window too small"
+msgstr "Ekran veya pencere pek küçük"
+
+msgid "Screen or window too large"
+msgstr "Ekran veya pencere pek büyük"
+
+msgid "Required environment variable not set"
+msgstr "Gerekli ortam değişkeni ayarlanmamış"
+
+msgid "User ID already exists"
+msgstr "Kullanıcı kimliği halihazırda mevcut"
+
+msgid "Name already exists"
+msgstr "Ad halihazırda mevcut"
+
+msgid "Duplicated name"
+msgstr "Yinelenmiş ad"
+
+msgid "Object is too young"
+msgstr "Nesne pek genç"
+
+msgid "Object is too old"
+msgstr "Nesne pek yaşlı"
+
+msgid "Unknown flag"
+msgstr "Bilinmeyen bayrak"
+
+msgid "Invalid execution order"
+msgstr "Geçersiz çalıştırma buyruğu"
+
+msgid "Already fetched"
+msgstr "Zaten getirilmiş"
+
+msgid "Try again later"
+msgstr "Daha sonra yeniden deneyin"
+
+msgid "Wrong name"
+msgstr "Yanlış ad"
+
+msgid "Not authenticated"
+msgstr "Kimlik doğrulanmamış"
+
+msgid "Bad authentication"
+msgstr "Kötü kimlik doğrulama"
+
+msgid "No Keybox daemon running"
+msgstr "Bir Keybox ardalan süreci çalışmıyor"
+
+msgid "Keybox daemon error"
+msgstr "Keybox ardalan süreci hatası"
+
+msgid "Service is not running"
+msgstr "Servis çalışmıyor"
+
+msgid "Service error"
+msgstr "Servis hatası"
+
+msgid "System bug detected"
+msgstr "Sistem hatası algılandı"
+
+msgid "Unknown DNS error"
+msgstr "Bilinmeyen DNS hatası"
+
+msgid "Invalid DNS section"
+msgstr "Geçersiz DNS bölümü"
+
+msgid "Invalid textual address form"
+msgstr "Geçersiz metin adres biçimi"
+
+msgid "Missing DNS query packet"
+msgstr "DNS sorgu paketi eksik"
+
+msgid "Missing DNS answer packet"
+msgstr "DNS yanıt paketi eksik"
+
+msgid "Connection closed in DNS"
+msgstr "DNS içindeki bağlantı kapatıldı"
+
+msgid "Verification failed in DNS"
+msgstr "DNS içindeki doğrulama başarısız"
+
+msgid "DNS Timeout"
+msgstr "DNS zaman aşımı"
+
+msgid "General LDAP error"
+msgstr "Genel LDAP hatası"
+
+msgid "General LDAP attribute error"
+msgstr "Genel LDAP öznitelik hatası"
+
+msgid "General LDAP name error"
+msgstr "Genel LDAP ad hatası"
+
+msgid "General LDAP security error"
+msgstr "Genel LDAP güvenlik hatası"
+
+msgid "General LDAP service error"
+msgstr "Genel LDAP servis hatası"
+
+msgid "General LDAP update error"
+msgstr "Genel LDAP güncelleme hatası"
+
+msgid "Experimental LDAP error code"
+msgstr "Deneysel LDAP hata kodu"
+
+msgid "Private LDAP error code"
+msgstr "Özel LDAP hata kodu"
+
+msgid "Other general LDAP error"
+msgstr "Diğer genel LDAP hatası"
+
+msgid "LDAP connecting failed (X)"
+msgstr "LDAP bağlantısı başarısız (X)"
+
+msgid "LDAP referral limit exceeded"
+msgstr "LDAP başvuru limiti aşıldı"
+
+msgid "LDAP client loop"
+msgstr "LDAP istemci döngüsü"
+
+msgid "No LDAP results returned"
+msgstr "Bir LDAP sonucu döndürülmedi"
+
+msgid "LDAP control not found"
+msgstr "LDAP denetimi bulunamadı"
+
+msgid "Not supported by LDAP"
+msgstr "LDAP tarafından desteklenmiyor"
+
+msgid "LDAP connect error"
+msgstr "LDAP bağlantı hatası"
+
+msgid "Out of memory in LDAP"
+msgstr "LDAP'ta bellek yetersiz"
+
+msgid "Bad parameter to an LDAP routine"
+msgstr "LDAP rutininde kötü parametre"
+
+msgid "User cancelled LDAP operation"
+msgstr "Kullanıcı, LDAP işlemini iptal etti"
+
+msgid "Bad LDAP search filter"
+msgstr "Kötü LDAP arama süzgeci"
+
+msgid "Unknown LDAP authentication method"
+msgstr "Bilinmeyen LDAP kimlik doğrulama yöntemi"
+
+msgid "Timeout in LDAP"
+msgstr "LDAP'ta zaman aşımı"
+
+msgid "LDAP decoding error"
+msgstr "LDAP kod çözüm hatası"
+
+msgid "LDAP encoding error"
+msgstr "LDAP kodlama hatası"
+
+msgid "LDAP local error"
+msgstr "LDAP yerel hatası"
+
+msgid "Cannot contact LDAP server"
+msgstr "LDAP sunucusu ile iletişim kurulamıyor"
+
+msgid "LDAP success"
+msgstr "LDAP başarılı"
+
+msgid "LDAP operations error"
+msgstr "LDAP işlem hatası"
+
+msgid "LDAP protocol error"
+msgstr "LDAP protokol hatası"
+
+msgid "Time limit exceeded in LDAP"
+msgstr "LDAP'ta zaman limiti aşıldı"
+
+msgid "Size limit exceeded in LDAP"
+msgstr "LDAP'ta boyut limiti aşıldı"
+
+msgid "LDAP compare false"
+msgstr "LDAP karşılaştırması yanlış"
+
+msgid "LDAP compare true"
+msgstr "LDAP karşılaştırması doğru"
+
+msgid "LDAP authentication method not supported"
+msgstr "LDAP kimlik doğrulama yöntemi desteklenmiyor"
+
+msgid "Strong(er) LDAP authentication required"
+msgstr "(Daha) güçlü LDAP kimlik doğrulaması gerekiyor"
+
+msgid "Partial LDAP results+referral received"
+msgstr "Kısımsal LDAP sonuçları/başvurusu alındı"
+
+msgid "LDAP referral"
+msgstr "LDAP başvurusu"
+
+msgid "Administrative LDAP limit exceeded"
+msgstr "Yönetimsel LDAP limiti aşıldı"
+
+msgid "Critical LDAP extension is unavailable"
+msgstr "Kritik LDAP uzantısı kullanılamıyor"
+
+msgid "Confidentiality required by LDAP"
+msgstr "LDAP tarafından gereken gizlilik"
+
+msgid "LDAP SASL bind in progress"
+msgstr "LDAP SASL garantisi ilerliyor"
+
+msgid "No such LDAP attribute"
+msgstr "Böyle bir LDAP özniteliği yok"
+
+msgid "Undefined LDAP attribute type"
+msgstr "Bilinmeyen LDAP öznitelik türü"
+
+msgid "Inappropriate matching in LDAP"
+msgstr "LDAP'ta uygun olmayan eşleşme"
+
+msgid "Constraint violation in LDAP"
+msgstr "LDAP'ta kısıtlama ihlali"
+
+msgid "LDAP type or value exists"
+msgstr "LDAP türü veya değeri mevcut"
+
+msgid "Invalid syntax in LDAP"
+msgstr "LDAP'ta geçersiz sözdizim"
+
+msgid "No such LDAP object"
+msgstr "Böyle bir LDAP nesnesi yok"
+
+msgid "LDAP alias problem"
+msgstr "LDAP arma sorunu"
+
+msgid "Invalid DN syntax in LDAP"
+msgstr "LDAP'ta geçersiz DN sözdizimi"
+
+msgid "LDAP entry is a leaf"
+msgstr "LDAP girdisi bir yaprak"
+
+msgid "LDAP alias dereferencing problem"
+msgstr "LDAP arma başvuru kaldırma sorunu"
+
+msgid "LDAP proxy authorization failure (X)"
+msgstr "LDAP vekil kimlik doğrulama sorunu (X)"
+
+msgid "Inappropriate LDAP authentication"
+msgstr "Uygun olmayan LDAP kimlik doğrulaması"
+
+msgid "Invalid LDAP credentials"
+msgstr "Geçersiz LDAP kimlik doğrulama bilgileri"
+
+msgid "Insufficient access for LDAP"
+msgstr "LDAP için yetersiz erişim"
+
+msgid "LDAP server is busy"
+msgstr "LDAP sunucusu meşgul"
+
+msgid "LDAP server is unavailable"
+msgstr "LDAP sunucusu kullanılamıyor"
+
+msgid "LDAP server is unwilling to perform"
+msgstr "LDAP sunucusu gerçekleştirmek istemiyor"
+
+msgid "Loop detected by LDAP"
+msgstr "LDAP tarafından döngü algılandı"
+
+msgid "LDAP naming violation"
+msgstr "LDAP adlandırma ihlali"
+
+msgid "LDAP object class violation"
+msgstr "LDAP nesne veya sınıf ihlali"
+
+msgid "LDAP operation not allowed on non-leaf"
+msgstr "LDAP işlemine yaprak olmayan ögeler üzerinde izin verilmiyor"
+
+msgid "LDAP operation not allowed on RDN"
+msgstr "LDAP işlemine RDN üzerinde izin verilmiyor"
+
+msgid "Already exists (LDAP)"
+msgstr "Halihazırda mevcut (LDAP)"
+
+msgid "Cannot modify LDAP object class"
+msgstr "LDAP nesne sınıfı değiştirilmiyor"
+
+msgid "LDAP results too large"
+msgstr "LDAP sonuçları pek büyük"
+
+msgid "LDAP operation affects multiple DSAs"
+msgstr "LDAP işlemi birden çok DSA'yı etkiliyor"
+
+msgid "Virtual LDAP list view error"
+msgstr "Sanal LDAP liste görünümü hatası"
+
+msgid "Other LDAP error"
+msgstr "Diğer LDAP hatası"
+
+msgid "Resources exhausted in LCUP"
+msgstr "LCUP'taki özkaynaklar tüketildi"
+
+msgid "Security violation in LCUP"
+msgstr "LCUP'ta güvenlik ihlali"
+
+msgid "Invalid data in LCUP"
+msgstr "LCUP'ta geçersiz veri"
+
+msgid "Unsupported scheme in LCUP"
+msgstr "LCUP'ta desteklenmeyen şema"
+
+msgid "Reload required in LCUP"
+msgstr "LCUP'ta yeniden yükleme gerekiyor"
+
+msgid "LDAP cancelled"
+msgstr "LDAP iptal edildi"
+
+msgid "No LDAP operation to cancel"
+msgstr "İptal edilecek bir LDAP işlemi yok"
+
+msgid "Too late to cancel LDAP"
+msgstr "LDAP'i iptal etmek için pek geç"
+
+msgid "Cannot cancel LDAP"
+msgstr "LDAP iptal edilemiyor"
+
+msgid "LDAP assertion failed"
+msgstr "LDAP teyidi başarısız"
+
+msgid "Proxied authorization denied by LDAP"
+msgstr "Vekil üzerinden kimlik doğrulama LDAP tarafından reddedildi"
+
+msgid "User defined error code 1"
+msgstr "Kullanıcı tanımlı hata kodu 1"
+
+msgid "User defined error code 2"
+msgstr "Kullanıcı tanımlı hata kodu 2"
+
+msgid "User defined error code 3"
+msgstr "Kullanıcı tanımlı hata kodu 3"
+
+msgid "User defined error code 4"
+msgstr "Kullanıcı tanımlı hata kodu 4"
+
+msgid "User defined error code 5"
+msgstr "Kullanıcı tanımlı hata kodu 5"
+
+msgid "User defined error code 6"
+msgstr "Kullanıcı tanımlı hata kodu 6"
+
+msgid "User defined error code 7"
+msgstr "Kullanıcı tanımlı hata kodu 7"
+
+msgid "User defined error code 8"
+msgstr "Kullanıcı tanımlı hata kodu 8"
+
+msgid "User defined error code 9"
+msgstr "Kullanıcı tanımlı hata kodu 9"
+
+msgid "User defined error code 10"
+msgstr "Kullanıcı tanımlı hata kodu 10"
+
+msgid "User defined error code 11"
+msgstr "Kullanıcı tanımlı hata kodu 11"
+
+msgid "User defined error code 12"
+msgstr "Kullanıcı tanımlı hata kodu 12"
+
+msgid "User defined error code 13"
+msgstr "Kullanıcı tanımlı hata kodu 13"
+
+msgid "User defined error code 14"
+msgstr "Kullanıcı tanımlı hata kodu 14"
+
+msgid "User defined error code 15"
+msgstr "Kullanıcı tanımlı hata kodu 15"
+
+msgid "User defined error code 16"
+msgstr "Kullanıcı tanımlı hata kodu 16"
+
+msgid "SQL success"
+msgstr "SQL başarılı"
+
+msgid "SQL error"
+msgstr "SQL hatası"
+
+msgid "Internal logic error in SQL library"
+msgstr "SQL kitaplığında iç mantık hatası"
+
+msgid "Access permission denied (SQL)"
+msgstr "Erişim izni reddedildi (SQL)"
+
+msgid "SQL abort was requested"
+msgstr "SQL iptali istendi"
+
+msgid "SQL database file is locked"
+msgstr "SQL veritabanı dosyası kilitli"
+
+msgid "An SQL table in the database is locked"
+msgstr "Veritabanındaki bir SQL tablosu kilitli"
+
+msgid "SQL library ran out of core"
+msgstr "SQL kitaplığında çekirdek kalmadı"
+
+msgid "Attempt to write a readonly SQL database"
+msgstr "Saltokunur bir SQL veritabanına yazmaya çalışılıyor"
+
+msgid "SQL operation terminated by interrupt"
+msgstr "SQL işlemi yarıda kesme tarafından sonlandırıldı"
+
+msgid "I/O error during SQL operation"
+msgstr "SQL işlemi sırasında girdi-çıktı hatası"
+
+msgid "SQL database disk image is malformed"
+msgstr "SQL veritabanı disk kalıbı hatalı oluşturulmuş"
+
+msgid "Unknown opcode in SQL file control"
+msgstr "SQL dosya denetiminde bilinmeyen işlem kodu"
+
+msgid "Insertion failed because SQL database is full"
+msgstr "Ekleme başarısız; çünkü SQL veritabanı dolu"
+
+msgid "Unable to open the SQL database file"
+msgstr "SQL veritabanı dosyası açılamıyor"
+
+msgid "SQL database lock protocol error"
+msgstr "SQL veritabanı kilit protokol hatası"
+
+msgid "(internal SQL code: empty)"
+msgstr "(iç SQL kodu: boş)"
+
+msgid "SQL database schema changed"
+msgstr "SQL veritabanı şeması değiştirildi"
+
+msgid "String or blob exceeds size limit (SQL)"
+msgstr "Dizi veya geniş ikili nesne boyut limitini aşıyor (SQL)"
+
+msgid "SQL abort due to constraint violation"
+msgstr "Kısıtlama ihlali dolayısıyla SQL iptali"
+
+msgid "Data type mismatch (SQL)"
+msgstr "Veri türü uyuşmazlığı (SQL)"
+
+msgid "SQL library used incorrectly"
+msgstr "SQL kitaplığı yanlış bir biçimde kullanıldı"
+
+msgid "SQL library uses unsupported OS features"
+msgstr ""
+"SQL kitaplığı desteklenmeyen işletim sistemi özelliklerini kullanıyor"
+
+msgid "Authorization denied (SQL)"
+msgstr "Kimlik doğrulama reddedildi (SQL)"
+
+msgid "(unused SQL code: format)"
+msgstr "(kullanılmayan SQL kodu: format)"
+
+msgid "SQL bind parameter out of range"
+msgstr "SQL garanti parametresi erim dışında"
+
+msgid "File opened that is not an SQL database file"
+msgstr "Bir SQL veritabanı dosyası olmayan bir dosya açıldı"
+
+msgid "Notifications from SQL logger"
+msgstr "SQL günlükleyicisinden bildirimler"
+
+msgid "Warnings from SQL logger"
+msgstr "SQL günlükleyicisinden uyarılar"
+
+msgid "SQL has another row ready"
+msgstr "SQL'de başka bir satır var"
+
+msgid "SQL has finished executing"
+msgstr "SQL çalıştırmayı bitirdi"
+
+msgid "System error w/o errno"
+msgstr "Hata numarası olmayan sistem hatası"
+
+msgid "Unknown system error"
+msgstr "Bilinmeyen sistem hatası"
+
+msgid "End of file"
+msgstr "Dosya sonu"
+
+msgid "Unknown error code"
+msgstr "Bilinmeyen hata kodu"
+
+msgid "argument not expected"
+msgstr "Argüman beklenmiyordu"
+
+msgid "read error"
+msgstr "Okuma hatası"
+
+msgid "keyword too long"
+msgstr "Anahtar sözcük pek uzun"
+
+msgid "missing argument"
+msgstr "Argüman eksik"
+
+msgid "invalid argument"
+msgstr "Geçersiz argüman"
+
+msgid "invalid command"
+msgstr "Geçersiz komut"
+
+msgid "invalid alias definition"
+msgstr "Geçersiz arma tanımı"
+
+msgid "permission error"
+msgstr "İzin hatası"
+
+msgid "out of core"
+msgstr "Çekirdek kalmadı"
+
+msgid "invalid meta command"
+msgstr "Geçersiz meta komutu"
+
+msgid "unknown meta command"
+msgstr "Bilinmeyen meta komutu"
+
+msgid "unexpected meta command"
+msgstr "Beklenmedik meta komutu"
+
+msgid "invalid option"
+msgstr "Geçersiz seçenek"
+
+#, c-format
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "\"%.50s\" seçeneği için argüman eksik\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "\"%.50s\" seçeneği için geçersiz argüman\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "\"%.50s\" seçeneği bir argüman beklemiyor\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "Geçersiz komut \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "\"%.50s\" seçeneği belirsiz\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "\"%.50s\" komutu belirsiz\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "Geçersiz seçenek \"%.50s\"\n"
+
+#, c-format
+msgid "Note: no default option file '%s'\n"
+msgstr "Not: Öntanımlı seçenek dosyası '%s' yok\n"
+
+#, c-format
+msgid "reading options from '%s'\n"
+msgstr "'%s' konumundan seçenekler okunuyor\n"
+
+#, c-format
+msgid "option file '%s': %s\n"
+msgstr "Seçenek dosyası '%s': %s\n"
+
+#, c-format
+msgid "Note: ignoring option \"--%s\" due to global config\n"
+msgstr "Not: Global yapılandırma dolayısıyla \"--%s\" seçeneği yok sayılıyor\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr "Hataları lütfen <https://bugs.gnupg.org> adresine bildirin.\n"
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "Uyarı: %s tanımlanamıyor\n"
