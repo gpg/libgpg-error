@@ -1874,6 +1874,17 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
                         xfree (buffer);
                       else
                         gpgrt_annotate_leaked_object (buffer);
+                      /* If the caller wants us to return the attributes or
+                       * ignored options, or these flags in. */
+                      if ((arg->flags & ARGPARSE_FLAG_WITHATTR))
+                        {
+                          if (opts[idx].ignore)
+                            arg->r_type |= ARGPARSE_ATTR_IGNORE;
+                          if (opts[idx].forced)
+                            arg->r_type |= ARGPARSE_ATTR_FORCE;
+                          if (set_ignore)
+                            arg->r_type |= ARGPARSE_OPT_IGNORE;
+                        }
                     }
                 }
               goto leave;
