@@ -1,5 +1,17 @@
-Noteworthy changes in version 1.44 (unreleased) [C32/A32/R_]
+Noteworthy changes in version 1.44 (2022-01-27) [C32/A32/R2]
 -----------------------------------------------
+
+ * Fix dependency to gpg-error-config-test.sh.  [T5696]
+
+ * Run the posix locking test only on supported platforms.  [T5699]
+
+ * Detect Linux systems using musl.  [T5762]
+
+ * Fix gpg-error-config-test for PKG_CONFIG_LIBDIR.  [T5740]
+
+ * Fix returning of option attributes for options with args.  [T5799]
+
+ * Add Turkish translations.
 
  Release-info: https://dev.gnupg.org/T5676
 
