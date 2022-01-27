@@ -1366,8 +1366,7 @@ msgid "SQL library used incorrectly"
 msgstr "SQL kitaplığı yanlış bir biçimde kullanıldı"
 
 msgid "SQL library uses unsupported OS features"
-msgstr ""
-"SQL kitaplığı desteklenmeyen işletim sistemi özelliklerini kullanıyor"
+msgstr "SQL kitaplığı desteklenmeyen işletim sistemi özelliklerini kullanıyor"
 
 msgid "Authorization denied (SQL)"
 msgstr "Kimlik doğrulama reddedildi (SQL)"
