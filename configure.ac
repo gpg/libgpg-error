@@ -637,9 +637,9 @@ if test "$gl_threads_api" = posix; then
   if test x$ac_cv_header_sys_single_threaded_h = xyes; then
     have_lock_optimization=yes
   else
-    case "$gl_cv_have_weak" in
-        *yes) have_lock_optimization=yes ;;
-        * ) ;;
+    case "${host_os}" in
+      *-gnu*) have_lock_optimization=yes ;;
+      * ) ;;
     esac
   fi
 fi
