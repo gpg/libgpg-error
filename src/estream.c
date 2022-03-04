@@ -362,6 +362,15 @@ _gpgrt_w32_set_errno (int ec)
 }
 
 
+gpg_err_code_t
+_gpgrt_w32_get_last_err_code (void)
+{
+  int ec = GetLastError ();
+  errno = map_w32_to_errno (ec);
+  return _gpg_err_code_from_errno (errno);
+}
+
+
 #endif /*HAVE_W32_SYSTEM*/
 
 /*
@@ -1742,6 +1751,100 @@ func_file_create (void **cookie, int *filedes,
 }
 
 
+/* Create function for objects identified by a file name.  Windows
+ * version to use CreateFile.  */
+#ifdef HAVE_W32_SYSTEM
+static int
+func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
+                      unsigned int modeflags, unsigned int cmode)
+{
+  estream_cookie_w32_t hd_cookie;
+  wchar_t *wpath = NULL;
+  int err = 0;
+  HANDLE hd;
+  DWORD desired_access;
+  DWORD share_mode;
+  DWORD creation_distribution;
+
+  (void)cmode;
+
+  hd_cookie = mem_alloc (sizeof *hd_cookie);
+  if (!hd_cookie)
+    {
+      err = -1;
+      goto leave;
+    }
+
+  wpath = _gpgrt_fname_to_wchar (path);
+  if (!wpath)
+    {
+      err = -1;
+      goto leave;
+    }
+
+  if ((modeflags & O_WRONLY))
+    {
+      desired_access = GENERIC_WRITE;
+      share_mode = FILE_SHARE_WRITE;
+    }
+  else if ((modeflags & O_RDWR))
+    {
+      desired_access = GENERIC_READ | GENERIC_WRITE;
+      share_mode = FILE_SHARE_READ | FILE_SHARE_WRITE;
+    }
+  else
+    {
+      desired_access = GENERIC_READ;
+      share_mode = FILE_SHARE_READ;
+    }
+
+
+  creation_distribution = 0;
+  if ((modeflags & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL))
+     creation_distribution |= CREATE_NEW;
+  else if ((modeflags & O_TRUNC) == O_TRUNC)
+    {
+      if ((modeflags & O_CREAT) == O_CREAT)
+        creation_distribution |= CREATE_ALWAYS;
+      else if ((modeflags & O_RDONLY) != O_RDONLY)
+        creation_distribution |= TRUNCATE_EXISTING;
+    }
+  else if ((modeflags & O_APPEND) == O_APPEND)
+    creation_distribution |= OPEN_EXISTING;
+  else if ((modeflags & O_CREAT) == O_CREAT)
+    creation_distribution |= OPEN_ALWAYS;
+  else
+    creation_distribution |= OPEN_EXISTING;
+
+  hd = CreateFileW (wpath,
+                    desired_access,
+                    share_mode,
+                    NULL,  /* security attributes */
+                    creation_distribution,
+                    0,     /* flags and attributes  */
+                    NULL); /* template file  */
+  if (hd == INVALID_HANDLE_VALUE)
+    {
+      _set_errno (map_w32_to_errno (GetLastError ()));
+      err = -1;
+      goto leave;
+    }
+
+  hd_cookie->hd = hd;
+  hd_cookie->no_close = 0;
+  hd_cookie->no_syscall_clamp = 0;
+  *cookie = hd_cookie;
+  *rethd = hd;
+
+ leave:
+  _gpgrt_free_wchar (wpath);
+  if (err)
+    mem_free (hd_cookie);
+  return err;
+}
+#endif /*HAVE_W32_SYSTEM*/
+
+
 
 /* Flags used by parse_mode and friends.  */
 #define X_SAMETHREAD	(1 << 0)
@@ -1780,10 +1883,11 @@ func_file_create (void **cookie, int *filedes,
  *
  * sysopen
  *
- *    The object is opened in sysmode.  On POSIX this is a NOP but
- *    under Windows the direct W32 API functions (HANDLE) are used
- *    instead of their libc counterparts (fd).
- *    FIXME: The functionality is not yet implemented.
+ *    The object is opened in GPGRT_SYSHD_HANDLE mode.  On POSIX this
+ *    is a NOP but under Windows the direct W32 API functions (HANDLE)
+ *    are used instead of their libc counterparts (fd).  This flag
+ *    also allows to use file names longer than MAXPATH.  Note that
+ *    gpgrt_fileno does not not work for such a stream under Windows.
  *
  * pollable
  *
@@ -2181,7 +2285,7 @@ deinit_stream_obj (estream_t stream)
 
 /*
  * Create a new stream and initialize it.  On success the new stream
- * handle is tsored at R_STREAM.  On failure NULL is stored at
+ * handle is stored at R_STREAM.  On failure NULL is stored at
  * R_STREAM.
  */
 static int
@@ -3210,40 +3314,57 @@ _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
               const char *_GPGRT__RESTRICT mode)
 {
   unsigned int modeflags, cmode, xmode;
-  int create_called;
-  estream_t stream;
-  void *cookie;
+  int create_called = 0;
+  estream_t stream = NULL;
+  void *cookie = NULL;
   int err;
-  int fd;
+  struct cookie_io_functions_s *functions;
   es_syshd_t syshd;
-
-  stream = NULL;
-  cookie = NULL;
-  create_called = 0;
+  int kind;
 
   err = parse_mode (mode, &modeflags, &xmode, &cmode);
   if (err)
-    goto out;
+    goto leave;
 
-  err = func_file_create (&cookie, &fd, path, modeflags, cmode);
+  /* Convenience hack so that we can use /dev/null on Windows.  */
+#ifdef HAVE_W32_SYSTEM
+  if (path && !strcmp (path, "/dev/null"))
+    path = "nul";
+#endif
+
+#ifdef HAVE_W32_SYSTEM
+  if ((xmode & X_SYSOPEN))
+    {
+      kind = BACKEND_W32;
+      functions = &estream_functions_w32;
+      syshd.type = ES_SYSHD_HANDLE;
+      err = func_file_create_w32 (&cookie, &syshd.u.handle,
+                                  path, modeflags, cmode);
+    }
+  else
+#endif /* W32 */
+    {
+      kind = BACKEND_FD;
+      functions = &estream_functions_fd;
+      syshd.type = ES_SYSHD_FD;
+      err = func_file_create (&cookie, &syshd.u.fd,
+                              path, modeflags, cmode);
+    }
   if (err)
-    goto out;
+    goto leave;
 
-  syshd.type = ES_SYSHD_FD;
-  syshd.u.fd = fd;
   create_called = 1;
-  err = create_stream (&stream, cookie, &syshd, BACKEND_FD,
-                       estream_functions_fd, modeflags, xmode, 0);
+  err = create_stream (&stream, cookie, &syshd, kind,
+                       *functions, modeflags, xmode, 0);
   if (err)
-    goto out;
+    goto leave;
 
   if (stream && path)
     fname_set_internal (stream, path, 1);
 
- out:
-
+ leave:
   if (err && create_called)
-    (*estream_functions_fd.public.func_close) (cookie);
+    functions->public.func_close (cookie);
 
   return stream;
 }
@@ -3542,7 +3663,7 @@ do_w32open (HANDLE hd, const char *mode,
 
   /* If we are pollable we create the function cookie with syscall
    * clamp disabled.  This is because functions are called from
-   * separatre reader and writer threads in w32-stream.  */
+   * separate reader and writer threads in w32-stream.  */
   err = func_w32_create (&cookie, hd, modeflags,
                          no_close, !!(xmode & X_POLLABLE));
   if (err)
@@ -3714,6 +3835,12 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
 
       cookie = NULL;
       create_called = 0;
+
+  /* Convenience hack so that we can use /dev/null on Windows.  */
+#ifdef HAVE_W32_SYSTEM
+      if (!strcmp (path, "/dev/null"))
+        path = "nul";
+#endif
 
       xmode = stream->intern->samethread ? X_SAMETHREAD : 0;
 

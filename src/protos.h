@@ -25,7 +25,10 @@
 wchar_t *_gpgrt_utf8_to_wchar (const char *string);
 void     _gpgrt_free_wchar (wchar_t *wstring);
 char    *_gpgrt_wchar_to_utf8 (const wchar_t *string, size_t length);
+
+/*-- estream.c --*/
 void     _gpgrt_w32_set_errno (int ec);
+gpg_err_code_t _gpgrt_w32_get_last_err_code (void);
 
 
 #endif /*_GPGRT_PROTOS_H*/

@@ -411,6 +411,10 @@ MARK_VISIBLE (gpgrt_absfnameconcat);
 #define gpgrt_absfnameconcat        _gpgrt_USE_UNDERSCORED_FUNCTION
 
 /* Windows specific functions.  */
+#define gpgrt_free_wchar            _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_utf8_to_wchar         _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_wchar_to_utf8         _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_fname_to_wchar        _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_w32_reg_query_string  _gpgrt_USE_UNDERSCORED_FUNCTION
 
 

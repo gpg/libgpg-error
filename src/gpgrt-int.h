@@ -822,6 +822,8 @@ char *_gpgrt_w32_reg_query_string (const char *root,
                                    const char *name);
 char *_gpgrt_w32_reg_get_string (const char *key);
 
+wchar_t *_gpgrt_fname_to_wchar (const char *fname);
+
 
 #endif /*HAVE_W32_SYSTEM*/
 

@@ -1241,6 +1241,31 @@ gpgrt_absfnameconcat (const char *first, ... )
  * specific function despite that they are technically not needed.  */
 #ifdef HAVE_W32_SYSTEM
 
+void
+gpgrt_free_wchar (wchar_t *wstring)
+{
+  if (wstring)
+    _gpgrt_free_wchar (wstring);
+}
+
+wchar_t *
+gpgrt_fname_to_wchar (const char *fname)
+{
+  return _gpgrt_fname_to_wchar (fname);
+}
+
+wchar_t *
+gpgrt_utf8_to_wchar (const char *string)
+{
+  return _gpgrt_utf8_to_wchar (string);
+}
+
+char *
+gpgrt_wchar_to_utf8 (const wchar_t *string)
+{
+  return _gpgrt_wchar_to_utf8 (string, (size_t)(-1));
+}
+
 char *
 gpgrt_w32_reg_query_string (const char *root, const char *dir, const char *name)
 {

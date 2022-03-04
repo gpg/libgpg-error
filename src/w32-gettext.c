@@ -1211,7 +1211,7 @@ load_domain (const char *filename)
   char *read_ptr;
 
   {
-    wchar_t *wfilename = _gpgrt_utf8_to_wchar (filename);
+    wchar_t *wfilename = _gpgrt_fname_to_wchar (filename);
 
     if (!wfilename)
       fh = INVALID_HANDLE_VALUE;
@@ -1322,7 +1322,7 @@ load_domain (const char *filename)
 /* Return a malloced wide char string from an UTF-8 encoded input
    string STRING.  Caller must free this value. On failure returns
    NULL.  The result of calling this function with STRING set to NULL
-   is not defined.  If LENGTH is zero and RETLEN NULL the fucntion
+   is not defined.  If LENGTH is zero and RETLEN NULL the function
    assumes that STRING is a nul-terminated string and returns a
    (wchar_t)0-terminated string.  */
 static wchar_t *

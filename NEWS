@@ -1,6 +1,21 @@
 Noteworthy changes in version 1.45 (unreleased) [C32/A32/R_]
 -----------------------------------------------
 
+ * Support the "sysopen" mode parameter for gpgrt_fopen so that file
+   names longer than MAX_PATH are supported under Windows.
+
+ * gpgrt_access and gpgrt_mkdir now support file anmes longer than
+   MAX_PATH.
+
+ * gpgrt_fopen now maps "/dev/null" to "nul" on Windows.
+
+ * Interface changes relative to the 1.42 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_free_wchar                 NEW.
+ gpgrt_fname_to_wchar             NEW.
+ gpgrt_utf8_to_wchar              NEW.
+ gpgrt_wchar_to_utf8              NEW.
+
  Release-info: https://dev.gnupg.org/T5802
 
 
