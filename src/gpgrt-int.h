@@ -234,6 +234,7 @@ typedef enum
   {
     BACKEND_MEM,
     BACKEND_FD,
+    BACKEND_SOCK,
     BACKEND_W32,
     BACKEND_FP,
     BACKEND_USER,
