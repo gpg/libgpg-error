@@ -485,7 +485,7 @@ set_file_fd (const char *name, int fd, estream_t stream)
   if (!name)
     fp = _gpgrt_fdopen (fd, "w");
   else if (!want_socket)
-    fp = _gpgrt_fopen (name, "w");
+    fp = _gpgrt_fopen (name, "a");
   else
     {
       es_cookie_io_functions_t io = { NULL };
