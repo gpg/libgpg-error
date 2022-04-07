@@ -64,10 +64,6 @@
 #endif
 
 
-#ifdef HAVE_W32CE_SYSTEM
-# define isatty(a)  (0)
-#endif
-
 #undef WITH_IPV6
 #if defined (AF_INET6) && defined(PF_INET) \
     && defined (INET6_ADDRSTRLEN) && defined(HAVE_INET_PTON)
@@ -144,9 +140,6 @@ struct fun_cookie_s
   int quiet;
   int want_socket;
   int is_socket;
-#ifdef HAVE_W32CE_SYSTEM
-  int use_writefile;
-#endif
   char name[1];
 };
 
@@ -208,9 +201,6 @@ static gpgrt_ssize_t
 fun_writer (void *cookie_arg, const void *buffer, size_t size)
 {
   struct fun_cookie_s *cookie = cookie_arg;
-
-  /* FIXME: Use only estream with a callback for socket writing.  This
-     avoids the ugly mix of fd and estream code.  */
 
   /* Note that we always try to reconnect to the socket but print
      error messages only the first time an error occurred.  If
@@ -415,15 +405,6 @@ fun_writer (void *cookie_arg, const void *buffer, size_t size)
   log_socket = cookie->fd;
   if (cookie->fd != -1)
     {
-#ifdef HAVE_W32CE_SYSTEM
-      if (cookie->use_writefile)
-        {
-          DWORD nwritten;
-
-          WriteFile ((HANDLE)cookie->fd, buffer, size, &nwritten, NULL);
-          return (gpgrt_ssize_t)size; /* Okay.  */
-        }
-#endif
       if (!writen (cookie->fd, buffer, size, cookie->is_socket))
         return (gpgrt_ssize_t)size; /* Okay. */
     }
@@ -469,9 +450,6 @@ set_file_fd (const char *name, int fd, estream_t stream)
 {
   estream_t fp;
   int want_socket = 0;
-#ifdef HAVE_W32CE_SYSTEM
-  int use_writefile = 0;
-#endif
   struct fun_cookie_s *cookie;
 
   /* Close an open log stream.  */
@@ -492,66 +470,41 @@ set_file_fd (const char *name, int fd, estream_t stream)
   /* Figure out what kind of logging we want.  */
   if (name && !strcmp (name, "-"))
     {
-      name = NULL;
-      fd = _gpgrt_fileno (es_stderr);
+      fp = es_stderr;
+      goto leave;
     }
-
-  if (name && !strncmp (name, "tcp://", 6) && name[6])
+  else if (name && !strncmp (name, "tcp://", 6) && name[6])
     want_socket = 1;
 #ifndef HAVE_W32_SYSTEM
   else if (name && !strncmp (name, "socket://", 9))
     want_socket = 2;
 #endif /*HAVE_W32_SYSTEM*/
-#ifdef HAVE_W32CE_SYSTEM
-  else if (name && !strcmp (name, "GPG2:"))
-    {
-      HANDLE hd;
-
-      ActivateDevice (L"Drivers\\"GNUPG_NAME"_Log", 0);
-      /* Ignore a filename and write the debug output to the GPG2:
-         device.  */
-      hd = CreateFile (L"GPG2:", GENERIC_WRITE,
-                       FILE_SHARE_READ | FILE_SHARE_WRITE,
-                       NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-      fd = (hd == INVALID_HANDLE_VALUE)? -1 : (int)hd;
-      name = NULL;
-      force_prefixes = 1;
-      use_writefile = 1;
-    }
-#endif /*HAVE_W32CE_SYSTEM*/
 
   /* Setup a new stream.  */
 
-  cookie = _gpgrt_malloc (sizeof *cookie + (name? strlen (name):0));
-  if (!cookie)
-    return; /* oops */
-  strcpy (cookie->name, name? name:"");
-  cookie->quiet = 0;
-  cookie->is_socket = 0;
-  cookie->want_socket = want_socket;
-#ifdef HAVE_W32CE_SYSTEM
-  cookie->use_writefile = use_writefile;
-#endif
   if (!name)
-    cookie->fd = fd;
-  else if (want_socket)
-    cookie->fd = -1;
+    fp = _gpgrt_fdopen (fd, "w");
+  else if (!want_socket)
+    fp = _gpgrt_fopen (name, "a");
   else
     {
-      do
-        cookie->fd = open (name, O_WRONLY|O_APPEND|O_CREAT,
-                           (S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH));
-      while (cookie->fd == -1 && errno == EINTR);
+      es_cookie_io_functions_t io = { NULL };
+
+      cookie = _gpgrt_malloc (sizeof *cookie + (name? strlen (name):0));
+      if (!cookie)
+        return; /* oops */
+      strcpy (cookie->name, name? name:"");
+      cookie->quiet = 0;
+      cookie->is_socket = 0;
+      cookie->want_socket = want_socket;
+      cookie->fd = -1;
+      log_socket = cookie->fd;
+
+      io.func_write = fun_writer;
+      io.func_close = fun_closer;
+
+      fp = _gpgrt_fopencookie (cookie, "w", io);
     }
-  log_socket = cookie->fd;
-
-  {
-    es_cookie_io_functions_t io = { NULL };
-    io.func_write = fun_writer;
-    io.func_close = fun_closer;
-
-    fp = _gpgrt_fopencookie (cookie, "w", io);
-  }
 
   /* On error default to a stderr based estream.  */
   if (!fp)

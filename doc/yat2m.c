@@ -1323,7 +1323,8 @@ finish_page (void)
     }
   else if (opt_store)
     {
-      inf ("writing '%s'", thepage.name );
+      if (verbose)
+        inf ("writing '%s'", thepage.name );
       fp = fopen ( thepage.name, "w" );
       if (!fp)
         die ("failed to create '%s': %s\n", thepage.name, strerror (errno));

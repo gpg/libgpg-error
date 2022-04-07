@@ -563,6 +563,13 @@ write_special (const char *fname, int lnr, const char *tag)
       else
         fputs ("ssize_t", stdout);
     }
+  else if (!strcmp (tag, "SOCKET_t"))
+    {
+      if (have_w32_system)
+        fputs ("uintptr_t", stdout);
+      else
+        fputs ("int", stdout);
+    }
   else if (!strcmp (tag, "define:pid_t"))
     {
       if (have_sys_types_h)

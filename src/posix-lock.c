@@ -67,6 +67,38 @@
 #  endif
 # endif /*!USE_POSIX_THREADS_WEAK*/
 # if PTHREAD_IN_USE_DETECTION_HARD
+#  if defined __FreeBSD__ || defined __DragonFly__                 /* FreeBSD */
+
+/* Test using pthread_key_create.  */
+
+static int
+use_pthread_p (void)
+{
+  static int tested;
+  static int result; /* 1: linked with -lpthread, 0: only with libc */
+
+  if (!tested)
+    {
+      pthread_key_t key;
+      int err = pthread_key_create (&key, NULL);
+
+      if (err == ENOSYS)
+        result = 0;
+      else
+        {
+          result = 1;
+          if (err == 0)
+            pthread_key_delete (key);
+        }
+      tested = 1;
+    }
+  return result;
+}
+
+#  else                                                     /* Solaris, HP-UX */
+
+/* Test using pthread_create.  */
+
 /* The function to be executed by a dummy thread.  */
 static void *
 dummy_thread_func (void *arg)
@@ -84,7 +116,7 @@ use_pthread_p (void)
     {
       pthread_t thread;
 
-      if (pthread_create (&thread, NULL, dummy_thread_func, NULL))
+      if (pthread_create (&thread, NULL, dummy_thread_func, NULL) != 0)
         result = 0; /* Thread creation failed.  */
       else
         {
@@ -102,6 +134,8 @@ use_pthread_p (void)
     }
   return result;
 }
+#  endif                                                     /* Solaris, HP-UX */
+
 # endif /*PTHREAD_IN_USE_DETECTION_HARD*/
 #endif /*USE_POSIX_THREADS*/
 

@@ -39,6 +39,10 @@
 #include <io.h>
 #include <windows.h>
 
+#ifndef EOPNOTSUPP
+# define EOPNOTSUPP ENOSYS
+#endif
+
 /* Enable tracing.  The value is the module name to be printed.  */
 /*#define ENABLE_TRACING "estream" */
 
