@@ -24,13 +24,8 @@
 # depend on the configuration anyway.
 #
 
-if HAVE_W32CE_SYSTEM
-gpg_extra_headers = gpg-extra/errno.h
-extra_cppflags = -idirafter gpg-extra
-else
 gpg_extra_headers =
 extra_cppflags =
-endif
 
 localedir = $(datadir)/locale
 
@@ -96,7 +91,7 @@ pkgconfig_DATA = gpg-error.pc
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrnos.awk errnos.in README \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
-	mkheader.c gpg-error.h.in mkw32errmap.c w32-add.h w32ce-add.h \
+	mkheader.c gpg-error.h.in mkw32errmap.c w32-add.h \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 gpgrt.m4 \
 	gpg-error.vers gpg-error.def.in \
         versioninfo.rc.in gpg-error.w32-manifest.in \
@@ -253,20 +248,8 @@ mkerrcodes.h: Makefile mkerrcodes.awk $(gpg_extra_headers)
                $(AWK) -f $(srcdir)/mkerrcodes.awk >$@
 	-rm _$@
 
-if HAVE_W32CE_SYSTEM
-# It is correct to use $(CPP).  We want the host's idea of the error codes.
-mkw32errmap.tab.h: Makefile mkw32errmap.c
-	$(CPP) -DRESOLVE_MACROS $(srcdir)/mkw32errmap.c | \
-	      grep '{&mkw32errmap_marker' >$@
-mkw32errmap.map.c: mkw32errmap$(EXEEXT_FOR_BUILD)
-	./mkw32errmap$(EXEEXT_FOR_BUILD) --map > $@
-gpg-extra/errno.h: mkw32errmap$(EXEEXT_FOR_BUILD)
-	-$(MKDIR_P) gpg-extra
-	./mkw32errmap$(EXEEXT_FOR_BUILD) > $@
-else
 mkw32errmap.map.c:
 	echo "/*dummy*/" > $@
-endif
 
 # We use CC proper for preprocessing thus we have to convince it that
 # the data is really to be preprocessed.
@@ -281,14 +264,6 @@ gpg-error.def: Makefile gpg-error.def.in
 mkerrcodes$(EXEEXT_FOR_BUILD): mkerrcodes.c mkerrcodes.h Makefile
 	$(CC_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) \
 	$(CPPFLAGS_FOR_BUILD) -I. -I$(srcdir) -o $@ $(srcdir)/mkerrcodes.c
-
-if HAVE_W32CE_SYSTEM
-# It is correct to use $(CC_FOR_BUILD) here.  We want to run the
-# program at build time.
-mkw32errmap$(EXEEXT_FOR_BUILD): mkw32errmap.c mkw32errmap.tab.h Makefile
-	$(CC_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) \
-	$(CPPFLAGS_FOR_BUILD) -I. -I$(srcdir) -o $@ $(srcdir)/mkw32errmap.c
-endif
 
 code-from-errno.h: mkerrcodes$(EXEEXT_FOR_BUILD) Makefile
 	./mkerrcodes$(EXEEXT_FOR_BUILD) | $(AWK) -f $(srcdir)/mkerrcodes2.awk >$@
@@ -309,7 +284,6 @@ parts_of_gpg_error_h = 	 	\
 	err-codes.h.in 	 	\
 	errnos.in 	 	\
 	w32-add.h	 	\
-	w32ce-add.h      	\
 	$(lock_obj_pub)
 
 # If we are cross-compiling or building on Windows we better make sure
@@ -356,12 +330,3 @@ gpg-error-config: gpgrt-config gpg-error-config-old gpg-error-config-test.sh
 	  exit 1; \
 	fi
 	cp gpg-error-config-old $@
-
-install-data-local:
-if HAVE_W32CE_SYSTEM
-	-$(MKDIR_P) "$(DESTDIR)$(includedir)/gpg-extra"
-	$(INSTALL_DATA) gpg-extra/errno.h \
-                         "$(DESTDIR)$(includedir)/gpg-extra/errno.h"
-else
-        :
-endif

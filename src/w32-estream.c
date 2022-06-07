@@ -168,8 +168,6 @@ reader (void *arg)
       if (nread < 0)
         {
           ctx->error_code = (int) errno;
-          /* NOTE (W32CE): Do not ignore ERROR_BUSY!  Check at
-             least stop_me if that happens.  */
           if (ctx->error_code == ERROR_BROKEN_PIPE)
             {
               ctx->eof = 1;
@@ -268,12 +266,7 @@ create_reader (estream_cookie_w32_pollable_t pcookie)
 
   InitializeCriticalSection (&ctx->mutex);
 
-#ifdef HAVE_W32CE_SYSTEM
-  ctx->thread_hd = CreateThread (&sec_attr, 64 * 1024, reader, ctx,
-				 STACK_SIZE_PARAM_IS_A_RESERVATION, &tid);
-#else
   ctx->thread_hd = CreateThread (&sec_attr, 0, reader, ctx, 0, &tid);
-#endif
 
   if (!ctx->thread_hd)
     {
@@ -313,22 +306,6 @@ destroy_reader (struct reader_context_s *ctx)
   if (ctx->have_space_ev)
     SetEvent (ctx->have_space_ev);
   LeaveCriticalSection (&ctx->mutex);
-
-#ifdef HAVE_W32CE_SYSTEM
-  /* Scenario: We never create a full pipe, but already started
-     reading.  Then we need to unblock the reader in the pipe driver
-     to make our reader thread notice that we want it to go away.  */
-
-  if (ctx->file_hd != INVALID_HANDLE_VALUE)
-    {
-      if (!DeviceIoControl (ctx->file_hd, GPGCEDEV_IOCTL_UNBLOCK,
-			NULL, 0, NULL, 0, NULL, NULL))
-	{
-	  trace (("%p: unblock control call failed: ec=%d",
-                  ctx, (int)GetLastError ()));
-	}
-    }
-#endif
 
   /* XXX is it feasible to unblock the thread?  */
 
@@ -571,12 +548,7 @@ create_writer (estream_cookie_w32_pollable_t pcookie)
 
   InitializeCriticalSection (&ctx->mutex);
 
-#ifdef HAVE_W32CE_SYSTEM
-  ctx->thread_hd = CreateThread (&sec_attr, 64 * 1024, writer, ctx,
-				 STACK_SIZE_PARAM_IS_A_RESERVATION, &tid);
-#else
   ctx->thread_hd = CreateThread (&sec_attr, 0, writer, ctx, 0, &tid );
-#endif
 
   if (!ctx->thread_hd)
     {
@@ -620,20 +592,6 @@ destroy_writer (struct writer_context_s *ctx)
 
   /* Give the writer a chance to flush the buffer.  */
   WaitForSingleObject (ctx->is_empty, INFINITE);
-
-#ifdef HAVE_W32CE_SYSTEM
-  /* Scenario: We never create a full pipe, but already started
-     writing more than the pipe buffer.  Then we need to unblock the
-     writer in the pipe driver to make our writer thread notice that
-     we want it to go away.  */
-
-  if (!DeviceIoControl (ctx->file_hd, GPGCEDEV_IOCTL_UNBLOCK,
-			NULL, 0, NULL, 0, NULL, NULL))
-    {
-      trace (("%p: unblock control call failed: ec=%d",
-              ctx, (int)GetLastError ()));
-    }
-#endif
 
   /* After setting this event CTX is void.  */
   trace (("%p: set close_ev", ctx));

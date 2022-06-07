@@ -102,7 +102,6 @@ _gpgrt_w32_reg_query_string (const char *root, const char *dir,
     }
   result[nbytes] = 0; /* Make sure it is really a string.  */
 
-#ifndef HAVE_W32CE_SYSTEM /* (Windows CE has no environment.)  */
   if (type == REG_EXPAND_SZ && strchr (result, '%'))
     {
       char *tmp;
@@ -146,7 +145,6 @@ _gpgrt_w32_reg_query_string (const char *root, const char *dir,
           xfree (tmp);
         }
     }
-#endif
 
  leave:
   RegCloseKey (key_handle);

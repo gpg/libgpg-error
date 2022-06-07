@@ -19,12 +19,6 @@
 
 ## Process this file with automake to produce Makefile.in
 
-if HAVE_W32CE_SYSTEM
-extra_includes = -idirafter $(top_builddir)/src/gpg-extra
-else
-extra_includes =
-endif
-
 EXTRA_DIST = t-argparse.conf etc/t-argparse.conf
 
 gpg_error_lib = ../src/libgpg-error.la
@@ -36,7 +30,7 @@ if HAVE_LOCK_OPTIMIZATION
 TESTS += t-lock-single-posix
 endif
 
-AM_CPPFLAGS = -I$(top_builddir)/src $(extra_includes)
+AM_CPPFLAGS = -I$(top_builddir)/src
 
 AM_LDFLAGS = -no-install
 LDADD = $(gpg_error_lib) @LDADD_FOR_TESTS_KLUDGE@
