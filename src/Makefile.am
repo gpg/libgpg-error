@@ -88,7 +88,7 @@ pkgconfig_DATA = gpg-error.pc
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrnos.awk errnos.in README \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
-	mkheader.c gpg-error.h.in mkw32errmap.c w32-add.h \
+	mkheader.c gpg-error.h.in w32-add.h \
 	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 gpgrt.m4 \
 	gpg-error.vers gpg-error.def.in \
         versioninfo.rc.in gpg-error.w32-manifest.in \
@@ -100,11 +100,11 @@ BUILT_SOURCES = $(srcdir)/err-sources.h $(srcdir)/err-codes.h \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h gpgrt.h \
 	gpg-error.def
 
-tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h
+tmp_files = _mkerrcodes.h _gpg-error.def.h
 
 CLEANFILES = code-to-errno.h code-from-errno.h \
 	gpg-error.h gpgrt.h \
-        mkerrcodes$(EXEEXT_FOR_BUILD) mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
+        mkerrcodes$(EXEEXT_FOR_BUILD) mkerrcodes.h gpg-error.def \
 	err-sources-sym.h err-codes-sym.h errnos-sym.h \
 	gpg-extra/errno.h mkheader$(EXEEXT_FOR_BUILD) \
 	gpgrt-config gpg-error-config-old gpg-error-config-test.sh \
