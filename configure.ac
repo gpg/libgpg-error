@@ -122,15 +122,10 @@ AC_SUBST([LDADD_FOR_TESTS_KLUDGE])
 # Set some variables depending on the platform for later use.
 have_w32_system=no
 have_w64_system=no
-have_w32ce_system=no
 case "${host}" in
     x86_64-*mingw32*)
         have_w32_system=yes
         have_w64_system=yes
-        ;;
-    *-mingw32ce*)
-        have_w32_system=yes
-        have_w32ce_system=yes
         ;;
     *-mingw32*)
         have_w32_system=yes
@@ -529,11 +524,7 @@ if test "x$LIBMULTITHREAD" != x; then
 else
   GPG_ERROR_CONFIG_MT_LIBS=""
 fi
-if test "$have_w32ce_system" = yes; then
-  GPG_ERROR_CONFIG_CFLAGS="-idirafter \${includedir}/gpg-extra"
-else
-  GPG_ERROR_CONFIG_CFLAGS=""
-fi
+GPG_ERROR_CONFIG_CFLAGS=""
 if test "x$THREADLIB_CPPFLAGS" != x; then
   GPG_ERROR_CONFIG_MT_CFLAGS="${THREADLIB_CPPFLAGS}"
 else
@@ -591,9 +582,6 @@ if test "$have_w32_system" = yes; then
     if test "$have_w64_system" = yes; then
       AC_DEFINE(HAVE_W64_SYSTEM,1,[Defined if we run on 64 bit W32 API system])
     fi
-    if test "$have_w32ce_system" = yes; then
-      AC_DEFINE(HAVE_W32CE_SYSTEM,1,[Defined if we run on WindowsCE])
-    fi
     force_use_syscfg=yes
 fi
 if test x"$gl_use_threads" = xno; then
@@ -627,7 +615,6 @@ fi
 
 AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
 AM_CONDITIONAL(HAVE_W64_SYSTEM, test "$have_w64_system" = yes)
-AM_CONDITIONAL(HAVE_W32CE_SYSTEM, test "$have_w32ce_system" = yes)
 AM_CONDITIONAL(CROSS_COMPILING, test x$cross_compiling = xyes)
 AM_CONDITIONAL(FORCE_USE_SYSCFG, test x$force_use_syscfg = xyes)
 AM_CONDITIONAL(HAVE_GENERATED_LOCK_OBJ_H, test x$lock_obj_h_generated = xyes)

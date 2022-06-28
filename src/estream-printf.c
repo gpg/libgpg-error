@@ -77,9 +77,6 @@
 
 #if defined(_WIN32) && !defined(HAVE_W32_SYSTEM)
 # define HAVE_W32_SYSTEM 1
-# if defined(__MINGW32CE__) && !defined (HAVE_W32CE_SYSTEM)
-#  define HAVE_W32CE_SYSTEM
-# endif
 #endif
 
 #include <stdio.h>
@@ -97,9 +94,6 @@
 #ifdef HAVE_LANGINFO_THOUSEP
 #include <langinfo.h>
 #endif
-#ifdef HAVE_W32CE_SYSTEM
-#include <gpg-error.h>  /* ERRNO replacement.  */
-#endif
 #ifdef _ESTREAM_PRINTF_EXTRA_INCLUDE
 # include _ESTREAM_PRINTF_EXTRA_INCLUDE
 #endif
@@ -116,11 +110,7 @@
 #endif
 
 /* A wrapper to set ERRNO.  */
-#ifdef HAVE_W32CE_SYSTEM
-# define _set_errno(a)  gpg_err_set_errno ((a))
-#else
-# define _set_errno(a)  do { errno = (a); } while (0)
-#endif
+#define _set_errno(a)  do { errno = (a); } while (0)
 
 
 /* Calculate array dimension.  */

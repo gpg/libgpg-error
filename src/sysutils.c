@@ -436,11 +436,7 @@ _gpgrt_chdir (const char *name)
 char *
 _gpgrt_getcwd (void)
 {
-#ifdef HAVE_W32CE_SYSTEM
-
-  return xtrystrdup ("/");
-
-#elif defined(HAVE_W32_SYSTEM)
+#if defined(HAVE_W32_SYSTEM)
   wchar_t wbuffer[MAX_PATH + sizeof(wchar_t)];
   DWORD wlen;
   char *buf, *p;
