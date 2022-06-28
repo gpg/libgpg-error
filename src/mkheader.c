@@ -614,11 +614,6 @@ write_special (const char *fname, int lnr, const char *tag)
         {
           include_file (fname, lnr, "w32-add.h", write_line);
         }
-      else if (!strcmp (host_os, "mingw32ce"))
-        {
-          include_file (fname, lnr, "w32-add.h", write_line);
-          include_file (fname, lnr, "w32ce-add.h", write_line);
-        }
     }
   else if (!strcmp (tag, "include:lock-obj"))
     {
