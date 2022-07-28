@@ -1560,6 +1560,12 @@ func_w32_seek (void *cookie, gpgrt_off_t *offset, int whence)
       return -1;
     }
 
+  if (GetFileType (w32_cookie->hd) == FILE_TYPE_PIPE)
+    {
+      _set_errno (ESPIPE);
+      return -1;
+    }
+
   if (whence == SEEK_SET)
     {
       method = FILE_BEGIN;
