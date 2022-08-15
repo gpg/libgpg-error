@@ -179,6 +179,15 @@ AH_BOTTOM([
 #define GPGRT_ENABLE_ARGPARSE_MACROS 1
 ])
 
+# We used to provide gpg-error-config command always.  Now, it's
+# gpgrt-config command with gpg-error.pc configuration file, which
+# does same thing.  gpg-error-config command is deprecated.
+AC_ARG_ENABLE(install-gpg-error-config,
+  AS_HELP_STRING([--enable-install-gpg-error-config],
+                 [install gpg-error-config command]),
+  install_gpg_error_config=$enableval)
+AM_CONDITIONAL(INSTALL_GPG_ERROR_CONFIG,
+               test "$install_gpg_error_config" = "yes")
 
 # Note, that autogen.sh greps for the next line.
 AM_GNU_GETTEXT_VERSION([0.19.3])

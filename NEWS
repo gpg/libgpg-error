@@ -1,6 +1,11 @@
 Noteworthy changes in version 1.46 (unreleased) [C33/A33/R_]
 -----------------------------------------------
 
+ * The gpg-error-config command is not installed by default, because
+   it is now replaced by use of pkg-config/gpgrt-config with
+   gpg-error.pc.  Supply --enable-install-gpg-error-config configure
+   option, if it's really needed.
+
  Release-info: https://dev.gnupg.org/T5923
 
 
