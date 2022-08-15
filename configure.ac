@@ -508,7 +508,7 @@ GNUPG_CHECK_READLINE
 estream_INIT
 
 #
-# Substitution used for gpg-error-config
+# Substitution used for gpg-error-config and gpg-error.pc
 #
 GPG_ERROR_CONFIG_LIBS="$config_libs"
 if test "x$LIBTHREAD" != x; then
@@ -548,7 +548,7 @@ case "$includedir" in
 esac
 case "$libdir" in
   /usr/lib|/usr/lib64|/lib|/lib64) ;;
-  '${exec_prefix}/lib')
+  '${exec_prefix}/lib'|'${exec_prefix}/lib64')
     if test "$exec_prefix" = "NONE"; then
       if test "$prefix" != / -a "$prefix" != /usr; then
         GPG_ERROR_CONFIG_LIBS="-L\${libdir} $GPG_ERROR_CONFIG_LIBS"
