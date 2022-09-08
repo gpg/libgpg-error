@@ -633,13 +633,13 @@ _gpgrt_log_test_fd (int fd)
 }
 
 int
-_gpgrt_log_get_fd ()
+_gpgrt_log_get_fd (void)
 {
   return logstream? _gpgrt_fileno (logstream) : -1;
 }
 
 estream_t
-_gpgrt_log_get_stream ()
+_gpgrt_log_get_stream (void)
 {
   if (!logstream)
     {
