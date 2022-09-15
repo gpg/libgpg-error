@@ -562,7 +562,7 @@ void _gpgrt_log_flush (void);
 void _gpgrt_logv_printhex (const void *buffer, size_t length,
                            const char *fmt, va_list arg_ptr);
 void _gpgrt_log_printhex (const void *buffer, size_t length,
-                          const char *fmt, ...) GPGRT_ATTR_PRINTF(3,4);;
+                          const char *fmt, ...) GPGRT_ATTR_PRINTF(3,4);
 
 void _gpgrt_logv_clock (const char *fmt, va_list arg_ptr);
 void _gpgrt_log_clock (const char *fmt, ...) GPGRT_ATTR_PRINTF(1,2);
@@ -627,9 +627,9 @@ gpg_err_code_t _gpgrt_make_pipe (int filedes[2], estream_t *r_fp,
                                  int direction, int nonblock);
 
 /* Convenience macros to create a pipe.  */
-#define _gpgrt_create_pipe(a)              _gpgrt_make_pipe ((a),NULL, 0,    0);
-#define _gpgrt_create_inbound_pipe(a,b,c)  _gpgrt_make_pipe ((a), (b), -1, (c));
-#define _gpgrt_create_outbound_pipe(a,b,c) _gpgrt_make_pipe ((a), (b),  1, (c));
+#define _gpgrt_create_pipe(a)              _gpgrt_make_pipe ((a),NULL, 0,    0)
+#define _gpgrt_create_inbound_pipe(a,b,c)  _gpgrt_make_pipe ((a), (b), -1, (c))
+#define _gpgrt_create_outbound_pipe(a,b,c) _gpgrt_make_pipe ((a), (b),  1, (c))
 
 
 /* Fork and exec the program PGMNAME.

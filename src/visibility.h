@@ -164,7 +164,7 @@ MARK_VISIBLE (gpgrt_setenv)
 MARK_VISIBLE (gpgrt_mkdir)
 MARK_VISIBLE (gpgrt_chdir)
 MARK_VISIBLE (gpgrt_getcwd)
-MARK_VISIBLE (gpgrt_access);
+MARK_VISIBLE (gpgrt_access)
 
 MARK_VISIBLE (gpgrt_b64dec_start)
 MARK_VISIBLE (gpgrt_b64dec_proc)
@@ -215,14 +215,14 @@ MARK_VISIBLE (gpgrt_argparser)
 MARK_VISIBLE (gpgrt_usage)
 MARK_VISIBLE (gpgrt_strusage)
 MARK_VISIBLE (gpgrt_set_strusage)
-MARK_VISIBLE (gpgrt_set_fixed_string_mapper);
-MARK_VISIBLE (gpgrt_set_usage_outfnc);
-MARK_VISIBLE (gpgrt_set_confdir);
+MARK_VISIBLE (gpgrt_set_fixed_string_mapper)
+MARK_VISIBLE (gpgrt_set_usage_outfnc)
+MARK_VISIBLE (gpgrt_set_confdir)
 
-MARK_VISIBLE (gpgrt_cmp_version);
+MARK_VISIBLE (gpgrt_cmp_version)
 
-MARK_VISIBLE (gpgrt_fnameconcat);
-MARK_VISIBLE (gpgrt_absfnameconcat);
+MARK_VISIBLE (gpgrt_fnameconcat)
+MARK_VISIBLE (gpgrt_absfnameconcat)
 
 
 
