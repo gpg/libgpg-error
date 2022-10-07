@@ -1,3 +1,9 @@
+Noteworthy changes in version 1.47 (unreleased) [C33/A33/R_]
+-----------------------------------------------
+
+ Release-info: https://dev.gnupg.org/T6231
+
+
 Noteworthy changes in version 1.46 (2022-10-07) [C33/A33/R1]
 -----------------------------------------------
 
@@ -20,7 +26,7 @@ Noteworthy changes in version 1.46 (2022-10-07) [C33/A33/R1]
 
  * Fixed support of posix-lock for FreeBSD.  [rE6e17e70bb7]
 
- * Build fixes for some Mingw tool chain versions.  [T5890, T4656
+ * Build fixes for some Mingw tool chain versions.  [T5890, T4656]
 
  * Removed remaining support for WindowsCE.  [T5912]
 
