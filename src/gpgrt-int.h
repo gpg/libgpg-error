@@ -675,6 +675,13 @@ gpg_err_code_t _gpgrt_make_pipe (int filedes[2], estream_t *r_fp,
  *        On W32 run AllowSetForegroundWindow for the child.  Note that
  *        due to unknown problems this actually allows
  *        SetForegroundWindow for all children of this process.
+ *
+ * GNUPG_SPAWN_KEEP_STDIN
+ * GNUPG_SPAWN_KEEP_STDOUT
+ * GNUPG_SPAWN_KEEP_STDERR
+ *        Do not assign /dev/null to a non-required standard file
+ *        descriptor.
+ *
  */
 gpg_err_code_t
 _gpgrt_spawn_process (const char *pgmname, const char *argv[],

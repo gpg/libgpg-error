@@ -258,15 +258,20 @@ get_all_open_fds (void)
 static void
 do_exec (const char *pgmname, const char *argv[],
          int fd_in, int fd_out, int fd_err,
-         int *except, void (*preexec)(void) )
+         int *except, void (*preexec)(void), unsigned int flags)
 {
   char **arg_list;
   int i, j;
   int fds[3];
+  int nodevnull[3];
 
   fds[0] = fd_in;
   fds[1] = fd_out;
   fds[2] = fd_err;
+
+  nodevnull[0] = !!(flags & GPGRT_SPAWN_KEEP_STDIN);
+  nodevnull[1] = !!(flags & GPGRT_SPAWN_KEEP_STDOUT);
+  nodevnull[2] = !!(flags & GPGRT_SPAWN_KEEP_STDERR);
 
   /* Create the command line argument array.  */
   i = 0;
@@ -292,7 +297,9 @@ do_exec (const char *pgmname, const char *argv[],
   /* Assign /dev/null to unused FDs. */
   for (i=0; i <= 2; i++)
     {
-      if (fds[i] == -1 )
+      if (nodevnull[i])
+        continue;
+      if (fds[i] == -1)
         {
           fds[i] = open ("/dev/null", i? O_WRONLY : O_RDONLY);
           if (fds[i] == -1)
@@ -304,6 +311,8 @@ do_exec (const char *pgmname, const char *argv[],
   /* Connect the standard files.  */
   for (i=0; i <= 2; i++)
     {
+      if (nodevnull[i])
+        continue;
       if (fds[i] != i && dup2 (fds[i], i) == -1)
         _gpgrt_log_fatal ("dup2 std%s failed: %s\n",
                           i==0?"in":i==1?"out":"err", strerror (errno));
@@ -503,7 +512,7 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
       _gpgrt_fclose (outfp);
       _gpgrt_fclose (errfp);
       do_exec (pgmname, argv, inpipe[0], outpipe[1], errpipe[1],
-               except, preexec);
+               except, preexec, flags);
       /*NOTREACHED*/
     }
 
@@ -549,7 +558,7 @@ _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
            gcry_control (GCRYCTL_TERM_SECMEM);
          can be done.  */
       /* Run child. */
-      do_exec (pgmname, argv, infd, outfd, errfd, NULL, NULL);
+      do_exec (pgmname, argv, infd, outfd, errfd, NULL, NULL, 0);
       /*NOTREACHED*/
     }
 
@@ -849,7 +858,7 @@ _gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
           putenv (p);
         }
 
-      do_exec (pgmname, argv, -1, -1, -1, NULL, NULL);
+      do_exec (pgmname, argv, -1, -1, -1, NULL, NULL, 0);
       /*NOTREACHED*/
     }
 

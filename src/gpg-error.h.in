@@ -1087,6 +1087,9 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 #define GPGRT_SPAWN_NONBLOCK   16 /* Set the streams to non-blocking.      */
 #define GPGRT_SPAWN_RUN_ASFW   64 /* Use AllowSetForegroundWindow on W32.  */
 #define GPGRT_SPAWN_DETACHED  128 /* Start the process in the background.  */
+#define GPGRT_SPAWN_KEEP_STDIN   256
+#define GPGRT_SPAWN_KEEP_STDOUT  512
+#define GPGRT_SPAWN_KEEP_STDERR 1024
 
 #if 0
 
