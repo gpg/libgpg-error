@@ -258,7 +258,7 @@ get_all_open_fds (void)
 static void
 do_exec (const char *pgmname, const char *argv[],
          int fd_in, int fd_out, int fd_err,
-         int *except, void (*preexec)(void), unsigned int flags)
+         int *except, unsigned int flags)
 {
   char **arg_list;
   int i, j;
@@ -321,8 +321,6 @@ do_exec (const char *pgmname, const char *argv[],
   /* Close all other files. */
   close_all_fds (3, except);
 
-  if (preexec)
-    preexec ();
   execv (pgmname, arg_list);
   /* No way to print anything, as we have may have closed all streams. */
   _exit (127);
@@ -403,7 +401,7 @@ _gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction,
 /* Fork and exec the PGMNAME, see gpgrt-int.h for details.  */
 gpg_err_code_t
 _gpgrt_spawn_process (const char *pgmname, const char *argv[],
-                      int *except, void (*preexec)(void), unsigned int flags,
+                      int *except, unsigned int flags,
                       estream_t *r_infp,
                       estream_t *r_outfp,
                       estream_t *r_errfp,
@@ -506,13 +504,11 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
   if (!*pid)
     {
       /* This is the child. */
-      /* FIXME: Needs to be done by preexec:
-         gcry_control (GCRYCTL_TERM_SECMEM); */
       _gpgrt_fclose (infp);
       _gpgrt_fclose (outfp);
       _gpgrt_fclose (errfp);
       do_exec (pgmname, argv, inpipe[0], outpipe[1], errpipe[1],
-               except, preexec, flags);
+               except, flags);
       /*NOTREACHED*/
     }
 
@@ -538,7 +534,10 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
 /* Fork and exec the PGMNAME using FDs, see gpgrt-int.h for details.  */
 gpg_err_code_t
 _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
-                         int infd, int outfd, int errfd, pid_t *pid)
+                         int infd, int outfd, int errfd,
+                         void (*after_fork_cb)(void *),
+                         void *after_fork_cb_arg,
+                         pid_t *pid)
 {
   gpg_error_t err;
 
@@ -554,11 +553,11 @@ _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
 
   if (!*pid)
     {
-      /* FIXME: We need to add a preexec so that a
-           gcry_control (GCRYCTL_TERM_SECMEM);
-         can be done.  */
+      if (after_fork_cb)
+        (*after_fork_cb) (after_fork_cb_arg);
+
       /* Run child. */
-      do_exec (pgmname, argv, infd, outfd, errfd, NULL, NULL, 0);
+      do_exec (pgmname, argv, infd, outfd, errfd, NULL, 0);
       /*NOTREACHED*/
     }
 
@@ -858,7 +857,7 @@ _gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
           putenv (p);
         }
 
-      do_exec (pgmname, argv, -1, -1, -1, NULL, NULL, 0);
+      do_exec (pgmname, argv, -1, -1, -1, NULL, 0);
       /*NOTREACHED*/
     }
 

@@ -1102,19 +1102,23 @@ gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction, int nonblock)
 
 gpg_err_code_t
 gpgrt_spawn_process (const char *pgmname, const char *argv[],
-                     int *except, void (*preexec)(void), unsigned int flags,
+                     int *except, unsigned int flags,
                      estream_t *r_infp, estream_t *r_outfp, estream_t *r_errfp,
                      pid_t *pid)
 {
-  return _gpgrt_spawn_process (pgmname, argv, except, preexec, flags,
+  return _gpgrt_spawn_process (pgmname, argv, except, flags,
                                r_infp, r_outfp, r_errfp, pid);
 }
 
 gpg_err_code_t
 gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
-                        int infd, int outfd, int errfd, pid_t *pid)
+                        int infd, int outfd, int errfd,
+                        void (*after_fork_cb)(void *),
+                        void *after_fork_cb_arg,
+                        pid_t *pid)
 {
-  return _gpgrt_spawn_process_fd (pgmname, argv, infd, outfd, errfd, pid);
+  return _gpgrt_spawn_process_fd (pgmname, argv, infd, outfd, errfd,
+                                  after_fork_cb, after_fork_cb_arg, pid);
 }
 
 gpg_err_code_t

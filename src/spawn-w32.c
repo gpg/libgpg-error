@@ -386,7 +386,7 @@ _gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction, int nonblock)
 /* Fork and exec the PGMNAME, see gpgrt-int.h for details.  */
 gpg_err_code_t
 _gpgrt_spawn_process (const char *pgmname, const char *argv[],
-                      int *except, void (*preexec)(void), unsigned int flags,
+                      int *except, unsigned int flags,
                       estream_t *r_infp, estream_t *r_outfp, estream_t *r_errfp,
                       pid_t *pid)
 {
@@ -539,10 +539,6 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
     nullhd[2] = ((flags & GPGRT_SPAWN_KEEP_STDOUT)?
                  GetStdHandle (STD_ERROR_HANDLE) : w32_open_null (1));
 
-  /* Start the process.  Note that we can't run the PREEXEC function
-     because this might change our own environment. */
-  (void)preexec;
-
   memset (&si, 0, sizeof si);
   si.cb = sizeof (si);
   si.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
@@ -645,7 +641,10 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
 /* Fork and exec the PGMNAME using FDs, see gpgrt-int.h for details.  */
 gpg_err_code_t
 _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
-                         int infd, int outfd, int errfd, pid_t *pid)
+                         int infd, int outfd, int errfd,
+                         void (*after_fork_cb)(void *),
+                         void *after_fork_cb_arg,
+                         pid_t *pid)
 {
   gpg_err_code_t err;
   SECURITY_ATTRIBUTES sec_attr;
@@ -654,6 +653,9 @@ _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
   char *cmdline;
   int ret, i;
   HANDLE stdhd[3];
+
+  (void)after_fork_cb;
+  (void)after_fork_cb_arg;
 
   /* Setup return values.  */
   *pid = (pid_t)INVALID_HANDLE_VALUE;

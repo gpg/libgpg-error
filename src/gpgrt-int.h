@@ -646,8 +646,6 @@ gpg_err_code_t _gpgrt_make_pipe (int filedes[2], estream_t *r_fp,
  *
  * The arguments for the process are expected in the NULL terminated
  * array ARGV.  The program name itself should not be included there.
- * If PREEXEC is not NULL, the given function will be called right
- * before the exec.
  *
  * IF EXCEPT is not NULL, it is expected to be an ordered list of file
  * descriptors, terminated by an entry with the value (-1).  These
@@ -685,7 +683,7 @@ gpg_err_code_t _gpgrt_make_pipe (int filedes[2], estream_t *r_fp,
  */
 gpg_err_code_t
 _gpgrt_spawn_process (const char *pgmname, const char *argv[],
-                      int *execpt, void (*preexec)(void), unsigned int flags,
+                      int *execpt, unsigned int flags,
                       estream_t *r_infp,
                       estream_t *r_outfp,
                       estream_t *r_errfp,
@@ -699,10 +697,15 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
  * terminated array ARGV.  The program name itself should not be
  * included there.  Calling gpgrt_wait_process and
  * gpgrt_release_process is required.  Returns 0 on success or an
- * error code. */
+ * error code.
+ * If AFTER_FORK_CB is not NULL, the given function will be called
+ * right after the fork, by child process.
+ */
 gpg_err_code_t _gpgrt_spawn_process_fd (const char *pgmname,
                                         const char *argv[],
                                         int infd, int outfd, int errfd,
+                                        void (*after_fork_cb)(void *),
+                                        void *after_fork_cb_arg,
                                         pid_t *pid);
 
 /* Spawn a new process and immediately detach from it.  The name of
@@ -713,7 +716,7 @@ gpg_err_code_t _gpgrt_spawn_process_fd (const char *pgmname,
  * provide an absolute file name.  */
 gpg_err_code_t _gpgrt_spawn_process_detached (const char *pgmname,
                                               const char *argv[],
-                                              const char *envp[] );
+                                              const char *envp[]);
 
 /* If HANG is true, waits for the process identified by PID to exit;
  * if HANG is false, checks whether the process has terminated.

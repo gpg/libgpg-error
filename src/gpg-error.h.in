@@ -1103,8 +1103,7 @@ gpg_err_code_t gpgrt_make_pipe (int filedes[2], gpgrt_stream_t *r_fp,
 
 /* Fork and exec PGMNAME.  */
 gpg_err_code_t gpgrt_spawn_process (const char *pgmname, const char *argv[],
-                                    int *execpt, void (*preexec)(void),
-                                    unsigned int flags,
+                                    int *execpt, unsigned int flags,
                                     gpgrt_stream_t *r_infp,
                                     gpgrt_stream_t *r_outfp,
                                     gpgrt_stream_t *r_errfp,
@@ -1113,6 +1112,8 @@ gpg_err_code_t gpgrt_spawn_process (const char *pgmname, const char *argv[],
 /* Fork and exec PGNNAME and connect the process to the given FDs.  */
 gpg_err_code_t gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
                                        int infd, int outfd, int errfd,
+                                       void (*after_fork_cb)(void *),
+                                       void *after_fork_cb_arg,
                                        pid_t *pid);
 
 /* Fork and exec PGMNAME as a detached process.  */
