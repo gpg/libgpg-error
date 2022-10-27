@@ -690,16 +690,15 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
                       pid_t *pid);
 
 
-/* Simplified version of gpgrt_spawn_process.  This function forks and
- * then execs PGMNAME, while connecting INFD to stdin, OUTFD to stdout
- * and ERRFD to stderr (any of them may be -1 to connect them to
- * /dev/null).  The arguments for the process are expected in the NULL
- * terminated array ARGV.  The program name itself should not be
- * included there.  Calling gpgrt_wait_process and
- * gpgrt_release_process is required.  Returns 0 on success or an
- * error code.
- * If AFTER_FORK_CB is not NULL, the given function will be called
- * right after the fork, by child process.
+/* Variant of gpgrt_spawn_process.  This function forks and then execs
+ * PGMNAME, while connecting INFD to stdin, OUTFD to stdout and ERRFD
+ * to stderr (any of them may be -1 to connect them to /dev/null).
+ * The arguments for the process are expected in the NULL terminated
+ * array ARGV.  The program name itself should not be included there.
+ * Calling gpgrt_wait_process and gpgrt_release_process is required.
+ * Returns 0 on success or an error code.  If AFTER_FORK_CB is not
+ * NULL, the given function will be called right after the fork, by
+ * child process.
  */
 gpg_err_code_t _gpgrt_spawn_process_fd (const char *pgmname,
                                         const char *argv[],
