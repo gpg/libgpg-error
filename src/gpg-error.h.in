@@ -1082,7 +1082,7 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 
 
 /*
- * Spawn functions  (Not yet available)
+ * Spawn functions
  */
 #define GPGRT_SPAWN_NONBLOCK   16 /* Set the streams to non-blocking.      */
 #define GPGRT_SPAWN_RUN_ASFW   64 /* Use AllowSetForegroundWindow on W32.  */
@@ -1090,8 +1090,6 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 #define GPGRT_SPAWN_KEEP_STDIN   256
 #define GPGRT_SPAWN_KEEP_STDOUT  512
 #define GPGRT_SPAWN_KEEP_STDERR 1024
-
-#if 0
 
 /* Function and convenience macros to create pipes.  */
 gpg_err_code_t gpgrt_make_pipe (int filedes[2], gpgrt_stream_t *r_fp,
@@ -1134,10 +1132,6 @@ void gpgrt_kill_process (pid_t pid);
 
 /* Release process resources identified by PID.  */
 void gpgrt_release_process (pid_t pid);
-
-#endif /*0*/
-
-
 
 /*
  * Option parsing.
