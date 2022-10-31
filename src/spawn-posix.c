@@ -163,8 +163,8 @@ get_max_fds (void)
  * EXCEPT is not NULL, it is expected to be a list of file descriptors
  * which shall not be closed.  This list shall be sorted in ascending
  * order with the end marked by -1.  */
-static void
-close_all_fds (int first, int *except)
+void
+_gpgrt_close_all_fds (int first, int *except)
 {
   int max_fd = get_max_fds ();
   int fd, i, except_start;
@@ -319,7 +319,8 @@ do_exec (const char *pgmname, const char *argv[],
     }
 
   /* Close all other files. */
-  close_all_fds (3, except);
+  if (!(flags & GPGRT_SPAWN_INHERIT_FILE))
+    _gpgrt_close_all_fds (3, except);
 
   execv (pgmname, arg_list);
   /* No way to print anything, as we have may have closed all streams. */
@@ -535,11 +536,12 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
 gpg_err_code_t
 _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
                          int infd, int outfd, int errfd,
-                         void (*after_fork_cb)(void *),
-                         void *after_fork_cb_arg,
+                         int (*spawn_cb) (void *),
+                         void *spawn_cb_arg,
                          pid_t *pid)
 {
   gpg_error_t err;
+  int ask_inherit_fds = 0;
 
   _gpgrt_pre_syscall ();
   *pid = fork ();
@@ -553,11 +555,12 @@ _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
 
   if (!*pid)
     {
-      if (after_fork_cb)
-        (*after_fork_cb) (after_fork_cb_arg);
+      if (spawn_cb)
+        ask_inherit_fds = (*spawn_cb) (spawn_cb_arg);
 
       /* Run child. */
-      do_exec (pgmname, argv, infd, outfd, errfd, NULL, 0);
+      do_exec (pgmname, argv, infd, outfd, errfd, NULL,
+               ask_inherit_fds? GPGRT_SPAWN_INHERIT_FILE : 0);
       /*NOTREACHED*/
     }
 

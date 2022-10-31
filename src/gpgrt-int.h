@@ -696,15 +696,19 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
  * The arguments for the process are expected in the NULL terminated
  * array ARGV.  The program name itself should not be included there.
  * Calling gpgrt_wait_process and gpgrt_release_process is required.
- * Returns 0 on success or an error code.  If AFTER_FORK_CB is not
- * NULL, the given function will be called right after the fork, by
- * child process.
+ * Returns 0 on success or an error code.  If SPAWN_CB is not NULL,
+ * the given function will be called with SPAWN_CB_ARG to determine if
+ * file descriptors/handles should be inherited or not.  The callback
+ * function should return 1 to ask keeping file descriptors/handles.
+ * If SPAWN_CB is NULL, or it returns 0, all file descriptors (except
+ * INFD, OUTFD, and ERRFD) will be closed on POSIX machine.  On POSIX
+ * machine, it is called right after the fork, by child process.
  */
 gpg_err_code_t _gpgrt_spawn_process_fd (const char *pgmname,
                                         const char *argv[],
                                         int infd, int outfd, int errfd,
-                                        void (*after_fork_cb)(void *),
-                                        void *after_fork_cb_arg,
+                                        int (*spawn_cb) (void *),
+                                        void *spawn_cb_arg,
                                         pid_t *pid);
 
 /* Spawn a new process and immediately detach from it.  The name of
@@ -757,6 +761,9 @@ void _gpgrt_kill_process (pid_t pid);
  * only required for Windows but it does not harm to always call it.
  * It is a nop if PID is invalid.  */
 void _gpgrt_release_process (pid_t pid);
+
+/* Close all file resources (descriptors), except KEEP_FDS.  */
+void _gpgrt_close_all_fds (int from, int *keep_fds);
 
 
 /*

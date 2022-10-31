@@ -1112,12 +1112,12 @@ gpgrt_spawn_process (const char *pgmname, const char *argv[],
 gpg_err_code_t
 gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
                         int infd, int outfd, int errfd,
-                        void (*after_fork_cb)(void *),
-                        void *after_fork_cb_arg,
+                        int (*spawn_cb)(void *),
+                        void *spawn_cb_arg,
                         pid_t *pid)
 {
   return _gpgrt_spawn_process_fd (pgmname, argv, infd, outfd, errfd,
-                                  after_fork_cb, after_fork_cb_arg, pid);
+                                  spawn_cb, spawn_cb_arg, pid);
 }
 
 gpg_err_code_t
@@ -1150,6 +1150,12 @@ void
 gpgrt_release_process (pid_t pid)
 {
   _gpgrt_release_process (pid);
+}
+
+void
+gpgrt_close_all_fds (int from, int *keep_fds)
+{
+  _gpgrt_close_all_fds (from, keep_fds);
 }
 
 

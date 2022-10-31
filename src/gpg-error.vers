@@ -179,6 +179,7 @@ GPG_ERROR_1.0 {
     gpgrt_wait_processes;
     gpgrt_kill_process;
     gpgrt_release_process;
+    gpgrt_close_all_fds;
 
     gpgrt_argparse;
     gpgrt_argparser;

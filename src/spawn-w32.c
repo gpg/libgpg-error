@@ -642,8 +642,8 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
 gpg_err_code_t
 _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
                          int infd, int outfd, int errfd,
-                         void (*after_fork_cb)(void *),
-                         void *after_fork_cb_arg,
+                         int (*spawn_cb) (void *),
+                         void *spawn_cb_arg,
                          pid_t *pid)
 {
   gpg_err_code_t err;
@@ -653,9 +653,10 @@ _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
   char *cmdline;
   int ret, i;
   HANDLE stdhd[3];
+  int ask_inherit = 0;
 
-  (void)after_fork_cb;
-  (void)after_fork_cb_arg;
+  if (spawn_cb)
+    ask_inherit = (*spawn_cb) (spawn_cb_arg);
 
   /* Setup return values.  */
   *pid = (pid_t)INVALID_HANDLE_VALUE;
@@ -663,7 +664,11 @@ _gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
   /* Prepare security attributes.  */
   memset (&sec_attr, 0, sizeof sec_attr );
   sec_attr.nLength = sizeof sec_attr;
-  sec_attr.bInheritHandle = FALSE;
+
+  if (ask_inherit)
+    sec_attr.bInheritHandle = TRUE;
+  else
+    sec_attr.bInheritHandle = FALSE;
 
   /* Build the command line.  */
   err = build_w32_commandline (pgmname, argv, &cmdline);
@@ -925,4 +930,11 @@ _gpgrt_release_process (pid_t pid)
 
       CloseHandle (process);
     }
+}
+
+void
+_gpgrt_close_all_fds (int from, int *keep_fds)
+{
+  (void)from;
+  (void)keep_fds;
 }

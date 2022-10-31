@@ -242,4 +242,6 @@ EXPORTS
  gpgrt_utf8_to_wchar          @186
  gpgrt_wchar_to_utf8          @187
 
+ gpgrt_close_all_fds          @188
+
 ;; end of file with public symbols for Windows.

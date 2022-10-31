@@ -207,6 +207,7 @@ MARK_VISIBLE (gpgrt_wait_process)
 MARK_VISIBLE (gpgrt_wait_processes)
 MARK_VISIBLE (gpgrt_kill_process)
 MARK_VISIBLE (gpgrt_release_process)
+MARK_VISIBLE (gpgrt_close_all_fds)
 
 MARK_VISIBLE (gpgrt_argparse)
 MARK_VISIBLE (gpgrt_argparser)
@@ -394,6 +395,7 @@ MARK_VISIBLE (gpgrt_absfnameconcat)
 #define gpgrt_wait_processes         _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_kill_process           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_release_process        _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_close_all_fds          _gpgrt_USE_UNDERSCORED_FUNCTION
 
 #define gpgrt_argparse                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_argparser               _gpgrt_USE_UNDERSCORED_FUNCTION
