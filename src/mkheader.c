@@ -570,28 +570,23 @@ write_special (const char *fname, int lnr, const char *tag)
       else
         fputs ("int", stdout);
     }
-  else if (!strcmp (tag, "define:pid_t"))
+  else if (!strcmp (tag, "define:gpgrt_process_t"))
     {
-      if (have_sys_types_h)
+      if (have_w32_system || have_w64_system)
         {
-          if (!sys_types_h_included)
-            {
-              fputs ("#include <sys/types.h>\n", stdout);
-              sys_types_h_included = 1;
-            }
-        }
-      else if (have_w64_system)
-        {
-          if (!stdint_h_included && have_stdint_h)
-            {
-              fputs ("#include <stdint.h>\n", stdout);
-              stdint_h_included = 1;
-            }
-          fputs ("typedef int64_t pid_t\n", stdout);
+          fputs ("typedef void *gpgrt_process_t;\n", stdout);
         }
       else
         {
-          fputs ("typedef int     pid_t\n", stdout);
+          if (have_sys_types_h)
+            {
+              if (!sys_types_h_included)
+                {
+                  fputs ("#include <sys/types.h>\n", stdout);
+                  sys_types_h_included = 1;
+                }
+            }
+          fputs ("typedef pid_t gpgrt_process_t;\n", stdout);
         }
     }
   else if (!strcmp (tag, "include:err-sources"))

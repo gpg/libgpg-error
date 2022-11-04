@@ -640,9 +640,9 @@ gpg_err_code_t _gpgrt_make_pipe (int filedes[2], estream_t *r_fp,
  * /dev/null; if it is not NULL store the address of a pointer to a
  * new estream there.  If R_ERRFP is NULL connect stderr of the new
  * process to /dev/null; if it is not NULL store the address of a
- * pointer to a new estream there.  On success the pid of the new
- * process is stored at PID.  On error -1 is stored at PID and if
- * R_OUTFP or R_ERRFP are not NULL, NULL is stored there.
+ * pointer to a new estream there.  On success the process id of the
+ * new process is stored at R_PID.  On error -1 is stored at R_PID and
+ * if R_OUTFP or R_ERRFP are not NULL, NULL is stored there.
  *
  * The arguments for the process are expected in the NULL terminated
  * array ARGV.  The program name itself should not be included there.
@@ -687,7 +687,7 @@ _gpgrt_spawn_process (const char *pgmname, const char *argv[],
                       estream_t *r_infp,
                       estream_t *r_outfp,
                       estream_t *r_errfp,
-                      pid_t *pid);
+                      gpgrt_process_t *r_process_id);
 
 
 /* Variant of gpgrt_spawn_process.  This function forks and then execs
@@ -709,7 +709,7 @@ gpg_err_code_t _gpgrt_spawn_process_fd (const char *pgmname,
                                         int infd, int outfd, int errfd,
                                         int (*spawn_cb) (void *),
                                         void *spawn_cb_arg,
-                                        pid_t *pid);
+                                        gpgrt_process_t *r_process_id);
 
 /* Spawn a new process and immediately detach from it.  The name of
  * the program to exec is PGMNAME and its arguments are in ARGV (the
@@ -721,8 +721,8 @@ gpg_err_code_t _gpgrt_spawn_process_detached (const char *pgmname,
                                               const char *argv[],
                                               const char *envp[]);
 
-/* If HANG is true, waits for the process identified by PID to exit;
- * if HANG is false, checks whether the process has terminated.
+/* If HANG is true, waits for the process identified by PROCESS_ID to
+ * exit; if HANG is false, checks whether the process has terminated.
  * PGMNAME should be the same as supplied to the spawn function and is
  * only used for diagnostics.  Return values:
  *
@@ -745,22 +745,25 @@ gpg_err_code_t _gpgrt_spawn_process_detached (const char *pgmname,
  * if the exit code is not required (in that case an error message will
  * be printed).  Note that under Windows PID is not the process id but
  * the handle of the process.  */
-gpg_err_code_t _gpgrt_wait_process (const char *pgmname, pid_t pid, int hang,
+gpg_err_code_t _gpgrt_wait_process (const char *pgmname,
+                                    gpgrt_process_t process_id, int hang,
                                     int *r_exitcode);
 
 /* Like _gpgrt_wait_process, but for COUNT processes.  */
-gpg_err_code_t _gpgrt_wait_processes (const char **pgmnames, pid_t *pids,
-                                      size_t count, int hang, int *r_exitcodes);
+gpg_err_code_t _gpgrt_wait_processes (const char **pgmnames,
+                                      gpgrt_process_t *process_ids,
+                                      size_t count, int hang,
+                                      int *r_exitcodes);
 
 /* Kill a process; that is send an appropriate signal to the process.
  * gpgrt_wait_process must be called to actually remove the process
- * from the system.  An invalid PID is ignored.  */
-void _gpgrt_kill_process (pid_t pid);
+ * from the system.  An invalid PROCESS_ID is ignored.  */
+void _gpgrt_kill_process (gpgrt_process_t process_id);
 
-/* Release the process identified by PID.  This function is actually
- * only required for Windows but it does not harm to always call it.
- * It is a nop if PID is invalid.  */
-void _gpgrt_release_process (pid_t pid);
+/* Release the process identified by PROCESS_ID.  This function is
+ * actually only required for Windows but it does not harm to always
+ * call it.  It is a nop if PROCESS_ID is invalid.  */
+void _gpgrt_release_process (gpgrt_process_t process_id);
 
 /* Close all file resources (descriptors), except KEEP_FDS.  */
 void _gpgrt_close_all_fds (int from, int *keep_fds);

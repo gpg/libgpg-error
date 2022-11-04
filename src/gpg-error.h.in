@@ -432,7 +432,7 @@ const char *gpgrt_check_version (const char *req_version);
 const char *gpg_error_check_version (const char *req_version);
 
 /* System specific type definitions.  */
-@define:pid_t@
+@define:gpgrt_process_t@
 @define:gpgrt_ssize_t@
 @define:gpgrt_off_t@
 
@@ -1108,14 +1108,14 @@ gpg_err_code_t gpgrt_spawn_process (const char *pgmname, const char *argv[],
                                     gpgrt_stream_t *r_infp,
                                     gpgrt_stream_t *r_outfp,
                                     gpgrt_stream_t *r_errfp,
-                                    pid_t *pid);
+                                    gpgrt_process_t *r_process_id);
 
 /* Fork and exec PGNNAME and connect the process to the given FDs.  */
 gpg_err_code_t gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
                                        int infd, int outfd, int errfd,
                                        int (*spawn_cb) (void *),
                                        void *spawn_cb_arg,
-                                       pid_t *pid);
+                                       gpgrt_process_t *r_process_id);
 
 /* Fork and exec PGMNAME as a detached process.  */
 gpg_err_code_t gpgrt_spawn_process_detached (const char *pgmname,
@@ -1123,18 +1123,20 @@ gpg_err_code_t gpgrt_spawn_process_detached (const char *pgmname,
                                              const char *envp[]);
 
 /* Wait for a single process.  */
-gpg_err_code_t gpgrt_wait_process (const char *pgmname, pid_t pid, int hang,
-                                int *r_exitcode);
+gpg_err_code_t gpgrt_wait_process (const char *pgmname,
+                                   gpgrt_process_t process_id,
+                                   int hang, int *r_exitcode);
 
 /* Wait for a multiple processes.  */
-gpg_err_code_t gpgrt_wait_processes (const char **pgmnames, pid_t *pids,
+gpg_err_code_t gpgrt_wait_processes (const char **pgmnames,
+                                     gpgrt_process_t *process_ids,
                                      size_t count, int hang, int *r_exitcodes);
 
-/* Kill the process identified by PID.  */
-void gpgrt_kill_process (pid_t pid);
+/* Kill the process identified by PROCESS_ID.  */
+void gpgrt_kill_process (gpgrt_process_t process_id);
 
-/* Release process resources identified by PID.  */
-void gpgrt_release_process (pid_t pid);
+/* Release process resources identified by PROCESS_ID.  */
+void gpgrt_release_process (gpgrt_process_t process_id);
 
 /* Close all file resources (descriptors), except KEEP_FDS. */
 void gpgrt_close_all_fds (int from, int *keep_fds);

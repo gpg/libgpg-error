@@ -216,7 +216,10 @@ AC_MSG_WARN([[Without strerror_r, gpg_strerror_r might not be thread-safe]]))
 esac
 AC_SUBST(INSTALLSHELLPATH)
 
-AC_FUNC_FORK
+# We don't check 'fork' by configure script.  Use of fork is inferred from by
+# the target system (POSIX or Windows).
+# AC_FUNC_FORK
+
 AC_CHECK_FUNCS([flockfile vasprintf mmap rand strlwr stpcpy setenv stat \
                 getrlimit getpwnam getpwuid getpwnam_r getpwuid_r inet_pton])
 
