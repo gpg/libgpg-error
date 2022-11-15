@@ -1082,7 +1082,7 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 
 
 /*
- * Spawn functions
+ * Spawn functions  (Not yet available)
  */
 /* Internal flag to ihnerit file descriptor/handle */
 #define GPGRT_SPAWN_INHERIT_FILE  1
@@ -1094,6 +1094,7 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 #define GPGRT_SPAWN_KEEP_STDOUT  512
 #define GPGRT_SPAWN_KEEP_STDERR 1024
 
+#if 0
 /* Function and convenience macros to create pipes.  */
 gpg_err_code_t gpgrt_make_pipe (int filedes[2], gpgrt_stream_t *r_fp,
                                 int direction, int nonblock);
@@ -1140,6 +1141,7 @@ void gpgrt_release_process (gpgrt_process_t process_id);
 
 /* Close all file resources (descriptors), except KEEP_FDS. */
 void gpgrt_close_all_fds (int from, int *keep_fds);
+#endif /*0*/
 
 /*
  * Option parsing.

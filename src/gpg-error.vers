@@ -171,15 +171,16 @@ GPG_ERROR_1.0 {
     gpgrt_chdir;
     gpgrt_getcwd;
 
-    gpgrt_make_pipe;
-    gpgrt_spawn_process;
-    gpgrt_spawn_process_fd;
-    gpgrt_spawn_process_detached;
-    gpgrt_wait_process;
-    gpgrt_wait_processes;
-    gpgrt_kill_process;
-    gpgrt_release_process;
-    gpgrt_close_all_fds;
+## API not yet finished for:
+#    gpgrt_make_pipe;
+#    gpgrt_spawn_process;
+#    gpgrt_spawn_process_fd;
+#    gpgrt_spawn_process_detached;
+#    gpgrt_wait_process;
+#    gpgrt_wait_processes;
+#    gpgrt_kill_process;
+#    gpgrt_release_process;
+#    gpgrt_close_all_fds;
 
     gpgrt_argparse;
     gpgrt_argparser;

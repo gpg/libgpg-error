@@ -199,6 +199,7 @@ MARK_VISIBLE (gpgrt_log_clock)
 MARK_VISIBLE (gpgrt_log_flush)
 MARK_VISIBLE (_gpgrt_log_assert)
 
+#if 0
 MARK_VISIBLE (gpgrt_make_pipe)
 MARK_VISIBLE (gpgrt_spawn_process)
 MARK_VISIBLE (gpgrt_spawn_process_fd)
@@ -208,6 +209,7 @@ MARK_VISIBLE (gpgrt_wait_processes)
 MARK_VISIBLE (gpgrt_kill_process)
 MARK_VISIBLE (gpgrt_release_process)
 MARK_VISIBLE (gpgrt_close_all_fds)
+#endif
 
 MARK_VISIBLE (gpgrt_argparse)
 MARK_VISIBLE (gpgrt_argparser)

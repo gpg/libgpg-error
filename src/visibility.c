@@ -1093,6 +1093,7 @@ _gpgrt_log_assert (const char *expr, const char *file,
 }
 
 
+#if 0
 gpg_err_code_t
 gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction, int nonblock)
 {
@@ -1158,6 +1159,7 @@ gpgrt_close_all_fds (int from, int *keep_fds)
 {
   _gpgrt_close_all_fds (from, keep_fds);
 }
+#endif /*0*/
 
 
 int
