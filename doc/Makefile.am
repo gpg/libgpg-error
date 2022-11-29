@@ -34,9 +34,9 @@ YAT2M_OPTIONS = -I $(srcdir) \
 
 myman_sources = gpgrt.texi
 if INSTALL_GPG_ERROR_CONFIG
-myman_pages   = gpg-error-config.1
+myman_pages   = gpg-error-config.1 gpgrt-config.1
 else
-myman_pages   =
+myman_pages   = gpgrt-config.1
 endif
 
 man_MANS = $(myman_pages)

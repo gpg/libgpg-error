@@ -342,6 +342,7 @@ TBD.  (Description of the error function may be taken from Libgcrypt.)
 
 @menu
 * gpg-error-config::    Print required compiler flags
+* gpgrt-config::    Helper tool for querying installed libraries
 @end menu
 
 @c The original version of this man page has been written for Debian and was
@@ -410,6 +411,72 @@ specified before any @option{--libs} or @option{--cflags} options.
 
 @manpause
 
+@manpage gpgrt-config.1
+@node gpgrt-config
+@section gpgrt-config - Helper tool for querying installed libraries.
+@ifset manverb
+.B gpgrt-config
+\- Helper script to get information about the installed version of gpg libraries
+@end ifset
+
+@mansect synopsis
+@ifset manverb
+.B  gpgrt-config
+.RI [ options ]
+.I [ module ]
+@end ifset
+
+@mansect description
+@command{gpgrt-config} is a script tool that is used by the autoconf macros
+shipped with gnupg software (e.g. AM_PATH_GPG_ERROR and AM_PATH_GPGME) to
+determine the compiler and linker flags that should be used to compile
+and link programs that use the specific library (e.g. libgpg-error or
+libgpgme). @command{gpgrt-config} uses pkg-config .pc files as data source.
+
+Apart from options @command{gpgrt-config} accepts a single argument
+@option{module} specifying the basename (without the ".pc"-suffix) of the
+pkg-config file to be used as input. @option{module} will default to
+@option{gpg-error} if it is not specified.
+
+@mansect options
+@noindent
+@command{gpgrt-config} accepts the following options:
+
+@table @gnupgtabopt
+@item --libdir=@var{LIBDIR}
+Parent directory path of pkgconfig file search path.
+e.g. @samp{gpgrt-config --libdir=/usr/lib --exists gpgme}
+will parse @file{/usr/lib/pkgconfig/gpgme.pc}.
+
+@item  --exists
+Test whether the pkg-config file @file{module.pc} exist and exits with
+success or error accordingly.
+
+@item --modversion
+Print the currently installed version of @option{module} on the standard output.
+
+@item --libs
+Print the linker flags that are necessary to link a program using the
+@option{module}.
+
+@item --cflags
+Print the compiler flags that are necessary to compile a program using the
+@option{module}.
+
+@item --static
+Modifies output if linking statically instead of dynamically.
+
+@item --variable=@var{VARNAME}
+Output variable VARNAME from the module's pkg-config file.
+
+@end table
+
+@mansect bugs
+@noindent
+@command{gpgrt-config} is tried to be compatible to pkg-config, and to
+support cross build well, but it is not intended to be a replacement.
+
+@manpause
 
 
 @c **********************************************************
