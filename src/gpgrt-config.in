@@ -452,6 +452,71 @@ Options:
 EOF
     exit $1
 }
+
+# Determine gpgrt_libdir
+determine_gpgrt_libdir () {
+    GPGRT_CONFIG="$0"
+    #
+    # Get the prefix of gpgrt-config assuming it's something like:
+    #   <PREFIX>/bin/gpgrt-config
+    gpgrt_prefix=${GPGRT_CONFIG%/*/*}
+    possible_libdir1=${gpgrt_prefix}/lib
+    # Determine by using system libdir-format with CC, it's like:
+    #   Normal style: /usr/lib
+    #   GNU cross style: /usr/<triplet>/lib
+    #   Debian style: /usr/lib/<multiarch-name>
+    #   Fedora/openSUSE style: /usr/lib, /usr/lib32 or /usr/lib64
+    # It is assumed that CC is specified to the one of host on cross build.
+    if libdir_candidates=$(${CC:-cc} -print-search-dirs | \
+          sed -n -e "/^libraries/{s/libraries: =//;s/:/\\
+/g;p;}"); then
+      # From the output of -print-search-dirs, select valid pkgconfig dirs.
+      libdir_candidates=$(for dir in $libdir_candidates; do
+        if p=$(cd $dir 2>/dev/null && pwd); then
+          test -d "$p/pkgconfig" && echo $p;
+        fi
+      done)
+
+      for possible_libdir0 in $libdir_candidates; do
+        # possible_libdir0:
+        #   Fallback candidate, the one of system-installed (by $CC)
+        #   (/usr/<triplet>/lib, /usr/lib/<multiarch-name> or /usr/lib32)
+        # possible_libdir1:
+        #   Another candidate, user-locally-installed
+        #   (<gpgrt_prefix>/lib)
+        # possible_libdir2
+        #   Most preferred
+        #   (<gpgrt_prefix>/<triplet>/lib,
+        #    <gpgrt_prefix>/lib/<multiarch-name> or <gpgrt_prefix>/lib32)
+        if test "${possible_libdir0##*/}" = "lib"; then
+          possible_prefix0=${possible_libdir0%/lib}
+          possible_prefix0_triplet=${possible_prefix0##*/}
+          if test -z "$possible_prefix0_triplet"; then
+            continue
+          fi
+          possible_libdir2=${gpgrt_prefix}/$possible_prefix0_triplet/lib
+        else
+          possible_prefix0=${possible_libdir0%%/lib*}
+          possible_libdir2=${gpgrt_prefix}${possible_libdir0#$possible_prefix0}
+        fi
+        if test -f ${possible_libdir2}/pkgconfig/gpg-error.pc; then
+          gpgrt_libdir=${possible_libdir2}
+        elif test -f ${possible_libdir1}/pkgconfig/gpg-error.pc; then
+          gpgrt_libdir=${possible_libdir1}
+        elif test -f ${possible_libdir0}/pkgconfig/gpg-error.pc; then
+          gpgrt_libdir=${possible_libdir0}
+        fi
+        if test -n "$gpgrt_libdir"; then break; fi
+      done
+      if test -z "$libdir_candidates"; then
+        # No valid pkgconfig dir in any of the system directories, fallback
+        gpgrt_libdir=${possible_libdir1}
+      fi
+    else
+      # When we cannot determine system libdir-format, use this:
+      gpgrt_libdir=${possible_libdir1}
+    fi
+}
 #### end of functions for this script
 
 myname=${0##*/}
@@ -490,9 +555,14 @@ else
   fi
   if [ -z "$PKG_CONFIG_LIBDIR" ]; then
     if [ -z "$PKG_CONFIG_PATH" ]; then
-      echo "Please use --libdir=LIBDIR option or set PKG_CONFIG_LIBDIR" 1>&2
-      echo "Or set PKG_CONFIG_PATH" 1>&2
-      exit 1
+      # It used to fail as:
+      #
+      # echo "Please use --libdir=LIBDIR option or set PKG_CONFIG_LIBDIR" 1>&2
+      # echo "Or set PKG_CONFIG_PATH" 1>&2
+      #
+      # Now, we try a fallback.
+      determine_gpgrt_libdir
+      PKG_CONFIG_PATH="${gpgrt_libdir}/pkgconfig"
     fi
   else
     # PKG_CONFIG_LIBDIR is available here
