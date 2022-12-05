@@ -96,7 +96,21 @@ system_strerror_r (int no, char *buf, size_t buflen)
 static int
 system_strerror_r (int no, char *buf, size_t buflen)
 {
-  return strerror_r (no, buf, buflen);
+  int saved_errno;
+  int r = strerror_r (no, buf, buflen);
+
+  if (r)
+    {
+      if (r < 0)
+        saved_errno = errno;
+      else
+        saved_errno = r;
+
+      snprintf (buf, buflen, "[errno=%i]\n", r);
+      return saved_errno;
+    }
+
+  return 0;
 }
 
 #endif	/* STRERROR_R_CHAR_P */
