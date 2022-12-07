@@ -489,6 +489,30 @@ check_fprintf_sf (void)
   gpgrt_fclose (stream);
 }
 
+static void
+check_fwrite (void)
+{
+  gpgrt_stream_t stream;
+  const char *expect;
+  char *result;
+
+  stream = gpgrt_fopenmem (0, "w+b");
+  if (!stream)
+    die ("fopenmem failed at line %d\n", __LINE__);
+
+  gpgrt_fwrite ("Has the dog Buddha-nature or not?", 1, 33, stream);
+  expect = "Has the dog Buddha-nature or not?";
+  result = stream_to_string (stream);
+  if (strcmp (result, expect))
+    {
+      show ("expect: '%s'\n", expect);
+      show ("result: '%s'\n", result);
+      fail ("fprintf_sf failed at %d\n", __LINE__);
+    }
+  free (result);
+  gpgrt_fclose (stream);
+}
+
 
 int
 main (int argc, char **argv)
@@ -535,6 +559,7 @@ main (int argc, char **argv)
   run_tests ();
   check_snprintf ();
   check_fprintf_sf ();
+  check_fwrite ();
 
 #ifdef __GLIBC__
   return !!errorcount;

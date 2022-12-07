@@ -49,7 +49,10 @@ main (int argc, char *argv[])
 	gpg_err_source_t src;
 	gpg_err_code_t code;
       } list[] = { { 0, 0 }, { 1, 201 }, { 2, 2 }, { 3, 102 },
-		   { 4, 100 }, { 5, 99 }, { 6, 110 }, { 7, 7 }, { 8, 888 } };
+		   { 4, 100 }, { 5, 99 }, { 6, 110 }, { 7, 7 }, { 8, 888 },
+		   { 1, GPG_ERR_SYSTEM_ERROR | 1 },
+		   { 1, GPG_ERR_SYSTEM_ERROR | 35 },
+		   { 1, GPG_ERR_SYSTEM_ERROR | 81 } };
       int i = 0;
 
       while (i < sizeof (list) / sizeof (list[0]))
