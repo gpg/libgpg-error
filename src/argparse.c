@@ -2937,7 +2937,7 @@ cmp_ordtbl (const void *a_v, const void *b_v)
  *    this option
  *  - a description which starts with a '@' and is followed by
  *    any other characters is printed as is; this may be used for examples
- *    and such.  This is a legacy methiod, moder codes uses the flags
+ *    and such.  This is a legacy method, modern code uses the flags
  *    ARGPARSE_OPT_VERBATIM or ARGPARSE_OPT_HEADER.
  *  - A description which starts with a '|' outputs the string between this
  *    bar and the next one as arguments of the long option.
@@ -3000,7 +3000,12 @@ show_help (opttable_t *opts, unsigned int nopts, unsigned int flags)
         writestrings (0, "Options:", "\n", NULL);
       for (i=0; i < nopts; i++ )
         {
-          s = map_fixed_string (_( opts[ordtbl[i]].description ));
+          /* Do not translate the empty string becuase it is used as
+           * the identification of the PO file.  */
+          if (opts[ordtbl[i]].description && *opts[ordtbl[i]].description)
+            s = map_fixed_string (_( opts[ordtbl[i]].description ));
+          else
+            s = "";
           if ( s && *s== '@' && !s[1] ) /* Hide this line.  */
             continue;
           if ( s && (opts[ordtbl[i]].flags & ARGPARSE_OPT_HEADER))
