@@ -15,7 +15,7 @@
 # configure it for the respective package.  It is maintained as part of
 # GnuPG and source copied by other packages.
 #
-# Version: 2022-06-28
+# Version: 2023-03-15
 
 configure_ac="configure.ac"
 
@@ -233,10 +233,12 @@ if [ "$myhost" = "find-version" ]; then
     if [ -z "$micro" ]; then
       matchstr1="$package-$major.[0-9]*"
       matchstr2="$package-$major-base"
+      matchstr3=""
       vers="$major.$minor"
     else
       matchstr1="$package-$major.$minor.[0-9]*"
-      matchstr2="$package-$major.$minor-base"
+      matchstr2="$package-$major.[0-9]*-base"
+      matchstr3="$package-$major-base"
       vers="$major.$minor.$micro"
     fi
 
@@ -244,13 +246,22 @@ if [ "$myhost" = "find-version" ]; then
     if [ -e .git ]; then
       ingit=yes
       tmp=$(git describe --match "${matchstr1}" --long 2>/dev/null)
-      tmp=$(echo "$tmp" | sed s/^"$package"//)
       if [ -n "$tmp" ]; then
-          tmp=$(echo "$tmp" | sed s/^"$package"//  \
-                | awk -F- '$3!=0 && $3 !~ /^beta/ {print"-beta"$3}')
+          tmp=$(echo "$tmp" | sed s/^"$package"// \
+                    | awk -F- '$3!=0 && $3 !~ /^beta/ {print"-beta"$3}')
       else
-          tmp=$(git describe --match "${matchstr2}" --long 2>/dev/null \
-                | awk -F- '$4!=0{print"-beta"$4}')
+          # (due tof "-base" in the tag we need to take the 4th field)
+          tmp=$(git describe --match "${matchstr2}" --long 2>/dev/null)
+          if [ -n "$tmp" ]; then
+              tmp=$(echo "$tmp" | sed s/^"$package"// \
+                        | awk -F- '$4!=0 && $4 !~ /^beta/ {print"-beta"$4}')
+          elif [ -n "${matchstr3}" ]; then
+              tmp=$(git describe --match "${matchstr3}" --long 2>/dev/null)
+              if [ -n "$tmp" ]; then
+                  tmp=$(echo "$tmp" | sed s/^"$package"// \
+                          | awk -F- '$4!=0 && $4 !~ /^beta/ {print"-beta"$4}')
+              fi
+          fi
       fi
       [ -n "$tmp" ] && beta=yes
       rev=$(git rev-parse --short HEAD | tr -d '\n\r')
