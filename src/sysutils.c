@@ -141,6 +141,10 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
 
     if (!value && overwrite)
       {
+        /* Deleting an envvar.  Although the Microsoft specs for
+         * putenv tell us that one may use "NAME=" to unset an envvar,
+         * this seems not to be correct.  Thus we do the same as what
+         * we do in Unix (or well in GNU libc) and use just "NAME". */
         if (!SetEnvironmentVariable (name, NULL))
           return GPG_ERR_EINVAL;
         if (getenv (name))

@@ -249,7 +249,7 @@ fun_writer (void *cookie_arg, const void *buffer, size_t size)
           srvr_addr_un.sun_family = af;
           if (!*name)
             {
-              if ((name = socket_dir_cb ()) && *name
+              if (socket_dir_cb && (name = socket_dir_cb ()) && *name
                   && strlen (name) + 7 < sizeof (srvr_addr_un.sun_path)-1)
                 {
                   strncpy (srvr_addr_un.sun_path,
@@ -887,7 +887,7 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
 
       if (ignore_arg_ptr)
         { /* This is used by log_string and comes with the extra
-           * feature that after a LF the next line is indent at the
+           * feature that after a LF the next line is indented by the
            * length of the prefix.  Note that we do not yet include
            * the length of the timestamp and pid in the indent
            * computation.  */
