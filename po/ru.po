@@ -1,13 +1,13 @@
 # Russian translation for libgpg-error.
-# Copyright (C) 2021 Free Software Foundation, Inc.
+# Copyright (C) 2023 Free Software Foundation, Inc.
 # This file is distributed under the same license as the original package.
-# Ineiev <ineiev@gnu.org>, 2014, 2015, 2018, 2019, 2020, 2021
+# Ineiev <ineiev@gnu.org>, 2014, 2015, 2018, 2019, 2020, 2021, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2021-10-12 10:43+0100\n"
+"PO-Revision-Date: 2023-04-01 10:43+0100\n"
 "Last-Translator: Ineiev <ineiev@gnu.org>\n"
 "Language-Team: Russian <gnupg-ru@gnupg.org>\n"
 "Language: ru\n"
@@ -62,9 +62,6 @@ msgstr "G13"
 
 msgid "Assuan"
 msgstr "Assuan"
-
-msgid "TPM2d"
-msgstr ""
 
 msgid "TLS"
 msgstr "TLS"
@@ -963,38 +960,8 @@ msgstr "Уже доставлено"
 msgid "Try again later"
 msgstr "Повторите попытку позднее"
 
-#, fuzzy
-#| msgid "No name"
 msgid "Wrong name"
-msgstr "Нет имени"
-
-#, fuzzy
-#| msgid "Not enabled"
-msgid "Not authenticated"
-msgstr "Отключено"
-
-#, fuzzy
-#| msgid "Inappropriate LDAP authentication"
-msgid "Bad authentication"
-msgstr "Неподходящее удостоверение LDAP"
-
-#, fuzzy
-#| msgid "No agent running"
-msgid "No Keybox daemon running"
-msgstr "Агент не работает"
-
-#, fuzzy
-#| msgid "SmartCard daemon error"
-msgid "Keybox daemon error"
-msgstr "Ошибка демона криптографических карт"
-
-msgid "Service is not running"
-msgstr ""
-
-#, fuzzy
-#| msgid "Keyserver error"
-msgid "Service error"
-msgstr "Ошибка сервера ключей"
+msgstr "Недопустимое имя"
 
 #, fuzzy
 #| msgid "Bad PIN"
@@ -1326,107 +1293,6 @@ msgstr "Пользовательский код ошибки 15"
 
 msgid "User defined error code 16"
 msgstr "Пользовательский код ошибки 16"
-
-#, fuzzy
-#| msgid "LDAP success"
-msgid "SQL success"
-msgstr "Успешное выполнение LDAP"
-
-#, fuzzy
-#| msgid "Syntax error"
-msgid "SQL error"
-msgstr "Синтаксическая ошибка"
-
-msgid "Internal logic error in SQL library"
-msgstr ""
-
-msgid "Access permission denied (SQL)"
-msgstr ""
-
-msgid "SQL abort was requested"
-msgstr ""
-
-msgid "SQL database file is locked"
-msgstr ""
-
-msgid "An SQL table in the database is locked"
-msgstr ""
-
-msgid "SQL library ran out of core"
-msgstr ""
-
-msgid "Attempt to write a readonly SQL database"
-msgstr ""
-
-msgid "SQL operation terminated by interrupt"
-msgstr ""
-
-msgid "I/O error during SQL operation"
-msgstr ""
-
-msgid "SQL database disk image is malformed"
-msgstr ""
-
-msgid "Unknown opcode in SQL file control"
-msgstr ""
-
-msgid "Insertion failed because SQL database is full"
-msgstr ""
-
-msgid "Unable to open the SQL database file"
-msgstr ""
-
-#, fuzzy
-#| msgid "LDAP protocol error"
-msgid "SQL database lock protocol error"
-msgstr "Ошибка протокола LDAP"
-
-msgid "(internal SQL code: empty)"
-msgstr ""
-
-msgid "SQL database schema changed"
-msgstr ""
-
-msgid "String or blob exceeds size limit (SQL)"
-msgstr ""
-
-msgid "SQL abort due to constraint violation"
-msgstr ""
-
-msgid "Data type mismatch (SQL)"
-msgstr ""
-
-msgid "SQL library used incorrectly"
-msgstr ""
-
-msgid "SQL library uses unsupported OS features"
-msgstr ""
-
-#, fuzzy
-#| msgid "Proxied authorization denied by LDAP"
-msgid "Authorization denied (SQL)"
-msgstr "LDAP отказал в опосредованной авторизации"
-
-msgid "(unused SQL code: format)"
-msgstr ""
-
-msgid "SQL bind parameter out of range"
-msgstr ""
-
-msgid "File opened that is not an SQL database file"
-msgstr ""
-
-msgid "Notifications from SQL logger"
-msgstr ""
-
-msgid "Warnings from SQL logger"
-msgstr ""
-
-msgid "SQL has another row ready"
-msgstr ""
-
-msgid "SQL has finished executing"
-msgstr ""
 
 msgid "System error w/o errno"
 msgstr "Системная ошибка без номера"
