@@ -1,6 +1,10 @@
 Noteworthy changes in version 1.47 (unreleased) [C33/A33/R_]
 -----------------------------------------------
 
+ * Interface changes relative to the 1.46 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_SOURCE_TKD             NEW.
+
  Release-info: https://dev.gnupg.org/T6231
 
 
