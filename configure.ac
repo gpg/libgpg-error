@@ -49,9 +49,9 @@ AC_INIT([mym4_package],[mym4_version],[https://bugs.gnupg.org])
 #   (Interfaces added:			AGE++)
 #   (Interfaces removed:		AGE=0)
 # Note that added error codes don't constitute an interface change.
-LIBGPG_ERROR_LT_CURRENT=33
-LIBGPG_ERROR_LT_AGE=33
-LIBGPG_ERROR_LT_REVISION=1
+LIBGPG_ERROR_LT_CURRENT=34
+LIBGPG_ERROR_LT_AGE=34
+LIBGPG_ERROR_LT_REVISION=0
 ################################################
 
 AC_SUBST(LIBGPG_ERROR_LT_CURRENT)
