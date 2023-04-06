@@ -339,6 +339,9 @@
 317	GPG_ERR_KEYBOXD			Keybox daemon error
 318	GPG_ERR_NO_SERVICE		Service is not running
 319	GPG_ERR_SERVICE			Service error
+320	GPG_ERR_BAD_PUK			Bad PUK
+321	GPG_ERR_NO_RESET_CODE		No reset code
+322	GPG_ERR_BAD_RESET_CODE		Bad reset code
 # This range is free for use.
 
 666	GPG_ERR_SYSTEM_BUG		System bug detected

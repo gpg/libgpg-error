@@ -1097,6 +1097,17 @@ GPG_ERR_SERVICE                 Service error
     An error occured in a service component.  This is a generic
     version of GPG_ERR_AGENT et al.
 
+GPG_ERR_BAD_PUK                 Bad PUK
+
+    A wrong PIN Unblocking Code was used.
+
+GPG_ERR_NO_RESET_CODE           No reset code
+
+    A reset code has not been configured for the card or token.
+
+GPG_ERR_BAD_RESET_CODE           No reset code
+
+    A wrong reset code was used.
 
 GPG_ERR_SYSTEM_BUG              System bug detected
 

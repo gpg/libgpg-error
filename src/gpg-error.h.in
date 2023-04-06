@@ -1084,7 +1084,7 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 /*
  * Spawn functions  (Not yet available)
  */
-/* Internal flag to ihnerit file descriptor/handle */
+/* Internal flag to inherit file descriptor/handle */
 #define GPGRT_SPAWN_INHERIT_FILE  1
 
 #define GPGRT_SPAWN_NONBLOCK   16 /* Set the streams to non-blocking.      */
