@@ -28,7 +28,7 @@ RELEASE_ARCHIVE_SUFFIX  = libgpg-error
 
 # Autoconf flags
 ACLOCAL_AMFLAGS = -I m4
-DISTCHECK_CONFIGURE_FLAGS = --enable-doc
+DISTCHECK_CONFIGURE_FLAGS = --enable-doc --enable-install-gpg-error-config
 
 # (A suitable gitlog-to-changelog script can be found in GnuPG master.)
 GITLOG_TO_CHANGELOG=gitlog-to-changelog
