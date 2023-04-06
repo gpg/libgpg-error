@@ -70,6 +70,9 @@ msgstr "TPM2d"
 msgid "TLS"
 msgstr "TLS"
 
+msgid "TKD"
+msgstr ""
+
 msgid "Any source"
 msgstr "Cualquier origen"
 
@@ -995,6 +998,19 @@ msgstr ""
 #| msgid "Keyserver error"
 msgid "Service error"
 msgstr "Error del servidor de claves"
+
+#, fuzzy
+#| msgid "Bad PIN"
+msgid "Bad PUK"
+msgstr "PIN incorrecto"
+
+msgid "No reset code"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bad secret key"
+msgid "Bad reset code"
+msgstr "Clave secreta incorrecta"
 
 msgid "System bug detected"
 msgstr "Detectado error del sistema"

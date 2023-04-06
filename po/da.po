@@ -73,6 +73,9 @@ msgstr "TPM2d"
 msgid "TLS"
 msgstr "TLS"
 
+msgid "TKD"
+msgstr ""
+
 msgid "Any source"
 msgstr "Enhver kilde"
 
@@ -1020,6 +1023,19 @@ msgstr ""
 #| msgid "Keyserver error"
 msgid "Service error"
 msgstr "Nøgleserverfejl"
+
+#, fuzzy
+#| msgid "Bad PIN"
+msgid "Bad PUK"
+msgstr "Ødelagt PIN"
+
+msgid "No reset code"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bad secret key"
+msgid "Bad reset code"
+msgstr "Ødelagt hemmelig nøgle"
 
 msgid "System bug detected"
 msgstr ""

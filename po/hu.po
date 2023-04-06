@@ -71,6 +71,9 @@ msgstr "TPM2d"
 msgid "TLS"
 msgstr "TLS"
 
+msgid "TKD"
+msgstr ""
+
 msgid "Any source"
 msgstr "Bármilyen forrás"
 
@@ -1076,6 +1079,19 @@ msgstr ""
 #| msgid "Keyserver error"
 msgid "Service error"
 msgstr "Kulcskiszolgáló hiba"
+
+#, fuzzy
+#| msgid "Bad PIN"
+msgid "Bad PUK"
+msgstr "Rossz PIN-kód"
+
+msgid "No reset code"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bad secret key"
+msgid "Bad reset code"
+msgstr "Rossz titkos kulcs"
 
 msgid "System bug detected"
 msgstr ""

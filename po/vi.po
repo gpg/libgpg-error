@@ -71,6 +71,9 @@ msgstr "TPM2d"
 msgid "TLS"
 msgstr "TLS"
 
+msgid "TKD"
+msgstr ""
+
 msgid "Any source"
 msgstr "Bất cứ nguồn nào"
 
@@ -1065,6 +1068,19 @@ msgstr ""
 #| msgid "Keyserver error"
 msgid "Service error"
 msgstr "Lỗi máy phục vụ khoá"
+
+#, fuzzy
+#| msgid "Bad PIN"
+msgid "Bad PUK"
+msgstr "PIN sai"
+
+msgid "No reset code"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bad secret key"
+msgid "Bad reset code"
+msgstr "Khoá bí mật sai"
 
 msgid "System bug detected"
 msgstr ""

@@ -71,6 +71,9 @@ msgstr "TPM2d"
 msgid "TLS"
 msgstr "TLS"
 
+msgid "TKD"
+msgstr ""
+
 msgid "Any source"
 msgstr "Elke bron"
 
@@ -1016,6 +1019,19 @@ msgstr ""
 #| msgid "Keyserver error"
 msgid "Service error"
 msgstr "Fout in sleutelserver"
+
+#, fuzzy
+#| msgid "Bad PIN"
+msgid "Bad PUK"
+msgstr "Verkeerde PIN"
+
+msgid "No reset code"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bad secret key"
+msgid "Bad reset code"
+msgstr "Foute geheime sleutel"
 
 msgid "System bug detected"
 msgstr ""

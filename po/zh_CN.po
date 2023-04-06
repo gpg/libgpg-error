@@ -73,6 +73,9 @@ msgstr "TPM2d"
 msgid "TLS"
 msgstr "TLS"
 
+msgid "TKD"
+msgstr ""
+
 msgid "Any source"
 msgstr "任何来源"
 
@@ -991,6 +994,19 @@ msgstr "服务未运行"
 
 msgid "Service error"
 msgstr "服务错误"
+
+#, fuzzy
+#| msgid "Bad PIN"
+msgid "Bad PUK"
+msgstr "损坏的 PIN"
+
+msgid "No reset code"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bad secret key"
+msgid "Bad reset code"
+msgstr "损坏的私钥"
 
 msgid "System bug detected"
 msgstr "检测到系统错误"

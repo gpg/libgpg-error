@@ -71,6 +71,9 @@ msgstr "TPM2d"
 msgid "TLS"
 msgstr "TLS"
 
+msgid "TKD"
+msgstr ""
+
 msgid "Any source"
 msgstr "指定なしのソース"
 
@@ -982,6 +985,19 @@ msgstr "サービスが動いていません"
 
 msgid "Service error"
 msgstr "サービスエラーです"
+
+#, fuzzy
+#| msgid "Bad PIN"
+msgid "Bad PUK"
+msgstr "誤った PIN です"
+
+msgid "No reset code"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bad secret key"
+msgid "Bad reset code"
+msgstr "誤った秘密鍵です"
 
 msgid "System bug detected"
 msgstr "システムのバグが検出されました"

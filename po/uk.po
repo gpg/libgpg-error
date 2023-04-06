@@ -71,6 +71,9 @@ msgstr "TPM2d"
 msgid "TLS"
 msgstr "TLS"
 
+msgid "TKD"
+msgstr ""
+
 msgid "Any source"
 msgstr "Будь-яке джерело"
 
@@ -991,6 +994,19 @@ msgstr "Службу не запущено"
 
 msgid "Service error"
 msgstr "Помилка служби"
+
+#, fuzzy
+#| msgid "Bad PIN"
+msgid "Bad PUK"
+msgstr "Помилковий пінкод"
+
+msgid "No reset code"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bad secret key"
+msgid "Bad reset code"
+msgstr "Помилковий закритий ключ"
 
 msgid "System bug detected"
 msgstr "Виявлено ваду у системі"
