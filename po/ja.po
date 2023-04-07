@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the libgpg-error package.
 # Yasuaki Taniguchi <yasuakit@gmail.com>, 2010.
 # Takeshi Hamasaki <hmatrjp@users.sourceforge.jp>, 2012.
-# NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016, 2017, 2019, 2020.
+# NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016, 2017, 2019, 2020, 2023.
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.39\n"
+"Project-Id-Version: libgpg-error 1.47\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2021-03-22 10:26+0100\n"
+"PO-Revision-Date: 2023-04-07 15:13+0900\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -72,7 +72,7 @@ msgid "TLS"
 msgstr "TLS"
 
 msgid "TKD"
-msgstr ""
+msgstr "TKD"
 
 msgid "Any source"
 msgstr "指定なしのソース"
@@ -986,18 +986,14 @@ msgstr "サービスが動いていません"
 msgid "Service error"
 msgstr "サービスエラーです"
 
-#, fuzzy
-#| msgid "Bad PIN"
 msgid "Bad PUK"
-msgstr "誤った PIN です"
+msgstr "誤った PUK です"
 
 msgid "No reset code"
-msgstr ""
+msgstr "リセット・コードがありません"
 
-#, fuzzy
-#| msgid "Bad secret key"
 msgid "Bad reset code"
-msgstr "誤った秘密鍵です"
+msgstr "誤ったリセット・コードです"
 
 msgid "System bug detected"
 msgstr "システムのバグが検出されました"
