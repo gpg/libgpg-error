@@ -508,12 +508,9 @@ determine_gpgrt_libdir () {
         fi
         if test -n "$gpgrt_libdir"; then break; fi
       done
-      if test -z "$libdir_candidates"; then
-        # No valid pkgconfig dir in any of the system directories, fallback
-        gpgrt_libdir=${possible_libdir1}
-      fi
-    else
-      # When we cannot determine system libdir-format, use this:
+    fi
+    if test -z "$gpgrt_libdir"; then
+      # No valid pkgconfig dir in any of the system directories, fallback
       gpgrt_libdir=${possible_libdir1}
     fi
 }
