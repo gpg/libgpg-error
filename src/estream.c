@@ -1950,7 +1950,8 @@ func_file_create (void **cookie, int *filedes,
 #ifdef HAVE_W32_SYSTEM
 static int
 func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
-                      unsigned int modeflags, unsigned int cmode)
+                      unsigned int modeflags, unsigned int cmode,
+                      unsigned int flags_and_attrs)
 {
   estream_cookie_w32_t hd_cookie;
   wchar_t *wpath = NULL;
@@ -2015,7 +2016,7 @@ func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
                     share_mode,
                     NULL,  /* security attributes */
                     creation_distribution,
-                    0,     /* flags and attributes  */
+                    flags_and_attrs,
                     NULL); /* template file  */
   if (hd == INVALID_HANDLE_VALUE)
     {
@@ -2044,6 +2045,7 @@ func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
 #define X_SAMETHREAD	(1 << 0)
 #define X_SYSOPEN	(1 << 1)
 #define X_POLLABLE	(1 << 2)
+#define X_SEQUENTIAL	(1 << 3)
 
 /* Parse the mode flags of fopen et al.  In addition to the POSIX
  * defined mode flags keyword parameters are supported.  These are
@@ -2089,6 +2091,11 @@ func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
  *    POSIX this is a NOP but under Windows we create up to two
  *    threads, one for reading and one for writing, do any I/O there,
  *    and synchronize with them in order to support es_poll.
+ *
+ * sequential
+ *
+ *    Indicate that the file will in general be access in sequential
+ *    way.  On Windows FILE_FLAG_SEQUENTIAL_SCAN will thus be used.
  *
  * Note: R_CMODE is optional because is only required by functions
  * which are able to creat a file.
@@ -2219,6 +2226,16 @@ parse_mode (const char *modestr,
               return -1;
             }
           *r_xmode |= X_POLLABLE;
+        }
+      else if (!strncmp (modestr, "sequential", 10))
+        {
+          modestr += 10;
+          if (*modestr && !strchr (" \t,", *modestr))
+            {
+              _set_errno (EINVAL);
+              return -1;
+            }
+          *r_xmode |= X_SEQUENTIAL;
         }
     }
   if (!got_cmode)
@@ -3529,11 +3546,15 @@ _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
 #ifdef HAVE_W32_SYSTEM
   if ((xmode & X_SYSOPEN))
     {
+      unsigned int flagsattrs = 0;
+
       kind = BACKEND_W32;
       functions = &estream_functions_w32;
       syshd.type = ES_SYSHD_HANDLE;
+      if ((xmode & X_SEQUENTIAL))
+        flagsattrs |= FILE_FLAG_SEQUENTIAL_SCAN;
       err = func_file_create_w32 (&cookie, &syshd.u.handle,
-                                  path, modeflags, cmode);
+                                  path, modeflags, cmode, flagsattrs);
     }
   else
 #endif /* W32 */
