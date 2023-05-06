@@ -108,6 +108,8 @@ canon_host_triplet (const char *triplet, int no_vendor_hack, char **r_os)
     {"x86_64-pc-linux-gnuhardened1", "x86_64-unknown-linux-gnu" },
     {"x86_64-pc-linux-gnu" },
 
+    {"x86_64-pc-gnu"},
+
     {"powerpc-unknown-linux-gnuspe", "powerpc-unknown-linux-gnu" },
 
     {"arm-unknown-linux-gnueabihf",  "arm-unknown-linux-gnueabi" },

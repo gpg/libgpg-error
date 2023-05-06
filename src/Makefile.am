@@ -67,6 +67,7 @@ lock_obj_pub = \
         syscfg/lock-obj-pub.sparc-unknown-linux-gnu.h       \
         syscfg/lock-obj-pub.sparc64-unknown-linux-gnu.h     \
 	syscfg/lock-obj-pub.x86_64-apple-darwin.h           \
+        syscfg/lock-obj-pub.x86_64-unknown-gnu.h              \
         syscfg/lock-obj-pub.x86_64-unknown-kfreebsd-gnu.h   \
         syscfg/lock-obj-pub.x86_64-unknown-linux-gnu.h      \
         syscfg/lock-obj-pub.x86_64-unknown-linux-gnux32.h   \
