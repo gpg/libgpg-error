@@ -32,7 +32,11 @@ endif
 
 AM_CPPFLAGS = -I$(top_builddir)/src
 
+if HAVE_W32_SYSTEM
+AM_LDFLAGS = -no-fast-install
+else
 AM_LDFLAGS = -no-install
+endif
 LDADD = $(gpg_error_lib) @LDADD_FOR_TESTS_KLUDGE@
 
 noinst_PROGRAMS = $(TESTS)
