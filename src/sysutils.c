@@ -137,18 +137,29 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
   {
     int exists;
     char tmpbuf[10];
-    char *buf;
 
     if (!value && overwrite)
       {
+        if (!SetEnvironmentVariable (name, NULL))
+          return GPG_ERR_EINVAL;
+        if (getenv (name))
+#if defined(_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES)
+          {
+            int e = _putenv_s (name, "");
+
+            if (e)
+              {
+                _gpg_err_set_errno (e);
+                return -1;
+              }
+          }
+#else
         /* Deleting an envvar.  Although the Microsoft specs for
          * putenv tell us that one may use "NAME=" to unset an envvar,
          * this seems not to be correct.  Thus we do the same as what
          * we do in Unix (or well in GNU libc) and use just "NAME". */
-        if (!SetEnvironmentVariable (name, NULL))
-          return GPG_ERR_EINVAL;
-        if (getenv (name))
           {
+            char *buf;
             /* Ugly: Leaking memory.  */
             buf = _gpgrt_strdup (name);
             if (!buf)
@@ -156,6 +167,7 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
             if (putenv (buf))
               return _gpg_err_code_from_syserror ();
           }
+#endif
         return 0;
       }
 
@@ -163,6 +175,17 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
     if ((! exists || overwrite) && !SetEnvironmentVariable (name, value))
       return GPG_ERR_EINVAL; /* (Might also be ENOMEM.) */
     if (overwrite || !getenv (name))
+#if defined(_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES)
+      {
+        int e = _putenv_s (name, value);
+
+        if (e)
+          {
+            _gpg_err_set_errno (e);
+            return -1;
+          }
+      }
+#else
       {
         /* Ugly: Leaking memory.  */
         buf = _gpgrt_strconcat (name, "=", value, NULL);
@@ -171,6 +194,7 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
         if (putenv (buf))
           return _gpg_err_code_from_syserror ();
       }
+#endif
     return 0;
   }
 
