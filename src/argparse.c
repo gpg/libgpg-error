@@ -997,7 +997,7 @@ handle_meta_user (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
  *   !=  The numerical values must not match
  *   <=  The numerical values must be LE than the value.
  *   <   The numerical values must be LT than the value.
- *   >=  The numerical values must be GT than the value.
+ *   >   The numerical values must be GT than the value.
  *   >=  The numerical values must be GE than the value.
  *   -n  True if value is not empty (STRING2 not allowed).
  *   -z  True if value is empty (STRING2 not allowed).
