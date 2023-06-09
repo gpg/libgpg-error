@@ -179,6 +179,7 @@ static int verbose;
 static int quiet;
 static int debug;
 static int htmlmode;
+static int gnupgorgmode;
 static const char *opt_source;
 static const char *opt_release;
 static const char *opt_date;
@@ -910,6 +911,7 @@ add_content (const char *sectname, char *line, int verbatim)
   line_buffer_t lb;
   char *linebuffer = NULL;
   char *src, *dst;
+  const char *s;
 
   if (verbatim && htmlmode)
     {
@@ -949,6 +951,31 @@ add_content (const char *sectname, char *line, int verbatim)
               else
                 *dst++ = *src;
             }
+          *dst = 0;
+          line = linebuffer;
+        }
+    }
+  else if (htmlmode)
+    {
+      size_t n0, n1;
+
+      for (s=line, n0=n1=0; *s; s++, n0++)
+        if (*s == '<' || *s == '>')
+          n1 += 3;
+        else if (*s == '&')
+          n1 += 4;
+      if (n1)
+        {
+          dst = linebuffer = xmalloc (n0 + n1 + 1);
+          for (s=line; *s; s++)
+            if (*s == '<')
+              strcpy (dst, "&lt;"), dst += 4;
+            else if (*s == '>')
+              strcpy (dst, "&gt;"), dst += 4;
+            else if (*s == '&')
+              strcpy (dst, "&amp;"), dst += 5;
+            else
+              *dst++ = *s;
           *dst = 0;
           line = linebuffer;
         }
@@ -1037,12 +1064,35 @@ write_th (FILE *fp)
 
   if (htmlmode)
     {
-      fputs ("<html>\n"
-             "<head>\n", fp);
+      if (gnupgorgmode)
+        {
+          fputs
+            ("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+             "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n"
+             "         \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n"
+             "<html xmlns=\"http://www.w3.org/1999/xhtml\""
+             " lang=\"en\" xml:lang=\"en\">\n", fp);
+        }
+      else
+        fputs ("<html>\n", fp);
+      fputs ("<head>\n", fp);
       fprintf (fp, " <title>%s(%s)</title>\n", name, p);
-      fputs (default_css, fp);
+      if (gnupgorgmode)
+        {
+          fputs ("<meta http-equiv=\"Content-Type\""
+                 " content=\"text/html;charset=utf-8\" />\n", fp);
+          fputs ("<meta name=\"viewport\""
+                 " content=\"width=device-width, initial-scale=1\" />\n"
+                 "<link rel=\"stylesheet\" href=\"/share/site.css\""
+                 " type=\"text/css\" />\n", fp);
+        }
+      else
+        fputs (default_css, fp);
       fputs ("</head>\n"
              "<body>\n", fp);
+      if (gnupgorgmode)
+        fputs ("<div id=\"wrapper\">\n"
+               "<div id=\"content\">\n", fp);
       fputs ("<div class=\"y2m\">\n", fp);
     }
 
@@ -1104,6 +1154,9 @@ write_bottom (FILE *fp)
            "</p>\n",
            opt_release, isodatestring (), name, p);
   fputs ("</div><!-- class y2m -->\n", fp);
+  if (gnupgorgmode)
+    fputs ("</div><!-- end content -->\n"
+           "</div><!-- end wrapper -->\n", fp);
   fputs ("</body>\n"
          "</html>\n", fp);
 
@@ -2107,6 +2160,7 @@ main (int argc, char **argv)
                 "  --date EPOCH     use EPOCH as publication date\n"
                 "  --store          write output using @manpage name\n"
                 "  --select NAME    only output pages with @manpage NAME\n"
+                "  --gnupgorg       prepare for use at www.gnupg.org\n"
                 "  --verbose        enable extra informational output\n"
                 "  --debug          enable additional debug output\n"
                 "  --help           display this help and exit\n"
@@ -2128,6 +2182,11 @@ main (int argc, char **argv)
       else if (!strcmp (*argv, "--html"))
         {
           htmlmode = 1;
+          argc--; argv++;
+        }
+      else if (!strcmp (*argv, "--gnupgorg"))
+        {
+          gnupgorgmode = 1;
           argc--; argv++;
         }
       else if (!strcmp (*argv, "--verbose"))
