@@ -396,6 +396,17 @@ xstrdup (const char *string)
   return p;
 }
 
+static char *
+mystpcpy (char *a,const char *b)
+{
+  while( *b )
+    *a++ = *b++;
+  *a = 0;
+
+  return (char*)a;
+}
+
+
 /* Helper for xstrconcat and strconcat.  */
 static char *
 do_strconcat (int xmode, const char *s1, va_list arg_ptr)
@@ -418,7 +429,7 @@ do_strconcat (int xmode, const char *s1, va_list arg_ptr)
   needed++;
   buffer = xmode? xmalloc (needed) : malloc (needed);
   for (p = buffer, argc=0; argv[argc]; argc++)
-    p = stpcpy (p, argv[argc]);
+    p = mystpcpy (p, argv[argc]);
 
   return buffer;
 }
