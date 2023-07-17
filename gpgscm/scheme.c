@@ -170,7 +170,11 @@ type_to_string (enum scheme_types typ)
      case T_SINK: return "sink";
      case T_FRAME: return "frame";
      }
+#ifdef __GNUC__
+     __builtin_unreachable ();
+#else
      assert (! "not reached");
+#endif
 }
 
 /* ADJ is enough slack to align cells in a TYPE_BITS-bit boundary */
@@ -5570,7 +5574,7 @@ static const struct scheme_interface vtbl = {
 };
 #endif
 
-scheme *scheme_init_new() {
+scheme *scheme_init_new(void) {
   scheme *sc=(scheme*)malloc(sizeof(scheme));
   if(!scheme_init(sc)) {
     free(sc);

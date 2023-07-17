@@ -212,7 +212,7 @@ do_chdir (scheme *sc, pointer args)
   FFI_ARG_OR_RETURN (sc, char *, name, path, args);
   FFI_ARGS_DONE_OR_RETURN (sc, args);
   if (chdir (name))
-    FFI_RETURN_ERR (sc, errno);
+    FFI_RETURN_ERR (sc, gpg_error_from_syserror ());
   FFI_RETURN (sc);
 }
 
@@ -351,6 +351,11 @@ do_get_temp_path (scheme *sc, pointer args)
 #ifdef HAVE_W32_SYSTEM
   if (GetTempPath (MAX_PATH+1, buffer) == 0)
     FFI_RETURN_STRING (sc, "/temp");
+  else
+    {
+      size_t len = strlen (buffer);
+      buffer[len-1] = 0;
+    }
   FFI_RETURN_STRING (sc, buffer);
 #else
   FFI_RETURN_STRING (sc, "/tmp");
