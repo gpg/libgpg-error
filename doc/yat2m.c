@@ -1618,8 +1618,10 @@ proc_texi_buffer (FILE *fp, const char *line, size_t len,
             {
             case EOL_CLOSE_SUBSECTION:
               writestr ("\n\\ \n", "</h3>\n", fp);
+              break;
             default:
               writechr (*s, fp);
+              break;
             }
           *eol_action = 0;
         }
