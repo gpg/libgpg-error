@@ -8497,11 +8497,6 @@ func_mode_link ()
 	    elif test -n "$soname_spec"; then
 	      # bleh windows
 	      case $host in
-              x86_64-*mingw32*)
-                func_arith $current - $age
-		major=$func_arith_result
-		versuffix="6-$major"
-		;;
 	      *cygwin* | mingw* | *cegcc* | *os2*)
 	        func_arith $current - $age
 		major=$func_arith_result
@@ -9280,14 +9275,7 @@ func_mode_link ()
 	  # extension on DOS 8.3 file systems.
 	  func_arith $current - $age
 	  major=$func_arith_result
-          case $host in
-          x86_64-*mingw32*)
-             versuffix="6-$major"
-             ;;
-          *)
-             versuffix="-$major"
-             ;;
-          esac
+          versuffix="-$major"
 	  ;;
 
 	*)

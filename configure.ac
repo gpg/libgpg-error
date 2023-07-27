@@ -156,6 +156,18 @@ LT_PREREQ([2.2.6])
 LT_INIT([win32-dll disable-static])
 LT_LANG([Windows Resource])
 
+#
+# Apply a patch (locally maintained one of ours) to libtool
+#
+case $host in
+  x86_64-*mingw32*)
+AC_CONFIG_COMMANDS([libtool-patch],[[
+  patch -p0 < $srcdir/build-aux/libtool.patch
+]])
+  ;;
+  *)
+  ;;
+esac
 
 # We need to compile and run a program on the build machine.
 AX_CC_FOR_BUILD
