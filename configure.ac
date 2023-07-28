@@ -162,7 +162,7 @@ LT_LANG([Windows Resource])
 case $host in
   x86_64-*mingw32*)
 AC_CONFIG_COMMANDS([libtool-patch],[[
-  patch -p0 < $srcdir/build-aux/libtool.patch
+  patch -p0 < $srcdir/build-aux/libtool.patch || as_fn_exit 1
 ]])
   ;;
   *)

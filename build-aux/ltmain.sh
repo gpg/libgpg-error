@@ -9275,7 +9275,7 @@ func_mode_link ()
 	  # extension on DOS 8.3 file systems.
 	  func_arith $current - $age
 	  major=$func_arith_result
-          versuffix="-$major"
+	  versuffix=-$major
 	  ;;
 
 	*)
