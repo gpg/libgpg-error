@@ -36,8 +36,8 @@ GITLOG_TO_CHANGELOG=gitlog-to-changelog
 EXTRA_DIST = autogen.sh autogen.rc libgpg-error.spec.in 		\
              VERSION COPYING COPYING.LIB doc/HACKING ChangeLog-2011 \
 	     po/ChangeLog-2011 m4/ChangeLog-2011 \
-             build-aux/git-log-footer  build-aux/git-log-fix
-
+             build-aux/git-log-footer  build-aux/git-log-fix \
+	     build-aux/libtool.patch
 
 if LANGUAGES_SOME
 lang_subdirs = lang

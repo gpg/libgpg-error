@@ -1,6 +1,7 @@
 Noteworthy changes in version 1.48 (unreleased) [C34/A34/R_]
 -----------------------------------------------
 
+ * New configure option --with-libtool-modification.  [T6619]
 
  Release-info: https://dev.gnupg.org/T6441
 
