@@ -178,7 +178,8 @@ case $host in
 AC_CONFIG_COMMANDS([libtool-patch],[[
   if test "$build_selection" = never; then
     echo "patch not applied"
-  elif patch -p0 < $srcdir/build-aux/libtool.patch; then
+  elif (mv -f libtool libtool.orig; \
+        sed -f $srcdir/build-aux/libtool-patch.sed libtool.orig >libtool); then
     echo "applied successfully"
   elif test "$build_selection" = try; then
     mv -f libtool.orig libtool
