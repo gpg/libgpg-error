@@ -166,7 +166,7 @@ LT_LANG([Windows Resource])
 #
 AC_ARG_WITH([libtool-modification],
   AS_HELP_STRING([--with-libtool-modification=apply|never|try],
-                 [how to handle libtool modification (default=apply)]),
+                 [how to handle libtool modification (default=never)]),
                  build_libtool_modification=$withval,
                  build_libtool_modification=apply)
 
