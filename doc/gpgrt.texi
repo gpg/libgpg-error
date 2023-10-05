@@ -428,9 +428,9 @@ specified before any @option{--libs} or @option{--cflags} options.
 
 @mansect description
 @command{gpgrt-config} is a script tool that is used by the autoconf macros
-shipped with gnupg software (e.g. AM_PATH_GPG_ERROR and AM_PATH_GPGME) to
+shipped with gnupg software (e.g., AM_PATH_GPG_ERROR and AM_PATH_GPGME) to
 determine the compiler and linker flags that should be used to compile
-and link programs that use the specific library (e.g. libgpg-error or
+and link programs that use the specific library (e.g., libgpg-error or
 libgpgme). @command{gpgrt-config} uses pkg-config .pc files as data source.
 
 Apart from options @command{gpgrt-config} accepts a single argument
@@ -445,7 +445,7 @@ pkg-config file to be used as input. @option{module} will default to
 @table @gnupgtabopt
 @item --libdir=@var{LIBDIR}
 Parent directory path of pkgconfig file search path.
-e.g. @samp{gpgrt-config --libdir=/usr/lib --exists gpgme}
+e.g., @samp{gpgrt-config --libdir=/usr/lib --exists gpgme}
 will parse @file{/usr/lib/pkgconfig/gpgme.pc}.
 
 @item  --exists
