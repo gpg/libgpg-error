@@ -1,13 +1,13 @@
 # Polish translation for libgpg-error.
 # Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
-# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2020.
+# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.38\n"
+"Project-Id-Version: libgpg-error 1.47\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2021-03-22 10:42+0100\n"
+"PO-Revision-Date: 2023-10-20 20:45+0200\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "Language: pl\n"
@@ -70,7 +70,7 @@ msgid "TLS"
 msgstr "TLS"
 
 msgid "TKD"
-msgstr ""
+msgstr "TKD"
 
 msgid "Any source"
 msgstr "Dowolne źródło"
@@ -984,18 +984,14 @@ msgstr "Usługa nie jest uruchomiona"
 msgid "Service error"
 msgstr "Błąd usługi"
 
-#, fuzzy
-#| msgid "Bad PIN"
 msgid "Bad PUK"
-msgstr "Błędny PIN"
+msgstr "Błędny PUK"
 
 msgid "No reset code"
-msgstr ""
+msgstr "Brak kodu resetującego"
 
-#, fuzzy
-#| msgid "Bad secret key"
 msgid "Bad reset code"
-msgstr "Błędny klucz tajny"
+msgstr "Błędny kod resetujący"
 
 msgid "System bug detected"
 msgstr "Wykryto błąd systemu"
