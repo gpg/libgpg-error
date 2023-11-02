@@ -235,6 +235,8 @@ static int condition_stack_idx;
 static int cond_is_active;     /* State of ifset/ifclear */
 static int cond_in_verbatim;   /* State of "manverb".  */
 
+/* Variable to check if it's in @example or @smallexample.  */
+static int example_cmd_active;
 
 /* Object to store one line of content.  */
 struct line_buffer_s
@@ -1280,8 +1282,8 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
     { "acronym", 0 },
     { "dfn",     0 },
     { "option",  0, "\\fB", "\\fR", "<samp>", "</samp>" },
-    { "example", 1, ".RS 2\n.nf\n",      NULL, "\n<pre>\n", "\n</pre>\n" },
-    { "smallexample", 1, ".RS 2\n.nf\n", NULL, "\n<pre>\n", "\n</pre>\n" },
+    { "example", 10, ".RS 2\n.nf\n",      NULL, "\n<pre>\n", "\n</pre>\n" },
+    { "smallexample", 10, ".RS 2\n.nf\n", NULL, "\n<pre>\n", "\n</pre>\n" },
     { "asis",    7 },
     { "anchor",  7 },
     { "cartouche", 1 },
@@ -1331,6 +1333,9 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
       html_out = cmdtbl[i].html_out;
       switch (cmdtbl[i].what)
         {
+        case 10:
+          example_cmd_active = 1;
+          /* Fallthrough */
         case 1: /* Throw away the entire line.  */
           s = memchr (rest, '\n', len);
           return s? (s-rest)+1 : len;
@@ -1371,11 +1376,13 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
           else if (n >= 7 && !memcmp (s, "example", 7)
               && (!n || s[7] == ' ' || s[7] == '\t' || s[7] == '\n'))
             {
+              example_cmd_active = 0;
               writestr (".fi\n.RE\n", "</pre>\n", fp);
             }
           else if (n >= 12 && !memcmp (s, "smallexample", 12)
               && (!n || s[12] == ' ' || s[12] == '\t' || s[12] == '\n'))
             {
+              example_cmd_active = 0;
               writestr (".fi\n.RE\n", "</pre>\n", fp);
             }
           else if (n >= 9 && !memcmp (s, "quotation", 9)
@@ -1627,7 +1634,7 @@ proc_texi_buffer (FILE *fp, const char *line, size_t len,
         }
       else if (*s == '\\')
         writestr ("\\\\", "\\\\", fp);
-      else if (sect && *s == '-')
+      else if (!example_cmd_active && sect && *s == '-')
         /* Handle -- and --- when it's _not_ in an argument.  */
         {
           if (len < 2 || s[1] != '-')
