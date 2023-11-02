@@ -1627,6 +1627,24 @@ proc_texi_buffer (FILE *fp, const char *line, size_t len,
         }
       else if (*s == '\\')
         writestr ("\\\\", "\\\\", fp);
+      else if (sect && *s == '-')
+        /* Handle -- and --- when it's _not_ in an argument.  */
+        {
+          if (len < 2 || s[1] != '-')
+            writechr (*s, fp);
+          else if (len < 3 || s[2] != '-')
+            {
+              writestr ("\\[en]", "&ndash;", fp);
+              len--;
+              s++;
+            }
+          else
+            {
+              writestr ("\\[em]", "&mdash;", fp);
+              len -= 2;
+              s += 2;
+            }
+        }
       else
         writechr (*s, fp);
     }
