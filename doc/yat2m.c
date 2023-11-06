@@ -235,8 +235,12 @@ static int condition_stack_idx;
 static int cond_is_active;     /* State of ifset/ifclear */
 static int cond_in_verbatim;   /* State of "manverb".  */
 
-/* Variable to check if it's in @example or @smallexample.  */
-static int example_cmd_active;
+/* Variable to parse en-dash and em-dash.
+ * -1: not parse until the end of the line
+ *  0: not parse
+ *  1: parse -- for en-dash, --- for em-dash
+ */
+static int cond_parse_dash;
 
 /* Object to store one line of content.  */
 struct line_buffer_s
@@ -1334,12 +1338,13 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
       switch (cmdtbl[i].what)
         {
         case 10:
-          example_cmd_active = 1;
+          cond_parse_dash = 0;
           /* Fallthrough */
         case 1: /* Throw away the entire line.  */
           s = memchr (rest, '\n', len);
           return s? (s-rest)+1 : len;
         case 2: /* Handle @item.  */
+          cond_parse_dash = -1;
           if (htmlmode)
             {
               s = memchr (rest, '\n', len);
@@ -1376,13 +1381,13 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
           else if (n >= 7 && !memcmp (s, "example", 7)
               && (!n || s[7] == ' ' || s[7] == '\t' || s[7] == '\n'))
             {
-              example_cmd_active = 0;
+              cond_parse_dash = 1;
               writestr (".fi\n.RE\n", "</pre>\n", fp);
             }
           else if (n >= 12 && !memcmp (s, "smallexample", 12)
               && (!n || s[12] == ' ' || s[12] == '\t' || s[12] == '\n'))
             {
-              example_cmd_active = 0;
+              cond_parse_dash = 1;
               writestr (".fi\n.RE\n", "</pre>\n", fp);
             }
           else if (n >= 9 && !memcmp (s, "quotation", 9)
@@ -1631,10 +1636,12 @@ proc_texi_buffer (FILE *fp, const char *line, size_t len,
               break;
             }
           *eol_action = 0;
+          if (cond_parse_dash == -1)
+            cond_parse_dash = 0;
         }
       else if (*s == '\\')
         writestr ("\\\\", "\\\\", fp);
-      else if (!example_cmd_active && sect && *s == '-')
+      else if (cond_parse_dash == 1 && sect && *s == '-')
         /* Handle -- and --- when it's _not_ in an argument.  */
         {
           if (len < 2 || s[1] != '-')
@@ -2153,6 +2160,7 @@ top_parse_file (const char *fname, FILE *fp)
     set_macro (m->name, xstrdup ("1"));
   cond_is_active = 1;
   cond_in_verbatim = 0;
+  cond_parse_dash = 1;
 
   parse_file (fname, fp, &section_name, 0);
   free (section_name);
