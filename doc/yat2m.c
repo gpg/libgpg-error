@@ -1318,6 +1318,7 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
     { "end",     4 },
     { "quotation",1, ".RS\n\\fB" },
     { "value", 8 },
+    { "dots", 0, "...", NULL, "&hellip;" },
     { NULL }
   };
   size_t n;
