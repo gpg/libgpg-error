@@ -1641,7 +1641,7 @@ proc_texi_buffer (FILE *fp, const char *line, size_t len,
             cond_parse_dash = 0;
         }
       else if (*s == '\\')
-        writestr ("\\\\", "\\\\", fp);
+        writestr ("\\[rs]", "\\\\", fp);
       else if (cond_parse_dash == 1 && sect && *s == '-')
         /* Handle -- and --- when it's _not_ in an argument.  */
         {
