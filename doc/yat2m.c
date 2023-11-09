@@ -242,6 +242,13 @@ static int cond_in_verbatim;   /* State of "manverb".  */
  */
 static int cond_parse_dash;
 
+/* Variable to generate \- (minus) for roff, which may distinguishes
+ * minus and hyphen.
+ * > 0 : emit \-
+ *   0 : emit -
+ */
+static int cond_2D_as_minus;
+
 /* Object to store one line of content.  */
 struct line_buffer_s
 {
@@ -301,7 +308,7 @@ enum eol_actions
 /*-- Local prototypes.  --*/
 static void proc_texi_buffer (FILE *fp, const char *line, size_t len,
                               int *table_level, int *eol_action,
-                              section_buffer_t sect);
+                              section_buffer_t sect, int char_2D_is_minus);
 
 static void die (const char *format, ...) ATTR_NR_PRINTF(1,2);
 static void err (const char *format, ...) ATTR_PRINTF(1,2);
@@ -1245,7 +1252,8 @@ write_html_item (FILE *fp, const char *line, size_t len, int itemx)
           if (len)
             {
               fputs (" <span class=\"y2m-args\">", fp);
-              proc_texi_buffer (fp, rest, len, &table_level, &eol_action, NULL);
+              proc_texi_buffer (fp, rest, len, &table_level, &eol_action,
+                                NULL, 0);
               fputs ("</span>", fp);
             }
           fputs ("</span>\n", fp);
@@ -1268,35 +1276,36 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
 {
   static struct {
     const char *name;    /* Name of the command.  */
-    int what;            /* What to do with this command. */
+    int what;            /* What to do with this command.  */
+    int enable_2D_minus; /* Interpret '-' as minus.  */
     const char *lead_in; /* String to print with a opening brace.  */
-    const char *lead_out;/* String to print with the closing brace. */
+    const char *lead_out;/* String to print with the closing brace.  */
     const char *html_in; /* Same as LEAD_IN but for HTML.  */
     const char *html_out;/* Same as LEAD_OUT but for HTML.  */
   } cmdtbl[] = {
-    { "command", 9, "\\fB", "\\fP", "<i>", "</i>" },
-    { "code",    0, "\\fB", "\\fP", "<samp>", "</samp>" },
-    { "url",     0, "\\fB", "\\fP", "<strong>", "</strong>" },
-    { "sc",      0, "\\fB", "\\fP", "<span class=\"y2m-sc\">", "</span>" },
-    { "var",     0, "\\fI", "\\fP", "<u>", "</u>" },
-    { "samp",    0, "\\(oq", "\\(cq"  },
-    { "kbd",     0, "\\(oq", "\\(cq"  },
-    { "file",    0, "\\(oq\\fI","\\fP\\(cq" },
-    { "env",     0, "\\(oq\\fI","\\fP\\(cq" },
-    { "acronym", 0 },
-    { "dfn",     0 },
-    { "option",  0, "\\fB", "\\fP", "<samp>", "</samp>" },
-    { "example", 10, ".RS 2\n.nf\n",      NULL, "\n<pre>\n", "\n</pre>\n" },
-    { "smallexample", 10, ".RS 2\n.nf\n", NULL, "\n<pre>\n", "\n</pre>\n" },
+    { "command", 9, 1, "\\fB", "\\fP", "<i>", "</i>" },
+    { "code",    0, 1, "\\fB", "\\fP", "<samp>", "</samp>" },
+    { "url",     0, 1, "\\fB", "\\fP", "<strong>", "</strong>" },
+    { "sc",      0, 0, "\\fB", "\\fP", "<span class=\"y2m-sc\">", "</span>" },
+    { "var",     0, 0, "\\fI", "\\fP", "<u>", "</u>" },
+    { "samp",    0, 0, "\\(oq", "\\(cq"  },
+    { "kbd",     0, 0, "\\(oq", "\\(cq"  },
+    { "file",    0, 0, "\\(oq\\fI","\\fP\\(cq" },
+    { "env",     0, 0, "\\(oq\\fI","\\fP\\(cq" },
+    { "acronym", 0, 0 },
+    { "dfn",     0, 0 },
+    { "option",  0, 1, "\\fB", "\\fP", "<samp>", "</samp>" },
+    { "example", 10, 1, ".RS 2\n.nf\n",      NULL, "\n<pre>\n", "\n</pre>\n" },
+    { "smallexample", 10, 1, ".RS 2\n.nf\n", NULL, "\n<pre>\n", "\n</pre>\n" },
     { "asis",    7 },
     { "anchor",  7 },
     { "cartouche", 1 },
-    { "ref",     0, "[", "]" },
-    { "xref",    0, "See: [", "]" },
-    { "pxref",   0, "see: [", "]" },
-    { "uref",    0, "(\\fB", "\\fP)" },
-    { "footnote",0, " ([", "])" },
-    { "emph",    0, "\\fI", "\\fP", "<em>", "</em>" },
+    { "ref",     0, 0, "[", "]" },
+    { "xref",    0, 0, "See: [", "]" },
+    { "pxref",   0, 0, "see: [", "]" },
+    { "uref",    0, 0, "(\\fB", "\\fP)" },
+    { "footnote",0, 0, " ([", "])" },
+    { "emph",    0, 0, "\\fI", "\\fP", "<em>", "</em>" },
     { "w",       1 },
     { "c",       5 },
     { "efindex", 1 },
@@ -1306,20 +1315,20 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
     { "noindent", 0 },
     { "section", 1 },
     { "chapter", 1 },
-    { "subsection", 6, "\n.SS ", NULL, "<h3>" },
+    { "subsection", 6, 0, "\n.SS ", NULL, "<h3>" },
     { "chapheading", 0},
-    { "item",    2, ".TP\n.B " },
-    { "itemx",   2, ".TQ\n.B " },
+    { "item",    2, 0, ".TP\n.B " },
+    { "itemx",   2, 0, ".TQ\n.B " },
     { "table",   3 },
     { "itemize", 3 },
-    { "bullet",  0, "* " },
-    { "*",       0, "\n.br"},
+    { "bullet",  0, 0, "* " },
+    { "*",       0, 0, "\n.br"},
     { "/",       0 },
     { "end",     4 },
-    { "quotation",1, ".RS\n\\fB" },
+    { "quotation", 1, 0, ".RS\n\\fB" },
     { "value", 8 },
-    { "dots", 0, "...", NULL, "&hellip;" },
-    { "minus", 0, "\\-", NULL, "&minus;" },
+    { "dots", 0, 0, "...", NULL, "&hellip;" },
+    { "minus", 0, 0, "\\-", NULL, "&minus;" },
     { NULL }
   };
   size_t n;
@@ -1329,6 +1338,7 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
   const char *html_out = NULL;
   int ignore_args = 0;
   int see_also_command = 0;
+  int enable_2D_minus = 0;
 
   for (i=0; cmdtbl[i].name && strcmp (cmdtbl[i].name, command); i++)
     ;
@@ -1337,10 +1347,12 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
       writestr (cmdtbl[i].lead_in, cmdtbl[i].html_in, fp);
       lead_out = cmdtbl[i].lead_out;
       html_out = cmdtbl[i].html_out;
+      enable_2D_minus = cmdtbl[i].enable_2D_minus;
       switch (cmdtbl[i].what)
         {
         case 10:
           cond_parse_dash = 0;
+          cond_2D_as_minus = 1;
           /* Fallthrough */
         case 1: /* Throw away the entire line.  */
           s = memchr (rest, '\n', len);
@@ -1384,12 +1396,14 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
               && (!n || s[7] == ' ' || s[7] == '\t' || s[7] == '\n'))
             {
               cond_parse_dash = 1;
+              cond_2D_as_minus = 0;
               writestr (".fi\n.RE\n", "</pre>\n", fp);
             }
           else if (n >= 12 && !memcmp (s, "smallexample", 12)
               && (!n || s[12] == ' ' || s[12] == '\t' || s[12] == '\n'))
             {
               cond_parse_dash = 1;
+              cond_2D_as_minus = 0;
               writestr (".fi\n.RE\n", "</pre>\n", fp);
             }
           else if (n >= 9 && !memcmp (s, "quotation", 9)
@@ -1487,7 +1501,7 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
       if (m)
         {
           proc_texi_buffer (fp, m->value, strlen (m->value),
-                            table_level, eol_action, NULL);
+                            table_level, eol_action, NULL, 0);
           ignore_args = 1; /* Parameterized macros are not yet supported. */
         }
       else
@@ -1551,7 +1565,8 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
             }
           else
             {
-              proc_texi_buffer (fp, workstr, n, table_level, eol_action, NULL);
+              proc_texi_buffer (fp, workstr, n, table_level, eol_action,
+                                NULL, enable_2D_minus);
               n += 2;
             }
           free (workstr);
@@ -1571,7 +1586,8 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
  * has infos about the current secion or is NULL.  */
 static void
 proc_texi_buffer (FILE *fp, const char *line, size_t len,
-                  int *table_level, int *eol_action, section_buffer_t sect)
+                  int *table_level, int *eol_action, section_buffer_t sect,
+                  int char_2D_is_minus)
 {
   const char *s;
   char cmdbuf[256];
@@ -1661,6 +1677,10 @@ proc_texi_buffer (FILE *fp, const char *line, size_t len,
               s += 2;
             }
         }
+      else if (*s == '-' && (cond_2D_as_minus || char_2D_is_minus))
+        {
+          writestr ("\\-", "-", fp);
+        }
       else
         writechr (*s, fp);
     }
@@ -1697,7 +1717,8 @@ parse_texi_line (FILE *fp, const char *line, int *table_level,
       writechr ('\n', fp);
       return;
     }
-  proc_texi_buffer (fp, line, strlen (line), table_level, &eol_action, sect);
+  proc_texi_buffer (fp, line, strlen (line), table_level, &eol_action,
+                    sect, 0);
   writechr ('\n', fp);
 }
 
