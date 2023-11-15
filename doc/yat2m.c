@@ -149,6 +149,9 @@
 /* Number of allowed condition nestings.  */
 #define MAX_CONDITION_NESTING  10
 
+/* Number of allowed table nestings.  */
+#define MAX_TABLE_NESTING  10
+
 static char const default_css[] =
   "<style type=\"text/css\">\n"
   "  .y2m {\n"
@@ -234,6 +237,12 @@ static condition_t condition_stack[MAX_CONDITION_NESTING];
 static int condition_stack_idx;
 static int cond_is_active;     /* State of ifset/ifclear */
 static int cond_in_verbatim;   /* State of "manverb".  */
+
+/* The stack used to evaluate table setting for @item and @itemx.
+ * 1: argument of @item should be handled \- as minus
+ * 0: argument of @item should be handled - as hyphen
+ */
+static int table_item_stack[MAX_TABLE_NESTING];
 
 /* Variable to parse en-dash and em-dash.
  * -1: not parse until the end of the line
@@ -1329,6 +1338,9 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
     { "value", 8 },
     { "dots", 0, 0, "...", NULL, "&hellip;" },
     { "minus", 0, 0, "\\-", NULL, "&minus;" },
+    /* From here, macro for table */
+    { "gcctabopt",       0, 1 },
+    { "gnupgtabopt",     0, 1 },
     { NULL }
   };
   size_t n;
@@ -1366,18 +1378,65 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
               write_html_item (fp, rest, n, !strcmp(cmdtbl[i].name, "itemx"));
               return n;
             }
+          else
+            {
+              s = memchr (rest, '\n', len);
+              if (s)
+                {
+                  n = (s-rest)+1;
+                  proc_texi_buffer (fp, rest, n, table_level, eol_action,
+                                    sect, table_item_stack[*table_level]);
+                  return n;
+                }
+            }
           break;
         case 3: /* Handle table.  */
           ++*table_level;
+          if (*table_level >= MAX_TABLE_NESTING)
+            die ("too many nesting level of table\n");
           if (*table_level > (htmlmode? 0 : 1))
             {
               if (htmlmode)
                 write_html_item (fp, NULL, 0, 0);
               writestr (".RS\n", "<ul>\n", fp);
             }
-          /* Now throw away the entire line. */
+
           s = memchr (rest, '\n', len);
-          return s? (s-rest)+1 : len;
+          if (s)
+            {
+              size_t n0 = n = (s-rest)+1;
+
+              for (s=rest; n && (*s == ' ' || *s == '\t'); s++, n--)
+                ;
+              if (n && *s == '@')
+                {
+                  char argbuf[256];
+                  int argidx;
+
+                  s++;
+                  n--;
+                  for (argidx = 0; argidx < n; argidx++)
+                    if (s[argidx] == ' ' || s[argidx] == '\t'
+                        || s[argidx] == '\n')
+                      break;
+                    else
+                      argbuf[argidx] = s[argidx];
+                  argbuf[argidx] = 0;
+                  for (i=0; cmdtbl[i].name; i++)
+                    if (!strcmp (cmdtbl[i].name, argbuf))
+                      break;
+                  if (cmdtbl[i].name && cmdtbl[i].enable_2D_minus)
+                    table_item_stack[*table_level] = 1;
+                  else
+                    table_item_stack[*table_level] = 0;
+                  return n0;
+                }
+              else
+                return len;
+            }
+          else
+            /* Now throw away the entire line. */
+            return len;
           break;
         case 4: /* Handle end.  */
           for (s=rest, n=len; n && (*s == ' ' || *s == '\t'); s++, n--)
