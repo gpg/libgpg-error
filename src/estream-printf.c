@@ -1191,30 +1191,36 @@ pr_string (estream_printf_out_t outfnc, void *outfncarg,
   int rc;
   size_t n;
   const char *string, *s;
-  /* If a precision is specified, no NUL byte need to be present.  We
-   can only call the string filter with a NUL-terminated string.  In
-   future, when breaking API/ABI is OK, we can change signature of
-   gpgrt_string_filter_t to have another argument for precision.  */
-  int allow_non_nul_string = (arg->precision >= 0);
+  char *stringbuf = NULL;
 
   if (arg->vt != VALTYPE_STRING)
     return -1;
-  if (sf && !allow_non_nul_string)
-    string = sf (value.a_string, string_no, sfvalue);
-  else
-    string = value.a_string;
+
+  string = value.a_string;
+
+  /* Make sure STRING is nul terminated, for call of string filter.  */
+  if (string && arg->precision >= 0)
+    {
+      /* STRING may be nul terminated shorter then the PRECISION.  */
+      for (n=0,s=string; n < arg->precision && *s; s++)
+        n++;
+
+      stringbuf = my_printf_realloc (NULL, n+1);
+      if (!stringbuf)
+        return -1;
+      memcpy (stringbuf, string, n);
+      stringbuf[n] = 0;
+      string = stringbuf;
+    }
+
+  if (sf)
+    string = sf (string, string_no, sfvalue);
 
   if (!string)
     string = "(null)";
-  if (allow_non_nul_string)
-    {
-      /* Test for nul after N so that we can pass a non-nul terminated
-         string.  */
-      for (n=0,s=string; n < arg->precision && *s; s++)
-        n++;
-    }
-  else
-    n = strlen (string);
+  n = strlen (string);
+  if (arg->precision >= 0 && n >= arg->precision)
+    n = arg->precision;
 
   if (!(arg->flags & FLAG_LEFT_JUST)
       && arg->width >= 0 && arg->width > n )
@@ -1240,8 +1246,10 @@ pr_string (estream_printf_out_t outfnc, void *outfncarg,
   rc = 0;
 
  leave:
-  if (sf && !allow_non_nul_string) /* Tell the filter to release resources.  */
-    sf (value.a_string, -1, sfvalue);
+  if (sf) /* Tell the filter to release resources.  */
+    sf (string, -1, sfvalue);
+  if (stringbuf)
+    my_printf_realloc (stringbuf, 0);
 
   return rc;
 }
