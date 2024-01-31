@@ -65,7 +65,7 @@ substitute_vars () {
 		__result="$__result\$"
 		__string="${__string#\$\$}"
 		;;
-	    \${*}*)
+	    \$\{*\}*)
 		__varname="${__string#\$\{}"
 		__varname="${__varname%%\}*}"
 		__result="$__result$(get_var $__varname)"
