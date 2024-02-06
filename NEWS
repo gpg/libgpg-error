@@ -3,6 +3,14 @@ Noteworthy changes in version 1.48 (unreleased) [C34/A34/R_]
 
  * New configure option --with-libtool-modification.  [T6619]
 
+ * New option parser flag to detect commands given without a double
+   dash.  There is also the new meta command [command-mode] to set
+   this flag via a config file.  [T6978]
+
+ * Interface changes relative to the 1.47 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ARGPARSE_FLAG_COMMAND          NEW.
+
  Release-info: https://dev.gnupg.org/T6441
 
 

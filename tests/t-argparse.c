@@ -68,6 +68,9 @@ main (int argc, char **argv)
 {
   gpgrt_opt_t opts[] = {
     ARGPARSE_verbatim("Now for the options:\n"),
+    ARGPARSE_c  (601, "foo", "Command FOO"),
+    ARGPARSE_c  (602, "bar", "Command BAR"),
+    ARGPARSE_c  (603, "foobar", "Command FOOBAR"),
     ARGPARSE_x  ('v', "verbose", NONE, 0, "Laut sein"),
     ARGPARSE_s_n('e', "echo"   , ("Zeile ausgeben, damit wir sehen, "
                                   "was wir eingegeben haben")),
@@ -96,6 +99,10 @@ main (int argc, char **argv)
   int i;
   const char *srcdir;
   int any_warn = 0;
+  int command = -1;
+
+  if (getenv ("argparse_flag_command"))
+    pargs.flags |= ARGPARSE_FLAG_COMMAND;
 
   gpgrt_set_strusage (my_strusage);
   srcdir = getenv ("srcdir");
@@ -139,11 +146,20 @@ main (int argc, char **argv)
         case 'M': opt.myopt = 0; break;
         case 's': opt.street = pargs.r.ret_str; break;
         case 500: opt.a_long_one++;  break;
+
+        case 601:
+        case 602:
+        case 603:
+          command = pargs.r_opt;
+          break;
+
         default : pargs.err = ARGPARSE_PRINT_WARNING; any_warn = 1; break;
 	}
     }
   for (i=0; i < argc; i++ )
     printf ("%3d -> (%s)\n", i, argv[i] );
+  if (command >= 0)
+    printf ("Command: %d\n", command);
   if (opt.verbose)
     puts ("Options:");
   if (opt.verbose)
