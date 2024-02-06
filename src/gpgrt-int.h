@@ -121,6 +121,7 @@ void *_gpgrt_calloc (size_t n, size_t m);
 char *_gpgrt_strdup (const char *string);
 char *_gpgrt_strconcat (const char *s1, ...) GPGRT_ATTR_SENTINEL(0);
 void _gpgrt_free (void *a);
+void _gpgrt_wipememory (void *ptr, size_t len);
 /* The next is only to be used by visibility.c.  */
 char *_gpgrt_strconcat_core (const char *s1, va_list arg_ptr);
 

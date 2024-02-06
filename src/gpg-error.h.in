@@ -472,6 +472,7 @@ void *gpgrt_calloc (size_t n, size_t m);
 char *gpgrt_strdup (const char *string);
 char *gpgrt_strconcat (const char *s1, ...) GPGRT_ATTR_SENTINEL(0);
 void gpgrt_free (void *a);
+void gpgrt_wipememory (void *ptr, size_t len);
 
 
 /*

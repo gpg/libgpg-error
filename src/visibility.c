@@ -817,6 +817,13 @@ gpgrt_free (void *a)
     _gpgrt_free (a);
 }
 
+void
+gpgrt_wipememory (void *ptr, size_t len)
+{
+  if (ptr && len)
+    _gpgrt_wipememory (ptr, len);
+}
+
 char *
 gpgrt_getenv (const char *name)
 {

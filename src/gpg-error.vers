@@ -209,6 +209,8 @@ GPG_ERROR_1.0 {
 
     gpgrt_access;
 
+    gpgrt_wipememory;
+
   local:
     *;
 };
