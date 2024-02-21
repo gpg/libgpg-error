@@ -3146,7 +3146,13 @@ show_help (opttable_t *opts, unsigned int nopts, unsigned int flags)
             {
               tmp[0] = opts[ordtbl[i]].short_opt < 256?',':' ';
               tmp[1] = 0;
-              j += writestrings (0, tmp, " --", opts[ordtbl[i]].long_opt, NULL);
+              if ((flags & ARGPARSE_FLAG_COMMAND)
+                  && (opts[ordtbl[i]].flags & ARGPARSE_OPT_COMMAND))
+                j += writestrings (0, tmp,
+                                   " ", opts[ordtbl[i]].long_opt, "  ", NULL);
+              else
+                j += writestrings (0, tmp,
+                                   " --", opts[ordtbl[i]].long_opt, NULL);
               if (s && *s == '|' )
                 {
                   if ( *++s != '=' )
