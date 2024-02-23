@@ -25,6 +25,9 @@ RELEASE_ARCHIVE_SUFFIX  = libgpg-error
 # to specify the key for signing.  For example:
 # RELEASE_SIGNKEY=D8692123C4065DEA5E0F3AB5249B39D24F25E3B6
 
+# Macro to help the release target.
+RELEASE_NAME = $(PACKAGE_TARNAME)-$(PACKAGE_VERSION)
+
 
 # Autoconf flags
 ACLOCAL_AMFLAGS = -I m4
@@ -116,9 +119,6 @@ stowinstall:
 	$(MAKE) $(AM_MAKEFLAGS) install prefix=/usr/local/stow/libgpg-error
 
 
-# Macro to help the release target.
-RELEASE_NAME = $(PACKAGE_TARNAME)-$(PACKAGE_VERSION)
-
 release:
 	+(set -e;\
 	 if [ "$(abs_top_builddir)" = "$(abs_top_srcdir)" ]; then \
@@ -142,13 +142,15 @@ release:
 sign-release:
 	 +(set -e; \
 	  test $$(pwd | sed 's,.*/,,') = dist || cd dist; \
-	  x=$$(grep '^RELEASE_ARCHIVE=' $$HOME/.gnupg-autogen.rc|cut -d= -f2);\
+	  x=$$(grep '^[[:blank:]]*RELEASE_ARCHIVE[[:blank:]]*=' \
+                    $$HOME/.gnupg-autogen.rc|cut -d= -f2|xargs);\
           if [ -z "$$x" ]; then \
              echo "error: RELEASE_ARCHIVE missing in ~/.gnupg-autogen.rc">&2; \
              exit 2;\
           fi;\
           myarchive="$$x/$(RELEASE_ARCHIVE_SUFFIX)";\
-	  x=$$(grep '^RELEASE_SIGNKEY=' $$HOME/.gnupg-autogen.rc|cut -d= -f2);\
+	  x=$$(grep '^[[:blank:]]*RELEASE_SIGNKEY[[:blank:]]*=' \
+                     $$HOME/.gnupg-autogen.rc|cut -d= -f2|xargs);\
           if [ -z "$$x" ]; then \
              echo "error: RELEASE_SIGNKEY missing in ~/.gnupg-autogen.rc">&2; \
              exit 2;\
