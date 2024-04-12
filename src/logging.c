@@ -1169,10 +1169,23 @@ _gpgrt_logv_printhex (const void *buffer, size_t length,
   int wrap = 0;
   int cnt = 0;
   const unsigned char *p;
+  int trunc = 0;  /* Only print a shortened string.  */
 
   /* FIXME: This printing is not yet protected by _gpgrt_flockfile.  */
   if (fmt && *fmt)
     {
+      const char *s;
+
+      if (*fmt == '|' && fmt[1] == '!' && (s=strchr (fmt+2, '|')) && s[1])
+        {
+          /* Skip initial keywords and parse them.  */
+          fmt += 2;
+          if (strstr (fmt, "trunc"))
+            trunc = 1;
+
+          fmt = s+1;
+        }
+
       _gpgrt_logv_internal (GPGRT_LOGLVL_DEBUG, 0, NULL, NULL, fmt, arg_ptr);
       wrap = 1;
     }
@@ -1187,6 +1200,12 @@ _gpgrt_logv_printhex (const void *buffer, size_t length,
           _gpgrt_log_printf ("%02x", *p);
           if (wrap && ++cnt == 32 && length)
             {
+              if (trunc)
+                {
+                  _gpgrt_log_printf (" …");
+                  break;
+                }
+
               cnt = 0;
               /* (we indicate continuations with a backslash) */
               _gpgrt_log_printf (" \\\n");
