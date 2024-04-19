@@ -836,14 +836,14 @@ print_prefix (int level, int leading_backspace)
 
 
 /* Internal worker function.  Exported so that we can use it in
- * visibility.c.  Returs the number of characters printed or 0 if the
- * line ends in a LF. */
+ * visibility.c.  Returns the number of characters printed sans prefix
+ * or 0 if the line ends in a LF. */
 int
 _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
                       const char *prefmt, const char *fmt, va_list arg_ptr)
 {
   int leading_backspace = (fmt && *fmt == '\b');
-  int length;
+  int length, prefixlen;
   int rc;
 
   if (!logstream)
@@ -884,6 +884,7 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
           _gpgrt_fputs_unlocked (prefmt, logstream);
           length += strlen (prefmt);
         }
+      prefixlen = length;
 
       if (ignore_arg_ptr)
         { /* This is used by log_string and comes with the extra
@@ -919,6 +920,8 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
       if (*fmt && fmt[strlen(fmt)-1] != '\n')
         missing_lf = 1;
     }
+  else
+    prefixlen = length;
 
   /* If we have an EXTRASTRING print it now while we still hold the
    * lock on the logstream.  */
@@ -1010,7 +1013,7 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
   if (level == GPGRT_LOGLVL_ERROR)
     _gpgrt_inc_errorcount ();
 
-  return length;
+  return length > prefixlen? (length - prefixlen): length;
 }
 
 
@@ -1167,6 +1170,7 @@ _gpgrt_logv_printhex (const void *buffer, size_t length,
                       const char *fmt, va_list arg_ptr)
 {
   int wrap = 0;
+  int wrapamount = 0;
   int cnt = 0;
   const unsigned char *p;
   int trunc = 0;  /* Only print a shortened string.  */
@@ -1186,7 +1190,8 @@ _gpgrt_logv_printhex (const void *buffer, size_t length,
           fmt = s+1;
         }
 
-      _gpgrt_logv_internal (GPGRT_LOGLVL_DEBUG, 0, NULL, NULL, fmt, arg_ptr);
+      wrapamount = _gpgrt_logv_internal (GPGRT_LOGLVL_DEBUG, 0, NULL, NULL,
+                                         fmt, arg_ptr);
       wrap = 1;
     }
 
@@ -1209,7 +1214,10 @@ _gpgrt_logv_printhex (const void *buffer, size_t length,
               cnt = 0;
               /* (we indicate continuations with a backslash) */
               _gpgrt_log_printf (" \\\n");
-              _gpgrt_log_debug ("%s", "");
+              if (wrap)
+                _gpgrt_log_debug ("%*s", wrapamount, "");
+              else
+                _gpgrt_log_debug ("%s", "");
               if (fmt && *fmt)
                 _gpgrt_log_printf (" ");
             }
