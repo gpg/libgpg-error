@@ -961,6 +961,14 @@ gpgrt_log_get_stream (void)
   return _gpgrt_log_get_stream ();
 }
 
+
+void
+gpgrt_add_post_log_func (void (*f)(int))
+{
+  _gpgrt_add_post_log_func (f);
+}
+
+
 void
 gpgrt_log (int level, const char *fmt, ...)
 {

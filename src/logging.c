@@ -101,6 +101,18 @@ static int force_prefixes;
 static int missing_lf;
 static int errorcount;
 
+/* The list of registered functions to be called after logging.  */
+struct post_log_func_item_s;
+typedef struct post_log_func_item_s *post_log_func_item_t;
+struct post_log_func_item_s
+{
+  post_log_func_item_t next;
+  void (*func) (int);
+};
+static post_log_func_item_t post_log_func_list;
+
+
+
 
 /* An object to convey data to the fmt_string_filter.  */
 struct fmt_string_filter_s
@@ -655,6 +667,59 @@ _gpgrt_log_get_stream (void)
 }
 
 
+/* Add a function F to the list of functions called after a log_fatal
+ * or log_bug right before terminating the process.  If a function
+ * with that address has already been registered, it is not added a
+ * second time.  */
+void
+_gpgrt_add_post_log_func (void (*f)(int))
+{
+  post_log_func_item_t item;
+
+  for (item = post_log_func_list; item; item = item->next)
+    if (item->func == f)
+      return; /* Function has already been registered.  */
+
+  /* We use a standard malloc here.  */
+  item = malloc (sizeof *item);
+  if (item)
+    {
+      item->func = f;
+      item->next = post_log_func_list;
+      post_log_func_list = item;
+    }
+  else
+    _gpgrt_log_fatal ("out of core in gpgrt_add_post_log_func\n");
+}
+
+
+/* Run the post log function handlers.  These are only called for
+ * fatal and bug errors and should be aware that the process will
+ * terminate.  */
+static void
+run_post_log_funcs (int level)
+{
+  static int running;  /* Just to avoid recursive calls.  */
+  post_log_func_item_t next;
+  void (*f)(int);
+
+  if (running)
+    return;
+  running = 1;
+
+  while (post_log_func_list)
+    {
+      next = post_log_func_list->next;
+      f = post_log_func_list->func;
+      post_log_func_list->func = NULL;
+      post_log_func_list = next;
+      if (f)
+        f (level);
+    }
+}
+
+
+
 /* A filter used with the fprintf_sf function to sanitize the args for
  * "%s" format specifiers.  */
 static char *
@@ -983,6 +1048,7 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
     {
       if (missing_lf)
         _gpgrt_putc_unlocked ('\n', logstream);
+      run_post_log_funcs (level);
       _gpgrt_funlockfile (logstream);
       exit (2);
     }
@@ -990,6 +1056,7 @@ _gpgrt_logv_internal (int level, int ignore_arg_ptr, const char *extrastring,
     {
       if (missing_lf)
         _gpgrt_putc_unlocked ('\n', logstream );
+      run_post_log_funcs (level);
       _gpgrt_funlockfile (logstream);
       /* Using backtrace requires a configure test and to pass
        * -rdynamic to gcc.  Thus we do not enable it now.  */

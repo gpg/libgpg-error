@@ -2,6 +2,11 @@ Noteworthy changes in version 1.49 (unreleased) [C35/A35/R_]
 -----------------------------------------------
 
 
+ * Interface changes relative to the 1.48 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_add_post_log_func        NEW.
+
+
  Release-info: https://dev.gnupg.org/T7012
 
 

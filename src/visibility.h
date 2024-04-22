@@ -184,6 +184,7 @@ MARK_VISIBLE (gpgrt_log_get_prefix)
 MARK_VISIBLE (gpgrt_log_test_fd)
 MARK_VISIBLE (gpgrt_log_get_fd)
 MARK_VISIBLE (gpgrt_log_get_stream)
+MARK_VISIBLE (gpgrt_add_post_log_func)
 MARK_VISIBLE (gpgrt_log)
 MARK_VISIBLE (gpgrt_logv)
 MARK_VISIBLE (gpgrt_logv_prefix)
@@ -375,6 +376,7 @@ MARK_VISIBLE (gpgrt_absfnameconcat)
 #define gpgrt_log_test_fd           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_log_get_fd            _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_log_get_stream        _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_add_post_log_func     _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_log                   _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_logv                  _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_logv_prefix           _gpgrt_USE_UNDERSCORED_FUNCTION

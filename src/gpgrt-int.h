@@ -537,6 +537,7 @@ void _gpgrt_log_set_sink (const char *name, estream_t stream, int fd);
 void _gpgrt_log_set_socket_dir_cb (const char *(*fnc)(void));
 void _gpgrt_log_set_pid_suffix_cb (int (*cb)(unsigned long *r_value));
 void _gpgrt_log_set_prefix (const char *text, unsigned int flags);
+void _gpgrt_add_post_log_func (void (*f)(int));
 const char *_gpgrt_log_get_prefix (unsigned int *flags);
 int  _gpgrt_log_test_fd (int fd);
 int  _gpgrt_log_get_fd (void);

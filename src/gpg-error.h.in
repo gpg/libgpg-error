@@ -995,11 +995,12 @@ enum gpgrt_log_levels
   };
 
 
-/* The next 4 functions are not thread-safe - call them early.  */
+/* The next 5 functions are not thread-safe - call them early.  */
 void gpgrt_log_set_sink (const char *name, gpgrt_stream_t stream, int fd);
 void gpgrt_log_set_socket_dir_cb (const char *(*fnc)(void));
 void gpgrt_log_set_pid_suffix_cb (int (*cb)(unsigned long *r_value));
 void gpgrt_log_set_prefix (const char *text, unsigned int flags);
+void gpgrt_add_post_log_func (void (*f)(int));
 
 int  gpgrt_get_errorcount (int clear);
 void gpgrt_inc_errorcount (void);
