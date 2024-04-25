@@ -993,6 +993,17 @@ gpgrt_logv_prefix (int level, const char *prefix,
 }
 
 void
+gpgrt_logv_domain (const char *domain, int level, const char *prefix,
+                   const void *buffer, size_t length,
+                   const char *fmt, va_list arg_ptr)
+{
+  (void)domain;  /* Not yet used.  */
+  (void)buffer;
+  (void)length;
+  _gpgrt_logv_prefix (level, prefix, fmt, arg_ptr);
+}
+
+void
 gpgrt_log_string (int level, const char *string)
 {
   _gpgrt_log_string (level, string);

@@ -188,6 +188,7 @@ MARK_VISIBLE (gpgrt_add_post_log_func)
 MARK_VISIBLE (gpgrt_log)
 MARK_VISIBLE (gpgrt_logv)
 MARK_VISIBLE (gpgrt_logv_prefix)
+MARK_VISIBLE (gpgrt_logv_domain)
 MARK_VISIBLE (gpgrt_log_string)
 MARK_VISIBLE (gpgrt_log_bug)
 MARK_VISIBLE (gpgrt_log_fatal)
@@ -380,6 +381,7 @@ MARK_VISIBLE (gpgrt_absfnameconcat)
 #define gpgrt_log                   _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_logv                  _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_logv_prefix           _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_logv_domain           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_log_string            _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_log_bug               _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_log_fatal             _gpgrt_USE_UNDERSCORED_FUNCTION

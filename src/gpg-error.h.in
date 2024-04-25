@@ -1010,9 +1010,13 @@ int  gpgrt_log_get_fd (void);
 gpgrt_stream_t gpgrt_log_get_stream (void);
 
 void gpgrt_log (int level, const char *fmt, ...) GPGRT_ATTR_PRINTF(2,3);
-void gpgrt_logv (int level, const char *fmt, va_list arg_ptr);
-void gpgrt_logv_prefix (int level, const char *prefix,
-                              const char *fmt, va_list arg_ptr);
+void gpgrt_logv (int level, const char *fmt,
+                 va_list arg_ptr) GPGRT_ATTR_PRINTF(2,0);
+void gpgrt_logv_prefix (int level, const char *prefix, const char *fmt,
+                        va_list arg_ptr) GPGRT_ATTR_PRINTF(3,0);
+void gpgrt_logv_domain (const char *domain, int level, const char *prefix,
+                        const void *buffer, size_t length, const char *fmt,
+                        va_list arg_ptr) GPGRT_ATTR_PRINTF(6,0);
 void gpgrt_log_string (int level, const char *string);
 void gpgrt_log_bug (const char *fmt, ...)    GPGRT_ATTR_NR_PRINTF(1,2);
 void gpgrt_log_fatal (const char *fmt, ...)  GPGRT_ATTR_NR_PRINTF(1,2);

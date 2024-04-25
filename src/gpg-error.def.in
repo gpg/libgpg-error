@@ -248,5 +248,6 @@ EXPORTS
 
  gpgrt_wipememory             @189
  gpgrt_add_post_log_func      @190
+ gpgrt_logv_domain            @191
 
 ;; end of file with public symbols for Windows.

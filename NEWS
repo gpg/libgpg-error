@@ -1,11 +1,16 @@
 Noteworthy changes in version 1.49 (unreleased) [C35/A35/R_]
 -----------------------------------------------
 
+ * Two new functions to improve the logging interface.  The
+   gpgrt_logv_domain is currently the same as gpgrt_logv_prefix but
+   allows to pass a domain string so that in future we will be able to
+   select log output by domain.  It also provide a non yet functional
+   feature to include a hex dump.
 
  * Interface changes relative to the 1.48 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  gpgrt_add_post_log_func        NEW.
-
+ gpgrt_logv_domain              NEW.
 
  Release-info: https://dev.gnupg.org/T7012
 

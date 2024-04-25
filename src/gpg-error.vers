@@ -212,6 +212,7 @@ GPG_ERROR_1.0 {
     gpgrt_wipememory;
 
     gpgrt_add_post_log_func;
+    gpgrt_logv_domain;
 
   local:
     *;
