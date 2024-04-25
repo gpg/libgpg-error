@@ -1,4 +1,4 @@
-Noteworthy changes in version 1.49 (unreleased) [C35/A35/R_]
+Noteworthy changes in version 1.49 (2024-04-25) [C36/A36/R0]
 -----------------------------------------------
 
  * Two new functions to improve the logging interface.  The
@@ -6,6 +6,11 @@ Noteworthy changes in version 1.49 (unreleased) [C35/A35/R_]
    allows to pass a domain string so that in future we will be able to
    select log output by domain.  It also provide a non yet functional
    feature to include a hex dump.
+
+ * Add a "trunc" keyword to gpgrt_log_printhex.  [rE0a39fbefcb]
+
+ * Avoid an endless loop in the argparser due to a conf file read
+   error.  [rE2dc93cfecc]
 
  * Interface changes relative to the 1.48 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
