@@ -84,7 +84,7 @@
 
     Don't change the indentation within a table and keep the same
     number of white space at the start of the line.  yat2m simply
-    detects the number of white spaces in front of an @item and remove
+    detects the number of white spaces in front of an @item and removes
     this number of spaces from all following lines until a new @item
     is found or there are less spaces than for the last @item.
 
@@ -279,6 +279,8 @@ struct section_buffer_s
                                 linked list.  */
   line_buffer_t last_line;   /* Points to the last line appended.  */
   unsigned int is_see_also:1; /* This is the SEE ALSO section.  */
+  unsigned int in_para:1;     /* Track whether we are in paragraph.  */
+  unsigned int in_pre:1;      /* Track whether we are in a html pre.  */
 };
 typedef struct section_buffer_s *section_buffer_t;
 
@@ -988,6 +990,8 @@ add_content (const char *sectname, char *line, int verbatim)
           line = linebuffer;
         }
     }
+  else if (htmlmode && !*line)
+    line = linebuffer = xstrdup ("@para{}");
   else if (htmlmode)
     {
       size_t n0, n1;
@@ -1033,7 +1037,10 @@ add_content (const char *sectname, char *line, int verbatim)
     {
       lb = xcalloc (1, sizeof *lb);
       lb->verbatim = verbatim;
-      lb->line = xstrdup (line);
+      if (htmlmode && sect->lines_tail == &sect->lines)
+        lb->line = xstrconcat ("@para{}", line, NULL);
+      else
+        lb->line = xstrdup (line);
       sect->last_line = lb;
       *sect->lines_tail = lb;
       sect->lines_tail = &lb->next;
@@ -1322,6 +1329,7 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
     { "cpindex", 1 },
     { "cindex",  1 },
     { "noindent", 0 },
+    { "para",   11, },
     { "section", 1 },
     { "chapter", 1 },
     { "subsection", 6, 0, "\n.SS ", NULL, "<h3>" },
@@ -1363,6 +1371,7 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
       switch (cmdtbl[i].what)
         {
         case 10:
+          sect->in_pre = 1;
           cond_parse_dash = 0;
           cond_2D_as_minus = 1;
           /* Fallthrough */
@@ -1457,6 +1466,7 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
               cond_parse_dash = 1;
               cond_2D_as_minus = 0;
               writestr (".fi\n.RE\n", "</pre>\n", fp);
+              sect->in_pre = 0;
             }
           else if (n >= 12 && !memcmp (s, "smallexample", 12)
               && (!n || s[12] == ' ' || s[12] == '\t' || s[12] == '\n'))
@@ -1464,6 +1474,7 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
               cond_parse_dash = 1;
               cond_2D_as_minus = 0;
               writestr (".fi\n.RE\n", "</pre>\n", fp);
+              sect->in_pre = 0;
             }
           else if (n >= 9 && !memcmp (s, "quotation", 9)
               && (!n || s[9] == ' ' || s[9] == '\t' || s[9] == '\n'))
@@ -1544,6 +1555,15 @@ proc_texi_cmd (FILE *fp, const char *command, const char *rest, size_t len,
         case 9:  /* @command{} */
           if (sect && sect->is_see_also)
             see_also_command = 1;
+          break;
+        case 11: /* @para{} inserted by htmlmode */
+          if (!*table_level && !sect->in_pre)
+            {
+              if (sect->in_para)
+                writestr (NULL, "</p>\n", fp);
+              writestr (NULL, "\n<p>", fp);
+              sect->in_para = 1;
+            }
           break;
 
         default:
@@ -1807,9 +1827,9 @@ write_content (FILE *fp, section_buffer_t sect)
         }
       else
         {
-/*           fputs ("TEXI---", fp); */
-/*           fputs (line->line, fp); */
-/*           fputs ("---\n", fp); */
+          /* fputs ("TEXI---", fp); */
+          /* fputs (line->line, fp); */
+          /* fputs ("---\n", fp); */
           parse_texi_line (fp, line->line, &table_level, sect);
         }
     }
