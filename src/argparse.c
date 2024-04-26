@@ -578,12 +578,12 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
 static void
 store_alias( gpgrt_argparse_t *arg, char *name, char *value )
 {
-    /* TODO: replace this dummy function with a rea one
-     * and fix the probelms IRIX has with (ALIAS_DEV)arg..
+    /* TODO: replace this dummy function with a real one
+     * and fix the problems IRIX has with (ALIAS_DEV)arg..
      * used as lvalue
      */
   (void)arg;
-  (void)name;
+  xfree (name);
   (void)value;
 #if 0
     ALIAS_DEF a = xmalloc( sizeof *a );
@@ -1843,6 +1843,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
                           *p++ = 0;
                           trim_spaces (p);
 			}
+
                       if (!p || !*p)
                         {
                           xfree (buffer);
