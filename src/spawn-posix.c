@@ -57,15 +57,6 @@
 #include "gpgrt-int.h"
 
 
-static void
-out_of_core (int line)
-{
-  _gpgrt_log_fatal ("malloc failed at line %d: %s\n",
-                    line, _gpg_strerror (_gpg_err_code_from_syserror ()));
-  /*NOTREACHED*/
-}
-
-
 /* Return the maximum number of currently allowed open file
  * descriptors.  Only useful on POSIX systems but returns a value on
  * other systems too.  */
@@ -93,7 +84,6 @@ get_max_fds (void)
     const char *s;
     int x;
 
-    /* FIXME: Check gpgme on how to do this right on Linux.  */
     dir = opendir ("/proc/self/fd");
     if (dir)
       {
@@ -198,136 +188,6 @@ _gpgrt_close_all_fds (int first, int *except)
   _gpg_err_set_errno (0);
 }
 
-
-/* Returns an array with all currently open file descriptors.  The end
- * of the array is marked by -1.  The caller needs to release this
- * array using the *standard free* and not with xfree.  This allow the
- * use of this function right at startup even before libgcrypt has
- * been initialized.  Returns NULL on error and sets ERRNO
- * accordingly.
- *
- * FIXME: Needs to be adjusted for use here.
- */
-#if 0
-int *
-get_all_open_fds (void)
-{
-  int *array;
-  size_t narray;
-  int fd, max_fd, idx;
-#ifndef HAVE_STAT
-  array = calloc (1, sizeof *array);
-  if (array)
-    array[0] = -1;
-#else /*HAVE_STAT*/
-  struct stat statbuf;
-
-  max_fd = get_max_fds ();
-  narray = 32;  /* If you change this change also t-exechelp.c.  */
-  array = calloc (narray, sizeof *array);
-  if (!array)
-    return NULL;
-
-  /* Note:  The list we return is ordered.  */
-  for (idx=0, fd=0; fd < max_fd; fd++)
-    if (!(fstat (fd, &statbuf) == -1 && errno == EBADF))
-      {
-        if (idx+1 >= narray)
-          {
-            int *tmp;
-
-            narray += (narray < 256)? 32:256;
-            tmp = realloc (array, narray * sizeof *array);
-            if (!tmp)
-              {
-                free (array);
-                return NULL;
-              }
-            array = tmp;
-          }
-        array[idx++] = fd;
-      }
-  array[idx] = -1;
-#endif /*HAVE_STAT*/
-  return array;
-}
-#endif /*0*/
-
-
-/* The exec core used right after the fork.  This will never return.  */
-static void
-do_exec (const char *pgmname, const char *argv[],
-         int fd_in, int fd_out, int fd_err,
-         int *except, unsigned int flags)
-{
-  char **arg_list;
-  int i, j;
-  int fds[3];
-  int nodevnull[3];
-
-  fds[0] = fd_in;
-  fds[1] = fd_out;
-  fds[2] = fd_err;
-
-  nodevnull[0] = !!(flags & GPGRT_SPAWN_KEEP_STDIN);
-  nodevnull[1] = !!(flags & GPGRT_SPAWN_KEEP_STDOUT);
-  nodevnull[2] = !!(flags & GPGRT_SPAWN_KEEP_STDERR);
-
-  /* Create the command line argument array.  */
-  i = 0;
-  if (argv)
-    while (argv[i])
-      i++;
-  arg_list = xtrycalloc (i+2, sizeof *arg_list);
-  if (!arg_list)
-    out_of_core (__LINE__);
-  arg_list[0] = strrchr (pgmname, '/');
-  if (arg_list[0])
-    arg_list[0]++;
-  else
-    {
-      arg_list[0] = xtrystrdup (pgmname);
-      if (!arg_list[0])
-        out_of_core (__LINE__);
-    }
-  if (argv)
-    for (i=0,j=1; argv[i]; i++, j++)
-      arg_list[j] = (char*)argv[i];
-
-  /* Assign /dev/null to unused FDs. */
-  for (i=0; i <= 2; i++)
-    {
-      if (nodevnull[i])
-        continue;
-      if (fds[i] == -1)
-        {
-          fds[i] = open ("/dev/null", i? O_WRONLY : O_RDONLY);
-          if (fds[i] == -1)
-            _gpgrt_log_fatal ("failed to open '%s': %s\n",
-                              "/dev/null", strerror (errno));
-        }
-    }
-
-  /* Connect the standard files.  */
-  for (i=0; i <= 2; i++)
-    {
-      if (nodevnull[i])
-        continue;
-      if (fds[i] != i && dup2 (fds[i], i) == -1)
-        _gpgrt_log_fatal ("dup2 std%s failed: %s\n",
-                          i==0?"in":i==1?"out":"err", strerror (errno));
-    }
-
-  /* Close all other files. */
-  if (!(flags & GPGRT_SPAWN_INHERIT_FILE))
-    _gpgrt_close_all_fds (3, except);
-
-  execv (pgmname, arg_list);
-  /* No way to print anything, as we have may have closed all streams. */
-  _exit (127);
-}
-
-
 /* Helper for _gpgrt_make_pipe.  */
 static gpg_err_code_t
 do_create_pipe (int filedes[2])
@@ -398,479 +258,103 @@ _gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction,
     return do_create_pipe (filedes);
 }
 
-/*
- * UNION PROCESS_ID:
- *
- * gpgrt_process_t object is an object which represents process handle.
- * It must be same size as pid_t and must have same bit pattern.
- */
-union process {
-  gpgrt_process_t process_id;
-  pid_t pid;
-};
+#include <sys/socket.h>
 
-static gpgrt_process_t
-convert_from_pid (pid_t pid)
+static gpg_err_code_t
+do_create_socketpair (int filedes[2])
 {
-  union process u;
-
-  u.pid = pid;
-  return u.process_id;
-}
-
-static pid_t
-convert_from_process (gpgrt_process_t process_id)
-{
-  union process u;
-
-  u.process_id = process_id;
-  return u.pid;
-}
-
-
-/* Fork and exec the PGMNAME, see gpgrt-int.h for details.  */
-gpg_err_code_t
-_gpgrt_spawn_process (const char *pgmname, const char *argv[],
-                      int *except, unsigned int flags,
-                      estream_t *r_infp,
-                      estream_t *r_outfp,
-                      estream_t *r_errfp,
-                      gpgrt_process_t *r_process_id)
-{
-  gpg_error_t err;
-  int inpipe[2] = {-1, -1};
-  int outpipe[2] = {-1, -1};
-  int errpipe[2] = {-1, -1};
-  estream_t infp = NULL;
-  estream_t outfp = NULL;
-  estream_t errfp = NULL;
-  int nonblock = !!(flags & GPGRT_SPAWN_NONBLOCK);
-  pid_t pid;
-
-  if (r_infp)
-    *r_infp = NULL;
-  if (r_outfp)
-    *r_outfp = NULL;
-  if (r_errfp)
-    *r_errfp = NULL;
-  *r_process_id = convert_from_pid (-1);
-
-  if (r_infp)
-    {
-      err = _gpgrt_create_outbound_pipe (inpipe, &infp, nonblock);
-      if (err)
-        return err;
-    }
-
-  if (r_outfp)
-    {
-      err = _gpgrt_create_inbound_pipe (outpipe, &outfp, nonblock);
-      if (err)
-        {
-          if (infp)
-            _gpgrt_fclose (infp);
-          else if (inpipe[1] != -1)
-            close (inpipe[1]);
-          if (inpipe[0] != -1)
-            close (inpipe[0]);
-
-          return err;
-        }
-    }
-
-  if (r_errfp)
-    {
-      err = _gpgrt_create_inbound_pipe (errpipe, &errfp, nonblock);
-      if (err)
-        {
-          if (infp)
-            _gpgrt_fclose (infp);
-          else if (inpipe[1] != -1)
-            close (inpipe[1]);
-          if (inpipe[0] != -1)
-            close (inpipe[0]);
-
-          if (outfp)
-            _gpgrt_fclose (outfp);
-          else if (outpipe[0] != -1)
-            close (outpipe[0]);
-          if (outpipe[1] != -1)
-            close (outpipe[1]);
-
-          return err;
-        }
-    }
+  gpg_error_t err = 0;
 
   _gpgrt_pre_syscall ();
-  pid = fork ();
-  _gpgrt_post_syscall ();
-  if (pid == (pid_t)(-1))
+  if (socketpair (AF_LOCAL, SOCK_STREAM, 0, filedes) == -1)
     {
       err = _gpg_err_code_from_syserror ();
-      _gpgrt_log_error (_("error forking process: %s\n"), _gpg_strerror (err));
-
-      if (infp)
-        _gpgrt_fclose (infp);
-      else if (inpipe[1] != -1)
-        close (inpipe[1]);
-      if (inpipe[0] != -1)
-        close (inpipe[0]);
-
-      if (outfp)
-        _gpgrt_fclose (outfp);
-      else if (outpipe[0] != -1)
-        close (outpipe[0]);
-      if (outpipe[1] != -1)
-        close (outpipe[1]);
-
-      if (errfp)
-        _gpgrt_fclose (errfp);
-      else if (errpipe[0] != -1)
-        close (errpipe[0]);
-      if (errpipe[1] != -1)
-        close (errpipe[1]);
-      return err;
+      filedes[0] = filedes[1] = -1;
     }
+  _gpgrt_post_syscall ();
 
-  if (!pid)
-    {
-      /* This is the child. */
-      _gpgrt_fclose (infp);
-      _gpgrt_fclose (outfp);
-      _gpgrt_fclose (errfp);
-      do_exec (pgmname, argv, inpipe[0], outpipe[1], errpipe[1],
-               except, flags);
-      /*NOTREACHED*/
-    }
+  return err;
+}
 
-  /* This is the parent. */
-  if (inpipe[0] != -1)
-    close (inpipe[0]);
-  if (outpipe[1] != -1)
-    close (outpipe[1]);
-  if (errpipe[1] != -1)
-    close (errpipe[1]);
+static int
+posix_open_null (int for_write)
+{
+  int fd;
 
-  if (r_infp)
-    *r_infp = infp;
-  if (r_outfp)
-    *r_outfp = outfp;
-  if (r_errfp)
-    *r_errfp = errfp;
+  fd = open ("/dev/null", for_write? O_WRONLY : O_RDONLY);
+  if (fd == -1)
+    _gpgrt_log_fatal ("failed to open '/dev/null': %s\n", strerror (errno));
+  return fd;
+}
 
-  *r_process_id = convert_from_pid (pid);
-  return 0;
+static void
+my_exec (const char *pgmname, const char *argv[], struct spawn_cb_arg *sca)
+{
+  int i;
+
+  /* Assign /dev/null to unused FDs.  */
+  for (i = 0; i <= 2; i++)
+    if (sca->fds[i] == -1)
+      sca->fds[i] = posix_open_null (i);
+
+  /* Connect the standard files.  */
+  for (i = 0; i <= 2; i++)
+    if (sca->fds[i] != i)
+      {
+        if (dup2 (sca->fds[i], i) == -1)
+          _gpgrt_log_fatal ("dup2 std%s failed: %s\n",
+                            i==0?"in":i==1?"out":"err", strerror (errno));
+        /*
+         * We don't close sca.fds[i] here, but close them by
+         * close_all_fds.  Note that there may be same one in three of
+         * sca->fds[i].
+         */
+      }
+
+  /* Close all other files.  */
+  _gpgrt_close_all_fds (3, sca->except_fds);
+
+  execv (pgmname, (char *const *)argv);
+  /* No way to print anything, as we have may have closed all streams. */
+  _exit (127);
 }
 
 
-/* Fork and exec the PGMNAME using FDs, see gpgrt-int.h for details.  */
-gpg_err_code_t
-_gpgrt_spawn_process_fd (const char *pgmname, const char *argv[],
-                         int infd, int outfd, int errfd,
-                         int (*spawn_cb) (void *),
-                         void *spawn_cb_arg,
-                         gpgrt_process_t *r_process_id)
+static void
+call_spawn_cb (struct spawn_cb_arg *sca,
+               int fd_in, int fd_out, int fd_err,
+               void (*spawn_cb) (struct spawn_cb_arg *), void *spawn_cb_arg)
 {
-  gpg_error_t err;
-  int ask_inherit_fds = 0;
-  pid_t pid;
-
-  *r_process_id = convert_from_pid (-1);
-  _gpgrt_pre_syscall ();
-  pid = fork ();
-  _gpgrt_post_syscall ();
-  if (pid == (pid_t)(-1))
-    {
-      err = _gpg_err_code_from_syserror ();
-      _gpgrt_log_error (_("error forking process: %s\n"), _gpg_strerror (err));
-      return err;
-    }
-
-  if (!pid)
-    {
-      if (spawn_cb)
-        ask_inherit_fds = (*spawn_cb) (spawn_cb_arg);
-
-      /* Run child. */
-      do_exec (pgmname, argv, infd, outfd, errfd, NULL,
-               ask_inherit_fds? GPGRT_SPAWN_INHERIT_FILE : 0);
-      /*NOTREACHED*/
-    }
-
-  *r_process_id = convert_from_pid (pid);
-  return 0;
+  sca->fds[0] = fd_in;
+  sca->fds[1] = fd_out;
+  sca->fds[2] = fd_err;
+  sca->except_fds = NULL;
+  sca->arg = spawn_cb_arg;
+  if (spawn_cb)
+    (*spawn_cb) (sca);
 }
-
-
-/* Waiting for child processes.
- *
- * waitpid(2) may return information about terminated children that we
- * did not yet request, and there is no portable way to wait for a
- * specific set of children.
- *
- * As a workaround, we store the results of children for later use.
- *
- * XXX: This assumes that PIDs are not reused too quickly.
- * FIXME: This is not thread-safe.
- */
-
-struct terminated_child
-{
-  pid_t pid;
-  int exitcode;
-  struct terminated_child *next;
-};
-
-static struct terminated_child *terminated_children;
 
 
 static gpg_err_code_t
-store_result (pid_t pid, int exitcode)
-{
-  struct terminated_child *c;
-
-  c = xtrymalloc (sizeof *c);
-  if (c == NULL)
-    return _gpg_err_code_from_syserror ();
-
-  c->pid = pid;
-  c->exitcode = exitcode;
-  c->next = terminated_children;
-  terminated_children = c;
-
-  return 0;
-}
-
-
-static int
-get_result (pid_t pid, int *r_exitcode)
-{
-  struct terminated_child *c, **prevp;
-
-  for (prevp = &terminated_children, c = terminated_children;
-       c;
-       prevp = &c->next, c = c->next)
-    if (c->pid == pid)
-      {
-        *prevp = c->next;
-        *r_exitcode = c->exitcode;
-        xfree (c);
-        return 1;
-      }
-
-  return 0;
-}
-
-
-/* See gpgrt-int.h for a description.  */
-gpg_err_code_t
-_gpgrt_wait_process (const char *pgmname, gpgrt_process_t process_id, int hang,
-                     int *r_exitcode)
-{
-  gpg_err_code_t ec;
-  int i, status;
-  pid_t pid;
-
-  pid = convert_from_process (process_id);
-
-  if (r_exitcode)
-    *r_exitcode = -1;
-
-  if (pid == (pid_t)(-1))
-    return GPG_ERR_INV_VALUE;
-
-  _gpgrt_pre_syscall ();
-  while ((i=waitpid (pid, &status, hang? 0:WNOHANG)) == (pid_t)(-1)
-	 && errno == EINTR);
-  _gpgrt_post_syscall ();
-
-  if (i == (pid_t)(-1))
-    {
-      ec = _gpg_err_code_from_syserror ();
-      _gpgrt_log_error (_("waiting for process %d to terminate failed: %s\n"),
-                        (int)pid, _gpg_strerror (ec));
-    }
-  else if (!i)
-    {
-      ec = GPG_ERR_TIMEOUT; /* Still running.  */
-    }
-  else if (WIFEXITED (status) && WEXITSTATUS (status) == 127)
-    {
-      /* FIXME: This is GnuPG specific.  */
-      _gpgrt_log_error (_("error running '%s': probably not installed\n"),
-                        pgmname);
-      ec = GPG_ERR_CONFIGURATION;
-    }
-  else if (WIFEXITED (status) && WEXITSTATUS (status))
-    {
-      if (!r_exitcode)
-        _gpgrt_log_error (_("error running '%s': exit status %d\n"), pgmname,
-                          WEXITSTATUS (status));
-      else
-        *r_exitcode = WEXITSTATUS (status);
-      ec = GPG_ERR_GENERAL;
-    }
-  else if (!WIFEXITED (status))
-    {
-      _gpgrt_log_error (_("error running '%s': terminated\n"), pgmname);
-      ec = GPG_ERR_GENERAL;
-    }
-  else
-    {
-      if (r_exitcode)
-        *r_exitcode = 0;
-      ec = 0;
-    }
-
-  return ec;
-}
-
-
-/* See gpgrt-int.h for a description.
- *
- * FIXME: What about using a poll like data structure for the pids and
- * their exit codes?  The whole thing is anyway problematic in a
- * threaded processs because waitpid has no association between PIDS
- * and threads.
- */
-gpg_err_code_t
-_gpgrt_wait_processes (const char **pgmnames, gpgrt_process_t *process_ids,
-                       size_t count, int hang, int *r_exitcodes)
-{
-  gpg_err_code_t ec = 0;
-  size_t i, left;
-  int *dummy = NULL;
-  pid_t pid;
-
-  if (!r_exitcodes)
-    {
-      dummy = r_exitcodes = xtrymalloc (sizeof *r_exitcodes * count);
-      if (!dummy)
-        return _gpg_err_code_from_syserror ();
-    }
-
-  for (i = 0, left = count; i < count; i++)
-    {
-      int status = -1;
-
-      pid = convert_from_process (process_ids[i]);
-
-      /* Skip invalid PID.  */
-      if (pid == (pid_t)(-1))
-        {
-          r_exitcodes[i] = -1;
-          left -= 1;
-          continue;
-        }
-
-      /* See if there was a previously stored result for this pid.  */
-      if (get_result (pid, &status))
-        left -= 1;
-
-      r_exitcodes[i] = status;
-    }
-
-  while (left > 0)
-    {
-      pid_t pid0;
-      int status;
-
-      _gpgrt_pre_syscall ();
-      while ((pid0 = waitpid (-1, &status, hang ? 0 : WNOHANG)) == (pid_t)(-1)
-             && errno == EINTR);
-      _gpgrt_post_syscall ();
-
-      if (pid0 == (pid_t)(-1))
-        {
-          ec = _gpg_err_code_from_syserror ();
-          _gpgrt_log_error (_("waiting for processes to terminate"
-                              " failed: %s\n"), _gpg_strerror (ec));
-          break;
-        }
-      else if (!pid0)
-        {
-          ec = GPG_ERR_TIMEOUT; /* Still running.  */
-          break;
-        }
-      else
-        {
-          for (i = 0; i < count; i++)
-            {
-              pid = convert_from_process (process_ids[i]);
-              if (pid0 == pid)
-                break;
-            }
-
-          if (i == count)
-            {
-              /* No match, store this result.  */
-              ec = store_result (pid0, status);
-              if (ec)
-                break;
-              continue;
-            }
-
-          /* Process PROCESS_PIDS[i] died.  */
-          if (r_exitcodes[i] != (pid_t) -1)
-            {
-              _gpgrt_log_error ("PID %d was reused", (int)pid0);
-              ec = GPG_ERR_GENERAL;
-              break;
-            }
-
-          left -= 1;
-          r_exitcodes[i] = status;
-        }
-    }
-
-  for (i = 0; i < count; i++)
-    {
-      if (r_exitcodes[i] == -1)
-        continue;
-
-      if (WIFEXITED (r_exitcodes[i]) && WEXITSTATUS (r_exitcodes[i]) == 127)
-        {
-          _gpgrt_log_error (_("error running '%s': probably not installed\n"),
-                            pgmnames[i]);
-          ec = GPG_ERR_CONFIGURATION;
-        }
-      else if (WIFEXITED (r_exitcodes[i]) && WEXITSTATUS (r_exitcodes[i]))
-        {
-          if (dummy)
-            _gpgrt_log_error (_("error running '%s': exit status %d\n"),
-                              pgmnames[i], WEXITSTATUS (r_exitcodes[i]));
-          else
-            r_exitcodes[i] = WEXITSTATUS (r_exitcodes[i]);
-          ec = GPG_ERR_GENERAL;
-        }
-      else if (!WIFEXITED (r_exitcodes[i]))
-        {
-          _gpgrt_log_error (_("error running '%s': terminated\n"), pgmnames[i]);
-          ec = GPG_ERR_GENERAL;
-        }
-    }
-
-  xfree (dummy);
-  return ec;
-}
-
-
-/* See gpgrt-int.h for a description.  FIXME: We should add a prexec
- * callback. */
-gpg_err_code_t
-_gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
-                               const char *envp[])
+spawn_detached (const char *pgmname, const char *argv[],
+                void (*spawn_cb) (struct spawn_cb_arg *), void *spawn_cb_arg)
 {
   gpg_err_code_t ec;
   pid_t pid;
-  int i;
 
   /* FIXME: Is this GnuPG specific or should we keep it.  */
   if (getuid() != geteuid())
-    return GPG_ERR_BUG;
+    {
+      xfree (argv);
+      return GPG_ERR_BUG;
+    }
 
   if (access (pgmname, X_OK))
-    return _gpg_err_code_from_syserror ();
+    {
+      ec = _gpg_err_code_from_syserror ();
+      xfree (argv);
+      return ec;
+    }
 
   _gpgrt_pre_syscall ();
   pid = fork ();
@@ -879,14 +363,15 @@ _gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
     {
       ec = _gpg_err_code_from_syserror ();
       _gpgrt_log_error (_("error forking process: %s\n"), _gpg_strerror (ec));
+      xfree (argv);
       return ec;
     }
 
   if (!pid)
     {
       pid_t pid2;
+      struct spawn_cb_arg sca;
 
-      /* gcry_control (GCRYCTL_TERM_SECMEM); */
       if (setsid() == -1 || chdir ("/"))
         _exit (1);
 
@@ -896,15 +381,9 @@ _gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
       if (pid2)
         _exit (0);  /* Let the parent exit immediately. */
 
-      for (i=0; envp && envp[i]; i++)
-        {
-          char *p = xtrystrdup (envp[i]);
-          if (!p)
-            out_of_core (__LINE__);
-          putenv (p);
-        }
+      call_spawn_cb (&sca, -1, -1, -1, spawn_cb, spawn_cb_arg);
 
-      do_exec (pgmname, argv, -1, -1, -1, NULL, 0);
+      my_exec (pgmname, argv, &sca);
       /*NOTREACHED*/
     }
 
@@ -923,27 +402,494 @@ _gpgrt_spawn_process_detached (const char *pgmname, const char *argv[],
   return 0;
 }
 
-
-/* Kill a process; that is send an appropriate signal to the process.
- * gnupg_wait_process must be called to actually remove the process
-   from the system.  An invalid PID is ignored.  */
 void
-_gpgrt_kill_process (gpgrt_process_t process_id)
+_gpgrt_spawn_helper (struct spawn_cb_arg *sca)
 {
-  pid_t pid;
-
-  pid = convert_from_process (process_id);
-  if (pid != (pid_t)(-1))
-    {
-      _gpgrt_pre_syscall ();
-      kill (pid, SIGTERM);
-      _gpgrt_post_syscall ();
-    }
+  int *user_except = sca->arg;
+  sca->except_fds = user_except;
 }
 
+struct gpgrt_process {
+  const char *pgmname;
+  unsigned int terminated   :1; /* or detached */
+  unsigned int flags;
+  pid_t pid;
+  int fd_in;
+  int fd_out;
+  int fd_err;
+  int wstatus;
+};
+
+gpg_err_code_t
+_gpgrt_process_spawn (const char *pgmname, const char *argv1[],
+                      unsigned int flags,
+                      void (*spawn_cb) (struct spawn_cb_arg *),
+                      void *spawn_cb_arg,
+                      gpgrt_process_t *r_process)
+{
+  gpg_err_code_t ec;
+  gpgrt_process_t process;
+  int fd_in[2];
+  int fd_out[2];
+  int fd_err[2];
+  pid_t pid;
+  const char **argv;
+  int i, j;
+
+  if (r_process)
+    *r_process = NULL;
+
+  /* Create the command line argument array.  */
+  i = 0;
+  if (argv1)
+    while (argv1[i])
+      i++;
+  argv = xtrycalloc (i+2, sizeof *argv);
+  if (!argv)
+    return _gpg_err_code_from_syserror ();
+  argv[0] = strrchr (pgmname, '/');
+  if (argv[0])
+    argv[0]++;
+  else
+    argv[0] = pgmname;
+
+  if (argv1)
+    for (i=0, j=1; argv1[i]; i++, j++)
+      argv[j] = argv1[i];
+
+  if ((flags & GPGRT_PROCESS_DETACHED))
+    {
+      if ((flags & GPGRT_PROCESS_STDFDS_SETTING))
+        {
+          xfree (argv);
+          return GPG_ERR_INV_FLAG;
+        }
+
+      /* In detached case, it must be no R_PROCESS.  */
+      if (r_process)
+        {
+          xfree (argv);
+          return GPG_ERR_INV_ARG;
+        }
+
+      return spawn_detached (pgmname, argv, spawn_cb, spawn_cb_arg);
+    }
+
+  process = xtrycalloc (1, sizeof (struct gpgrt_process));
+  if (process == NULL)
+    {
+      xfree (argv);
+      return _gpg_err_code_from_syserror ();
+    }
+
+  process->pgmname = pgmname;
+  process->flags = flags;
+
+  if ((flags & GPGRT_PROCESS_STDINOUT_SOCKETPAIR))
+    {
+      ec = do_create_socketpair (fd_in);
+      if (ec)
+        {
+          xfree (process);
+          xfree (argv);
+          return ec;
+        }
+      fd_out[0] = dup (fd_in[0]);
+      fd_out[1] = dup (fd_in[1]);
+    }
+  else
+    {
+      if ((flags & GPGRT_PROCESS_STDIN_PIPE))
+        {
+          ec = do_create_pipe (fd_in);
+          if (ec)
+            {
+              xfree (process);
+              xfree (argv);
+              return ec;
+            }
+        }
+      else if ((flags & GPGRT_PROCESS_STDIN_KEEP))
+        {
+          fd_in[0] = 0;
+          fd_in[1] = -1;
+        }
+      else
+        {
+          fd_in[0] = -1;
+          fd_in[1] = -1;
+        }
+
+      if ((flags & GPGRT_PROCESS_STDOUT_PIPE))
+        {
+          ec = do_create_pipe (fd_out);
+          if (ec)
+            {
+              if (fd_in[0] >= 0 && fd_in[0] != 0)
+                close (fd_in[0]);
+              if (fd_in[1] >= 0)
+                close (fd_in[1]);
+              xfree (process);
+              xfree (argv);
+              return ec;
+            }
+        }
+      else if ((flags & GPGRT_PROCESS_STDOUT_KEEP))
+        {
+          fd_out[0] = -1;
+          fd_out[1] = 1;
+        }
+      else
+        {
+          fd_out[0] = -1;
+          fd_out[1] = -1;
+        }
+    }
+
+  if ((flags & GPGRT_PROCESS_STDERR_PIPE))
+    {
+      ec = do_create_pipe (fd_err);
+      if (ec)
+        {
+          if (fd_in[0] >= 0 && fd_in[0] != 0)
+            close (fd_in[0]);
+          if (fd_in[1] >= 0)
+            close (fd_in[1]);
+          if (fd_out[0] >= 0)
+            close (fd_out[0]);
+          if (fd_out[1] >= 0 && fd_out[1] != 1)
+            close (fd_out[1]);
+          xfree (process);
+          xfree (argv);
+          return ec;
+        }
+    }
+  else if ((flags & GPGRT_PROCESS_STDERR_KEEP))
+    {
+      fd_err[0] = -1;
+      fd_err[1] = 2;
+    }
+  else
+    {
+      fd_err[0] = -1;
+      fd_err[1] = -1;
+    }
+
+  _gpgrt_pre_syscall ();
+  pid = fork ();
+  _gpgrt_post_syscall ();
+  if (pid == (pid_t)(-1))
+    {
+      ec = _gpg_err_code_from_syserror ();
+      _gpgrt_log_error (_("error forking process: %s\n"), _gpg_strerror (ec));
+      if (fd_in[0] >= 0 && fd_in[0] != 0)
+        close (fd_in[0]);
+      if (fd_in[1] >= 0)
+        close (fd_in[1]);
+      if (fd_out[0] >= 0)
+        close (fd_out[0]);
+      if (fd_out[1] >= 0 && fd_out[1] != 1)
+        close (fd_out[1]);
+      if (fd_err[0] >= 0)
+        close (fd_err[0]);
+      if (fd_err[1] >= 0 && fd_err[1] != 2)
+        close (fd_err[1]);
+      xfree (process);
+      xfree (argv);
+      return ec;
+    }
+
+  if (!pid)
+    {
+      struct spawn_cb_arg sca;
+
+      if (fd_in[1] >= 0)
+        close (fd_in[1]);
+      if (fd_out[0] >= 0)
+        close (fd_out[0]);
+      if (fd_err[0] >= 0)
+        close (fd_err[0]);
+
+      call_spawn_cb (&sca, fd_in[0], fd_out[1], fd_err[1],
+                     spawn_cb, spawn_cb_arg);
+
+      /* Run child. */
+      my_exec (pgmname, argv, &sca);
+      /*NOTREACHED*/
+    }
+
+  xfree (argv);
+  process->pid = pid;
+
+  if (fd_in[0] >= 0 && fd_in[0] != 0)
+    close (fd_in[0]);
+  if (fd_out[1] >= 0 && fd_out[1] != 1)
+    close (fd_out[1]);
+  if (fd_err[1] >= 0 && fd_err[1] != 2)
+    close (fd_err[1]);
+  process->fd_in = fd_in[1];
+  process->fd_out = fd_out[0];
+  process->fd_err = fd_err[0];
+  process->wstatus = -1;
+  process->terminated = 0;
+
+  if (r_process == NULL)
+    {
+      ec = _gpgrt_process_wait (process, 1);
+      _gpgrt_process_release (process);
+      return ec;
+    }
+
+  *r_process = process;
+  return 0;
+}
+
+static gpg_err_code_t
+process_kill (gpgrt_process_t process, int sig)
+{
+  gpg_err_code_t ec = 0;
+  pid_t pid = process->pid;
+
+  _gpgrt_pre_syscall ();
+  if (kill (pid, sig) < 0)
+    ec = _gpg_err_code_from_syserror ();
+  _gpgrt_post_syscall ();
+  return ec;
+}
+
+gpg_err_code_t
+_gpgrt_process_terminate (gpgrt_process_t process)
+{
+  return process_kill (process, SIGTERM);
+}
+
+gpg_err_code_t
+_gpgrt_process_get_fds (gpgrt_process_t process, unsigned int flags,
+                        int *r_fd_in, int *r_fd_out, int *r_fd_err)
+{
+  (void)flags;
+  if (r_fd_in)
+    {
+      *r_fd_in = process->fd_in;
+      process->fd_in = -1;
+    }
+  if (r_fd_out)
+    {
+      *r_fd_out = process->fd_out;
+      process->fd_out = -1;
+    }
+  if (r_fd_err)
+    {
+      *r_fd_err = process->fd_err;
+      process->fd_err = -1;
+    }
+
+  return 0;
+}
+
+gpg_err_code_t
+_gpgrt_process_get_streams (gpgrt_process_t process, unsigned int flags,
+                            gpgrt_stream_t *r_fp_in, gpgrt_stream_t *r_fp_out,
+                            gpgrt_stream_t *r_fp_err)
+{
+  int nonblock = (flags & GPGRT_PROCESS_STREAM_NONBLOCK)? 1: 0;
+
+  if (r_fp_in)
+    {
+      *r_fp_in = _gpgrt_fdopen (process->fd_in, nonblock? "w,nonblock" : "w");
+      process->fd_in = -1;
+    }
+  if (r_fp_out)
+    {
+      *r_fp_out = _gpgrt_fdopen (process->fd_out, nonblock? "r,nonblock" : "r");
+      process->fd_out = -1;
+    }
+  if (r_fp_err)
+    {
+      *r_fp_err = _gpgrt_fdopen (process->fd_err, nonblock? "r,nonblock" : "r");
+      process->fd_err = -1;
+    }
+  return 0;
+}
+
+static gpg_err_code_t
+process_vctl (gpgrt_process_t process, unsigned int request, va_list arg_ptr)
+{
+  switch (request)
+    {
+    case GPGRT_PROCESS_NOP:
+      return 0;
+
+    case GPGRT_PROCESS_GET_PROC_ID:
+      {
+        int *r_id = va_arg (arg_ptr, int *);
+
+        if (r_id == NULL)
+          return GPG_ERR_INV_VALUE;
+
+        *r_id = (int)process->pid;
+        return 0;
+      }
+
+    case GPGRT_PROCESS_GET_EXIT_ID:
+      {
+        int status = process->wstatus;
+        int *r_exit_status = va_arg (arg_ptr, int *);
+
+        if (!process->terminated)
+          return GPG_ERR_UNFINISHED;
+
+        if (WIFEXITED (status))
+          {
+            if (r_exit_status)
+              *r_exit_status = WEXITSTATUS (status);
+          }
+        else
+          *r_exit_status = -1;
+
+        return 0;
+      }
+
+    case GPGRT_PROCESS_GET_PID:
+      {
+        pid_t *r_pid = va_arg (arg_ptr, pid_t *);
+
+        if (r_pid == NULL)
+          return GPG_ERR_INV_VALUE;
+
+        *r_pid = process->pid;
+        return 0;
+      }
+
+    case GPGRT_PROCESS_GET_WSTATUS:
+      {
+        int status = process->wstatus;
+        int *r_if_exited = va_arg (arg_ptr, int *);
+        int *r_if_signaled = va_arg (arg_ptr, int *);
+        int *r_exit_status = va_arg (arg_ptr, int *);
+        int *r_termsig = va_arg (arg_ptr, int *);
+
+        if (!process->terminated)
+          return GPG_ERR_UNFINISHED;
+
+        if (WIFEXITED (status))
+          {
+            if (r_if_exited)
+              *r_if_exited = 1;
+            if (r_if_signaled)
+              *r_if_signaled = 0;
+            if (r_exit_status)
+              *r_exit_status = WEXITSTATUS (status);
+            if (r_termsig)
+              *r_termsig = 0;
+          }
+        else if (WIFSIGNALED (status))
+          {
+            if (r_if_exited)
+              *r_if_exited = 0;
+            if (r_if_signaled)
+              *r_if_signaled = 1;
+            if (r_exit_status)
+              *r_exit_status = 0;
+            if (r_termsig)
+              *r_termsig = WTERMSIG (status);
+          }
+
+        return 0;
+      }
+
+    case GPGRT_PROCESS_KILL:
+      {
+        int sig = va_arg (arg_ptr, int);
+
+        return process_kill (process, sig);
+      }
+
+    default:
+      break;
+    }
+
+  return GPG_ERR_UNKNOWN_COMMAND;
+}
+
+gpg_err_code_t
+_gpgrt_process_ctl (gpgrt_process_t process, unsigned int request, ...)
+{
+  va_list arg_ptr;
+  gpg_err_code_t ec;
+
+  va_start (arg_ptr, request);
+  ec = process_vctl (process, request, arg_ptr);
+  va_end (arg_ptr);
+  return ec;
+}
+
+gpg_err_code_t
+_gpgrt_process_wait (gpgrt_process_t process, int hang)
+{
+  gpg_err_code_t ec;
+  int status;
+  pid_t pid;
+
+  if (process->terminated)
+    /* Already terminated.  */
+    return 0;
+
+  _gpgrt_pre_syscall ();
+  while ((pid = waitpid (process->pid, &status, hang? 0: WNOHANG))
+         == (pid_t)(-1) && errno == EINTR);
+  _gpgrt_post_syscall ();
+
+  if (pid == (pid_t)(-1))
+    {
+      ec = _gpg_err_code_from_syserror ();
+      _gpgrt_log_error (_("waiting for process %d to terminate failed: %s\n"),
+                        (int)pid, _gpg_strerror (ec));
+    }
+  else if (!pid)
+    {
+      ec = GPG_ERR_TIMEOUT; /* Still running.  */
+    }
+  else
+    {
+      process->terminated = 1;
+      process->wstatus = status;
+      ec = 0;
+    }
+
+  return ec;
+}
 
 void
-_gpgrt_release_process (gpgrt_process_t process_id)
+_gpgrt_process_release (gpgrt_process_t process)
 {
-  (void)process_id;
+  if (!process)
+    return;
+
+  if (process->terminated)
+    {
+      _gpgrt_process_terminate (process);
+      _gpgrt_process_wait (process, 1);
+    }
+
+  xfree (process);
+}
+
+gpg_err_code_t
+_gpgrt_process_wait_list (gpgrt_process_t *process_list, int count, int hang)
+{
+  gpg_err_code_t ec = 0;
+  int i;
+
+  for (i = 0; i < count; i++)
+    {
+      if (process_list[i]->terminated)
+        continue;
+
+      ec = _gpgrt_process_wait (process_list[i], hang);
+      if (ec)
+        break;
+    }
+
+  return ec;
 }

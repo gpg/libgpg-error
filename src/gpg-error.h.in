@@ -432,7 +432,6 @@ const char *gpgrt_check_version (const char *req_version);
 const char *gpg_error_check_version (const char *req_version);
 
 /* System specific type definitions.  */
-@define:gpgrt_process_t@
 @define:gpgrt_ssize_t@
 @define:gpgrt_off_t@
 
@@ -1090,15 +1089,44 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 /*
  * Spawn functions  (Not yet available)
  */
-/* Internal flag to inherit file descriptor/handle */
-#define GPGRT_SPAWN_INHERIT_FILE  1
+#define GPGRT_PROCESS_DETACHED            (1 << 1)
 
-#define GPGRT_SPAWN_NONBLOCK   16 /* Set the streams to non-blocking.      */
-#define GPGRT_SPAWN_RUN_ASFW   64 /* Use AllowSetForegroundWindow on W32.  */
-#define GPGRT_SPAWN_DETACHED  128 /* Start the process in the background.  */
-#define GPGRT_SPAWN_KEEP_STDIN   256
-#define GPGRT_SPAWN_KEEP_STDOUT  512
-#define GPGRT_SPAWN_KEEP_STDERR 1024
+/* Specify how to keep/connect standard fds.  */
+#define GPGRT_PROCESS_STDIN_PIPE          (1 << 8)
+#define GPGRT_PROCESS_STDOUT_PIPE         (1 << 9)
+#define GPGRT_PROCESS_STDERR_PIPE         (1 << 10)
+#define GPGRT_PROCESS_STDINOUT_SOCKETPAIR (1 << 11)
+#define GPGRT_PROCESS_STDIN_KEEP          (1 << 12)
+#define GPGRT_PROCESS_STDOUT_KEEP         (1 << 13)
+#define GPGRT_PROCESS_STDERR_KEEP         (1 << 14)
+#define GPGRT_PROCESS_STDFDS_SETTING  ( GPGRT_PROCESS_STDIN_PIPE  \
+  | GPGRT_PROCESS_STDOUT_PIPE         | GPGRT_PROCESS_STDERR_PIPE \
+  | GPGRT_PROCESS_STDINOUT_SOCKETPAIR | GPGRT_PROCESS_STDIN_KEEP  \
+  | GPGRT_PROCESS_STDOUT_KEEP         | GPGRT_PROCESS_STDERR_KEEP)
+
+#define GPGRT_PROCESS_STREAM_NONBLOCK     (1 << 16)
+
+typedef struct gpgrt_process *gpgrt_process_t;
+@define:struct_spawn_cb_arg@
+
+enum gpgrt_process_requests
+  {
+    /* Portable requests */
+    GPGRT_PROCESS_NOP           = 0,
+    GPGRT_PROCESS_GET_PROC_ID   = 1,
+    GPGRT_PROCESS_GET_EXIT_ID   = 2,
+
+    /* POSIX only */
+    GPGRT_PROCESS_GET_PID       = 16,
+    GPGRT_PROCESS_GET_WSTATUS   = 17,
+    GPGRT_PROCESS_KILL          = 18,
+
+    /* Windows only */
+    GPGRT_PROCESS_GET_P_HANDLE  = 32,
+    GPGRT_PROCESS_GET_HANDLES   = 33,
+    GPGRT_PROCESS_GET_EXIT_CODE = 34,
+    GPGRT_PROCESS_KILL_WITH_EC  = 35
+  };
 
 #if 0
 /* Function and convenience macros to create pipes.  */

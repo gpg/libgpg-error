@@ -684,45 +684,36 @@ gpg_err_code_t _gpgrt_make_pipe (int filedes[2], estream_t *r_fp,
  *        descriptor.
  *
  */
-gpg_err_code_t
-_gpgrt_spawn_process (const char *pgmname, const char *argv[],
-                      int *execpt, unsigned int flags,
-                      estream_t *r_infp,
-                      estream_t *r_outfp,
-                      estream_t *r_errfp,
-                      gpgrt_process_t *r_process_id);
+gpg_err_code_t _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
+                                     unsigned int flags,
+                                     void (*spawn_cb) (struct spawn_cb_arg *),
+                                     void *spawn_cb_arg,
+                                     gpgrt_process_t *r_process);
 
+gpg_err_code_t _gpgrt_process_terminate (gpgrt_process_t process);
 
-/* Variant of gpgrt_spawn_process.  This function forks and then execs
- * PGMNAME, while connecting INFD to stdin, OUTFD to stdout and ERRFD
- * to stderr (any of them may be -1 to connect them to /dev/null).
- * The arguments for the process are expected in the NULL terminated
- * array ARGV.  The program name itself should not be included there.
- * Calling gpgrt_wait_process and gpgrt_release_process is required.
- * Returns 0 on success or an error code.  If SPAWN_CB is not NULL,
- * the given function will be called with SPAWN_CB_ARG to determine if
- * file descriptors/handles should be inherited or not.  The callback
- * function should return 1 to ask keeping file descriptors/handles.
- * If SPAWN_CB is NULL, or it returns 0, all file descriptors (except
- * INFD, OUTFD, and ERRFD) will be closed on POSIX machine.  On POSIX
- * machine, it is called right after the fork, by child process.
- */
-gpg_err_code_t _gpgrt_spawn_process_fd (const char *pgmname,
-                                        const char *argv[],
-                                        int infd, int outfd, int errfd,
-                                        int (*spawn_cb) (void *),
-                                        void *spawn_cb_arg,
-                                        gpgrt_process_t *r_process_id);
+gpg_err_code_t _gpgrt_process_get_fds (gpgrt_process_t process,
+                                       unsigned int flags,
+                                       int *r_fd_in, int *r_fd_out,
+                                       int *r_fd_err);
 
-/* Spawn a new process and immediately detach from it.  The name of
- * the program to exec is PGMNAME and its arguments are in ARGV (the
- * programname is automatically passed as first argument).
- * Environment strings in ENVP are set.  An error is returned if
- * pgmname is not executable; to make this work it is necessary to
- * provide an absolute file name.  */
-gpg_err_code_t _gpgrt_spawn_process_detached (const char *pgmname,
-                                              const char *argv[],
-                                              const char *envp[]);
+gpg_err_code_t _gpgrt_process_get_streams (gpgrt_process_t process,
+                                           unsigned int flags,
+                                           gpgrt_stream_t *r_fp_in,
+                                           gpgrt_stream_t *r_fp_out,
+                                           gpgrt_stream_t *r_fp_err);
+
+gpg_err_code_t _gpgrt_process_ctl (gpgrt_process_t process,
+                                   unsigned int request, ...);
+
+gpg_err_code_t _gpgrt_process_wait (gpgrt_process_t process, int hang);
+
+void _gpgrt_process_release (gpgrt_process_t process);
+
+gpg_err_code_t _gpgrt_process_wait_list (gpgrt_process_t *process_list,
+                                         int count, int hang);
+
+void _gpgrt_spawn_helper (struct spawn_cb_arg *sca);
 
 /* If HANG is true, waits for the process identified by PROCESS_ID to
  * exit; if HANG is false, checks whether the process has terminated.

@@ -573,23 +573,27 @@ write_special (const char *fname, int lnr, const char *tag)
       else
         fputs ("int", stdout);
     }
-  else if (!strcmp (tag, "define:gpgrt_process_t"))
+  else if (!strcmp (tag, "define:struct_spawn_cb_arg"))
     {
       if (have_w32_system || have_w64_system)
         {
-          fputs ("typedef void *gpgrt_process_t;\n", stdout);
+          fputs ("struct spawn_cb_arg;\n", stdout);
+          fputs ("#ifdef NEED_STRUCT_SPAWN_CB_ARG\n", stdout);
+          fputs ("struct spawn_cb_arg {\n", stdout);
+          fputs ("  HANDLE hd[3];\n", stdout);
+          fputs ("  HANDLE *inherit_hds;\n", stdout);
+          fputs ("  BOOL allow_foreground_window;\n", stdout);
+          fputs ("  void *arg;\n", stdout);
+          fputs ("};\n", stdout);
+          fputs ("#endif /* NEED_STRUCT_SPAWN_CB_ARG */\n", stdout);
         }
       else
         {
-          if (have_sys_types_h)
-            {
-              if (!sys_types_h_included)
-                {
-                  fputs ("#include <sys/types.h>\n", stdout);
-                  sys_types_h_included = 1;
-                }
-            }
-          fputs ("typedef pid_t gpgrt_process_t;\n", stdout);
+          fputs ("struct spawn_cb_arg {\n", stdout);
+          fputs ("  int fds[3];\n", stdout);
+          fputs ("  int *except_fds;\n", stdout);
+          fputs ("  void *arg;\n", stdout);
+          fputs ("};\n", stdout);
         }
     }
   else if (!strcmp (tag, "include:err-sources"))
