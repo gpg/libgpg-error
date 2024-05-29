@@ -1107,7 +1107,8 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 #define GPGRT_PROCESS_STREAM_NONBLOCK     (1 << 16)
 
 typedef struct gpgrt_process *gpgrt_process_t;
-@define:struct_spawn_cb_arg@
+typedef struct gpgrt_spawn_actions *gpgrt_spawn_actions_t;
+@define:spawn_actions_functions@
 
 enum gpgrt_process_requests
   {

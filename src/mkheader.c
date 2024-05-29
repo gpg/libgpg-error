@@ -573,27 +573,17 @@ write_special (const char *fname, int lnr, const char *tag)
       else
         fputs ("int", stdout);
     }
-  else if (!strcmp (tag, "define:struct_spawn_cb_arg"))
+  else if (!strcmp (tag, "define:spawn_actions_functions"))
     {
       if (have_w32_system || have_w64_system)
         {
-          fputs ("struct spawn_cb_arg;\n", stdout);
-          fputs ("#ifdef NEED_STRUCT_SPAWN_CB_ARG\n", stdout);
-          fputs ("struct spawn_cb_arg {\n", stdout);
-          fputs ("  HANDLE hd[3];\n", stdout);
-          fputs ("  HANDLE *inherit_hds;\n", stdout);
-          fputs ("  BOOL allow_foreground_window;\n", stdout);
-          fputs ("  void *arg;\n", stdout);
-          fputs ("};\n", stdout);
-          fputs ("#endif /* NEED_STRUCT_SPAWN_CB_ARG */\n", stdout);
+          fputs ("void gpgrt_spawn_actions_set_redirect (gpgrt_spawn_actions_t, void *, void *, void *);\n", stdout);
+          fputs ("void gpgrt_spawn_actions_set_inherit_handles (gpgrt_spawn_actions_t, void **);\n", stdout);
         }
       else
         {
-          fputs ("struct spawn_cb_arg {\n", stdout);
-          fputs ("  int fds[3];\n", stdout);
-          fputs ("  int *except_fds;\n", stdout);
-          fputs ("  void *arg;\n", stdout);
-          fputs ("};\n", stdout);
+          fputs ("void gpgrt_spawn_actions_set_redirect (gpgrt_spawn_actions_t, int, int, int);\n", stdout);
+          fputs ("void gpgrt_spawn_actions_set_inherit_fds (gpgrt_spawn_actions_t, const int *);\n", stdout);
         }
     }
   else if (!strcmp (tag, "include:err-sources"))
