@@ -915,7 +915,7 @@ _gpgrt_process_release (gpgrt_process_t process)
   if (!process)
     return;
 
-  if (process->terminated)
+  if (!process->terminated)
     {
       _gpgrt_process_terminate (process);
       _gpgrt_process_wait (process, 1);
