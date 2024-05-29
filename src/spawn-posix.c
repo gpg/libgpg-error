@@ -290,7 +290,7 @@ posix_open_null (int for_write)
 struct gpgrt_spawn_actions {
   int fd[3];
   const int *except_fds;
-  char **env;
+  char **environ;
   void (*atfork) (void *);
   void *atfork_arg;
 };
@@ -323,8 +323,8 @@ my_exec (const char *pgmname, const char *argv[],
   /* Close all other files.  */
   _gpgrt_close_all_fds (3, act->except_fds);
 
-  if (act->env)
-    environ = act->env;
+  if (act->environ)
+    environ = act->environ;
 
   if (act->atfork)
     act->atfork (act->atfork_arg);
@@ -428,9 +428,10 @@ _gpgrt_spawn_actions_release (gpgrt_spawn_actions_t act)
 }
 
 void
-_gpgrt_spawn_actions_set_envvars (gpgrt_spawn_actions_t act, char **env)
+_gpgrt_spawn_actions_set_environ (gpgrt_spawn_actions_t act,
+                                  char **environ_for_child)
 {
-  act->env = env;
+  act->environ = environ_for_child;
 }
 
 void

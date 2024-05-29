@@ -686,12 +686,13 @@ gpg_err_code_t _gpgrt_make_pipe (int filedes[2], estream_t *r_fp,
  */
 gpg_err_code_t _gpgrt_spawn_actions_new (gpgrt_spawn_actions_t *r_act);
 void _gpgrt_spawn_actions_release (gpgrt_spawn_actions_t act);
-void _gpgrt_spawn_actions_set_envvars (gpgrt_spawn_actions_t, char **env);
 #ifdef HAVE_W32_SYSTEM
+void _gpgrt_spawn_actions_set_envvars (gpgrt_spawn_actions_t, char *);
 void _gpgrt_spawn_actions_set_redirect (gpgrt_spawn_actions_t,
                                         void *, void *, void *);
 void _gpgrt_spawn_actions_set_inherit_handles (gpgrt_spawn_actions_t, void **);
 #else
+void _gpgrt_spawn_actions_set_environ (gpgrt_spawn_actions_t, char **);
 void _gpgrt_spawn_actions_set_redirect (gpgrt_spawn_actions_t, int, int, int);
 void _gpgrt_spawn_actions_set_inherit_fds (gpgrt_spawn_actions_t,
                                            const int *);

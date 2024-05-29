@@ -304,7 +304,7 @@ _gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction, int nonblock)
 struct gpgrt_spawn_actions {
   void *hd[3];
   void **inherit_hds;
-  char **env;
+  char *env;
 };
 
 struct gpgrt_process {
@@ -450,7 +450,7 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
                           &sec_attr,     /* Thread security attributes.  */
                           ask_inherit,   /* Inherit handles.  */
                           cr_flags,      /* Creation flags.  */
-                          NULL,          /* Environment.  */
+                          act->env,      /* Environment.  */
                           NULL,          /* Use current drive/directory.  */
                           (STARTUPINFOW *)&si,    /* Startup information. */
                           &pi            /* Returns process information.  */
@@ -517,7 +517,7 @@ _gpgrt_spawn_actions_release (gpgrt_spawn_actions_t act)
 }
 
 void
-_gpgrt_spawn_actions_set_envvars (gpgrt_spawn_actions_t act, char **env)
+_gpgrt_spawn_actions_set_envvars (gpgrt_spawn_actions_t act, char *env)
 {
   act->env = env;
 }
@@ -786,7 +786,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
                           &sec_attr,     /* Thread security attributes.  */
                           ask_inherit,   /* Inherit handles.  */
                           cr_flags,      /* Creation flags.  */
-                          NULL,          /* Environment.  */
+                          act->env,      /* Environment.  */
                           NULL,          /* Use current drive/directory.  */
                           (STARTUPINFOW *)&si, /* Startup information. */
                           &pi            /* Returns process information.  */
