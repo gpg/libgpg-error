@@ -296,8 +296,7 @@ struct gpgrt_spawn_actions {
 };
 
 static void
-my_exec (const char *pgmname, const char *argv[],
-         gpgrt_spawn_actions_t act)
+my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act)
 {
   int i;
 
@@ -482,6 +481,15 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
   pid_t pid;
   const char **argv;
   int i, j;
+  struct gpgrt_spawn_actions act_default;
+
+  if (!act)
+    {
+      memset (&act_default, 0, sizeof (act_default));
+      for (i = 0; i <= 2; i++)
+        act_default.fd[i] = -1;
+      act = &act_default;
+    }
 
   if (r_process)
     *r_process = NULL;

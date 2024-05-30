@@ -560,6 +560,15 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   int i;
   BOOL ask_inherit = FALSE;
   BOOL allow_foreground_window = FALSE;
+  struct gpgrt_spawn_actions act_default;
+
+  if (!act)
+    {
+      memset (&act_default, 0, sizeof (act_default));
+      for (i = 0; i <= 2; i++)
+        act_default.hd[i] = INVALID_HANDLE_VALUE;
+      act = &act_default;
+    }
 
   /* Build the command line.  */
   ec = build_w32_commandline (pgmname, argv, &cmdline);
