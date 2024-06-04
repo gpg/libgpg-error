@@ -774,7 +774,8 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
 
   /* Start the process.  */
   si.StartupInfo.cb = sizeof (si);
-  si.StartupInfo.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
+  si.StartupInfo.dwFlags = ((i > 0 ? STARTF_USESTDHANDLES : 0)
+                            | STARTF_USESHOWWINDOW);
   si.StartupInfo.wShowWindow = DEBUG_W32_SPAWN? SW_SHOW : SW_HIDE;
   si.StartupInfo.hStdInput  = act->hd[0];
   si.StartupInfo.hStdOutput = act->hd[1];
