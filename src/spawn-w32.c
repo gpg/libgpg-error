@@ -376,7 +376,7 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
   if (i != 0 || act->inherit_hds)
     {
       SIZE_T attr_list_size = 0;
-      HANDLE hd[16];
+      HANDLE hd[32];
       HANDLE *hd_p = act->inherit_hds;
       int j = 0;
 
@@ -710,7 +710,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   if (i != 0 || act->inherit_hds)
     {
       SIZE_T attr_list_size = 0;
-      HANDLE hd[16];
+      HANDLE hd[32];
       HANDLE *hd_p = act->inherit_hds;
       int j = 0;
 
