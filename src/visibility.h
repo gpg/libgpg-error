@@ -204,15 +204,16 @@ MARK_VISIBLE (_gpgrt_log_assert)
 
 #if 0
 MARK_VISIBLE (gpgrt_make_pipe)
-MARK_VISIBLE (gpgrt_spawn_process)
-MARK_VISIBLE (gpgrt_spawn_process_fd)
-MARK_VISIBLE (gpgrt_spawn_process_detached)
-MARK_VISIBLE (gpgrt_wait_process)
-MARK_VISIBLE (gpgrt_wait_processes)
-MARK_VISIBLE (gpgrt_kill_process)
-MARK_VISIBLE (gpgrt_release_process)
 MARK_VISIBLE (gpgrt_close_all_fds)
 #endif
+
+MARK_VISIBLE (gpgrt_process_spawn)
+MARK_VISIBLE (gpgrt_process_terminate)
+MARK_VISIBLE (gpgrt_process_get_fds)
+MARK_VISIBLE (gpgrt_process_get_streams)
+MARK_VISIBLE (gpgrt_process_ctl)
+MARK_VISIBLE (gpgrt_process_wait)
+MARK_VISIBLE (gpgrt_process_release)
 
 MARK_VISIBLE (gpgrt_argparse)
 MARK_VISIBLE (gpgrt_argparser)
@@ -228,6 +229,16 @@ MARK_VISIBLE (gpgrt_cmp_version)
 MARK_VISIBLE (gpgrt_fnameconcat)
 MARK_VISIBLE (gpgrt_absfnameconcat)
 
+#ifdef HAVE_W32_SYSTEM
+MARK_VISIBLE (gpgrt_spawn_actions_set_envvars)
+MARK_VISIBLE (gpgrt_spawn_actions_set_redirect)
+MARK_VISIBLE (gpgrt_spawn_actions_set_inherit_handles)
+#else
+MARK_VISIBLE (gpgrt_spawn_actions_set_environ)
+MARK_VISIBLE (gpgrt_spawn_actions_set_redirect)
+MARK_VISIBLE (gpgrt_spawn_actions_set_inherit_fds)
+MARK_VISIBLE (gpgrt_spawn_actions_set_atfork)
+#endif
 
 
 #undef MARK_VISIBLE
@@ -395,15 +406,29 @@ MARK_VISIBLE (gpgrt_absfnameconcat)
 #define gpgrt_log_flush             _gpgrt_USE_UNDERSCORED_FUNCTION
 #define _gpgrt_log_assert           _gpgrt_USE_UNDERSCORED_FUNCTION
 
+#if 0
 #define gpgrt_make_pipe              _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_spawn_process          _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_spawn_process_fd       _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_spawn_process_detached _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_wait_process           _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_wait_processes         _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_kill_process           _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_release_process        _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_close_all_fds          _gpgrt_USE_UNDERSCORED_FUNCTION
+#endif
+
+#define gpgrt_process_spawn          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_process_terminate      _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_process_get_fds        _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_process_get_streams    _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_process_ctl            _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_process_wait           _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_process_release        _gpgrt_USE_UNDERSCORED_FUNCTION
+
+#ifdef HAVE_W32_SYSTEM
+#define gpgrt_spawn_actions_set_envvars         _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_actions_set_redirect        _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_actions_set_inherit_handles _gpgrt_USE_UNDERSCORED_FUNCTION
+#else
+#define gpgrt_spawn_actions_set_environ     _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_actions_set_redirect    _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_actions_set_inherit_fds _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_actions_set_atfork      _gpgrt_USE_UNDERSCORED_FUNCTION
+#endif
 
 #define gpgrt_argparse                _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_argparser               _gpgrt_USE_UNDERSCORED_FUNCTION

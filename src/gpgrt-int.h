@@ -696,8 +696,8 @@ void _gpgrt_spawn_actions_set_environ (gpgrt_spawn_actions_t, char **);
 void _gpgrt_spawn_actions_set_redirect (gpgrt_spawn_actions_t, int, int, int);
 void _gpgrt_spawn_actions_set_inherit_fds (gpgrt_spawn_actions_t,
                                            const int *);
-void _gpgrt_spawn_actions_set_atfork (gpgrt_spawn_actions_t,
-                                      void (*atfork)(void *), void *arg);
+void _gpgrt_spawn_actions_set_atfork (gpgrt_spawn_actions_t, void (*)(void *),
+                                      void *);
 #endif
 
 gpg_err_code_t _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
@@ -718,8 +718,8 @@ gpg_err_code_t _gpgrt_process_get_streams (gpgrt_process_t process,
                                            gpgrt_stream_t *r_fp_out,
                                            gpgrt_stream_t *r_fp_err);
 
-gpg_err_code_t _gpgrt_process_ctl (gpgrt_process_t process,
-                                   unsigned int request, ...);
+gpg_err_code_t _gpgrt_process_vctl (gpgrt_process_t process,
+                                    unsigned int request, va_list arg_ptr);
 
 gpg_err_code_t _gpgrt_process_wait (gpgrt_process_t process, int hang);
 

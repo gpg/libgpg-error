@@ -195,13 +195,15 @@ EXPORTS
 
 ;; API not yet finished for:
 ;; gpgrt_make_pipe              @152
-;; gpgrt_spawn_process          @153
-;; gpgrt_spawn_process_fd       @154
-;; gpgrt_spawn_process_detached @155
-;; gpgrt_wait_process           @156
-;; gpgrt_wait_processes         @157
-;; gpgrt_kill_process           @158
-;; gpgrt_release_process        @159
+;; gpgrt_close_all_fds          @188
+
+ gpgrt_process_spawn          @153
+ gpgrt_process_terminate      @154
+ gpgrt_process_get_fds        @155
+ gpgrt_process_get_streams    @156
+ gpgrt_process_ctl            @157
+ gpgrt_process_wait           @158
+ gpgrt_process_release        @159
 
  gpgrt_argparse               @160
  gpgrt_usage                  @161
@@ -243,11 +245,12 @@ EXPORTS
  gpgrt_utf8_to_wchar          @186
  gpgrt_wchar_to_utf8          @187
 
-;; API not yet finished for:
-;; gpgrt_close_all_fds          @188
-
  gpgrt_wipememory             @189
  gpgrt_add_post_log_func      @190
  gpgrt_logv_domain            @191
+
+ gpgrt_spawn_actions_set_envvars         @192
+ gpgrt_spawn_actions_set_redirect        @193
+ gpgrt_spawn_actions_set_inherit_handles @194
 
 ;; end of file with public symbols for Windows.

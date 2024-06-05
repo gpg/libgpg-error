@@ -173,14 +173,15 @@ GPG_ERROR_1.0 {
 
 ## API not yet finished for:
 #    gpgrt_make_pipe;
-#    gpgrt_spawn_process;
-#    gpgrt_spawn_process_fd;
-#    gpgrt_spawn_process_detached;
-#    gpgrt_wait_process;
-#    gpgrt_wait_processes;
-#    gpgrt_kill_process;
-#    gpgrt_release_process;
 #    gpgrt_close_all_fds;
+
+    gpgrt_process_spawn;
+    gpgrt_process_terminate;
+    gpgrt_process_get_fds;
+    gpgrt_process_get_streams;
+    gpgrt_process_ctl;
+    gpgrt_process_wait;
+    gpgrt_process_release;
 
     gpgrt_argparse;
     gpgrt_argparser;
@@ -213,6 +214,11 @@ GPG_ERROR_1.0 {
 
     gpgrt_add_post_log_func;
     gpgrt_logv_domain;
+
+    gpgrt_spawn_actions_set_environ;
+    gpgrt_spawn_actions_set_redirect;
+    gpgrt_spawn_actions_set_inherit_fds;
+    gpgrt_spawn_actions_set_atfork;
 
   local:
     *;
