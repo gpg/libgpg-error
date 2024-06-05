@@ -217,7 +217,7 @@ do_create_pipe_and_estream (int filedes[2], estream_t *r_fp,
   if (pipe (filedes) == -1)
     {
       err = _gpg_err_code_from_syserror ();
-      _gpgrt_log_error (_("error creating a pipe: %s\n"), _gpg_strerror (err));
+      _gpgrt_log_info (_("error creating a pipe: %s\n"), _gpg_strerror (err));
       filedes[0] = filedes[1] = -1;
       *r_fp = NULL;
       return err;
@@ -231,7 +231,7 @@ do_create_pipe_and_estream (int filedes[2], estream_t *r_fp,
   if (!*r_fp)
     {
       err = _gpg_err_code_from_syserror ();
-      _gpgrt_log_error (_("error creating a stream for a pipe: %s\n"),
+      _gpgrt_log_info (_("error creating a stream for a pipe: %s\n"),
                         _gpg_strerror (err));
       close (filedes[0]);
       close (filedes[1]);
@@ -361,7 +361,7 @@ spawn_detached (const char *pgmname, const char *argv[],
   if (pid == (pid_t)(-1))
     {
       ec = _gpg_err_code_from_syserror ();
-      _gpgrt_log_error (_("error forking process: %s\n"), _gpg_strerror (ec));
+      _gpgrt_log_info (_("error forking process: %s\n"), _gpg_strerror (ec));
       xfree (argv);
       return ec;
     }
@@ -388,7 +388,7 @@ spawn_detached (const char *pgmname, const char *argv[],
     {
       _gpgrt_post_syscall ();
       ec = _gpg_err_code_from_syserror ();
-      _gpgrt_log_error ("waitpid failed in gpgrt_spawn_process_detached: %s",
+      _gpgrt_log_info ("waitpid failed in gpgrt_spawn_process_detached: %s",
                         _gpg_strerror (ec));
       return ec;
     }
@@ -636,7 +636,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
   if (pid == (pid_t)(-1))
     {
       ec = _gpg_err_code_from_syserror ();
-      _gpgrt_log_error (_("error forking process: %s\n"), _gpg_strerror (ec));
+      _gpgrt_log_info (_("error forking process: %s\n"), _gpg_strerror (ec));
       if (fd_in[0] >= 0 && fd_in[0] != 0)
         close (fd_in[0]);
       if (fd_in[1] >= 0)
@@ -889,7 +889,7 @@ _gpgrt_process_wait (gpgrt_process_t process, int hang)
   if (pid == (pid_t)(-1))
     {
       ec = _gpg_err_code_from_syserror ();
-      _gpgrt_log_error (_("waiting for process %d to terminate failed: %s\n"),
+      _gpgrt_log_info (_("waiting for process %d to terminate failed: %s\n"),
                         (int)pid, _gpg_strerror (ec));
     }
   else if (!pid)

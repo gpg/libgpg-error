@@ -194,7 +194,7 @@ create_inheritable_pipe (HANDLE filedes[2], int flags)
   return 0;
 
  fail:
-  _gpgrt_log_error ("SetHandleInformation failed: ec=%d\n",
+  _gpgrt_log_info ("SetHandleInformation failed: ec=%d\n",
                     (int)GetLastError ());
   CloseHandle (r);
   CloseHandle (w);
@@ -240,7 +240,7 @@ do_create_pipe_and_estream (int filedes[2],
       filedes[0] = _open_osfhandle (handle_to_fd (fds[0]), O_RDONLY);
       if (filedes[0] == -1)
         {
-          _gpgrt_log_error ("failed to translate osfhandle %p\n", fds[0]);
+          _gpgrt_log_info ("failed to translate osfhandle %p\n", fds[0]);
           CloseHandle (fds[1]);
         }
       else
@@ -248,7 +248,7 @@ do_create_pipe_and_estream (int filedes[2],
           filedes[1] = _open_osfhandle (handle_to_fd (fds[1]), O_APPEND);
           if (filedes[1] == -1)
             {
-              _gpgrt_log_error ("failed to translate osfhandle %p\n", fds[1]);
+              _gpgrt_log_info ("failed to translate osfhandle %p\n", fds[1]);
               close (filedes[0]);
               filedes[0] = -1;
               CloseHandle (fds[1]);
@@ -274,7 +274,7 @@ do_create_pipe_and_estream (int filedes[2],
       if (!*r_fp)
         {
           err = _gpg_err_code_from_syserror ();
-          _gpgrt_log_error (_("error creating a stream for a pipe: %s\n"),
+          _gpgrt_log_info (_("error creating a stream for a pipe: %s\n"),
                             _gpg_strerror (err));
           close (filedes[0]);
           close (filedes[1]);
@@ -384,7 +384,7 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
         hd[j++] = act->hd[0];
       if (act->hd[1] != INVALID_HANDLE_VALUE)
         hd[j++] = act->hd[1];
-      if (act->hd[1] != INVALID_HANDLE_VALUE)
+      if (act->hd[2] != INVALID_HANDLE_VALUE)
         hd[j++] = act->hd[2];
       if (hd_p)
         {
@@ -393,7 +393,7 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
               hd[j++] = *hd_p++;
             else
               {
-                _gpgrt_log_error ("Too much handles\n");
+                _gpgrt_log_info ("gpgrt_spawn_detached: too many handles\n");
                 break;
               }
         }
@@ -458,10 +458,12 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
   if (!ret)
     {
       if (!wpgmname || !wcmdline)
-        _gpgrt_log_error ("CreateProcess failed (utf8_to_wchar): %s\n",
+        _gpgrt_log_info ("gpgrt_spawn_detached: "
+                         "CreateProcess failed (utf8_to_wchar): %s\n",
                           strerror (errno));
       else
-        _gpgrt_log_error ("CreateProcess(detached) failed: %d\n",
+        _gpgrt_log_info ("gpgrt_spawn_detached: "
+                         "CreateProcess(detached) failed: %d\n",
                           (int)GetLastError ());
       xfree (wpgmname);
       xfree (wcmdline);
@@ -716,7 +718,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
         hd[j++] = act->hd[0];
       if (act->hd[1] != INVALID_HANDLE_VALUE)
         hd[j++] = act->hd[1];
-      if (act->hd[1] != INVALID_HANDLE_VALUE)
+      if (act->hd[2] != INVALID_HANDLE_VALUE)
         hd[j++] = act->hd[2];
       if (hd_p)
         {
@@ -725,7 +727,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
               hd[j++] = *hd_p++;
             else
               {
-                _gpgrt_log_error ("Too much handles\n");
+                _gpgrt_log_info ("gpgrt_process_spawn: too many handles\n");
                 break;
               }
         }
@@ -804,10 +806,10 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   if (!ret)
     {
       if (!wpgmname || !wcmdline)
-        _gpgrt_log_error ("CreateProcess failed (utf8_to_wchar): %s\n",
+        _gpgrt_log_info ("CreateProcess failed (utf8_to_wchar): %s\n",
                           strerror (errno));
       else
-        _gpgrt_log_error ("CreateProcess failed: ec=%d\n",
+        _gpgrt_log_info ("CreateProcess failed: ec=%d\n",
                           (int)GetLastError ());
       if ((flags & GPGRT_PROCESS_STDIN_PIPE)
           || !(flags & GPGRT_PROCESS_STDIN_KEEP))
@@ -1086,8 +1088,8 @@ _gpgrt_process_wait (gpgrt_process_t process, int hang)
       break;
 
     case WAIT_FAILED:
-      _gpgrt_log_error (_("waiting for process to terminate failed: ec=%d\n"),
-                        (int)GetLastError ());
+      _gpgrt_log_info (_("waiting for process to terminate failed: ec=%d\n"),
+                       (int)GetLastError ());
       ec = GPG_ERR_GENERAL;
       break;
 
