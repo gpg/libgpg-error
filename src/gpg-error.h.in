@@ -962,10 +962,10 @@ gpg_err_code_t   gpgrt_b64enc_write (gpgrt_b64state_t state,
 gpg_err_code_t   gpgrt_b64enc_finish (gpgrt_b64state_t state);
 
 gpgrt_b64state_t gpgrt_b64dec_start (const char *title);
-gpg_error_t      gpgrt_b64dec_proc (gpgrt_b64state_t state,
+gpg_err_code_t   gpgrt_b64dec_proc (gpgrt_b64state_t state,
                                     void *buffer, size_t length,
                                     size_t *r_nbytes);
-gpg_error_t      gpgrt_b64dec_finish (gpgrt_b64state_t state);
+gpg_err_code_t   gpgrt_b64dec_finish (gpgrt_b64state_t state);
 
 
 
