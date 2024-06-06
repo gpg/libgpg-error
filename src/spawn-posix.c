@@ -889,7 +889,7 @@ _gpgrt_process_wait (gpgrt_process_t process, int hang)
   if (pid == (pid_t)(-1))
     {
       ec = _gpg_err_code_from_syserror ();
-      _gpgrt_log_info (_("waiting for process %d to terminate failed: %s\n"),
+      _gpgrt_log_info (_("waiting for process %d failed: %s\n"),
                         (int)pid, _gpg_strerror (ec));
     }
   else if (!pid)

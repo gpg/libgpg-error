@@ -1088,7 +1088,7 @@ _gpgrt_process_wait (gpgrt_process_t process, int hang)
       break;
 
     case WAIT_FAILED:
-      _gpgrt_log_info (_("waiting for process to terminate failed: ec=%d\n"),
+      _gpgrt_log_info (_("waiting for process failed: ec=%d\n"),
                        (int)GetLastError ());
       ec = GPG_ERR_GENERAL;
       break;
