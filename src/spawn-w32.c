@@ -785,6 +785,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
 
   /* log_debug ("CreateProcess, path='%s' cmdline='%s'\n", pgmname, cmdline); */
   cr_flags = (CREATE_DEFAULT_ERROR_MODE
+              | ((flags & GPGRT_PROCESS_NO_CONSOLE) ? DETACHED_PROCESS : 0)
               | GetPriorityClass (GetCurrentProcess ())
               | CREATE_SUSPENDED);
   if (!(wpgmname = _gpgrt_utf8_to_wchar (pgmname)))
