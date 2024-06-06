@@ -1133,6 +1133,18 @@ gpgrt_close_all_fds (int from, int *keep_fds)
 }
 #endif /*0*/
 
+gpg_err_code_t
+gpgrt_spawn_actions_new (gpgrt_spawn_actions_t *r_act)
+{
+  return _gpgrt_spawn_actions_new (r_act);
+}
+
+void
+gpgrt_spawn_actions_release (gpgrt_spawn_actions_t act)
+{
+  _gpgrt_spawn_actions_release (act);
+}
+
 #ifdef HAVE_W32_SYSTEM
 void
 gpgrt_spawn_actions_set_envvars (gpgrt_spawn_actions_t act,

@@ -215,6 +215,8 @@ GPG_ERROR_1.0 {
     gpgrt_add_post_log_func;
     gpgrt_logv_domain;
 
+    gpgrt_spawn_actions_new;
+    gpgrt_spawn_actions_release;
     gpgrt_spawn_actions_set_environ;
     gpgrt_spawn_actions_set_redirect;
     gpgrt_spawn_actions_set_inherit_fds;

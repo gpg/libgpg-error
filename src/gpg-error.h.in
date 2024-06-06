@@ -1112,6 +1112,8 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 
 typedef struct gpgrt_process *gpgrt_process_t;
 typedef struct gpgrt_spawn_actions *gpgrt_spawn_actions_t;
+gpg_err_code_t gpgrt_spawn_actions_new (gpgrt_spawn_actions_t *r_act);
+void gpgrt_spawn_actions_release (gpgrt_spawn_actions_t act);
 @define:spawn_actions_functions@
 
 enum gpgrt_process_requests

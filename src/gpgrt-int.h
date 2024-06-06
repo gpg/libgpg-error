@@ -634,7 +634,7 @@ gpg_err_code_t _gpgrt_make_pipe (int filedes[2], estream_t *r_fp,
 #define _gpgrt_create_inbound_pipe(a,b,c)  _gpgrt_make_pipe ((a), (b), -1, (c))
 #define _gpgrt_create_outbound_pipe(a,b,c) _gpgrt_make_pipe ((a), (b),  1, (c))
 
-/* Actions (at spawning a chile process), which is OS-specific.  */
+/* Actions (at spawning a child process), which is OS-specific.  */
 gpg_err_code_t _gpgrt_spawn_actions_new (gpgrt_spawn_actions_t *r_act);
 void _gpgrt_spawn_actions_release (gpgrt_spawn_actions_t act);
 #ifdef HAVE_W32_SYSTEM

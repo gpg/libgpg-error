@@ -229,6 +229,8 @@ MARK_VISIBLE (gpgrt_cmp_version)
 MARK_VISIBLE (gpgrt_fnameconcat)
 MARK_VISIBLE (gpgrt_absfnameconcat)
 
+MARK_VISIBLE (gpgrt_spawn_actions_new)
+MARK_VISIBLE (gpgrt_spawn_actions_release)
 #ifdef HAVE_W32_SYSTEM
 MARK_VISIBLE (gpgrt_spawn_actions_set_envvars)
 MARK_VISIBLE (gpgrt_spawn_actions_set_redirect)
@@ -419,15 +421,17 @@ MARK_VISIBLE (gpgrt_spawn_actions_set_atfork)
 #define gpgrt_process_wait           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_process_release        _gpgrt_USE_UNDERSCORED_FUNCTION
 
+#define gpgrt_spawn_actions_new                 _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_actions_release             _gpgrt_USE_UNDERSCORED_FUNCTION
 #ifdef HAVE_W32_SYSTEM
 #define gpgrt_spawn_actions_set_envvars         _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_spawn_actions_set_redirect        _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_spawn_actions_set_inherit_handles _gpgrt_USE_UNDERSCORED_FUNCTION
 #else
-#define gpgrt_spawn_actions_set_environ     _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_spawn_actions_set_redirect    _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_spawn_actions_set_inherit_fds _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_spawn_actions_set_atfork      _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_actions_set_environ         _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_actions_set_redirect        _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_actions_set_inherit_fds     _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_actions_set_atfork          _gpgrt_USE_UNDERSCORED_FUNCTION
 #endif
 
 #define gpgrt_argparse                _gpgrt_USE_UNDERSCORED_FUNCTION
