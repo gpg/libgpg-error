@@ -586,7 +586,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
         }
 
       /* In detached case, it must be no R_PROCESS.  */
-      if (r_process)
+      if (r_process || pgmname == NULL)
         {
           xfree (cmdline);
           return GPG_ERR_INV_ARG;
@@ -597,6 +597,12 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
 
   if (r_process)
     *r_process = NULL;
+
+  if (pgmname == NULL)
+    {
+      xfree (cmdline);
+      return GPG_ERR_INV_ARG;
+    }
 
   process = xtrymalloc (sizeof (struct gpgrt_process));
   if (process == NULL)

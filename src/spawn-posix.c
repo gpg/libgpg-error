@@ -295,7 +295,7 @@ struct gpgrt_spawn_actions {
   void *atfork_arg;
 };
 
-static void
+static int
 my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act)
 {
   int i;
@@ -328,9 +328,14 @@ my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act)
   if (act->atfork)
     act->atfork (act->atfork_arg);
 
+  /* This use case is for assuan pipe connect with no PGMNAME */
+  if (pgmname == NULL)
+    return 0;
+
   execv (pgmname, (char *const *)argv);
   /* No way to print anything, as we have may have closed all streams. */
   _exit (127);
+  return -1;
 }
 
 
@@ -502,7 +507,8 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
   argv = xtrycalloc (i+2, sizeof *argv);
   if (!argv)
     return _gpg_err_code_from_syserror ();
-  argv[0] = strrchr (pgmname, '/');
+  if (pgmname)
+    argv[0] = strrchr (pgmname, '/');
   if (argv[0])
     argv[0]++;
   else
@@ -521,7 +527,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
         }
 
       /* In detached case, it must be no R_PROCESS.  */
-      if (r_process)
+      if (r_process || pgmname == NULL)
         {
           xfree (argv);
           return GPG_ERR_INV_ARG;
@@ -671,7 +677,14 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
         act->fd[2] = fd_err[1];
 
       /* Run child. */
-      my_exec (pgmname, argv, act);
+      if (!my_exec (pgmname, argv, act))
+        {
+          xfree (process);
+          xfree (argv);
+          *r_process = NULL;
+          return 0;
+        }
+
       /*NOTREACHED*/
     }
 
