@@ -67,6 +67,30 @@
 #define handle_to_fd(a)  ((intptr_t)(a))
 
 
+/* Definition for the gpgrt_spawn_actions_t.  Note that there is a
+ * different one for Unices.  */
+struct gpgrt_spawn_actions {
+  void *hd[3];
+  void **inherit_hds;
+  char *env;
+};
+
+
+/* Definition for the gpgrt_process_t.  Note that there is a different
+ * one for Unices.  */
+struct gpgrt_process {
+  const char *pgmname;
+  unsigned int terminated:1;  /* or detached */
+  unsigned int flags;
+  HANDLE hProcess;
+  HANDLE hd_in;
+  HANDLE hd_out;
+  HANDLE hd_err;
+  int exitcode;
+};
+
+
+
 /* Return the maximum number of currently allowed open file
  * descriptors.  Only useful on POSIX systems but returns a value on
  * other systems too.  */
@@ -301,22 +325,6 @@ _gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction, int nonblock)
     return do_create_pipe_and_estream (filedes, NULL, 0, 0);
 }
 
-struct gpgrt_spawn_actions {
-  void *hd[3];
-  void **inherit_hds;
-  char *env;
-};
-
-struct gpgrt_process {
-  const char *pgmname;
-  unsigned int terminated   :1; /* or detached */
-  unsigned int flags;
-  HANDLE hProcess;
-  HANDLE hd_in;
-  HANDLE hd_out;
-  HANDLE hd_err;
-  int exitcode;
-};
 
 /*
  * Check if STARTUPINFOEXW supports PROC_THREAD_ATTRIBUTE_HANDLE_LIST.

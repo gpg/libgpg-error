@@ -38,6 +38,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#include <sys/socket.h>
 #include <sys/wait.h>
 
 #ifdef HAVE_GETRLIMIT
@@ -55,6 +56,32 @@
 #endif /*__linux__ */
 
 #include "gpgrt-int.h"
+
+
+/* Definition for the gpgrt_spawn_actions_t.  Note that there is a
+ * different one for Windows.  */
+struct gpgrt_spawn_actions {
+  int fd[3];
+  const int *except_fds;
+  char **environ;
+  void (*atfork) (void *);
+  void *atfork_arg;
+};
+
+
+/* Definition for the gpgrt_process_t.  Note that there is a different
+ * one for Windows.  */
+struct gpgrt_process {
+  const char *pgmname;
+  unsigned int terminated   :1; /* or detached */
+  unsigned int flags;
+  pid_t pid;
+  int fd_in;
+  int fd_out;
+  int fd_err;
+  int wstatus;
+};
+
 
 
 /* Return the maximum number of currently allowed open file
@@ -258,7 +285,6 @@ _gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction,
     return do_create_pipe (filedes);
 }
 
-#include <sys/socket.h>
 
 static gpg_err_code_t
 do_create_socketpair (int filedes[2])
@@ -287,13 +313,6 @@ posix_open_null (int for_write)
   return fd;
 }
 
-struct gpgrt_spawn_actions {
-  int fd[3];
-  const int *except_fds;
-  char **environ;
-  void (*atfork) (void *);
-  void *atfork_arg;
-};
 
 static int
 my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act)
@@ -462,16 +481,6 @@ _gpgrt_spawn_actions_set_inherit_fds (gpgrt_spawn_actions_t act,
   act->except_fds = fds;
 }
 
-struct gpgrt_process {
-  const char *pgmname;
-  unsigned int terminated   :1; /* or detached */
-  unsigned int flags;
-  pid_t pid;
-  int fd_in;
-  int fd_out;
-  int fd_err;
-  int wstatus;
-};
 
 gpg_err_code_t
 _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
