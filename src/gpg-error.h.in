@@ -1,5 +1,5 @@
 /* gpg-error.h or gpgrt.h - Common code for GnuPG and others.    -*- c -*-
- * Copyright (C) 2001-2023 g10 Code GmbH
+ * Copyright (C) 2001-2024 g10 Code GmbH
  *
  * This file is part of libgpg-error (aka libgpgrt).
  *
@@ -1094,6 +1094,9 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 
 /* Child process has no console (Windows only).  */
 #define GPGRT_PROCESS_NO_CONSOLE          (1 << 2)
+
+/* Allow a detached process with uid != euid (Posix only).  */
+#define GPGRT_PROCESS_NO_EUID_CHECK       (1 << 3)
 
 /* Specify how to keep/connect standard fds.  */
 #define GPGRT_PROCESS_STDIN_PIPE          (1 << 8)

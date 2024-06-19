@@ -365,13 +365,6 @@ spawn_detached (const char *pgmname, const char *argv[],
   gpg_err_code_t ec;
   pid_t pid;
 
-  /* FIXME: Is this GnuPG specific or should we keep it.  */
-  if (getuid() != geteuid())
-    {
-      xfree (argv);
-      return GPG_ERR_BUG;
-    }
-
   if (access (pgmname, X_OK))
     {
       ec = _gpg_err_code_from_syserror ();
@@ -540,6 +533,15 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
         {
           xfree (argv);
           return GPG_ERR_INV_ARG;
+        }
+
+      if (!(flags & GPGRT_PROCESS_NO_EUID_CHECK))
+        {
+          if (getuid() != geteuid())
+            {
+              xfree (argv);
+              return GPG_ERR_FORBIDDEN;
+            }
         }
 
       return spawn_detached (pgmname, argv, act);
