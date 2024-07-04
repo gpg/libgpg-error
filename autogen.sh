@@ -265,17 +265,19 @@ if [ "$myhost" = "find-version" ]; then
           fi
       fi
       [ -n "$tmp" ] && beta=yes
+      cid=$(git rev-parse --verify HEAD | tr -d '\n\r')
       rev=$(git rev-parse --short HEAD | tr -d '\n\r')
       rvd=$((0x$(echo ${rev} | dd bs=1 count=4 2>/dev/null)))
     else
       ingit=no
       beta=yes
       tmp="-unknown"
+      cid="0000000"
       rev="0000000"
       rvd="0"
     fi
 
-    echo "$package-$vers$tmp:$beta:$ingit:$vers$tmp:$vers:$tmp:$rev:$rvd:"
+    echo "$package-$vers$tmp:$beta:$ingit:$vers$tmp:$vers:$tmp:$rev:$rvd:$cid:"
     exit 0
 fi
 # **** end FIND VERSION ****
