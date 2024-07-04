@@ -15,7 +15,7 @@
 # configure it for the respective package.  It is maintained as part of
 # GnuPG and source copied by other packages.
 #
-# Version: 2023-04-13
+# Version: 2024-07-04
 
 configure_ac="configure.ac"
 
