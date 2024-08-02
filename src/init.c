@@ -39,6 +39,8 @@
 
 static int tls_index = TLS_OUT_OF_INDEXES;  /* Index for the TLS functions.  */
 
+static volatile int utf8_for_new_threads;
+
 static char *get_locale_dir (void);
 static void drop_locale_dir (char *locale_dir);
 
@@ -549,6 +551,14 @@ _gpgrt_internal_trace_end (void)
  ******** Below is only Windows code. ****
  *****************************************/
 
+/* This function can be called to force utf8 for new threads.  */
+void
+_gpgrt_w32_utf8_for_new_threads (void)
+{
+  utf8_for_new_threads = 1;
+}
+
+
 static char *
 get_locale_dir (void)
 {
@@ -645,7 +655,7 @@ get_tls (void)
           /* No way to continue - commit suicide.  */
           _gpgrt_abort ();
         }
-      tls->gt_use_utf8 = 0;
+      tls->gt_use_utf8 = utf8_for_new_threads;
       TlsSetValue (tls_index, tls);
     }
 
@@ -677,7 +687,7 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
       tls = LocalAlloc (LPTR, sizeof *tls);
       if (!tls)
         return FALSE;
-      tls->gt_use_utf8 = 0;
+      tls->gt_use_utf8 = utf8_for_new_threads;
       TlsSetValue (tls_index, tls);
       if (reason == DLL_PROCESS_ATTACH)
         {

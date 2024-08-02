@@ -24,6 +24,13 @@ const char *_gpg_w32_dngettext (const char *domainname, const char *msgid1,
                                 const char *msgid2, unsigned long int n)
             _GPG_ERR_ATTR_FORMAT_ARG (2) _GPG_ERR_ATTR_FORMAT_ARG (3);
 const char *_gpg_w32_gettext_localename (void);
+
+/* With a VALUE of 1 switch the gettext functions into utf8 mode; with
+ * 2 or 3 all new threads will initially be using UTF8 (this new
+ * default init can't be reverted, though).  That is the strings are
+ * returned without translation to the native charset.  A VALUE of 0
+ * switches back to translated strings.  A VALUE of -1 returns the
+ * current value (1 or 0). */
 int _gpg_w32_gettext_use_utf8 (int value);
 
 #ifdef GPG_ERR_ENABLE_GETTEXT_MACROS
