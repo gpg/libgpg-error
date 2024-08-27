@@ -569,7 +569,6 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   HANDLE hd_err[2];
   int i;
   BOOL ask_inherit = FALSE;
-  BOOL allow_foreground_window = FALSE;
   struct gpgrt_spawn_actions act_default;
 
   if (!act)
@@ -869,7 +868,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   /*           pi.hProcess, pi.hThread, */
   /*           (int) pi.dwProcessId, (int) pi.dwThreadId); */
 
-  if (allow_foreground_window)
+  if ((flags & GPGRT_PROCESS_ALLOW_SET_FG))
     {
       /* Fixme: For unknown reasons AllowSetForegroundWindow returns
        * an invalid argument error if we pass it the correct
