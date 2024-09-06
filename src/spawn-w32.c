@@ -526,6 +526,9 @@ _gpgrt_spawn_actions_release (gpgrt_spawn_actions_t act)
   xfree (act);
 }
 
+/* Set the environment block for child process.
+ * ENV is an ASCII encoded string, terminated by two zero bytes.
+ */
 void
 _gpgrt_spawn_actions_set_envvars (gpgrt_spawn_actions_t act, char *env)
 {
