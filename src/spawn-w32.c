@@ -90,27 +90,6 @@ struct gpgrt_process {
 };
 
 
-
-/* Return the maximum number of currently allowed open file
- * descriptors.  Only useful on POSIX systems but returns a value on
- * other systems too.  */
-int
-get_max_fds (void)
-{
-  int max_fds = -1;
-
-#ifdef OPEN_MAX
-  if (max_fds == -1)
-    max_fds = OPEN_MAX;
-#endif
-
-  if (max_fds == -1)
-    max_fds = 256;  /* Arbitrary limit.  */
-
-  return max_fds;
-}
-
-
 /* Helper function to build_w32_commandline. */
 static char *
 build_w32_commandline_copy (char *buffer, const char *string)
