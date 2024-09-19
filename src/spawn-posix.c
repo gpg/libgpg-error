@@ -246,6 +246,7 @@ do_create_pipe_and_estream (int filedes[2], estream_t *r_fp,
   _gpgrt_pre_syscall ();
   if (pipe (filedes) == -1)
     {
+      _gpgrt_post_syscall ();
       err = _gpg_err_code_from_syserror ();
       _gpgrt_log_info (_("error creating a pipe: %s\n"), _gpg_strerror (err));
       filedes[0] = filedes[1] = -1;
