@@ -403,6 +403,7 @@ spawn_detached (const char *pgmname, const char *argv[],
       /*NOTREACHED*/
     }
 
+  xfree (argv);
   _gpgrt_pre_syscall ();
   if (waitpid (pid, NULL, 0) == -1)
     {
