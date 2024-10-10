@@ -452,15 +452,15 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
         _gpgrt_log_info ("gpgrt_spawn_detached: "
                          "CreateProcess(detached) failed: %d\n",
                           (int)GetLastError ());
-      xfree (wpgmname);
-      xfree (wcmdline);
+      _gpgrt_free_wchar (wpgmname);
+      _gpgrt_free_wchar (wcmdline);
       xfree (cmdline);
       return GPG_ERR_GENERAL;
     }
   if (si.lpAttributeList)
     DeleteProcThreadAttributeList (si.lpAttributeList);
-  xfree (wpgmname);
-  xfree (wcmdline);
+  _gpgrt_free_wchar (wpgmname);
+  _gpgrt_free_wchar (wcmdline);
   xfree (cmdline);
 
   /* log_debug ("CreateProcess(detached) ready: hProcess=%p hThread=%p" */
@@ -822,8 +822,8 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
       if ((flags & GPGRT_PROCESS_STDERR_PIPE)
           || !(flags & GPGRT_PROCESS_STDERR_KEEP))
         CloseHandle (hd_err[1]);
-      xfree (wpgmname);
-      xfree (wcmdline);
+      _gpgrt_free_wchar (wpgmname);
+      _gpgrt_free_wchar (wcmdline);
       xfree (process);
       xfree (cmdline);
       return GPG_ERR_GENERAL;
@@ -831,8 +831,8 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
 
   if (si.lpAttributeList)
     DeleteProcThreadAttributeList (si.lpAttributeList);
-  xfree (wpgmname);
-  xfree (wcmdline);
+  _gpgrt_free_wchar (wpgmname);
+  _gpgrt_free_wchar (wcmdline);
   xfree (cmdline);
 
   if ((flags & GPGRT_PROCESS_STDIN_PIPE)
