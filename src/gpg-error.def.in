@@ -254,5 +254,6 @@ EXPORTS
  gpgrt_spawn_actions_set_envvars         @194
  gpgrt_spawn_actions_set_redirect        @195
  gpgrt_spawn_actions_set_inherit_handles @196
+ gpgrt_spawn_actions_set_envchange       @197
 
 ;; end of file with public symbols for Windows.

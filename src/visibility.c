@@ -1145,6 +1145,13 @@ gpgrt_spawn_actions_release (gpgrt_spawn_actions_t act)
   _gpgrt_spawn_actions_release (act);
 }
 
+void
+gpgrt_spawn_actions_set_envchange (gpgrt_spawn_actions_t act,
+                                   const char *const *env)
+{
+  _gpgrt_spawn_actions_set_envchange (act, env);
+}
+
 #ifdef HAVE_W32_SYSTEM
 void
 gpgrt_spawn_actions_set_envvars (gpgrt_spawn_actions_t act,

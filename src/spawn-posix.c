@@ -57,9 +57,6 @@
 
 #include "gpgrt-int.h"
 
-/* (Only glibc's unistd.h declares this iff _GNU_SOURCE is used.)  */
-extern char **environ;
-
 
 /* Definition for the gpgrt_spawn_actions_t.  Note that there is a
  * different one for Windows.  */
@@ -67,6 +64,7 @@ struct gpgrt_spawn_actions {
   int fd[3];
   const int *except_fds;
   char **environ;
+  const char *const *envchange;
   void (*atfork) (void *);
   void *atfork_arg;
 };
@@ -318,6 +316,31 @@ posix_open_null (int for_write)
 }
 
 
+static gpg_err_code_t
+prepare_environ (const char *const *envchange)
+{
+  const char *const *envp;
+  const char *e;
+
+  for (envp = envchange; (e = *envp); envp++)
+    {
+      char *name = xtrystrdup (e);
+      char *p;
+
+      if (!name)
+        return _gpg_err_code_from_syserror ();
+
+      p = strchr (name, '=');
+      if (p)
+        *p++ = 0;
+
+      _gpgrt_setenv (name, p, 1);
+      xfree (name);
+    }
+
+  return 0;
+}
+
 static int
 my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act)
 {
@@ -345,8 +368,8 @@ my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act)
   /* Close all other files.  */
   _gpgrt_close_all_fds (3, act->except_fds);
 
-  if (act->environ)
-    environ = act->environ;
+  if (act->envchange && prepare_environ (act->envchange))
+    goto leave;
 
   if (act->atfork)
     act->atfork (act->atfork_arg);
@@ -355,8 +378,13 @@ my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act)
   if (pgmname == NULL)
     return 0;
 
-  execv (pgmname, (char *const *)argv);
+  if (act->environ)
+    execve (pgmname, (char *const *)argv, act->environ);
+  else
+    execv (pgmname, (char *const *)argv);
+
   /* No way to print anything, as we have may have closed all streams. */
+ leave:
   _exit (127);
   return -1;
 }
@@ -453,6 +481,13 @@ _gpgrt_spawn_actions_set_environ (gpgrt_spawn_actions_t act,
                                   char **environ_for_child)
 {
   act->environ = environ_for_child;
+}
+
+void
+_gpgrt_spawn_actions_set_envchange (gpgrt_spawn_actions_t act,
+				    const char *const *envchange)
+{
+  act->envchange = envchange;
 }
 
 void

@@ -637,6 +637,8 @@ gpg_err_code_t _gpgrt_make_pipe (int filedes[2], estream_t *r_fp,
 /* Actions (at spawning a child process), which is OS-specific.  */
 gpg_err_code_t _gpgrt_spawn_actions_new (gpgrt_spawn_actions_t *r_act);
 void _gpgrt_spawn_actions_release (gpgrt_spawn_actions_t act);
+void _gpgrt_spawn_actions_set_envchange (gpgrt_spawn_actions_t,
+                                         const char *const*);
 #ifdef HAVE_W32_SYSTEM
 void _gpgrt_spawn_actions_set_envvars (gpgrt_spawn_actions_t, char *);
 void _gpgrt_spawn_actions_set_redirect (gpgrt_spawn_actions_t,

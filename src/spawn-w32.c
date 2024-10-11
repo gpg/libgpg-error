@@ -73,6 +73,7 @@ struct gpgrt_spawn_actions {
   void *hd[3];
   void **inherit_hds;
   char *env;
+  const char *const *envchange;
 };
 
 
@@ -328,6 +329,147 @@ check_windows_version (void)
   return is_vista_or_later;
 }
 
+static gpg_err_code_t
+prepare_env_block (char **r_env, const char *const *envchange)
+{
+  gpg_err_code_t ec;
+  wchar_t *orig_env_block;
+  wchar_t *wp;
+  int i;
+  size_t envlen[256];
+  wchar_t *env_block;
+  size_t env_block_len;
+
+  const char *const *envp;
+  const char *e;
+  int env_num;
+
+  wp = orig_env_block = GetEnvironmentStringsW ();
+  for (i = 0; *wp != L'\0'; i++)
+    if (i >= DIM (envlen))
+      {
+        FreeEnvironmentStringsW (orig_env_block);
+        return GPG_ERR_TOO_LARGE;
+      }
+    else
+      wp += ((envlen[i] = wcslen (wp)) + 1);
+  wp++;
+  env_num = i;
+
+  env_block_len = (char *)wp - (char *)orig_env_block;
+  env_block = xtrymalloc (env_block_len);
+  if (!env_block)
+    {
+      FreeEnvironmentStringsW (orig_env_block);
+      return _gpg_err_code_from_syserror ();
+    }
+  memcpy (env_block, orig_env_block, env_block_len);
+  FreeEnvironmentStringsW (orig_env_block);
+
+  for (envp = envchange; (e = *envp); envp++)
+    {
+      wchar_t *we;
+      int off = 0;
+
+      we = _gpgrt_utf8_to_wchar (e);
+      if (!we)
+        {
+          ec = _gpg_err_code_from_syserror ();
+          goto leave;
+        }
+
+      wp = wcschr (we, L'=');
+      if (!wp)
+        {
+          /* Remove WE entry in the environment block.  */
+          for (i = 0; i < env_num; i++)
+            if (!wcsncmp (&env_block[off], we, wcslen (we))
+                && env_block[off+wcslen (we)] == L'=')
+              break;
+            else
+              off += envlen[i] + 1;
+
+          if (i == env_num)
+            /* not found */;
+          else
+            {
+              env_block_len -= (envlen[i] + 1) * sizeof (wchar_t);
+              env_num--;
+              for (; i < env_num; i++)
+                {
+                  int off0 = off;
+
+                  off += envlen[i] + 1;
+                  memmove (&env_block[off0], &env_block[off],
+                           ((envlen[i] = envlen[i+1]) + 1) * sizeof (wchar_t));
+                }
+              env_block[(env_block_len / sizeof (wchar_t)) - 1] = L'\0';
+            }
+        }
+      else
+        {
+          size_t old_env_block_len;
+
+          for (i = 0; i < env_num; i++)
+            if (!wcsncmp (&env_block[off], we, wp - we + 1))
+              break;
+            else
+              off += envlen[i] + 1;
+
+          if (i < env_num)
+            {
+              int off0 = off;
+
+              off += envlen[i] + 1;
+              /* If an existing entry, remove it.  */
+              env_block_len -= (envlen[i] + 1) * sizeof (wchar_t);
+              env_num--;
+              for (; i < env_num; i++)
+                {
+                  size_t len = (envlen[i] = envlen[i+1]) + 1;
+
+                  memmove (&env_block[off0], &env_block[off],
+                           len * sizeof (wchar_t));
+                  off0 += len;
+                  off += len;
+                }
+              env_block[(env_block_len / sizeof (wchar_t)) - 1] = L'\0';
+            }
+
+          if (i >= DIM (envlen) - 1)
+            {
+              ec = GPG_ERR_TOO_LARGE;
+              _gpgrt_free_wchar (we);
+              goto leave;
+            }
+
+          old_env_block_len = env_block_len;
+          env_block_len += ((envlen[i++] = wcslen (we)) + 1) * sizeof (wchar_t);
+          env_num = i;
+          env_block = xtryrealloc (env_block, env_block_len);
+          if (!env_block)
+            {
+              ec = _gpg_err_code_from_syserror ();
+              _gpgrt_free_wchar (we);
+              goto leave;
+            }
+          memmove ((char *)env_block + old_env_block_len - sizeof (wchar_t),
+                   we, (envlen[env_num - 1] + 1) * sizeof (wchar_t));
+          env_block[(env_block_len / sizeof (wchar_t)) - 1] = L'\0';
+        }
+
+      _gpgrt_free_wchar (we);
+    }
+  ec = 0;
+
+ leave:
+  if (ec)
+    xfree (env_block);
+  else
+    *r_env = (char *)env_block;
+
+  return ec;
+}
 
 static gpg_err_code_t
 spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
@@ -342,6 +484,7 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
   int ret;
   BOOL ask_inherit = FALSE;
   int i;
+  char *env = NULL;
 
   ec = _gpgrt_access (pgmname, X_OK);
   if (ec)
@@ -425,6 +568,29 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
               | CREATE_NEW_PROCESS_GROUP
               | DETACHED_PROCESS);
 
+  if (act->env)
+    {
+      /* Either ENV or ENVCHANGE can be specified, not both.  */
+      if (act->envchange)
+        {
+          xfree (cmdline);
+          return GPG_ERR_INV_ARG;
+        }
+
+      env = act->env;
+    }
+  else if (act->envchange)
+    {
+      ec = prepare_env_block (&env, act->envchange);
+      if (ec)
+        {
+          xfree (cmdline);
+          return ec;
+        }
+
+      cr_flags |= CREATE_UNICODE_ENVIRONMENT;
+    }
+
   /* Take care: CreateProcessW may modify wpgmname */
   if (!(wpgmname = _gpgrt_utf8_to_wchar (pgmname)))
     ret = 0;
@@ -437,11 +603,14 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
                           &sec_attr,     /* Thread security attributes.  */
                           ask_inherit,   /* Inherit handles.  */
                           cr_flags,      /* Creation flags.  */
-                          act->env,      /* Environment.  */
+                          env,           /* Environment.  */
                           NULL,          /* Use current drive/directory.  */
                           (STARTUPINFOW *)&si,    /* Startup information. */
                           &pi            /* Returns process information.  */
                           );
+  if (act->envchange)
+    xfree (env);
+  env = NULL;
   if (!ret)
     {
       if (!wpgmname || !wcmdline)
@@ -505,6 +674,13 @@ _gpgrt_spawn_actions_release (gpgrt_spawn_actions_t act)
   xfree (act);
 }
 
+void
+_gpgrt_spawn_actions_set_envchange (gpgrt_spawn_actions_t act,
+				    const char *const *envchange)
+{
+  act->envchange = envchange;
+}
+
 /* Set the environment block for child process.
  * ENV is an ASCII encoded string, terminated by two zero bytes.
  */
@@ -552,6 +728,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   int i;
   BOOL ask_inherit = FALSE;
   struct gpgrt_spawn_actions act_default;
+  char *env = NULL;
 
   if (!act)
     {
@@ -783,6 +960,32 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
               | ((flags & GPGRT_PROCESS_NO_CONSOLE) ? DETACHED_PROCESS : 0)
               | GetPriorityClass (GetCurrentProcess ())
               | CREATE_SUSPENDED);
+
+  if (act->env)
+    {
+      /* Either ENV or ENVCHANGE can be specified, not both.  */
+      if (act->envchange)
+        {
+          xfree (process);
+          xfree (cmdline);
+          return GPG_ERR_INV_ARG;
+        }
+
+      env = act->env;
+    }
+  else if (act->envchange)
+    {
+      ec = prepare_env_block (&env, act->envchange);
+      if (ec)
+        {
+          xfree (process);
+          xfree (cmdline);
+          return ec;
+        }
+
+      cr_flags |= CREATE_UNICODE_ENVIRONMENT;
+    }
+
   if (!(wpgmname = _gpgrt_utf8_to_wchar (pgmname)))
     ret = 0;
   else if (!(wcmdline = _gpgrt_utf8_to_wchar (cmdline)))
@@ -794,11 +997,14 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
                           &sec_attr,     /* Thread security attributes.  */
                           ask_inherit,   /* Inherit handles.  */
                           cr_flags,      /* Creation flags.  */
-                          act->env,      /* Environment.  */
+                          env,           /* Environment.  */
                           NULL,          /* Use current drive/directory.  */
                           (STARTUPINFOW *)&si, /* Startup information. */
                           &pi            /* Returns process information.  */
                           );
+  if (act->envchange)
+    xfree (env);
+  env = NULL;
   if (!ret)
     {
       if (!wpgmname || !wcmdline)
