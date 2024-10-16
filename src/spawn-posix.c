@@ -484,8 +484,8 @@ _gpgrt_spawn_actions_set_environ (gpgrt_spawn_actions_t act,
 }
 
 void
-_gpgrt_spawn_actions_set_envchange (gpgrt_spawn_actions_t act,
-				    const char *const *envchange)
+_gpgrt_spawn_actions_set_env_rev (gpgrt_spawn_actions_t act,
+                                  const char *const *envchange)
 {
   act->envchange = envchange;
 }

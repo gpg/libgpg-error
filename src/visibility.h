@@ -231,7 +231,7 @@ MARK_VISIBLE (gpgrt_absfnameconcat)
 
 MARK_VISIBLE (gpgrt_spawn_actions_new)
 MARK_VISIBLE (gpgrt_spawn_actions_release)
-MARK_VISIBLE (gpgrt_spawn_actions_set_envchange)
+MARK_VISIBLE (gpgrt_spawn_actions_set_env_rev)
 #ifdef HAVE_W32_SYSTEM
 MARK_VISIBLE (gpgrt_spawn_actions_set_envvars)
 MARK_VISIBLE (gpgrt_spawn_actions_set_redirect)
@@ -424,7 +424,7 @@ MARK_VISIBLE (gpgrt_spawn_actions_set_atfork)
 
 #define gpgrt_spawn_actions_new                 _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_spawn_actions_release             _gpgrt_USE_UNDERSCORED_FUNCTION
-#define gpgrt_spawn_actions_set_envchange       _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_spawn_actions_set_env_rev         _gpgrt_USE_UNDERSCORED_FUNCTION
 #ifdef HAVE_W32_SYSTEM
 #define gpgrt_spawn_actions_set_envvars         _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_spawn_actions_set_redirect        _gpgrt_USE_UNDERSCORED_FUNCTION

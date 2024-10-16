@@ -1120,8 +1120,8 @@ typedef struct gpgrt_process *gpgrt_process_t;
 typedef struct gpgrt_spawn_actions *gpgrt_spawn_actions_t;
 gpg_err_code_t gpgrt_spawn_actions_new (gpgrt_spawn_actions_t *r_act);
 void gpgrt_spawn_actions_release (gpgrt_spawn_actions_t act);
-void gpgrt_spawn_actions_set_envchange (gpgrt_spawn_actions_t,
-                                        const char *const*);
+void gpgrt_spawn_actions_set_env_rev (gpgrt_spawn_actions_t,
+                                      const char *const*);
 @define:spawn_actions_functions@
 
 enum gpgrt_process_requests

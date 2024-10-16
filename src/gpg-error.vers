@@ -221,7 +221,7 @@ GPG_ERROR_1.0 {
     gpgrt_spawn_actions_set_redirect;
     gpgrt_spawn_actions_set_inherit_fds;
     gpgrt_spawn_actions_set_atfork;
-    gpgrt_spawn_actions_set_envchange;
+    gpgrt_spawn_actions_set_env_rev;
 
   local:
     *;

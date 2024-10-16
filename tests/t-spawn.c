@@ -74,7 +74,7 @@ run_test (const char *progname)
     fail ("gpgrt_spawn_actions_new failed at %d: %s",
           __LINE__, gpg_strerror (rc));
 
-  gpgrt_spawn_actions_set_envchange (act, envchange);
+  gpgrt_spawn_actions_set_env_rev (act, envchange);
 
   rc = gpgrt_process_spawn (progname, argv1,
                             (GPGRT_PROCESS_STDIN_KEEP
