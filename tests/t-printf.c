@@ -449,7 +449,7 @@ string_filter (const char *string, int no, void *opaque)
 static void
 check_fprintf_sf (void)
 {
-  volatile char *nullptr = NULL; /* Avoid compiler warning.  */
+  volatile char *null_ptr = NULL; /* Avoid compiler warning.  */
   struct sfstate_s sfstate = {NULL};
   gpgrt_stream_t stream;
   const char *expect;
@@ -461,8 +461,8 @@ check_fprintf_sf (void)
 
   gpgrt_fprintf_sf (stream, string_filter, &sfstate,
                     "%s a=%d b=%s c=%d d=%.8s null=%s\n",
-                    nullptr, 1, "foo\x01 bar", 2,
-                    "a longer string", nullptr);
+                    null_ptr, 1, "foo\x01 bar", 2,
+                    "a longer string", null_ptr);
   expect = "[==>Niente<==] a=1 b=foo\x01 bar c=2 d=a longer null=(null)\n";
   result = stream_to_string (stream);
   if (strcmp (result, expect))
@@ -475,7 +475,7 @@ check_fprintf_sf (void)
 
   gpgrt_fprintf_sf (stream, string_filter, &sfstate,
                     "a=%d b=%s c=%d d=%.8s e=%s\n",
-                    1, "foo\n bar", 2, nullptr, "");
+                    1, "foo\n bar", 2, null_ptr, "");
   expect = "a=1 b=foo\n bar c=2 d=[==>Nien e=\n";
   result = stream_to_string (stream);
   if (strcmp (result, expect))
