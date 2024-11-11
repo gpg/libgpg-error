@@ -1,5 +1,26 @@
-Noteworthy changes in version 1.51 (unreleased) [C37/A37/R_]
+Noteworthy changes in version 1.51 (2024-11-11) [C38/A38/R0]
 -----------------------------------------------
+
+ * Allow initialization of new Windows threads to utf8 mode.  [T7185]
+
+ * Add GPGRT_PROCESS_ALLOW_SET_FG for gpgrt_process_spawn.
+   [rEb79d4206f4]
+
+ * Add new spawn function to modify the environment.  [T7307]
+
+ * Fix missing environ var for macOS and others.  [T7169,T7307]
+
+ * Fix forgotten _gpgrt_post_syscall on create pipe failure.  [rEbcab96484d]
+
+ * Let gpgrt_poll return an error for a closed fd.  [rE4a3dc85f69]
+
+ * Fix build error introduced by C-committee stupidity.  [T7344]
+
+ * Interface changes relative to the 1.50 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ _gpg_w32_gettext_use_utf8           EXTN (new value 2).
+ gpgrt_spawn_actions_set_env_rev     NEW.
+ GPGRT_PROCESS_ALLOW_SET_FG          NEW.
 
  Release-info: https://dev.gnupg.org/T7164
 
