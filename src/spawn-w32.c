@@ -611,6 +611,8 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
   if (act->envchange)
     xfree (env);
   env = NULL;
+  if (si.lpAttributeList)
+    DeleteProcThreadAttributeList (si.lpAttributeList);
   if (!ret)
     {
       if (!wpgmname || !wcmdline)
@@ -626,8 +628,6 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
       xfree (cmdline);
       return GPG_ERR_GENERAL;
     }
-  if (si.lpAttributeList)
-    DeleteProcThreadAttributeList (si.lpAttributeList);
   _gpgrt_free_wchar (wpgmname);
   _gpgrt_free_wchar (wcmdline);
   xfree (cmdline);
@@ -1005,6 +1005,8 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   if (act->envchange)
     xfree (env);
   env = NULL;
+  if (si.lpAttributeList)
+    DeleteProcThreadAttributeList (si.lpAttributeList);
   if (!ret)
     {
       if (!wpgmname || !wcmdline)
@@ -1035,8 +1037,6 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
       return GPG_ERR_GENERAL;
     }
 
-  if (si.lpAttributeList)
-    DeleteProcThreadAttributeList (si.lpAttributeList);
   _gpgrt_free_wchar (wpgmname);
   _gpgrt_free_wchar (wcmdline);
   xfree (cmdline);
