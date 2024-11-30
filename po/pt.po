@@ -1,24 +1,81 @@
-# Portuguese translations for libgpg-error package.
+# Portuguese translation of libgpg-error.
 # Copyright (C) 2014 g10 Code GmbH
+# Copyright (C) 2024 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 #
-# paulo <paulo.jorge.tome@gmail.com>, 2014.
+# Current contributors:
+#  - Daniel Cerqueira <dan.git@lispclub.com>, 2024.
+#
+# Past contributors:
+#  - paulo <paulo.jorge.tome@gmail.com>, 2014.
+#
+#
+#  GnuPG glossary for Portuguese translators
+#
+#   English                           |  Portuguese
+#   ----------------------------------+--------------------------------------
+#   cryptography                      |  cifragem
+#   encryption                        |  cifração
+#   (to) encrypt                      |  cifrar
+#   decryption                        |  decifração
+#   (to) decrypt                      |  decifrar
+#   cipher                            |  a cifra
+#   passphrase(s)                     |  frase-secreta(s)
+#   password                          |  senha
+#   socket                            |  socket
+#   directory                         |  pasta
+#   handler                           |  handler
+#   string                            |  string
+#   batch mode                        |  modo batch
+#   delete                            |  apagar
+#   request                           |  pedido
+#   armor                             |  blindagem
+#   compression                       |  compressão
+#   ownership                         |  ownership
+#   self-sign                         |  auto-assinar
+#   keyring                           |  porta-chaves
+#   enter                             |  introduzir
+#   prompt                            |  perguntar
+#   agent                             |  agent
+#   smartcard                         |  smartcard
+#   primary                           |  principal
+#   digest                            |  digest
+#   deprecated                        |  depreciado
+#   stale                             |  obsoleto
+#   photo ID                          |  ID fotográfica
+#   subject                           |  entidade
+#   chain                             |  corrente
+#   write                             |  escrever
+#   a record                          |  um registo
+#   timestamp                         |  timestamp
+#   S-expression                      |  S-expression
+#   keyflag                           |  keyflag
+#   flag                              |  flag
+#   (to) flag                         |  marcar
+#   merge                             |  fundir
+#   homedir                           |  homedir
+#   overwrite                         |  sobrescrever
+#   (conjugation) please enter (verb) |  introduza
+#   (conjugation) enter (verb)        |  introduzir
+#   usage:                            |  uso:
+#   usage                             |  utilização
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.17\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2021-03-22 10:42+0100\n"
-"Last-Translator: Paulo Tomé <paulo.jorge.tome@gmail.com>\n"
-"Language-Team: Portuguese <traduz@debian.pt.org>\n"
+"PO-Revision-Date: 2024-08-20 22:07+0100\n"
+"Last-Translator: Daniel Cerqueira <dan.git@lispclub.com>\n"
+"Language-Team: pt <dan.git@lispclub.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.4\n"
 
 msgid "Unspecified source"
-msgstr "Fonte não especificada"
+msgstr "Fonte inespecificada"
 
 msgid "gcrypt"
 msgstr "gcrypt"
@@ -30,7 +87,7 @@ msgid "GpgSM"
 msgstr "GpgSM"
 
 msgid "GPG Agent"
-msgstr "Agente GPG"
+msgstr "GPG Agent"
 
 msgid "Pinentry"
 msgstr "Pinentry"
@@ -72,25 +129,25 @@ msgid "TLS"
 msgstr "TLS"
 
 msgid "TKD"
-msgstr ""
+msgstr "TKD"
 
 msgid "Any source"
 msgstr "Qualquer fonte"
 
 msgid "User defined source 1"
-msgstr "Fonte definida pelo utilizador 1"
+msgstr "Fonte n. 1 definida pelo utilizador"
 
 msgid "User defined source 2"
-msgstr "Fonte definida pelo utilizador 2"
+msgstr "Fonte n. 2 definida pelo utilizador"
 
 msgid "User defined source 3"
-msgstr "Fonte definida pelo utilizador 3"
+msgstr "Fonte n. 3 definida pelo utilizador"
 
 msgid "User defined source 4"
-msgstr "Fonte definida pelo utilizador 4"
+msgstr "Fonte n. 4 definida pelo utilizador"
 
 msgid "Unknown source"
-msgstr "Fonte não conhecida"
+msgstr "Fonte desconhecida"
 
 msgid "Success"
 msgstr "Sucesso"
@@ -108,49 +165,49 @@ msgid "Invalid public key algorithm"
 msgstr "Algoritmo de chave pública inválido"
 
 msgid "Invalid digest algorithm"
-msgstr "Algoritmo de resumo inválido"
+msgstr "Algoritmo de digest inválido"
 
 msgid "Bad public key"
-msgstr "Chave pública errada"
+msgstr "Chave pública inválida"
 
 msgid "Bad secret key"
-msgstr "Chave secreta errada"
+msgstr "Chave secreta inválida"
 
 msgid "Bad signature"
-msgstr "Assinatura errada"
+msgstr "Assinatura inválida"
 
 msgid "No public key"
 msgstr "Sem chave pública"
 
 msgid "Checksum error"
-msgstr "Soma de verificação errada"
+msgstr "Erro de checksum"
 
 msgid "Bad passphrase"
-msgstr "Senha errada"
+msgstr "Frase-secreta inválida"
 
 msgid "Invalid cipher algorithm"
 msgstr "Algoritmo de cifra inválido"
 
 msgid "Cannot open keyring"
-msgstr "Chaveiro aberto"
+msgstr "Não é possível abrir o porta-chaves"
 
 msgid "Invalid packet"
 msgstr "Pacote inválido"
 
 msgid "Invalid armor"
-msgstr "Armadura inválida"
+msgstr "Blindagem inválida"
 
 msgid "No user ID"
-msgstr "Sem identificador de utilizador"
+msgstr "Sem ID de utilizador"
 
 msgid "No secret key"
 msgstr "Sem chave secreta"
 
 msgid "Wrong secret key used"
-msgstr "Utilizada chave secreta errada"
+msgstr "Usada chave secreta errada"
 
 msgid "Bad session key"
-msgstr "Chave de sessão errada"
+msgstr "Chave de sessão inválida"
 
 msgid "Unknown compression algorithm"
 msgstr "Algoritmo de compressão desconhecido"
@@ -159,10 +216,10 @@ msgid "Number is not prime"
 msgstr "O número não é primo"
 
 msgid "Invalid encoding method"
-msgstr "Método de codificação errado"
+msgstr "Método de codificação inválido"
 
 msgid "Invalid encryption scheme"
-msgstr "Esquema de encriptação errado"
+msgstr "Esquema de cifração inválido"
 
 msgid "Invalid signature scheme"
 msgstr "Esquema de assinatura inválido"
@@ -183,10 +240,10 @@ msgid "Syntax error"
 msgstr "Erro de sintaxe"
 
 msgid "Bad MPI value"
-msgstr "Valor de MPI errado"
+msgstr "Valor de MPI inválido"
 
 msgid "Invalid passphrase"
-msgstr "Senha inválida"
+msgstr "Frase-secreta inválida"
 
 msgid "Invalid signature class"
 msgstr "Classe de assinatura inválida"
@@ -195,37 +252,37 @@ msgid "Resources exhausted"
 msgstr "Recursos esgotados"
 
 msgid "Invalid keyring"
-msgstr "Chaveiro inválido"
+msgstr "Porta-chaves inválido"
 
 msgid "Trust DB error"
-msgstr "Erro na Base de Dados de confiança"
+msgstr "Erro de TrustDB"
 
 msgid "Bad certificate"
-msgstr "Certificado errado"
+msgstr "Certificado inválido"
 
 msgid "Invalid user ID"
-msgstr "Identificador de utilizador errado"
+msgstr "ID de utilizador inválido"
 
 msgid "Unexpected error"
 msgstr "Erro inesperado"
 
 msgid "Time conflict"
-msgstr "Conflito temporal"
+msgstr "Conflito com o tempo"
 
 msgid "Keyserver error"
-msgstr "Erro no servidor de chaves"
+msgstr "Erro do servidor de chaves"
 
 msgid "Wrong public key algorithm"
-msgstr "Algoritmo da chave pública errado"
+msgstr "Algoritmo de chave pública errado"
 
 msgid "Tribute to D. A."
-msgstr "Tributo a D. A."
+msgstr "Homenagem a D. A."
 
 msgid "Weak encryption key"
-msgstr "Chave de encriptação fraca"
+msgstr "Chave de cifração fraca"
 
 msgid "Invalid key length"
-msgstr "Comprimento da chave inválido"
+msgstr "Comprimento de chave inválido"
 
 msgid "Invalid argument"
 msgstr "Argumento inválido"
@@ -240,13 +297,13 @@ msgid "Network error"
 msgstr "Erro de rede"
 
 msgid "Unknown host"
-msgstr "Anfitrião desconhecido"
+msgstr "Host desconhecido"
 
 msgid "Selftest failed"
-msgstr "Auto teste falhou"
+msgstr "Falha no autoteste"
 
 msgid "Data not encrypted"
-msgstr "Dados não encriptados"
+msgstr "Dados não cifrados"
 
 msgid "Data not processed"
 msgstr "Dados não processados"
@@ -261,19 +318,19 @@ msgid "Invalid value"
 msgstr "Valor inválido"
 
 msgid "Bad certificate chain"
-msgstr "Cadeia de certificados errada"
+msgstr "Corrente de certificados inválida"
 
 msgid "Missing certificate"
-msgstr "Certificado em falta"
+msgstr "Certificado ausente"
 
 msgid "No data"
-msgstr "Não existem dados"
+msgstr "Sem dados"
 
 msgid "Bug"
-msgstr "Erro"
+msgstr "Bug"
 
 msgid "Not supported"
-msgstr "Não suportado"
+msgstr "Insuportado"
 
 msgid "Invalid operation code"
 msgstr "Código de operação inválido"
@@ -288,31 +345,31 @@ msgid "EOF (gcrypt)"
 msgstr "EOF (gcrypt)"
 
 msgid "Invalid object"
-msgstr "Objecto inválido"
+msgstr "Objeto inválido"
 
 msgid "Provided object is too short"
-msgstr "O objecto fornecido é demasiado curto"
+msgstr "O objeto fornecido é demasiado curto"
 
 msgid "Provided object is too large"
-msgstr "O objecto fornecido é demasiado grande"
+msgstr "O objeto fornecido é demasiado grande"
 
 msgid "Missing item in object"
-msgstr "Item em falta no objecto"
+msgstr "Item ausente no objeto"
 
 msgid "Not implemented"
 msgstr "Não implementado"
 
 msgid "Conflicting use"
-msgstr "Utilização em conflito"
+msgstr "Uso com conflitos"
 
 msgid "Invalid cipher mode"
 msgstr "Modo de cifra inválido"
 
 msgid "Invalid flag"
-msgstr "Flag inválido"
+msgstr "Flag inválida"
 
 msgid "Invalid handle"
-msgstr "Identificador inválido"
+msgstr "Handle inválido"
 
 msgid "Result truncated"
 msgstr "Resultado truncado"
@@ -324,43 +381,43 @@ msgid "Invalid response"
 msgstr "Resposta inválida"
 
 msgid "No agent running"
-msgstr "Nenhum agente em execução"
+msgstr "Nenhum agent em execução"
 
 msgid "Agent error"
-msgstr "Erro no agente"
+msgstr "Erro do agent"
 
 msgid "Invalid data"
 msgstr "Dados inválidos"
 
 msgid "Unspecific Assuan server fault"
-msgstr "Falha não especificada no servidor Assuan"
+msgstr "Falha inespecífica do servidor Assuan"
 
 msgid "General Assuan error"
-msgstr "Erro Assuan genérico"
+msgstr "Erro genérico de Assuan"
 
 msgid "Invalid session key"
 msgstr "Chave de sessão inválida"
 
 msgid "Invalid S-expression"
-msgstr "Expressão simbólica inválida"
+msgstr "S-expression inválida"
 
 msgid "Unsupported algorithm"
-msgstr "Algoritmo não suportado"
+msgstr "Algoritmo insuportado"
 
 msgid "No pinentry"
 msgstr "Sem pinentry"
 
 msgid "pinentry error"
-msgstr "Erro no pinentry"
+msgstr "erro de pinentry"
 
 msgid "Bad PIN"
-msgstr "PIN errado"
+msgstr "PIN inválido"
 
 msgid "Invalid name"
 msgstr "Nome inválido"
 
 msgid "Bad data"
-msgstr "Dados errados"
+msgstr "Dados inválidos"
 
 msgid "Invalid parameter"
 msgstr "Parâmetro inválido"
@@ -372,46 +429,46 @@ msgid "No dirmngr"
 msgstr "Sem dirmngr"
 
 msgid "dirmngr error"
-msgstr "Erro no dirmngr"
+msgstr "erro dirmngr"
 
 msgid "Certificate revoked"
 msgstr "Certificado revogado"
 
 msgid "No CRL known"
-msgstr "Sem CRL conhecido"
+msgstr "Nenhuma CRL conhecida"
 
 msgid "CRL too old"
-msgstr "CRL muito velho"
+msgstr "CRL demasiada velha"
 
 msgid "Line too long"
-msgstr "Linha demasiado longa"
+msgstr "Linha demasiada longa"
 
 msgid "Not trusted"
-msgstr "Não é de confiança"
+msgstr "Não confiável"
 
 msgid "Operation cancelled"
 msgstr "Operação cancelada"
 
 msgid "Bad CA certificate"
-msgstr "Certificado BA errado"
+msgstr "Certificado CA inválido"
 
 msgid "Certificate expired"
-msgstr "Certificado expirou"
+msgstr "Certificado expirado"
 
 msgid "Certificate too young"
 msgstr "Certificado demasiado novo"
 
 msgid "Unsupported certificate"
-msgstr "Certificado não suportado"
+msgstr "Certificado insuportado"
 
 msgid "Unknown S-expression"
-msgstr "Expressão simbólica desconhecida"
+msgstr "S-expression desconhecida"
 
 msgid "Unsupported protection"
-msgstr "Protecção não suportada"
+msgstr "Proteção insuportada"
 
 msgid "Corrupted protection"
-msgstr "Protecção corrompida"
+msgstr "Proteção corrompida"
 
 msgid "Ambiguous name"
 msgstr "Nome ambíguo"
@@ -420,7 +477,7 @@ msgid "Card error"
 msgstr "Erro de cartão"
 
 msgid "Card reset required"
-msgstr "Reinicialização de cartão necessária"
+msgstr "Reset do cartão necessário"
 
 msgid "Card removed"
 msgstr "Cartão removido"
@@ -447,28 +504,28 @@ msgid "Invalid index"
 msgstr "Índice inválido"
 
 msgid "Invalid ID"
-msgstr "Identificador inválido"
+msgstr "ID inválida"
 
 msgid "No SmartCard daemon"
-msgstr "Sem demónio de SmartCard"
+msgstr "Sem daemon de SmartCard"
 
 msgid "SmartCard daemon error"
-msgstr "Erro no demónio de SmartCard"
+msgstr "Erro do daemon SmartCard"
 
 msgid "Unsupported protocol"
-msgstr "Protocolo não suportado"
+msgstr "Protocolo insuportado"
 
 msgid "Bad PIN method"
-msgstr "Método de PIN errado"
+msgstr "Método de PIN inválido"
 
 msgid "Card not initialized"
 msgstr "Cartão não inicializado"
 
 msgid "Unsupported operation"
-msgstr "Operação não suportada"
+msgstr "Operação insuportada"
 
 msgid "Wrong key usage"
-msgstr "Utilização de chave errada"
+msgstr "Uso errado de chave"
 
 msgid "Nothing found"
 msgstr "Nada encontrado"
@@ -477,7 +534,7 @@ msgid "Wrong blob type"
 msgstr "Tipo de blob errado"
 
 msgid "Missing value"
-msgstr "Valor em falta"
+msgstr "Valor ausente"
 
 msgid "Hardware problem"
 msgstr "Problema de hardware"
@@ -486,19 +543,19 @@ msgid "PIN blocked"
 msgstr "PIN bloqueado"
 
 msgid "Conditions of use not satisfied"
-msgstr "Condições de utilização não satisfeitas"
+msgstr "Condições de uso não satisfeitas"
 
 msgid "PINs are not synced"
-msgstr "PINs não estão sincronizados"
+msgstr "Os PINs não estão sincronizados"
 
 msgid "Invalid CRL"
-msgstr "CRL inválido"
+msgstr "CRL inválida"
 
 msgid "BER error"
-msgstr "Erro de BER"
+msgstr "Erro BER"
 
 msgid "Invalid BER"
-msgstr "BER inválido"
+msgstr "BER inválida"
 
 msgid "Element not found"
 msgstr "Elemento não encontrado"
@@ -507,49 +564,49 @@ msgid "Identifier not found"
 msgstr "Identificador não encontrado"
 
 msgid "Invalid tag"
-msgstr "Etiqueta inválida"
+msgstr "Tag inválida"
 
 msgid "Invalid length"
 msgstr "Comprimento inválido"
 
 msgid "Invalid key info"
-msgstr "Informação de chave errada"
+msgstr "Informações de chave inválidas"
 
 msgid "Unexpected tag"
-msgstr "Etiqueta inesperada"
+msgstr "Tag inesperada"
 
 msgid "Not DER encoded"
-msgstr "Não codificado através de DER"
+msgstr "Não codificado em DER"
 
 msgid "No CMS object"
-msgstr "Sem objecto CMS"
+msgstr "Nenhum objeto CMS"
 
 msgid "Invalid CMS object"
-msgstr "Objecto CMS inválido"
+msgstr "Objeto CMS inválido"
 
 msgid "Unknown CMS object"
-msgstr "Objecto CMS desconhecido"
+msgstr "Objeto CMS desconhecido"
 
 msgid "Unsupported CMS object"
-msgstr "Objecto CMS não suportado"
+msgstr "Objeto CMS insuportado"
 
 msgid "Unsupported encoding"
-msgstr "Codificação não suportada"
+msgstr "Codificação insuportada"
 
 msgid "Unsupported CMS version"
-msgstr "Versão de CMS não suportada"
+msgstr "Versão do CMS insuportada"
 
 msgid "Unknown algorithm"
 msgstr "Algoritmo desconhecido"
 
 msgid "Invalid crypto engine"
-msgstr "Motor de encriptação inválido"
+msgstr "Motor da cifragem inválido"
 
 msgid "Public key not trusted"
-msgstr "Chave pública não é de confiança"
+msgstr "Chave pública não confiável"
 
 msgid "Decryption failed"
-msgstr "Desencriptação falhada"
+msgstr "Falha na decifração"
 
 msgid "Key expired"
 msgstr "Chave expirada"
@@ -567,34 +624,34 @@ msgid "Duplicated value"
 msgstr "Valor duplicado"
 
 msgid "Missing action"
-msgstr "Acção em falta"
+msgstr "Ação ausente"
 
 msgid "ASN.1 module not found"
 msgstr "Módulo ASN.1 não encontrado"
 
 msgid "Invalid OID string"
-msgstr "Sequência OID inválida"
+msgstr "String OID inválida"
 
 msgid "Invalid time"
 msgstr "Tempo inválido"
 
 msgid "Invalid CRL object"
-msgstr "Objecto CRL inválido"
+msgstr "Objeto CRL inválido"
 
 msgid "Unsupported CRL version"
 msgstr "Versão CRL não suportada"
 
 msgid "Invalid certificate object"
-msgstr "Objecto de certificado inválido"
+msgstr "Objeto de certificado inválido"
 
 msgid "Unknown name"
 msgstr "Nome desconhecido"
 
 msgid "A locale function failed"
-msgstr "Uma função de localização falhou"
+msgstr "Falha em uma função de locale"
 
 msgid "Not locked"
-msgstr "Não trancado"
+msgstr "Não bloqueado"
 
 msgid "Protocol violation"
 msgstr "Violação de protocolo"
@@ -609,10 +666,10 @@ msgid "Unknown extension"
 msgstr "Extensão desconhecida"
 
 msgid "Unknown critical extension"
-msgstr "Extensão crítica desconhecida"
+msgstr "Extensão fundamental desconhecida"
 
 msgid "Locked"
-msgstr "Trancado"
+msgstr "Bloqueado"
 
 msgid "Unknown option"
 msgstr "Opção desconhecida"
@@ -624,22 +681,22 @@ msgid "Not operational"
 msgstr "Não operacional"
 
 msgid "No passphrase given"
-msgstr "Nenhuma senha dada"
+msgstr "Nenhuma frase-secreta fornecida"
 
 msgid "No PIN given"
-msgstr "Sem PIN dado"
+msgstr "Nenhum PIN fornecido"
 
 msgid "Not enabled"
 msgstr "Não habilitado"
 
 msgid "No crypto engine"
-msgstr "Sem motor de encriptação"
+msgstr "Sem motor de cifragem"
 
 msgid "Missing key"
-msgstr "Chave em falta"
+msgstr "Chave ausente"
 
 msgid "Too many objects"
-msgstr "Demasiados objectos"
+msgstr "Demasiados objetos"
 
 msgid "Limit reached"
 msgstr "Limite atingido"
@@ -648,7 +705,7 @@ msgid "Not initialized"
 msgstr "Não inicializado"
 
 msgid "Missing issuer certificate"
-msgstr "Certificado do emissor em falta"
+msgstr "Certificado de emissor ausente"
 
 msgid "No keyserver available"
 msgstr "Sem servidor de chaves disponível"
@@ -666,16 +723,16 @@ msgid "Ambiguous result"
 msgstr "Resultado ambíguo"
 
 msgid "No crypto context"
-msgstr "Sem contexto de encriptação"
+msgstr "Sem contexto de cifragem"
 
 msgid "Wrong crypto context"
-msgstr "Contexto de encriptação errado"
+msgstr "Contexto de cifragem errado"
 
 msgid "Bad crypto context"
-msgstr "Contexto de encriptação inválido"
+msgstr "Contexto de cifragem inválido"
 
 msgid "Conflict in the crypto context"
-msgstr "Conflito no contexto de encriptação"
+msgstr "Conflito no contexto de cifragem"
 
 msgid "Broken public key"
 msgstr "Chave pública quebrada"
@@ -690,209 +747,199 @@ msgid "Operation fully cancelled"
 msgstr "Operação totalmente cancelada"
 
 msgid "Operation not yet finished"
-msgstr "Operação ainda não completada"
+msgstr "Operação ainda não concluída"
 
 msgid "Buffer too short"
 msgstr "Buffer demasiado curto"
 
 msgid "Invalid length specifier in S-expression"
-msgstr "Especificador de comprimento inválido na expressão simbólica"
+msgstr "Especificador de comprimento inválido na S-expression"
 
 msgid "String too long in S-expression"
-msgstr "Sequência de caracteres demasiado longa na expressão simbólica"
+msgstr "String demasiada longa na S-expression"
 
 msgid "Unmatched parentheses in S-expression"
-msgstr "Parênteses não correspondidos na expressão simbólica"
+msgstr "Parênteses sem correspondência na S-expression"
 
 msgid "S-expression not canonical"
-msgstr "Expressão simbólica não canónica"
+msgstr "S-expression não canónica"
 
 msgid "Bad character in S-expression"
-msgstr "Carácter errado na expressão simbólica"
+msgstr "Caractere inválido na S-expression"
 
 msgid "Bad quotation in S-expression"
-msgstr "Plicas erradas na expressão simbólica"
+msgstr "Citação inválida na S-expression"
 
 msgid "Zero prefix in S-expression"
-msgstr "Prefixo zero na expressão simbólica"
+msgstr "Prefixo zero na S-expression"
 
 msgid "Nested display hints in S-expression"
-msgstr "Dicas de exibição aninhadas na expressão simbólica"
+msgstr "Dicas de exibição aninhadas na S-expression"
 
 msgid "Unmatched display hints"
-msgstr "Dicas de exibição não correspondidas"
+msgstr "Dicas de exibição sem correspondência"
 
 msgid "Unexpected reserved punctuation in S-expression"
-msgstr "Pontuação reservada não esperada na expressão simbólica"
+msgstr "Pontuação reservada inesperada na S-expression"
 
 msgid "Bad hexadecimal character in S-expression"
-msgstr "Carácter hexadecimal errado na expressão simbólica"
+msgstr "Caractere hexadecimal inválido na S-expression"
 
 msgid "Odd hexadecimal numbers in S-expression"
-msgstr "Números hexadecimais ímpares na expressão simbólica"
+msgstr "Números hexadecimais estranhos na S-expression"
 
 msgid "Bad octal character in S-expression"
-msgstr "Carácter octal errado na expressão simbólica"
+msgstr "Caractere octal inválido na S-expression"
 
 msgid "All subkeys are expired or revoked"
-msgstr ""
+msgstr "Todas as subchaves estão expiradas ou revogadas"
 
-#, fuzzy
-#| msgid "Data not encrypted"
 msgid "Database is corrupted"
-msgstr "Dados não encriptados"
+msgstr "A base de dados está corrompida"
 
 msgid "Server indicated a failure"
-msgstr ""
+msgstr "O servidor indicou uma falha"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "No name"
-msgstr "Nome desconhecido"
+msgstr "Sem nome"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "No key"
-msgstr "Sem chave pública"
+msgstr "Sem chave"
 
 msgid "Legacy key"
-msgstr ""
+msgstr "Chave de legado"
 
-#, fuzzy
-#| msgid "Buffer too short"
 msgid "Request too short"
-msgstr "Buffer demasiado curto"
+msgstr "Pedido demasiado curto"
 
-#, fuzzy
-#| msgid "Line too long"
 msgid "Request too long"
-msgstr "Linha demasiado longa"
+msgstr "Pedido demasiado longo"
 
 msgid "Object is in termination state"
-msgstr ""
+msgstr "O objeto está no estado de ser terminado"
 
 msgid "No certificate chain"
-msgstr "Sem cadeia de certificados"
+msgstr "Sem corrente de certificados"
 
 msgid "Certificate is too large"
-msgstr "Certificado é demasiado grande"
+msgstr "O certificado é demasiado grande"
 
 msgid "Invalid record"
 msgstr "Registo inválido"
 
 msgid "The MAC does not verify"
-msgstr "O MAC não se verifica"
+msgstr "O MAC não verifica"
 
 msgid "Unexpected message"
 msgstr "Mensagem inesperada"
 
 msgid "Compression or decompression failed"
-msgstr "Compressão ou descompressão falhada"
+msgstr "Falha na compressão ou descompressão"
 
 msgid "A counter would wrap"
-msgstr "Um contador daria a volta"
+msgstr "Um contador faria wrap"
 
 msgid "Fatal alert message received"
 msgstr "Mensagem de alerta fatal recebida"
 
 msgid "No cipher algorithm"
-msgstr "Algoritmo de criptografia inexistente"
+msgstr "Sem algoritmo de cifra"
 
 msgid "Missing client certificate"
-msgstr "Certificado cliente em falta"
+msgstr "Certificado de cliente ausente"
 
 msgid "Close notification received"
-msgstr "Notificação de encerramento recebida"
+msgstr "Recebida notificação de fechar"
 
 msgid "Ticket expired"
-msgstr "Ticket expirou"
+msgstr "Bilhete expirado"
 
 msgid "Bad ticket"
-msgstr "Ticket errado"
+msgstr "Bilhete inválido"
 
 msgid "Unknown identity"
 msgstr "Identidade desconhecida"
 
 msgid "Bad certificate message in handshake"
-msgstr "Mensagem de certificado errada no handshake"
+msgstr "Mensagem de certificado inválida no handshake"
 
 msgid "Bad certificate request message in handshake"
-msgstr "Mensagem de pedido de certificado errada no handshake"
+msgstr "Mensagem de pedido de certificado inválida no handshake"
 
 msgid "Bad certificate verify message in handshake"
-msgstr "Mensagem de verificação de certificado errada no handshake"
+msgstr "Mensagem de verificação de certificado inválida no handshake"
 
 msgid "Bad change cipher message in handshake"
-msgstr "Mensagem de alteração de certificado errada no handshake"
+msgstr "Mensagem de modificação de cifra inválida no handshake"
 
 msgid "Bad client hello message in handshake"
-msgstr "Mensagem de hello do cliente errada no handshake"
+msgstr "Mensagem de hello do cliente inválida no handshake"
 
 msgid "Bad server hello message in handshake"
-msgstr "Mensagem de hello do servidor errada no handshake"
+msgstr "Mensagem de hello do servidor inválida no handshake"
 
 msgid "Bad server hello done message in handshake"
-msgstr "Mensagem de hello done do servidor errada no handshake"
+msgstr "Mensagem de hello done do servidor inválida no handshake"
 
 msgid "Bad finished message in handshake"
-msgstr "Mensagem de conclusão errada no handshake"
+msgstr "Mensagem de terminar inválida no handshake"
 
 msgid "Bad server key exchange message in handshake"
-msgstr "Mensagem de troca de chaves do servidor errada no handshake"
+msgstr "Mensagem de troca de chave do servidor inválida no handshake"
 
 msgid "Bad client key exchange message in handshake"
-msgstr "Mensagem de troca de chaves do cliente errada no handshake"
+msgstr "Mensagem de troca de chave do cliente inválida no handshake"
 
 msgid "Bogus string"
-msgstr "Sequência de caracteres adulterada"
+msgstr "String falsa"
 
 msgid "Forbidden"
-msgstr ""
+msgstr "Proibido"
 
 msgid "Key disabled"
 msgstr "Chave desabilitada"
 
 msgid "Not possible with a card based key"
-msgstr "Não possível com uma chave baseada num cartão"
+msgstr "Não é possível com uma chave de cartão"
 
 msgid "Invalid lock object"
-msgstr "Objecto de tranca inválido"
+msgstr "Objeto de bloqueio inválido"
 
 msgid "True"
-msgstr ""
+msgstr "Verdadeiro"
 
 msgid "False"
-msgstr ""
+msgstr "Falso"
 
 msgid "General IPC error"
 msgstr "Erro genérico de IPC"
 
 msgid "IPC accept call failed"
-msgstr "Chamada de aceitação de IPC falhada"
+msgstr "Falha na chamada de accept IPC"
 
 msgid "IPC connect call failed"
-msgstr "Chamada de conexão de IPC falhada"
+msgstr "Falha na chamada de connect IPC"
 
 msgid "Invalid IPC response"
-msgstr "Resposta de IPC inválida"
+msgstr "Resposta IPC inválida"
 
 msgid "Invalid value passed to IPC"
-msgstr "Valor inválido passado ao IPC"
+msgstr "Valor inválido passado para IPC"
 
 msgid "Incomplete line passed to IPC"
-msgstr "Linha inválida passada ao IPC"
+msgstr "Linha incompleta passada para IPC"
 
 msgid "Line passed to IPC too long"
-msgstr "Linha passada ao IPC demasiado longa"
+msgstr "Linha demasiada longa passada para IPC"
 
 msgid "Nested IPC commands"
 msgstr "Comandos IPC aninhados"
 
 msgid "No data callback in IPC"
-msgstr "Sem retorno de chamada de dados no IPC"
+msgstr "Sem data callback no IPC"
 
 msgid "No inquire callback in IPC"
-msgstr "Sem retorno de chamada de inquirição no IPC"
+msgstr "Sem inquire callback no IPC"
 
 msgid "Not an IPC server"
 msgstr "Não é um servidor IPC"
@@ -901,13 +948,13 @@ msgid "Not an IPC client"
 msgstr "Não é um cliente IPC"
 
 msgid "Problem starting IPC server"
-msgstr "Problema na iniciação do servidor IPC"
+msgstr "Problema ao iniciar o servidor IPC"
 
 msgid "IPC read error"
-msgstr "Erro de leitura de IPC"
+msgstr "Erro de leitura IPC"
 
 msgid "IPC write error"
-msgstr "Erro de escrita de IPC"
+msgstr "Erro de gravação IPC"
 
 msgid "Too much data for IPC layer"
 msgstr "Demasiados dados para a camada IPC"
@@ -922,659 +969,499 @@ msgid "IPC syntax error"
 msgstr "Erro de sintaxe IPC"
 
 msgid "IPC call has been cancelled"
-msgstr "Chamada de IPC foi cancelada"
+msgstr "A chamada IPC foi cancelada"
 
 msgid "No input source for IPC"
-msgstr "Sem fonte de entrada para o IPC"
+msgstr "Sem fonte de entrada para IPC"
 
 msgid "No output source for IPC"
-msgstr "Nenhuma fonte de saída para IPC"
+msgstr "Sem fonte de saída para IPC"
 
 msgid "IPC parameter error"
 msgstr "Erro de parâmetro IPC"
 
 msgid "Unknown IPC inquire"
-msgstr "Inquirição IPC desconhecida"
+msgstr "IPC inquire desconhecido"
 
-#, fuzzy
-#| msgid "No crypto engine"
 msgid "Crypto engine too old"
-msgstr "Sem motor de encriptação"
+msgstr "Motor de cifragem demasiado antigo"
 
 msgid "Screen or window too small"
-msgstr ""
+msgstr "Tela ou janela demasiada pequena"
 
 msgid "Screen or window too large"
-msgstr ""
+msgstr "Tela ou janela demasiada grande"
 
 msgid "Required environment variable not set"
-msgstr ""
+msgstr "Variável de ambiente necessária não foi definida"
 
 msgid "User ID already exists"
-msgstr ""
+msgstr "O ID de utilizador já existe"
 
 msgid "Name already exists"
-msgstr ""
+msgstr "O nome já existe"
 
-#, fuzzy
-#| msgid "Duplicated value"
 msgid "Duplicated name"
-msgstr "Valor duplicado"
+msgstr "Nome duplicado"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Object is too young"
-msgstr "Certificado demasiado novo"
+msgstr "O objeto é demasiado novo"
 
-#, fuzzy
-#| msgid "Provided object is too short"
 msgid "Object is too old"
-msgstr "O objecto fornecido é demasiado curto"
+msgstr "O objeto é demasiado antigo"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "Unknown flag"
-msgstr "Nome desconhecido"
+msgstr "Flag desconhecida"
 
-#, fuzzy
-#| msgid "Invalid operation code"
 msgid "Invalid execution order"
-msgstr "Código de operação inválido"
+msgstr "Ordem de execução inválida"
 
 msgid "Already fetched"
-msgstr ""
+msgstr "Já buscado"
 
 msgid "Try again later"
-msgstr ""
+msgstr "Tente novamente mais tarde"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "Wrong name"
-msgstr "Nome desconhecido"
+msgstr "Nome errado"
 
-#, fuzzy
-#| msgid "Not enabled"
 msgid "Not authenticated"
-msgstr "Não habilitado"
+msgstr "Não autenticado"
 
-#, fuzzy
-#| msgid "Unsupported protection"
 msgid "Bad authentication"
-msgstr "Protecção não suportada"
+msgstr "Autenticação inválida"
 
-#, fuzzy
-#| msgid "No agent running"
 msgid "No Keybox daemon running"
-msgstr "Nenhum agente em execução"
+msgstr "Nenhum daemon Keybox em execução"
 
-#, fuzzy
-#| msgid "SmartCard daemon error"
 msgid "Keybox daemon error"
-msgstr "Erro no demónio de SmartCard"
+msgstr "Erro do daemon Keybox"
 
 msgid "Service is not running"
-msgstr ""
+msgstr "O serviço não está em execução"
 
-#, fuzzy
-#| msgid "Keyserver error"
 msgid "Service error"
-msgstr "Erro no servidor de chaves"
+msgstr "Erro de serviço"
 
-#, fuzzy
-#| msgid "Bad PIN"
 msgid "Bad PUK"
-msgstr "PIN errado"
+msgstr "PUK inválido"
 
 msgid "No reset code"
-msgstr ""
+msgstr "Sem código de reset"
 
-#, fuzzy
-#| msgid "Bad secret key"
 msgid "Bad reset code"
-msgstr "Chave secreta errada"
+msgstr "Código de reset inválido"
 
 msgid "System bug detected"
-msgstr ""
+msgstr "Bug de sistema detetado"
 
-#, fuzzy
-#| msgid "Unknown system error"
 msgid "Unknown DNS error"
-msgstr "Erro de sistema desconhecido"
+msgstr "Erro de DNS desconhecido"
 
-#, fuzzy
-#| msgid "Invalid OID string"
 msgid "Invalid DNS section"
-msgstr "Sequência OID inválida"
+msgstr "Seção DNS inválida"
 
-#, fuzzy
-#| msgid "Invalid S-expression"
 msgid "Invalid textual address form"
-msgstr "Expressão simbólica inválida"
+msgstr "Formulário de endereço de texto inválido"
 
-#, fuzzy
-#| msgid "Missing issuer certificate"
 msgid "Missing DNS query packet"
-msgstr "Certificado do emissor em falta"
+msgstr "Pacote de consulta DNS ausente"
 
 msgid "Missing DNS answer packet"
-msgstr ""
+msgstr "Pacote de resposta DNS ausente"
 
 msgid "Connection closed in DNS"
-msgstr ""
+msgstr "Conexão fechada no DNS"
 
-#, fuzzy
-#| msgid "Decryption failed"
 msgid "Verification failed in DNS"
-msgstr "Desencriptação falhada"
+msgstr "Falhou a verificação no DNS"
 
-#, fuzzy
-#| msgid "Timeout"
 msgid "DNS Timeout"
-msgstr "Tempo limite"
+msgstr "Tempo limite do DNS"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "General LDAP error"
-msgstr "Erro genérico de IPC"
+msgstr "Erro genérico de LDAP"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP attribute error"
-msgstr "Erro genérico"
+msgstr "Erro genérico de atributo LDAP"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP name error"
-msgstr "Erro genérico"
+msgstr "Erro genérico de nome LDAP"
 
-#, fuzzy
-#| msgid "General Assuan error"
 msgid "General LDAP security error"
-msgstr "Erro Assuan genérico"
+msgstr "Erro genérico de segurança LDAP"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP service error"
-msgstr "Erro genérico"
+msgstr "Erro genérico de serviço LDAP"
 
-#, fuzzy
-#| msgid "General Assuan error"
 msgid "General LDAP update error"
-msgstr "Erro Assuan genérico"
+msgstr "Erro genérico de atualização LDAP"
 
 msgid "Experimental LDAP error code"
-msgstr ""
+msgstr "Código de erro LDAP experimental"
 
-#, fuzzy
-#| msgid "IPC write error"
 msgid "Private LDAP error code"
-msgstr "Erro de escrita de IPC"
+msgstr "Código de erro LDAP privado"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "Other general LDAP error"
-msgstr "Erro genérico de IPC"
+msgstr "Outro erro genérico de LDAP"
 
-#, fuzzy
-#| msgid "IPC connect call failed"
 msgid "LDAP connecting failed (X)"
-msgstr "Chamada de conexão de IPC falhada"
+msgstr "Falha na conexão LDAP (X)"
 
-#, fuzzy
-#| msgid "General error"
 msgid "LDAP referral limit exceeded"
-msgstr "Erro genérico"
+msgstr "Limite de referral LDAP excedido"
 
 msgid "LDAP client loop"
-msgstr ""
+msgstr "Ciclo de cliente de LDAP"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "No LDAP results returned"
-msgstr "Reinicialização de cartão necessária"
+msgstr "Retornou nenhum resultado LDAP"
 
-#, fuzzy
-#| msgid "Element not found"
 msgid "LDAP control not found"
-msgstr "Elemento não encontrado"
+msgstr "Controle LDAP não encontrado"
 
-#, fuzzy
-#| msgid "Not supported"
 msgid "Not supported by LDAP"
-msgstr "Não suportado"
+msgstr "Não suportado pelo LDAP"
 
-#, fuzzy
-#| msgid "Unexpected error"
 msgid "LDAP connect error"
-msgstr "Erro inesperado"
+msgstr "Erro de conexão LDAP"
 
 msgid "Out of memory in LDAP"
-msgstr ""
+msgstr "Sem memória no LDAP"
 
 msgid "Bad parameter to an LDAP routine"
-msgstr ""
+msgstr "Parâmetro inválido para uma rotina LDAP"
 
-#, fuzzy
-#| msgid "Unsupported operation"
 msgid "User cancelled LDAP operation"
-msgstr "Operação não suportada"
+msgstr "Operação LDAP cancelada pelo utilizador"
 
-#, fuzzy
-#| msgid "Bad certificate"
 msgid "Bad LDAP search filter"
-msgstr "Certificado errado"
+msgstr "Filtro de pesquisa LDAP inválido"
 
-#, fuzzy
-#| msgid "Unknown extension"
 msgid "Unknown LDAP authentication method"
-msgstr "Extensão desconhecida"
+msgstr "Método de autenticação LDAP desconhecido"
 
-#, fuzzy
-#| msgid "Timeout"
 msgid "Timeout in LDAP"
-msgstr "Tempo limite"
+msgstr "Tempo limite no LDAP"
 
-#, fuzzy
-#| msgid "dirmngr error"
 msgid "LDAP decoding error"
-msgstr "Erro no dirmngr"
+msgstr "Erro de descodificação LDAP"
 
-#, fuzzy
-#| msgid "dirmngr error"
 msgid "LDAP encoding error"
-msgstr "Erro no dirmngr"
+msgstr "Erro de codificação LDAP"
 
-#, fuzzy
-#| msgid "IPC read error"
 msgid "LDAP local error"
-msgstr "Erro de leitura de IPC"
+msgstr "Erro local LDAP"
 
-#, fuzzy
-#| msgid "Not an IPC server"
 msgid "Cannot contact LDAP server"
-msgstr "Não é um servidor IPC"
+msgstr "Não é possível contatar o servidor LDAP"
 
-#, fuzzy
-#| msgid "Success"
 msgid "LDAP success"
-msgstr "Sucesso"
+msgstr "Sucesso com o LDAP"
 
-#, fuzzy
-#| msgid "Configuration error"
 msgid "LDAP operations error"
-msgstr "Erro de configuração"
+msgstr "Erro de operações LDAP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "LDAP protocol error"
-msgstr "Violação de protocolo"
+msgstr "Erro de protocolo LDAP"
 
 msgid "Time limit exceeded in LDAP"
-msgstr ""
+msgstr "Limite de tempo excedido no LDAP"
 
 msgid "Size limit exceeded in LDAP"
-msgstr ""
+msgstr "Limite de tamanho excedido no LDAP"
 
 msgid "LDAP compare false"
-msgstr ""
+msgstr "Comparação LDAP deu falso"
 
 msgid "LDAP compare true"
-msgstr ""
+msgstr "Comparação LDAP deu verdadeiro"
 
-#, fuzzy
-#| msgid "Unknown extension"
 msgid "LDAP authentication method not supported"
-msgstr "Extensão desconhecida"
+msgstr "Método de autenticação LDAP não suportado"
 
 msgid "Strong(er) LDAP authentication required"
-msgstr ""
+msgstr "Autenticação LDAP (mais) forte necessária"
 
-#, fuzzy
-#| msgid "Fatal alert message received"
 msgid "Partial LDAP results+referral received"
-msgstr "Mensagem de alerta fatal recebida"
+msgstr "Recebido resultados+referral parciais do LDAP"
 
-#, fuzzy
-#| msgid "General error"
 msgid "LDAP referral"
-msgstr "Erro genérico"
+msgstr "Referral LDAP"
 
 msgid "Administrative LDAP limit exceeded"
-msgstr ""
+msgstr "Limite administrativo do LDAP excedido"
 
 msgid "Critical LDAP extension is unavailable"
-msgstr ""
+msgstr "Extensão fundamental do LDAP não está disponível"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "Confidentiality required by LDAP"
-msgstr "Reinicialização de cartão necessária"
+msgstr "Confidencialidade exigida pelo LDAP"
 
 msgid "LDAP SASL bind in progress"
-msgstr ""
+msgstr "Ligação SASL LDAP em andamento"
 
 msgid "No such LDAP attribute"
-msgstr ""
+msgstr "Sem esse atributo LDAP"
 
-#, fuzzy
-#| msgid "Invalid attribute"
 msgid "Undefined LDAP attribute type"
-msgstr "Atributo inválido"
+msgstr "Tipo de atributo LDAP indefinido"
 
-#, fuzzy
-#| msgid "Unsupported protection"
 msgid "Inappropriate matching in LDAP"
-msgstr "Protecção não suportada"
+msgstr "Correspondência inadequada no LDAP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "Constraint violation in LDAP"
-msgstr "Violação de protocolo"
+msgstr "Violação de uma restrição no LDAP"
 
 msgid "LDAP type or value exists"
-msgstr ""
+msgstr "Tipo ou valor LDAP existe"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid syntax in LDAP"
-msgstr "Estado inválido"
+msgstr "Sintaxe inválida no LDAP"
 
-#, fuzzy
-#| msgid "No CMS object"
 msgid "No such LDAP object"
-msgstr "Sem objecto CMS"
+msgstr "Sem esse objeto LDAP"
 
-#, fuzzy
-#| msgid "Hardware problem"
 msgid "LDAP alias problem"
-msgstr "Problema de hardware"
+msgstr "Problema de alias LDAP"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid DN syntax in LDAP"
-msgstr "Estado inválido"
+msgstr "Sintaxe DN inválida no LDAP"
 
 msgid "LDAP entry is a leaf"
-msgstr ""
+msgstr "Entrada LDAP é uma folha"
 
-#, fuzzy
-#| msgid "Encoding problem"
 msgid "LDAP alias dereferencing problem"
-msgstr "Problema de codificação"
+msgstr "Problema de desreferenciamento de alias LDAP"
 
 msgid "LDAP proxy authorization failure (X)"
-msgstr ""
+msgstr "Falha na autorização de proxy LDAP (X)"
 
-#, fuzzy
-#| msgid "Unsupported protection"
 msgid "Inappropriate LDAP authentication"
-msgstr "Protecção não suportada"
+msgstr "Autenticação LDAP inadequada"
 
-#, fuzzy
-#| msgid "Invalid card"
 msgid "Invalid LDAP credentials"
-msgstr "Cartão inválido"
+msgstr "Credenciais LDAP inválidas"
 
 msgid "Insufficient access for LDAP"
-msgstr ""
+msgstr "Acesso insuficiente para LDAP"
 
 msgid "LDAP server is busy"
-msgstr ""
+msgstr "O servidor LDAP está ocupado"
 
-#, fuzzy
-#| msgid "No keyserver available"
 msgid "LDAP server is unavailable"
-msgstr "Sem servidor de chaves disponível"
+msgstr "O servidor LDAP está indisponível"
 
 msgid "LDAP server is unwilling to perform"
-msgstr ""
+msgstr "O servidor LDAP não está a obedecer"
 
 msgid "Loop detected by LDAP"
-msgstr ""
+msgstr "Ciclo detetado pelo LDAP"
 
-#, fuzzy
-#| msgid "Missing action"
 msgid "LDAP naming violation"
-msgstr "Acção em falta"
+msgstr "Violação de nomenclatura LDAP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "LDAP object class violation"
-msgstr "Violação de protocolo"
+msgstr "Violação de classe de objeto LDAP"
 
-#, fuzzy
-#| msgid "Operation not yet finished"
 msgid "LDAP operation not allowed on non-leaf"
-msgstr "Operação ainda não completada"
+msgstr "Operação LDAP proibida em não-folhas"
 
-#, fuzzy
-#| msgid "Operation cancelled"
 msgid "LDAP operation not allowed on RDN"
-msgstr "Operação cancelada"
+msgstr "Operação LDAP não permitida no RDN"
 
 msgid "Already exists (LDAP)"
-msgstr ""
+msgstr "Já existe (LDAP)"
 
 msgid "Cannot modify LDAP object class"
-msgstr ""
+msgstr "Não é possível modificar a classe de objeto LDAP"
 
-#, fuzzy
-#| msgid "Line too long"
 msgid "LDAP results too large"
-msgstr "Linha demasiado longa"
+msgstr "Resultados LDAP demasiado grandes"
 
-#, fuzzy
-#| msgid "Operation cancelled"
 msgid "LDAP operation affects multiple DSAs"
-msgstr "Operação cancelada"
+msgstr "A operação LDAP afeta vários DSAs"
 
 msgid "Virtual LDAP list view error"
-msgstr ""
+msgstr "Erro ao ver a lista LDAP virtual"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "Other LDAP error"
-msgstr "Erro genérico de IPC"
+msgstr "Outro erro LDAP"
 
-#, fuzzy
-#| msgid "Resources exhausted"
 msgid "Resources exhausted in LCUP"
-msgstr "Recursos esgotados"
+msgstr "Recursos esgotados no LCUP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "Security violation in LCUP"
-msgstr "Violação de protocolo"
+msgstr "Violação de segurança no LCUP"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid data in LCUP"
-msgstr "Estado inválido"
+msgstr "Dados inválidos no LCUP"
 
-#, fuzzy
-#| msgid "Unsupported certificate"
 msgid "Unsupported scheme in LCUP"
-msgstr "Certificado não suportado"
+msgstr "Esquema não suportado no LCUP"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "Reload required in LCUP"
-msgstr "Reinicialização de cartão necessária"
+msgstr "Recarregamento necessário no LCUP"
 
-#, fuzzy
-#| msgid "Success"
 msgid "LDAP cancelled"
-msgstr "Sucesso"
+msgstr "LDAP cancelado"
 
-#, fuzzy
-#| msgid "Not operational"
 msgid "No LDAP operation to cancel"
-msgstr "Não operacional"
+msgstr "Nenhuma operação LDAP para ser cancelada"
 
-#, fuzzy
-#| msgid "Not operational"
 msgid "Too late to cancel LDAP"
-msgstr "Não operacional"
+msgstr "Demasiado tarde para cancelar o LDAP"
 
-#, fuzzy
-#| msgid "Not an IPC server"
 msgid "Cannot cancel LDAP"
-msgstr "Não é um servidor IPC"
+msgstr "Não é possível cancelar o LDAP"
 
-#, fuzzy
-#| msgid "Decryption failed"
 msgid "LDAP assertion failed"
-msgstr "Desencriptação falhada"
+msgstr "Falha na assertion LDAP"
 
 msgid "Proxied authorization denied by LDAP"
-msgstr ""
+msgstr "Autorização de proxy negada pelo LDAP"
 
 msgid "User defined error code 1"
-msgstr "Código de erro definido pelo utilizador 1"
+msgstr "Código de erro n. 1 definido pelo utilizador"
 
 msgid "User defined error code 2"
-msgstr "Código de erro definido pelo utilizador 2"
+msgstr "Código de erro n. 2 definido pelo utilizador"
 
 msgid "User defined error code 3"
-msgstr "Código de erro definido pelo utilizador 3"
+msgstr "Código de erro n. 3 definido pelo utilizador"
 
 msgid "User defined error code 4"
-msgstr "Código de erro definido pelo utilizador 4"
+msgstr "Código de erro n. 4 definido pelo utilizador"
 
 msgid "User defined error code 5"
-msgstr "Código de erro definido pelo utilizador 5"
+msgstr "Código de erro n. 5 definido pelo utilizador"
 
 msgid "User defined error code 6"
-msgstr "Código de erro definido pelo utilizador 6"
+msgstr "Código de erro n. 6 definido pelo utilizador"
 
 msgid "User defined error code 7"
-msgstr "Código de erro definido pelo utilizador 7"
+msgstr "Código de erro n. 7 definido pelo utilizador"
 
 msgid "User defined error code 8"
-msgstr "Código de erro definido pelo utilizador 8"
+msgstr "Código de erro n. 8 definido pelo utilizador"
 
 msgid "User defined error code 9"
-msgstr "Código de erro definido pelo utilizador 9"
+msgstr "Código de erro n. 9 definido pelo utilizador"
 
 msgid "User defined error code 10"
-msgstr "Código de erro definido pelo utilizador 10"
+msgstr "Código de erro n. 10 definido pelo utilizador"
 
 msgid "User defined error code 11"
-msgstr "Código de erro definido pelo utilizador 11"
+msgstr "Código de erro n. 11 definido pelo utilizador"
 
 msgid "User defined error code 12"
-msgstr "Código de erro definido pelo utilizador 12"
+msgstr "Código de erro n. 12 definido pelo utilizador"
 
 msgid "User defined error code 13"
-msgstr "Código de erro definido pelo utilizador 13"
+msgstr "Código de erro n. 13 definido pelo utilizador"
 
 msgid "User defined error code 14"
-msgstr "Código de erro definido pelo utilizador 14"
+msgstr "Código de erro n. 14 definido pelo utilizador"
 
 msgid "User defined error code 15"
-msgstr "Código de erro definido pelo utilizador 15"
+msgstr "Código de erro n. 15 definido pelo utilizador"
 
 msgid "User defined error code 16"
-msgstr "Código de erro definido pelo utilizador 16"
+msgstr "Código de erro n. 16 definido pelo utilizador"
 
-#, fuzzy
-#| msgid "Success"
 msgid "SQL success"
-msgstr "Sucesso"
+msgstr "Sucesso do SQL"
 
-#, fuzzy
-#| msgid "Syntax error"
 msgid "SQL error"
-msgstr "Erro de sintaxe"
+msgstr "Erro do SQL"
 
 msgid "Internal logic error in SQL library"
-msgstr ""
+msgstr "Erro de lógica interna na biblioteca SQL"
 
 msgid "Access permission denied (SQL)"
-msgstr ""
+msgstr "Permissão de acesso negada (SQL)"
 
 msgid "SQL abort was requested"
-msgstr ""
+msgstr "Foi solicitado um aborto ao SQL"
 
 msgid "SQL database file is locked"
-msgstr ""
+msgstr "O ficheiro da base de dados SQL está bloqueado"
 
 msgid "An SQL table in the database is locked"
-msgstr ""
+msgstr "Uma tabela SQL na base de dados está bloqueada"
 
 msgid "SQL library ran out of core"
-msgstr ""
+msgstr "A biblioteca SQL ficou sem memória"
 
 msgid "Attempt to write a readonly SQL database"
-msgstr ""
+msgstr "Tentativa de escrita numa base de dados SQL só de leitura"
 
 msgid "SQL operation terminated by interrupt"
-msgstr ""
+msgstr "Operação SQL encerrada por interrupção"
 
 msgid "I/O error during SQL operation"
-msgstr ""
+msgstr "Erro de I/O durante a operação SQL"
 
 msgid "SQL database disk image is malformed"
-msgstr ""
+msgstr "A imagem de disco da base de dados SQL está mal formada"
 
 msgid "Unknown opcode in SQL file control"
-msgstr ""
+msgstr "Opcode desconhecido no controle de ficheiro SQL"
 
 msgid "Insertion failed because SQL database is full"
-msgstr ""
+msgstr "Falha na inserção porque a base de dados SQL está cheia"
 
 msgid "Unable to open the SQL database file"
-msgstr ""
+msgstr "Não é possível abrir o ficheiro da base de dados SQL"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "SQL database lock protocol error"
-msgstr "Violação de protocolo"
+msgstr "Erro no protocolo de bloqueio da base de dados SQL"
 
 msgid "(internal SQL code: empty)"
-msgstr ""
+msgstr "(código SQL interno: vazio)"
 
 msgid "SQL database schema changed"
-msgstr ""
+msgstr "Esquema de base de dados SQL alterado"
 
 msgid "String or blob exceeds size limit (SQL)"
-msgstr ""
+msgstr "String ou blob excede o limite de tamanho (SQL)"
 
 msgid "SQL abort due to constraint violation"
-msgstr ""
+msgstr "Aborto ao SQL devido a violação de uma restrição"
 
 msgid "Data type mismatch (SQL)"
-msgstr ""
+msgstr "Incompatibilidade do tipo de dados (SQL)"
 
 msgid "SQL library used incorrectly"
-msgstr ""
+msgstr "Biblioteca SQL usada incorretamente"
 
 msgid "SQL library uses unsupported OS features"
-msgstr ""
+msgstr "Biblioteca SQL usa características do SO não suportadas"
 
 msgid "Authorization denied (SQL)"
-msgstr ""
+msgstr "Autorização negada (SQL)"
 
 msgid "(unused SQL code: format)"
-msgstr ""
+msgstr "(código SQL não utilizado: formato)"
 
 msgid "SQL bind parameter out of range"
-msgstr ""
+msgstr "Ligação de parâmetro no SQL fora do intervalo"
 
 msgid "File opened that is not an SQL database file"
-msgstr ""
+msgstr "Ficheiro aberto que não é um ficheiro de base de dados SQL"
 
 msgid "Notifications from SQL logger"
-msgstr ""
+msgstr "Notificações do logger do SQL"
 
 msgid "Warnings from SQL logger"
-msgstr ""
+msgstr "Avisos do logger do SQL"
 
 msgid "SQL has another row ready"
-msgstr ""
+msgstr "SQL tem uma outra linha pronta"
 
 msgid "SQL has finished executing"
-msgstr ""
+msgstr "SQL terminou de ser executado"
 
 msgid "System error w/o errno"
 msgstr "Erro de sistema sem errno"
@@ -1588,136 +1475,92 @@ msgstr "Fim do ficheiro"
 msgid "Unknown error code"
 msgstr "Código de erro desconhecido"
 
-#, fuzzy
 msgid "argument not expected"
-msgstr "a escrever chave privada para `%s'\n"
+msgstr "argumento não esperado"
 
-#, fuzzy
 msgid "read error"
 msgstr "erro de leitura"
 
-#, fuzzy
 msgid "keyword too long"
-msgstr "frase secreta demasiado longa\n"
+msgstr "palavra-chave demasiada longa"
 
-#, fuzzy
 msgid "missing argument"
+msgstr "argumento ausente"
+
+msgid "invalid argument"
 msgstr "argumento inválido"
 
-#, fuzzy
-#| msgid "invalid armor"
-msgid "invalid argument"
-msgstr "armadura inválida"
-
-#, fuzzy
 msgid "invalid command"
-msgstr "comandos em conflito\n"
+msgstr "comando inválido"
 
-#, fuzzy
 msgid "invalid alias definition"
-msgstr "opções de importação inválidas\n"
+msgstr "definição de alias inválida"
 
-#, fuzzy
-#| msgid "Configuration error"
 msgid "permission error"
-msgstr "Erro de configuração"
+msgstr "erro de permissão"
 
-#, fuzzy
 msgid "out of core"
-msgstr "não processado"
+msgstr "fora da memória"
 
-#, fuzzy
 msgid "invalid meta command"
-msgstr "comandos em conflito\n"
+msgstr "comando meta inválido"
 
-#, fuzzy
-#| msgid "Unknown command"
 msgid "unknown meta command"
-msgstr "Comando desconhecido"
+msgstr "comando meta desconhecido"
 
-#, fuzzy
-#| msgid "Unexpected IPC command"
 msgid "unexpected meta command"
-msgstr "Comando IPC inesperado"
+msgstr "comando meta inesperado"
 
-#, fuzzy
 msgid "invalid option"
-msgstr "opções de importação inválidas\n"
+msgstr "opção inválida"
 
 #, c-format
 msgid "missing argument for option \"%.50s\"\n"
-msgstr ""
+msgstr "argumento ausente para a opção \"%.50s\"\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "invalid argument for option \"%.50s\"\n"
-msgstr "opções de importação inválidas\n"
+msgstr "argumento inválido para a opção \"%.50s\"\n"
 
 #, c-format
 msgid "option \"%.50s\" does not expect an argument\n"
-msgstr ""
+msgstr "a opção \"%.50s\" não está à espera de um argumento\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "invalid command \"%.50s\"\n"
-msgstr "Comando inválido (tente \"help\")\n"
+msgstr "comando inválido \"%.50s\"\n"
 
 #, c-format
 msgid "option \"%.50s\" is ambiguous\n"
-msgstr ""
+msgstr "a opção \"%.50s\" é ambígua\n"
 
 #, c-format
 msgid "command \"%.50s\" is ambiguous\n"
-msgstr ""
+msgstr "comando \"%.50s\" é ambíguo\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "invalid option \"%.50s\"\n"
-msgstr "opções de importação inválidas\n"
+msgstr "opção inválida \"%.50s\"\n"
 
 #, c-format
 msgid "Note: no default option file '%s'\n"
-msgstr ""
+msgstr "Nota: nenhum ficheiro de opções pré-definido '%s'\n"
 
 #, c-format
 msgid "reading options from '%s'\n"
-msgstr ""
+msgstr "opções de leitura a partir de '%s'\n"
 
 #, c-format
 msgid "option file '%s': %s\n"
-msgstr ""
+msgstr "ficheiro de opções '%s': %s\n"
 
 #, c-format
 msgid "Note: ignoring option \"--%s\" due to global config\n"
-msgstr ""
+msgstr "Nota: ignorando a opção \"--%s\" devido à configuração global\n"
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
-msgstr ""
+msgstr "Relate bugs para <https://bugs.gnupg.org>.\n"
 
 #, c-format
 msgid "warning: could not recognize %s\n"
-msgstr "aviso: não consegui reconhecer %s\n"
-
-#, fuzzy
-#~ msgid "out of core\n"
-#~ msgstr "não processado"
-
-#~ msgid "Usage: %s GPG-ERROR [...]\n"
-#~ msgstr "Utilização: %s GPG-ERROR [...]\n"
-
-#, fuzzy
-#~| msgid "Resources exhausted"
-#~ msgid "LCUP Resources exhausted"
-#~ msgstr "Recursos esgotados"
-
-#, fuzzy
-#~| msgid "Invalid data"
-#~ msgid "LCUP Invalid data"
-#~ msgstr "Dados inválidos"
-
-#, fuzzy
-#~| msgid "General error"
-#~ msgid "LDAP Other general error"
-#~ msgstr "Erro genérico"
-
-#, fuzzy
-#~| msgid "dirmngr error"
-#~ msgid "Encoding error"
-#~ msgstr "Erro no dirmngr"
+msgstr "aviso: não foi possível reconhecer %s\n"
