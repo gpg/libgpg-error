@@ -455,6 +455,7 @@ MARK_VISIBLE (gpgrt_spawn_actions_set_atfork)
 #define gpgrt_wchar_to_utf8         _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fname_to_wchar        _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_w32_reg_query_string  _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_w32_reg_get_string    _gpgrt_USE_UNDERSCORED_FUNCTION
 
 
 #endif /*!_GPGRT_INCL_BY_VISIBILITY_C*/

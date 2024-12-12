@@ -521,6 +521,16 @@ my_strusage (int level)
     case 14: p = "Copyright (C) 2019 g10 Code GmbH"; break;
     case 19: p = _("Please report bugs to <https://bugs.gnupg.org>.\n"); break;
 
+#ifdef HAVE_W32_SYSTEM
+    case 31:
+#if defined(_WIN64)
+      p = "(Windows 64 bit)";
+#else
+      p = "(Windows 32 bit)";
+#endif
+      break;
+#endif
+
     case 1:
     case 40:
       p = ("Usage: gpg-error [options] error-numbers");
@@ -548,6 +558,7 @@ main (int argc, char *argv[])
          CMD_LIST,
          CMD_DEFINES,
          CMD_LOCALE,
+         CMD_GETREG,
          OPT_DESC
   };
   static gpgrt_opt_t opts[] = {
@@ -559,9 +570,13 @@ main (int argc, char *argv[])
                 "Print all error codes as #define lines"),
 #if HAVE_W32_SYSTEM
     ARGPARSE_c (CMD_LOCALE, "locale",
-                "Return the locale used for gettext"),
+                "Print the locale used for gettext"),
+    ARGPARSE_c (CMD_GETREG, "getreg",
+                "Print string from the Registry"),
 #else
     ARGPARSE_c (CMD_LOCALE, "locale",
+                "@"),
+    ARGPARSE_c (CMD_GETREG, "getreg",
                 "@"),
 #endif
     ARGPARSE_s_n (OPT_DESC, "desc",
@@ -574,6 +589,7 @@ main (int argc, char *argv[])
   int libversion = 0;
   int listmode = 0;
   int localemode = 0;
+  int getregmode = 0;
   int desc = 0;
   const char *s, *s2;
   const char *source_sym;
@@ -594,6 +610,7 @@ main (int argc, char *argv[])
         case CMD_LIST:       listmode = 1; break;
         case CMD_DEFINES:    listmode = 2; break;
         case CMD_LOCALE:     localemode = 1; break;
+        case CMD_GETREG:     getregmode = 1; break;
         case OPT_DESC:       desc = 1; break;
         default: pargs.err = ARGPARSE_PRINT_WARNING; break;
         }
@@ -608,6 +625,11 @@ main (int argc, char *argv[])
   else if (localemode)
     {
       if (argc > 1)
+        gpgrt_usage (1);
+    }
+  else if (getregmode)
+    {
+      if (argc != 1)
         gpgrt_usage (1);
     }
   else if ((argc && listmode) || (!argc && !listmode))
@@ -654,6 +676,14 @@ main (int argc, char *argv[])
         }
 
       printf ("%s\n", gettext_localename ());
+#else
+      log_info ("this command is only useful on Windows\n");
+#endif
+    }
+  else if (getregmode)
+    {
+#if HAVE_W32_SYSTEM
+      printf ("%s\n", gpgrt_w32_reg_get_string (*argv));
 #else
       log_info ("this command is only useful on Windows\n");
 #endif

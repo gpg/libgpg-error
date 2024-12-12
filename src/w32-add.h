@@ -88,3 +88,6 @@ char *gpgrt_wchar_to_utf8 (const wchar_t *wstring);
 char *gpgrt_w32_reg_query_string (const char *root,
                                   const char *dir,
                                   const char *name);
+
+/* Query a string in the registry using a unified key representation.  */
+char *gpgrt_w32_reg_get_string (const char *key);

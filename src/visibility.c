@@ -1380,4 +1380,10 @@ gpgrt_w32_reg_query_string (const char *root, const char *dir, const char *name)
   return _gpgrt_w32_reg_query_string (root, dir, name);
 }
 
+char *
+gpgrt_w32_reg_get_string (const char *key)
+{
+  return _gpgrt_w32_reg_get_string (key);
+}
+
 #endif /*HAVE_W32_SYSTEM*/

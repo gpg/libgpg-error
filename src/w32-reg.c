@@ -47,10 +47,30 @@ _gpgrt_w32_reg_query_string (const char *root, const char *dir,
                              const char *name)
 {
   HKEY root_key, key_handle;
-  DWORD n1, nbytes, type;
+  DWORD n1, nbytes, type, flags;
   char *result = NULL;
+  int cross = 0;
 
+  /* Check special prefix.  */
   if (!root)
+    ;
+  else if (!strncmp (root, "!64key!", 7))
+    {
+      root += 7;
+      cross = 64;
+    }
+  else if (!strncmp (root, "!32key!", 7))
+    {
+      root += 7;
+      cross = 32;
+    }
+  else if (!strncmp (root, "!cross!", 7))
+    {
+      root += 7;
+      cross = 1;
+    }
+
+  if (!root || !*root)
     root_key = HKEY_CURRENT_USER;
   else if (!strcmp (root, "HKEY_CLASSES_ROOT") || !strcmp (root, "HKCR"))
     root_key = HKEY_CLASSES_ROOT;
@@ -67,12 +87,26 @@ _gpgrt_w32_reg_query_string (const char *root, const char *dir,
   else
     return NULL;
 
-  if (RegOpenKeyExA (root_key, dir, 0, KEY_READ, &key_handle))
+  flags = KEY_READ;
+  if (cross == 64)
+    flags |= KEY_WOW64_64KEY;
+  else if (cross == 32)
+    flags |= KEY_WOW64_32KEY;
+  else if (cross)
     {
-      if (root)
+#if defined(_WIN64)
+      flags |= KEY_WOW64_32KEY;
+#else
+      flags |= KEY_WOW64_64KEY;
+#endif
+    }
+
+  if (RegOpenKeyExA (root_key, dir, 0, flags, &key_handle))
+    {
+      if (root && !*root)
         return NULL; /* No need for a RegClose, so return direct.  */
       /* It seems to be common practise to fall back to HKLM. */
-      if (RegOpenKeyExA (HKEY_LOCAL_MACHINE, dir, 0, KEY_READ, &key_handle))
+      if (RegOpenKeyExA (HKEY_LOCAL_MACHINE, dir, 0, flags, &key_handle))
         return NULL; /* still no need for a RegClose, so return direct */
     }
 
@@ -81,11 +115,11 @@ _gpgrt_w32_reg_query_string (const char *root, const char *dir,
   nbytes = 1;
   if (RegQueryValueExA (key_handle, name, 0, NULL, NULL, &nbytes))
     {
-      if (root)
+      if (root && !*root)
         goto leave;
       /* Try to fallback to HKLM also for a missing value.  */
       RegCloseKey (key_handle);
-      if (RegOpenKeyExA (HKEY_LOCAL_MACHINE, dir, 0, KEY_READ, &key_handle))
+      if (RegOpenKeyExA (HKEY_LOCAL_MACHINE, dir, 0, flags, &key_handle))
         return NULL; /* Nope.  */
       if (RegQueryValueExA (key_handle, name, 0, NULL, NULL, &nbytes))
         goto leave;
@@ -170,14 +204,20 @@ _gpgrt_w32_reg_query_string (const char *root, const char *dir,
 /* Compact version of gpgrt_w32_reg_query_string.  This version
  * expects a single string as key described here using an example:
  *
- *    HKCU\Software\GNU\GnuPG:HomeDir
+ *    <prefix>HKCU\Software\GNU\GnuPG:HomeDir
  *
+ * <prefix> := Optional; see below.
  * HKCU := the class, other supported classes are HKLM, HKCR, HKU, and
  *         HKCC.  If no class is given and the string thus starts with
  *         a backslash HKCU with a fallback to HKLM is used.
  * Software\GNU\GnuPG := The actual key.
  * HomeDir := the name of the item.  The name is optional to use the default
  *            value.
+ *
+ * If <prefix> is given it may take these values:
+ *    !64key! := Access a 64 bit key
+ *    !32key! := Access a 32 bit key
+ *    !cross! := On 32-bit use the 64-bit key, on 64-bit use the 32-bit key
  *
  * Note that the first backslash and the first colon act as delimiters.
  *

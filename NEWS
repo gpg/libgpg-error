@@ -1,6 +1,15 @@
 Noteworthy changes in version 1.52 (unreleased) [C38/A38/R_]
 -----------------------------------------------
 
+ * The KEY_WOW64_xxKEY flags can now be passed to the Regsiry read
+   functions.
+
+ * New command --getreg for gpg-error on Windows.
+
+ * Interface changes relative to the 1.51 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ _gpgrt_w32_reg_query_string         NEW (Windows only).
+
 
  Release-info: https://dev.gnupg.org/T7385
 
