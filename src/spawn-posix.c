@@ -84,7 +84,7 @@ struct gpgrt_process {
 };
 
 
-
+#ifndef HAVE_CLOSEFROM
 /* Return the maximum number of currently allowed open file
  * descriptors.  Only useful on POSIX systems but returns a value on
  * other systems too.  */
@@ -175,7 +175,7 @@ get_max_fds (void)
 
   return max_fds;
 }
-
+#endif
 
 /* Close all file descriptors starting with descriptor FIRST.  If
  * EXCEPT is not NULL, it is expected to be a list of file descriptors
@@ -184,6 +184,49 @@ get_max_fds (void)
 void
 _gpgrt_close_all_fds (int first, const int *except)
 {
+#ifdef HAVE_CLOSEFROM
+  int fd, i, except_start;
+  int fd_except_first, fd_except_last;
+
+  if (except)
+    {
+      fd_except_first = except[0];
+      fd_except_last = -1;
+
+      /* Find the last entry in EXCEPT.  */
+      for (i = 0; except[i] != -1; i++)
+        ;
+      if (i != 0)
+        fd_except_last = except[--i];
+
+      if (fd_except_last != -1)
+        {
+          if (first < fd_except_last)
+            {
+              for (fd = first; fd < fd_except_first; fd++)
+                close (fd);
+
+              except_start = 0;
+              for (; fd <= fd_except_last; fd++)
+                {
+                  for (i = except_start; except[i] != -1; i++)
+                    if (except[i] == fd)
+                      {
+                        except_start = i + 1;
+                        break;
+                      }
+
+                  if (except[i] == -1)
+                    close (fd);
+                }
+
+              first = fd;
+            }
+        }
+    }
+
+  closefrom (first);
+#else
   int max_fd = get_max_fds ();
   int fd, i, except_start;
 
@@ -212,6 +255,7 @@ _gpgrt_close_all_fds (int first, const int *except)
       for (fd=first; fd < max_fd; fd++)
         close (fd);
     }
+#endif
 
   _gpg_err_set_errno (0);
 }

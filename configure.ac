@@ -260,7 +260,8 @@ AC_SUBST(INSTALLSHELLPATH)
 # AC_FUNC_FORK
 
 AC_CHECK_FUNCS([flockfile vasprintf mmap rand strlwr stpcpy setenv stat \
-                getrlimit getpwnam getpwuid getpwnam_r getpwuid_r inet_pton])
+                getrlimit getpwnam getpwuid getpwnam_r getpwuid_r inet_pton \
+                closefrom])
 
 
 #
