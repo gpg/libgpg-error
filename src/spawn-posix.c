@@ -84,7 +84,20 @@ struct gpgrt_process {
 };
 
 
-#ifndef HAVE_CLOSEFROM
+#ifdef HAVE_CLOSEFROM
+static void
+closefrom_really (int lowfd)
+{
+# if defined(__NetBSD__) || defined(__OpenBSD__)
+  /* On NetBSD and OpenBSD, it may be interrupted.  */
+  while (1)
+    if (closefrom (lowfd) == 0 || errno != EINTR)
+      break;
+# else
+  closefrom (lowfd);
+# endif
+}
+#else
 /* Return the maximum number of currently allowed open file
  * descriptors.  Only useful on POSIX systems but returns a value on
  * other systems too.  */
@@ -177,6 +190,38 @@ get_max_fds (void)
 }
 #endif
 
+static void
+close_except (int first_fd, int max_fd, const int *except)
+{
+  int fd;
+  int except_start = 0;
+
+  for (fd = first_fd; fd < max_fd; fd++)
+    {
+      if (except)
+        {
+          int i;
+
+          for (i = except_start; except[i] != -1; i++)
+            if (except[i] == fd)
+              {
+                /* If we found the descriptor in the exception list
+                   we can start the next compare run at the next
+                   index because the exception list is ordered.  */
+                except_start = i + 1;
+                break;
+              }
+
+          if (except[i] != -1)
+            continue;
+        }
+
+      while (1)
+        if (close (fd) == 0 || errno != EINTR)
+          break;
+    }
+}
+
 /* Close all file descriptors starting with descriptor FIRST.  If
  * EXCEPT is not NULL, it is expected to be a list of file descriptors
  * which shall not be closed.  This list shall be sorted in ascending
@@ -184,79 +229,26 @@ get_max_fds (void)
 void
 _gpgrt_close_all_fds (int first, const int *except)
 {
-#ifdef HAVE_CLOSEFROM
-  int fd, i, except_start;
-  int fd_except_first, fd_except_last;
+  int max_fd;
 
+#ifdef HAVE_CLOSEFROM
+  max_fd = first;
   if (except)
     {
-      fd_except_first = except[0];
-      fd_except_last = -1;
+      int i;
 
       /* Find the last entry in EXCEPT.  */
       for (i = 0; except[i] != -1; i++)
         ;
       if (i != 0)
-        fd_except_last = except[--i];
-
-      if (fd_except_last != -1)
-        {
-          if (first < fd_except_last)
-            {
-              for (fd = first; fd < fd_except_first; fd++)
-                close (fd);
-
-              except_start = 0;
-              for (; fd <= fd_except_last; fd++)
-                {
-                  for (i = except_start; except[i] != -1; i++)
-                    if (except[i] == fd)
-                      {
-                        except_start = i + 1;
-                        break;
-                      }
-
-                  if (except[i] == -1)
-                    close (fd);
-                }
-
-              first = fd;
-            }
-        }
+        max_fd = except[--i] + 1;
     }
 
-  closefrom (first);
+  closefrom_really (max_fd);
 #else
-  int max_fd = get_max_fds ();
-  int fd, i, except_start;
-
-  if (except)
-    {
-      except_start = 0;
-      for (fd=first; fd < max_fd; fd++)
-        {
-          for (i=except_start; except[i] != -1; i++)
-            {
-              if (except[i] == fd)
-                {
-                  /* If we found the descriptor in the exception list
-                     we can start the next compare run at the next
-                     index because the exception list is ordered.  */
-                except_start = i + 1;
-                break;
-                }
-            }
-          if (except[i] == -1)
-            close (fd);
-        }
-    }
-  else
-    {
-      for (fd=first; fd < max_fd; fd++)
-        close (fd);
-    }
+  max_fd = get_max_fds ();
 #endif
-
+  close_except (first, max_fd, except);
   _gpg_err_set_errno (0);
 }
 
