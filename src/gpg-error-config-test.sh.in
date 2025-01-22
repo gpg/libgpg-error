@@ -15,6 +15,15 @@ if [ "$1" = --old-new ]; then
     # Old gpg-error-config never supports PKG_CONFIG_SYSROOT_DIR
     unset PKG_CONFIG_SYSROOT_DIR
 else
+    if ! pkg_config_version=$(pkg-config --version 2>/dev/null); then
+        # Skip this test when pkg-config is not available
+        exit 77
+    fi
+    case $pkg_config_version in
+        # We know that pkgconf 1.8.0 doesn't work well
+        1.8.0) exit 77 ;;
+        *) ;;
+    esac
     pkg_config_min_version=0.29
     PKG_CONFIG_SYSROOT_DIR="/var/example-target"
     export PKG_CONFIG_SYSROOT_DIR
