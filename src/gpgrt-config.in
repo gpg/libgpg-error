@@ -1,6 +1,6 @@
 #!@INSTALLSHELLPATH@
 #                          -*- mode: shell-script; sh-shell: "/bin/sh" -*-
-# Copyright (C) 2018, 2021, 2022 g10 Code GmbH
+# Copyright (C) 2018, 2021, 2022, 2025  g10 Code GmbH
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -551,16 +551,11 @@ else
     PKG_CONFIG_LIBDIR=$libdir/pkgconfig
   fi
   if [ -z "$PKG_CONFIG_LIBDIR" ]; then
-    if [ -z "$PKG_CONFIG_PATH" ]; then
-      # It used to fail as:
-      #
-      # echo "Please use --libdir=LIBDIR option or set PKG_CONFIG_LIBDIR" 1>&2
-      # echo "Or set PKG_CONFIG_PATH" 1>&2
-      #
-      # Now, we try a fallback.
-      determine_gpgrt_libdir
-      PKG_CONFIG_PATH="${gpgrt_libdir}/pkgconfig"
-    fi
+    # We try a fallback for PKG_CONFIG_LIBDIR.
+    determine_gpgrt_libdir
+    PKG_CONFIG_LIBDIR=${gpgrt_libdir}/pkgconfig
+    # And append PKG_CONFIG_LIBDIR to PKG_CONFIG_PATH
+    PKG_CONFIG_PATH="$PKG_CONFIG_PATH${PKG_CONFIG_PATH:+:}$PKG_CONFIG_LIBDIR"
   else
     # PKG_CONFIG_LIBDIR is available here
     # Modify PKG_CONFIG_PATH, prepending PKG_CONFIG_LIBDIR
