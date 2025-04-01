@@ -198,6 +198,7 @@ libgpg_error_la_SOURCES = gettext.h $(arch_sources) \
 	visibility.c visibility.h \
 	sysutils.c \
 	stringutils.c \
+	strlist.c \
 	syscall-clamp.c \
 	logging.c \
 	b64dec.c b64enc.c \

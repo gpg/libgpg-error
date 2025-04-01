@@ -1,14 +1,28 @@
 Noteworthy changes in version 1.52 (unreleased) [C38/A38/R_]
 -----------------------------------------------
 
- * The KEY_WOW64_xxKEY flags can now be passed to the Regsiry read
+ * The KEY_WOW64_xxKEY flags can now be passed to the Registry read
    functions.
 
  * New command --getreg for gpg-error on Windows.
 
+ * New simple string list API.
+
  * Interface changes relative to the 1.51 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- _gpgrt_w32_reg_query_string         NEW (Windows only).
+ gpgrt_w32_reg_query_string          NEW (Windows only).
+ gpgrt_strlist_t                     NEW type.
+ gpgrt_strlist_free                  NEW.
+ gpgrt_strlist_add                   NEW.
+ gpgrt_strlist_tokenize              NEW.
+ gpgrt_strlist_copy                  NEW.
+ gpgrt_strlist_rev                   NEW.
+ gpgrt_strlist_prev                  NEW.
+ gpgrt_strlist_last                  NEW.
+ gpgrt_strlist_pop                   NEW.
+ gpgrt_strlist_find                  NEW.
+ GPGRT_STRLIST_APPEND                NEW const.
+ GPGRT_STRLIST_WIPE                  NEW const.
 
 
  Release-info: https://dev.gnupg.org/T7385

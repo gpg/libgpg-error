@@ -1345,6 +1345,65 @@ gpgrt_absfnameconcat (const char *first, ... )
 
 
 
+void
+gpgrt_strlist_free (gpgrt_strlist_t sl)
+{
+  _gpgrt_strlist_free (sl);
+}
+
+gpgrt_strlist_t
+gpgrt_strlist_add (gpgrt_strlist_t *list, const char *string,
+                   unsigned int flags)
+{
+  return _gpgrt_strlist_add (list, string, flags);
+}
+
+gpgrt_strlist_t
+gpgrt_strlist_tokenize (gpgrt_strlist_t *list, const char *string,
+                        const char *delim, unsigned int flags)
+{
+  return _gpgrt_strlist_tokenize (list, string, delim, flags);
+}
+
+gpgrt_strlist_t
+gpgrt_strlist_copy (gpgrt_strlist_t list)
+{
+  return _gpgrt_strlist_copy (list);
+}
+
+gpgrt_strlist_t
+gpgrt_strlist_rev (gpgrt_strlist_t *list)
+{
+  return  _gpgrt_strlist_rev (list);
+}
+
+gpgrt_strlist_t
+gpgrt_strlist_prev (gpgrt_strlist_t head, gpgrt_strlist_t node)
+{
+  return _gpgrt_strlist_prev (head, node);
+}
+
+gpgrt_strlist_t
+gpgrt_strlist_last (gpgrt_strlist_t node)
+{
+  return _gpgrt_strlist_last (node);
+}
+
+char *
+gpgrt_strlist_pop (gpgrt_strlist_t *list)
+{
+  return _gpgrt_strlist_pop (list);
+}
+
+gpgrt_strlist_t
+gpgrt_strlist_find (gpgrt_strlist_t haystack, const char *needle)
+{
+  return _gpgrt_strlist_find (haystack, needle);
+}
+
+
+
+
 /* For consistency reasons we use function wrappers also for Windows
  * specific function despite that they are technically not needed.  */
 #ifdef HAVE_W32_SYSTEM

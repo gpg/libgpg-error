@@ -760,9 +760,33 @@ void _gpgrt_set_confdir (int what, const char *name);
 int _gpgrt_cmp_version (const char *a, const char *b, int level);
 
 
+/*
+ * strlist.c
+ */
+void _gpgrt_strlist_free (gpgrt_strlist_t sl);
+gpgrt_strlist_t _gpgrt_strlist_add (gpgrt_strlist_t *list,
+                                    const char *string, unsigned int flags);
+gpgrt_strlist_t _gpgrt_strlist_tokenize (gpgrt_strlist_t *list,
+                                         const char *string, const char *delim,
+                                         unsigned int flags);
+gpgrt_strlist_t _gpgrt_strlist_copy (gpgrt_strlist_t list);
+gpgrt_strlist_t _gpgrt_strlist_rev (gpgrt_strlist_t *list);
+gpgrt_strlist_t _gpgrt_strlist_prev (gpgrt_strlist_t head,
+                                     gpgrt_strlist_t node);
+gpgrt_strlist_t _gpgrt_strlist_last (gpgrt_strlist_t node);
+char *_gpgrt_strlist_pop (gpgrt_strlist_t *list);
+gpgrt_strlist_t _gpgrt_strlist_find (gpgrt_strlist_t haystack,
+                                     const char *needle);
+
+
+
+
+
+
+
 
 /*
- * Internal platform abstraction functions (sysutils.c)
+ * Internal platform abstraction functions (sysutils.c and stringutil.c)
  */
 
 /* Return true if FD is valid.  */
@@ -801,6 +825,9 @@ char *_gpgrt_fnameconcat (const char *first_part,
                           ... ) GPGRT_ATTR_SENTINEL(0);
 char *_gpgrt_absfnameconcat (const char *first_part,
                              ... ) GPGRT_ATTR_SENTINEL(0);
+
+/* What the name says.  */
+char *_gpgrt_trim_spaces (char *str);
 
 
 /*

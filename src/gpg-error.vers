@@ -223,6 +223,17 @@ GPG_ERROR_1.0 {
     gpgrt_spawn_actions_set_atfork;
     gpgrt_spawn_actions_set_env_rev;
 
+    gpgrt_strlist_free;
+    gpgrt_strlist_add;
+    gpgrt_strlist_tokenize;
+    gpgrt_strlist_copy;
+    gpgrt_strlist_rev;
+    gpgrt_strlist_prev;
+    gpgrt_strlist_last;
+    gpgrt_strlist_pop;
+    gpgrt_strlist_find;
+
+
   local:
     *;
 };

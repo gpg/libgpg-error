@@ -33,113 +33,42 @@
 
 #include "gpgrt-int.h"
 
-
-void
-free_strlist( strlist_t sl )
-{
-    strlist_t sl2;
-
-    for(; sl; sl = sl2 ) {
-	sl2 = sl->next;
-	xfree(sl);
-    }
-}
+#define SL_PRIV_FLAG_WIPE   0x01
 
 
 void
-free_strlist_wipe (strlist_t sl)
+_gpgrt_strlist_free (gpgrt_strlist_t sl)
 {
-    strlist_t sl2;
+  gpgrt_strlist_t sl2;
 
-    for(; sl; sl = sl2 ) {
-	sl2 = sl->next;
-        wipememory (sl, sizeof *sl + strlen (sl->d));
-	xfree(sl);
-    }
-}
-
-
-/* Add STRING to the LIST at the front.  This function terminates the
-   process on memory shortage.  */
-strlist_t
-add_to_strlist( strlist_t *list, const char *string )
-{
-    strlist_t sl;
-
-    sl = xmalloc( sizeof *sl + strlen(string));
-    sl->flags = 0;
-    strcpy(sl->d, string);
-    sl->next = *list;
-    *list = sl;
-    return sl;
-}
-
-
-/* Add STRING to the LIST at the front.  This function returns NULL
-   and sets ERRNO on memory shortage.  */
-strlist_t
-add_to_strlist_try (strlist_t *list, const char *string)
-{
-  strlist_t sl;
-
-  sl = xtrymalloc (sizeof *sl + strlen (string));
-  if (sl)
+  for (; sl; sl = sl2)
     {
-      sl->flags = 0;
-      strcpy (sl->d, string);
-      sl->next = *list;
-      *list = sl;
+      sl2 = sl->next;
+      if ((sl->_private_flags & ~SL_PRIV_FLAG_WIPE))
+        _gpgrt_log_fatal ("gpgrt_strlist_free: corrupted object %p\n", sl);
+
+      if ((sl->_private_flags & SL_PRIV_FLAG_WIPE))
+        _gpgrt_wipememory (sl, sizeof *sl + strlen (sl->d));
+      xfree(sl);
     }
-  return sl;
 }
 
 
-/* Same as add_to_strlist() but if IS_UTF8 is *not* set, a conversion
-   to UTF-8 is done.  This function terminates the process on memory
-   shortage.  */
-strlist_t
-add_to_strlist2( strlist_t *list, const char *string, int is_utf8 )
-{
-  strlist_t sl;
-
-  if (is_utf8)
-    sl = add_to_strlist( list, string );
-  else
-    {
-      char *p = native_to_utf8( string );
-      sl = add_to_strlist( list, p );
-      xfree ( p );
-    }
-  return sl;
-}
-
-
-/* Add STRING to the LIST at the end.  This function terminates the
-   process on memory shortage.  */
-strlist_t
-append_to_strlist( strlist_t *list, const char *string )
-{
-  strlist_t sl;
-  sl = append_to_strlist_try (list, string);
-  if (!sl)
-    xoutofcore ();
-  return sl;
-}
-
-
-/* Core of append_to_strlist_try which take the length of the string.
+/* Core of gpgrt_strlist_append which take the length of the string.
  * Return the item added to the end of the list.  Or NULL in case of
  * an error.  */
-static strlist_t
-do_append_to_strlist (strlist_t *list, const char *string, size_t stringlen)
+static gpgrt_strlist_t
+do_strlist_append (gpgrt_strlist_t *list, const char *string, size_t stringlen,
+                   unsigned int flags)
 {
-  strlist_t r, sl;
+  gpgrt_strlist_t r, sl;
 
   sl = xtrymalloc (sizeof *sl + stringlen);
   if (!sl)
     return NULL;
 
   sl->flags = 0;
+  sl->_private_flags = (flags & GPGRT_STRLIST_WIPE)? SL_PRIV_FLAG_WIPE : 0;
   memcpy (sl->d, string, stringlen);
   sl->d[stringlen] = 0;
   sl->next = NULL;
@@ -155,43 +84,53 @@ do_append_to_strlist (strlist_t *list, const char *string, size_t stringlen)
 }
 
 
-/* Add STRING to the LIST at the end.  */
-strlist_t
-append_to_strlist_try (strlist_t *list, const char *string)
+/* Add STRING to the LIST.  This function returns NULL and sets ERRNO
+ * on memory shortage.  If STRING is NULL an empty string is stored
+ * instead.  FLAGS are these bits:
+ *  GPGRT_STRLIST_APPEND  - Append to the list; default is to prepend
+ *  GPGRT_STRLIST_WIPE    - Set a marker to wipe the string on free.
+ */
+gpgrt_strlist_t
+_gpgrt_strlist_add (gpgrt_strlist_t *list, const char *string,
+                    unsigned int flags)
 {
-  return do_append_to_strlist (list, string, strlen (string));
-}
+  gpgrt_strlist_t sl;
 
+  if (!string)
+    string = "";
 
-strlist_t
-append_to_strlist2( strlist_t *list, const char *string, int is_utf8 )
-{
-  strlist_t sl;
+  if ((flags & GPGRT_STRLIST_APPEND))
+    return do_strlist_append (list, string, strlen (string), flags);
 
-  if( is_utf8 )
-    sl = append_to_strlist( list, string );
-  else
+  /* Default is to prepend.  */
+  sl = xtrymalloc (sizeof *sl + strlen (string));
+  if (sl)
     {
-      char *p = native_to_utf8 (string);
-      sl = append_to_strlist( list, p );
-      xfree( p );
+      sl->flags = 0;
+      sl->_private_flags = (flags & GPGRT_STRLIST_WIPE)? SL_PRIV_FLAG_WIPE : 0;
+      strcpy (sl->d, string);
+      sl->next = *list;
+      *list = sl;
     }
   return sl;
 }
 
-
 /* Tokenize STRING using the delimiters from DELIM and append each
- * token to the string list LIST.  On success a pinter into LIST with
+ * token to the string list LIST.  On success a pointer into LIST with
  * the first new token is returned.  Returns NULL on error and sets
  * ERRNO.  Take care, an error with ENOENT set mean that no tokens
- * were found in STRING.  */
-strlist_t
-tokenize_to_strlist (strlist_t *list, const char *string, const char *delim)
+ * were found in STRING.  Only GPGRT_STRLIST_WIPE has an effect here.  */
+gpgrt_strlist_t
+_gpgrt_strlist_tokenize (gpgrt_strlist_t *list, const char *string,
+                         const char *delim, unsigned int flags)
 {
   const char *s, *se;
   size_t n;
-  strlist_t newlist = NULL;
-  strlist_t tail;
+  gpgrt_strlist_t newlist = NULL;
+  gpgrt_strlist_t tail;
+
+  if (!string)
+    string = "";
 
   s = string;
   do
@@ -203,24 +142,24 @@ tokenize_to_strlist (strlist_t *list, const char *string, const char *delim)
         n = strlen (s);
       if (!n)
         continue;  /* Skip empty string.  */
-      tail = do_append_to_strlist (&newlist, s, n);
+      tail = do_strlist_append (&newlist, s, n, flags);
       if (!tail)
         {
-          free_strlist (newlist);
+          _gpgrt_strlist_free (newlist);
           return NULL;
         }
-      trim_spaces (tail->d);
+      _gpgrt_trim_spaces (tail->d);
       if (!*tail->d)  /* Remove new but empty item from the list.  */
         {
-          tail = strlist_prev (newlist, tail);
+          tail = _gpgrt_strlist_prev (newlist, tail);
           if (tail)
             {
-              free_strlist (tail->next);
+              _gpgrt_strlist_free (tail->next);
               tail->next = NULL;
             }
           else if (newlist)
             {
-              free_strlist (newlist);
+              _gpgrt_strlist_free (newlist);
               newlist = NULL;
             }
           continue;
@@ -232,7 +171,7 @@ tokenize_to_strlist (strlist_t *list, const char *string, const char *delim)
     {
       /* Not items found.  Indicate this by returnning NULL with errno
        * set to ENOENT.  */
-      gpg_err_set_errno (ENOENT);
+      _gpg_err_set_errno (ENOENT);
       return NULL;
     }
 
@@ -249,19 +188,25 @@ tokenize_to_strlist (strlist_t *list, const char *string, const char *delim)
 }
 
 
-/* Return a copy of LIST.  This function terminates the process on
-   memory shortage.*/
-strlist_t
-strlist_copy (strlist_t list)
+/* Return a copy of LIST.  On error set ERRNO and return NULL.  */
+gpgrt_strlist_t
+_gpgrt_strlist_copy (gpgrt_strlist_t list)
 {
-  strlist_t newlist = NULL, sl, *last;
+  gpgrt_strlist_t newlist = NULL;
+  gpgrt_strlist_t sl, *last;
 
   last = &newlist;
   for (; list; list = list->next)
     {
-      sl = xmalloc (sizeof *sl + strlen (list->d));
+      sl = xtrymalloc (sizeof *sl + strlen (list->d));
+      if (!sl)
+        {
+          _gpgrt_strlist_free (newlist);
+          return NULL;
+        }
       sl->flags = list->flags;
-      strcpy(sl->d, list->d);
+      sl->_private_flags = list->_private_flags;
+      strcpy (sl->d, list->d);
       sl->next = NULL;
       *last = sl;
       last = &sl;
@@ -269,82 +214,16 @@ strlist_copy (strlist_t list)
   return newlist;
 }
 
-
-
-strlist_t
-strlist_prev( strlist_t head, strlist_t node )
-{
-    strlist_t n;
-
-    for(n=NULL; head && head != node; head = head->next )
-	n = head;
-    return n;
-}
-
-strlist_t
-strlist_last( strlist_t node )
-{
-    if( node )
-	for( ; node->next ; node = node->next )
-	    ;
-    return node;
-}
-
-
-/* Remove the first item from LIST and return its content in an
-   allocated buffer.  This function terminates the process on memory
-   shortage.  */
-char *
-strlist_pop (strlist_t *list)
-{
-  char *str=NULL;
-  strlist_t sl=*list;
-
-  if(sl)
-    {
-      str = xmalloc(strlen(sl->d)+1);
-      strcpy(str,sl->d);
-
-      *list=sl->next;
-      xfree(sl);
-    }
-
-  return str;
-}
-
-/* Return the first element of the string list HAYSTACK whose string
-   matches NEEDLE.  If no elements match, return NULL.  */
-strlist_t
-strlist_find (strlist_t haystack, const char *needle)
-{
-  for (;
-       haystack;
-       haystack = haystack->next)
-    if (strcmp (haystack->d, needle) == 0)
-      return haystack;
-  return NULL;
-}
-
-int
-strlist_length (strlist_t list)
-{
-  int i;
-  for (i = 0; list; list = list->next)
-    i ++;
-
-  return i;
-}
-
 /* Reverse the list *LIST in place.  */
-strlist_t
-strlist_rev (strlist_t *list)
+gpgrt_strlist_t
+_gpgrt_strlist_rev (gpgrt_strlist_t *list)
 {
-  strlist_t l = *list;
-  strlist_t lrev = NULL;
+  gpgrt_strlist_t l = *list;
+  gpgrt_strlist_t lrev = NULL;
 
   while (l)
     {
-      strlist_t tail = l->next;
+      gpgrt_strlist_t tail = l->next;
       l->next = lrev;
       lrev = l;
       l = tail;
@@ -352,4 +231,61 @@ strlist_rev (strlist_t *list)
 
   *list = lrev;
   return lrev;
+}
+
+
+gpgrt_strlist_t
+_gpgrt_strlist_prev (gpgrt_strlist_t head, gpgrt_strlist_t node)
+{
+  gpgrt_strlist_t n = NULL;
+
+  for (; head && head != node; head = head->next )
+    n = head;
+  return n;
+}
+
+
+gpgrt_strlist_t
+_gpgrt_strlist_last (gpgrt_strlist_t node)
+{
+  if (node)
+    for (; node->next ; node = node->next)
+      ;
+  return node;
+}
+
+
+/* Remove the first item from LIST and return its content in an
+ * allocated buffer.  This function returns NULl and sets ERRNO on
+ * error.  */
+char *
+_gpgrt_strlist_pop (gpgrt_strlist_t *list)
+{
+  char *str = NULL;
+  gpgrt_strlist_t sl = *list;
+
+  if (sl)
+    {
+      str = xtrystrdup (sl->d);
+      if (!str)
+        return NULL;
+
+      *list = sl->next;
+      sl->next = NULL;
+      xfree (sl);
+    }
+
+  return str;
+}
+
+
+/* Return the first element of the string list HAYSTACK whose string
+   matches NEEDLE.  If no elements match, return NULL.  */
+gpgrt_strlist_t
+_gpgrt_strlist_find (gpgrt_strlist_t haystack, const char *needle)
+{
+  for (; haystack; haystack = haystack->next)
+    if (!strcmp (haystack->d, needle))
+      return haystack;
+  return NULL;
 }

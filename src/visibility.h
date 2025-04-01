@@ -229,6 +229,16 @@ MARK_VISIBLE (gpgrt_cmp_version)
 MARK_VISIBLE (gpgrt_fnameconcat)
 MARK_VISIBLE (gpgrt_absfnameconcat)
 
+MARK_VISIBLE (gpgrt_strlist_free)
+MARK_VISIBLE (gpgrt_strlist_add)
+MARK_VISIBLE (gpgrt_strlist_tokenize)
+MARK_VISIBLE (gpgrt_strlist_copy)
+MARK_VISIBLE (gpgrt_strlist_rev)
+MARK_VISIBLE (gpgrt_strlist_prev)
+MARK_VISIBLE (gpgrt_strlist_last)
+MARK_VISIBLE (gpgrt_strlist_pop)
+MARK_VISIBLE (gpgrt_strlist_find)
+
 MARK_VISIBLE (gpgrt_spawn_actions_new)
 MARK_VISIBLE (gpgrt_spawn_actions_release)
 MARK_VISIBLE (gpgrt_spawn_actions_set_env_rev)
@@ -448,6 +458,16 @@ MARK_VISIBLE (gpgrt_spawn_actions_set_atfork)
 #define gpgrt_cmp_version           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fnameconcat           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_absfnameconcat        _gpgrt_USE_UNDERSCORED_FUNCTION
+
+#define gpgrt_strlist_free          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_strlist_add           _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_strlist_tokenize      _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_strlist_copy          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_strlist_rev           _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_strlist_prev          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_strlist_last          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_strlist_pop           _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_strlist_find          _gpgrt_USE_UNDERSCORED_FUNCTION
 
 /* Windows specific functions.  */
 #define gpgrt_free_wchar            _gpgrt_USE_UNDERSCORED_FUNCTION

@@ -204,31 +204,6 @@ is_native_utf8 (void)
 }
 
 
-static char *
-trim_spaces (char *str)
-{
-  char *string, *p, *mark;
-
-  string = str;
-  /* Find first non space character. */
-  for (p=string; *p && isspace (*(unsigned char*)p) ; p++)
-    ;
-  /* Move characters. */
-  for ((mark = NULL); (*string = *p); string++, p++)
-    if (isspace (*(unsigned char*)p))
-      {
-        if (!mark)
-          mark = string;
-      }
-    else
-      mark = NULL;
-  if (mark)
-    *mark = '\0' ;  /* Remove trailing spaces. */
-
-  return str ;
-}
-
-
 static const char *
 map_fixed_string (const char *string)
 {
@@ -1220,7 +1195,7 @@ handle_meta_let (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
   if (*value)
     {
       *value++ = 0;
-      trim_spaces (value);
+      _gpgrt_trim_spaces (value);
     }
 
   if (!isascii (*name) || !isalpha (*name))
@@ -1273,7 +1248,7 @@ handle_meta_getenv (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
   if (*varname)
     {
       *varname++ = 0;
-      trim_spaces (varname);
+      _gpgrt_trim_spaces (varname);
     }
 
   if (!isascii (*name) || !isalpha (*name))
@@ -1461,7 +1436,7 @@ handle_metacmd (gpgrt_argparse_t *arg, char *keyword)
   if (*rest)
     {
       *rest++ = 0;
-      trim_spaces (rest);
+      _gpgrt_trim_spaces (rest);
     }
 
   for (i=0; i < DIM (cmds); i++)
@@ -1772,7 +1747,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
         {
           /* We are at the end of a line.  */
           gpgrt_assert (*keyword == '[');
-          trim_spaces (keyword+1);
+          _gpgrt_trim_spaces (keyword+1);
           if (!keyword[1])
             {
               arg->r_opt = ARGPARSE_INVALID_META; /* Empty.  */
@@ -1841,7 +1816,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
                       if (p)
                         {
                           *p++ = 0;
-                          trim_spaces (p);
+                          _gpgrt_trim_spaces (p);
 			}
 
                       if (!p || !*p)
@@ -1873,7 +1848,7 @@ _gpgrt_argparse (estream_t fp, gpgrt_argparse_t *arg, gpgrt_opt_t *opts_orig)
 
                   if (buffer)
                     {
-                      trim_spaces (buffer);
+                      _gpgrt_trim_spaces (buffer);
                       p = buffer;
                       if (*p == '"')
                         {

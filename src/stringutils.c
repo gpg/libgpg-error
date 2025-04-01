@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <ctype.h>
 #include <stdarg.h>
 #include <errno.h>
 #ifdef HAVE_STAT
@@ -31,6 +32,31 @@
 #include <sys/types.h>
 
 #include "gpgrt-int.h"
+
+
+char *
+_gpgrt_trim_spaces (char *str)
+{
+  char *string, *p, *mark;
+
+  string = str;
+  /* Find first non space character. */
+  for (p=string; *p && isspace (*(unsigned char*)p) ; p++)
+    ;
+  /* Move characters. */
+  for ((mark = NULL); (*string = *p); string++, p++)
+    if (isspace (*(unsigned char*)p))
+      {
+        if (!mark)
+          mark = string;
+      }
+    else
+      mark = NULL;
+  if (mark)
+    *mark = '\0' ;  /* Remove trailing spaces. */
+
+  return str ;
+}
 
 
 /* Helper for _gpgrt_fnameconcat.  The additional flag WANT_ABS tells

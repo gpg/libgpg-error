@@ -970,6 +970,79 @@ gpg_err_code_t   gpgrt_b64dec_finish (gpgrt_b64state_t state);
 
 
 /*
+ * Simple string list
+ */
+struct _gpgrt_strlist_s
+{
+  struct _gpgrt_strlist_s *next;
+  unsigned int flags;
+  unsigned char _private_flags;  /* Not of your business.  */
+  char d[1];
+};
+typedef struct _gpgrt_strlist_s *gpgrt_strlist_t;
+
+
+#define GPGRT_STRLIST_APPEND  1  /* Append and not prepend to the list. */
+#define GPGRT_STRLIST_WIPE    2  /* Wipe the string on free.  */
+
+
+/* Free the string list SL.  */
+void gpgrt_strlist_free (gpgrt_strlist_t sl);
+
+/* Add STRING to the LIST.  This function returns NULL and sets ERRNO
+ * on memory shortage.  If STRING is NULL an empty string is stored
+ * instead.  FLAGS */
+gpgrt_strlist_t gpgrt_strlist_add (gpgrt_strlist_t *list, const char *string,
+                                   unsigned int flags);
+
+/* Tokenize STRING using the delimiters from DELIM and append each
+ * token to the string list LIST.  On success a pointer into LIST with
+ * the first new token is returned.  Returns NULL on error and sets
+ * ERRNO.  Take care, an error with ENOENT set mean that no tokens
+ * were found in STRING.  */
+gpgrt_strlist_t gpgrt_strlist_tokenize (gpgrt_strlist_t *list,
+                                        const char *string,
+                                        const char *delim, unsigned int flags);
+
+/* Return a copy of LIST.  On error ERRNO is set and NULL
+ * returned.  */
+gpgrt_strlist_t gpgrt_strlist_copy (gpgrt_strlist_t list);
+
+/* Reverse the list *LIST in place.  Will not fail. */
+gpgrt_strlist_t gpgrt_strlist_rev (gpgrt_strlist_t *list);
+
+/* In the list starting with HEAD return the item previous to NODE.
+ * Returns NULL if no previous item exists.  */
+gpgrt_strlist_t gpgrt_strlist_prev (gpgrt_strlist_t head, gpgrt_strlist_t node);
+
+/* Return the last item in the list starting at NODE.  */
+gpgrt_strlist_t gpgrt_strlist_last (gpgrt_strlist_t node);
+
+/* Remove the first item from LIST and return its content in an
+ * allocated buffer.  This function returns NULl and sets ERRNO on
+ * error.  */
+char *gpgrt_strlist_pop (gpgrt_strlist_t *list);
+
+/* Return the first item of the string list HAYSTACK whose value
+ * matches NEEDLE.  If no items match, return NULL.  */
+gpgrt_strlist_t gpgrt_strlist_find (gpgrt_strlist_t haystack,
+                                    const char *needle);
+
+/* Return the number of items in LIST.  */
+static GPG_ERR_INLINE unsigned int
+gpgrt_strlist_count (gpgrt_strlist_t list)
+{
+  unsigned int i = 0;
+
+  for (i = 0; list; list = list->next)
+    i++;
+
+  return i;
+}
+
+
+
+/*
  * Logging functions
  */
 

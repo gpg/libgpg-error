@@ -258,4 +258,17 @@ EXPORTS
 
  gpgrt_w32_reg_get_string     @198
 
+ gpgrt_strlist_free           @199
+ gpgrt_strlist_add            @200
+ gpgrt_strlist_tokenize       @201
+ gpgrt_strlist_copy           @202
+ gpgrt_strlist_rev            @203
+ gpgrt_strlist_prev           @204
+ gpgrt_strlist_last           @205
+ gpgrt_strlist_pop            @206
+ gpgrt_strlist_find           @207
+
+
+
+
 ;; end of file with public symbols for Windows.
