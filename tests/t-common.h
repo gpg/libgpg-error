@@ -32,11 +32,16 @@
 static int verbose;
 static int debug;
 static int errorcount;
-
+static const char *current_func;
 
 static void die (const char *format, ...) GPGRT_ATTR_NR_PRINTF(1,2);
 static void fail (const char *format, ...) GPGRT_ATTR_PRINTF(1,2);
 static void show (const char *format, ...) GPGRT_ATTR_PRINTF(1,2);
+
+
+/* Set the name of the function to be used in error messages.   */
+#define enter_test_function() do { current_func = __func__; } while(0)
+#define leave_test_function() do { current_func = NULL; } while(0)
 
 
 static void *
@@ -75,7 +80,10 @@ die (const char *format, ...)
 #ifdef HAVE_FLOCKFILE
   flockfile (stderr);
 #endif
-  fprintf (stderr, "%s: ", PGM);
+  if (current_func)
+    fprintf (stderr, "%s:%s: ", PGM, current_func);
+  else
+    fprintf (stderr, "%s: ", PGM);
   va_start (arg_ptr, format) ;
   vfprintf (stderr, format, arg_ptr);
   va_end (arg_ptr);
@@ -99,7 +107,10 @@ fail (const char *format, ...)
 #ifdef HAVE_FLOCKFILE
   flockfile (stderr);
 #endif
-  fprintf (stderr, "%s: ", PGM);
+  if (current_func)
+    fprintf (stderr, "%s:%s: ", PGM, current_func);
+  else
+    fprintf (stderr, "%s: ", PGM);
   va_start (arg_ptr, format);
   vfprintf (stderr, format, arg_ptr);
   va_end (arg_ptr);
@@ -124,7 +135,10 @@ show (const char *format, ...)
 #ifdef HAVE_FLOCKFILE
   flockfile (stderr);
 #endif
-  fprintf (stderr, "%s: ", PGM);
+  if (current_func)
+    fprintf (stderr, "%s:%s: ", PGM, current_func);
+  else
+    fprintf (stderr, "%s: ", PGM);
   va_start (arg_ptr, format);
   vfprintf (stderr, format, arg_ptr);
   if (*format && format[strlen(format)-1] != '\n')
