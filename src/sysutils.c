@@ -256,8 +256,10 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
 /* Convert an UTF-8 encode file name to wchar.  If the file name is
  * close to the limit of MAXPATH the API functions will fail.  The
  * method to overcome this API limitation is to use a prefix which
- * bypasses the checking by CreateFile.  This also required to first
- * convert the name to an absolute file name.  */
+ * bypasses the checking by CreateFile.  This also requires to first
+ * convert the name to an absolute file name.  To avoid looking up the
+ * fill name in all cases we do the \\?\ prefixing only if FNAME is
+ * longer than 60 byes or if it has any path separator.  */
 wchar_t *
 _gpgrt_fname_to_wchar (const char *fname)
 {
@@ -271,7 +273,7 @@ _gpgrt_fname_to_wchar (const char *fname)
 
   if (!strncmp (fname, "\\\\?\\", 4))
     success = 1; /* Already translated.  */
-  else if (wcslen (wname) > 230)
+  else if (strpbrk (fname, "/\\") || wcslen (wname) > 60)
     {
       int wlen = 1024;
       int extralen;
