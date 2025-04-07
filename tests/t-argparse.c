@@ -40,6 +40,7 @@ static struct {
     int echo;
     int a_long_one;
     char *street;
+    char *disable_akr;
 } opt;
 
 
@@ -85,6 +86,7 @@ main (int argc, char **argv)
     ARGPARSE_s_n(500, "a-long-option", 0 ),
     ARGPARSE_conffile(501, "options", "|FILE|read options from FILE"),
     ARGPARSE_noconffile(502, "no-options", "Ignore conf files"),
+    ARGPARSE_s_s(503, "disable-akr", "@" ),
     ARGPARSE_verbatim("This epilog consists\nof only 2 lines\n"),
     ARGPARSE_end()
   };
@@ -93,8 +95,8 @@ main (int argc, char **argv)
                                             | ARGPARSE_FLAG_ONEDASH
                                             | ARGPARSE_FLAG_SYS
                                             | ARGPARSE_FLAG_USER
-                                            /* | ARGPARSE_FLAG_VERBOSE */
-                                            /* | ARGPARSE_FLAG_WITHATTR */
+                                            | ARGPARSE_FLAG_VERBOSE
+                                            | ARGPARSE_FLAG_WITHATTR
                                             ) };
   int i;
   const char *srcdir;
@@ -146,6 +148,7 @@ main (int argc, char **argv)
         case 'M': opt.myopt = 0; break;
         case 's': opt.street = pargs.r.ret_str; break;
         case 500: opt.a_long_one++;  break;
+        case 503: opt.disable_akr = pargs.r.ret_str;  break;
 
         case 601:
         case 602:
@@ -176,6 +179,8 @@ main (int argc, char **argv)
     printf ("  myopt=%d\n", opt.myopt );
   if (opt.a_long_one)
     printf ("  a-long-one=%d\n", opt.a_long_one );
+  if (opt.disable_akr)
+    printf ("  disable-akr=%s\n", opt.disable_akr);
   if (opt.echo)
     printf ("  echo=%d\n", opt.echo );
 

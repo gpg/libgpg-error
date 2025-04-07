@@ -1,7 +1,7 @@
 /* argparse.c - Argument Parser for option handling
  * Copyright (C) 1997-2001, 2006-2008, 2013-2017 Werner Koch
  * Copyright (C) 1998-2001, 2006-2008, 2012 Free Software Foundation, Inc.
- * Copyright (C) 2015-2021 g10 Code GmbH
+ * Copyright (C) 2015-2021, 2025 g10 Code GmbH
  *
  * This file is part of Libgpg-error.
  *
@@ -126,6 +126,7 @@ struct _gpgrt_argparse_internal_s
   unsigned int user_wildcard:1;    /* A [user *] has been seen.         */
   unsigned int user_any_active:1;  /* Any user section was active.      */
   unsigned int user_active:1;      /* User section active.              */
+  unsigned int no_registry:1;      /* Registry not availabale.          */
   unsigned int expand:1;           /* Expand vars in option values.     */
   unsigned int explicit_cmd_mode:1;/* Command mode set via config.      */
   unsigned int cmd_mode:1;         /* Command mode according to config. */
@@ -146,6 +147,9 @@ struct _gpgrt_argparse_internal_s
   char *confname;
   opttable_t *opts;            /* Malloced option table.  */
   unsigned int nopts;          /* Number of items in OPTS.  */
+#ifndef HAVE_W32_SYSTEM
+  gpgrt_nvc_t registry;        /* Registry emulation.  */
+#endif
 };
 
 
@@ -264,6 +268,7 @@ deinitialize (gpgrt_argparse_t *arg)
           xfree (v);
           v = vn;
         }
+      _gpgrt_nvc_release (arg->internal->registry);
       xfree (arg->internal->username);
       xfree (arg->internal->explicit_conffile);
       xfree (arg->internal->opts);
@@ -323,6 +328,7 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
       arg->internal->user_wildcard = 0;
       arg->internal->user_any_active = 0;
       arg->internal->user_active = 0;
+      arg->internal->no_registry = 0;
       arg->internal->if_cond = 0;
       arg->internal->vartbl = NULL;
       arg->internal->username = NULL;
@@ -340,6 +346,9 @@ initialize (gpgrt_argparse_t *arg, gpgrt_opt_t *opts, estream_t fp)
       arg->internal->iio_list = NULL;
       arg->internal->conffp = NULL;
       arg->internal->confname = NULL;
+#ifndef HAVE_W32_SYSTEM
+      arg->internal->registry = NULL;
+#endif
 
       /* Clear the copy of the option list.  */
       /* Clear the error indicator.  */
@@ -1225,6 +1234,82 @@ handle_meta_let (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 }
 
 
+#ifndef HAVE_W32_SYSTEM
+/* On Unix we emulate the Windows Regregisyr using a name-value
+ * formatted file "Registry" in the system config directory. If an
+ * inetnal error is found _ERR is set to an argparse error and NULL
+ * returned.  */
+static char *
+emulated_registry_lookup (gpgrt_argparse_t *arg, const char *name, int *r_err)
+{
+  const char *s;
+  gpgrt_nve_t e;
+
+  *r_err = 0;
+
+  if (!arg->internal->in_sysconf)
+    return NULL;  /* Lookup in the user conf directory is not supported.  */
+  if (arg->internal->no_registry)
+    return NULL;  /* Registry file does not exist.  */
+
+  /* Read and parse the resgistry if not yet done.  */
+  if (!arg->internal->registry)
+    {
+      gpg_error_t err;
+      int lnr;
+      char *fname;
+      estream_t fp;
+      char *p;
+
+      if (!arg->internal->confname || !arg->internal->confname)
+        return NULL;  /* No system conf file known.  */
+
+      fname = xtrymalloc (strlen (arg->internal->confname) + 8 + 2 );
+      if (!fname)
+        {
+          *r_err = ARGPARSE_OUT_OF_CORE;
+          return NULL;
+        }
+      strcpy (fname, arg->internal->confname);
+      p = strrchr (fname, '/');
+      strcpy (p? p : fname, "/Registry");
+      fp = _gpgrt_fopen (fname, "r");
+      if (!fp)
+        {
+          arg->internal->no_registry = 1;
+          return NULL;
+        }
+      if (arg->internal->verbose)
+        _gpgrt_log_info ("Note: Using Registry emulation file '%s'\n", fname);
+
+      err = _gpgrt_nvc_parse (&arg->internal->registry, &lnr, fp,
+                              GPGRT_NVC_SECTION);
+      _gpgrt_fclose (fp);
+      if (err)
+        {
+          _gpgrt_log_info ("%s:%d: error parsing Registry emulation file: %s\n",
+                           fname, lnr, _gpg_strerror (err));
+          *r_err = ARGPARSE_READ_ERROR;
+          arg->internal->no_registry = 1;
+          xfree (fname);
+          return NULL;
+        }
+      xfree (fname);
+    }
+
+  e = _gpgrt_nvc_lookup (arg->internal->registry, name);
+  if (!e && *name != '/')
+    {
+      /* Strip any HKLM or HKCU prefix and try again.  */
+      name = strchr (name, '/');
+      if (name)
+        e = _gpgrt_nvc_lookup (arg->internal->registry, name);
+    }
+  s = e? _gpgrt_nve_value (e) : NULL;
+  return s? xtrystrdup (s) : NULL;
+}
+#endif /* Unix*/
+
 /* Implementation of the "getenv" and, if ALTERNATE is set, the
  * "getreg" command.  ARG is the context.  ARGS is a non-empty string
  * with the name of the variable and of the envvar/registry-entry.
@@ -1234,12 +1319,10 @@ static int
 handle_meta_getenv (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 {
   char *name = args;
-  char *varname;
+  char *varname, *p;
   const char *s;
   int rc;
-#ifdef HAVE_W32_SYSTEM
   char *helpbuf = NULL;
-#endif
 
   for (varname = name;
        *varname && !(isascii (*varname) && isspace (*varname));
@@ -1262,7 +1345,12 @@ handle_meta_getenv (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 #ifdef HAVE_W32_SYSTEM
       s = helpbuf = _gpgrt_w32_reg_get_string (varname);
 #else
-      s = "";
+      for (p=varname; *p; p++)
+        if (*p == '\\')
+          *p = '/';
+      s = helpbuf = emulated_registry_lookup (arg, varname, &rc);
+      if (!s && rc)
+        return rc;
 #endif
     }
   else
@@ -1270,9 +1358,7 @@ handle_meta_getenv (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 
   /* Set/clear the variable but do not substitute.  */
   rc = set_variable (arg, name, s, 0);
-#ifdef HAVE_W32_SYSTEM
   xfree (helpbuf);
-#endif
   return rc;
 }
 

@@ -10,6 +10,8 @@ Noteworthy changes in version 1.52 (unreleased) [C38/A38/R_]
 
  * New API for name value files.
 
+ * Add a Windows Registry emulation for Unix.
+
  * Interface changes relative to the 1.51 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  gpgrt_w32_reg_query_string          NEW (Windows only).
