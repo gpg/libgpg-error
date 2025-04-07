@@ -35,6 +35,7 @@ struct _gpgrt_name_value_container
   struct _gpgrt_name_value_entry *last;
   unsigned int wipe_on_free:1;
   unsigned int private_key_mode:1;
+  unsigned int section_mode:1;
   unsigned int modified:1;
 };
 
@@ -148,6 +149,7 @@ _gpgrt_nvc_new (unsigned int flags)
     }
   else if ((flags & GPGRT_NVC_WIPE))
     nvc->wipe_on_free     = 1;
+  nvc->section_mode = !!(flags & GPGRT_NVC_SECTION);
 
   return nvc;
 }
@@ -209,6 +211,8 @@ _gpgrt_nvc_get_flag (gpgrt_nvc_t cont, unsigned int flags, int clear)
     ret = cont->private_key_mode;
   else if ((flags & GPGRT_NVC_WIPE))
     ret = cont->wipe_on_free;
+  else if ((flags & GPGRT_NVC_SECTION))
+    ret = cont->section_mode;
 
   return !!ret;
 }
@@ -223,11 +227,23 @@ _gpgrt_nvc_get_flag (gpgrt_nvc_t cont, unsigned int flags, int clear)
  * optional colon if NAME is valid; returns 0 if the name is not
  * valid.  The length of the name must be less than 255.  */
 static unsigned int
-valid_name (const char *name)
+valid_name (const char *name, int sectionmode)
 {
   size_t i;
-  size_t len = strlen (name);
+  size_t len, extralen;
+  const char *s;
 
+  /* In section mode we skip over the first colon.  We require that
+   * after the colon at least one other characters is found.  */
+  if (sectionmode && (s=strchr (name, ':')) && s[1] && s[1] != ':')
+    {
+      extralen = s + 1 - name;
+      name = s+1;
+    }
+  else
+    extralen = 0;
+
+  len = strlen (name);
   if (!alphap (name) || !len || len > 255)
     return 0;
   if (name[len-1] == ':') /* The colon is optional.  */
@@ -239,7 +255,7 @@ valid_name (const char *name)
     if (!alnump (name + i) && name[i] != '-')
       return 0;
 
-  return len;
+  return len + extralen;
 }
 
 
@@ -437,7 +453,7 @@ do_nvc_add (gpgrt_nvc_t cont, char *name, char *value,
 
   gpgrt_assert (value || raw_value);
 
-  namelen = name ? valid_name (name) : 0;
+  namelen = name ? valid_name (name, cont->section_mode) : 0;
   if (name && !namelen)
     {
       err = GPG_ERR_INV_NAME;
@@ -558,7 +574,7 @@ _gpgrt_nvc_set (gpgrt_nvc_t cont, const char *name, const char *value)
 {
   gpgrt_nve_t e;
 
-  if (! valid_name (name))
+  if (! valid_name (name, cont->section_mode))
     return GPG_ERR_INV_NAME;
 
   e = _gpgrt_nvc_lookup (cont, name);
@@ -630,7 +646,7 @@ _gpgrt_nvc_delete (gpgrt_nvc_t cont, gpgrt_nve_t entry, const char *name)
 {
   if (entry)
     do_nvc_delete (cont, entry);
-  else if (valid_name (name))
+  else if (valid_name (name, cont->section_mode))
     {
       while ((entry = _gpgrt_nvc_lookup (cont, name)))
         do_nvc_delete (cont, entry);
@@ -705,6 +721,7 @@ do_nvc_parse (gpgrt_nvc_t *result, int *errlinep, estream_t stream,
   char *buf = NULL;
   size_t buf_len = 0;
   char *name = NULL;
+  char *section = NULL;
   gpgrt_strlist_t raw_value = NULL;
   unsigned int slflags;
 
@@ -719,7 +736,8 @@ do_nvc_parse (gpgrt_nvc_t *result, int *errlinep, estream_t stream,
     *errlinep = 0;
   while ((len = _gpgrt_read_line (stream, &buf, &buf_len, NULL)) > 0)
     {
-      char *p;
+      char *p, *p2;
+
       if (errlinep)
 	*errlinep += 1;
 
@@ -752,7 +770,44 @@ do_nvc_parse (gpgrt_nvc_t *result, int *errlinep, estream_t stream,
       name = NULL;
       raw_value = NULL;
 
-      if (*p != 0 && *p != '#')
+      if ((flags & GPGRT_NVC_SECTION) && *p == '[' && (p2=strchr (p+1, ']')))
+        {
+          /* This is a section header.  Extract it so that we can
+           * prepend all names with it.  We allow a comment after the
+           * section and spaces after the [ and before the ].  No
+           * spaces inside the section name.  We also limit the name
+           * to 200 characters. */
+          _gpgrt_trim_spaces (p2+1);
+          if (p == p2 || (p2[1] && p2[1] != '#'))
+            {
+              err = GPG_ERR_INV_VALUE;
+	      goto leave;
+            }
+          *p2 = 0;
+          p++;
+          _gpgrt_trim_spaces (p);
+          if (!*p || strpbrk (p, " \t#:") || strlen (p) > 200)
+            {
+              err = GPG_ERR_INV_VALUE;  /* No or invalid section name */
+	      goto leave;
+            }
+          xfree (section);
+          section = xtrystrdup (p);
+          if (!section)
+            {
+	      err = _gpg_err_code_from_syserror ();
+	      goto leave;
+	    }
+          /* Map all backslashes to slashes.  */
+          for (p2=section; *p2; p2++)
+            if (*p2 == '\\')
+              *p2 = '/';
+
+          continue;
+        }
+
+
+      if (*p && *p != '#')
 	{
 	  char *colon, *value, tmp;
 
@@ -766,7 +821,10 @@ do_nvc_parse (gpgrt_nvc_t *result, int *errlinep, estream_t stream,
 	  value = colon + 1;
 	  tmp = *value;
 	  *value = 0;
-	  name = xtrystrdup (p);
+          if (section)
+            name = _gpgrt_strconcat (section, ":", p, NULL);
+          else
+            name = xtrystrdup (p);
 	  *value = tmp;
 	  if (!name)
 	    {
@@ -802,6 +860,7 @@ do_nvc_parse (gpgrt_nvc_t *result, int *errlinep, estream_t stream,
     }
 
  leave:
+  xfree (section);
   xfree (name);
   xfree (buf);
   if (err)
@@ -857,6 +916,11 @@ _gpgrt_nvc_write (gpgrt_nvc_t cont, estream_t stream)
   gpg_err_code_t err = 0;
   gpgrt_nve_t entry;
   gpgrt_nve_t keyentry = NULL;
+
+  /* We can't yet write out in section mode because we merge entries
+   * from the same section and do not keep a raw representation.  */
+  if (cont->section_mode)
+    return GPG_ERR_NOT_IMPLEMENTED;
 
   for (entry = cont->first; entry; entry = entry->next)
     {

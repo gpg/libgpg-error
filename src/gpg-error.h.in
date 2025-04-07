@@ -1053,6 +1053,7 @@ typedef struct _gpgrt_name_value_entry *gpgrt_nve_t;
 
 #define GPGRT_NVC_WIPE       2  /* Wipe the values on free.  */
 #define GPGRT_NVC_PRIVKEY    4  /* Enable private key mode.  */
+#define GPGRT_NVC_SECTION    8  /* Enable section mode.      */
 #define GPGRT_NVC_MODIFIED 256  /* Return the modified flag. */
 
 /* Return a name-value container according to the given flags.

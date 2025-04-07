@@ -31,16 +31,19 @@
 
 
 static void test_getting_values (gpgrt_nvc_t cont);
+static void test_getting_section_values (gpgrt_nvc_t pk);
 static void test_key_extraction (gpgrt_nvc_t pk);
 static void test_iteration (gpgrt_nvc_t pk);
 static void test_whitespace (gpgrt_nvc_t pk);
 
 static int private_key_mode;
+static int section_mode;
 
 static struct
 {
   char *value;
   void (*test_func) (gpgrt_nvc_t);
+  int only_section_mode;
 } tests[] =
   {
     {
@@ -118,6 +121,22 @@ static struct
       "   (#D2760001240102000005000011730000# OPENPGP.1)\n"
       "    )))\n",
       test_key_extraction
+    },
+    {
+      "# This is a test for section mode\n"
+      "[  HKLM\\Software\\Bla\\Foo ]# the section name\n"
+      "Myname: Erika\n"
+      "Surname:   Musterfrau\n"
+      "\n"
+      "[\\Software\\blub]\n"
+      "Myname: Otto Blub\n"
+      "Surname: Ottoman\n"
+      "[HKLM\\Software/Bla\\Foo ] # Add stuff to the first section\n"
+      "Url: https://example.org\n"
+      "Url: http://example.de\n"
+      "Surname: Hacker\n"
+      "# last comment\n",
+      test_getting_section_values, 1
     }
   };
 
@@ -157,6 +176,71 @@ test_getting_values (gpgrt_nvc_t pk)
   e = gpgrt_nvc_lookup (pk, "SomeOtherNam :");
   gpgrt_assert (!e);
 
+}
+
+
+static void
+test_getting_section_values (gpgrt_nvc_t pk)
+{
+  gpgrt_nve_t e;
+  const char *value;
+
+  enter_test_function ();
+
+  e = gpgrt_nvc_lookup (pk, "MyName");
+  if (e)
+    fail ("nvc_lookup unexpected succeeded at line %d\n", __LINE__);
+
+  e = gpgrt_nvc_lookup (pk, "HKLM/Software/Bla/Foo:MyName");
+  if (!e)
+    fail ("nvc_lookup failed at line %d\n", __LINE__);
+  else
+    {
+      value = gpgrt_nve_value (e);
+      show ("value for %s is ->%s<-\n", gpgrt_nve_name (e), value);
+    }
+
+  e = gpgrt_nvc_lookup (pk, "HKLM/Software/Bla/Foo:SurName");
+  if (!e)
+    fail ("nvc_lookup failed at line %d\n", __LINE__);
+  else
+    {
+      value = gpgrt_nve_value (e);
+      show ("value for %s is ->%s<-\n", gpgrt_nve_name (e), value);
+    }
+  e = gpgrt_nve_next (e, "HKLM/Software/Bla/Foo:SurName");
+  if (!e)
+    fail ("nvc_next failed at line %d\n", __LINE__);
+  else
+    {
+      value = gpgrt_nve_value (e);
+      show ("value for %s is ->%s<-\n", gpgrt_nve_name (e), value);
+    }
+  e = gpgrt_nve_next (e, "HKLM/Software/Bla/Foo:surname");
+  if (e)
+    fail ("nve_next unexpected succeeded at line %d\n", __LINE__);
+
+  e = gpgrt_nvc_lookup (pk, "HKLM/Software/Bla/Foo:Url");
+  if (!e)
+    fail ("nvc_lookup failed at line %d\n", __LINE__);
+  else
+    {
+      value = gpgrt_nve_value (e);
+      show ("value for %s is ->%s<-\n", gpgrt_nve_name (e), value);
+    }
+  e = gpgrt_nve_next (e, "HKLM/Software/Bla/Foo:Url");
+  if (!e)
+    fail ("nve_next failed at line %d\n", __LINE__);
+  else
+    {
+      value = gpgrt_nve_value (e);
+      show ("value for %s is ->%s<-\n", gpgrt_nve_name (e), value);
+    }
+  e = gpgrt_nve_next (e, "HKLM/Software/Bla/Foo:Url");
+  if (e)
+    fail ("nve_next unexpected succeeded at line %d\n", __LINE__);
+
+  leave_test_function ();
 }
 
 
@@ -258,6 +342,7 @@ run_tests (void)
   gpg_error_t err;
   gpgrt_nvc_t pk;
   int i;
+  int errlno;
 
   for (i = 0; i < DIM (tests); i++)
     {
@@ -265,26 +350,38 @@ run_tests (void)
       char *buf;
       size_t len;
 
+      if (tests[i].only_section_mode && !section_mode)
+        continue;
+
       len = strlen (tests[i].value);
       source = es_mopen (tests[i].value, len, len,
 			 0, dummy_realloc, dummy_free, "r");
       gpgrt_assert (source);
 
       if (private_key_mode)
-        err = gpgrt_nvc_parse  (&pk, NULL, source, GPGRT_NVC_PRIVKEY);
+        err = gpgrt_nvc_parse  (&pk, &errlno, source, GPGRT_NVC_PRIVKEY);
+      else if (section_mode)
+        err = gpgrt_nvc_parse  (&pk, &errlno, source, GPGRT_NVC_SECTION);
       else
-        err = gpgrt_nvc_parse (&pk, NULL, source, 0);
+        err = gpgrt_nvc_parse (&pk, &errlno, source, 0);
+      if (err)
+        show ("parser failed at input line %d: %s\n",
+              errlno, gpg_strerror (err));
       gpgrt_assert (err == 0);
       gpgrt_assert (pk);
 
-      if (verbose)
-	{
-	  err = gpgrt_nvc_write (pk, es_stderr);
-	  gpgrt_assert (err == 0);
-	}
-
-      buf = nvc_to_string (pk);
-      gpgrt_assert (memcmp (tests[i].value, buf, len) == 0);
+      if (section_mode)
+        buf = NULL;  /* nvc_to_string does not yet work.  */
+      else
+        {
+          if (verbose)
+            {
+              err = gpgrt_nvc_write (pk, es_stderr);
+              gpgrt_assert (err == 0);
+            }
+          buf = nvc_to_string (pk);
+          gpgrt_assert (memcmp (tests[i].value, buf, len) == 0);
+        }
 
       es_fclose (source);
       xfree (buf);
@@ -307,6 +404,8 @@ run_modification_tests (void)
   gpgrt_nvc_t pk;
   gpgrt_nve_t e;
   char *buf;
+
+  enter_test_function ();
 
   pk = gpgrt_nvc_new (private_key_mode? GPGRT_NVC_PRIVKEY : 0);
   gpgrt_assert (pk);
@@ -454,6 +553,8 @@ run_modification_tests (void)
   gpgrt_assert (strcmp (buf, "Key: (hello world)\n") == 0);
   xfree (buf);
   gpgrt_nvc_release (pk);
+
+  leave_test_function ();
 }
 
 
@@ -585,6 +686,11 @@ main (int argc, char **argv)
       private_key_mode = 1;
       run_tests ();
       run_modification_tests ();
+
+      show ("again in section mode\n");
+      private_key_mode = 0;
+      section_mode = 1;
+      run_tests ();
 
       show ("testing name-value functions finished\n");
     }
