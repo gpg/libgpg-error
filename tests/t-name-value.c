@@ -139,6 +139,24 @@ test_getting_values (gpgrt_nvc_t pk)
 
   e = gpgrt_nvc_lookup (pk, "SomeOtherName:");
   gpgrt_assert (e);
+
+  /* The colon is optional.  */
+  e = gpgrt_nvc_lookup (pk, "comment");
+  gpgrt_assert (e);
+  e = gpgrt_nvc_lookup (pk, "COMMENT");
+  gpgrt_assert (e);
+
+  e = gpgrt_nvc_lookup (pk, "SomeOtherName");
+  gpgrt_assert (e);
+
+  /* And check one which does not exist.  */
+  e = gpgrt_nvc_lookup (pk, "SomeOtherNam");
+  gpgrt_assert (!e);
+  e = gpgrt_nvc_lookup (pk, "SomeOtherNam:");
+  gpgrt_assert (!e);
+  e = gpgrt_nvc_lookup (pk, "SomeOtherNam :");
+  gpgrt_assert (!e);
+
 }
 
 

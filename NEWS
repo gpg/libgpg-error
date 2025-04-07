@@ -44,6 +44,7 @@ Noteworthy changes in version 1.52 (unreleased) [C38/A38/R_]
  gpgrt_nvc_get_bool                  NEW.
  GPGRT_NVC_WIPE                      NEW const.
  GPGRT_NVC_PRIVKEY                   NEW const.
+ GPGRT_NVC_SECTION                   NEW const.
  GPGRT_NVC_MODIFIED                  NEW const.
 
 

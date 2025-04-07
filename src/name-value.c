@@ -46,6 +46,9 @@ struct _gpgrt_name_value_entry
 
   unsigned int wipe_on_free:1;  /* Copied from the container.  */
 
+  /* The length of the NAME (to save calling strlen).  */
+  unsigned int namelen:8;
+
   /* The name.  Comments and blank lines have NAME set to NULL.  */
   char *name;
 
@@ -94,6 +97,37 @@ ascii_strcasecmp (const char *a, const char *b)
   return *a == *b? 0 : (ascii_toupper (*a) - ascii_toupper (*b));
 }
 
+static int
+ascii_memcasecmp (const void *a_arg, const void *b_arg, size_t n )
+{
+  const char *a = a_arg;
+  const char *b = b_arg;
+
+  if (a == b)
+    return 0;
+  for ( ; n; n--, a++, b++ )
+    {
+      if( *a != *b  && ascii_toupper (*a) != ascii_toupper (*b) )
+        return *a == *b? 0 : (ascii_toupper (*a) - ascii_toupper (*b));
+    }
+  return 0;
+}
+
+
+/* Return true if NAME of length NAMELEN is the same as STRING.  The
+ * comparison is case-insensitive for ascii characters.  */
+static int
+same_name_p (const char *name, size_t namelen, const char *string)
+{
+  size_t stringlen = strlen (string);
+
+  if (stringlen && string[stringlen-1] == ':')
+    stringlen--;
+
+  if (namelen != stringlen)
+    return 0;
+  return !ascii_memcasecmp (name, string, namelen);
+}
 
 
 
@@ -184,22 +218,28 @@ _gpgrt_nvc_get_flag (gpgrt_nvc_t cont, unsigned int flags, int clear)
 /* Dealing with names and values.  */
 
 /* Check whether the given name is valid.  Valid names start with a
- * letter, end with a colon, and contain only alphanumeric characters
- * and the hyphen.  Returns true if NAME is valid.  */
-static int
+ * letter, optionally end with a colon, and contain only alphanumeric
+ * characters and the hyphen.  Returns the length of the name sans the
+ * optional colon if NAME is valid; returns 0 if the name is not
+ * valid.  The length of the name must be less than 255.  */
+static unsigned int
 valid_name (const char *name)
 {
   size_t i;
   size_t len = strlen (name);
 
-  if (! alphap (name) || !len || name[len - 1] != ':')
+  if (!alphap (name) || !len || len > 255)
+    return 0;
+  if (name[len-1] == ':') /* The colon is optional.  */
+    len--;
+  if (!len)
     return 0;
 
-  for (i = 1; i < len - 1; i++)
+  for (i = 1; i < len; i++)
     if (!alnump (name + i) && name[i] != '-')
       return 0;
 
-  return 1;
+  return len;
 }
 
 
@@ -393,10 +433,12 @@ do_nvc_add (gpgrt_nvc_t cont, char *name, char *value,
 {
   gpg_err_code_t err = 0;
   gpgrt_nve_t e;
+  unsigned int namelen;
 
   gpgrt_assert (value || raw_value);
 
-  if (name && ! valid_name (name))
+  namelen = name ? valid_name (name) : 0;
+  if (name && !namelen)
     {
       err = GPG_ERR_INV_NAME;
       goto leave;
@@ -404,8 +446,8 @@ do_nvc_add (gpgrt_nvc_t cont, char *name, char *value,
 
   if (name
       && cont->private_key_mode
-      && !ascii_strcasecmp (name, "Key:")
-      && _gpgrt_nvc_lookup (cont, "Key:"))
+      && same_name_p (name, namelen, "Key")
+      && _gpgrt_nvc_lookup (cont, "Key"))
     {
       err = GPG_ERR_INV_NAME;
       goto leave;
@@ -419,6 +461,7 @@ do_nvc_add (gpgrt_nvc_t cont, char *name, char *value,
     }
 
   e->name = name;
+  e->namelen = namelen;
   e->value = value;
   e->raw_value = raw_value;
   e->wipe_on_free = cont->wipe_on_free;
@@ -441,7 +484,8 @@ do_nvc_add (gpgrt_nvc_t cont, char *name, char *value,
                 {
                   gpgrt_nve_t next = last->next;
 
-                  if (next->name && !ascii_strcasecmp (next->name, name))
+                  if (next->name
+                      && same_name_p (next->name, next->namelen, name))
                     last = next;
                   else
                     break;
@@ -598,15 +642,12 @@ _gpgrt_nvc_delete (gpgrt_nvc_t cont, gpgrt_nve_t entry, const char *name)
 /* Lookup and iteration.  */
 
 /* Get the first entry with the given name.  Return NULL if it does
- * not exist.  This function allows to specify NAME without the
- * trailing colon as long as name is not too long.  If NAME is NULL
- * the first non-comment entry is returned.  */
+ * not exist.  If NAME is NULL the first non-comment entry is
+ * returned.  */
 gpgrt_nve_t
 _gpgrt_nvc_lookup (gpgrt_nvc_t cont, const char *name)
 {
   gpgrt_nve_t entry;
-  size_t n;
-  char buffer[40];
 
   if (!cont)
     return NULL;
@@ -620,14 +661,8 @@ _gpgrt_nvc_lookup (gpgrt_nvc_t cont, const char *name)
       return NULL;
     }
 
-  if ((n=strlen (name)) && name[n-1] != ':' && n + 2 < sizeof buffer)
-    {
-      strcpy (stpcpy (buffer, name), ":");
-      name = buffer;
-    }
-
   for (entry = cont->first; entry; entry = entry->next)
-    if (entry->name && !ascii_strcasecmp (entry->name, name))
+    if (entry->name && same_name_p (entry->name, entry->namelen, name))
       return entry;
 
   return NULL;
@@ -645,7 +680,7 @@ _gpgrt_nve_next (gpgrt_nve_t entry, const char *name)
   if (name)
     {
       for (entry = entry->next; entry; entry = entry->next)
-        if (entry->name && !ascii_strcasecmp (entry->name, name))
+        if (entry->name && same_name_p (entry->name, entry->namelen, name))
           return entry;
     }
   else
@@ -826,7 +861,7 @@ _gpgrt_nvc_write (gpgrt_nvc_t cont, estream_t stream)
   for (entry = cont->first; entry; entry = entry->next)
     {
       if (cont->private_key_mode
-          && entry->name && !ascii_strcasecmp (entry->name, "Key:"))
+          && entry->name && same_name_p (entry->name, entry->namelen, "Key"))
         {
           if (!keyentry)
             keyentry = entry;
