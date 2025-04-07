@@ -8,6 +8,8 @@ Noteworthy changes in version 1.52 (unreleased) [C38/A38/R_]
 
  * New simple string list API.
 
+ * New API for name value files.
+
  * Interface changes relative to the 1.51 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  gpgrt_w32_reg_query_string          NEW (Windows only).
@@ -23,6 +25,26 @@ Noteworthy changes in version 1.52 (unreleased) [C38/A38/R_]
  gpgrt_strlist_find                  NEW.
  GPGRT_STRLIST_APPEND                NEW const.
  GPGRT_STRLIST_WIPE                  NEW const.
+ gpgrt_nvc_t                         NEW type.
+ gpgrt_nve_t                         NEW type.
+ gpgrt_nvc_new                       NEW.
+ gpgrt_nvc_release                   NEW.
+ gpgrt_nvc_get_flag                  NEW.
+ gpgrt_nvc_add                       NEW.
+ gpgrt_nvc_set                       NEW.
+ gpgrt_nve_set                       NEW.
+ gpgrt_nvc_delete                    NEW.
+ gpgrt_nvc_lookup                    NEW.
+ gpgrt_nvc_parse                     NEW.
+ gpgrt_nvc_write                     NEW.
+ gpgrt_nve_next                      NEW.
+ gpgrt_nve_name                      NEW.
+ gpgrt_nve_value                     NEW.
+ gpgrt_nvc_get_string                NEW.
+ gpgrt_nvc_get_bool                  NEW.
+ GPGRT_NVC_WIPE                      NEW const.
+ GPGRT_NVC_PRIVKEY                   NEW const.
+ GPGRT_NVC_MODIFIED                  NEW const.
 
 
  Release-info: https://dev.gnupg.org/T7385

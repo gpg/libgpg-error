@@ -1402,6 +1402,98 @@ gpgrt_strlist_find (gpgrt_strlist_t haystack, const char *needle)
 }
 
 
+
+gpgrt_nvc_t
+gpgrt_nvc_new (unsigned int flags)
+{
+  return _gpgrt_nvc_new (flags);
+}
+
+void
+gpgrt_nvc_release (gpgrt_nvc_t cont)
+{
+  _gpgrt_nvc_release (cont);
+}
+
+int
+gpgrt_nvc_get_flag (gpgrt_nvc_t cont, unsigned int flags, int clear)
+{
+  return _gpgrt_nvc_get_flag (cont, flags, clear);
+}
+
+gpg_err_code_t
+gpgrt_nvc_add (gpgrt_nvc_t cont, const char *name, const char *value)
+{
+  return _gpgrt_nvc_add (cont, name, value);
+}
+
+gpg_err_code_t
+gpgrt_nvc_set (gpgrt_nvc_t cont, const char *name, const char *value)
+{
+  return _gpgrt_nvc_set (cont, name, value);
+}
+
+gpg_err_code_t
+gpgrt_nve_set (gpgrt_nvc_t cont, gpgrt_nve_t e, const char *value)
+{
+  return _gpgrt_nve_set (cont, e, value);
+}
+
+void
+gpgrt_nvc_delete (gpgrt_nvc_t cont, gpgrt_nve_t entry, const char *name)
+{
+  _gpgrt_nvc_delete (cont, entry, name);
+}
+
+gpgrt_nve_t
+gpgrt_nvc_lookup (gpgrt_nvc_t cont, const char *name)
+{
+  return _gpgrt_nvc_lookup (cont, name);
+}
+
+gpg_err_code_t
+gpgrt_nvc_parse (gpgrt_nvc_t *result, int *errlinep,
+                 estream_t stream, unsigned int flags)
+{
+  return _gpgrt_nvc_parse (result, errlinep, stream, flags);
+}
+
+gpg_err_code_t
+gpgrt_nvc_write (gpgrt_nvc_t cont, estream_t stream)
+{
+  return _gpgrt_nvc_write (cont, stream);
+}
+
+gpgrt_nve_t
+gpgrt_nve_next (gpgrt_nve_t entry, const char *name)
+{
+  return _gpgrt_nve_next (entry, name);
+}
+
+const char *
+gpgrt_nve_name (gpgrt_nve_t entry)
+{
+  return _gpgrt_nve_name (entry);
+}
+
+const char *
+gpgrt_nve_value (gpgrt_nve_t entry)
+{
+  return _gpgrt_nve_value (entry);
+}
+
+const char *
+gpgrt_nvc_get_string (gpgrt_nvc_t nvc, const char *name)
+{
+  return _gpgrt_nvc_get_string (nvc, name);
+}
+
+int
+gpgrt_nvc_get_bool (gpgrt_nvc_t nvc, const char *name)
+{
+  return _gpgrt_nvc_get_bool (nvc, name);
+}
+
 
 
 /* For consistency reasons we use function wrappers also for Windows

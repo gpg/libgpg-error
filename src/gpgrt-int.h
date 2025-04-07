@@ -778,9 +778,29 @@ char *_gpgrt_strlist_pop (gpgrt_strlist_t *list);
 gpgrt_strlist_t _gpgrt_strlist_find (gpgrt_strlist_t haystack,
                                      const char *needle);
 
-
-
-
+/*
+ * name-value.c
+ */
+gpgrt_nvc_t _gpgrt_nvc_new (unsigned int flags);
+void _gpgrt_nvc_release (gpgrt_nvc_t cont);
+int _gpgrt_nvc_get_flag (gpgrt_nvc_t cont, unsigned int flags, int clear);
+gpg_err_code_t _gpgrt_nvc_add (gpgrt_nvc_t cont,
+                               const char *name, const char *value);
+gpg_err_code_t _gpgrt_nvc_set (gpgrt_nvc_t cont,
+                               const char *name, const char *value);
+gpg_err_code_t _gpgrt_nve_set (gpgrt_nvc_t cont, gpgrt_nve_t e,
+                               const char *value);
+void _gpgrt_nvc_delete (gpgrt_nvc_t cont, gpgrt_nve_t entry, const char *name);
+gpgrt_nve_t _gpgrt_nvc_lookup (gpgrt_nvc_t cont, const char *name);
+gpg_err_code_t _gpgrt_nvc_parse (gpgrt_nvc_t *result, int *errlinep,
+                                 estream_t stream, unsigned int flags);
+gpg_err_code_t _gpgrt_nvc_write (gpgrt_nvc_t cont, estream_t stream);
+gpgrt_nve_t _gpgrt_nve_next (gpgrt_nve_t entry, const char *name);
+const char *_gpgrt_nve_name (gpgrt_nve_t entry);
+const char *_gpgrt_nve_value (gpgrt_nve_t entry);
+/* Convenience functions.  */
+const char *_gpgrt_nvc_get_string (gpgrt_nvc_t nvc, const char *name);
+int _gpgrt_nvc_get_bool (gpgrt_nvc_t nvc, const char *name);
 
 
 

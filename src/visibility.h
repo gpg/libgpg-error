@@ -239,6 +239,22 @@ MARK_VISIBLE (gpgrt_strlist_last)
 MARK_VISIBLE (gpgrt_strlist_pop)
 MARK_VISIBLE (gpgrt_strlist_find)
 
+MARK_VISIBLE (gpgrt_nvc_new)
+MARK_VISIBLE (gpgrt_nvc_release)
+MARK_VISIBLE (gpgrt_nvc_get_flag)
+MARK_VISIBLE (gpgrt_nvc_add)
+MARK_VISIBLE (gpgrt_nvc_set)
+MARK_VISIBLE (gpgrt_nve_set)
+MARK_VISIBLE (gpgrt_nvc_delete)
+MARK_VISIBLE (gpgrt_nvc_lookup)
+MARK_VISIBLE (gpgrt_nvc_parse)
+MARK_VISIBLE (gpgrt_nvc_write)
+MARK_VISIBLE (gpgrt_nve_next)
+MARK_VISIBLE (gpgrt_nve_name)
+MARK_VISIBLE (gpgrt_nve_value)
+MARK_VISIBLE (gpgrt_nvc_get_string)
+MARK_VISIBLE (gpgrt_nvc_get_bool)
+
 MARK_VISIBLE (gpgrt_spawn_actions_new)
 MARK_VISIBLE (gpgrt_spawn_actions_release)
 MARK_VISIBLE (gpgrt_spawn_actions_set_env_rev)
@@ -468,6 +484,22 @@ MARK_VISIBLE (gpgrt_spawn_actions_set_atfork)
 #define gpgrt_strlist_last          _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_strlist_pop           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_strlist_find          _gpgrt_USE_UNDERSCORED_FUNCTION
+
+#define gpgrt_nvc_new               _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nvc_release           _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nvc_get_flag          _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nvc_add               _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nvc_set               _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nve_set               _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nvc_delete            _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nvc_lookup            _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nvc_parse             _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nvc_write             _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nve_next              _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nve_name              _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nve_value             _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nvc_get_string        _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_nvc_get_bool          _gpgrt_USE_UNDERSCORED_FUNCTION
 
 /* Windows specific functions.  */
 #define gpgrt_free_wchar            _gpgrt_USE_UNDERSCORED_FUNCTION

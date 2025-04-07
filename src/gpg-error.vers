@@ -233,6 +233,22 @@ GPG_ERROR_1.0 {
     gpgrt_strlist_pop;
     gpgrt_strlist_find;
 
+    gpgrt_nvc_new;
+    gpgrt_nvc_release;
+    gpgrt_nvc_get_flag;
+    gpgrt_nvc_add;
+    gpgrt_nvc_set;
+    gpgrt_nve_set;
+    gpgrt_nvc_delete;
+    gpgrt_nvc_lookup;
+    gpgrt_nvc_parse;
+    gpgrt_nvc_write;
+    gpgrt_nve_next;
+    gpgrt_nve_name;
+    gpgrt_nve_value;
+    gpgrt_nvc_get_string;
+    gpgrt_nvc_get_bool;
+
 
   local:
     *;

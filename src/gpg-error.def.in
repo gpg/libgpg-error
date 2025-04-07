@@ -268,7 +268,21 @@ EXPORTS
  gpgrt_strlist_pop            @206
  gpgrt_strlist_find           @207
 
-
+ gpgrt_nvc_new                @208
+ gpgrt_nvc_release            @209
+ gpgrt_nvc_get_flag           @210
+ gpgrt_nvc_add                @211
+ gpgrt_nvc_set                @212
+ gpgrt_nve_set                @213
+ gpgrt_nvc_delete             @214
+ gpgrt_nvc_lookup             @215
+ gpgrt_nvc_parse              @216
+ gpgrt_nvc_write              @217
+ gpgrt_nve_next               @218
+ gpgrt_nve_name               @219
+ gpgrt_nve_value              @220
+ gpgrt_nvc_get_string         @221
+ gpgrt_nvc_get_bool           @222
 
 
 ;; end of file with public symbols for Windows.

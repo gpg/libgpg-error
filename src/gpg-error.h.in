@@ -1041,6 +1041,87 @@ gpgrt_strlist_count (gpgrt_strlist_t list)
 }
 
 
+/*
+ * Name-value parser and writer
+ */
+
+struct _gpgrt_name_value_container;
+typedef struct _gpgrt_name_value_container *gpgrt_nvc_t;
+
+struct _gpgrt_name_value_entry;
+typedef struct _gpgrt_name_value_entry *gpgrt_nve_t;
+
+#define GPGRT_NVC_WIPE       2  /* Wipe the values on free.  */
+#define GPGRT_NVC_PRIVKEY    4  /* Enable private key mode.  */
+#define GPGRT_NVC_MODIFIED 256  /* Return the modified flag. */
+
+/* Return a name-value container according to the given flags.
+ * Returns NULL and sets ERRNO on error.  */
+gpgrt_nvc_t gpgrt_nvc_new (unsigned int flags);
+
+/* Release a name-value container.  */
+void gpgrt_nvc_release (gpgrt_nvc_t cont);
+
+/* Return the specified container FLAG. For the GPGRT_NVC_MODIFIED
+ * flag the CLEAR arg resets the flag after retrieval.  */
+int gpgrt_nvc_get_flag (gpgrt_nvc_t cont, unsigned int flag, int clear);
+
+/* Add (NAME, VALUE) to CONT.  If an entry with NAME already exists, a
+ * new entry with that name is appended.  */
+gpg_err_code_t gpgrt_nvc_add (gpgrt_nvc_t cont,
+                              const char *name, const char *value);
+
+/* Add (NAME, VALUE) to CONT.  If an entry with NAME already exists,
+ * it is updated by VALUE.  If multiple entries with NAME exist, only
+ * the first entry is updated.  */
+gpg_err_code_t gpgrt_nvc_set (gpgrt_nvc_t cont,
+                              const char *name, const char *value);
+
+/* Update entry E to VALUE.  CONT is required to update the internal
+ * modified flag and to pass container flags to the entry.  */
+gpg_err_code_t gpgrt_nve_set (gpgrt_nvc_t cont, gpgrt_nve_t e,
+                              const char *value);
+
+/* Delete entries from the container CONT.  Either ENTRY or NAME must
+ * be given.  If ENTRY is given only this entry is deleted; if NAME is
+ * given all entries with this name are deleted.  */
+void gpgrt_nvc_delete (gpgrt_nvc_t cont, gpgrt_nve_t entry, const char *name);
+
+/* Get the first entry with the given name.  Return NULL if it does
+ * not exist.  If NAME is NULL the first non-comment entry is
+ * returned.  */
+gpgrt_nve_t gpgrt_nvc_lookup (gpgrt_nvc_t cont, const char *name);
+
+/* Parse STREAM and return a newly allocated container structure at
+ * RESULT.  If ERRLINEP is given, the line number the parser was last
+ * considering is stored there.  FLAGS are used to allocate the
+ * container.  */
+gpg_err_code_t gpgrt_nvc_parse (gpgrt_nvc_t *result, int *errlinep,
+                                estream_t stream, unsigned int flags);
+
+/* Write a representation of the container CONT to STREAM.  */
+gpg_err_code_t gpgrt_nvc_write (gpgrt_nvc_t cont, estream_t stream);
+
+/* Return the next non-comment entry after ENTRY.  If NAME is given
+ * the next entry with that name is returned.  */
+gpgrt_nve_t gpgrt_nve_next (gpgrt_nve_t entry, const char *name);
+
+/* Return the name of the entry.  */
+const char *gpgrt_nve_name (gpgrt_nve_t entry);
+
+/* Return the value of the entry.  */
+const char *gpgrt_nve_value (gpgrt_nve_t entry);
+
+/* Convenience function to return the string for the first entry of
+ * CONT with NAME.  If no such entry is found or its value is the
+ * empty string NULL is returned.  */
+const char *gpgrt_nvc_get_string (gpgrt_nvc_t cont, const char *name);
+
+/* Convenience function to return true if NAME exists and its value is
+ * true; that is either "yes", "true", or a decimal value != 0.  */
+int gpgrt_nvc_get_bool (gpgrt_nvc_t nvc, const char *name);
+
+
 
 /*
  * Logging functions
