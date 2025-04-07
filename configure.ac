@@ -215,6 +215,8 @@ AH_BOTTOM([
 #define GPGRT_ENABLE_ES_MACROS 1
 #define GPGRT_ENABLE_LOG_MACROS 1
 #define GPGRT_ENABLE_ARGPARSE_MACROS 1
+
+#define GPGRT_STD_COPYRIGHT_LINE "Copyright (C) 2025 g10 Code GmbH"
 ])
 
 # We used to provide gpg-error-config command always.  Now, it's

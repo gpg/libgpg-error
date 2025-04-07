@@ -518,7 +518,7 @@ my_strusage (int level)
     case 11: p = "gpg-error"; break;
     case 12: p = PACKAGE_NAME; break;
     case 13: p = PACKAGE_VERSION; break;
-    case 14: p = "Copyright (C) 2019 g10 Code GmbH"; break;
+    case 14: p = GPGRT_STD_COPYRIGHT_LINE; break;
     case 19: p = _("Please report bugs to <https://bugs.gnupg.org>.\n"); break;
 
 #ifdef HAVE_W32_SYSTEM
