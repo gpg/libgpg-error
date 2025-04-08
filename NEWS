@@ -1,16 +1,19 @@
-Noteworthy changes in version 1.52 (unreleased) [C38/A38/R_]
+Noteworthy changes in version 1.52 (2025-04-08) [C39/A39/R0]
 -----------------------------------------------
 
  * The KEY_WOW64_xxKEY flags can now be passed to the Registry read
-   functions.
+   functions.  [rE652328c786]
 
- * New command --getreg for gpg-error on Windows.
+ * In the spawn functions care about closefrom/close call is
+   interrupted.  [T7478]
 
- * New simple string list API.
+ * New command --getreg for gpg-error on Windows.  [rE652328c786]
 
- * New API for name value files.
+ * New simple string list API.  [rE47097806f1]
 
- * Add a Windows Registry emulation for Unix.
+ * New API for name value files.  [rE7ec1f27b60]
+
+ * Add a Windows Registry emulation for Unix.  [rE9864dd4d66]
 
  * Interface changes relative to the 1.51 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

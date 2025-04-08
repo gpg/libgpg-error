@@ -268,7 +268,9 @@ deinitialize (gpgrt_argparse_t *arg)
           xfree (v);
           v = vn;
         }
+#ifndef HAVE_W32_SYSTEM
       _gpgrt_nvc_release (arg->internal->registry);
+#endif
       xfree (arg->internal->username);
       xfree (arg->internal->explicit_conffile);
       xfree (arg->internal->opts);
@@ -1319,7 +1321,7 @@ static int
 handle_meta_getenv (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 {
   char *name = args;
-  char *varname, *p;
+  char *varname;
   const char *s;
   int rc;
   char *helpbuf = NULL;
@@ -1345,6 +1347,8 @@ handle_meta_getenv (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 #ifdef HAVE_W32_SYSTEM
       s = helpbuf = _gpgrt_w32_reg_get_string (varname);
 #else
+      char *p;
+
       for (p=varname; *p; p++)
         if (*p == '\\')
           *p = '/';
