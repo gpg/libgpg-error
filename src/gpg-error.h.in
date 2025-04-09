@@ -1098,10 +1098,10 @@ gpgrt_nve_t gpgrt_nvc_lookup (gpgrt_nvc_t cont, const char *name);
  * considering is stored there.  FLAGS are used to allocate the
  * container.  */
 gpg_err_code_t gpgrt_nvc_parse (gpgrt_nvc_t *result, int *errlinep,
-                                estream_t stream, unsigned int flags);
+                                gpgrt_stream_t stream, unsigned int flags);
 
 /* Write a representation of the container CONT to STREAM.  */
-gpg_err_code_t gpgrt_nvc_write (gpgrt_nvc_t cont, estream_t stream);
+gpg_err_code_t gpgrt_nvc_write (gpgrt_nvc_t cont, gpgrt_stream_t stream);
 
 /* Return the next non-comment entry after ENTRY.  If NAME is given
  * the next entry with that name is returned.  */
