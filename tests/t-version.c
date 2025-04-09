@@ -20,6 +20,10 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#undef GPG_ERR_ENABLE_GETTEXT_MACROS
+#undef GPGRT_ENABLE_ES_MACROS
+#undef GPGRT_ENABLE_LOG_MACROS
+#undef GPGRT_ENABLE_ARGPARSE_MACROS
 
 #include <stdio.h>
 #include <stdlib.h>

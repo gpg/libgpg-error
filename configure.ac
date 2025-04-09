@@ -210,7 +210,9 @@ AH_BOTTOM([
 #define _ESTREAM_PRINTF_REALLOC _gpgrt_realloc
 #define _ESTREAM_PRINTF_EXTRA_INCLUDE "gpgrt-int.h"
 
-/* For building we need to define these macro.  */
+/* For building we need to define these macro. Note that they
+ * are undef-ed in tests/t-version.c so that we don't accidently
+ * use them in the public API.   */
 #define GPG_ERR_ENABLE_GETTEXT_MACROS 1
 #define GPGRT_ENABLE_ES_MACROS 1
 #define GPGRT_ENABLE_LOG_MACROS 1
