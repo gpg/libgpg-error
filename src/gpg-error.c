@@ -559,6 +559,7 @@ main (int argc, char *argv[])
          CMD_DEFINES,
          CMD_LOCALE,
          CMD_GETREG,
+         CMD_FOPEN,
          OPT_DESC
   };
   static gpgrt_opt_t opts[] = {
@@ -579,6 +580,8 @@ main (int argc, char *argv[])
     ARGPARSE_c (CMD_GETREG, "getreg",
                 "@"),
 #endif
+    ARGPARSE_c (CMD_FOPEN, "fopen",
+                "Open the given file"),
     ARGPARSE_s_n (OPT_DESC, "desc",
                   "Print with error description"),
     ARGPARSE_end()
@@ -590,6 +593,7 @@ main (int argc, char *argv[])
   int listmode = 0;
   int localemode = 0;
   int getregmode = 0;
+  int cmdfopen = 0;
   int desc = 0;
   const char *s, *s2;
   const char *source_sym;
@@ -599,7 +603,8 @@ main (int argc, char *argv[])
   gpgrt_init ();
   i18n_init ();
   gpgrt_set_strusage (my_strusage);
-  gpgrt_log_set_prefix (gpgrt_strusage (11), GPGRT_LOG_WITH_PREFIX);
+  gpgrt_log_set_prefix (gpgrt_strusage (11),
+                        (GPGRT_LOG_WITH_PREFIX| GPGRT_LOG_NO_REGISTRY));
 
 
   while (gpgrt_argparse (NULL, &pargs, opts))
@@ -611,6 +616,7 @@ main (int argc, char *argv[])
         case CMD_DEFINES:    listmode = 2; break;
         case CMD_LOCALE:     localemode = 1; break;
         case CMD_GETREG:     getregmode = 1; break;
+        case CMD_FOPEN:      cmdfopen = 1; break;
         case OPT_DESC:       desc = 1; break;
         default: pargs.err = ARGPARSE_PRINT_WARNING; break;
         }
@@ -627,7 +633,7 @@ main (int argc, char *argv[])
       if (argc > 1)
         gpgrt_usage (1);
     }
-  else if (getregmode)
+  else if (getregmode|| cmdfopen)
     {
       if (argc != 1)
         gpgrt_usage (1);
@@ -679,6 +685,20 @@ main (int argc, char *argv[])
 #else
       log_info ("this command is only useful on Windows\n");
 #endif
+    }
+  else if (cmdfopen)
+    {
+      gpgrt_stream_t fp;
+
+      fp = gpgrt_fopen (*argv, "r,sysopen");
+      if (!fp)
+        log_error ("error opening '%s': %s\n",
+                   *argv, gpg_strerror (gpg_error_from_syserror ()));
+      else
+        {
+          printf ("success opening '%s'\n", *argv);
+          gpgrt_fclose (fp);
+        }
     }
   else if (getregmode)
     {
