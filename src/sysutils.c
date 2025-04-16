@@ -263,15 +263,27 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
 wchar_t *
 _gpgrt_fname_to_wchar (const char *fname)
 {
+  static int no_extlenpath;
   wchar_t *wname;
   wchar_t *wfullpath = NULL;
   int success = 0;
+
+  if (!no_extlenpath)
+    {
+      const char *s = getenv ("GPGRT_DISABLE_EXTLENPATH");
+      if (s && atoi (s))
+        no_extlenpath = 1;
+      else
+        no_extlenpath = -1;
+    }
 
   wname = _gpgrt_utf8_to_wchar (fname);
   if (!wname)
     return NULL;
 
-  if (!strncmp (fname, "\\\\?\\", 4))
+  if (no_extlenpath > 0)
+    success = 1; /* Extended length path support has been disabled.  */
+  else if (!strncmp (fname, "\\\\?\\", 4) || !strncmp (fname, "//?/", 4))
     success = 1; /* Already translated.  */
   else if (strpbrk (fname, "/\\") || wcslen (wname) > 60)
     {
@@ -285,10 +297,16 @@ _gpgrt_fname_to_wchar (const char *fname)
       if (!wfullpath)
         goto leave;
 
-      if (*fname == '\\' && fname[1] == '\\' && fname[2])
+      if (((*fname == '\\' && fname[1] == '\\')
+           ||(*fname == '/' && fname[1] == '/')) && fname[2])
         {
-          wcscpy (wfullpath, L"\\\\?\\UNC\\");
-          extralen = 8;
+          /* Note that the GFPN call below will append the UNC name
+           * and thus two leading backslashes.  However, for an
+           * extended length path only one backslash is expected after
+           * the prefix.  We handle this by replacing the first
+           * backslash with the C from UNC after the GFPN call.  */
+          wcscpy (wfullpath, L"\\\\?\\UN");
+          extralen = 6;
         }
       else
         {
@@ -319,6 +337,10 @@ _gpgrt_fname_to_wchar (const char *fname)
       _gpgrt_free_wchar (wname);
       wname = wfullpath;
       wfullpath = NULL;
+
+      if (extralen == 6)
+        wname[6] = 'C';  /* Replace first backslash - see above.  */
+
       /* Need to make sure that all slashes are mapped. */
       for (w = wname; *w; w++)
         if (*w == L'/')
