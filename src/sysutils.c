@@ -339,7 +339,7 @@ _gpgrt_fname_to_wchar (const char *fname)
       wfullpath = NULL;
 
       if (extralen == 6)
-        wname[6] = 'C';  /* Replace first backslash - see above.  */
+        wname[6] = L'C';  /* Replace first backslash - see above.  */
 
       /* Need to make sure that all slashes are mapped. */
       for (w = wname; *w; w++)

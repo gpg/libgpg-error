@@ -1,5 +1,13 @@
-Noteworthy changes in version 1.54 (unreleased) [C39/A39/R_]
+Noteworthy changes in version 1.54 (2025-04-17) [C39/A39/R2]
 -----------------------------------------------
+
+ * Fix a regression in 1.52 which did not allow to open UNC
+   specified files on Windows.  [rE28ae4ee194]
+
+ * Ignore log file specification from the Registry in the gpg-error
+   tool.
+
+ Release-info: https://dev.gnupg.org/T7597
 
 
 Noteworthy changes in version 1.53 (2025-04-09) [C39/A39/R1]
