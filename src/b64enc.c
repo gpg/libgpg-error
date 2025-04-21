@@ -39,6 +39,7 @@
 #define B64ENC_USE_PGPCRC   32
 
 /* The base-64 character list */
+GPGRT_ATTR_NONSTRING
 static unsigned char const bintoasc[64] = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                            "abcdefghijklmnopqrstuvwxyz"
                                            "0123456789+/");
