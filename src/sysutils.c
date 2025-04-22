@@ -26,6 +26,7 @@
 #include <errno.h>
 #ifdef HAVE_W32_SYSTEM
 # include <windows.h>
+# include <wchar.h>
 #endif
 #ifdef HAVE_STAT
 # include <sys/stat.h>
@@ -253,73 +254,99 @@ _gpgrt_setenv (const char *name, const char *value, int overwrite)
 
 
 #ifdef HAVE_W32_SYSTEM
+/* Checks whether fname has a path separator, that is a slash or
+ * backslash somewhere.  However, it skips leading slashes with drive
+ * letters (backslashes and slashes are considered the same):
+ *  x:\foo     -> false
+ *  x:foo      -> false
+ *  x:         -> false
+ *  x:\        -> false
+ *  foo        -> false
+ *  foo\bar    -> true
+ *  x:\foo\bar -> true
+ *  x:foo\bar  -> true
+ *  \\server   -> true
+ */
+static int
+has_path_separator (const char *fname)
+{
+  if (fname[0] == '/' || fname[0] == '\\')
+    return 1;
+  else if (fname[0] && fname[1] == ':')
+    return (fname[2] && strpbrk (fname+3, "/\\"));
+  else
+    return !!strpbrk (fname, "/\\");
+}
+
 /* Convert an UTF-8 encode file name to wchar.  If the file name is
  * close to the limit of MAXPATH the API functions will fail.  The
  * method to overcome this API limitation is to use a prefix which
  * bypasses the checking by CreateFile.  This also requires to first
  * convert the name to an absolute file name.  To avoid looking up the
- * fill name in all cases we do the \\?\ prefixing only if FNAME is
+ * full name in all cases we do the \\?\ prefixing only if FNAME is
  * longer than 60 byes or if it has any path separator.  */
 wchar_t *
 _gpgrt_fname_to_wchar (const char *fname)
 {
   static int no_extlenpath;
-  wchar_t *wname;
+  wchar_t *wname, *w;
   wchar_t *wfullpath = NULL;
   int success = 0;
 
   if (!no_extlenpath)
     {
+      /* Note that a value of -2 enables debugging of extlenpath.  */
       const char *s = getenv ("GPGRT_DISABLE_EXTLENPATH");
-      if (s && atoi (s))
+      int i = atoi (s? s:"0");
+
+      if (i > 0)
         no_extlenpath = 1;
       else
-        no_extlenpath = -1;
+        no_extlenpath = (i == -2)? -2 : -1;
     }
 
   wname = _gpgrt_utf8_to_wchar (fname);
   if (!wname)
     return NULL;
+  /* We use only backslashes in the wchar version of fname.  */
+  for (w = wname; *w; w++)
+    if (*w == L'/')
+      *w = L'\\';
 
   if (no_extlenpath > 0)
     success = 1; /* Extended length path support has been disabled.  */
   else if (!strncmp (fname, "\\\\?\\", 4) || !strncmp (fname, "//?/", 4))
     success = 1; /* Already translated.  */
-  else if (strpbrk (fname, "/\\") || wcslen (wname) > 60)
+  else if (has_path_separator (fname) || wcslen (wname) > 60)
     {
       int wlen = 1024;
-      int extralen;
       DWORD res;
-      wchar_t *w;
 
     try_again:
-      wfullpath = xtrymalloc (wlen * sizeof *wfullpath);
+      /* We need some extra characters (backslashes are actually used):
+       * Either "//?/" = 4 or "//?/UNC" = 7 and to be safe one more
+       * for the end of string */
+      wfullpath = xtrymalloc ((wlen+8) * sizeof *wfullpath);
       if (!wfullpath)
         goto leave;
 
-      if (((*fname == '\\' && fname[1] == '\\')
-           ||(*fname == '/' && fname[1] == '/')) && fname[2])
+      if (no_extlenpath == -2)
         {
-          /* Note that the GFPN call below will append the UNC name
-           * and thus two leading backslashes.  However, for an
-           * extended length path only one backslash is expected after
-           * the prefix.  We handle this by replacing the first
-           * backslash with the C from UNC after the GFPN call.  */
-          wcscpy (wfullpath, L"\\\\?\\UN");
-          extralen = 6;
+          char *tmpn = _gpgrt_wchar_to_utf8 (wname, -1);
+          _gpgrt_log_debug ("%s:%d: checking '%s'\n",
+                            __func__, __LINE__, tmpn);
+          xfree (tmpn);
         }
-      else
-        {
-          wcscpy (wfullpath, L"\\\\?\\");
-          extralen = 4;
-        }
-      res = GetFullPathNameW (wname, wlen-extralen, wfullpath+extralen, NULL);
+      /* Note that GFPN is basically a string function without a
+       * MAX_PATH limitation.  cf https://googleprojectzero.blogspot.com
+       * /2016/02/the-definitive-guide-on-win32-to-nt.html */
+      res = GetFullPathNameW (wname, wlen, wfullpath, NULL);
       if (!res)
         {
           _gpgrt_w32_set_errno (-1);
           goto leave;
         }
-      else if (res >= wlen - extralen)
+      else if (res >= wlen)
         {
           /* Truncated - increase to the desired length.  */
           if (wlen > 1024)
@@ -331,21 +358,46 @@ _gpgrt_fname_to_wchar (const char *fname)
           /* GetFullPathNameW indicated the required buffer length.  */
           _gpgrt_free_wchar (wfullpath);
           wfullpath = NULL;
-          wlen = res + extralen;
+          wlen = res;
           goto try_again;
         }
       _gpgrt_free_wchar (wname);
       wname = wfullpath;
       wfullpath = NULL;
+      if (no_extlenpath == -2)
+        {
+          char *tmpn = _gpgrt_wchar_to_utf8 (wname, -1);
+          _gpgrt_log_debug ("%s:%d: absfname '%s' (len=%d)\n",
+                            __func__, __LINE__, tmpn, (int)res);
+          xfree (tmpn);
+        }
 
-      if (extralen == 6)
-        wname[6] = L'C';  /* Replace first backslash - see above.  */
+      if (res < MAX_PATH - 5)
+        ; /* No need for extended length path (-5 is kind of arbitrary) */
+      else if (*wname == L'\\' && wname[1] == L'\\' && wname[2])
+        {
+          /* For an UNC extended length path only one backslash is
+           * expected after the prefix.  This we overwrite the first
+           * slash with the 'C'.  Thus a shift by 6 and not 7.  */
+          wmemmove (wname+6, wname, res+1);
+          wname[0] = L'\\';
+          wname[1] = L'\\';
+          wname[2] = L'?';
+          wname[3] = L'\\';
+          wname[4] = L'U';
+          wname[5] = L'N';
+          wname[6] = L'C'; /* (Overwrites the first slash.)  */
 
-      /* Need to make sure that all slashes are mapped. */
-      for (w = wname; *w; w++)
-        if (*w == L'/')
-          *w = L'\\';
-      success = 1;
+        }
+      else
+        {
+          wmemmove (wname+4, wname, res+1);
+          wname[0] = L'\\';
+          wname[1] = L'\\';
+          wname[2] = L'?';
+          wname[3] = L'\\';
+        }
+      success = 2;
     }
   else
     success = 1;
@@ -356,6 +408,12 @@ _gpgrt_fname_to_wchar (const char *fname)
     {
       _gpgrt_free_wchar (wname);
       wname = NULL;
+    }
+  if (wname && success == 2 && no_extlenpath == -2)
+    {
+      char *tmpn = _gpgrt_wchar_to_utf8 (wname, -1);
+      _gpgrt_log_debug ("%s:%d:    using '%s'\n", __func__, __LINE__, tmpn);
+      xfree (tmpn);
     }
   return wname;
 }
