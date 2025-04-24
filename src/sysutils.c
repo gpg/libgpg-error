@@ -372,8 +372,13 @@ _gpgrt_fname_to_wchar (const char *fname)
           xfree (tmpn);
         }
 
-      if (res < MAX_PATH - 5)
-        ; /* No need for extended length path (-5 is kind of arbitrary) */
+      if (res < 250)
+        {
+          /* No need for extended length path.  For unknown reasons
+           * this does not work reliable with 255 or even with the
+           * real value of MAX_PATH (260).  A value of 250 seems to
+           * work though. */
+        }
       else if (*wname == L'\\' && wname[1] == L'\\' && wname[2])
         {
           /* For an UNC extended length path only one backslash is
@@ -387,7 +392,6 @@ _gpgrt_fname_to_wchar (const char *fname)
           wname[4] = L'U';
           wname[5] = L'N';
           wname[6] = L'C'; /* (Overwrites the first slash.)  */
-
         }
       else
         {
