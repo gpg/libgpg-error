@@ -1,6 +1,13 @@
-Noteworthy changes in version 1.55 (unreleased) [C39/A39/R_]
+Noteworthy changes in version 1.55 (2025-04-24) [C39/A39/R3]
 -----------------------------------------------
 
+ * Rewrite the extended length path handling under Windows.
+   [T5754,rEfba44d619d]
+
+ * Add new test commands to the gpg-error tool.  Allow command w/o
+   dashes and reformat the help.  [rEc002490a8f]
+
+ * Silence warning from gcc 15.  [T7621]
 
  Release-info: https://dev.gnupg.org/T7614
 
