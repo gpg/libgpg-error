@@ -1,22 +1,22 @@
 /* gpg-error.c - Determining gpg-error error codes.
-   Copyright (C) 2004, 2016 g10 Code GmbH
-
-   This file is part of libgpg-error.
-
-   libgpg-error is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public License
-   as published by the Free Software Foundation; either version 2.1 of
-   the License, or (at your option) any later version.
-
-   libgpg-error is distributed in the hope that it will be useful, but
-   WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with libgpg-error; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-   02111-1307, USA.  */
+ * Copyright (C) 2004, 2016 g10 Code GmbH
+ *
+ * This file is part of libgpg-error.
+ *
+ * libgpg-error is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * libgpg-error is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program; if not, see <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: LGPL-2.1+
+ **/
 
 #if HAVE_CONFIG_H
 #include <config.h>
@@ -533,7 +533,7 @@ my_strusage (int level)
 
     case 1:
     case 40:
-      p = ("Usage: gpg-error [options] error-numbers");
+      p = ("Usage: gpg-error [commands] [options] error-numbers");
       break;
     case 41:
       p = ("Map error numbers to strings and vice versa.\n");
@@ -554,15 +554,19 @@ int
 main (int argc, char *argv[])
 {
   enum { CMD_DEFAULT     = 0,
+         OPT_QUIET       = 'q',
+         OPT_DESC        = 'd',
          CMD_LIB_VERSION = 501,
          CMD_LIST,
          CMD_DEFINES,
          CMD_LOCALE,
          CMD_GETREG,
          CMD_FOPEN,
-         OPT_DESC
+         CMD_CHDIR,
+         CMD_MKDIR
   };
   static gpgrt_opt_t opts[] = {
+    ARGPARSE_group (300, ("@Commands:\n ")),
     ARGPARSE_c (CMD_LIB_VERSION, "lib-version",
                 "Print library version"),
     ARGPARSE_c (CMD_LIST, "list",
@@ -580,21 +584,24 @@ main (int argc, char *argv[])
     ARGPARSE_c (CMD_GETREG, "getreg",
                 "@"),
 #endif
-    ARGPARSE_c (CMD_FOPEN, "fopen",
-                "Open the given file"),
-    ARGPARSE_s_n (OPT_DESC, "desc",
-                  "Print with error description"),
+    ARGPARSE_c (CMD_FOPEN, "fopen", "Open the given file"),
+    ARGPARSE_c (CMD_CHDIR, "chdir", "Try a chdir to the given directory"),
+    ARGPARSE_c (CMD_MKDIR, "mkdir", "Create the given directory"),
+    ARGPARSE_group (301, ("@\nOptions:\n ")),
+    ARGPARSE_s_n (OPT_QUIET, "quiet", "Silence some output"),
+    ARGPARSE_s_n (OPT_DESC, "desc", "Print with error description"),
     ARGPARSE_end()
   };
-  gpgrt_argparse_t pargs = { &argc, &argv };
+  gpgrt_argparse_t pargs = { &argc, &argv, ARGPARSE_FLAG_COMMAND };
 
   int i;
   int libversion = 0;
   int listmode = 0;
   int localemode = 0;
   int getregmode = 0;
-  int cmdfopen = 0;
+  int mycmd = CMD_DEFAULT;
   int desc = 0;
+  int quiet = 0;
   const char *s, *s2;
   const char *source_sym;
   const char *error_sym;
@@ -606,7 +613,6 @@ main (int argc, char *argv[])
   gpgrt_log_set_prefix (gpgrt_strusage (11),
                         (GPGRT_LOG_WITH_PREFIX| GPGRT_LOG_NO_REGISTRY));
 
-
   while (gpgrt_argparse (NULL, &pargs, opts))
     {
       switch (pargs.r_opt)
@@ -616,7 +622,14 @@ main (int argc, char *argv[])
         case CMD_DEFINES:    listmode = 2; break;
         case CMD_LOCALE:     localemode = 1; break;
         case CMD_GETREG:     getregmode = 1; break;
-        case CMD_FOPEN:      cmdfopen = 1; break;
+
+        case CMD_FOPEN:
+        case CMD_CHDIR:
+        case CMD_MKDIR:
+          mycmd = pargs.r_opt;
+          break;
+
+        case OPT_QUIET:      quiet = 1; break;
         case OPT_DESC:       desc = 1; break;
         default: pargs.err = ARGPARSE_PRINT_WARNING; break;
         }
@@ -633,7 +646,7 @@ main (int argc, char *argv[])
       if (argc > 1)
         gpgrt_usage (1);
     }
-  else if (getregmode|| cmdfopen)
+  else if (getregmode || mycmd)
     {
       if (argc != 1)
         gpgrt_usage (1);
@@ -686,7 +699,7 @@ main (int argc, char *argv[])
       log_info ("this command is only useful on Windows\n");
 #endif
     }
-  else if (cmdfopen)
+  else if (mycmd == CMD_FOPEN)
     {
       gpgrt_stream_t fp;
 
@@ -696,9 +709,26 @@ main (int argc, char *argv[])
                    *argv, gpg_strerror (gpg_error_from_syserror ()));
       else
         {
-          printf ("success opening '%s'\n", *argv);
+          if (!quiet)
+            printf ("success opening '%s'\n", *argv);
           gpgrt_fclose (fp);
         }
+    }
+  else if (mycmd == CMD_CHDIR)
+    {
+      err = gpgrt_chdir (*argv);
+      if (err)
+        log_error ("error chdir '%s': %s\n", *argv, gpg_strerror (err));
+      else if (!quiet)
+        printf ("success chdir '%s'\n", *argv);
+    }
+  else if (mycmd == CMD_MKDIR)
+    {
+      err = gpgrt_mkdir (*argv, "-rwxr-xr-x");
+      if (err)
+        log_error ("error mkdir '%s': %s\n", *argv, gpg_strerror (err));
+      else if (!quiet)
+        printf ("success mkdir '%s'\n", *argv);
     }
   else if (getregmode)
     {
@@ -813,5 +843,5 @@ main (int argc, char *argv[])
         }
     }
 
-  exit (0);
+  exit (!!gpgrt_get_errorcount (0));
 }
