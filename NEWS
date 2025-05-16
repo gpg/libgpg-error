@@ -1,6 +1,11 @@
 Noteworthy changes in version 1.56 (unrelease) [C39/A39/R_]
 -----------------------------------------------
 
+
+ * Interface changes relative to the 1.55 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_UNEXPECTED_PACKET           NEW.
+
  Release-info: https://dev.gnupg.org/T7625
 
 

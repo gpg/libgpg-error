@@ -248,6 +248,7 @@
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
 # 214 to 216 are free to be used.
+216	GPG_ERR_UNEXPECTED_PACKET	Unexpected packet
 217	GPG_ERR_SUBKEYS_EXP_OR_REV	All subkeys are expired or revoked
 218	GPG_ERR_DB_CORRUPTED		Database is corrupted
 219	GPG_ERR_SERVER_FAILED		Server indicated a failure

@@ -793,6 +793,11 @@ GPG_ERR_SEXP_ODD_HEX_NUMBERS  Odd hexadecimal numbers in S-expression
 
 GPG_ERR_SEXP_BAD_OCT_CHAR     Bad octal character in S-expression
 
+GPG_ERR_UNEXPECTED_PACKET     Unexpected packet
+
+    GnuPG: - An OpenPGP packet was not expected at this place of the
+             parsed data.
+
 GPG_ERR_SUBKEYS_EXP_REV       All subkeys are expired or revoked
 
 GPG_ERR_DB_CORRUPTED          Database is corrupted
