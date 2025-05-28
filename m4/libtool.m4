@@ -3603,6 +3603,10 @@ openbsd* | bitrig*)
   fi
   ;;
 
+openedition*)
+  lt_cv_deplibs_check_method=pass_all
+  ;;
+
 osf3* | osf4* | osf5*)
   lt_cv_deplibs_check_method=pass_all
   ;;
