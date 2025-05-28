@@ -1424,6 +1424,7 @@ handle_meta_echo (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
   else
     _gpgrt_log_info ("%s:%u: %s\n",
                      arg->internal->confname, arg->lineno, string);
+  xfree (string);
   return 0;
 }
 
