@@ -940,7 +940,7 @@ roff_alternate (const char *line, const char *mode)
 
 /* Add the content of LINE to the section named SECTNAME.  */
 static void
-add_content (const char *sectname, char *line, int verbatim)
+add_content (const char *sectname, const char *line, int verbatim)
 {
   section_buffer_t sect;
   line_buffer_t lb;
@@ -1937,7 +1937,24 @@ finish_page (void)
     fclose (fp);
   free (thepage.name);
   thepage.name = NULL;
-  /* FIXME: Cleanup the content.  */
+
+  for (i=0; i < thepage.n_sections; i++)
+    {
+      line_buffer_t line, line_next;
+
+      sect = thepage.sections + i;
+      for (line = sect->lines; line; line = line_next)
+        {
+          line_next = line->next;
+          free (line->line);
+          free (line);
+        }
+
+      free (sect->name);
+    }
+
+  free (thepage.sections);
+  thepage.n_sections = 0;
 }
 
 
@@ -2227,7 +2244,6 @@ parse_file (const char *fname, FILE *fp, char **section_name, int in_pause)
         add_content (*section_name, line, 1);
       else if (got_line && thepage.name && *section_name && !in_pause)
         add_content (*section_name, line, 0);
-
     }
   if (ferror (fp))
     err ("%s:%d: read error: %s", fname, lnr, strerror (errno));
