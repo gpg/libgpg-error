@@ -1263,7 +1263,7 @@ emulated_registry_lookup (gpgrt_argparse_t *arg, const char *name, int *r_err)
       estream_t fp;
       char *p;
 
-      if (!arg->internal->confname || !arg->internal->confname)
+      if (!arg->internal->confname)
         return NULL;  /* No system conf file known.  */
 
       fname = xtrymalloc (strlen (arg->internal->confname) + 8 + 2 );
