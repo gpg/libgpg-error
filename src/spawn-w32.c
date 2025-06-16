@@ -27,6 +27,10 @@
 #error This code is only used on W32.
 #endif
 
+#if _WIN32_WINNT < 0x0600
+# define _WIN32_WINNT 0x0600  /* Required for STARTUPINFOEXW  */
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
