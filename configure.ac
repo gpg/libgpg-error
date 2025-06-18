@@ -142,6 +142,17 @@ case "${host}" in
        ;;
 esac
 
+# Set some variables for building build platform helpers.
+case "$build_os" in
+    *zOS*)
+        EXTRA_LIBS_FOR_BUILD=zoslib
+        ;;
+    *)
+        EXTRA_LIBS_FOR_BUILD=
+	;;
+esac
+AC_SUBST(EXTRA_LIBS_FOR_BUILD)
+
 
 if test "$have_w32_system" != yes; then
   gl_THREADLIB_EARLY

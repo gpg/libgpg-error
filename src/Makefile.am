@@ -278,7 +278,8 @@ errnos-sym.h: Makefile mkstrtable.awk errnos.in
 
 mkheader$(EXEEXT_FOR_BUILD): mkheader.c Makefile
 	$(CC_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) \
-	$(CPPFLAGS_FOR_BUILD) -g -I. -I$(srcdir) -o $@ $(srcdir)/mkheader.c
+	$(CPPFLAGS_FOR_BUILD) -g -I. -I$(srcdir) \
+        -o $@ $(srcdir)/mkheader.c $(EXTRA_LIBS_FOR_BUILD)
 
 parts_of_gpg_error_h = 	 	\
 	gpg-error.h.in  	\
