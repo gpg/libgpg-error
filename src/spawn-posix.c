@@ -166,11 +166,6 @@ get_max_fds (void)
     }
 #endif
 
-#ifdef _POSIX_OPEN_MAX
-  if (max_fds == -1)
-    max_fds = _POSIX_OPEN_MAX;
-#endif
-
 #ifdef OPEN_MAX
   if (max_fds == -1)
     max_fds = OPEN_MAX;
