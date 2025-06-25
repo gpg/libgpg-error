@@ -55,6 +55,7 @@
 # include <dirent.h>
 #endif /*__linux__ */
 
+#define _GPGRT_NEED_AFLOCAL 1
 #include "gpgrt-int.h"
 
 
