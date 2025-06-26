@@ -97,11 +97,15 @@ closefrom_really (int lowfd)
 # endif
 }
 #else
+#define USE_GET_MAX_FDS 1
+#endif
+
+#ifdef USE_GET_MAX_FDS
 /* Return the maximum number of currently allowed open file
  * descriptors.  Only useful on POSIX systems but returns a value on
  * other systems too.  */
 static int
-get_max_fds (void)
+get_max_fds (int fallback_max_fds)
 {
   int max_fds = -1;
 #ifdef HAVE_GETRLIMIT
@@ -179,14 +183,8 @@ get_max_fds (void)
 # endif
 #endif /*HAVE_GETRLIMIT*/
 
-#ifdef _SC_OPEN_MAX
-  if (max_fds == -1)
-    {
-      long int scres = sysconf (_SC_OPEN_MAX);
-      if (scres >= 0)
-        max_fds = scres;
-    }
-#endif
+  if (max_fds == -1 && fallback_max_fds >= 0)
+    max_fds = fallback_max_fds;
 
 #ifdef OPEN_MAX
   if (max_fds == -1)
@@ -208,12 +206,12 @@ get_max_fds (void)
 #endif /* HAVE_CLOSEFROM */
 
 static void
-close_except (int first_fd, int max_fd, const int *except)
+close_except (int first_fd, int max_fds, const int *except)
 {
   int fd;
   int except_start = 0;
 
-  for (fd = first_fd; fd < max_fd; fd++)
+  for (fd = first_fd; fd < max_fds; fd++)
     {
       if (except)
         {
@@ -244,12 +242,13 @@ close_except (int first_fd, int max_fd, const int *except)
  * which shall not be closed.  This list shall be sorted in ascending
  * order with the end marked by -1.  */
 void
-_gpgrt_close_all_fds (int first, const int *except)
+_gpgrt_close_all_fds (int first, const int *except, int fallback_max_fds)
 {
-  int max_fd;
+  int max_fds;
 
 #ifdef HAVE_CLOSEFROM
-  max_fd = first;
+  (void)fallback_max_fds;
+  max_fds = first;
   if (except)
     {
       int i;
@@ -258,14 +257,14 @@ _gpgrt_close_all_fds (int first, const int *except)
       for (i = 0; except[i] != -1; i++)
         ;
       if (i != 0)
-        max_fd = except[--i] + 1;
+        max_fds = except[--i] + 1;
     }
 
-  closefrom_really (max_fd);
+  closefrom_really (max_fds);
 #else
-  max_fd = get_max_fds ();
+  max_fds = get_max_fds (fallback_max_fds);
 #endif
-  close_except (first, max_fd, except);
+  close_except (first, max_fds, except);
   _gpg_err_set_errno (0);
 }
 
@@ -395,7 +394,8 @@ prepare_environ (const char *const *envchange)
 }
 
 static int
-my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act)
+my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act,
+         int fallback_max_fds)
 {
   int i;
 
@@ -419,7 +419,7 @@ my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act)
       }
 
   /* Close all other files.  */
-  _gpgrt_close_all_fds (3, act->except_fds);
+  _gpgrt_close_all_fds (3, act->except_fds, fallback_max_fds);
 
   if (act->envchange && prepare_environ (act->envchange))
     goto leave;
@@ -445,7 +445,7 @@ my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act)
 
 static gpg_err_code_t
 spawn_detached (const char *pgmname, const char *argv[],
-                gpgrt_spawn_actions_t act)
+                gpgrt_spawn_actions_t act, int fallback_max_fds)
 {
   gpg_err_code_t ec;
   pid_t pid;
@@ -481,7 +481,7 @@ spawn_detached (const char *pgmname, const char *argv[],
       if (pid2)
         _exit (0);  /* Let the parent exit immediately. */
 
-      my_exec (pgmname, argv, act);
+      my_exec (pgmname, argv, act, fallback_max_fds);
       /*NOTREACHED*/
     }
 
@@ -582,6 +582,15 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
   const char **argv;
   int i, j;
   struct gpgrt_spawn_actions act_default;
+  int fallback_max_fds = -1;
+
+#if defined(USE_GET_MAX_FDS) && defined(_SC_OPEN_MAX)
+  {
+    long int scres = sysconf (_SC_OPEN_MAX);
+    if (scres >= 0)
+      fallback_max_fds = scres;
+  }
+#endif
 
   if (!act)
     {
@@ -637,7 +646,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
             }
         }
 
-      return spawn_detached (pgmname, argv, act);
+      return spawn_detached (pgmname, argv, act, fallback_max_fds);
     }
 
   process = xtrycalloc (1, sizeof (struct gpgrt_process));
@@ -781,7 +790,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv1[],
         act->fd[2] = fd_err[1];
 
       /* Run child. */
-      if (!my_exec (pgmname, argv, act))
+      if (!my_exec (pgmname, argv, act, fallback_max_fds))
         {
           xfree (process);
           xfree (argv);

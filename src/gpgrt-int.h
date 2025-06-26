@@ -737,7 +737,8 @@ void _gpgrt_process_release (gpgrt_process_t process);
 
 
 /* Close all file resources (descriptors), except KEEP_FDS.  */
-void _gpgrt_close_all_fds (int from, const int *keep_fds);
+void _gpgrt_close_all_fds (int from, const int *keep_fds,
+                           int fallback_max_fds);
 
 
 /*
