@@ -192,13 +192,13 @@ get_max_fds (int fallback_max_fds)
 #endif
 
   if (max_fds == -1)
-    max_fds = 256;  /* Arbitrary limit.  */
+    max_fds = 1024;  /* Arbitrary limit.  */
 
   /* AIX returns INT32_MAX instead of a proper value.  We assume that
      this is always an error and use an arbitrary limit.  */
 #ifdef INT32_MAX
   if (max_fds == INT32_MAX)
-    max_fds = 256;
+    max_fds = 1024;
 #endif
 
   return max_fds;
