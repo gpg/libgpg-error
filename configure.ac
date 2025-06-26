@@ -264,7 +264,7 @@ AC_SUBST(INSTALLSHELLPATH)
 
 AC_CHECK_FUNCS([flockfile vasprintf mmap rand strlwr stpcpy setenv stat \
                 getrlimit getpwnam getpwuid getpwnam_r getpwuid_r inet_pton \
-                closefrom])
+                getdents64 closefrom])
 
 
 #

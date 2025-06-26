@@ -41,6 +41,11 @@
 #include <sys/socket.h>
 #include <sys/wait.h>
 
+#if !defined(HAVE_CLOSEFROM) && defined(HAVE_GETDENTS64)
+# include <sys/types.h>
+# include <dirent.h>
+#endif /* !defined(HAVE_CLOSEFROM) && defined(HAVE_GETDENTS64) */
+
 #ifdef HAVE_GETRLIMIT
 #include <sys/time.h>
 #include <sys/resource.h>
@@ -50,13 +55,7 @@
 # include <sys/stat.h>
 #endif
 
-#if __linux__
-# include <sys/types.h>
-# include <dirent.h>
-#endif /*__linux__ */
-
 #include "gpgrt-int.h"
-
 
 /* Definition for the gpgrt_spawn_actions_t.  Note that there is a
  * different one for Windows.  */
@@ -107,7 +106,9 @@ get_max_fds (void)
   int max_fds = -1;
 #ifdef HAVE_GETRLIMIT
   struct rlimit rl;
-
+#endif
+#ifdef HAVE_GETDENTS64
+#define DIR_BUF_SIZE 1024
   /* Under Linux we can figure out the highest used file descriptor by
    * reading /proc/PID/fd.  This is in the common cases much fast than
    * for example doing 4096 close calls where almost all of them will
@@ -118,32 +119,54 @@ get_max_fds (void)
    * Another option would be to close the file descriptors as returned
    * from reading that directory - however then we need to snapshot
    * that list before starting to close them.  */
-#ifdef __linux__
   {
-    DIR *dir = NULL;
-    struct dirent *dir_entry;
+    int dir_fd;
+    struct dirent64 buf[(DIR_BUF_SIZE+sizeof (struct dirent64)-1)
+                        /sizeof (struct dirent64)];
+    char *dir_buf = (char *)buf; /* BUF aligned for struct dirent64 */
+    struct dirent64 *dir_entry;
+    ssize_t r, pos;
     const char *s;
     int x;
 
-    dir = opendir ("/proc/self/fd");
-    if (dir)
+    dir_fd = open ("/proc/self/fd", O_RDONLY | O_DIRECTORY);
+    if (dir_fd != -1)
       {
-        while ((dir_entry = readdir (dir)))
+        for (;;)
           {
-            s = dir_entry->d_name;
-            if ( *s < '0' || *s > '9')
-              continue;
-            x = atoi (s);
-            if (x > max_fds)
-              max_fds = x;
+            r = getdents64 (dir_fd, buf, sizeof (buf));
+            if (r == -1)
+              {
+                /* Fall back to other methods.  */
+                max_fds = -1;
+                break;
+              }
+            if (r == 0)
+              break;
+
+            for (pos = 0; pos < r; pos += dir_entry->d_reclen)
+              {
+                dir_entry = (struct dirent64 *)(dir_buf + pos);
+                s = dir_entry->d_name;
+                if (*s < '0' || *s > '9')
+                  continue;
+                /* NOTE: atoi is not guaranteed to be async-signal-safe.  */
+                for (x = 0; *s >= '0' && *s <= '9'; s++)
+                  x = x * 10 + (*s - '0');
+                if (!*s && x > max_fds && x != dir_fd)
+                  max_fds = x;
+              }
           }
-        closedir (dir);
+
+        close (dir_fd);
       }
+
     if (max_fds != -1)
       return max_fds + 1;
-    }
-#endif /* __linux__ */
+  }
+#endif /* HAVE_GETDENTS64 */
 
+#ifdef HAVE_GETRLIMIT
 
 # ifdef RLIMIT_NOFILE
   if (!getrlimit (RLIMIT_NOFILE, &rl))
@@ -153,7 +176,6 @@ get_max_fds (void)
 # ifdef RLIMIT_OFILE
   if (max_fds == -1 && !getrlimit (RLIMIT_OFILE, &rl))
     max_fds = rl.rlim_max;
-
 # endif
 #endif /*HAVE_GETRLIMIT*/
 
@@ -183,7 +205,7 @@ get_max_fds (void)
 
   return max_fds;
 }
-#endif
+#endif /* HAVE_CLOSEFROM */
 
 static void
 close_except (int first_fd, int max_fd, const int *except)
