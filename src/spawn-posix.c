@@ -55,6 +55,7 @@
 # include <sys/stat.h>
 #endif
 
+#define _GPGRT_NEED_AFLOCAL 1
 #include "gpgrt-int.h"
 
 /* Definition for the gpgrt_spawn_actions_t.  Note that there is a
