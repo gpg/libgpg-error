@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the libgpg-error package.
 # Yasuaki Taniguchi <yasuakit@gmail.com>, 2010.
 # Takeshi Hamasaki <hmatrjp@users.sourceforge.jp>, 2012.
-# NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016, 2017, 2019, 2020, 2023.
+# NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016, 2017, 2019, 2020, 2023,
+# 2025.
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.47\n"
+"Project-Id-Version: libgpg-error 1.56\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2023-04-07 15:13+0900\n"
+"PO-Revision-Date: 2025-06-30 15:33+0900\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -733,6 +734,9 @@ msgstr "S式におかしな16進キャラクタがあります"
 
 msgid "Bad octal character in S-expression"
 msgstr "S式に間違った8進キャラクタがあります"
+
+msgid "Unexpected packet"
+msgstr "予期しないパケットです"
 
 msgid "All subkeys are expired or revoked"
 msgstr "すべての副鍵が期限切れか失効しています"
