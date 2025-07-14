@@ -567,7 +567,7 @@ spawn_detached (const char *pgmname, char *cmdline, gpgrt_spawn_actions_t act)
   si.StartupInfo.hStdOutput = act->hd[1];
   si.StartupInfo.hStdError  = act->hd[2];
 
-  cr_flags = (CREATE_DEFAULT_ERROR_MODE
+  cr_flags = (CREATE_DEFAULT_ERROR_MODE | EXTENDED_STARTUPINFO_PRESENT
               | GetPriorityClass (GetCurrentProcess ())
               | CREATE_NEW_PROCESS_GROUP
               | DETACHED_PROCESS);
@@ -960,7 +960,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   si.StartupInfo.hStdError  = act->hd[2];
 
   /* log_debug ("CreateProcess, path='%s' cmdline='%s'\n", pgmname, cmdline); */
-  cr_flags = (CREATE_DEFAULT_ERROR_MODE
+  cr_flags = (CREATE_DEFAULT_ERROR_MODE | EXTENDED_STARTUPINFO_PRESENT
               | ((flags & GPGRT_PROCESS_NO_CONSOLE) ? DETACHED_PROCESS : 0)
               | GetPriorityClass (GetCurrentProcess ())
               | CREATE_SUSPENDED);
