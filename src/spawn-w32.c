@@ -729,13 +729,14 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   HANDLE hd_in[2];
   HANDLE hd_out[2];
   HANDLE hd_err[2];
-  int i;
   BOOL ask_inherit = FALSE;
   struct gpgrt_spawn_actions act_default;
   char *env = NULL;
 
   if (!act)
     {
+      int i;
+
       memset (&act_default, 0, sizeof (act_default));
       for (i = 0; i <= 2; i++)
         act_default.hd[i] = INVALID_HANDLE_VALUE;
@@ -791,6 +792,8 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
       return GPG_ERR_NOT_SUPPORTED;
     }
 
+  hd_in[0] = INVALID_HANDLE_VALUE;
+  hd_in[1] = INVALID_HANDLE_VALUE;
   if ((flags & GPGRT_PROCESS_STDIN_PIPE))
     {
       ec = create_inheritable_pipe (hd_in, INHERIT_READ);
@@ -802,148 +805,153 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
         }
     }
   else if ((flags & GPGRT_PROCESS_STDIN_KEEP))
-    {
-      hd_in[0] = GetStdHandle (STD_INPUT_HANDLE);
-      hd_in[1] = INVALID_HANDLE_VALUE;
-    }
-  else
-    {
-      hd_in[0] = w32_open_null (0);
-      hd_in[1] = INVALID_HANDLE_VALUE;
-    }
+    hd_in[0] = GetStdHandle (STD_INPUT_HANDLE);
 
+  hd_out[0] = INVALID_HANDLE_VALUE;
+  hd_out[1] = INVALID_HANDLE_VALUE;
   if ((flags & GPGRT_PROCESS_STDOUT_PIPE))
     {
       ec = create_inheritable_pipe (hd_out, INHERIT_WRITE);
       if (ec)
         {
-          if (hd_in[0] != INVALID_HANDLE_VALUE)
-            CloseHandle (hd_in[0]);
-          if (hd_in[1] != INVALID_HANDLE_VALUE)
-            CloseHandle (hd_in[1]);
+          if ((flags & GPGRT_PROCESS_STDIN_PIPE))
+            {
+              CloseHandle (hd_in[0]);
+              CloseHandle (hd_in[1]);
+            }
           xfree (process);
           xfree (cmdline);
           return ec;
         }
     }
   else if ((flags & GPGRT_PROCESS_STDOUT_KEEP))
-    {
-      hd_out[0] = INVALID_HANDLE_VALUE;
-      hd_out[1] = GetStdHandle (STD_OUTPUT_HANDLE);
-    }
-  else
-    {
-      hd_out[0] = INVALID_HANDLE_VALUE;
-      hd_out[1] = w32_open_null (1);
-    }
+    hd_out[1] = GetStdHandle (STD_OUTPUT_HANDLE);
 
+  hd_err[0] = INVALID_HANDLE_VALUE;
+  hd_err[1] = INVALID_HANDLE_VALUE;
   if ((flags & GPGRT_PROCESS_STDERR_PIPE))
     {
       ec = create_inheritable_pipe (hd_err, INHERIT_WRITE);
       if (ec)
         {
-          if (hd_in[0] != INVALID_HANDLE_VALUE)
-            CloseHandle (hd_in[0]);
-          if (hd_in[1] != INVALID_HANDLE_VALUE)
-            CloseHandle (hd_in[1]);
-          if (hd_out[0] != INVALID_HANDLE_VALUE)
-            CloseHandle (hd_out[0]);
-          if (hd_out[1] != INVALID_HANDLE_VALUE)
-            CloseHandle (hd_out[1]);
+          if ((flags & GPGRT_PROCESS_STDIN_PIPE))
+            {
+              CloseHandle (hd_in[0]);
+              CloseHandle (hd_in[1]);
+            }
+          if ((flags & GPGRT_PROCESS_STDOUT_PIPE))
+            {
+              CloseHandle (hd_out[0]);
+              CloseHandle (hd_out[1]);
+            }
           xfree (process);
           xfree (cmdline);
           return ec;
         }
     }
   else if ((flags & GPGRT_PROCESS_STDERR_KEEP))
-    {
-      hd_err[0] = INVALID_HANDLE_VALUE;
-      hd_err[1] = GetStdHandle (STD_ERROR_HANDLE);
-    }
-  else
-    {
-      hd_err[0] = INVALID_HANDLE_VALUE;
-      hd_err[1] = w32_open_null (1);
-    }
+    hd_err[1] = GetStdHandle (STD_ERROR_HANDLE);
 
   memset (&si, 0, sizeof si);
 
-  if (act->hd[0] == INVALID_HANDLE_VALUE)
-    act->hd[0] = hd_in[0];
-  if (act->hd[1] == INVALID_HANDLE_VALUE)
-    act->hd[1] = hd_out[1];
-  if (act->hd[2] == INVALID_HANDLE_VALUE)
-    act->hd[2] = hd_err[1];
-
-  i = 0;
   if (act->hd[0] != INVALID_HANDLE_VALUE)
-    i++;
-  if (act->hd[1] != INVALID_HANDLE_VALUE)
-    i++;
-  if (act->hd[2] != INVALID_HANDLE_VALUE)
-    i++;
-
-  if (i != 0 || act->inherit_hds)
     {
-      SIZE_T attr_list_size = 0;
-      HANDLE hd[32];
-      HANDLE *hd_p = act->inherit_hds;
-      int j = 0;
-
-      if (act->hd[0] != INVALID_HANDLE_VALUE)
-        hd[j++] = act->hd[0];
-      if (act->hd[1] != INVALID_HANDLE_VALUE)
-        hd[j++] = act->hd[1];
-      if (act->hd[2] != INVALID_HANDLE_VALUE)
-        hd[j++] = act->hd[2];
-      if (hd_p)
+      if ((flags & GPGRT_PROCESS_STDIN_PIPE))
         {
-          while (*hd_p != INVALID_HANDLE_VALUE)
-            if (j < DIM (hd))
-              hd[j++] = *hd_p++;
-            else
-              {
-                _gpgrt_log_info ("gpgrt_process_spawn: too many handles\n");
-                break;
-              }
+          CloseHandle (hd_in[0]);
+          CloseHandle (hd_in[1]);
+          hd_in[1] = INVALID_HANDLE_VALUE;
         }
-
-      if (j)
-        {
-          if (check_windows_version ())
-            {
-              InitializeProcThreadAttributeList (NULL, 1, 0, &attr_list_size);
-              si.lpAttributeList = xtrymalloc (attr_list_size);
-              if (si.lpAttributeList == NULL)
-                {
-                  if ((flags & GPGRT_PROCESS_STDIN_PIPE)
-                      || !(flags & GPGRT_PROCESS_STDIN_KEEP))
-                    CloseHandle (hd_in[0]);
-                  if ((flags & GPGRT_PROCESS_STDIN_PIPE))
-                    CloseHandle (hd_in[1]);
-                  if ((flags & GPGRT_PROCESS_STDOUT_PIPE))
-                    CloseHandle (hd_out[0]);
-                  if ((flags & GPGRT_PROCESS_STDOUT_PIPE)
-                      || !(flags & GPGRT_PROCESS_STDOUT_KEEP))
-                    CloseHandle (hd_out[1]);
-                  if ((flags & GPGRT_PROCESS_STDERR_PIPE))
-                    CloseHandle (hd_err[0]);
-                  if ((flags & GPGRT_PROCESS_STDERR_PIPE)
-                      || !(flags & GPGRT_PROCESS_STDERR_KEEP))
-                    CloseHandle (hd_err[1]);
-                  xfree (process);
-                  xfree (cmdline);
-                  return _gpg_err_code_from_syserror ();
-                }
-              InitializeProcThreadAttributeList (si.lpAttributeList, 1, 0,
-                                                 &attr_list_size);
-              UpdateProcThreadAttribute (si.lpAttributeList, 0,
-                                         PROC_THREAD_ATTRIBUTE_HANDLE_LIST,
-                                         hd, sizeof (HANDLE) * j, NULL, NULL);
-            }
-          ask_inherit = TRUE;
-        }
+      hd_in[0] = act->hd[0];
     }
+  else if (hd_in[0] == INVALID_HANDLE_VALUE)
+    hd_in[0] = w32_open_null (0);
+  if (act->hd[1] != INVALID_HANDLE_VALUE)
+    {
+      if ((flags & GPGRT_PROCESS_STDOUT_PIPE))
+        {
+          CloseHandle (hd_out[0]);
+          CloseHandle (hd_out[1]);
+          hd_out[0] = INVALID_HANDLE_VALUE;
+        }
+      hd_out[1] = act->hd[1];
+    }
+  else if (hd_out[1] == INVALID_HANDLE_VALUE)
+    hd_out[1] = w32_open_null (1);
+  if (act->hd[2] != INVALID_HANDLE_VALUE)
+    {
+      if ((flags & GPGRT_PROCESS_STDERR_PIPE))
+        {
+          CloseHandle (hd_err[0]);
+          CloseHandle (hd_err[1]);
+          hd_err[0] = INVALID_HANDLE_VALUE;
+        }
+      hd_err[1] = act->hd[2];
+      }
+  else if (hd_err[1] == INVALID_HANDLE_VALUE)
+    hd_err[1] = w32_open_null (1);
+
+  {
+    HANDLE hd[32];
+    HANDLE *hd_p = act->inherit_hds;
+    int j = 0;
+
+    if (hd_in[0] != INVALID_HANDLE_VALUE)
+      hd[j++] = hd_in[0];
+    if (hd_out[1] != INVALID_HANDLE_VALUE)
+      hd[j++] = hd_out[1];
+    if (hd_err[1] != INVALID_HANDLE_VALUE)
+      hd[j++] = hd_err[1];
+    if (hd_p)
+      {
+        while (*hd_p != INVALID_HANDLE_VALUE)
+          if (j < DIM (hd))
+            hd[j++] = *hd_p++;
+          else
+            {
+              _gpgrt_log_info ("gpgrt_process_spawn: too many handles\n");
+              break;
+            }
+      }
+
+    if (j)
+      {
+        if (check_windows_version ())
+          {
+            SIZE_T attr_list_size = 0;
+
+            InitializeProcThreadAttributeList (NULL, 1, 0, &attr_list_size);
+            si.lpAttributeList = xtrymalloc (attr_list_size);
+            if (si.lpAttributeList == NULL)
+              {
+                if (hd_in[0] != INVALID_HANDLE_VALUE
+                    && hd_in[0] != act->hd[0])
+                  CloseHandle (hd_in[0]);
+                if ((flags & GPGRT_PROCESS_STDIN_PIPE))
+                  CloseHandle (hd_in[1]);
+                if ((flags & GPGRT_PROCESS_STDOUT_PIPE))
+                  CloseHandle (hd_out[0]);
+                if (hd_out[1] != INVALID_HANDLE_VALUE
+                    && hd_out[1] != act->hd[1])
+                  CloseHandle (hd_out[1]);
+                if ((flags & GPGRT_PROCESS_STDERR_PIPE))
+                  CloseHandle (hd_err[0]);
+                if (hd_err[1] != INVALID_HANDLE_VALUE
+                    && hd_err[1] != act->hd[2])
+                  CloseHandle (hd_err[1]);
+                xfree (process);
+                xfree (cmdline);
+                return _gpg_err_code_from_syserror ();
+              }
+            InitializeProcThreadAttributeList (si.lpAttributeList, 1, 0,
+                                               &attr_list_size);
+            UpdateProcThreadAttribute (si.lpAttributeList, 0,
+                                       PROC_THREAD_ATTRIBUTE_HANDLE_LIST,
+                                       hd, sizeof (HANDLE) * j, NULL, NULL);
+          }
+        ask_inherit = TRUE;
+      }
+  }
 
   /* Prepare security attributes.  */
   memset (&sec_attr, 0, sizeof sec_attr );
@@ -952,12 +960,11 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
 
   /* Start the process.  */
   si.StartupInfo.cb = sizeof (si);
-  si.StartupInfo.dwFlags = ((i > 0 ? STARTF_USESTDHANDLES : 0)
-                            | STARTF_USESHOWWINDOW);
+  si.StartupInfo.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
   si.StartupInfo.wShowWindow = DEBUG_W32_SPAWN? SW_SHOW : SW_HIDE;
-  si.StartupInfo.hStdInput  = act->hd[0];
-  si.StartupInfo.hStdOutput = act->hd[1];
-  si.StartupInfo.hStdError  = act->hd[2];
+  si.StartupInfo.hStdInput  = hd_in[0];
+  si.StartupInfo.hStdOutput = hd_out[1];
+  si.StartupInfo.hStdError  = hd_err[1];
 
   /* log_debug ("CreateProcess, path='%s' cmdline='%s'\n", pgmname, cmdline); */
   cr_flags = (CREATE_DEFAULT_ERROR_MODE | EXTENDED_STARTUPINFO_PRESENT
@@ -1019,20 +1026,17 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
       else
         _gpgrt_log_info ("CreateProcess failed: ec=%d\n",
                           (int)GetLastError ());
-      if ((flags & GPGRT_PROCESS_STDIN_PIPE)
-          || !(flags & GPGRT_PROCESS_STDIN_KEEP))
+      if (hd_in[0] != INVALID_HANDLE_VALUE && hd_in[0] != act->hd[0])
         CloseHandle (hd_in[0]);
       if ((flags & GPGRT_PROCESS_STDIN_PIPE))
         CloseHandle (hd_in[1]);
       if ((flags & GPGRT_PROCESS_STDOUT_PIPE))
         CloseHandle (hd_out[0]);
-      if ((flags & GPGRT_PROCESS_STDOUT_PIPE)
-          || !(flags & GPGRT_PROCESS_STDOUT_KEEP))
+      if (hd_out[1] != INVALID_HANDLE_VALUE && hd_out[1] != act->hd[1])
         CloseHandle (hd_out[1]);
       if ((flags & GPGRT_PROCESS_STDERR_PIPE))
         CloseHandle (hd_err[0]);
-      if ((flags & GPGRT_PROCESS_STDERR_PIPE)
-          || !(flags & GPGRT_PROCESS_STDERR_KEEP))
+      if (hd_err[1] != INVALID_HANDLE_VALUE && hd_err[1] != act->hd[2])
         CloseHandle (hd_err[1]);
       _gpgrt_free_wchar (wpgmname);
       _gpgrt_free_wchar (wcmdline);
@@ -1045,14 +1049,11 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   _gpgrt_free_wchar (wcmdline);
   xfree (cmdline);
 
-  if ((flags & GPGRT_PROCESS_STDIN_PIPE)
-      || !(flags & GPGRT_PROCESS_STDIN_KEEP))
+  if (hd_in[0] != INVALID_HANDLE_VALUE && hd_in[0] != act->hd[0])
     CloseHandle (hd_in[0]);
-  if ((flags & GPGRT_PROCESS_STDOUT_PIPE)
-      || !(flags & GPGRT_PROCESS_STDOUT_KEEP))
+  if (hd_out[1] != INVALID_HANDLE_VALUE && hd_out[1] != act->hd[1])
     CloseHandle (hd_out[1]);
-  if ((flags & GPGRT_PROCESS_STDERR_PIPE)
-      || !(flags & GPGRT_PROCESS_STDERR_KEEP))
+  if (hd_err[1] != INVALID_HANDLE_VALUE && hd_err[1] != act->hd[2])
     CloseHandle (hd_err[1]);
 
   /* log_debug ("CreateProcess ready: hProcess=%p hThread=%p" */
