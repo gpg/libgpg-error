@@ -1262,6 +1262,10 @@ void _gpgrt_log_assert (const char *expr, const char *file, int line,
 /* Allow the child process to set the foreground window (Windows only).  */
 #define GPGRT_PROCESS_ALLOW_SET_FG        (1 << 4)
 
+/* Child process uses "NUL" device for its stdin/stdout/stderr
+ * (Windows only).  */
+#define GPGRT_PROCESS_STDIO_NUL           (1 << 5)
+
 /* Specify how to keep/connect standard fds.  */
 #define GPGRT_PROCESS_STDIN_PIPE          (1 << 8)
 #define GPGRT_PROCESS_STDOUT_PIPE         (1 << 9)

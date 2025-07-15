@@ -211,17 +211,28 @@ create_inheritable_pipe (HANDLE filedes[2], int flags)
 
 
 static HANDLE
-w32_open_null (int for_write)
+w32_open_null (int for_write, int enable_null_device)
 {
   HANDLE hfile;
 
-  hfile = CreateFileW (L"nul",
-                       for_write? GENERIC_WRITE : GENERIC_READ,
-                       FILE_SHARE_READ | FILE_SHARE_WRITE,
-                       NULL, OPEN_EXISTING, 0, NULL);
-  if (hfile == INVALID_HANDLE_VALUE)
-    _gpgrt_log_debug ("can't open 'nul': ec=%d\n", (int)GetLastError ());
-  return hfile;
+  if (enable_null_device)
+    {
+      SECURITY_ATTRIBUTES sec_attr;
+
+      /* Prepare security attributes.  */
+      memset (&sec_attr, 0, sizeof sec_attr );
+      sec_attr.nLength = sizeof sec_attr;
+      sec_attr.bInheritHandle = TRUE;
+      hfile = CreateFileW (L"nul",
+                           for_write? GENERIC_WRITE : GENERIC_READ,
+                           FILE_SHARE_READ | FILE_SHARE_WRITE,
+                           &sec_attr, OPEN_EXISTING, 0, NULL);
+      if (hfile == INVALID_HANDLE_VALUE)
+        _gpgrt_log_debug ("can't open 'nul': ec=%d\n", (int)GetLastError ());
+      return hfile;
+    }
+  else
+    return INVALID_HANDLE_VALUE;
 }
 
 
@@ -732,6 +743,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   BOOL ask_inherit = FALSE;
   struct gpgrt_spawn_actions act_default;
   char *env = NULL;
+  int enable_null_device = !!(flags & GPGRT_PROCESS_STDIO_NUL);
 
   if (!act)
     {
@@ -865,7 +877,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
       hd_in[0] = act->hd[0];
     }
   else if (hd_in[0] == INVALID_HANDLE_VALUE)
-    hd_in[0] = w32_open_null (0);
+    hd_in[0] = w32_open_null (0, enable_null_device);
   if (act->hd[1] != INVALID_HANDLE_VALUE)
     {
       if ((flags & GPGRT_PROCESS_STDOUT_PIPE))
@@ -877,7 +889,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
       hd_out[1] = act->hd[1];
     }
   else if (hd_out[1] == INVALID_HANDLE_VALUE)
-    hd_out[1] = w32_open_null (1);
+    hd_out[1] = w32_open_null (1, enable_null_device);
   if (act->hd[2] != INVALID_HANDLE_VALUE)
     {
       if ((flags & GPGRT_PROCESS_STDERR_PIPE))
@@ -889,7 +901,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
       hd_err[1] = act->hd[2];
       }
   else if (hd_err[1] == INVALID_HANDLE_VALUE)
-    hd_err[1] = w32_open_null (1);
+    hd_err[1] = w32_open_null (1, enable_null_device);
 
   {
     HANDLE hd[32];
