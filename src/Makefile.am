@@ -48,6 +48,7 @@ lock_obj_pub = \
 	syscfg/lock-obj-pub.i386-apple-darwin.h             \
         syscfg/lock-obj-pub.i686-unknown-gnu.h              \
         syscfg/lock-obj-pub.i686-unknown-kfreebsd-gnu.h     \
+        syscfg/lock-obj-pub.i686-unknown-linux-androideabi.h \
         syscfg/lock-obj-pub.i686-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.m68k-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.mips-unknown-linux-gnu.h        \
