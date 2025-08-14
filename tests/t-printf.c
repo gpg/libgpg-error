@@ -486,6 +486,32 @@ check_fprintf_sf (void)
     }
   free (result);
 
+  gpgrt_fprintf_sf (stream, string_filter, &sfstate,
+                    "a=%x b=%b c=%X",
+                    19410909u, 19410909u, 19410909u);
+  expect = "a=1282fdd b=1001010000010111111011101 c=1282FDD";
+  result = stream_to_string (stream);
+  if (strcmp (result, expect))
+    {
+      show ("expect: '%s'\n", expect);
+      show ("result: '%s'\n", result);
+      fail ("fprintf_sf failed at %d\n", __LINE__);
+    }
+  free (result);
+
+  gpgrt_fprintf_sf (stream, string_filter, &sfstate,
+                    "a=%#x b=%#b c=%#X",
+                    19420130u, 19420130u, 19420130u);
+  expect = "a=0x12853e2 b=0b1001010000101001111100010 c=0X12853E2";
+  result = stream_to_string (stream);
+  if (strcmp (result, expect))
+    {
+      show ("expect: '%s'\n", expect);
+      show ("result: '%s'\n", result);
+      fail ("fprintf_sf failed at %d\n", __LINE__);
+    }
+  free (result);
+
   gpgrt_fclose (stream);
 }
 

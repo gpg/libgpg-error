@@ -163,6 +163,7 @@ typedef enum
     CONSPEC_UNSIGNED,
     CONSPEC_HEX,
     CONSPEC_HEX_UP,
+    CONSPEC_BIN,
     CONSPEC_FLOAT,
     CONSPEC_FLOAT_UP,
     CONSPEC_EXP,
@@ -367,6 +368,7 @@ compute_type (argspec_t arg)
     case CONSPEC_UNSIGNED:
     case CONSPEC_HEX:
     case CONSPEC_HEX_UP:
+    case CONSPEC_BIN:
       switch (arg->lenmod)
         {
         case LENMOD_CHAR: arg->vt = VALTYPE_UCHAR; break;
@@ -627,6 +629,7 @@ parse_format (const char *format,
         case 'u': conspec = CONSPEC_UNSIGNED; break;
         case 'x': conspec = CONSPEC_HEX; break;
         case 'X': conspec = CONSPEC_HEX_UP; break;
+        case 'b': conspec = CONSPEC_BIN; break;
         case 'f': conspec = CONSPEC_FLOAT; break;
         case 'F': conspec = CONSPEC_FLOAT_UP; break;
         case 'e': conspec = CONSPEC_EXP; break;
@@ -844,7 +847,7 @@ pr_integer (estream_printf_out_t outfnc, void *outfncarg,
 #else
   unsigned long aulong;
 #endif
-  char numbuf[100];
+  char numbuf[150]; /* Should be sufficient for %b with 128 bit integers */
   char *p, *pend;
   size_t n;
   char signchar = 0;
@@ -955,6 +958,17 @@ pr_integer (estream_printf_out_t outfnc, void *outfncarg,
       if ((arg->flags & FLAG_ALT_CONV) && *p != '0')
         *--p = '0';
     }
+  else if (arg->conspec == CONSPEC_BIN)
+    {
+      do
+        {
+          *--p = '0' + (aulong % 2);
+          aulong /= 2;
+        }
+      while (aulong);
+      if ((arg->flags & FLAG_ALT_CONV))
+        n_extra += 2;
+    }
   else /* HEX or HEXUP */
     {
       const char *digits = ((arg->conspec == CONSPEC_HEX)
@@ -998,13 +1012,22 @@ pr_integer (estream_printf_out_t outfnc, void *outfncarg,
       *nbytes += 1;
     }
 
-  if ((arg->flags & FLAG_ALT_CONV)
-      && (arg->conspec == CONSPEC_HEX || arg->conspec == CONSPEC_HEX_UP))
+  if ((arg->flags & FLAG_ALT_CONV))
     {
-      rc = outfnc (outfncarg, arg->conspec == CONSPEC_HEX? "0x": "0X", 2);
-      if (rc)
-        return rc;
-      *nbytes += 2;
+      if (arg->conspec == CONSPEC_HEX || arg->conspec == CONSPEC_HEX_UP)
+        {
+          rc = outfnc (outfncarg, arg->conspec == CONSPEC_HEX? "0x": "0X", 2);
+          if (rc)
+            return rc;
+          *nbytes += 2;
+        }
+      else if (arg->conspec == CONSPEC_BIN)
+        {
+          rc = outfnc (outfncarg, "0b", 2);
+          if (rc)
+            return rc;
+          *nbytes += 2;
+        }
     }
 
   if (n_prec)
@@ -1445,6 +1468,7 @@ do_format (estream_printf_out_t outfnc, void *outfncarg,
         case CONSPEC_OCTAL:
         case CONSPEC_HEX:
         case CONSPEC_HEX_UP:
+        case CONSPEC_BIN:
           rc = pr_integer (outfnc, outfncarg, arg, value, nbytes);
           break;
         case CONSPEC_FLOAT:
