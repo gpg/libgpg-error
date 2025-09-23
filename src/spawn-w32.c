@@ -322,29 +322,6 @@ _gpgrt_make_pipe (int filedes[2], estream_t *r_fp, int direction, int nonblock)
 }
 
 
-/*
- * Check if STARTUPINFOEXW supports PROC_THREAD_ATTRIBUTE_HANDLE_LIST.
- */
-static int
-check_windows_version (void)
-{
-  static int is_vista_or_later = -1;
-
-  OSVERSIONINFO osvi;
-
-  if (is_vista_or_later == -1)
-    {
-      memset (&osvi,0,sizeof(osvi));
-      osvi.dwOSVersionInfoSize = sizeof(osvi);
-      GetVersionEx (&osvi);
-
-      /* The feature is available on Vista or later.  */
-      is_vista_or_later = (osvi.dwMajorVersion >= 6);
-    }
-
-  return is_vista_or_later;
-}
-
 static gpg_err_code_t
 prepare_env_block (char **r_env, const char *const *envchange)
 {
@@ -753,7 +730,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
 
     if (j)
       {
-        if (check_windows_version ())
+        if (_gpgrt_windows_feature (GPGRT_WINDOWS_PROC_ATTRIBUTE))
           {
             SIZE_T attr_list_size = 0;
 

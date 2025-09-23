@@ -37,6 +37,12 @@
 
 #include <windows.h>
 
+static struct windows_features
+{
+  unsigned int is_vista_or_later :1;   /* If it's Vista or later.  */
+  unsigned int semihosted_by_wine :1;  /* If it's under Wine or not.  */
+} windows_features;
+
 static int tls_index = TLS_OUT_OF_INDEXES;  /* Index for the TLS functions.  */
 
 static volatile int utf8_for_new_threads;
@@ -71,6 +77,26 @@ static void *(*custom_realloc)(void *a, size_t n);
 
 
 
+#ifdef HAVE_W32_SYSTEM
+static void
+windows_specific_init (void)
+{
+  OSVERSIONINFO osvi;
+  HMODULE hntdll = GetModuleHandle ("ntdll.dll");
+
+  memset (&osvi,0,sizeof(osvi));
+  osvi.dwOSVersionInfoSize = sizeof(osvi);
+  GetVersionEx (&osvi);
+
+  /* The feature of process/thread attribute is available on Vista or
+     later.  */
+  windows_features.is_vista_or_later = (osvi.dwMajorVersion >= 6);
+
+  if (hntdll && GetProcAddress (hntdll, "wine_get_version"))
+    windows_features.semihosted_by_wine = 1;
+}
+#endif
+
 static void
 real_init (void)
 {
@@ -84,6 +110,9 @@ real_init (void)
       bindtextdomain (PACKAGE, locale_dir);
       drop_locale_dir (locale_dir);
     }
+#endif
+#ifdef HAVE_W32_SYSTEM
+  windows_specific_init ();
 #endif
   _gpgrt_estream_init ();
 }
@@ -550,6 +579,26 @@ _gpgrt_internal_trace_end (void)
 /*****************************************
  ******** Below is only Windows code. ****
  *****************************************/
+
+/*
+ * Check the feature if it is supported or not
+ */
+int
+_gpgrt_windows_feature (int k)
+{
+  switch (k)
+    {
+    case GPGRT_WINDOWS_PROC_ATTRIBUTE:
+      return windows_features.is_vista_or_later;
+
+    case GPGRT_WINDOWS_UNDER_WINE:
+      return windows_features.semihosted_by_wine;
+
+    default:
+      return 0;
+    }
+}
+
 
 /* This function can be called to force utf8 for new threads.  */
 void

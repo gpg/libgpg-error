@@ -863,6 +863,12 @@ char *_gpgrt_w32_reg_get_string (const char *key);
 
 wchar_t *_gpgrt_fname_to_wchar (const char *fname);
 
+enum gpgrt_windows_feature
+  {
+    GPGRT_WINDOWS_PROC_ATTRIBUTE,
+    GPGRT_WINDOWS_UNDER_WINE
+  };
+int _gpgrt_windows_feature (int);
 
 #endif /*HAVE_W32_SYSTEM*/
 
