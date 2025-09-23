@@ -270,7 +270,7 @@ eval_compare_version () {
     ___chunk1=""
     ___chunk2=""
 
-    while [ -n "$___str1" -a -n "$___str2" ]; do
+    while [ -n "$___str1" ] && [ -n "$___str2" ]; do
 	# Trim anything that's not alnum or tilde from the front
 	___str1="$(expr "$___str1" : '[^0-9A-Za-z~]*\(.*\)')"
 	___str2="$(expr "$___str2" : '[^0-9A-Za-z~]*\(.*\)')"
@@ -691,18 +691,18 @@ for p in $PKG_LIST; do
     cleanup_vars_attrs
 done
 
-if [ -z "$want_var" -a -z "$want_attr" ]; then
+if [ -z "$want_var" ] && [ -z "$want_attr" ]; then
     if [ -n "$want_cflags" ]; then
 	output="$output${output:+ }$(sysroot -I $(list_only_once $cflags))"
 	# Backward compatibility to old gpg-error-config
-	if [ $mt = yes -a -n "$mtcflags" ]; then
+	if [ $mt = yes ] && [ -n "$mtcflags" ]; then
 	    output="$output${output:+ }$mtcflags"
 	fi
     fi
     if [ -n "$want_libs" ]; then
 	output="$output${output:+ }$(sysroot -L $(list_only_once_for_libs $libs))"
 	# Backward compatibility to old gpg-error-config
-	if [ $mt = yes -a -n "$mtlibs" ]; then
+	if [ $mt = yes ] && [ -n "$mtlibs" ]; then
 	    output="$output${output:+ }$mtlibs"
 	fi
     fi

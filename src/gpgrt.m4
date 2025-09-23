@@ -57,7 +57,7 @@ AC_DEFUN([AM_PATH_GPGRT],
   min_gpgrt_version=ifelse([$1], ,1.33,$1)
   AC_MSG_CHECKING(for GPG Runtime - version >= $min_gpgrt_version)
   ok=no
-  if test x"$GPGRT_CONFIG" != x -a "$GPGRT_CONFIG" != "no" ; then
+  if test x"$GPGRT_CONFIG" != x && test "$GPGRT_CONFIG" != "no" ; then
     req_major=`echo $min_gpgrt_version | \
                sed 's/\([[0-9]]*\)\.\([[0-9]]*\)/\1/'`
     req_minor=`echo $min_gpgrt_version | \

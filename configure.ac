@@ -587,7 +587,7 @@ GPG_ERROR_CONFIG_HOST="$host"
 case "$includedir" in
   /usr/include|/include) ;;
   '${prefix}/include')
-    if test "$prefix" != / -a "$prefix" != /usr; then
+    if test "$prefix" != / && test "$prefix" != /usr; then
       if test -z "$GPG_ERROR_CONFIG_CFLAGS"; then
         GPG_ERROR_CONFIG_CFLAGS="-I\${includedir}"
       else
@@ -607,10 +607,10 @@ case "$libdir" in
   /usr/lib|/usr/lib64|/lib|/lib64) ;;
   '${exec_prefix}/lib'|'${exec_prefix}/lib64')
     if test "$exec_prefix" = "NONE"; then
-      if test "$prefix" != / -a "$prefix" != /usr; then
+      if test "$prefix" != / && test "$prefix" != /usr; then
         GPG_ERROR_CONFIG_LIBS="-L\${libdir} $GPG_ERROR_CONFIG_LIBS"
       fi
-    elif test "$exec_prefix" != / -a "$exec_prefix" != /usr; then
+    elif test "$exec_prefix" != / && test "$exec_prefix" != /usr; then
       GPG_ERROR_CONFIG_LIBS="-L\${libdir} $GPG_ERROR_CONFIG_LIBS"
     fi
     ;;

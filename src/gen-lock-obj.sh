@@ -111,7 +111,7 @@ echo ${ECHO_N} "#define GPGRT_LOCK_INITIALIZER {$LOCK_ABI_VERSION,{{${ECHO_C}"
 
 i=0
 while test "$i" -lt $ac_mtx_size; do
-    if test "$i" -ne 0 -a "$(( $i % 8 ))" -eq 0; then
+    if [ "$i" -ne 0 ] && [ "$(( $i % 8 ))" -eq 0 ]; then
         echo ' \'
         echo ${ECHO_N} "                                    ${ECHO_C}"
     fi
