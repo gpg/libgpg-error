@@ -164,7 +164,7 @@ reader (void *arg)
 
       nread = ctx->pcookie->next_functions.public.func_read
         (ctx->pcookie->next_cookie, ctx->buffer + ctx->writepos, nbytes);
-      trace (("%p: got %d bytes", ctx, nread));
+      trace (("%p: got %zd bytes", ctx, nread));
       if (nread < 0)
         {
           ctx->error_code = (int) errno;
@@ -324,7 +324,7 @@ func_w32_pollable_read (void *cookie, void *buffer, size_t count)
   gpgrt_ssize_t nread;
   struct reader_context_s *ctx;
 
-  trace (("%p: enter buffer=%p count=%u", cookie, buffer, count));
+  trace (("%p: enter buffer=%p count=%zu", cookie, buffer, count));
 
   /* FIXME: implement pending check if COUNT==0 */
 
@@ -348,7 +348,7 @@ func_w32_pollable_read (void *cookie, void *buffer, size_t count)
     }
 
   EnterCriticalSection (&ctx->mutex);
-  trace (("%p: readpos: %d, writepos %d", cookie, ctx->readpos, ctx->writepos));
+  trace (("%p: readpos: %zu, writepos %zu", cookie, ctx->readpos, ctx->writepos));
   if (ctx->readpos == ctx->writepos && !ctx->error)
     {
       /* No data available.  */
@@ -461,11 +461,11 @@ writer (void *arg)
         }
       LeaveCriticalSection (&ctx->mutex);
 
-      trace (("%p: writing up to %d bytes", ctx, ctx->nbytes));
+      trace (("%p: writing up to %zu bytes", ctx, ctx->nbytes));
 
       nwritten = ctx->pcookie->next_functions.public.func_write
         (ctx->pcookie->next_cookie, ctx->buffer, ctx->nbytes);
-      trace (("%p: wrote %d bytes", ctx, nwritten));
+      trace (("%p: wrote %zd bytes", ctx, nwritten));
       if (nwritten < 1)
         {
           /* XXX */
@@ -494,7 +494,7 @@ writer (void *arg)
   WaitForSingleObject (ctx->close_ev, INFINITE);
 
   if (ctx->nbytes)
-    trace (("%p: still %d bytes in buffer at close time", ctx, ctx->nbytes));
+    trace (("%p: still %zu bytes in buffer at close time", ctx, ctx->nbytes));
 
   CloseHandle (ctx->close_ev);
   CloseHandle (ctx->have_data);
@@ -610,7 +610,7 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
   struct writer_context_s *ctx = pcookie->writer;
   int nwritten;
 
-  trace (("%p: enter buffer: %p count: %d", cookie, buffer, count));
+  trace (("%p: enter buffer: %p count: %zu", cookie, buffer, count));
   if (count == 0)
     {
       nwritten = 0;
@@ -629,7 +629,7 @@ func_w32_pollable_write (void *cookie, const void *buffer, size_t count)
     }
 
   EnterCriticalSection (&ctx->mutex);
-  trace (("%p: buffer: %p, count: %d, nbytes: %d",
+  trace (("%p: buffer: %p, count: %zu, nbytes: %zu",
           cookie, buffer, count, ctx->nbytes));
   if (!ctx->error && ctx->nbytes)
     {

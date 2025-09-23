@@ -1,6 +1,8 @@
 Noteworthy changes in version 1.56 (unrelease) [C39/A39/R_]
 -----------------------------------------------
 
+ * Support the %b conversion specifier in the estream printf
+   functions.  [rE6ac5332e4f]
 
  * Interface changes relative to the 1.55 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -38,7 +40,7 @@ Noteworthy changes in version 1.54 (2025-04-17) [C39/A39/R2]
 Noteworthy changes in version 1.53 (2025-04-09) [C39/A39/R1]
 -----------------------------------------------
 
- * Fix regression in 1.52.
+ * Fix regression in 1.52.  [rE32475a7868]
 
 
 Noteworthy changes in version 1.52 (2025-04-08) [C39/A39/R0]
