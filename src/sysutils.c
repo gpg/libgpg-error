@@ -308,10 +308,15 @@ _gpgrt_fname_to_wchar (const char *fname)
   wname = _gpgrt_utf8_to_wchar (fname);
   if (!wname)
     return NULL;
-  /* We use only backslashes in the wchar version of fname.  */
-  for (w = wname; *w; w++)
-    if (*w == L'/')
-      *w = L'\\';
+
+  /* Under Wine, keep the slash as is.  */
+  if (!_gpgrt_windows_feature (GPGRT_WINDOWS_UNDER_WINE))
+    {
+      /* We use only backslashes in the wchar version of fname.  */
+      for (w = wname; *w; w++)
+        if (*w == L'/')
+          *w = L'\\';
+    }
 
   if (no_extlenpath > 0)
     success = 1; /* Extended length path support has been disabled.  */
