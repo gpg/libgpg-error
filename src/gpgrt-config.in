@@ -247,15 +247,15 @@ list_only_once_for_libs () {
 }
 
 arg1_is_same () {
-    [ "$1" = "=" -o "$1" = ">=" -o "$1" = "<=" ]
+    [ "$1" = "=" ] || [ "$1" = ">=" ] || [ "$1" = "<=" ]
 }
 
 arg1_is_less () {
-    [ "$1" = "!=" -o "$1" = "<" -o "$1" = "<=" ]
+    [ "$1" = "!=" ] || [ "$1" = "<" ] || [ "$1" = "<=" ]
 }
 
 arg1_is_great () {
-    [ "$1" = "!=" -o "$1" = ">" -o "$1" = ">=" ]
+    [ "$1" = "!=" ] || [ "$1" = ">" ] || [ "$1" = ">=" ]
 }
 
 #
@@ -279,7 +279,7 @@ eval_compare_version () {
 	___char1=${___str1%${___str1#?}}
 	___char2=${___str2%${___str2#?}}
 
-	if [ "$___char1" = ~ -o "$___char2" = ~ ]; then
+	if [ "$___char1" = ~ ] || [ "$___char2" = ~ ]; then
 	    if [ "$___char1" != ~ ]; then
 		arg1_is_great $___cmp
 		return
@@ -293,7 +293,7 @@ eval_compare_version () {
 	    continue
 	fi
 
-	if [ -z "$___char1" -o -z "$___char2" ]; then
+	if [ -z "$___char1" ] || [ -z "$___char2" ]; then
 	    break
 	fi
 
