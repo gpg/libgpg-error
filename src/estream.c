@@ -156,6 +156,15 @@
 #define tohex(n) ((n) < 10 ? ((n) + '0') : (((n) - 10) + 'A'))
 
 
+/* Flags used by parse_mode and friends.  */
+#define X_SAMETHREAD	(1 << 0)
+#define X_SYSOPEN	(1 << 1)
+#define X_POLLABLE	(1 << 2)
+#define X_SEQUENTIAL	(1 << 3)
+#define X_WIPE          (1 << 4)
+#define X_SHARE_RW       (1 << 5)
+
+
 /* Generally used types.  */
 
 typedef void *(*func_realloc_t) (void *mem, size_t size);
@@ -1970,7 +1979,7 @@ func_file_create (void **cookie, int *filedes,
 static int
 func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
                       unsigned int modeflags, unsigned int cmode,
-                      unsigned int flags_and_attrs)
+                      unsigned int xflags)
 {
   estream_cookie_w32_t hd_cookie;
   wchar_t *wpath = NULL;
@@ -1979,6 +1988,7 @@ func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
   DWORD desired_access;
   DWORD share_mode;
   DWORD creation_distribution;
+  DWORD flags_and_attrs;
 
   (void)cmode;
 
@@ -2012,6 +2022,12 @@ func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
       share_mode = FILE_SHARE_READ;
     }
 
+  if ((xflags & X_SHARE_RW))
+    share_mode |= FILE_SHARE_READ | FILE_SHARE_WRITE;
+
+  flags_and_attrs = 0;
+  if ((xflags & X_SEQUENTIAL))
+    flags_and_attrs |= FILE_FLAG_SEQUENTIAL_SCAN;
 
   creation_distribution = 0;
   if ((modeflags & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL))
@@ -2060,13 +2076,6 @@ func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
 
 
 
-/* Flags used by parse_mode and friends.  */
-#define X_SAMETHREAD	(1 << 0)
-#define X_SYSOPEN	(1 << 1)
-#define X_POLLABLE	(1 << 2)
-#define X_SEQUENTIAL	(1 << 3)
-#define X_WIPE          (1 << 4)
-
 /* Parse the mode flags of fopen et al.  In addition to the POSIX
  * defined mode flags keyword parameters are supported.  These are
  * key/value pairs delimited by comma and optional white spaces.
@@ -2117,12 +2126,17 @@ func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
  *    Indicate that the file will in general be access in sequential
  *    way.  On Windows FILE_FLAG_SEQUENTIAL_SCAN will thus be used.
  *
+ * share=rw
+ *
+ *   Under Windows with "sysopen use FILE_SHARE_READ|FILE_SHARE_WRITE
+ *   regardless of the open mode.
+ *
  * wipe
  *
  *    Overwrites internal buffers at fclose time.
  *
  * Note: R_CMODE is optional because is only required by functions
- * which are able to creat a file.
+ * which are able to create a file.
  */
 static int
 parse_mode (const char *modestr,
@@ -2260,6 +2274,16 @@ parse_mode (const char *modestr,
               return -1;
             }
           *r_xmode |= X_SEQUENTIAL;
+        }
+      else if (!strncmp (modestr, "share=rw", 8))
+        {
+          modestr += 8;
+          if (*modestr && !strchr (" \t,", *modestr))
+            {
+              _set_errno (EINVAL);
+              return -1;
+            }
+          *r_xmode |= X_SHARE_RW;
         }
       else if (!strncmp (modestr, "wipe", 4))
         {
@@ -3583,15 +3607,11 @@ _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
 #ifdef HAVE_W32_SYSTEM
   if ((xmode & X_SYSOPEN))
     {
-      unsigned int flagsattrs = 0;
-
       kind = BACKEND_W32;
       functions = &estream_functions_w32;
       syshd.type = ES_SYSHD_HANDLE;
-      if ((xmode & X_SEQUENTIAL))
-        flagsattrs |= FILE_FLAG_SEQUENTIAL_SCAN;
       err = func_file_create_w32 (&cookie, &syshd.u.handle,
-                                  path, modeflags, cmode, flagsattrs);
+                                  path, modeflags, cmode, xmode);
     }
   else
 #endif /* W32 */
