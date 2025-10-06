@@ -4,9 +4,27 @@ Noteworthy changes in version 1.56 (unrelease) [C39/A39/R_]
  * Support the %b conversion specifier in the estream printf
    functions.  [rE6ac5332e4f]
 
+ * New spawn GPGRT_PROCESS_STDIO_NUL to be used on Windows to share
+   the "nul" device.  [T7723]
+
+ * Support pipe I/O for GPGRT_PROCESS_DETACHED on Windows.  [T7716]
+
+ * New mode keyword "share=rw" for gpgrt_fopen.  [rE2344947717]
+
+ * Change the default method to get the number of fds to close.  This
+   fixes a spawning problem on certain POSIX machine.  [T7696]
+
+ * Fix some cases of inheriting HANDLEs on Windows.  [T7716]
+
+ * New system configurations for 64-bit Android, i686 Android, x86_64
+   Android and an armv7a alias to arm for Android.
+
+ * Set build specific build variable for zOS  [rE7ee191f54c]
+
  * Interface changes relative to the 1.55 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  GPG_ERR_UNEXPECTED_PACKET           NEW.
+ GPGRT_PROCESS_STDIO_NUL             NEW.
 
  Release-info: https://dev.gnupg.org/T7625
 
