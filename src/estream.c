@@ -2140,10 +2140,11 @@ func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
  *
  * share=[r][w][d][0]
  *
- *   Under Windows with the "sysopen" flag use FILE_SHARE_READ,
- *   FILE_SHARE_WRITE, or SHARE_MODE_DELETE depending on the given
- *   letters.  If no letter or 0 is given, share mode 0 is used.  The
- *   default is to use a share mode depending on the open mode.
+ *   Under Windows use FILE_SHARE_READ, FILE_SHARE_WRITE, or
+ *   SHARE_MODE_DELETE depending on the given letters.  If no letter
+ *   or 0 is given, share mode 0 is used.  The default is to use a
+ *   share mode depending on the open mode.  The use of this flag
+ *   implicitly enables the "sysopen" flag.
  *
  * wipe
  *
@@ -2293,7 +2294,8 @@ parse_mode (const char *modestr,
         {
           modestr += 6;
           *r_xmode |= X_SHARE_CUSTOM;
-          for ( ; *modestr; modestr++)
+          *r_xmode |= X_SYSOPEN;  /* "share" implies "sysopen".  */
+          for ( ; *modestr && !strchr (" \t,", *modestr); modestr++)
             switch (*modestr)
               {
               case 'w': *r_xmode |= X_SHARE_WRITE; break;
@@ -2301,10 +2303,6 @@ parse_mode (const char *modestr,
               case 'd': *r_xmode |= X_SHARE_DEL; break;
               case '0': *r_xmode &= ~(X_SHARE_READ|X_SHARE_WRITE|X_SHARE_DEL);
                 break;
-              case ' ':
-              case '\t':
-                _set_errno (EINVAL);
-                return -1;
               default: break; /* Ignore other letters.  */
               }
         }
