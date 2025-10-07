@@ -732,6 +732,11 @@ msgstr "Нечетные шестнадцатеричные числа в S-вы
 msgid "Bad octal character in S-expression"
 msgstr "Плохой восьмеричный символ в S-выражении"
 
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected packet"
+msgstr "Неожиданный тег"
+
 msgid "All subkeys are expired or revoked"
 msgstr "Все подключи просрочены или отозваны"
 

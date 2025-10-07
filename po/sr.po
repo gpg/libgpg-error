@@ -767,6 +767,11 @@ msgstr "Непарни хексадецимални бројеви у С-изр�
 msgid "Bad octal character in S-expression"
 msgstr "Лош октадецимални знак у С-изразу"
 
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected packet"
+msgstr "Неочекивана ознака"
+
 msgid "All subkeys are expired or revoked"
 msgstr ""
 

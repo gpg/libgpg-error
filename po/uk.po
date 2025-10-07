@@ -734,6 +734,11 @@ msgstr "Дивні шістнадцяткові числа у S-виразі"
 msgid "Bad octal character in S-expression"
 msgstr "Помилковий вісімковий символ у S-виразі"
 
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected packet"
+msgstr "Неочікуваний теґ"
+
 msgid "All subkeys are expired or revoked"
 msgstr "Строк дії усіх підключів вичерпано або їх відкликано"
 

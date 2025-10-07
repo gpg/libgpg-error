@@ -742,6 +742,11 @@ msgstr "Lichá šestnáctková čísla v S-výrazu"
 msgid "Bad octal character in S-expression"
 msgstr "Chybný osmičkový znak v S-výrazu"
 
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected packet"
+msgstr "Neočekávaná značka"
+
 msgid "All subkeys are expired or revoked"
 msgstr "Všem podklíčům skončila platnost nebo byly odvolány"
 

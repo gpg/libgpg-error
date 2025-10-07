@@ -735,6 +735,11 @@ msgstr "Nombre hexadécimal impair dans l'expression symbolique"
 msgid "Bad octal character in S-expression"
 msgstr "Mauvais caractère octal dans l'expression symbolique"
 
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected packet"
+msgstr "Balise inattendue"
+
 msgid "All subkeys are expired or revoked"
 msgstr ""
 

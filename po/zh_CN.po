@@ -743,6 +743,11 @@ msgstr "S-表达式中十六进制数异常"
 msgid "Bad octal character in S-expression"
 msgstr "S-表达式中八进制字符错误"
 
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected packet"
+msgstr "意外的标记"
+
 msgid "All subkeys are expired or revoked"
 msgstr "所有子密钥均已过期或吊销"
 

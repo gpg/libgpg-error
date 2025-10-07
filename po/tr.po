@@ -732,6 +732,11 @@ msgstr "Sembolik ifadede tek onaltılık sayı"
 msgid "Bad octal character in S-expression"
 msgstr "Sembolik ifadede kötü sekizlik karakter"
 
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected packet"
+msgstr "Beklenmedik etiket"
+
 msgid "All subkeys are expired or revoked"
 msgstr "Tüm yardımcı anahtarlar yürürlükten kaldırılmış/süresi dolmuş"
 

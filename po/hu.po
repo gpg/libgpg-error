@@ -768,6 +768,11 @@ msgstr "Páratlan hexadecimális számok az S-kifejezésben"
 msgid "Bad octal character in S-expression"
 msgstr "Rossz oktadecimális karakter az S-kifejezésben"
 
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected packet"
+msgstr "Váratlan címke"
+
 msgid "All subkeys are expired or revoked"
 msgstr ""
 

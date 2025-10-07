@@ -791,6 +791,11 @@ msgstr "Números hexadecimais estranhos na S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Caractere octal inválido na S-expression"
 
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected packet"
+msgstr "Tag inesperada"
+
 msgid "All subkeys are expired or revoked"
 msgstr "Todas as subchaves estão expiradas ou revogadas"
 
