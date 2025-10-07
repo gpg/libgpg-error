@@ -162,7 +162,10 @@
 #define X_POLLABLE	(1 << 2)
 #define X_SEQUENTIAL	(1 << 3)
 #define X_WIPE          (1 << 4)
-#define X_SHARE_RW       (1 << 5)
+#define X_SHARE_CUSTOM  (1 << 5)
+#define X_SHARE_READ    (1 << 6)
+#define X_SHARE_WRITE   (1 << 7)
+#define X_SHARE_DEL     (1 << 8)
 
 
 /* Generally used types.  */
@@ -2022,8 +2025,17 @@ func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
       share_mode = FILE_SHARE_READ;
     }
 
-  if ((xflags & X_SHARE_RW))
-    share_mode |= FILE_SHARE_READ | FILE_SHARE_WRITE;
+  /* Set custom share modes under Windows.  */
+  if ((xflags & X_SHARE_CUSTOM))
+    {
+      share_mode = 0;
+      if ((xflags & X_SHARE_READ))
+        share_mode |= FILE_SHARE_READ;
+      if ((xflags & X_SHARE_WRITE))
+        share_mode |= FILE_SHARE_WRITE;
+      if ((xflags & X_SHARE_DEL))
+        share_mode |= FILE_SHARE_DELETE;
+    }
 
   flags_and_attrs = 0;
   if ((xflags & X_SEQUENTIAL))
@@ -2126,10 +2138,12 @@ func_file_create_w32 (void **cookie, HANDLE *rethd, const char *path,
  *    Indicate that the file will in general be access in sequential
  *    way.  On Windows FILE_FLAG_SEQUENTIAL_SCAN will thus be used.
  *
- * share=rw
+ * share=[r][w][d][0]
  *
- *   Under Windows with "sysopen use FILE_SHARE_READ|FILE_SHARE_WRITE
- *   regardless of the open mode.
+ *   Under Windows with the "sysopen" flag use FILE_SHARE_READ,
+ *   FILE_SHARE_WRITE, or SHARE_MODE_DELETE depending on the given
+ *   letters.  If no letter or 0 is given, share mode 0 is used.  The
+ *   default is to use a share mode depending on the open mode.
  *
  * wipe
  *
@@ -2275,15 +2289,24 @@ parse_mode (const char *modestr,
             }
           *r_xmode |= X_SEQUENTIAL;
         }
-      else if (!strncmp (modestr, "share=rw", 8))
+      else if (!strncmp (modestr, "share=", 6))
         {
-          modestr += 8;
-          if (*modestr && !strchr (" \t,", *modestr))
-            {
-              _set_errno (EINVAL);
-              return -1;
-            }
-          *r_xmode |= X_SHARE_RW;
+          modestr += 6;
+          *r_xmode |= X_SHARE_CUSTOM;
+          for ( ; *modestr; modestr++)
+            switch (*modestr)
+              {
+              case 'w': *r_xmode |= X_SHARE_WRITE; break;
+              case 'r': *r_xmode |= X_SHARE_READ; break;
+              case 'd': *r_xmode |= X_SHARE_DEL; break;
+              case '0': *r_xmode &= ~(X_SHARE_READ|X_SHARE_WRITE|X_SHARE_DEL);
+                break;
+              case ' ':
+              case '\t':
+                _set_errno (EINVAL);
+                return -1;
+              default: break; /* Ignore other letters.  */
+              }
         }
       else if (!strncmp (modestr, "wipe", 4))
         {

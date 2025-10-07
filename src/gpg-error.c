@@ -562,6 +562,7 @@ main (int argc, char *argv[])
          CMD_LOCALE,
          CMD_GETREG,
          CMD_FOPEN,
+         OPT_OPENMODE,
          CMD_CHDIR,
          CMD_MKDIR
   };
@@ -590,6 +591,7 @@ main (int argc, char *argv[])
     ARGPARSE_group (301, ("@\nOptions:\n ")),
     ARGPARSE_s_n (OPT_QUIET, "quiet", "Silence some output"),
     ARGPARSE_s_n (OPT_DESC, "desc", "Print with error description"),
+    ARGPARSE_s_s (OPT_OPENMODE, "openmode", "Specify the open mode"),
     ARGPARSE_end()
   };
   gpgrt_argparse_t pargs = { &argc, &argv, ARGPARSE_FLAG_COMMAND };
@@ -605,6 +607,7 @@ main (int argc, char *argv[])
   const char *s, *s2;
   const char *source_sym;
   const char *error_sym;
+  const char *openmode = "r,sysopen";
   gpg_error_t err;
 
   gpgrt_init ();
@@ -631,6 +634,7 @@ main (int argc, char *argv[])
 
         case OPT_QUIET:      quiet = 1; break;
         case OPT_DESC:       desc = 1; break;
+        case OPT_OPENMODE:   openmode = pargs.r.ret_str; break;
         default: pargs.err = ARGPARSE_PRINT_WARNING; break;
         }
     }
@@ -703,7 +707,7 @@ main (int argc, char *argv[])
     {
       gpgrt_stream_t fp;
 
-      fp = gpgrt_fopen (*argv, "r,sysopen");
+      fp = gpgrt_fopen (*argv, openmode);
       if (!fp)
         log_error ("error opening '%s': %s\n",
                    *argv, gpg_strerror (gpg_error_from_syserror ()));
