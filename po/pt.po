@@ -1,10 +1,10 @@
 # Portuguese translation of libgpg-error.
 # Copyright (C) 2014 g10 Code GmbH
-# Copyright (C) 2024 Free Software Foundation, Inc.
+# Copyright (C) 2024, 2025 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 #
 # Current contributors:
-#  - Daniel Cerqueira <dan.git@lispclub.com>, 2024.
+#  - Daniel Cerqueira <dan.git@lispclub.com>, 2024, 2025.
 #
 # Past contributors:
 #  - paulo <paulo.jorge.tome@gmail.com>, 2014.
@@ -13,7 +13,7 @@
 #  GnuPG glossary for Portuguese translators
 #
 #   English                           |  Portuguese
-#   ----------------------------------+--------------------------------------
+#   ----------------------------------+----------------------------------
 #   cryptography                      |  cifragem
 #   encryption                        |  cifração
 #   (to) encrypt                      |  cifrar
@@ -59,13 +59,26 @@
 #   (conjugation) enter (verb)        |  introduzir
 #   usage:                            |  uso:
 #   usage                             |  utilização
+#   (to) end                          |  encerrar
+#   (to) type                         |  digitar
+#   stop                              |  interromper
+#   next                              |  próximo
+#   scroll                            |  rolar
+#   screen                            |  ecrã
+#   note:                             |  nota:
+#   note                              |  notar
+#   overlap                           |  sobreposição
+#   move                              |  mover
+#   label                             |  rotular
+#   terminate                         |  encerrar
+#   exit code                         |  código de saída
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.52\n"
+"Project-Id-Version: libgpg-error 1.56\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2025-04-08 08:55+0200\n"
+"PO-Revision-Date: 2025-10-28 22:04+0000\n"
 "Last-Translator: Daniel Cerqueira <dan.git@lispclub.com>\n"
 "Language-Team: Portuguese <dan.git@lispclub.com>\n"
 "Language: pt\n"
@@ -791,10 +804,8 @@ msgstr "Números hexadecimais estranhos na S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Caractere octal inválido na S-expression"
 
-#, fuzzy
-#| msgid "Unexpected tag"
 msgid "Unexpected packet"
-msgstr "Tag inesperada"
+msgstr "Pacote inesperado"
 
 msgid "All subkeys are expired or revoked"
 msgstr "Todas as subchaves estão expiradas ou revogadas"
