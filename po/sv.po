@@ -1,19 +1,20 @@
 # Swedish translation for libgpg-error.
 # Copyright (C) 2006, 2007, 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
-# Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2009.
+# Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2009, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2021-03-22 10:43+0100\n"
-"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"PO-Revision-Date: 2025-11-15 18:57+0100\n"
+"Last-Translator: Daniel Nylander <github@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
 
 msgid "Unspecified source"
 msgstr "Ospecificerad källa"
@@ -70,7 +71,7 @@ msgid "TLS"
 msgstr "TLS"
 
 msgid "TKD"
-msgstr ""
+msgstr "TKD"
 
 msgid "Any source"
 msgstr "Alla källor"
@@ -214,7 +215,7 @@ msgid "Keyserver error"
 msgstr "Fel i nyckelserver"
 
 msgid "Wrong public key algorithm"
-msgstr "Fel publik nyckel-algoritm"
+msgstr "Fel algoritm för publik nyckel"
 
 msgid "Tribute to D. A."
 msgstr "Hyllning till D. A."
@@ -324,10 +325,9 @@ msgstr "Ogiltigt svar"
 msgid "No agent running"
 msgstr "Ingen agent kör"
 
-#, fuzzy
 #| msgid "agent error"
 msgid "Agent error"
-msgstr "agentfel"
+msgstr "Agentfel"
 
 msgid "Invalid data"
 msgstr "Ogiltig data"
@@ -629,88 +629,65 @@ msgstr "Ingen lösenfras angiven"
 msgid "No PIN given"
 msgstr "Ingen pinkod angiven"
 
-#, fuzzy
 msgid "Not enabled"
-msgstr "Inte låst"
+msgstr "Inte aktiverad"
 
-#, fuzzy
 msgid "No crypto engine"
-msgstr "Ogiltig krypteringsmotor"
+msgstr "Ingen kryptomotor"
 
-#, fuzzy
 msgid "Missing key"
-msgstr "Saknar värde"
+msgstr "Saknad nyckel"
 
-#, fuzzy
 msgid "Too many objects"
-msgstr "Inget CMS-objekt"
+msgstr "För många objekt"
 
 msgid "Limit reached"
-msgstr ""
+msgstr "Gräns uppnåddes"
 
-#, fuzzy
 msgid "Not initialized"
-msgstr "Kortet är inte initierat"
+msgstr "Inte initialiserad"
 
-#, fuzzy
 msgid "Missing issuer certificate"
-msgstr "Saknar certifikat"
+msgstr "Saknat utfärdarcertifikat"
 
 msgid "No keyserver available"
-msgstr ""
+msgstr "Ingen nyckelserver tillgänglig"
 
-#, fuzzy
 msgid "Invalid elliptic curve"
-msgstr "Ogiltig tid"
+msgstr "Ogiltig elliptisk kurva"
 
-#, fuzzy
 msgid "Unknown elliptic curve"
-msgstr "Okänd källa"
+msgstr "Okänd elliptisk kurva"
 
-#, fuzzy
-#| msgid "Duplicated value"
 msgid "Duplicated key"
-msgstr "Dubblettvärde"
+msgstr "Duplicerad nyckel"
 
-#, fuzzy
-#| msgid "Ambiguous name"
 msgid "Ambiguous result"
-msgstr "Tvetydigt namn"
+msgstr "Tvetydigt resultat"
 
-#, fuzzy
 msgid "No crypto context"
-msgstr "Ogiltig krypteringsmotor"
+msgstr "Ingen kryptokontext"
 
-#, fuzzy
 msgid "Wrong crypto context"
-msgstr "Ogiltig krypteringsmotor"
+msgstr "Felaktig kryptokontext"
 
-#, fuzzy
-#| msgid "Invalid crypto engine"
 msgid "Bad crypto context"
-msgstr "Ogiltig krypteringsmotor"
+msgstr "Felaktig kryptokontext"
 
 msgid "Conflict in the crypto context"
-msgstr ""
+msgstr "Konflikt i kryptokontext"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "Broken public key"
-msgstr "Ingen publik nyckel"
+msgstr "Trasig publik nyckel"
 
-#, fuzzy
-#| msgid "No secret key"
 msgid "Broken secret key"
-msgstr "Ingen hemlig nyckel"
+msgstr "Trasig hemlig nyckel"
 
-#, fuzzy
-#| msgid "Invalid digest algorithm"
 msgid "Invalid MAC algorithm"
-msgstr "Ogiltig sammandragsalgoritm"
+msgstr "Ogiltig MAC-algoritm"
 
-#, fuzzy
 msgid "Operation fully cancelled"
-msgstr "Åtgärden avbröts"
+msgstr "Operationen fullständigt avbruten"
 
 msgid "Operation not yet finished"
 msgstr "Åtgärden är ännu inte färdig"
@@ -754,169 +731,131 @@ msgstr "Felaktigt hexadecimalt tecken i S-uttryck"
 msgid "Odd hexadecimal numbers in S-expression"
 msgstr "Udda hexadecimala tal i S-uttryck"
 
-#, fuzzy
 msgid "Bad octal character in S-expression"
-msgstr "Felaktigt oktadecimalt tecken i S-uttryck"
+msgstr "Felaktigt oktalt tecken i S-uttryck"
 
-#, fuzzy
-#| msgid "Unexpected tag"
 msgid "Unexpected packet"
-msgstr "Oväntad tagg"
+msgstr "Oväntat paket"
 
 msgid "All subkeys are expired or revoked"
-msgstr ""
+msgstr "Alla undernycklar har gått ut eller återkallats"
 
-#, fuzzy
-#| msgid "Data not encrypted"
 msgid "Database is corrupted"
-msgstr "Data är inte krypterat"
+msgstr "Databasen är skadad"
 
 msgid "Server indicated a failure"
-msgstr ""
+msgstr "Servern indikerade ett fel"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "No name"
-msgstr "Okänt namn"
+msgstr "Inget namn"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "No key"
-msgstr "Ingen publik nyckel"
+msgstr "Ingen nyckel"
 
 msgid "Legacy key"
-msgstr ""
+msgstr "Föråldrad nyckel"
 
-#, fuzzy
-#| msgid "Buffer too short"
 msgid "Request too short"
-msgstr "Buffert för liten"
+msgstr "För kort begäran"
 
-#, fuzzy
-#| msgid "Line too long"
 msgid "Request too long"
-msgstr "Raden är för lång"
+msgstr "För lång begäran"
 
 msgid "Object is in termination state"
-msgstr ""
+msgstr "Objektet är i avslutningsläge"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "No certificate chain"
-msgstr "Felaktig certifikatkedja"
+msgstr "Ingen certifikatkedja"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Certificate is too large"
-msgstr "Certifikatet är för ungt"
+msgstr "Certifikatet är för stort"
 
-#, fuzzy
-#| msgid "Invalid card"
 msgid "Invalid record"
-msgstr "Ogiltigt kort"
+msgstr "Ogiltig post"
 
 msgid "The MAC does not verify"
-msgstr ""
+msgstr "MAC verifierar inte"
 
-#, fuzzy
-#| msgid "Unexpected tag"
 msgid "Unexpected message"
-msgstr "Oväntad tagg"
+msgstr "Oväntat meddelande"
 
 msgid "Compression or decompression failed"
-msgstr ""
+msgstr "Komprimering eller dekomprimering misslyckades"
 
 msgid "A counter would wrap"
-msgstr ""
+msgstr "En räknare skulle börja om"
 
 msgid "Fatal alert message received"
-msgstr ""
+msgstr "Allvarligt varningsmeddelande mottaget"
 
-#, fuzzy
-#| msgid "Invalid cipher algorithm"
 msgid "No cipher algorithm"
-msgstr "Ogiltig chifferalgoritm"
+msgstr "Ingen chifferalgoritm"
 
-#, fuzzy
 msgid "Missing client certificate"
-msgstr "Saknar certifikat"
+msgstr "Saknat klientcertifikat"
 
-#, fuzzy
-#| msgid "Certificate revoked"
 msgid "Close notification received"
-msgstr "Certifikatet är spärrat"
+msgstr "Stängningsmeddelande mottaget"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Ticket expired"
-msgstr "Nyckeln har gått ut"
+msgstr "Biljetten har gått ut"
 
-#, fuzzy
-#| msgid "Bad public key"
 msgid "Bad ticket"
-msgstr "Felaktig publik nyckel"
+msgstr "Ogiltig biljett"
 
-#, fuzzy
-#| msgid "Unknown packet"
 msgid "Unknown identity"
-msgstr "Okänt paket"
+msgstr "Okänd identitet"
 
-#, fuzzy
-#| msgid "Bad certificate chain"
 msgid "Bad certificate message in handshake"
-msgstr "Felaktig certifikatkedja"
+msgstr "Felaktigt certifikatmeddelande vid handskakning"
 
 msgid "Bad certificate request message in handshake"
-msgstr ""
+msgstr "Meddelande om felaktig certifikatbegäran i handskakning"
 
 msgid "Bad certificate verify message in handshake"
-msgstr ""
+msgstr "Meddelande om felaktig certifikatverifiering i handskakning"
 
 msgid "Bad change cipher message in handshake"
-msgstr ""
+msgstr "Meddelande om felaktig chifferändring i handskakning"
 
 msgid "Bad client hello message in handshake"
-msgstr ""
+msgstr "Felaktigt hälsningsmeddelande från klient i handskakning"
 
 msgid "Bad server hello message in handshake"
-msgstr ""
+msgstr "Felaktigt serverhälsningsmeddelande i handskakning"
 
 msgid "Bad server hello done message in handshake"
-msgstr ""
+msgstr "Meddelande om felaktig serverhälsning i handskakning"
 
 msgid "Bad finished message in handshake"
-msgstr ""
+msgstr "Felaktigt slutfört meddelande i handskakning"
 
 msgid "Bad server key exchange message in handshake"
-msgstr ""
+msgstr "Felaktigt meddelande om servernyckelutbyte vid handskakning"
 
 msgid "Bad client key exchange message in handshake"
-msgstr ""
+msgstr "Felaktigt meddelande om klientnyckelutbyte vid handskakning"
 
 msgid "Bogus string"
-msgstr ""
+msgstr "Falsk sträng"
 
 msgid "Forbidden"
-msgstr ""
+msgstr "Förbjuden"
 
-#, fuzzy
-#| msgid "Key expired"
 msgid "Key disabled"
-msgstr "Nyckeln har gått ut"
+msgstr "Nyckel inaktiverad"
 
 msgid "Not possible with a card based key"
-msgstr ""
+msgstr "Inte möjligt med kortbaserad nyckel"
 
-#, fuzzy
-#| msgid "Invalid object"
 msgid "Invalid lock object"
-msgstr "Ogiltigt objekt"
+msgstr "Ogiltigt låsobjekt"
 
 msgid "True"
-msgstr ""
+msgstr "Sant"
 
 msgid "False"
-msgstr ""
+msgstr "Falskt"
 
 msgid "General IPC error"
 msgstr "Allmänt IPC-fel"
@@ -990,491 +929,344 @@ msgstr "IPC-parameterfel"
 msgid "Unknown IPC inquire"
 msgstr "Okänd IPC-fråga"
 
-#, fuzzy
 msgid "Crypto engine too old"
-msgstr "Ogiltig krypteringsmotor"
+msgstr "Kryptomotorn är för gammal"
 
 msgid "Screen or window too small"
-msgstr ""
+msgstr "Skärmen eller fönstret är för litet"
 
 msgid "Screen or window too large"
-msgstr ""
+msgstr "Skärmen eller fönstret är för stort"
 
 msgid "Required environment variable not set"
-msgstr ""
+msgstr "Nödvändig miljövariabel är inte inställd"
 
 msgid "User ID already exists"
-msgstr ""
+msgstr "Användar-id finns redan"
 
 msgid "Name already exists"
-msgstr ""
+msgstr "Namnet finns redan"
 
-#, fuzzy
-#| msgid "Duplicated value"
 msgid "Duplicated name"
-msgstr "Dubblettvärde"
+msgstr "Duplicerat namn"
 
-#, fuzzy
-#| msgid "Certificate too young"
 msgid "Object is too young"
-msgstr "Certifikatet är för ungt"
+msgstr "Objektet är för ungt"
 
-#, fuzzy
-#| msgid "Provided object is too short"
 msgid "Object is too old"
-msgstr "Tillhandahållet objekt är för kort"
+msgstr "Objektet är för gammalt"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "Unknown flag"
-msgstr "Okänt namn"
+msgstr "Okänd flagga"
 
-#, fuzzy
-#| msgid "Invalid operation code"
 msgid "Invalid execution order"
-msgstr "Ogiltig åtgärdskod"
+msgstr "Ogiltig exekveringsordning"
 
 msgid "Already fetched"
-msgstr ""
+msgstr "Redan hämtad"
 
 msgid "Try again later"
-msgstr ""
+msgstr "Försök igen senare"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "Wrong name"
-msgstr "Okänt namn"
+msgstr "Fel namn"
 
-#, fuzzy
 msgid "Not authenticated"
-msgstr "Inte låst"
+msgstr "Inte autentiserad"
 
-#, fuzzy
-#| msgid "Unsupported protection"
 msgid "Bad authentication"
-msgstr "Skyddet stöds inte"
+msgstr "Felaktig autentisering"
 
-#, fuzzy
-#| msgid "No agent running"
 msgid "No Keybox daemon running"
-msgstr "Ingen agent kör"
+msgstr "Ingen Keybox-daemon körs"
 
-#, fuzzy
-#| msgid "SmartCard daemon error"
 msgid "Keybox daemon error"
-msgstr "Fel i SmartCard-demon"
+msgstr "Fel i Keybox-demonen"
 
 msgid "Service is not running"
-msgstr ""
+msgstr "Tjänsten körs inte"
 
-#, fuzzy
-#| msgid "Keyserver error"
 msgid "Service error"
-msgstr "Fel i nyckelserver"
+msgstr "Tjänstefel"
 
-#, fuzzy
-#| msgid "Bad PIN"
 msgid "Bad PUK"
-msgstr "Felaktig PIN-kod"
+msgstr "Felaktig PUK"
 
 msgid "No reset code"
-msgstr ""
+msgstr "Ingen återställningskod"
 
-#, fuzzy
-#| msgid "Bad secret key"
 msgid "Bad reset code"
-msgstr "Felaktig hemlig nyckel"
+msgstr "Felaktig återställningskod"
 
 msgid "System bug detected"
-msgstr ""
+msgstr "Systemfel upptäcktes"
 
-#, fuzzy
-#| msgid "Unknown system error"
 msgid "Unknown DNS error"
-msgstr "Okänt systemfel"
+msgstr "Okänt DNS-fel"
 
-#, fuzzy
-#| msgid "Invalid OID string"
 msgid "Invalid DNS section"
-msgstr "Ogiltig OID-sträng"
+msgstr "Ogiltig DNS-sektion"
 
-#, fuzzy
-#| msgid "Invalid S-expression"
 msgid "Invalid textual address form"
-msgstr "Ogiltigt S-uttryck"
+msgstr "Ogiltig textadressform"
 
-#, fuzzy
 msgid "Missing DNS query packet"
-msgstr "Saknar certifikat"
+msgstr "Saknat DNS-frågepaket"
 
 msgid "Missing DNS answer packet"
-msgstr ""
+msgstr "Saknat DNS-svarspaket"
 
 msgid "Connection closed in DNS"
-msgstr ""
+msgstr "Anslutningen stängdes i DNS"
 
-#, fuzzy
-#| msgid "Decryption failed"
 msgid "Verification failed in DNS"
-msgstr "Dekryptering misslyckades"
+msgstr "Verifieringen misslyckades i DNS"
 
-#, fuzzy
-#| msgid "Timeout"
 msgid "DNS Timeout"
-msgstr "Tidsgräns"
+msgstr "DNS-timeout"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "General LDAP error"
-msgstr "Allmänt IPC-fel"
+msgstr "Allmänt LDAP-fel"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP attribute error"
-msgstr "Allmänt fel"
+msgstr "Allmänt LDAP-attributfel"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP name error"
-msgstr "Allmänt fel"
+msgstr "Allmänt LDAP-namnfel"
 
-#, fuzzy
-#| msgid "General Assuan error"
 msgid "General LDAP security error"
-msgstr "Allmänt Assuan-fel"
+msgstr "Allmänt LDAP-säkerhetsfel"
 
-#, fuzzy
-#| msgid "General error"
 msgid "General LDAP service error"
-msgstr "Allmänt fel"
+msgstr "Allmänt LDAP-tjänstefel"
 
-#, fuzzy
-#| msgid "General Assuan error"
 msgid "General LDAP update error"
-msgstr "Allmänt Assuan-fel"
+msgstr "Allmänt LDAP-uppdateringsfel"
 
 msgid "Experimental LDAP error code"
-msgstr ""
+msgstr "Experimentell LDAP-felkod"
 
-#, fuzzy
-#| msgid "IPC write error"
 msgid "Private LDAP error code"
-msgstr "IPC-skrivfel"
+msgstr "Privat LDAP-felkod"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "Other general LDAP error"
-msgstr "Allmänt IPC-fel"
+msgstr "Andra allmänna LDAP-fel"
 
-#, fuzzy
-#| msgid "IPC connect call failed"
 msgid "LDAP connecting failed (X)"
-msgstr "IPC-anslutningsanrop misslyckades"
+msgstr "LDAP-anslutningen misslyckades (X)"
 
-#, fuzzy
-#| msgid "General error"
 msgid "LDAP referral limit exceeded"
-msgstr "Allmänt fel"
+msgstr "LDAP-hänvisningsgränsen överskriden"
 
 msgid "LDAP client loop"
-msgstr ""
+msgstr "LDAP-klientslinga"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "No LDAP results returned"
-msgstr "Nollställning av kort krävs"
+msgstr "Inga LDAP-resultat returnerades"
 
-#, fuzzy
-#| msgid "Element not found"
 msgid "LDAP control not found"
-msgstr "Elementet hittades inte"
+msgstr "LDAP-kontroll hittades inte"
 
-#, fuzzy
-#| msgid "Not supported"
 msgid "Not supported by LDAP"
-msgstr "Stöds inte"
+msgstr "Stöds inte av LDAP"
 
-#, fuzzy
-#| msgid "Unexpected error"
 msgid "LDAP connect error"
-msgstr "Oväntat fel"
+msgstr "LDAP-anslutningsfel"
 
 msgid "Out of memory in LDAP"
-msgstr ""
+msgstr "Minnet är slut i LDAP"
 
 msgid "Bad parameter to an LDAP routine"
-msgstr ""
+msgstr "Felaktig parameter till en LDAP-rutin"
 
-#, fuzzy
-#| msgid "Unsupported operation"
 msgid "User cancelled LDAP operation"
-msgstr "Åtgärden stöds inte"
+msgstr "Användaren avbröt LDAP-åtgärden"
 
-#, fuzzy
-#| msgid "Bad certificate"
 msgid "Bad LDAP search filter"
-msgstr "Felaktigt certifikat"
+msgstr "Felaktigt LDAP-sökfilter"
 
-#, fuzzy
-#| msgid "Unknown extension"
 msgid "Unknown LDAP authentication method"
-msgstr "Okänd utökning"
+msgstr "Okänd LDAP-autentiseringsmetod"
 
-#, fuzzy
-#| msgid "Timeout"
 msgid "Timeout in LDAP"
-msgstr "Tidsgräns"
+msgstr "Timeout i LDAP"
 
-#, fuzzy
-#| msgid "dirmngr error"
 msgid "LDAP decoding error"
-msgstr "dirmngr-fel"
+msgstr "LDAP-avkodningsfel"
 
-#, fuzzy
-#| msgid "dirmngr error"
 msgid "LDAP encoding error"
-msgstr "dirmngr-fel"
+msgstr "LDAP-kodningsfel"
 
-#, fuzzy
-#| msgid "IPC read error"
 msgid "LDAP local error"
-msgstr "IPC-läsfel"
+msgstr "LDAP lokalt fel"
 
-#, fuzzy
-#| msgid "Not an IPC server"
 msgid "Cannot contact LDAP server"
-msgstr "Inte en IPC-server"
+msgstr "Kan inte kontakta LDAP-servern"
 
-#, fuzzy
-#| msgid "Success"
 msgid "LDAP success"
-msgstr "Lyckades"
+msgstr "LDAP lyckades"
 
-#, fuzzy
-#| msgid "Configuration error"
 msgid "LDAP operations error"
-msgstr "Konfigurationsfel"
+msgstr "LDAP-operationsfel"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "LDAP protocol error"
-msgstr "Protokollöverträdelse"
+msgstr "LDAP-protokollfel"
 
 msgid "Time limit exceeded in LDAP"
-msgstr ""
+msgstr "Tidsgränsen överskriden i LDAP"
 
 msgid "Size limit exceeded in LDAP"
-msgstr ""
+msgstr "Storleksbegränsning överskriden i LDAP"
 
 msgid "LDAP compare false"
-msgstr ""
+msgstr "LDAP-jämförelse falsk"
 
 msgid "LDAP compare true"
-msgstr ""
+msgstr "LDAP-jämförelse sann"
 
-#, fuzzy
-#| msgid "Unknown extension"
 msgid "LDAP authentication method not supported"
-msgstr "Okänd utökning"
+msgstr "LDAP-autentiseringsmetod stöds inte"
 
 msgid "Strong(er) LDAP authentication required"
-msgstr ""
+msgstr "Kräver stark(are) LDAP-autentisering"
 
 msgid "Partial LDAP results+referral received"
-msgstr ""
+msgstr "Delvisa LDAP-resultat + hänvisning mottagen"
 
-#, fuzzy
-#| msgid "General error"
 msgid "LDAP referral"
-msgstr "Allmänt fel"
+msgstr "LDAP-hänvisning"
 
 msgid "Administrative LDAP limit exceeded"
-msgstr ""
+msgstr "Administrativ LDAP-gräns överskriden"
 
 msgid "Critical LDAP extension is unavailable"
-msgstr ""
+msgstr "Kritisk LDAP-utökning är inte tillgänglig"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "Confidentiality required by LDAP"
-msgstr "Nollställning av kort krävs"
+msgstr "Sekretess krävs av LDAP"
 
 msgid "LDAP SASL bind in progress"
-msgstr ""
+msgstr "LDAP SASL-bindning pågår"
 
 msgid "No such LDAP attribute"
-msgstr ""
+msgstr "Inget sådant LDAP-attribut"
 
-#, fuzzy
-#| msgid "Invalid attribute"
 msgid "Undefined LDAP attribute type"
-msgstr "Ogiltigt attribut"
+msgstr "Odefinierad LDAP-attributtyp"
 
-#, fuzzy
-#| msgid "Unsupported protection"
 msgid "Inappropriate matching in LDAP"
-msgstr "Skyddet stöds inte"
+msgstr "Olämplig matchning i LDAP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "Constraint violation in LDAP"
-msgstr "Protokollöverträdelse"
+msgstr "Begränsningsöverträdelse i LDAP"
 
 msgid "LDAP type or value exists"
-msgstr ""
+msgstr "LDAP-typ eller värde finns"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid syntax in LDAP"
-msgstr "Ogiltigt tillstånd"
+msgstr "Ogiltig syntax i LDAP"
 
-#, fuzzy
-#| msgid "No CMS object"
 msgid "No such LDAP object"
-msgstr "Inget CMS-objekt"
+msgstr "Inget sådant LDAP-objekt"
 
-#, fuzzy
-#| msgid "Hardware problem"
 msgid "LDAP alias problem"
-msgstr "Hårdvaruproblem"
+msgstr "Problem med LDAP-alias"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid DN syntax in LDAP"
-msgstr "Ogiltigt tillstånd"
+msgstr "Ogiltig DN-syntax i LDAP"
 
 msgid "LDAP entry is a leaf"
-msgstr ""
+msgstr "LDAP-posten är ett blad"
 
-#, fuzzy
-#| msgid "Encoding problem"
 msgid "LDAP alias dereferencing problem"
-msgstr "Kodningsproblem"
+msgstr "Problem med avreferering av LDAP-alias"
 
 msgid "LDAP proxy authorization failure (X)"
-msgstr ""
+msgstr "Auktoriseringsfel för LDAP-proxy (X)"
 
-#, fuzzy
-#| msgid "Unsupported protection"
 msgid "Inappropriate LDAP authentication"
-msgstr "Skyddet stöds inte"
+msgstr "Olämplig LDAP-autentisering"
 
-#, fuzzy
-#| msgid "Invalid card"
 msgid "Invalid LDAP credentials"
-msgstr "Ogiltigt kort"
+msgstr "Ogiltiga LDAP-inloggningsuppgifter"
 
 msgid "Insufficient access for LDAP"
-msgstr ""
+msgstr "Otillräcklig åtkomst för LDAP"
 
 msgid "LDAP server is busy"
-msgstr ""
+msgstr "LDAP-servern är upptagen"
 
 msgid "LDAP server is unavailable"
-msgstr ""
+msgstr "LDAP-servern är inte tillgänglig"
 
 msgid "LDAP server is unwilling to perform"
-msgstr ""
+msgstr "LDAP-servern vill inte utföra"
 
 msgid "Loop detected by LDAP"
-msgstr ""
+msgstr "Slinga upptäckt av LDAP"
 
-#, fuzzy
-#| msgid "Missing action"
 msgid "LDAP naming violation"
-msgstr "Saknar åtgärd"
+msgstr "LDAP-namngivningsöverträdelse"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "LDAP object class violation"
-msgstr "Protokollöverträdelse"
+msgstr "Överträdelse av LDAP-objektklass"
 
-#, fuzzy
-#| msgid "Operation not yet finished"
 msgid "LDAP operation not allowed on non-leaf"
-msgstr "Åtgärden är ännu inte färdig"
+msgstr "LDAP-åtgärd tillåts inte på icke-blad"
 
-#, fuzzy
-#| msgid "Operation cancelled"
 msgid "LDAP operation not allowed on RDN"
-msgstr "Åtgärden avbröts"
+msgstr "LDAP-åtgärd tillåts inte på RDN"
 
 msgid "Already exists (LDAP)"
-msgstr ""
+msgstr "Finns redan (LDAP)"
 
 msgid "Cannot modify LDAP object class"
-msgstr ""
+msgstr "Kan inte ändra LDAP-objektklass"
 
-#, fuzzy
-#| msgid "Line too long"
 msgid "LDAP results too large"
-msgstr "Raden är för lång"
+msgstr "LDAP-resultaten är för stora"
 
-#, fuzzy
-#| msgid "Operation cancelled"
 msgid "LDAP operation affects multiple DSAs"
-msgstr "Åtgärden avbröts"
+msgstr "LDAP-åtgärden påverkar flera DSA:er"
 
 msgid "Virtual LDAP list view error"
-msgstr ""
+msgstr "Fel i virtuell LDAP-listvy"
 
-#, fuzzy
-#| msgid "General IPC error"
 msgid "Other LDAP error"
-msgstr "Allmänt IPC-fel"
+msgstr "Annat LDAP-fel"
 
-#, fuzzy
-#| msgid "Resources exhausted"
 msgid "Resources exhausted in LCUP"
-msgstr "Resurser överansträngda"
+msgstr "Resurser uttömda i LCUP"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "Security violation in LCUP"
-msgstr "Protokollöverträdelse"
+msgstr "Säkerhetsöverträdelse i LCUP"
 
-#, fuzzy
-#| msgid "Invalid state"
 msgid "Invalid data in LCUP"
-msgstr "Ogiltigt tillstånd"
+msgstr "Ogiltigt data i LCUP"
 
-#, fuzzy
-#| msgid "Unsupported certificate"
 msgid "Unsupported scheme in LCUP"
-msgstr "Certifikatet stöds inte"
+msgstr "Schema stöds inte i LCUP"
 
-#, fuzzy
-#| msgid "Card reset required"
 msgid "Reload required in LCUP"
-msgstr "Nollställning av kort krävs"
+msgstr "Omstart krävs i LCUP"
 
-#, fuzzy
-#| msgid "Success"
 msgid "LDAP cancelled"
-msgstr "Lyckades"
+msgstr "LDAP avbruten"
 
-#, fuzzy
-#| msgid "Not operational"
 msgid "No LDAP operation to cancel"
-msgstr "Fungerar inte"
+msgstr "Ingen LDAP-åtgärd att avbryta"
 
-#, fuzzy
-#| msgid "Not operational"
 msgid "Too late to cancel LDAP"
-msgstr "Fungerar inte"
+msgstr "För sent att avbryta LDAP"
 
-#, fuzzy
-#| msgid "Not an IPC server"
 msgid "Cannot cancel LDAP"
-msgstr "Inte en IPC-server"
+msgstr "Kan inte avbryta LDAP"
 
-#, fuzzy
-#| msgid "Decryption failed"
 msgid "LDAP assertion failed"
-msgstr "Dekryptering misslyckades"
+msgstr "LDAP-påstående misslyckades"
 
 msgid "Proxied authorization denied by LDAP"
-msgstr ""
+msgstr "Auktorisering via proxy nekad av LDAP"
 
 msgid "User defined error code 1"
 msgstr "Användardefinierad felkod 1"
@@ -1524,104 +1316,98 @@ msgstr "Användardefinierad felkod 15"
 msgid "User defined error code 16"
 msgstr "Användardefinierad felkod 16"
 
-#, fuzzy
-#| msgid "Success"
 msgid "SQL success"
-msgstr "Lyckades"
+msgstr "SQL lyckades"
 
-#, fuzzy
-#| msgid "Syntax error"
 msgid "SQL error"
-msgstr "Syntaxfel"
+msgstr "SQL-fel"
 
 msgid "Internal logic error in SQL library"
-msgstr ""
+msgstr "Internt logikfel i SQL-biblioteket"
 
 msgid "Access permission denied (SQL)"
-msgstr ""
+msgstr "Åtkomstbehörighet nekad (SQL)"
 
 msgid "SQL abort was requested"
-msgstr ""
+msgstr "SQL-avbrott begärdes"
 
 msgid "SQL database file is locked"
-msgstr ""
+msgstr "SQL-databasfilen är låst"
 
 msgid "An SQL table in the database is locked"
-msgstr ""
+msgstr "En SQL-tabell i databasen är låst"
 
 msgid "SQL library ran out of core"
-msgstr ""
+msgstr "SQL-biblioteket har slut på minne"
 
 msgid "Attempt to write a readonly SQL database"
-msgstr ""
+msgstr "Försök att skriva en skrivskyddad SQL-databas"
 
 msgid "SQL operation terminated by interrupt"
-msgstr ""
+msgstr "SQL-operation avbruten av avbrott"
 
 msgid "I/O error during SQL operation"
-msgstr ""
+msgstr "I/O-fel under SQL-operation"
 
 msgid "SQL database disk image is malformed"
-msgstr ""
+msgstr "Diskavbildningen för SQL-databas är felaktig"
 
 msgid "Unknown opcode in SQL file control"
-msgstr ""
+msgstr "Okänd opcode i SQL-filkontroll"
 
 msgid "Insertion failed because SQL database is full"
-msgstr ""
+msgstr "Infogning misslyckades eftersom SQL-databasen är full"
 
 msgid "Unable to open the SQL database file"
-msgstr ""
+msgstr "Det går inte att öppna SQL-databasfilen"
 
-#, fuzzy
-#| msgid "Protocol violation"
 msgid "SQL database lock protocol error"
-msgstr "Protokollöverträdelse"
+msgstr "Fel i SQL-databaslåsprotokollet"
 
 msgid "(internal SQL code: empty)"
-msgstr ""
+msgstr "(intern SQL-kod: tom)"
 
 msgid "SQL database schema changed"
-msgstr ""
+msgstr "SQL-databasschemat har ändrats"
 
 msgid "String or blob exceeds size limit (SQL)"
-msgstr ""
+msgstr "Sträng eller blob överskrider storleksgränsen (SQL)"
 
 msgid "SQL abort due to constraint violation"
-msgstr ""
+msgstr "SQL avbryts på grund av överträdelse av begränsning"
 
 msgid "Data type mismatch (SQL)"
-msgstr ""
+msgstr "Datatypskonflikt (SQL)"
 
 msgid "SQL library used incorrectly"
-msgstr ""
+msgstr "SQL-bibliotek används felaktigt"
 
 msgid "SQL library uses unsupported OS features"
-msgstr ""
+msgstr "SQL-biblioteket använder OS-funktioner som inte stöds"
 
 msgid "Authorization denied (SQL)"
-msgstr ""
+msgstr "Auktorisering nekad (SQL)"
 
 msgid "(unused SQL code: format)"
-msgstr ""
+msgstr "(oanvänd SQL-kod: format)"
 
 msgid "SQL bind parameter out of range"
-msgstr ""
+msgstr "SQL-bindningsparameter utanför intervallet"
 
 msgid "File opened that is not an SQL database file"
-msgstr ""
+msgstr "Fil öppnad som inte är en SQL-databasfil"
 
 msgid "Notifications from SQL logger"
-msgstr ""
+msgstr "Meddelanden från SQL-loggaren"
 
 msgid "Warnings from SQL logger"
-msgstr ""
+msgstr "Varningar från SQL-loggaren"
 
 msgid "SQL has another row ready"
-msgstr ""
+msgstr "SQL har en annan rad klar"
 
 msgid "SQL has finished executing"
-msgstr ""
+msgstr "SQL har slutfört exekveringen"
 
 msgid "System error w/o errno"
 msgstr "Systemfel utan felnummer"
@@ -1647,10 +1433,8 @@ msgstr "nyckelordet är för långt"
 msgid "missing argument"
 msgstr "argument saknas"
 
-#, fuzzy
-#| msgid "invalid value\n"
 msgid "invalid argument"
-msgstr "ogiltigt värde\n"
+msgstr "ogiltigt argument"
 
 msgid "invalid command"
 msgstr "ogiltigt kommando"
@@ -1658,28 +1442,20 @@ msgstr "ogiltigt kommando"
 msgid "invalid alias definition"
 msgstr "ogiltig aliasdefinition"
 
-#, fuzzy
-#| msgid "Configuration error"
 msgid "permission error"
-msgstr "Konfigurationsfel"
+msgstr "behörighetsfel"
 
 msgid "out of core"
 msgstr "slut på minne"
 
-#, fuzzy
-#| msgid "invalid command"
 msgid "invalid meta command"
-msgstr "ogiltigt kommando"
+msgstr "ogiltigt metakommando"
 
-#, fuzzy
-#| msgid "Unknown command"
 msgid "unknown meta command"
-msgstr "Okänt kommando"
+msgstr "okänt metakommando"
 
-#, fuzzy
-#| msgid "Unexpected IPC command"
 msgid "unexpected meta command"
-msgstr "Oväntat IPC-kommando"
+msgstr "oväntat metakommando"
 
 msgid "invalid option"
 msgstr "ogiltig flagga"
@@ -1688,10 +1464,9 @@ msgstr "ogiltig flagga"
 msgid "missing argument for option \"%.50s\"\n"
 msgstr "argument för flaggan \"%.50s\" saknas\n"
 
-#, fuzzy, c-format
-#| msgid "missing argument for option \"%.50s\"\n"
+#, c-format
 msgid "invalid argument for option \"%.50s\"\n"
-msgstr "argument för flaggan \"%.50s\" saknas\n"
+msgstr "ogiltigt argument för flaggan \"%.50s\"\n"
 
 #, c-format
 msgid "option \"%.50s\" does not expect an argument\n"
@@ -1715,22 +1490,24 @@ msgstr "ogiltig flagga \"%.50s\"\n"
 
 #, c-format
 msgid "Note: no default option file '%s'\n"
-msgstr ""
+msgstr "Observera: ingen standardfil för flaggor '%s'\n"
 
 #, c-format
 msgid "reading options from '%s'\n"
-msgstr ""
+msgstr "läser flaggor från '%s'\n"
 
 #, c-format
 msgid "option file '%s': %s\n"
-msgstr ""
+msgstr "flaggfilen '%s': %s\n"
 
 #, c-format
 msgid "Note: ignoring option \"--%s\" due to global config\n"
-msgstr ""
+msgstr "Observera: ignorerar flaggan \"--%s\" på grund av global konfiguration\n"
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr ""
+"Rapportera buggar till <https://bugs.gnupg.org>.\n"
+"Rapportera översättningsfel till <tp-sv@listor.tp-sv.se>.\n"
 
 #, c-format
 msgid "warning: could not recognize %s\n"
