@@ -63,7 +63,7 @@
 struct gpgrt_spawn_actions {
   int fd[3];
   const int *except_fds;
-  char **environ;
+  char **envp;
   const char *const *envchange;
   void (*atfork) (void *);
   void *atfork_arg;
@@ -432,8 +432,8 @@ my_exec (const char *pgmname, const char *argv[], gpgrt_spawn_actions_t act,
   if (pgmname == NULL)
     return 0;
 
-  if (act->environ)
-    execve (pgmname, (char *const *)argv, act->environ);
+  if (act->envp)
+    execve (pgmname, (char *const *)argv, act->envp);
   else
     execv (pgmname, (char *const *)argv);
 
@@ -534,7 +534,7 @@ void
 _gpgrt_spawn_actions_set_environ (gpgrt_spawn_actions_t act,
                                   char **environ_for_child)
 {
-  act->environ = environ_for_child;
+  act->envp = environ_for_child;
 }
 
 void
