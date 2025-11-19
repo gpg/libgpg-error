@@ -67,6 +67,8 @@ GPG_ERR_BAD_PUBKEY              Bad public key
             - Missing public or domain parameter in an s-expression.
               If the curve name is mssing GPG_ERR_INV_CURVE may be
               used as well.
+            - The keygrip for a key could not be computed
+
 
 GPG_ERR_BAD_SECKEY              Bad secret key
 
@@ -78,8 +80,9 @@ GPG_ERR_BAD_SECKEY              Bad secret key
             - A private key passed to the OpenPGP card application does
               not match the requirements of the card or misses required
               parameters.
-            - Gpg'agents import key command is not able to convert
+            - Gpg-agent's import key command is not able to convert
               the key to the internal format.
+            - Gpg-agent received a garbled composite key.
     GCRYPT: - Checking the secret key failed (consistency check).
 
 

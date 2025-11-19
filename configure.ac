@@ -142,13 +142,19 @@ case "${host}" in
        ;;
 esac
 
-# Set some variables for building build platform helpers.
+# Set some variables for build platform helpers.
 case "$build_os" in
-    *zOS*)
-        EXTRA_LIBS_FOR_BUILD=zoslib
-        ;;
+    *openedition*)
+        PKG_CHECK_MODULES([ZOSLIB], [zoslib],
+                          [EXTRA_LIBS_FOR_BUILD="$ZOSLIB_LIBS"],
+                          [AC_MSG_WARN([[
+***
+*** zoslib not found.  Please ensure zoslib.pc is in PKG_CONFIG_PATH.
+*** (If you are not using zOS please ignore this warning)
+***]])])
+         ;;
     *)
-        EXTRA_LIBS_FOR_BUILD=
+        EXTRA_LIBS_FOR_BUILD=""
 	;;
 esac
 AC_SUBST(EXTRA_LIBS_FOR_BUILD)
