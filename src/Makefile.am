@@ -214,7 +214,8 @@ nodist_libgpg_error_la_SOURCES = gpg-error.h
 # libgpg_error_la_DEPENDENCIES = \
 #        $(srcdir)/gpg-error.vers
 
-libgpg_error_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
+libgpg_error_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" \
+                           -DSYSCONFDIR=\"$(sysconfdir)\"
 libgpg_error_la_LIBADD = $(gpg_error_res) $(intllibs) $(socklibs) $(LIBTHREAD)
 
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c

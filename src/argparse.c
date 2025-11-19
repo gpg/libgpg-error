@@ -2381,7 +2381,7 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
           s = confname;
         xfree (arg->internal->confname);
         arg->internal->confname = _gpgrt_fnameconcat
-          (confdir.sys? confdir.sys : "/etc", s, NULL);
+          (confdir.sys? confdir.sys : SYSCONFDIR, s, NULL);
         _gpgrt_free (tmpname);
         if (!arg->internal->confname)
           return (arg->r_opt = ARGPARSE_OUT_OF_CORE);
