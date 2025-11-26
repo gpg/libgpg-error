@@ -648,8 +648,8 @@ my_nl_locale_name (const char *categoryname)
       if (retval != NULL && retval[0] != '\0')
         return retval;
 
-      /* Use native Win32 API locale ID.  */
-      lcid = GetThreadLocale ();
+      /* Use native Win32 API language ID.  */
+      lcid = GetThreadUILanguage ();
       /* Strip off the sorting rules, keep only the language part.  */
       langid = LANGIDFROMLCID (lcid);
     }
