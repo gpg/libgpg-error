@@ -61,6 +61,8 @@ static struct
   char name[28];
 } override_locale;
 
+/* This is the dynloaded GetThreadUILanguage() or NULL.  */
+static LANGID (WINAPI *get_thread_ui_language)(void);
 
 
 
@@ -648,8 +650,10 @@ my_nl_locale_name (const char *categoryname)
       if (retval != NULL && retval[0] != '\0')
         return retval;
 
-      /* Use native Win32 API language ID.  */
-      lcid = GetThreadUILanguage ();
+      /* Use native Win32 API language ID or use GetThreadLocale on XP  */
+      lcid = get_thread_ui_language? get_thread_ui_language ()
+                                   : GetThreadLocale ();
+
       /* Strip off the sorting rules, keep only the language part.  */
       langid = LANGIDFROMLCID (lcid);
     }
@@ -1154,6 +1158,7 @@ static CRITICAL_SECTION domainlist_access_cs;
 static char *current_domainname;
 
 
+
 
 /* Constructor for this module.  This can only be used if we are a
    DLL.  If used as a static lib we can't control the process set; for
@@ -1166,10 +1171,16 @@ static void
 module_init (void)
 {
   static int init_done;
+  HMODULE hkernel32;
 
   if (!init_done)
     {
       InitializeCriticalSection (&domainlist_access_cs);
+
+      hkernel32 = GetModuleHandle ("kernel32.dll");
+      if (hkernel32)
+        get_thread_ui_language = (void*)GetProcAddress (hkernel32,
+                                                        "GetThreadUILanguage");
       init_done = 1;
     }
 }
