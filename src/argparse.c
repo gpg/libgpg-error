@@ -2380,8 +2380,12 @@ _gpgrt_argparser (gpgrt_argparse_t *arg, gpgrt_opt_t *opts,
         else
           s = confname;
         xfree (arg->internal->confname);
-        arg->internal->confname = _gpgrt_fnameconcat
-          (confdir.sys? confdir.sys : SYSCONFDIR, s, NULL);
+        if (confdir.sys)
+          arg->internal->confname = _gpgrt_fconcat (GPGRT_FCONCAT_TILDE,
+                                                    confdir.sys, s, NULL);
+        else
+          arg->internal->confname = _gpgrt_fconcat (GPGRT_FCONCAT_SYSCONF,
+                                                    s, NULL);
         _gpgrt_free (tmpname);
         if (!arg->internal->confname)
           return (arg->r_opt = ARGPARSE_OUT_OF_CORE);

@@ -842,6 +842,8 @@ char *_gpgrt_getusername (void);
 /* Expand and concat file name parts.  */
 char *_gpgrt_vfnameconcat (unsigned int flags, const char *first_part,
                            va_list arg_ptr);
+char *_gpgrt_fconcat (unsigned int flags, const char *first_part,
+                      ... ) GPGRT_ATTR_SENTINEL(0);
 char *_gpgrt_fnameconcat (const char *first_part,
                           ... ) GPGRT_ATTR_SENTINEL(0);
 char *_gpgrt_absfnameconcat (const char *first_part,

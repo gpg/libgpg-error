@@ -278,6 +278,19 @@ _gpgrt_vfnameconcat (unsigned int flags,
 }
 
 
+char *
+_gpgrt_fconcat (unsigned int flags, const char *first_part, ... )
+{
+  va_list arg_ptr;
+  char *result;
+
+  va_start (arg_ptr, first_part);
+  result = _gpgrt_vfnameconcat (flags, first_part, arg_ptr);
+  va_end (arg_ptr);
+  return result;
+}
+
+
 /* Construct a filename from the NULL terminated list of parts.  Tilde
  * expansion is done for the first argument.  The caller must release
  * the result using gpgrt_free; on error ERRNO is set and NULL

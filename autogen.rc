@@ -21,4 +21,4 @@ case "$myhost" in
     ;;
 esac
 
-final_info="./configure --enable-maintainer-mode && make"
+final_info="./configure --sysconfdir=/etc --enable-maintainer-mode && make"
