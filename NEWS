@@ -1,6 +1,15 @@
 Noteworthy changes in version 1.57 (unreleased) [C40/A40/R_]
 -----------------------------------------------
 
+ * New function gpgrt_fconcat and improved the existing
+   gpgrt_fnameconcat and gpgrt_absfnameconcat.  [T7894]
+
+ * Interface changes relative to the 1.55 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_fconcat                       NEW.
+ GPGRT_FCONCAT_ABS                   NEW.
+ GPGRT_FCONCAT_TILDE                 NEW.
+ GPGRT_FCONCAT_SYSCONF               NEW.
 
  Release-info: https://dev.gnupg.org/T7847
 

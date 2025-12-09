@@ -563,6 +563,7 @@ main (int argc, char *argv[])
          CMD_GETREG,
          CMD_FOPEN,
          OPT_OPENMODE,
+         CMD_FCONCAT,
          CMD_CHDIR,
          CMD_MKDIR
   };
@@ -588,10 +589,12 @@ main (int argc, char *argv[])
     ARGPARSE_c (CMD_FOPEN, "fopen", "Open the given file"),
     ARGPARSE_c (CMD_CHDIR, "chdir", "Try a chdir to the given directory"),
     ARGPARSE_c (CMD_MKDIR, "mkdir", "Create the given directory"),
+    ARGPARSE_c (CMD_FCONCAT, "fconcat", "Construct a file name"),
     ARGPARSE_group (301, ("@\nOptions:\n ")),
     ARGPARSE_s_n (OPT_QUIET, "quiet", "Silence some output"),
     ARGPARSE_s_n (OPT_DESC, "desc", "Print with error description"),
     ARGPARSE_s_s (OPT_OPENMODE, "openmode", "Specify the open mode"),
+
     ARGPARSE_end()
   };
   gpgrt_argparse_t pargs = { &argc, &argv, ARGPARSE_FLAG_COMMAND };
@@ -629,6 +632,7 @@ main (int argc, char *argv[])
         case CMD_FOPEN:
         case CMD_CHDIR:
         case CMD_MKDIR:
+        case CMD_FCONCAT:
           mycmd = pargs.r_opt;
           break;
 
@@ -649,6 +653,17 @@ main (int argc, char *argv[])
     {
       if (argc > 1)
         gpgrt_usage (1);
+    }
+  else if (mycmd == CMD_FCONCAT)
+    {
+      if (argc < 2)
+        {
+          es_fprintf (es_stderr,
+                      "Usage: %s fconcat <flags> <part1> [<part2> ...]\n\n"
+                      "       For <flags> see GPGRT_FCONCAT_*\n",
+                      gpgrt_strusage (11));
+          exit(2);
+        }
     }
   else if (getregmode || mycmd)
     {
@@ -717,6 +732,37 @@ main (int argc, char *argv[])
             printf ("success opening '%s'\n", *argv);
           gpgrt_fclose (fp);
         }
+    }
+  else if (mycmd == CMD_FCONCAT)
+    {
+      unsigned int fconcatflags;
+      char *myfname;
+
+      fconcatflags = strtoul (argv[0], NULL, 0);
+
+      if (argc == 2)
+        myfname = gpgrt_fconcat (fconcatflags, argv[1], NULL);
+      else if (argc == 3)
+        myfname = gpgrt_fconcat (fconcatflags, argv[1], argv[2], NULL);
+      else if (argc == 4)
+        myfname = gpgrt_fconcat (fconcatflags, argv[1], argv[2], argv[3], NULL);
+      else if (argc == 5)
+        myfname = gpgrt_fconcat (fconcatflags, argv[1], argv[2], argv[3],
+                                 argv[4], NULL);
+      else if (argc == 6)
+        myfname = gpgrt_fconcat (fconcatflags, argv[1], argv[2], argv[3],
+                                 argv[4], argv[5], NULL);
+      else
+        myfname = NULL;
+
+      if (argc > 6)
+        log_error ("error fconcat: too many parts\n");
+      else if (!myfname)
+        log_error ("error fconcat: %s\n",
+                   gpg_strerror (gpg_error_from_syserror ()));
+      else if (!quiet)
+        printf ("%s\n", myfname);
+      gpgrt_free (myfname);
     }
   else if (mycmd == CMD_CHDIR)
     {

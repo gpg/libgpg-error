@@ -228,6 +228,7 @@ MARK_VISIBLE (gpgrt_cmp_version)
 
 MARK_VISIBLE (gpgrt_fnameconcat)
 MARK_VISIBLE (gpgrt_absfnameconcat)
+MARK_VISIBLE (gpgrt_fconcat)
 
 MARK_VISIBLE (gpgrt_strlist_free)
 MARK_VISIBLE (gpgrt_strlist_add)
@@ -474,6 +475,7 @@ MARK_VISIBLE (gpgrt_spawn_actions_set_atfork)
 #define gpgrt_cmp_version           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_fnameconcat           _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_absfnameconcat        _gpgrt_USE_UNDERSCORED_FUNCTION
+#define gpgrt_fconcat               _gpgrt_USE_UNDERSCORED_FUNCTION
 
 #define gpgrt_strlist_free          _gpgrt_USE_UNDERSCORED_FUNCTION
 #define gpgrt_strlist_add           _gpgrt_USE_UNDERSCORED_FUNCTION

@@ -284,5 +284,6 @@ EXPORTS
  gpgrt_nvc_get_string         @221
  gpgrt_nvc_get_bool           @222
 
+ gpgrt_fconcat                @223
 
 ;; end of file with public symbols for Windows.

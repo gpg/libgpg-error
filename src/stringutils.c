@@ -59,17 +59,21 @@ _gpgrt_trim_spaces (char *str)
 }
 
 
-/* Helper for _gpgrt_fnameconcat.  The additional flag WANT_ABS tells
- * whether an absolute file name is requested.  */
+/* Helper for _gpgrt_fnameconcat.  FLAGS controls special features of
+ * the function.  See GPGRT_FCONCAT_ constants for details. */
 char *
-_gpgrt_vfnameconcat (int want_abs, const char *first_part, va_list arg_ptr)
+_gpgrt_vfnameconcat (unsigned int flags,
+                     const char *first_part, va_list arg_ptr)
 {
   const char *argv[32];
   int argc;
   size_t n;
-  int skip = 1;  /* Characters to skip from FIRST_PART.  */
+  int skip = 1;  /* Characters to skip from FIRST_PART.  Only used if
+                  * HOME is NULL */
   char *home_buffer = NULL;
-  char *name, *home, *p;
+  char *name, *p;
+  const char *home;
+  const char *extradelim = "";
 
   /* Put all args into an array because we need to scan them twice.  */
   n = strlen (first_part) + 1;
@@ -87,15 +91,39 @@ _gpgrt_vfnameconcat (int want_abs, const char *first_part, va_list arg_ptr)
   n++;
 
   home = NULL;
-  if (*first_part == '~')
+  if ((flags & GPGRT_FCONCAT_SYSCONF))
+    {
+#ifdef HAVE_W32_SYSTEM
+      home = _gpgrt_w32_get_sysconfdir ();
+      if (!home)
+        return NULL;
+#else
+      home = SYSCONFDIR;
+#endif
+      skip = 0;
+      n += strlen (home);
+      if (n && home[n-1] != '/' && *first_part != '/')
+        {
+          extradelim = "/";
+          n++;
+        }
+    }
+  else if (*first_part == '~' && (flags & GPGRT_FCONCAT_TILDE))
     {
       if (first_part[1] == '/' || !first_part[1])
         {
           /* This is the "~/" or "~" case.  */
-          home_buffer = _gpgrt_getenv ("HOME");
-          if (!home_buffer)
-            home_buffer = _gpgrt_getpwdir (NULL);
-          home = home_buffer;
+#ifdef HAVE_W32_SYSTEM
+          home = _gpgrt_w32_get_profile ();
+          /* Note that we fallback to $HOME if the above failed.  */
+#endif
+          if (!home)
+            {
+              home_buffer = _gpgrt_getenv ("HOME");
+              if (!home_buffer)
+                home_buffer = _gpgrt_getpwdir (NULL);
+              home = home_buffer;
+            }
           if (home && *home)
             n += strlen (home);
         }
@@ -130,7 +158,7 @@ _gpgrt_vfnameconcat (int want_abs, const char *first_part, va_list arg_ptr)
     }
 
   if (home)
-    p = stpcpy (stpcpy (name, home), first_part + skip);
+    p = stpcpy (stpcpy (stpcpy (name, home), extradelim), first_part + skip);
   else
     p = stpcpy (name, first_part);
 
@@ -146,7 +174,7 @@ _gpgrt_vfnameconcat (int want_abs, const char *first_part, va_list arg_ptr)
         p = stpcpy (stpcpy (p, "/"), argv[argc]);
     }
 
-  if (want_abs)
+  if ((flags & GPGRT_FCONCAT_ABS))
     {
 #ifdef HAVE_W32_SYSTEM
       p = strchr (name, ':');
@@ -163,18 +191,18 @@ _gpgrt_vfnameconcat (int want_abs, const char *first_part, va_list arg_ptr)
 #endif
           )
         {
-          home = _gpgrt_getcwd ();
-          if (!home)
+          char *mycwd = _gpgrt_getcwd ();
+          if (!mycwd)
             {
               xfree (name);
               return NULL;
             }
 
-          n = strlen (home) + 1 + strlen (name) + 1;
+          n = strlen (mycwd) + 1 + strlen (name) + 1;
           home_buffer = xtrymalloc (n);
           if (!home_buffer)
             {
-              xfree (home);
+              xfree (mycwd);
               xfree (name);
               return NULL;
             }
@@ -188,12 +216,12 @@ _gpgrt_vfnameconcat (int want_abs, const char *first_part, va_list arg_ptr)
             }
 
           /* Avoid a leading double slash if the cwd is "/".  */
-          if (home[0] == '/' && !home[1])
+          if (mycwd[0] == '/' && !mycwd[1])
             strcpy (stpcpy (p, "/"), name);
           else
-            strcpy (stpcpy (stpcpy (p, home), "/"), name);
+            strcpy (stpcpy (stpcpy (p, mycwd), "/"), name);
 
-          xfree (home);
+          xfree (mycwd);
           xfree (name);
           name = home_buffer;
           /* Let's do a simple compression to catch the common case of
@@ -202,7 +230,44 @@ _gpgrt_vfnameconcat (int want_abs, const char *first_part, va_list arg_ptr)
           if (n > 2 && name[n-2] == '/' && name[n-1] == '.')
             name[n-2] = 0;
         }
-    }
+#ifdef HAVE_W32_SYSTEM
+      else if (name[0] && name[1] != ':'
+               && !(name[0] == '/' && name[1] == '/')
+               && !(name[0] == '\\' && name[1] == '\\'))
+        {
+          /* Absolute name but no drive letter but also no UNC.  */
+          char *mycwd = _gpgrt_getcwd ();
+          if (!mycwd)
+            {
+              xfree (name);
+              return NULL;
+            }
+          if (mycwd[0] && mycwd[1] == ':')
+            {
+              home_buffer = xtrymalloc (2 + strlen (name) + 1);
+              if (!home_buffer)
+                {
+                  xfree (mycwd);
+                  xfree (name);
+                  return NULL;
+                }
+              home_buffer[0] = mycwd[0];
+              home_buffer[1] = mycwd[1];
+              strcpy (home_buffer + 2, name);
+              xfree (name);
+              name = home_buffer;
+            }
+          xfree (mycwd);
+        }
+#endif /* W32 */
+
+#ifdef HAVE_W32_SYSTEM
+      /* Fix "c://foo" to c:/foo".  */
+      n = strlen (name);
+      if (name[0] && name[1] == ':' && name[2] == '/' && name[3] == '/')
+        memmove (name+3, name+4, strlen (name+4)+1);
+#endif
+    } /* end GPGRT_FCONCAT_ABS */
 
 #ifdef HAVE_W32_SYSTEM
   for (p=name; *p; p++)
@@ -224,7 +289,7 @@ _gpgrt_fnameconcat (const char *first_part, ... )
   char *result;
 
   va_start (arg_ptr, first_part);
-  result = _gpgrt_vfnameconcat (0, first_part, arg_ptr);
+  result = _gpgrt_vfnameconcat (GPGRT_FCONCAT_TILDE, first_part, arg_ptr);
   va_end (arg_ptr);
   return result;
 }
@@ -241,7 +306,8 @@ _gpgrt_absfnameconcat (const char *first_part, ... )
   char *result;
 
   va_start (arg_ptr, first_part);
-  result = _gpgrt_vfnameconcat (1, first_part, arg_ptr);
+  result = _gpgrt_vfnameconcat (GPGRT_FCONCAT_TILDE| GPGRT_FCONCAT_ABS,
+                                first_part, arg_ptr);
   va_end (arg_ptr);
   return result;
 }

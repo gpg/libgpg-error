@@ -1583,6 +1583,14 @@ int gpgrt_cmp_version (const char *a, const char *b, int level);
 char *gpgrt_fnameconcat (const char *first, ...) GPGRT_ATTR_SENTINEL(0);
 char *gpgrt_absfnameconcat (const char *first, ...) GPGRT_ATTR_SENTINEL(0);
 
+/* Same as gpgrt_fnameconcat but using flags for extensibility.  */
+#define GPGRT_FCONCAT_ABS     1  /* Expand to an absolute name.  */
+#define GPGRT_FCONCAT_TILDE   2  /* Enable tilde expansion.      */
+#define GPGRT_FCONCAT_SYSCONF 4  /* Prepend the sysconfdir.      */
+char *gpgrt_fconcat (unsigned int flags, const char *first,
+                     ...) GPGRT_ATTR_SENTINEL(0);
+
+
 
 #ifdef __cplusplus
 }

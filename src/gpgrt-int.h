@@ -840,7 +840,7 @@ char *_gpgrt_getpwdir (const char *name);
 char *_gpgrt_getusername (void);
 
 /* Expand and concat file name parts.  */
-char *_gpgrt_vfnameconcat (int want_abs, const char *first_part,
+char *_gpgrt_vfnameconcat (unsigned int flags, const char *first_part,
                            va_list arg_ptr);
 char *_gpgrt_fnameconcat (const char *first_part,
                           ... ) GPGRT_ATTR_SENTINEL(0);
@@ -869,6 +869,9 @@ enum gpgrt_windows_feature
     GPGRT_WINDOWS_UNDER_WINE
   };
 int _gpgrt_windows_feature (int);
+
+const char *_gpgrt_w32_get_sysconfdir (void);
+const char *_gpgrt_w32_get_profile (void);
 
 #endif /*HAVE_W32_SYSTEM*/
 

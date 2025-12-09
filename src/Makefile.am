@@ -129,7 +129,7 @@ TESTS = gpg-error-config-test.sh
 #
 if HAVE_W32_SYSTEM
 arch_sources = w32-gettext.c w32-lock.c w32-lock-obj.h w32-thread.c \
-	       w32-iconv.c w32-estream.c w32-reg.c spawn-w32.c
+	       w32-iconv.c w32-estream.c w32-reg.c spawn-w32.c w32-utils.c
 RCCOMPILE = $(RC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
             $(libgpg_error_la_CPPFLAGS) $(AM_CPPFLAGS) $(CPPFLAGS)
 LTRCCOMPILE = $(LIBTOOL) --mode=compile --tag=RC $(RCCOMPILE)

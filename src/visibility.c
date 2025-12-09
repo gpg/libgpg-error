@@ -1326,7 +1326,7 @@ gpgrt_fnameconcat (const char *first, ... )
   char *result;
 
   va_start (arg_ptr, first);
-  result = _gpgrt_vfnameconcat (0, first, arg_ptr);
+  result = _gpgrt_vfnameconcat (GPGRT_FCONCAT_TILDE, first, arg_ptr);
   va_end (arg_ptr);
   return result;
 }
@@ -1338,7 +1338,20 @@ gpgrt_absfnameconcat (const char *first, ... )
   char *result;
 
   va_start (arg_ptr, first);
-  result = _gpgrt_vfnameconcat (1, first, arg_ptr);
+  result = _gpgrt_vfnameconcat (GPGRT_FCONCAT_TILDE|GPGRT_FCONCAT_ABS,
+                                first, arg_ptr);
+  va_end (arg_ptr);
+  return result;
+}
+
+char *
+gpgrt_fconcat (unsigned int flags, const char *first, ... )
+{
+  va_list arg_ptr;
+  char *result;
+
+  va_start (arg_ptr, first);
+  result = _gpgrt_vfnameconcat (flags, first, arg_ptr);
   va_end (arg_ptr);
   return result;
 }

@@ -54,9 +54,10 @@ void _gpgrt_w32_utf8_for_new_threads (void);
 struct tls_space_s *get_tls (void);
 
 
-/* Explicit constructor for w32-gettext.c  */
+/* Explicit constructors for w32-gettext.c and w32-utils.c */
 #ifndef DLL_EXPORT
 void _gpg_w32__init_gettext_module (void);
+void _gpgrt_w32__init_utils (void);
 #endif
 
 #endif /*HAVE_W32_SYSTEM*/

@@ -207,6 +207,7 @@ GPG_ERROR_1.0 {
 
     gpgrt_fnameconcat;
     gpgrt_absfnameconcat;
+    gpgrt_fconcat;
 
     gpgrt_access;
 

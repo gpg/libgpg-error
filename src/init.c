@@ -143,6 +143,7 @@ _gpg_err_init (void)
           _gpgrt_abort ();
         }
       _gpg_w32__init_gettext_module ();
+      _gpgrt_w32__init_utils ();
       real_init ();
     }
 # endif /*!DLL_EXPORT*/
@@ -728,8 +729,9 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
       if (tls_index == TLS_OUT_OF_INDEXES)
         return FALSE;
 #ifndef _GPG_ERR_HAVE_CONSTRUCTOR
-      /* If we have not constructors (e.g. MSC) we call it here.  */
+      /* If we have no constructors (e.g. MSC) we call it here.  */
       _gpg_w32__init_gettext_module ();
+      _gpgrt_w32__init_utils ();
 #endif
       /* fallthru.  */
     case DLL_THREAD_ATTACH:
