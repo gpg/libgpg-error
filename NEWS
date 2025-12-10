@@ -1,10 +1,20 @@
-Noteworthy changes in version 1.57 (unreleased) [C40/A40/R_]
+Noteworthy changes in version 1.57 (2025-12-10) [C41/A41/R0]
 -----------------------------------------------
 
- * New function gpgrt_fconcat and improved the existing
-   gpgrt_fnameconcat and gpgrt_absfnameconcat.  [T7894]
+ * The sysconfdir as provided by the configure run is now used for the
+   default global config files of the argparser.  [T7894]
 
- * Interface changes relative to the 1.55 release:
+ * New function gpgrt_fconcat and improved the existing
+   gpgrt_fnameconcat and gpgrt_absfnameconcat.  [T7894,rE34dba88757]
+
+ * On Windows use the UI language instead of the locale for
+   translations.  [T7874]
+
+ * Some minor build improvements for zOS.
+
+ * Updated the Swedish and Portuguese translations.
+
+ * Interface changes relative to the 1.56 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  gpgrt_fconcat                       NEW.
  GPGRT_FCONCAT_ABS                   NEW.
