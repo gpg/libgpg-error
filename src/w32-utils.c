@@ -159,6 +159,6 @@ w32_utils_init (void)
 void
 _gpgrt_w32__init_utils (void)
 {
-  w32_utils_init ().
+  w32_utils_init ();
 }
 #endif
