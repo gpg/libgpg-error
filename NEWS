@@ -1,5 +1,7 @@
-Noteworthy changes in version 1.58 (unrelease) [C41/A41/R_]
+Noteworthy changes in version 1.58 (2025-12-12) [C41/A41/R1]
 -----------------------------------------------
+
+ * Fix building of static libraries on Windows.  [rE421e101cf9]
 
  Release-info: https://dev.gnupg.org/T7970
 
