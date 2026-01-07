@@ -1159,6 +1159,9 @@ _gpgrt_process_wait (gpgrt_process_t process, int hang)
 gpg_err_code_t
 _gpgrt_process_terminate (gpgrt_process_t process)
 {
+  if (process->hProcess == INVALID_HANDLE_VALUE)
+    return 0;
+
   return process_kill (process, 1);
 }
 
@@ -1183,7 +1186,8 @@ _gpgrt_process_release (gpgrt_process_t process)
   if (process->hd_err != INVALID_HANDLE_VALUE)
     CloseHandle (process->hd_err);
 
-  CloseHandle (process->hProcess);
+  if (process->hProcess != INVALID_HANDLE_VALUE)
+    CloseHandle (process->hProcess);
   xfree (process);
 }
 
