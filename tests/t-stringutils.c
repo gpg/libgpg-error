@@ -64,12 +64,17 @@ mygethome (void)
   static char *home_buffer;
 
   if (!home_buffer)
+#ifdef HAVE_W32_SYSTEM
+    {
+      home_buffer = gpgrt_fnameconcat ("~", NULL);
+    }
+#else
     {
       char *home = getenv("HOME");
 
       if(home)
         home_buffer = xstrdup (home);
-#if defined(HAVE_GETPWUID) && defined(HAVE_PWD_H)
+# if defined(HAVE_GETPWUID) && defined(HAVE_PWD_H)
       else
         {
           struct passwd *pwd;
@@ -78,8 +83,9 @@ mygethome (void)
           if (pwd)
             home_buffer = xstrdup (pwd->pw_dir);
         }
-#endif
+# endif
     }
+#endif
   return home_buffer;
 }
 
