@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2025-11-15 18:57+0100\n"
+"PO-Revision-Date: 2026-01-10 20:52+0100\n"
 "Last-Translator: Daniel Nylander <github@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -131,7 +131,7 @@ msgid "Invalid cipher algorithm"
 msgstr "Ogiltig chifferalgoritm"
 
 msgid "Cannot open keyring"
-msgstr "Nyckelring är öppnad"
+msgstr "Kan inte öppna nyckelring"
 
 msgid "Invalid packet"
 msgstr "Ogiltigt paket"
@@ -191,7 +191,7 @@ msgid "Invalid signature class"
 msgstr "Ogiltig signaturklass"
 
 msgid "Resources exhausted"
-msgstr "Resurser överansträngda"
+msgstr "Resurser uttömda"
 
 msgid "Invalid keyring"
 msgstr "Ogiltig nyckelring"
@@ -486,7 +486,7 @@ msgid "PIN blocked"
 msgstr "PIN-kod blockerad"
 
 msgid "Conditions of use not satisfied"
-msgstr "Användningsvillkoren tillfredsställs inte"
+msgstr "Användningsvillkoren uppfylls inte"
 
 msgid "PINs are not synced"
 msgstr "PIN-koderna är inte synkroniserade"
@@ -669,10 +669,10 @@ msgid "No crypto context"
 msgstr "Ingen kryptokontext"
 
 msgid "Wrong crypto context"
-msgstr "Felaktig kryptokontext"
+msgstr "Fel kryptokontext"
 
 msgid "Bad crypto context"
-msgstr "Felaktig kryptokontext"
+msgstr "Fel kryptokontext"
 
 msgid "Conflict in the crypto context"
 msgstr "Konflikt i kryptokontext"
@@ -822,7 +822,7 @@ msgid "Bad client hello message in handshake"
 msgstr "Felaktigt hälsningsmeddelande från klient i handskakning"
 
 msgid "Bad server hello message in handshake"
-msgstr "Felaktigt serverhälsningsmeddelande i handskakning"
+msgstr "Felaktigt hälsningsmeddelande från server i handskakning"
 
 msgid "Bad server hello done message in handshake"
 msgstr "Meddelande om felaktig serverhälsning i handskakning"
@@ -1050,7 +1050,7 @@ msgid "Private LDAP error code"
 msgstr "Privat LDAP-felkod"
 
 msgid "Other general LDAP error"
-msgstr "Andra allmänna LDAP-fel"
+msgstr "Annat allmänt LDAP-fel"
 
 msgid "LDAP connecting failed (X)"
 msgstr "LDAP-anslutningen misslyckades (X)"
@@ -1176,7 +1176,7 @@ msgid "Invalid DN syntax in LDAP"
 msgstr "Ogiltig DN-syntax i LDAP"
 
 msgid "LDAP entry is a leaf"
-msgstr "LDAP-posten är ett blad"
+msgstr "LDAP-posten är ett löv"
 
 msgid "LDAP alias dereferencing problem"
 msgstr "Problem med avreferering av LDAP-alias"
@@ -1263,7 +1263,7 @@ msgid "Cannot cancel LDAP"
 msgstr "Kan inte avbryta LDAP"
 
 msgid "LDAP assertion failed"
-msgstr "LDAP-påstående misslyckades"
+msgstr "LDAP-försäkran misslyckades"
 
 msgid "Proxied authorization denied by LDAP"
 msgstr "Auktorisering via proxy nekad av LDAP"
@@ -1506,7 +1506,7 @@ msgstr "Observera: ignorerar flaggan \"--%s\" på grund av global konfiguration\
 
 msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
 msgstr ""
-"Rapportera buggar till <https://bugs.gnupg.org>.\n"
+"Rapportera fel till <https://bugs.gnupg.org>.\n"
 "Rapportera översättningsfel till <tp-sv@listor.tp-sv.se>.\n"
 
 #, c-format
