@@ -15,7 +15,7 @@
 # configure it for the respective package.  It is maintained as part of
 # GnuPG and source copied by other packages.
 #
-# Version: 2025-09-23
+# Version: 2026-02-03
 
 configure_ac="configure.ac"
 
@@ -214,6 +214,7 @@ fi
 # Source our configuration
 if [ -f "${tsdir}/autogen.rc" ]; then
     . "${tsdir}/autogen.rc"
+    [ "$autogen_use_force" = yes ] && FORCE=" --force"
 fi
 
 # Source optional site specific configuration

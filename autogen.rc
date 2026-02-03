@@ -2,6 +2,7 @@
 
 display_name="Libgpg-error"
 patches_to="gnupg-devel@gnupg.org"
+#autogen_use_force=no
 
 case "$myhost:$myhostsub" in
   w32:ce)
