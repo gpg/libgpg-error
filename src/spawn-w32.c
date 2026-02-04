@@ -386,15 +386,19 @@ prepare_env_block (char **r_env, const char *const *envchange)
             /* not found */;
           else
             {
+              int off0 = off;
+
               env_block_len -= (envlen[i] + 1) * sizeof (wchar_t);
               env_num--;
+              off += envlen[i] + 1;
               for (; i < env_num; i++)
                 {
-                  int off0 = off;
+                  size_t len = (envlen[i] = envlen[i+1]) + 1;
 
-                  off += envlen[i] + 1;
                   memmove (&env_block[off0], &env_block[off],
-                           ((envlen[i] = envlen[i+1]) + 1) * sizeof (wchar_t));
+                           len * sizeof (wchar_t));
+                  off0 += len;
+                  off += len;
                 }
               env_block[(env_block_len / sizeof (wchar_t)) - 1] = L'\0';
             }
