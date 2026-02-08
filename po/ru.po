@@ -1,13 +1,12 @@
 # Russian translation for libgpg-error.
-# Copyright (C) 2023 Free Software Foundation, Inc.
 # This file is distributed under the same license as the original package.
-# Ineiev <ineiev@gnu.org>, 2014, 2015, 2018, 2019, 2020, 2021, 2023
+# Ineiev <ineiev@gnu.org>, 2014, 2015, 2018, 2019, 2020, 2021, 2023, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2023-04-01 10:43+0100\n"
+"PO-Revision-Date: 2026-02-08 10:43+0100\n"
 "Last-Translator: Ineiev <ineiev@gnu.org>\n"
 "Language-Team: Russian <gnupg-ru@gnupg.org>\n"
 "Language: ru\n"
@@ -64,13 +63,13 @@ msgid "Assuan"
 msgstr "Assuan"
 
 msgid "TPM2d"
-msgstr ""
+msgstr "TPM2d"
 
 msgid "TLS"
 msgstr "TLS"
 
 msgid "TKD"
-msgstr ""
+msgstr "TKD"
 
 msgid "Any source"
 msgstr "Любой источник"
@@ -732,10 +731,8 @@ msgstr "Нечетные шестнадцатеричные числа в S-вы
 msgid "Bad octal character in S-expression"
 msgstr "Плохой восьмеричный символ в S-выражении"
 
-#, fuzzy
-#| msgid "Unexpected tag"
 msgid "Unexpected packet"
-msgstr "Неожиданный тег"
+msgstr "Неожиданный пакет"
 
 msgid "All subkeys are expired or revoked"
 msgstr "Все подключи просрочены или отозваны"
@@ -971,46 +968,32 @@ msgstr "Повторите попытку позднее"
 msgid "Wrong name"
 msgstr "Недопустимое имя"
 
-#, fuzzy
-#| msgid "Not enabled"
 msgid "Not authenticated"
-msgstr "Отключено"
+msgstr "Не проведено удостоверение"
 
-#, fuzzy
-#| msgid "Inappropriate LDAP authentication"
 msgid "Bad authentication"
-msgstr "Неподходящее удостоверение LDAP"
+msgstr "Неподходящее удостоверение"
 
-#, fuzzy
-#| msgid "No agent running"
 msgid "No Keybox daemon running"
-msgstr "Агент не работает"
+msgstr "Демон щита ключей не работает"
 
-#, fuzzy
-#| msgid "SmartCard daemon error"
 msgid "Keybox daemon error"
 msgstr "Ошибка демона криптографических карт"
 
 msgid "Service is not running"
-msgstr ""
+msgstr "Служба не работает"
 
-#, fuzzy
-#| msgid "Keyserver error"
 msgid "Service error"
-msgstr "Ошибка сервера ключей"
+msgstr "Ошибка службы"
 
-#, fuzzy
-#| msgid "Bad PIN"
 msgid "Bad PUK"
-msgstr "Плохой пароль"
+msgstr "Плохой PUK"
 
 msgid "No reset code"
-msgstr ""
+msgstr "Нет кода сброса"
 
-#, fuzzy
-#| msgid "Bad secret key"
 msgid "Bad reset code"
-msgstr "Плохой секретный ключ"
+msgstr "Плохой код сброса"
 
 msgid "System bug detected"
 msgstr "Обнаружена ошибка в системе"
@@ -1330,106 +1313,99 @@ msgstr "Пользовательский код ошибки 15"
 msgid "User defined error code 16"
 msgstr "Пользовательский код ошибки 16"
 
-#, fuzzy
-#| msgid "LDAP success"
 msgid "SQL success"
-msgstr "Успешное выполнение LDAP"
+msgstr "Успешное выполнение SQL"
 
-#, fuzzy
-#| msgid "Syntax error"
 msgid "SQL error"
-msgstr "Синтаксическая ошибка"
+msgstr "Ошибка SQL"
 
 msgid "Internal logic error in SQL library"
-msgstr ""
+msgstr "Ошибка внутренней логики в библиотеке SQL"
 
 msgid "Access permission denied (SQL)"
-msgstr ""
+msgstr "Отказ в доступе (SQL)"
 
 msgid "SQL abort was requested"
-msgstr ""
+msgstr "Запрошена отмена операции SQL"
 
 msgid "SQL database file is locked"
-msgstr ""
+msgstr "База данных SQL заблокирована"
 
 msgid "An SQL table in the database is locked"
-msgstr ""
+msgstr "Таблица в базе данных SQL заблокирована"
 
 msgid "SQL library ran out of core"
-msgstr ""
+msgstr "Библиотека SQL исчерпала ресурсы"
 
 msgid "Attempt to write a readonly SQL database"
-msgstr ""
+msgstr "Попытка записи в базу данных SQL, доступную только для чтения"
 
 msgid "SQL operation terminated by interrupt"
-msgstr ""
+msgstr "Операция SQL завершена прерыванием"
 
 msgid "I/O error during SQL operation"
-msgstr ""
+msgstr "Ошибка ввода-вывода при операции SQL"
 
 msgid "SQL database disk image is malformed"
-msgstr ""
+msgstr "Образ диска базы данных SQL недоброкачествен"
 
 msgid "Unknown opcode in SQL file control"
-msgstr ""
+msgstr "Неизвестный код операции в файловом управлении SQL"
 
 msgid "Insertion failed because SQL database is full"
-msgstr ""
+msgstr "Сбой вставки из-за переполнения базы данных SQL"
 
 msgid "Unable to open the SQL database file"
-msgstr ""
+msgstr "Не могу открыть файл базы данных SQL"
 
-#, fuzzy
-#| msgid "LDAP protocol error"
 msgid "SQL database lock protocol error"
-msgstr "Ошибка протокола LDAP"
+msgstr "Ошибка протокола захвата доступа к базе данных SQL"
 
 msgid "(internal SQL code: empty)"
-msgstr ""
+msgstr "(внутренний код SQL: пусто)"
 
 msgid "SQL database schema changed"
-msgstr ""
+msgstr "Изменилась схема базы данных SQL"
 
 msgid "String or blob exceeds size limit (SQL)"
-msgstr ""
+msgstr "Строка или фрагмент превосходит предел размера (SQL)"
 
 msgid "SQL abort due to constraint violation"
-msgstr ""
+msgstr "Отмена SQL из-за нарушения ограничений"
 
 msgid "Data type mismatch (SQL)"
-msgstr ""
+msgstr "Несовпадение типов (SQL)"
 
 msgid "SQL library used incorrectly"
-msgstr ""
+msgstr "Неверное применение библиотеки SQL"
 
 msgid "SQL library uses unsupported OS features"
 msgstr ""
+"Операционная система не поддерживает функции, применяемые в библиотеке SQL"
 
-#, fuzzy
-#| msgid "Proxied authorization denied by LDAP"
 msgid "Authorization denied (SQL)"
-msgstr "LDAP отказал в опосредованной авторизации"
+msgstr "Отказ в авторизации (SQL)"
 
 msgid "(unused SQL code: format)"
-msgstr ""
+msgstr "(неиспользованный код SQL: format)"
 
 msgid "SQL bind parameter out of range"
-msgstr ""
+msgstr "Параметр связки SQL вне пределов"
 
 msgid "File opened that is not an SQL database file"
-msgstr ""
+msgstr "Открытый файл не является файлом базы данных SQL"
 
 msgid "Notifications from SQL logger"
-msgstr ""
+msgstr "Уведомления из журналирования SQL"
 
 msgid "Warnings from SQL logger"
-msgstr ""
+msgstr "Предупреждения из журналирования SQL"
 
 msgid "SQL has another row ready"
-msgstr ""
+msgstr "В SQL готов другой ряд"
 
 msgid "SQL has finished executing"
-msgstr ""
+msgstr "Выполнение SQL завершено"
 
 msgid "System error w/o errno"
 msgstr "Системная ошибка без номера"
