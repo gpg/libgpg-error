@@ -3359,6 +3359,9 @@ _LT_TAGDECL([], [LD], [1], [The linker used to build libraries])
 # Old names:
 AU_ALIAS([AM_PROG_LD], [LT_PATH_LD])
 AU_ALIAS([AC_PROG_LD], [LT_PATH_LD])
+dnl Since lib-ld.m4 does mostly same things with AC_LIB_PROG_LD,
+dnl we define AC_LIB_PROG_LD here to avoid duplication.
+AC_DEFUN([AC_LIB_PROG_LD], [LT_PATH_LD])
 dnl aclocal-1.4 backwards compatibility:
 dnl AC_DEFUN([AM_PROG_LD], [])
 dnl AC_DEFUN([AC_PROG_LD], [])
