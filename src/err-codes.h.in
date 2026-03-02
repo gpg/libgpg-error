@@ -246,8 +246,8 @@
 211	GPG_ERR_SEXP_BAD_HEX_CHAR	Bad hexadecimal character in S-expression
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
-
-# 214 to 216 are free to be used.
+214	GPG_ERR_PUBKEY_NON_COMPLIANT	Non-compliant public key algorithm
+215	GPG_ERR_CIPHER_NON_COMPLIANT	Non-compliant cipher algorithm
 216	GPG_ERR_UNEXPECTED_PACKET	Unexpected packet
 217	GPG_ERR_SUBKEYS_EXP_OR_REV	All subkeys are expired or revoked
 218	GPG_ERR_DB_CORRUPTED		Database is corrupted
@@ -343,6 +343,8 @@
 320	GPG_ERR_BAD_PUK			Bad PUK
 321	GPG_ERR_NO_RESET_CODE		No reset code
 322	GPG_ERR_BAD_RESET_CODE		Bad reset code
+323	GPG_ERR_DIGEST_NON_COMPLIANT	Non-compliant digest algorithm
+
 # This range is free for use.
 
 666	GPG_ERR_SYSTEM_BUG		System bug detected

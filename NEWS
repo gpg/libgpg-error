@@ -1,3 +1,19 @@
+Noteworthy changes in version 1.60 (unreleased) [C41/A41/R_]
+-----------------------------------------------
+
+ * New error codes.  [T6644]
+
+
+
+ * Interface changes relative to the 1.57 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_PUBKEY_NON_COMPLIANT        NEW.
+ GPG_ERR_CIPHER_NON_COMPLIANT        NEW.
+ GPG_ERR_DIGEST_NON_COMPLIANT        NEW.
+
+ Release-info: https://dev.gnupg.org/T8112
+
+
 Noteworthy changes in version 1.59 (2026-02-18) [C41/A41/R2]
 -----------------------------------------------
 

@@ -796,6 +796,16 @@ GPG_ERR_SEXP_ODD_HEX_NUMBERS  Odd hexadecimal numbers in S-expression
 
 GPG_ERR_SEXP_BAD_OCT_CHAR     Bad octal character in S-expression
 
+GPG_ERR_PUBKEY_NON_COMPLIANT  Non-compliant public key algorithm
+
+    GnuPG: - The public key algorithms is not allowed by the current
+             compliance mode.
+
+GPG_ERR_CIPHER_NON_COMPLIANT  Non-compliant cipher algorithm
+
+    GnuPG: - The symmetric encryption algorithm is not allowed by the
+             current compliance mode.
+
 GPG_ERR_UNEXPECTED_PACKET     Unexpected packet
 
     GnuPG: - An OpenPGP packet was not expected at this place of the
@@ -1116,6 +1126,11 @@ GPG_ERR_NO_RESET_CODE           No reset code
 GPG_ERR_BAD_RESET_CODE           No reset code
 
     A wrong reset code was used.
+
+GPG_ERR_DIGEST_NON_COMPLIANT	Non-compliant digest algorithm
+
+    GnuPG: - The digest (hash) algorithm is not allowed by the
+             current compliance mode.
 
 GPG_ERR_SYSTEM_BUG              System bug detected
 
