@@ -142,24 +142,6 @@ case "${host}" in
        ;;
 esac
 
-# Set some variables for build platform helpers.
-case "$build_os" in
-    *openedition*)
-        PKG_CHECK_MODULES([ZOSLIB], [zoslib],
-                          [EXTRA_LIBS_FOR_BUILD="$ZOSLIB_LIBS"],
-                          [AC_MSG_WARN([[
-***
-*** zoslib not found.  Please ensure zoslib.pc is in PKG_CONFIG_PATH.
-*** (If you are not using zOS please ignore this warning)
-***]])])
-         ;;
-    *)
-        EXTRA_LIBS_FOR_BUILD=""
-	;;
-esac
-AC_SUBST(EXTRA_LIBS_FOR_BUILD)
-
-
 if test "$have_w32_system" != yes; then
   gl_THREADLIB_EARLY
 fi
