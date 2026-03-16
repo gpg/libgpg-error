@@ -548,6 +548,7 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
   HANDLE hd_in[2];
   HANDLE hd_out[2];
   HANDLE hd_err[2];
+  HANDLE hd[32];
   BOOL ask_inherit = FALSE;
   struct gpgrt_spawn_actions act_default;
   char *env = NULL;
@@ -710,7 +711,6 @@ _gpgrt_process_spawn (const char *pgmname, const char *argv[],
     hd_err[1] = w32_open_null (1, enable_null_device);
 
   {
-    HANDLE hd[32];
     HANDLE *hd_p = act->inherit_hds;
     int j = 0;
 
