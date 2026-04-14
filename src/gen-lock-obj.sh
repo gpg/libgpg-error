@@ -73,7 +73,7 @@ pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 EOF
 
 if $CC -c conftest.$ac_ext; then :
-  ac_mtx_size=$($OBJDUMP -j .bss -t conftest.$ac_objext \
+  ac_mtx_size=$($OBJDUMP -t conftest.$ac_objext \
          | $AWK $AWK_OPTION '
 /mtx$/ { mtx_size = int("0x" $5) }
 END { print mtx_size }')
