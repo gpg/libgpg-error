@@ -1,9 +1,11 @@
-Noteworthy changes in version 1.60 (unreleased) [C41/A41/R_]
+Noteworthy changes in version 1.60 (2026-04-24) [C42/A42/R0]
 -----------------------------------------------
 
  * New error codes.  [T6644]
 
+ * Fix a use-after-scope of a Windows handle array.  [rE7957a1f720]
 
+ * Fix cross compiling for wasm32-unknown-emscripten. [rE98660a4816]
 
  * Interface changes relative to the 1.57 release:
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
