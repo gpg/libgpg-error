@@ -739,6 +739,16 @@ msgid "Bad octal character in S-expression"
 msgstr "S-表示式中有不良的八進制字符"
 
 #, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "無效的公鑰演算法"
+
+#, fuzzy
+#| msgid "No cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "沒有密碼演算法"
+
+#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected packet"
 msgstr "未預期的標籤"
@@ -1007,6 +1017,11 @@ msgstr ""
 #| msgid "Bad secret key"
 msgid "Bad reset code"
 msgstr "不良的私鑰"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "無效的摘要演算法"
 
 msgid "System bug detected"
 msgstr "系統錯誤"

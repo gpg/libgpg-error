@@ -733,6 +733,16 @@ msgid "Bad octal character in S-expression"
 msgstr "Błędny znak ósemkowy w S-wyrażeniu"
 
 #, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Niepoprawny algorytm klucza publicznego"
+
+#, fuzzy
+#| msgid "No cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Brak algorytmu szyfru"
+
+#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected packet"
 msgstr "Nieoczekiwany znacznik"
@@ -997,6 +1007,11 @@ msgstr "Brak kodu resetującego"
 
 msgid "Bad reset code"
 msgstr "Błędny kod resetujący"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Niepoprawny algorytm skrótu"
 
 msgid "System bug detected"
 msgstr "Wykryto błąd systemu"

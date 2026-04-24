@@ -804,6 +804,16 @@ msgstr "Números hexadecimais estranhos na S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Caractere octal inválido na S-expression"
 
+#, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Algoritmo de chave pública inválido"
+
+#, fuzzy
+#| msgid "No cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Sem algoritmo de cifra"
+
 msgid "Unexpected packet"
 msgstr "Pacote inesperado"
 
@@ -1067,6 +1077,11 @@ msgstr "Sem código de reset"
 
 msgid "Bad reset code"
 msgstr "Código de reset inválido"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Algoritmo de digest inválido"
 
 msgid "System bug detected"
 msgstr "Bug de sistema detetado"

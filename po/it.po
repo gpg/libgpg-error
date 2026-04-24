@@ -734,6 +734,16 @@ msgid "Bad octal character in S-expression"
 msgstr "Carattere ottale errato in S-expression"
 
 #, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Algoritmo a chiave pubblica non valido"
+
+#, fuzzy
+#| msgid "No cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Nessun algoritmo di cifratura"
+
+#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected packet"
 msgstr "Etichetta inaspettata"
@@ -1036,6 +1046,11 @@ msgstr ""
 #| msgid "Bad secret key"
 msgid "Bad reset code"
 msgstr "Chiave segreta errata"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Algoritmo di digest non valido"
 
 msgid "System bug detected"
 msgstr ""

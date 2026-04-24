@@ -735,6 +735,16 @@ msgid "Bad octal character in S-expression"
 msgstr "Помилковий вісімковий символ у S-виразі"
 
 #, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Некоректний алгоритм відкритого ключа"
+
+#, fuzzy
+#| msgid "No cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Немає алгоритму шифрування"
+
+#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected packet"
 msgstr "Неочікуваний теґ"
@@ -1012,6 +1022,11 @@ msgstr ""
 #| msgid "Bad secret key"
 msgid "Bad reset code"
 msgstr "Помилковий закритий ключ"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Некоректний алгоритм контрольної суми"
 
 msgid "System bug detected"
 msgstr "Виявлено ваду у системі"

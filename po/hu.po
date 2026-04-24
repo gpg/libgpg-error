@@ -769,6 +769,16 @@ msgid "Bad octal character in S-expression"
 msgstr "Rossz oktadecimális karakter az S-kifejezésben"
 
 #, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Érvénytelen nyilvános kulcs algoritmus"
+
+#, fuzzy
+#| msgid "Invalid cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Érvénytelen titkosító algoritmus"
+
+#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected packet"
 msgstr "Váratlan címke"
@@ -1097,6 +1107,11 @@ msgstr ""
 #| msgid "Bad secret key"
 msgid "Bad reset code"
 msgstr "Rossz titkos kulcs"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Érvénytelen kivonat algoritmus"
 
 msgid "System bug detected"
 msgstr ""

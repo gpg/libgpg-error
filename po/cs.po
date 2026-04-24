@@ -743,6 +743,16 @@ msgid "Bad octal character in S-expression"
 msgstr "Chybný osmičkový znak v S-výrazu"
 
 #, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Neplatný algoritmus veřejného klíče"
+
+#, fuzzy
+#| msgid "No cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Žádný šifrovací algoritmus"
+
+#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected packet"
 msgstr "Neočekávaná značka"
@@ -1011,6 +1021,11 @@ msgstr ""
 #| msgid "Bad secret key"
 msgid "Bad reset code"
 msgstr "Chybný tajný klíč"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Neplatný hashovací algoritmus"
 
 msgid "System bug detected"
 msgstr "Objevena chyba systému"

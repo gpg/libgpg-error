@@ -731,6 +731,16 @@ msgstr "Нечетные шестнадцатеричные числа в S-вы
 msgid "Bad octal character in S-expression"
 msgstr "Плохой восьмеричный символ в S-выражении"
 
+#, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Недопустимый алгоритм шифрования с открытым ключом"
+
+#, fuzzy
+#| msgid "No cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Нет алгоритма симметричного шифрования"
+
 msgid "Unexpected packet"
 msgstr "Неожиданный пакет"
 
@@ -994,6 +1004,11 @@ msgstr "Нет кода сброса"
 
 msgid "Bad reset code"
 msgstr "Плохой код сброса"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Недопустимая хеш-функция"
 
 msgid "System bug detected"
 msgstr "Обнаружена ошибка в системе"

@@ -771,6 +771,16 @@ msgid "Bad octal character in S-expression"
 msgstr "Malĝusta okuma signo en S-esprimo"
 
 #, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Malvalida publika ŝlosila algoritmo"
+
+#, fuzzy
+#| msgid "Invalid cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Malvalida ĉifra algoritmo"
+
+#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected packet"
 msgstr "Neatentida marko"
@@ -1099,6 +1109,11 @@ msgstr ""
 #| msgid "Bad secret key"
 msgid "Bad reset code"
 msgstr "Malĝusta sekreta ŝlosilo"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Malvalida resuma algoritmo"
 
 msgid "System bug detected"
 msgstr ""

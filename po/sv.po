@@ -733,6 +733,16 @@ msgstr "Udda hexadecimala tal i S-uttryck"
 msgid "Bad octal character in S-expression"
 msgstr "Felaktigt oktalt tecken i S-uttryck"
 
+#, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Ogiltig publik nyckel-algoritm"
+
+#, fuzzy
+#| msgid "No cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Ingen chifferalgoritm"
+
 msgid "Unexpected packet"
 msgstr "Oväntat paket"
 
@@ -996,6 +1006,11 @@ msgstr "Ingen återställningskod"
 
 msgid "Bad reset code"
 msgstr "Felaktig återställningskod"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Ogiltig sammandragsalgoritm"
 
 msgid "System bug detected"
 msgstr "Systemfel upptäcktes"

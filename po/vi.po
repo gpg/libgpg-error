@@ -761,6 +761,16 @@ msgid "Bad octal character in S-expression"
 msgstr "Ký tự bát phân sai trong biểu thức S"
 
 #, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Thuật toán khoá công không hợp lệ"
+
+#, fuzzy
+#| msgid "Invalid cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Thuật toán mật mã không hợp lệ"
+
+#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected packet"
 msgstr "Thẻ (tag) bất thường"
@@ -1086,6 +1096,11 @@ msgstr ""
 #| msgid "Bad secret key"
 msgid "Bad reset code"
 msgstr "Khoá bí mật sai"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Thuật toán bộ tóm tắt (digest) không hợp lệ"
 
 msgid "System bug detected"
 msgstr ""

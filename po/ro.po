@@ -772,6 +772,16 @@ msgid "Bad octal character in S-expression"
 msgstr "Caracter octal incorect în expresia-S"
 
 #, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Algoritm cu cheie publică invalid"
+
+#, fuzzy
+#| msgid "Invalid cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Algoritm cifrare invalid"
+
+#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected packet"
 msgstr "Etichetă neaşteptată"
@@ -1109,6 +1119,11 @@ msgstr ""
 #| msgid "Bad secret key"
 msgid "Bad reset code"
 msgstr "Cheie secretă incorectă"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Algoritm rezumat invalid"
 
 msgid "System bug detected"
 msgstr ""

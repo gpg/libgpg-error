@@ -735,6 +735,16 @@ msgstr "S式におかしな16進キャラクタがあります"
 msgid "Bad octal character in S-expression"
 msgstr "S式に間違った8進キャラクタがあります"
 
+#, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "無効な公開鍵アルゴリズムです"
+
+#, fuzzy
+#| msgid "No cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "暗号アルゴリズムがありません"
+
 msgid "Unexpected packet"
 msgstr "予期しないパケットです"
 
@@ -998,6 +1008,11 @@ msgstr "リセット・コードがありません"
 
 msgid "Bad reset code"
 msgstr "誤ったリセット・コードです"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "無効なダイジェスト・アルゴリズムです"
 
 msgid "System bug detected"
 msgstr "システムのバグが検出されました"

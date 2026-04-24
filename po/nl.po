@@ -735,6 +735,16 @@ msgid "Bad octal character in S-expression"
 msgstr "Fout octaal teken in S-expressie"
 
 #, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Ongeldig algoritme voor publieke sleutel"
+
+#, fuzzy
+#| msgid "No cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Geen versleutelingsalgoritme"
+
+#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected packet"
 msgstr "Onverwachte tag"
@@ -1037,6 +1047,11 @@ msgstr ""
 #| msgid "Bad secret key"
 msgid "Bad reset code"
 msgstr "Foute geheime sleutel"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Ongeldig digest-algoritme"
 
 msgid "System bug detected"
 msgstr ""

@@ -768,6 +768,16 @@ msgid "Bad octal character in S-expression"
 msgstr "Лош октадецимални знак у С-изразу"
 
 #, fuzzy
+#| msgid "Invalid public key algorithm"
+msgid "Non-compliant public key algorithm"
+msgstr "Неисправан алгоритам јавног кључа"
+
+#, fuzzy
+#| msgid "Invalid cipher algorithm"
+msgid "Non-compliant cipher algorithm"
+msgstr "Неисправан алгоритам шифровања"
+
+#, fuzzy
 #| msgid "Unexpected tag"
 msgid "Unexpected packet"
 msgstr "Неочекивана ознака"
@@ -1096,6 +1106,11 @@ msgstr ""
 #| msgid "Bad secret key"
 msgid "Bad reset code"
 msgstr "Лош тајни кључ"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Non-compliant digest algorithm"
+msgstr "Непознат алгоритам апсорпције"
 
 msgid "System bug detected"
 msgstr ""
