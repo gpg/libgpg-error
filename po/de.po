@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.19\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2025-10-07 17:27+0200\n"
+"PO-Revision-Date: 2026-04-24 11:20+0200\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -735,6 +735,13 @@ msgstr "Ungerade Anzahl von Hex-Zeichen in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Falsches Oktal-Zeichen in S-expression"
 
+msgid "Non-compliant public key algorithm"
+msgstr "Nicht konformes Public-Key-Verfahren"
+
+#, fuzzy
+msgid "Non-compliant cipher algorithm"
+msgstr "Nicht konformes Verschlüsselungsverfahren"
+
 msgid "Unexpected packet"
 msgstr "Unerwartetes Paket"
 
@@ -1001,6 +1008,9 @@ msgstr "Kein Rückstellcode"
 
 msgid "Bad reset code"
 msgstr "Falscher Rückstellcode"
+
+msgid "Non-compliant digest algorithm"
+msgstr "Nicht konforme Hashmethode"
 
 msgid "System bug detected"
 msgstr "Fehler im System entdeckt"
