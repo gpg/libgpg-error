@@ -1,13 +1,13 @@
 # Polish translation for libgpg-error.
 # Copyright (C) 2004, 2005, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
-# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2023.
+# Jakub Bogusz <qboosh@pld-linux.org>, 2004-2026.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.47\n"
+"Project-Id-Version: libgpg-error 1.60\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2023-10-20 20:45+0200\n"
+"PO-Revision-Date: 2026-04-25 11:34+0200\n"
 "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
 "Language: pl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "Unspecified source"
-msgstr "Nie podane źródło"
+msgstr "Niepodane źródło"
 
 msgid "gcrypt"
 msgstr "gcrypt"
@@ -175,7 +175,7 @@ msgid "Not found"
 msgstr "Nie znaleziono"
 
 msgid "Value not found"
-msgstr "Wartość nie znaleziona"
+msgstr "Wartość nieznaleziona"
 
 msgid "Syntax error"
 msgstr "Błąd składni"
@@ -244,10 +244,10 @@ msgid "Selftest failed"
 msgstr "Test wewnętrzny nie powiódł się"
 
 msgid "Data not encrypted"
-msgstr "Dane nie zaszyfrowane"
+msgstr "Dane niezaszyfrowane"
 
 msgid "Data not processed"
-msgstr "Dane nie przetworzone"
+msgstr "Dane nieprzetworzone"
 
 msgid "Unusable public key"
 msgstr "Bezużyteczny klucz publiczny"
@@ -271,7 +271,7 @@ msgid "Bug"
 msgstr "Błąd w kodzie"
 
 msgid "Not supported"
-msgstr "Nie obsługiwane"
+msgstr "Nieobsługiwane"
 
 msgid "Invalid operation code"
 msgstr "Niepoprawny kod operacji"
@@ -298,7 +298,7 @@ msgid "Missing item in object"
 msgstr "Brak elementu w obiekcie"
 
 msgid "Not implemented"
-msgstr "Nie zaimplementowane"
+msgstr "Niezaimplementowane"
 
 msgid "Conflicting use"
 msgstr "Konflikt użycia"
@@ -322,7 +322,7 @@ msgid "Invalid response"
 msgstr "Niepoprawna odpowiedź"
 
 msgid "No agent running"
-msgstr "Agent nie uruchomiony"
+msgstr "Agent nieuruchomiony"
 
 msgid "Agent error"
 msgstr "Błąd agenta"
@@ -385,7 +385,7 @@ msgid "Line too long"
 msgstr "Linia zbyt długa"
 
 msgid "Not trusted"
-msgstr "Nie zaufany"
+msgstr "Niezaufany"
 
 msgid "Operation cancelled"
 msgstr "Operacja anulowana"
@@ -460,7 +460,7 @@ msgid "Bad PIN method"
 msgstr "Błędna metoda PIN-u"
 
 msgid "Card not initialized"
-msgstr "Karta nie zainicjowana"
+msgstr "Karta niezainicjowana"
 
 msgid "Unsupported operation"
 msgstr "Nieobsługiwana operacja"
@@ -484,10 +484,10 @@ msgid "PIN blocked"
 msgstr "PIN zablokowany"
 
 msgid "Conditions of use not satisfied"
-msgstr "Warunki użycia nie spełnione"
+msgstr "Warunki użycia niespełnione"
 
 msgid "PINs are not synced"
-msgstr "PIN-y nie zsynchronizowane"
+msgstr "PIN-y niezsynchronizowane"
 
 msgid "Invalid CRL"
 msgstr "Niepoprawne CRL"
@@ -499,10 +499,10 @@ msgid "Invalid BER"
 msgstr "Niepoprawne BER"
 
 msgid "Element not found"
-msgstr "Element nie znaleziony"
+msgstr "Element nieznaleziony"
 
 msgid "Identifier not found"
-msgstr "Identyfikator nie znaleziony"
+msgstr "Identyfikator nieznaleziony"
 
 msgid "Invalid tag"
 msgstr "Niepoprawny znacznik"
@@ -517,7 +517,7 @@ msgid "Unexpected tag"
 msgstr "Nieoczekiwany znacznik"
 
 msgid "Not DER encoded"
-msgstr "Nie zakodowane DER"
+msgstr "Niezakodowane DER"
 
 msgid "No CMS object"
 msgstr "Brak obiektu CMS"
@@ -544,7 +544,7 @@ msgid "Invalid crypto engine"
 msgstr "Niepoprawny silnik kryptograficzny"
 
 msgid "Public key not trusted"
-msgstr "Klucz publiczny nie zaufany"
+msgstr "Klucz publiczny niezaufany"
 
 msgid "Decryption failed"
 msgstr "Odszyfrowywanie nie powiodło się"
@@ -592,7 +592,7 @@ msgid "A locale function failed"
 msgstr "Funkcja lokalizacji nie powiodła się"
 
 msgid "Not locked"
-msgstr "Nie zablokowany"
+msgstr "Niezablokowany"
 
 msgid "Protocol violation"
 msgstr "Naruszenie protokołu"
@@ -619,7 +619,7 @@ msgid "Unknown command"
 msgstr "Nieznane polecenie"
 
 msgid "Not operational"
-msgstr "Nie gotowy"
+msgstr "Niegotowy"
 
 msgid "No passphrase given"
 msgstr "Nie podano hasła"
@@ -628,7 +628,7 @@ msgid "No PIN given"
 msgstr "Nie podano PIN-u"
 
 msgid "Not enabled"
-msgstr "Nie włączony"
+msgstr "Niewłączony"
 
 msgid "No crypto engine"
 msgstr "Brak silnika kryptograficznego"
@@ -688,7 +688,7 @@ msgid "Operation fully cancelled"
 msgstr "Operacja całkowicie anulowana"
 
 msgid "Operation not yet finished"
-msgstr "Operacja jeszcze nie zakończona"
+msgstr "Operacja jeszcze niezakończona"
 
 msgid "Buffer too short"
 msgstr "Bufor zbyt mały"
@@ -703,7 +703,7 @@ msgid "Unmatched parentheses in S-expression"
 msgstr "Niedopasowane nawiasy w S-wyrażeniu"
 
 msgid "S-expression not canonical"
-msgstr "S-wyrażenie nie kanoniczne"
+msgstr "S-wyrażenie niekanoniczne"
 
 msgid "Bad character in S-expression"
 msgstr "Błędny znak w S-wyrażeniu"
@@ -732,20 +732,14 @@ msgstr "Nieparzysta liczba cyfr szesnastkowych w S-wyrażeniu"
 msgid "Bad octal character in S-expression"
 msgstr "Błędny znak ósemkowy w S-wyrażeniu"
 
-#, fuzzy
-#| msgid "Invalid public key algorithm"
 msgid "Non-compliant public key algorithm"
-msgstr "Niepoprawny algorytm klucza publicznego"
+msgstr "Niezgodny algorytm klucza publicznego"
 
-#, fuzzy
-#| msgid "No cipher algorithm"
 msgid "Non-compliant cipher algorithm"
-msgstr "Brak algorytmu szyfru"
+msgstr "Niezgodny algorytm szyfru"
 
-#, fuzzy
-#| msgid "Unexpected tag"
 msgid "Unexpected packet"
-msgstr "Nieoczekiwany znacznik"
+msgstr "Nieoczekiwany pakiet"
 
 msgid "All subkeys are expired or revoked"
 msgstr "Wszystkie podklucze wygasły lub zostały anulowane"
@@ -988,7 +982,7 @@ msgid "Bad authentication"
 msgstr "Niewłaściwe uwierzytelnienie"
 
 msgid "No Keybox daemon running"
-msgstr "Demon Keybox nie uruchomiony"
+msgstr "Demon Keybox nieuruchomiony"
 
 msgid "Keybox daemon error"
 msgstr "Błąd demona Keybox"
@@ -1008,10 +1002,8 @@ msgstr "Brak kodu resetującego"
 msgid "Bad reset code"
 msgstr "Błędny kod resetujący"
 
-#, fuzzy
-#| msgid "Invalid digest algorithm"
 msgid "Non-compliant digest algorithm"
-msgstr "Niepoprawny algorytm skrótu"
+msgstr "Niezgodny algorytm skrótu"
 
 msgid "System bug detected"
 msgstr "Wykryto błąd systemu"
@@ -1083,7 +1075,7 @@ msgid "LDAP control not found"
 msgstr "Nie znaleziono sterowania LDAP"
 
 msgid "Not supported by LDAP"
-msgstr "Nie obsługiwane przez LDAP"
+msgstr "Nieobsługiwane przez LDAP"
 
 msgid "LDAP connect error"
 msgstr "Błąd połączenia z LDAP"
@@ -1399,13 +1391,13 @@ msgstr "Biblioteka SQL użyta niepoprawnie"
 
 msgid "SQL library uses unsupported OS features"
 msgstr ""
-"Biblioteka SQL wykorzystuje nie obsługiwane funkcje systemu operacyjnego"
+"Biblioteka SQL wykorzystuje nieobsługiwane funkcje systemu operacyjnego"
 
 msgid "Authorization denied (SQL)"
 msgstr "Autoryzacja odrzucona (SQL)"
 
 msgid "(unused SQL code: format)"
-msgstr "(nie używany kod SQL: format)"
+msgstr "(nieużywany kod SQL: format)"
 
 msgid "SQL bind parameter out of range"
 msgstr "Parametr dowiązania SQL spoza zakresu"
