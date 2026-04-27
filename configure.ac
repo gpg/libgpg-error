@@ -632,7 +632,7 @@ if test x"$gl_use_threads" = xno; then
   AC_MSG_NOTICE([generated src/lock-obj-pub.native.h for $host])
 elif test x$cross_compiling = xyes; then
   case $host in
-    *-*-gnu* | *-*-linux-gnu* | *-*-linux-musl*)
+    *-*-gnu* | *-*-linux-gnu* | *-*-linux-musl* | wasm*-*-emscripten)
     AC_CHECK_TOOL(OBJDUMP, [objdump])
     if test -n "$OBJDUMP"; then
       lock_obj_h_generated=yes
