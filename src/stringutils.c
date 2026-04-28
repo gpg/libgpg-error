@@ -67,7 +67,7 @@ _gpgrt_vfnameconcat (unsigned int flags,
 {
   const char *argv[32];
   int argc;
-  size_t n;
+  size_t n, n0;
   int skip = 1;  /* Characters to skip from FIRST_PART.  Only used if
                   * HOME is NULL */
   char *home_buffer = NULL;
@@ -101,8 +101,9 @@ _gpgrt_vfnameconcat (unsigned int flags,
       home = SYSCONFDIR;
 #endif
       skip = 0;
-      n += strlen (home);
-      if (n && home[n-1] != '/' && *first_part != '/')
+      n0 = strlen (home);
+      n += n0;
+      if (n0 && home[n0-1] != '/' && *first_part != '/')
         {
           extradelim = "/";
           n++;
