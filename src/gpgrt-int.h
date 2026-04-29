@@ -480,9 +480,11 @@ const char *_gpgrt_fname_get (gpgrt_stream_t stream);
 
 #include "estream-printf.h"
 
-/* Make sure we always use our snprintf */
+/* Make sure we always use our snprintf (except for estream-printf.c) */
+#ifndef KEEP_SYSTEM_SNPRINTF
 #undef snprintf
 #define snprintf _gpgrt_estream_snprintf
+#endif
 
 
 #if HAVE_W32_SYSTEM

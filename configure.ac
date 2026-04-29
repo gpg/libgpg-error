@@ -261,9 +261,11 @@ AC_SUBST(INSTALLSHELLPATH)
 # the target system (POSIX or Windows).
 # AC_FUNC_FORK
 
+# Note that vasprintf is only used by the test suite; snprintf is used
+# by estream-printf.c only if available.
 AC_CHECK_FUNCS([flockfile vasprintf mmap rand strlwr stpcpy setenv stat \
                 getrlimit getpwnam getpwuid getpwnam_r getpwuid_r inet_pton \
-                getdents64 closefrom])
+                getdents64 closefrom snprintf])
 
 
 #

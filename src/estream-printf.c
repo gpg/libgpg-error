@@ -71,6 +71,7 @@
 
 */
 
+#define KEEP_SYSTEM_SNPRINTF 1  /* Disable our snprintf re-mapping here.  */
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -1073,7 +1074,7 @@ pr_float (estream_printf_out_t outfnc, void *outfncarg,
   int use_dbl = 0;
 #endif
   double afloat;
-  char numbuf[350];
+  char numbuf[450];  /* See comment above the sprintf.  */
   char formatstr[20];
   char *p, *pend;
   size_t n;
@@ -1129,9 +1130,30 @@ pr_float (estream_printf_out_t outfnc, void *outfncarg,
   if ((arg->flags & FLAG_ALT_CONV))
     *--p = '#';
   *--p = '%';
+
+  /* On the size of NUMBUF: A double value (e.g. DBL_MAX) can have up
+   * to 309 decimal digits before the decimal point.  When formatted
+   * with a precision of 100 (`%.100f`), the resulting string can have
+   * up to 411 characters (309 integer digits + 1 decimal point + 100
+   * fractional digits + 1 nul).  With long double it is worse and in
+   * theory we should not use a static buffer but allocate a large
+   * one.  However, platforms with support for long double will very
+   * likley also support snprintf which can then be used to throw an
+   * error on truncation.  */
 #ifdef HAVE_LONG_DOUBLE
   if (use_dbl)
-    sprintf (numbuf, p, adblfloat);
+    {
+# ifdef HAVE_SNPRINTF
+      rc = snprintf (numbuf, sizeof numbuf, p, adblfloat);
+# else
+      rc = -1;  /* Not supported - should not happen.  */
+# endif
+      if (rc < 0 || rc >= sizeof numbuf)
+        {
+          _set_errno (EINVAL);
+          return -1;
+        }
+    }
   else
 #endif /*HAVE_LONG_DOUBLE*/
     sprintf (numbuf, p, afloat);
