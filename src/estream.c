@@ -599,7 +599,7 @@ static void
 do_deinit (void)
 {
   /* Flush all streams. */
-  _gpgrt_fflush (NULL);
+  _gpgrt_fflush (NULL, 1); /* 1 = we are in an atexit handler */
 
   /* We should release the estream_list.  However there is one
      problem: That list is also used to search for the standard
@@ -4552,8 +4552,9 @@ do_fflush (estream_t stream)
 }
 
 
+/* IN_ATEXIT is set when this function is called by an atexit handler.  */
 int
-_gpgrt_fflush (estream_t stream)
+_gpgrt_fflush (estream_t stream, int in_atexit)
 {
   int err;
 
@@ -4572,9 +4573,23 @@ _gpgrt_fflush (estream_t stream)
       for (item = estream_list; item; item = item->next)
         if (item->stream)
           {
-            lock_stream (item->stream);
-            err |= do_fflush (item->stream);
-            unlock_stream (item->stream);
+            if (in_atexit)
+              {
+                /* Do not flush if we can't take the lock while we are
+                 * in an atexit handler.  The atexit handler might
+                 * have been called while the stream was locked. */
+                if (!trylock_stream (item->stream))
+                  {
+                    err |= do_fflush (item->stream);
+                    unlock_stream (item->stream);
+                  }
+              }
+            else
+              {
+                lock_stream (item->stream);
+                err |= do_fflush (item->stream);
+                unlock_stream (item->stream);
+              }
           }
       unlock_list ();
     }

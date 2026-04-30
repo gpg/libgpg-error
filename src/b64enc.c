@@ -202,7 +202,7 @@ _gpgrt_b64enc_write (gpgrt_b64state_t state, const void *buffer, size_t nbytes)
   if (!nbytes)
     {
       if (buffer)
-        if (_gpgrt_fflush (state->stream))
+        if (_gpgrt_fflush (state->stream, 0))
           goto write_error;
       return 0;
     }

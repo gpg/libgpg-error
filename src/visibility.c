@@ -374,7 +374,7 @@ gpgrt_clearerr_unlocked (estream_t stream)
 int
 gpgrt_fflush (estream_t stream)
 {
-  return _gpgrt_fflush (stream);
+  return _gpgrt_fflush (stream, 0);
 }
 
 int

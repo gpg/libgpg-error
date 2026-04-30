@@ -377,7 +377,7 @@ void _gpgrt_clearerr_unlocked (gpgrt_stream_t stream);
 int _gpgrt__pending (gpgrt_stream_t stream);
 int _gpgrt__pending_unlocked (gpgrt_stream_t stream);
 
-int _gpgrt_fflush (gpgrt_stream_t stream);
+int _gpgrt_fflush (gpgrt_stream_t stream, int in_atexit);
 int _gpgrt_fseek (gpgrt_stream_t stream, long int offset, int whence);
 int _gpgrt_fseeko (gpgrt_stream_t stream, gpgrt_off_t offset, int whence);
 long int _gpgrt_ftell (gpgrt_stream_t stream);

@@ -250,7 +250,7 @@ flushstrings (int is_error)
   if (custom_outfnc)
     custom_outfnc (is_error? 2:1, NULL);
   else
-    _gpgrt_fflush (is_error? es_stderr : es_stdout);
+    _gpgrt_fflush (is_error? es_stderr : es_stdout, 0);
 }
 
 
