@@ -4573,18 +4573,21 @@ _gpgrt_fflush (estream_t stream, int in_atexit)
       for (item = estream_list; item; item = item->next)
         if (item->stream)
           {
-            if (in_atexit)
-              {
-                /* Do not flush if we can't take the lock while we are
-                 * in an atexit handler.  The atexit handler might
-                 * have been called while the stream was locked. */
-                if (!trylock_stream (item->stream))
-                  {
-                    err |= do_fflush (item->stream);
-                    unlock_stream (item->stream);
-                  }
-              }
-            else
+            /* The code below does not work - we need to think more about
+             *  atexit handlers and stream locking. */
+            (void)in_atexit;
+            /* if (in_atexit) */
+            /*   { */
+            /*     /\* Do not flush if we can't take the lock while we are */
+            /*      * in an atexit handler.  The atexit handler might */
+            /*      * have been called while the stream was locked. *\/ */
+            /*     if (!trylock_stream (item->stream)) */
+            /*       { */
+            /*         err |= do_fflush (item->stream); */
+            /*         unlock_stream (item->stream); */
+            /*       } */
+            /*   } */
+            /* else */
               {
                 lock_stream (item->stream);
                 err |= do_fflush (item->stream);
