@@ -1,6 +1,15 @@
-Noteworthy changes in version 1.61 (2026-04-24) [C42/A42/R_]
+Noteworthy changes in version 1.61 (2026-05-07) [C42/A42/R1]
 -----------------------------------------------
 
+ * Fix possible stack overflow in es_printf for %.100f format.
+   [T8240]
+
+ * Fix out-of-bounds read in vfnameconcat.  [rE48fae7f604]
+
+ * Add cross compile support for wasm*-*-emscripten target.
+   [rE15ccba67c5]
+
+ * Update Japanese and Polish translations.
 
  Release-info: https://dev.gnupg.org/T8239
 
