@@ -635,16 +635,16 @@ if test x"$gl_use_threads" = xno; then
 elif test x$cross_compiling = xyes; then
   case $host in
     *-*-gnu* | *-*-linux-gnu* | *-*-linux-musl* | wasm*-*-emscripten)
-    AC_CHECK_TOOL(OBJDUMP, [objdump])
-    if test -n "$OBJDUMP"; then
+    AC_CHECK_TOOL(NM, [nm])
+    if test -n "$NM"; then
       lock_obj_h_generated=yes
       if test ! -d src; then mkdir src; fi
       LOCK_ABI_VERSION=1 host=$host host_alias=$host_alias \
-          CC=$CC OBJDUMP=$OBJDUMP \
+          CC=$CC NM=$NM \
           ac_ext=$ac_ext ac_objext=$ac_objext \
-          AWK=$AWK $srcdir/src/gen-lock-obj.sh \
+          $srcdir/src/gen-lock-obj.sh \
           >src/lock-obj-pub.native.h
-      AC_MSG_NOTICE([generated src/lock-obj-pub.native.h using $host_alias-objdump and $AWK])
+      AC_MSG_NOTICE([generated src/lock-obj-pub.native.h using $NM])
     else
       force_use_syscfg=yes
     fi

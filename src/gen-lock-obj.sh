@@ -24,8 +24,7 @@
 # Following variables should be defined to invoke this script
 #
 #   CC
-#   OBJDUMP
-#   AWK
+#   NM
 #   ac_ext
 #   ac_object
 #   host
@@ -34,8 +33,8 @@
 # An example:
 #
 # LOCK_ABI_VERSION=1 host=x86_64-pc-linux-gnu host_alias=x86_64-linux-gnu \
-#     CC=$host_alias-gcc OBJDUMP=$host_alias-objdump ac_ext=c ac_objext=o \
-#     AWK=gawk ./gen-lock-obj.sh
+#     CC=$host_alias-gcc NM=$NM ac_ext=c ac_objext=o \
+#     ./gen-lock-obj.sh
 #
 
 if test -n "`echo -n`"; then
@@ -61,23 +60,19 @@ typedef struct
 #define GPGRT_LOCK_INITIALIZER {-1}
 EOF
 else
-AWK_VERSION_OUTPUT=$($AWK 'BEGIN { print PROCINFO["version"] }')
-if test -n "$AWK_VERSION_OUTPUT"; then
-    # It's GNU awk, which supports PROCINFO.
-    AWK_OPTION=--non-decimal-data
-fi
-
 cat <<'EOF' >conftest.$ac_ext
 #include <pthread.h>
 pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
 EOF
 
+#
+# Note: NM actually comes with the option -B, because of libtool.m4.
+# We override with the -P option (Use POSIX.2 standard format).
+#
 if $CC -c conftest.$ac_ext; then :
-  ac_mtx_size=$($OBJDUMP -t conftest.$ac_objext \
-         | $AWK $AWK_OPTION '
-/mtx$/ { mtx_size = int("0x" $5) }
-END { print mtx_size }')
-else
+  ac_mtx_size=$($NM -P -t d conftest.$ac_objext | cut -d ' ' -f 4)
+fi
+if test -z "$ac_mtx_size"; then
     echo "Can't determine mutex size"
     exit 1
 fi
