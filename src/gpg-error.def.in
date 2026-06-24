@@ -286,4 +286,6 @@ EXPORTS
 
  gpgrt_fconcat                @223
 
+ gpgrt_w32_set_errno          @224
+
 ;; end of file with public symbols for Windows.

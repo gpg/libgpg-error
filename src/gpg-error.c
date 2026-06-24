@@ -561,6 +561,7 @@ main (int argc, char *argv[])
          CMD_DEFINES,
          CMD_LOCALE,
          CMD_GETREG,
+         CMD_MAPW32ERR,
          CMD_FOPEN,
          OPT_OPENMODE,
          CMD_FCONCAT,
@@ -580,10 +581,14 @@ main (int argc, char *argv[])
                 "Print the locale used for gettext"),
     ARGPARSE_c (CMD_GETREG, "getreg",
                 "Print string from the Registry"),
+    ARGPARSE_c (CMD_MAPW32ERR, "mapw32err",
+                "Print the errno mapped from Windows error"),
 #else
     ARGPARSE_c (CMD_LOCALE, "locale",
                 "@"),
     ARGPARSE_c (CMD_GETREG, "getreg",
+                "@"),
+    ARGPARSE_c (CMD_MAPW32ERR, "mapw32err",
                 "@"),
 #endif
     ARGPARSE_c (CMD_FOPEN, "fopen", "Open the given file"),
@@ -629,6 +634,7 @@ main (int argc, char *argv[])
         case CMD_LOCALE:     localemode = 1; break;
         case CMD_GETREG:     getregmode = 1; break;
 
+        case CMD_MAPW32ERR:
         case CMD_FOPEN:
         case CMD_CHDIR:
         case CMD_MKDIR:
@@ -779,6 +785,16 @@ main (int argc, char *argv[])
         log_error ("error mkdir '%s': %s\n", *argv, gpg_strerror (err));
       else if (!quiet)
         printf ("success mkdir '%s'\n", *argv);
+    }
+  else if (mycmd == CMD_MAPW32ERR)
+    {
+#if HAVE_W32_SYSTEM
+      i = gpgrt_w32_set_errno ((int)strtol (*argv, NULL, 0));
+      err = gpg_err_code_from_syserror ();
+      printf ("%d 0x%04x -> %d %s\n", i, i, err, gpg_strerror (err));
+#else
+      log_info ("this command is only useful on Windows\n");
+#endif
     }
   else if (getregmode)
     {

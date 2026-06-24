@@ -91,3 +91,8 @@ char *gpgrt_w32_reg_query_string (const char *root,
 
 /* Query a string in the registry using a unified key representation.  */
 char *gpgrt_w32_reg_get_string (const char *key);
+
+/* Set the ERRNO from a Windows error code.  This is the same mapping
+ * as used internally by gpgrt.  If EC is -1 GetLastError() is used.
+ * The function returns EC or the result of GetLastError().  */
+int gpgrt_w32_set_errno (int ec);

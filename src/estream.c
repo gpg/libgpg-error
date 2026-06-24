@@ -370,12 +370,13 @@ map_w32_to_errno (DWORD w32_err)
 
 /* Wrapper to be used by other modules to set ERRNO from the Windows
  * error.  EC may be -1 to get the last error.  */
-void
+int
 _gpgrt_w32_set_errno (int ec)
 {
   if (ec == -1)
     ec = GetLastError ();
   _set_errno (map_w32_to_errno (ec));
+  return ec;
 }
 
 

@@ -1550,4 +1550,10 @@ gpgrt_w32_reg_get_string (const char *key)
   return _gpgrt_w32_reg_get_string (key);
 }
 
+int
+gpgrt_w32_set_errno (int ec)
+{
+  return _gpgrt_w32_set_errno (ec);
+}
+
 #endif /*HAVE_W32_SYSTEM*/
