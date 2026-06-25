@@ -449,7 +449,7 @@ check_large_float (void)
             errno, strerror (errno));
     }
   else if (verbose)
-    show ("format \"%%.100f\" with DBL_MAX: ->%s<-\n", buf2);
+    show ("format \"%%.101f\" with DBL_MAX: ->%s<-\n", buf2);
 
   if (strcmp (buf, buf2))
     fail ("format \"%%.100f\" does not match \"%%.101f\"\n" );
@@ -469,6 +469,7 @@ check_large_float (void)
     show ("format \"%%.100Lf\" with DBL_MAX: ->%s<-\n", buf);
   gpgrt_free (buf);
 
+# ifdef HAVE_LONG_DOUBLE_WIDER
   ld = LDBL_MAX;
   buf = gpgrt_bsprintf ("%.100Lf\n", ld);
   if (buf)
@@ -478,6 +479,10 @@ check_large_float (void)
   else if (verbose)
     show ("format \"%%.100Lf\" with LDBL_MAX failed as expected\n");
   gpgrt_free (buf);
+# else
+  if (verbose)
+    show ("LDBL_MAX == DBL_MAX - skipping LDBL_MAX test\n");
+# endif
 
 #endif /*HAVE_LONG_DOUBLE*/
 }
