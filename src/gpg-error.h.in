@@ -259,9 +259,10 @@ typedef unsigned int gpg_error_t;
 # define GPGRT_HAVE_MACRO_FUNCTION 1
 #endif
 
-/* A macro defined if the pragma GCC push_options is available.  */
+/* A macro defined if the "#pragma GCC push_option" and "#pragma GCC
+ * diagnostic push" options are available.  */
 #undef GPGRT_HAVE_PRAGMA_GCC_PUSH
-#if _GPG_ERR_GCC_VERSION >= 40400
+#if _GPG_ERR_GCC_VERSION >= 40600
 # define GPGRT_HAVE_PRAGMA_GCC_PUSH 1
 #endif
 
