@@ -476,7 +476,7 @@ trylock_stream (estream_t _GPGRT__RESTRICT stream)
   if (!stream->intern->samethread)
     {
       dbg_lock_1 ("enter trylock_stream for %p\n", stream);
-      rc = _gpgrt_lock_trylock (&stream->intern->lock)? 0 : -1;
+      rc = _gpgrt_lock_trylock (&stream->intern->lock)? -1 : 0;
       dbg_lock_2 ("leave trylock_stream for %p: rc=%d\n", stream, rc);
     }
   else
