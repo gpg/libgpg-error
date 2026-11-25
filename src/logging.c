@@ -1231,7 +1231,19 @@ _gpgrt_log_flush (void)
  * just the raw dump (in this case ARG_PTR is not used), with FMT
  * being an empty string, print a trailing linefeed, otherwise print
  * an entire debug line with the expanded FMT followed by a possible
- * wrapped hexdump and a final LF.  */
+ * wrapped hexdump and a final LF.
+ * The format string also supports some keywords.  The syntax is"
+ *   "|!KEYWORDS|"
+ * The currently implemented keywords are:
+ *   "trunc"  := Truncate to 32 input bytes.
+ *   "upcase" := Use uppercase hex digits.
+ *   "nolf"   := Do not print a final LF.
+ *
+ * The keywords should be delimited by commas.  If the format string
+ * ends with the second '|' no text output is printed in the same was
+ * as FMT is the empty string; the use of "nolf" has in this case the
+ * same effect as a FMT of NULL.
+ */
 void
 _gpgrt_logv_printhex (const void *buffer, size_t length,
                       const char *fmt, va_list arg_ptr)
@@ -1241,25 +1253,34 @@ _gpgrt_logv_printhex (const void *buffer, size_t length,
   int cnt = 0;
   const unsigned char *p;
   int trunc = 0;  /* Only print a shortened string.  */
+  int upcase = 0; /* Print in uppercase.             */
+  int nolf = 0;   /* Do not print a final line feed. */
 
   /* FIXME: This printing is not yet protected by _gpgrt_flockfile.  */
   if (fmt && *fmt)
     {
       const char *s;
 
-      if (*fmt == '|' && fmt[1] == '!' && (s=strchr (fmt+2, '|')) && s[1])
+      if (*fmt == '|' && fmt[1] == '!' && (s=strchr (fmt+2, '|')))
         {
           /* Skip initial keywords and parse them.  */
           fmt += 2;
           if (strstr (fmt, "trunc"))
-            trunc = 1;
+            trunc = wrap = 1;
+          if (strstr (fmt, "upcase"))
+            upcase = 1;
+          if (strstr (fmt, "nolf"))
+            nolf = 1;
 
           fmt = s+1;
         }
 
-      wrapamount = _gpgrt_logv_internal (GPGRT_LOGLVL_DEBUG, 0, NULL, NULL,
-                                         fmt, arg_ptr);
-      wrap = 1;
+      if (*fmt)
+        {
+          wrapamount = _gpgrt_logv_internal (GPGRT_LOGLVL_DEBUG, 0, NULL, NULL,
+                                             fmt, arg_ptr);
+          wrap = 1;
+        }
     }
 
   if (length)
@@ -1269,7 +1290,10 @@ _gpgrt_logv_printhex (const void *buffer, size_t length,
 
       for (p = buffer; length--; p++)
         {
-          _gpgrt_log_printf ("%02x", *p);
+          if (upcase)
+            _gpgrt_log_printf ("%02X", *p);
+          else
+            _gpgrt_log_printf ("%02x", *p);
           if (wrap && ++cnt == 32 && length)
             {
               if (trunc)
@@ -1281,7 +1305,7 @@ _gpgrt_logv_printhex (const void *buffer, size_t length,
               cnt = 0;
               /* (we indicate continuations with a backslash) */
               _gpgrt_log_printf (" \\\n");
-              if (wrap)
+              if (wrap && wrapamount)
                 _gpgrt_log_debug ("%*s", wrapamount, "");
               else
                 _gpgrt_log_debug ("%s", "");
@@ -1291,7 +1315,7 @@ _gpgrt_logv_printhex (const void *buffer, size_t length,
         }
     }
 
-  if (fmt)
+  if (fmt && !nolf)
     _gpgrt_log_printf ("\n");
 }
 
