@@ -302,6 +302,9 @@ map_w32_to_errno (DWORD w32_err)
     case ERROR_FILE_INVALID:
       return EIO;
 
+    case ERROR_INVALID_PARAMETER:
+      return EINVAL;
+
       /* This mapping has been taken from reactOS.  */
     case ERROR_TOO_MANY_OPEN_FILES: return EMFILE;
     case ERROR_ARENA_TRASHED: return ENOMEM;
