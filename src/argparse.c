@@ -1239,7 +1239,7 @@ handle_meta_let (gpgrt_argparse_t *arg, unsigned int alternate, char *args)
 #ifndef HAVE_W32_SYSTEM
 /* On Unix we emulate the Windows Regregisyr using a name-value
  * formatted file "Registry" in the system config directory. If an
- * inetnal error is found _ERR is set to an argparse error and NULL
+ * internal error is found _ERR is set to an argparse error and NULL
  * returned.  */
 static char *
 emulated_registry_lookup (gpgrt_argparse_t *arg, const char *name, int *r_err)
